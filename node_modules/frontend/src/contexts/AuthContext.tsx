@@ -16,6 +16,7 @@ interface AuthContextType {
   login: (token: string, user: User) => void;
   logout: () => void;
   checkAuth: () => Promise<void>;
+  handleTokenExpiration: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,6 +39,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     window.location.href = '/login';
   };
 
+  const handleTokenExpiration = () => {
+    console.log('Handling token expiration...');
+    localStorage.removeItem('token');
+    delete api.defaults.headers.common['Authorization'];
+    setUser(null);
+    
+    // Show user-friendly message
+    if (typeof window !== 'undefined') {
+      const currentPath = window.location.pathname;
+      if (currentPath.startsWith('/admin') || currentPath.startsWith('/student')) {
+        // Use SweetAlert if available, otherwise use alert
+        if (typeof window !== 'undefined' && (window as any).Swal) {
+          (window as any).Swal.fire({
+            title: 'Session Expired',
+            text: 'Your session has expired. Please log in again to continue.',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+            allowOutsideClick: false
+          }).then(() => {
+            window.location.href = '/login';
+          });
+        } else {
+          alert('Your session has expired. Please log in again.');
+          window.location.href = '/login';
+        }
+      }
+    }
+  };
+
   const checkAuth = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -56,16 +86,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const { data } = await api.get('/auth/me');
       setUser(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Auth check failed:', error);
-      localStorage.removeItem('token');
-      delete api.defaults.headers.common['Authorization'];
-      setUser(null);
-      // Redirect to login if on protected route
-      if (typeof window !== 'undefined') {
-        const pathname = window.location.pathname;
-        if (pathname.startsWith('/admin') || pathname.startsWith('/student')) {
-          window.location.href = '/login';
+      
+      // Check if it's a 401 error (token expired)
+      if (error.response?.status === 401) {
+        handleTokenExpiration();
+      } else {
+        // For other errors, just clear the token and redirect
+        localStorage.removeItem('token');
+        delete api.defaults.headers.common['Authorization'];
+        setUser(null);
+        
+        if (typeof window !== 'undefined') {
+          const pathname = window.location.pathname;
+          if (pathname.startsWith('/admin') || pathname.startsWith('/student')) {
+            window.location.href = '/login';
+          }
         }
       }
     } finally {
@@ -77,8 +114,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     checkAuth();
   }, []);
 
+  // Add visibility change listener to check token when user returns to tab
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden && user) {
+        // User has returned to the tab, check if token is still valid
+        checkAuth();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [user, checkAuth]);
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, checkAuth }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, checkAuth, handleTokenExpiration }}>
       {children}
     </AuthContext.Provider>
   );

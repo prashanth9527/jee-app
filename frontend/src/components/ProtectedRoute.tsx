@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
-  const { user, loading } = useAuth();
+  const { user, loading, checkAuth } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +31,23 @@ export default function ProtectedRoute({ children, requiredRole }: ProtectedRout
       }
     }
   }, [user, loading, requiredRole, router]);
+
+  // Periodic token validation (check every 5 minutes)
+  useEffect(() => {
+    if (user) {
+      const interval = setInterval(async () => {
+        try {
+          // Make a lightweight request to validate token
+          await checkAuth();
+        } catch (error) {
+          // Token validation failed, will be handled by AuthContext
+          console.log('Periodic token validation failed');
+        }
+      }, 5 * 60 * 1000); // 5 minutes
+
+      return () => clearInterval(interval);
+    }
+  }, [user, checkAuth]);
 
   if (loading) {
     return (
