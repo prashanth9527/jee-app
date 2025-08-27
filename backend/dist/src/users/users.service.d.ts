@@ -1,0 +1,94 @@
+import { PrismaService } from '../prisma/prisma.service';
+export declare class UsersService {
+    private readonly prisma;
+    constructor(prisma: PrismaService);
+    createUser(params: {
+        email: string;
+        fullName: string;
+        hashedPassword: string;
+        phone?: string | null;
+    }): import(".prisma/client").Prisma.Prisma__UserClient<{
+        id: string;
+        email: string;
+        phone: string | null;
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        hashedPassword: string;
+        fullName: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        createdAt: Date;
+        updatedAt: Date;
+        trialStartedAt: Date | null;
+        trialEndsAt: Date | null;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
+    findByEmail(email: string): import(".prisma/client").Prisma.Prisma__UserClient<{
+        id: string;
+        email: string;
+        phone: string | null;
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        hashedPassword: string;
+        fullName: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        createdAt: Date;
+        updatedAt: Date;
+        trialStartedAt: Date | null;
+        trialEndsAt: Date | null;
+    } | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
+    findById(id: string): import(".prisma/client").Prisma.Prisma__UserClient<{
+        id: string;
+        email: string;
+        phone: string | null;
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        hashedPassword: string;
+        fullName: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        createdAt: Date;
+        updatedAt: Date;
+        trialStartedAt: Date | null;
+        trialEndsAt: Date | null;
+    } | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
+    setEmailVerified(userId: string): Promise<{
+        id: string;
+        email: string;
+        phone: string | null;
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        hashedPassword: string;
+        fullName: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        createdAt: Date;
+        updatedAt: Date;
+        trialStartedAt: Date | null;
+        trialEndsAt: Date | null;
+    }>;
+    setPhoneVerified(userId: string): Promise<{
+        id: string;
+        email: string;
+        phone: string | null;
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        hashedPassword: string;
+        fullName: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        createdAt: Date;
+        updatedAt: Date;
+        trialStartedAt: Date | null;
+        trialEndsAt: Date | null;
+    }>;
+    updateTrial(userId: string, startedAt: Date, endsAt: Date): Promise<{
+        id: string;
+        email: string;
+        phone: string | null;
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        hashedPassword: string;
+        fullName: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        createdAt: Date;
+        updatedAt: Date;
+        trialStartedAt: Date | null;
+        trialEndsAt: Date | null;
+    }>;
+}

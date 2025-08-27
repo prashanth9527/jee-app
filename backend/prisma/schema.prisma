@@ -1,0 +1,262 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Use PostgreSQL
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// -------------------------------------------
+// Core Users & Auth
+// -------------------------------------------
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  phone          String?  @unique
+  emailVerified  Boolean  @default(false)
+  phoneVerified  Boolean  @default(false)
+  hashedPassword String
+  fullName       String
+  role           UserRole @default(STUDENT)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // trial & subscription
+  trialStartedAt DateTime?
+  trialEndsAt    DateTime?
+  subscriptions  Subscription[]
+
+  // exams
+  examSubmissions ExamSubmission[]
+
+  // OTPs
+  otps Otp[]
+}
+
+enum UserRole {
+  ADMIN
+  STUDENT
+}
+
+// -------------------------------------------
+// Content Hierarchy: Subject -> Topic -> Subtopic
+// -------------------------------------------
+model Subject {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String?
+  topics      Topic[]
+  questions   Question[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Topic {
+  id          String     @id @default(cuid())
+  name        String
+  description String?
+  subject     Subject    @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  subjectId   String
+  subtopics   Subtopic[]
+  questions   Question[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@unique([subjectId, name])
+}
+
+model Subtopic {
+  id          String     @id @default(cuid())
+  name        String
+  description String?
+  topic       Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topicId     String
+  questions   Question[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@unique([topicId, name])
+}
+
+// -------------------------------------------
+// Questions & Tags
+// -------------------------------------------
+model Question {
+  id             String     @id @default(cuid())
+  stem           String
+  explanation    String?
+  difficulty     Difficulty @default(MEDIUM)
+  yearAppeared   Int?
+  isPreviousYear Boolean    @default(false)
+
+  subject    Subject?  @relation(fields: [subjectId], references: [id])
+  subjectId  String?
+  topic      Topic?    @relation(fields: [topicId], references: [id])
+  topicId    String?
+  subtopic   Subtopic? @relation(fields: [subtopicId], references: [id])
+  subtopicId String?
+
+  tags    QuestionTag[]
+  options QuestionOption[]
+  answers ExamAnswer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model QuestionOption {
+  id                String       @id @default(cuid())
+  question          Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId        String
+  text              String
+  isCorrect         Boolean      @default(false)
+  order             Int          @default(0)
+  // back relation for selected answers
+  selectedByAnswers ExamAnswer[] @relation("SelectedOption")
+}
+
+model Tag {
+  id        String        @id @default(cuid())
+  name      String        @unique
+  questions QuestionTag[]
+}
+
+model QuestionTag {
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId      String
+
+  @@id([questionId, tagId])
+}
+
+// -------------------------------------------
+// Exams (Practice Papers) & Submissions
+// -------------------------------------------
+model ExamPaper {
+  id           String   @id @default(cuid())
+  title        String
+  description  String?
+  // optional scoping for practice generation
+  subjectIds   String[] @default([])
+  topicIds     String[] @default([])
+  subtopicIds  String[] @default([])
+  questionIds  String[] @default([])
+  timeLimitMin Int? // optional time limit
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  submissions ExamSubmission[]
+}
+
+model ExamSubmission {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  examPaper   ExamPaper @relation(fields: [examPaperId], references: [id], onDelete: Cascade)
+  examPaperId String
+
+  startedAt      DateTime  @default(now())
+  submittedAt    DateTime?
+  totalQuestions Int
+  correctCount   Int       @default(0)
+  scorePercent   Float? // computed
+
+  answers ExamAnswer[]
+}
+
+model ExamAnswer {
+  id               String          @id @default(cuid())
+  submission       ExamSubmission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  submissionId     String
+  question         Question        @relation(fields: [questionId], references: [id])
+  questionId       String
+  selectedOption   QuestionOption? @relation("SelectedOption", fields: [selectedOptionId], references: [id])
+  selectedOptionId String?
+  isCorrect        Boolean         @default(false)
+
+  @@unique([submissionId, questionId])
+}
+
+// -------------------------------------------
+// Subscriptions & Plans
+// -------------------------------------------
+model Plan {
+  id            String       @id @default(cuid())
+  name          String       @unique
+  description   String?
+  priceCents    Int // price in cents
+  currency      String       @default("usd")
+  interval      PlanInterval @default(MONTH)
+  stripePriceId String?      @unique
+  isActive      Boolean      @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscriptions Subscription[]
+}
+
+enum PlanInterval {
+  MONTH
+  YEAR
+}
+
+model Subscription {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  plan   Plan   @relation(fields: [planId], references: [id])
+  planId String
+
+  status    SubscriptionStatus @default(ACTIVE)
+  startedAt DateTime           @default(now())
+  endsAt    DateTime?
+
+  stripeCustomerId String?
+  stripeSubId      String?
+  stripeStatus     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  EXPIRED
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  code      String
+  type      OtpType
+  target    String // email or phone value used
+  expiresAt DateTime
+  consumed  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, type])
+}
+
+enum OtpType {
+  EMAIL
+  PHONE
+}
