@@ -22,14 +22,98 @@ let AdminSubtopicsController = class AdminSubtopicsController {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    list(topicId) {
-        return this.prisma.subtopic.findMany({ where: { topicId: topicId || undefined }, orderBy: { name: 'asc' } });
+    async list(page = '1', limit = '10', search, topicId, subjectId) {
+        const pageNum = parseInt(page, 10);
+        const limitNum = parseInt(limit, 10);
+        const skip = (pageNum - 1) * limitNum;
+        const where = {};
+        if (topicId) {
+            where.topicId = topicId;
+        }
+        if (subjectId) {
+            where.topic = {
+                subjectId: subjectId
+            };
+        }
+        if (search) {
+            where.OR = [
+                {
+                    name: {
+                        contains: search,
+                        mode: 'insensitive'
+                    }
+                },
+                {
+                    topic: {
+                        name: {
+                            contains: search,
+                            mode: 'insensitive'
+                        }
+                    }
+                },
+                {
+                    topic: {
+                        subject: {
+                            name: {
+                                contains: search,
+                                mode: 'insensitive'
+                            }
+                        }
+                    }
+                }
+            ];
+        }
+        const [totalItems, subtopics] = await Promise.all([
+            this.prisma.subtopic.count({ where }),
+            this.prisma.subtopic.findMany({
+                where,
+                include: {
+                    topic: {
+                        select: {
+                            id: true,
+                            name: true,
+                            subject: {
+                                select: {
+                                    id: true,
+                                    name: true
+                                }
+                            }
+                        }
+                    }
+                },
+                orderBy: { name: 'asc' },
+                skip,
+                take: limitNum
+            })
+        ]);
+        const totalPages = Math.ceil(totalItems / limitNum);
+        return {
+            subtopics,
+            pagination: {
+                currentPage: pageNum,
+                totalPages,
+                totalItems,
+                itemsPerPage: limitNum
+            }
+        };
     }
     create(body) {
-        return this.prisma.subtopic.create({ data: { topicId: body.topicId, name: body.name, description: body.description || null } });
+        return this.prisma.subtopic.create({
+            data: {
+                topicId: body.topicId,
+                name: body.name,
+                description: body.description || null
+            }
+        });
     }
     update(id, body) {
-        return this.prisma.subtopic.update({ where: { id }, data: { name: body.name, description: body.description } });
+        return this.prisma.subtopic.update({
+            where: { id },
+            data: {
+                name: body.name,
+                description: body.description
+            }
+        });
     }
     remove(id) {
         return this.prisma.subtopic.delete({ where: { id } });
@@ -38,10 +122,14 @@ let AdminSubtopicsController = class AdminSubtopicsController {
 exports.AdminSubtopicsController = AdminSubtopicsController;
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)('topicId')),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('limit')),
+    __param(2, (0, common_1.Query)('search')),
+    __param(3, (0, common_1.Query)('topicId')),
+    __param(4, (0, common_1.Query)('subjectId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Object, Object, String, String, String]),
+    __metadata("design:returntype", Promise)
 ], AdminSubtopicsController.prototype, "list", null);
 __decorate([
     (0, common_1.Post)(),
