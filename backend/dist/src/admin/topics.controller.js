@@ -22,14 +22,74 @@ let AdminTopicsController = class AdminTopicsController {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    list(subjectId) {
-        return this.prisma.topic.findMany({ where: { subjectId: subjectId || undefined }, orderBy: { name: 'asc' } });
+    async list(page = '1', limit = '10', search, subjectId) {
+        const pageNum = parseInt(page, 10);
+        const limitNum = parseInt(limit, 10);
+        const skip = (pageNum - 1) * limitNum;
+        const where = {};
+        if (subjectId) {
+            where.subjectId = subjectId;
+        }
+        if (search) {
+            where.OR = [
+                { name: { contains: search, mode: 'insensitive' } },
+                { subject: { name: { contains: search, mode: 'insensitive' } } }
+            ];
+        }
+        const totalItems = await this.prisma.topic.count({ where });
+        const totalPages = Math.ceil(totalItems / limitNum);
+        const topics = await this.prisma.topic.findMany({
+            where,
+            include: {
+                subject: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
+            },
+            orderBy: { name: 'asc' },
+            skip,
+            take: limitNum
+        });
+        return {
+            topics,
+            pagination: {
+                currentPage: pageNum,
+                totalPages,
+                totalItems,
+                itemsPerPage: limitNum,
+                hasNextPage: pageNum < totalPages,
+                hasPreviousPage: pageNum > 1
+            }
+        };
     }
     create(body) {
-        return this.prisma.topic.create({ data: { subjectId: body.subjectId, name: body.name, description: body.description || null } });
+        return this.prisma.topic.create({
+            data: { subjectId: body.subjectId, name: body.name, description: body.description || null },
+            include: {
+                subject: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
+            }
+        });
     }
     update(id, body) {
-        return this.prisma.topic.update({ where: { id }, data: { name: body.name, description: body.description } });
+        return this.prisma.topic.update({
+            where: { id },
+            data: { name: body.name, description: body.description, subjectId: body.subjectId },
+            include: {
+                subject: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
+            }
+        });
     }
     remove(id) {
         return this.prisma.topic.delete({ where: { id } });
@@ -38,10 +98,13 @@ let AdminTopicsController = class AdminTopicsController {
 exports.AdminTopicsController = AdminTopicsController;
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)('subjectId')),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('limit')),
+    __param(2, (0, common_1.Query)('search')),
+    __param(3, (0, common_1.Query)('subjectId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Object, Object, String, String]),
+    __metadata("design:returntype", Promise)
 ], AdminTopicsController.prototype, "list", null);
 __decorate([
     (0, common_1.Post)(),
