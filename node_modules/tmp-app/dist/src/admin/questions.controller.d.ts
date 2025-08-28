@@ -3,59 +3,69 @@ import { Response } from 'express';
 export declare class AdminQuestionsController {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    list(subjectId?: string, topicId?: string, subtopicId?: string): import(".prisma/client").Prisma.PrismaPromise<({
-        subject: {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            name: string;
-            description: string | null;
-        } | null;
-        topic: {
-            id: string;
-            subjectId: string;
-            createdAt: Date;
-            updatedAt: Date;
-            name: string;
-            description: string | null;
-        } | null;
-        subtopic: {
-            id: string;
-            topicId: string;
-            createdAt: Date;
-            updatedAt: Date;
-            name: string;
-            description: string | null;
-        } | null;
-        tags: ({
-            tag: {
+    list(page?: string, limit?: string, search?: string, subjectId?: string, topicId?: string, subtopicId?: string, difficulty?: string): Promise<{
+        questions: ({
+            subject: {
                 id: string;
+                createdAt: Date;
+                updatedAt: Date;
                 name: string;
-            };
+                description: string | null;
+            } | null;
+            topic: {
+                id: string;
+                subjectId: string;
+                createdAt: Date;
+                updatedAt: Date;
+                name: string;
+                description: string | null;
+            } | null;
+            subtopic: {
+                id: string;
+                topicId: string;
+                createdAt: Date;
+                updatedAt: Date;
+                name: string;
+                description: string | null;
+            } | null;
+            tags: ({
+                tag: {
+                    id: string;
+                    name: string;
+                };
+            } & {
+                questionId: string;
+                tagId: string;
+            })[];
+            options: {
+                id: string;
+                questionId: string;
+                text: string;
+                isCorrect: boolean;
+                order: number;
+            }[];
         } & {
-            questionId: string;
-            tagId: string;
-        })[];
-        options: {
             id: string;
-            questionId: string;
-            text: string;
-            isCorrect: boolean;
-            order: number;
-        }[];
-    } & {
-        id: string;
-        stem: string;
-        explanation: string | null;
-        difficulty: import(".prisma/client").$Enums.Difficulty;
-        yearAppeared: number | null;
-        isPreviousYear: boolean;
-        subjectId: string | null;
-        topicId: string | null;
-        subtopicId: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-    })[]>;
+            stem: string;
+            explanation: string | null;
+            difficulty: import(".prisma/client").$Enums.Difficulty;
+            yearAppeared: number | null;
+            isPreviousYear: boolean;
+            subjectId: string | null;
+            topicId: string | null;
+            subtopicId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+        })[];
+        pagination: {
+            currentPage: number;
+            totalPages: number;
+            totalItems: number;
+            itemsPerPage: number;
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+        };
+    }>;
     findOne(id: string): import(".prisma/client").Prisma.Prisma__QuestionClient<({
         subject: {
             id: string;

@@ -24,13 +24,33 @@ let AdminQuestionsController = class AdminQuestionsController {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    list(subjectId, topicId, subtopicId) {
-        return this.prisma.question.findMany({
-            where: {
-                subjectId: subjectId || undefined,
-                topicId: topicId || undefined,
-                subtopicId: subtopicId || undefined,
-            },
+    async list(page, limit, search, subjectId, topicId, subtopicId, difficulty) {
+        const currentPage = parseInt(page || '1');
+        const itemsPerPage = parseInt(limit || '10');
+        const skip = (currentPage - 1) * itemsPerPage;
+        const where = {};
+        if (subjectId)
+            where.subjectId = subjectId;
+        if (topicId)
+            where.topicId = topicId;
+        if (subtopicId)
+            where.subtopicId = subtopicId;
+        if (difficulty)
+            where.difficulty = difficulty;
+        if (search) {
+            where.OR = [
+                { stem: { contains: search, mode: 'insensitive' } },
+                { explanation: { contains: search, mode: 'insensitive' } },
+                { subject: { name: { contains: search, mode: 'insensitive' } } },
+                { topic: { name: { contains: search, mode: 'insensitive' } } },
+                { subtopic: { name: { contains: search, mode: 'insensitive' } } },
+                { tags: { tag: { name: { contains: search, mode: 'insensitive' } } } }
+            ];
+        }
+        const totalItems = await this.prisma.question.count({ where });
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const questions = await this.prisma.question.findMany({
+            where,
             include: {
                 options: true,
                 tags: { include: { tag: true } },
@@ -39,7 +59,20 @@ let AdminQuestionsController = class AdminQuestionsController {
                 subtopic: true
             },
             orderBy: { createdAt: 'desc' },
+            skip,
+            take: itemsPerPage,
         });
+        return {
+            questions,
+            pagination: {
+                currentPage,
+                totalPages,
+                totalItems,
+                itemsPerPage,
+                hasNextPage: currentPage < totalPages,
+                hasPreviousPage: currentPage > 1
+            }
+        };
     }
     findOne(id) {
         return this.prisma.question.findUnique({
@@ -162,12 +195,16 @@ let AdminQuestionsController = class AdminQuestionsController {
 exports.AdminQuestionsController = AdminQuestionsController;
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)('subjectId')),
-    __param(1, (0, common_1.Query)('topicId')),
-    __param(2, (0, common_1.Query)('subtopicId')),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('limit')),
+    __param(2, (0, common_1.Query)('search')),
+    __param(3, (0, common_1.Query)('subjectId')),
+    __param(4, (0, common_1.Query)('topicId')),
+    __param(5, (0, common_1.Query)('subtopicId')),
+    __param(6, (0, common_1.Query)('difficulty')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, String, String, String, String, String, String]),
+    __metadata("design:returntype", Promise)
 ], AdminQuestionsController.prototype, "list", null);
 __decorate([
     (0, common_1.Get)(':id'),

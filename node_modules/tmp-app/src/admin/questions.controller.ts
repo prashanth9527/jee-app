@@ -14,13 +14,46 @@ export class AdminQuestionsController {
 	constructor(private readonly prisma: PrismaService) {}
 
 	@Get()
-	list(@Query('subjectId') subjectId?: string, @Query('topicId') topicId?: string, @Query('subtopicId') subtopicId?: string) {
-		return this.prisma.question.findMany({
-			where: {
-				subjectId: subjectId || undefined,
-				topicId: topicId || undefined,
-				subtopicId: subtopicId || undefined,
-			},
+	async list(
+		@Query('page') page?: string,
+		@Query('limit') limit?: string,
+		@Query('search') search?: string,
+		@Query('subjectId') subjectId?: string,
+		@Query('topicId') topicId?: string,
+		@Query('subtopicId') subtopicId?: string,
+		@Query('difficulty') difficulty?: string
+	) {
+		const currentPage = parseInt(page || '1');
+		const itemsPerPage = parseInt(limit || '10');
+		const skip = (currentPage - 1) * itemsPerPage;
+
+		// Build where clause
+		const where: any = {};
+		
+		if (subjectId) where.subjectId = subjectId;
+		if (topicId) where.topicId = topicId;
+		if (subtopicId) where.subtopicId = subtopicId;
+		if (difficulty) where.difficulty = difficulty;
+		
+		// Add search functionality
+		if (search) {
+			where.OR = [
+				{ stem: { contains: search, mode: 'insensitive' } },
+				{ explanation: { contains: search, mode: 'insensitive' } },
+				{ subject: { name: { contains: search, mode: 'insensitive' } } },
+				{ topic: { name: { contains: search, mode: 'insensitive' } } },
+				{ subtopic: { name: { contains: search, mode: 'insensitive' } } },
+				{ tags: { tag: { name: { contains: search, mode: 'insensitive' } } } }
+			];
+		}
+
+		// Get total count for pagination
+		const totalItems = await this.prisma.question.count({ where });
+		const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+		// Get questions with pagination
+		const questions = await this.prisma.question.findMany({
+			where,
 			include: { 
 				options: true, 
 				tags: { include: { tag: true } },
@@ -29,7 +62,21 @@ export class AdminQuestionsController {
 				subtopic: true
 			},
 			orderBy: { createdAt: 'desc' },
+			skip,
+			take: itemsPerPage,
 		});
+
+		return {
+			questions,
+			pagination: {
+				currentPage,
+				totalPages,
+				totalItems,
+				itemsPerPage,
+				hasNextPage: currentPage < totalPages,
+				hasPreviousPage: currentPage > 1
+			}
+		};
 	}
 
 	@Get(':id')
