@@ -13,13 +13,14 @@ const subjects_controller_1 = require("./subjects.controller");
 const topics_controller_1 = require("./topics.controller");
 const subtopics_controller_1 = require("./subtopics.controller");
 const tags_controller_1 = require("./tags.controller");
+const questions_controller_1 = require("./questions.controller");
 let AdminModule = class AdminModule {
 };
 exports.AdminModule = AdminModule;
 exports.AdminModule = AdminModule = __decorate([
     (0, common_1.Module)({
         imports: [prisma_module_1.PrismaModule],
-        controllers: [subjects_controller_1.AdminSubjectsController, topics_controller_1.AdminTopicsController, subtopics_controller_1.AdminSubtopicsController, tags_controller_1.AdminTagsController],
+        controllers: [subjects_controller_1.AdminSubjectsController, topics_controller_1.AdminTopicsController, subtopics_controller_1.AdminSubtopicsController, tags_controller_1.AdminTagsController, questions_controller_1.AdminQuestionsController],
     })
 ], AdminModule);
 //# sourceMappingURL=admin.module.js.map

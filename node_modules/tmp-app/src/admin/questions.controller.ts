@@ -21,7 +21,13 @@ export class AdminQuestionsController {
 				topicId: topicId || undefined,
 				subtopicId: subtopicId || undefined,
 			},
-			include: { options: true, tags: { include: { tag: true } } },
+			include: { 
+				options: true, 
+				tags: { include: { tag: true } },
+				subject: true,
+				topic: true,
+				subtopic: true
+			},
 			orderBy: { createdAt: 'desc' },
 		});
 	}

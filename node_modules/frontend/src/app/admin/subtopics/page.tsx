@@ -69,6 +69,10 @@ export default function SubtopicsPage() {
 	const [editDescription, setEditDescription] = useState('');
 	const [editTopicId, setEditTopicId] = useState('');
 	
+	// Add form specific states
+	const [addFormSubject, setAddFormSubject] = useState('');
+	const [addFormTopics, setAddFormTopics] = useState<Topic[]>([]);
+	
 	// Toggle states
 	const [showAddForm, setShowAddForm] = useState(false);
 
@@ -117,6 +121,15 @@ export default function SubtopicsPage() {
 	useEffect(() => { 
 		refresh(); 
 	}, []);
+
+	// Debug effect to log topics data
+	useEffect(() => {
+		console.log('Topics data updated:', topics);
+		console.log('Topics array check:', Array.isArray(topics));
+		if (Array.isArray(topics) && topics.length > 0) {
+			console.log('First topic structure:', topics[0]);
+		}
+	}, [topics]);
 
 	// Handle page change
 	const handlePageChange = (page: number) => {
@@ -175,6 +188,8 @@ export default function SubtopicsPage() {
 			setName('');
 			setDescription('');
 			setTopicId('');
+			setAddFormSubject('');
+			setAddFormTopics([]);
 			
 			Swal.fire({
 				title: 'Success!',
@@ -379,7 +394,7 @@ export default function SubtopicsPage() {
 						</div>
 						
 						{showAddForm && (
-							<div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+							<div className="grid grid-cols-1 md:grid-cols-6 gap-3">
 								<input 
 									className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium placeholder-gray-500" 
 									placeholder="Enter subtopic name" 
@@ -396,8 +411,17 @@ export default function SubtopicsPage() {
 								/>
 								<select 
 									className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
-									value={selectedSubject}
-									onChange={e => setSelectedSubject(e.target.value)}
+									value={addFormSubject}
+									onChange={e => {
+										const selectedSubjectId = e.target.value;
+										console.log('Selected subject:', selectedSubjectId);
+										console.log('Available topics:', topics);
+										const filteredTopics = topics.filter(topic => topic.subject.id === selectedSubjectId);
+										console.log('Filtered topics:', filteredTopics);
+										setAddFormSubject(selectedSubjectId);
+										setAddFormTopics(filteredTopics);
+										setTopicId(''); // Reset topic when subject changes
+									}}
 								>
 									<option value="">Select Subject</option>
 									{Array.isArray(subjects) && subjects.map(subject => (
@@ -410,14 +434,17 @@ export default function SubtopicsPage() {
 									className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
 									value={topicId}
 									onChange={e => setTopicId(e.target.value)}
-									disabled={!selectedSubject}
+									disabled={!addFormSubject}
 								>
 									<option value="">Select Topic</option>
-									{Array.isArray(filteredTopics) && filteredTopics.map(topic => (
-										<option key={topic.id} value={topic.id}>
-											{topic.name}
-										</option>
-									))}
+									{(() => {
+										console.log('Rendering topics dropdown with:', addFormTopics);
+										return Array.isArray(addFormTopics) && addFormTopics.map(topic => (
+											<option key={topic.id} value={topic.id}>
+												{topic.name}
+											</option>
+										));
+									})()}
 								</select>
 								<button 
 									className={`px-4 py-2 rounded-md text-white font-medium transition-colors ${
@@ -436,6 +463,18 @@ export default function SubtopicsPage() {
 									) : (
 										'Add Subtopic'
 									)}
+								</button>
+								<button 
+									className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+									onClick={() => {
+										setName('');
+										setDescription('');
+										setTopicId('');
+										setAddFormSubject('');
+										setAddFormTopics([]);
+									}}
+								>
+									Clear Form
 								</button>
 							</div>
 						)}
