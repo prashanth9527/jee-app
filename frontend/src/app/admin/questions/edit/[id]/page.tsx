@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import api from '@/lib/api';
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -75,6 +75,11 @@ interface Subtopic {
 	};
 }
 
+interface Tag {
+	id: string;
+	name: string;
+}
+
 export default function EditQuestionPage() {
 	const router = useRouter();
 	const params = useParams();
@@ -85,6 +90,7 @@ export default function EditQuestionPage() {
 	const [subjects, setSubjects] = useState<Subject[]>([]);
 	const [topics, setTopics] = useState<Topic[]>([]);
 	const [subtopics, setSubtopics] = useState<Subtopic[]>([]);
+	const [allTags, setAllTags] = useState<Tag[]>([]);
 	
 	// Loading states
 	const [loading, setLoading] = useState(true);
@@ -101,14 +107,25 @@ export default function EditQuestionPage() {
 	const [subtopicId, setSubtopicId] = useState('');
 	const [options, setOptions] = useState<{ text: string; isCorrect: boolean }[]>([]);
 	const [tagNames, setTagNames] = useState('');
+	const [tagSuggestions, setTagSuggestions] = useState<string[]>([]);
+	const [showTagSuggestions, setShowTagSuggestions] = useState(false);
+	
+	// Form validation states
+	const [errors, setErrors] = useState<{[key: string]: string}>({});
+	const [formProgress, setFormProgress] = useState(0);
+	
+	// Auto-save states
+	const [lastSaved, setLastSaved] = useState<Date | null>(null);
+	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
 	const loadData = async () => {
 		try {
-			const [questionResponse, subjectsResponse, topicsResponse, subtopicsResponse] = await Promise.all([
+			const [questionResponse, subjectsResponse, topicsResponse, subtopicsResponse, tagsResponse] = await Promise.all([
 				api.get(`/admin/questions/${questionId}`),
 				api.get('/admin/subjects'),
 				api.get('/admin/topics?limit=1000'),
-				api.get('/admin/subtopics?limit=1000')
+				api.get('/admin/subtopics?limit=1000'),
+				api.get('/admin/tags?limit=1000')
 			]);
 			
 			const questionData = questionResponse.data;
@@ -116,6 +133,7 @@ export default function EditQuestionPage() {
 			setSubjects(subjectsResponse.data);
 			setTopics(topicsResponse.data.topics || topicsResponse.data);
 			setSubtopics(subtopicsResponse.data.subtopics || subtopicsResponse.data);
+			setAllTags(tagsResponse.data.tags || tagsResponse.data);
 			
 			// Populate form with question data
 			setStem(questionData.stem);
@@ -149,11 +167,179 @@ export default function EditQuestionPage() {
 		}
 	}, [questionId]);
 
+	// Auto-save functionality
+	useEffect(() => {
+		if (hasUnsavedChanges && !loading) {
+			const timer = setTimeout(() => {
+				saveDraft();
+			}, 3000); // Auto-save after 3 seconds of inactivity
+
+			return () => clearTimeout(timer);
+		}
+	}, [stem, explanation, difficulty, yearAppeared, isPreviousYear, subjectId, topicId, subtopicId, options, tagNames, hasUnsavedChanges, loading]);
+
+	// Calculate form progress
+	useEffect(() => {
+		let progress = 0;
+		if (stem.trim()) progress += 25;
+		if (subjectId) progress += 20;
+		if (options.every(opt => opt.text.trim())) progress += 25;
+		if (options.some(opt => opt.isCorrect)) progress += 15;
+		if (difficulty) progress += 10;
+		if (explanation.trim() || yearAppeared || tagNames.trim()) progress += 5;
+		
+		setFormProgress(Math.min(progress, 100));
+	}, [stem, subjectId, options, difficulty, explanation, yearAppeared, tagNames]);
+
+	// Validate form
+	const validateForm = useCallback(() => {
+		const newErrors: {[key: string]: string} = {};
+		
+		if (!stem.trim()) {
+			newErrors.stem = 'Question stem is required';
+		} else if (stem.trim().length < 10) {
+			newErrors.stem = 'Question stem must be at least 10 characters';
+		}
+		
+		if (!subjectId) {
+			newErrors.subject = 'Subject is required';
+		}
+		
+		if (options.some(opt => !opt.text.trim())) {
+			newErrors.options = 'All options must be filled';
+		}
+		
+		if (!options.some(opt => opt.isCorrect)) {
+			newErrors.correctAnswer = 'Please select a correct answer';
+		}
+		
+		if (yearAppeared && (parseInt(yearAppeared) < 1900 || parseInt(yearAppeared) > new Date().getFullYear())) {
+			newErrors.yearAppeared = 'Year must be between 1900 and current year';
+		}
+		
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
+	}, [stem, subjectId, options, yearAppeared]);
+
+	// Tag suggestions
+	const handleTagInput = (value: string) => {
+		setTagNames(value);
+		setHasUnsavedChanges(true);
+		
+		const lastTag = value.split(',').pop()?.trim() || '';
+		if (lastTag.length > 0) {
+			const suggestions = allTags
+				.map(tag => tag.name)
+				.filter(tag => tag.toLowerCase().includes(lastTag.toLowerCase()))
+				.slice(0, 5);
+			setTagSuggestions(suggestions);
+			setShowTagSuggestions(suggestions.length > 0);
+		} else {
+			setShowTagSuggestions(false);
+		}
+	};
+
+	const addTag = (tag: string) => {
+		const tags = tagNames.split(',').map(t => t.trim()).filter(t => t.length > 0);
+		if (!tags.includes(tag)) {
+			tags.push(tag);
+			setTagNames(tags.join(', '));
+		}
+		setShowTagSuggestions(false);
+		setHasUnsavedChanges(true);
+	};
+
+	// Option management
+	const addOption = () => {
+		if (options.length < 6) {
+			setOptions([...options, { text: '', isCorrect: false }]);
+			setHasUnsavedChanges(true);
+		}
+	};
+
+	const removeOption = (index: number) => {
+		if (options.length > 2) {
+			const newOptions = options.filter((_, i) => i !== index);
+			// Ensure at least one option is marked as correct
+			if (!newOptions.some(opt => opt.isCorrect)) {
+				newOptions[0].isCorrect = true;
+			}
+			setOptions(newOptions);
+			setHasUnsavedChanges(true);
+		}
+	};
+
+	const updateOption = (index: number, field: 'text' | 'isCorrect', value: string | boolean) => {
+		const newOptions = [...options];
+		if (field === 'isCorrect') {
+			// If setting this option as correct, uncheck others
+			newOptions.forEach((opt, i) => {
+				opt.isCorrect = i === index;
+			});
+		} else {
+			newOptions[index][field] = value as string;
+		}
+		setOptions(newOptions);
+		setHasUnsavedChanges(true);
+	};
+
+	// Auto-save draft
+	const saveDraft = () => {
+		const draft = {
+			questionId,
+			stem,
+			explanation,
+			difficulty,
+			yearAppeared,
+			isPreviousYear,
+			subjectId,
+			topicId,
+			subtopicId,
+			options,
+			tagNames,
+			timestamp: new Date().toISOString()
+		};
+		localStorage.setItem(`questionDraft_${questionId}`, JSON.stringify(draft));
+		setLastSaved(new Date());
+		setHasUnsavedChanges(false);
+	};
+
+	// Load draft
+	const loadDraft = () => {
+		const draft = localStorage.getItem(`questionDraft_${questionId}`);
+		if (draft) {
+			try {
+				const parsed = JSON.parse(draft);
+				setStem(parsed.stem || '');
+				setExplanation(parsed.explanation || '');
+				setDifficulty(parsed.difficulty || 'MEDIUM');
+				setYearAppeared(parsed.yearAppeared || '');
+				setIsPreviousYear(parsed.isPreviousYear || false);
+				setSubjectId(parsed.subjectId || '');
+				setTopicId(parsed.topicId || '');
+				setSubtopicId(parsed.subtopicId || '');
+				setOptions(parsed.options || []);
+				setTagNames(parsed.tagNames || '');
+				setHasUnsavedChanges(false);
+				
+				Swal.fire({
+					title: 'Draft Loaded!',
+					text: 'Your previous draft has been restored.',
+					icon: 'info',
+					timer: 2000,
+					showConfirmButton: false
+				});
+			} catch (error) {
+				console.error('Error loading draft:', error);
+			}
+		}
+	};
+
 	const save = async () => {
-		if (!stem.trim() || !subjectId || options.some(opt => !opt.text.trim())) {
+		if (!validateForm()) {
 			Swal.fire({
 				title: 'Validation Error',
-				text: 'Please fill in all required fields including question stem, subject, and all options.',
+				text: 'Please fix the errors in the form before submitting.',
 				icon: 'warning',
 				confirmButtonText: 'OK'
 			});
@@ -177,6 +363,9 @@ export default function EditQuestionPage() {
 				tagNames: tagNamesArray.length > 0 ? tagNamesArray : undefined
 			});
 			
+			// Clear draft after successful save
+			localStorage.removeItem(`questionDraft_${questionId}`);
+			
 			Swal.fire({
 				title: 'Success!',
 				text: 'Question has been updated successfully.',
@@ -185,7 +374,6 @@ export default function EditQuestionPage() {
 				showConfirmButton: false
 			});
 			
-			// Redirect to questions listing page
 			setTimeout(() => {
 				router.push('/admin/questions');
 			}, 2000);
@@ -214,8 +402,31 @@ export default function EditQuestionPage() {
 			setSubtopicId(question.subtopicId || '');
 			setOptions(question.options.map(opt => ({ text: opt.text, isCorrect: opt.isCorrect })));
 			setTagNames(question.tags.map(t => t.tag.name).join(', '));
+			setErrors({});
+			setHasUnsavedChanges(false);
 		}
 	};
+
+	// Keyboard shortcuts
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.ctrlKey || e.metaKey) {
+				switch (e.key) {
+					case 's':
+						e.preventDefault();
+						if (!saving) save();
+						break;
+					case 'Enter':
+						e.preventDefault();
+						if (e.shiftKey) save();
+						break;
+				}
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, [saving]);
 
 	if (loading) {
 		return (
@@ -256,6 +467,19 @@ export default function EditQuestionPage() {
 							<p className="text-gray-600">Update the question details and options</p>
 						</div>
 						<div className="flex items-center space-x-4">
+							{hasUnsavedChanges && (
+								<div className="text-sm text-orange-600 flex items-center">
+									<svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+									</svg>
+									Unsaved changes
+								</div>
+							)}
+							{lastSaved && (
+								<div className="text-sm text-green-600">
+									Last saved: {lastSaved.toLocaleTimeString()}
+								</div>
+							)}
 							<button 
 								onClick={() => router.push('/admin/questions')}
 								className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors flex items-center"
@@ -268,29 +492,68 @@ export default function EditQuestionPage() {
 						</div>
 					</div>
 
+					{/* Progress Bar */}
+					<div className="bg-white rounded-lg shadow p-4">
+						<div className="flex items-center justify-between mb-2">
+							<span className="text-sm font-medium text-gray-700">Form Progress</span>
+							<span className="text-sm text-gray-500">{formProgress}%</span>
+						</div>
+						<div className="w-full bg-gray-200 rounded-full h-2">
+							<div 
+								className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+								style={{ width: `${formProgress}%` }}
+							></div>
+						</div>
+					</div>
+
 					{/* Question Form */}
 					<div className="bg-white rounded-lg shadow p-6">
 						<div className="space-y-6">
 							{/* Basic Question Details */}
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-2">Question Stem *</label>
+									<label className="block text-sm font-medium text-gray-700 mb-2">
+										Question Stem * 
+										<span className="text-xs text-gray-500 ml-2">({stem.length}/1000)</span>
+									</label>
 									<textarea 
-										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-										rows={4}
-										placeholder="Enter the question text..." 
+										className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium ${
+											errors.stem ? 'border-red-300' : 'border-gray-300'
+										}`}
+										rows={6}
+										placeholder="Enter the question text... (Supports basic formatting)" 
 										value={stem} 
-										onChange={e => setStem(e.target.value)}
+										onChange={e => {
+											setStem(e.target.value);
+											setHasUnsavedChanges(true);
+											if (errors.stem) {
+												setErrors(prev => ({ ...prev, stem: '' }));
+											}
+										}}
+										maxLength={1000}
 									/>
+									{errors.stem && (
+										<p className="mt-1 text-sm text-red-600">{errors.stem}</p>
+									)}
+									<div className="mt-2 text-xs text-gray-500">
+										💡 Tip: Use **bold**, *italic*, and `code` for better formatting
+									</div>
 								</div>
 								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-2">Explanation (Optional)</label>
+									<label className="block text-sm font-medium text-gray-700 mb-2">
+										Explanation (Optional)
+										<span className="text-xs text-gray-500 ml-2">({explanation.length}/500)</span>
+									</label>
 									<textarea 
 										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-										rows={4}
-										placeholder="Enter explanation for the answer..." 
+										rows={6}
+										placeholder="Enter detailed explanation for the answer..." 
 										value={explanation} 
-										onChange={e => setExplanation(e.target.value)}
+										onChange={e => {
+											setExplanation(e.target.value);
+											setHasUnsavedChanges(true);
+										}}
+										maxLength={500}
 									/>
 								</div>
 							</div>
@@ -300,12 +563,18 @@ export default function EditQuestionPage() {
 								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
 									<select 
-										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+										className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium ${
+											errors.subject ? 'border-red-300' : 'border-gray-300'
+										}`}
 										value={subjectId}
 										onChange={e => {
 											setSubjectId(e.target.value);
 											setTopicId('');
 											setSubtopicId('');
+											setHasUnsavedChanges(true);
+											if (errors.subject) {
+												setErrors(prev => ({ ...prev, subject: '' }));
+											}
 										}}
 									>
 										<option value="">Select Subject</option>
@@ -315,6 +584,9 @@ export default function EditQuestionPage() {
 											</option>
 										))}
 									</select>
+									{errors.subject && (
+										<p className="mt-1 text-sm text-red-600">{errors.subject}</p>
+									)}
 								</div>
 								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-2">Topic</label>
@@ -324,6 +596,7 @@ export default function EditQuestionPage() {
 										onChange={e => {
 											setTopicId(e.target.value);
 											setSubtopicId('');
+											setHasUnsavedChanges(true);
 										}}
 										disabled={!subjectId}
 									>
@@ -343,7 +616,10 @@ export default function EditQuestionPage() {
 									<select 
 										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
 										value={subtopicId}
-										onChange={e => setSubtopicId(e.target.value)}
+										onChange={e => {
+											setSubtopicId(e.target.value);
+											setHasUnsavedChanges(true);
+										}}
 										disabled={!topicId}
 									>
 										<option value="">Select Subtopic</option>
@@ -362,7 +638,10 @@ export default function EditQuestionPage() {
 									<select 
 										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
 										value={difficulty}
-										onChange={e => setDifficulty(e.target.value as 'EASY' | 'MEDIUM' | 'HARD')}
+										onChange={e => {
+											setDifficulty(e.target.value as 'EASY' | 'MEDIUM' | 'HARD');
+											setHasUnsavedChanges(true);
+										}}
 									>
 										<option value="EASY">Easy</option>
 										<option value="MEDIUM">Medium</option>
@@ -377,11 +656,24 @@ export default function EditQuestionPage() {
 									<label className="block text-sm font-medium text-gray-700 mb-2">Year Appeared</label>
 									<input 
 										type="number"
-										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
+										className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium ${
+											errors.yearAppeared ? 'border-red-300' : 'border-gray-300'
+										}`}
 										placeholder="e.g., 2023" 
 										value={yearAppeared} 
-										onChange={e => setYearAppeared(e.target.value)}
+										onChange={e => {
+											setYearAppeared(e.target.value);
+											setHasUnsavedChanges(true);
+											if (errors.yearAppeared) {
+												setErrors(prev => ({ ...prev, yearAppeared: '' }));
+											}
+										}}
+										min="1900"
+										max={new Date().getFullYear()}
 									/>
+									{errors.yearAppeared && (
+										<p className="mt-1 text-sm text-red-600">{errors.yearAppeared}</p>
+									)}
 								</div>
 								<div className="flex items-center">
 									<label className="flex items-center">
@@ -389,25 +681,60 @@ export default function EditQuestionPage() {
 											type="checkbox"
 											className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
 											checked={isPreviousYear}
-											onChange={e => setIsPreviousYear(e.target.checked)}
+											onChange={e => {
+												setIsPreviousYear(e.target.checked);
+												setHasUnsavedChanges(true);
+											}}
 										/>
 										<span className="ml-2 text-sm text-gray-700">Previous Year Question</span>
 									</label>
 								</div>
-								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-2">Tags (comma-separated)</label>
+								<div className="relative">
+									<label className="block text-sm font-medium text-gray-700 mb-2">Tags</label>
 									<input 
 										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
 										placeholder="e.g., previous year, important, formula" 
 										value={tagNames} 
-										onChange={e => setTagNames(e.target.value)}
+										onChange={e => handleTagInput(e.target.value)}
 									/>
+									{showTagSuggestions && (
+										<div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+											{tagSuggestions.map((tag, index) => (
+												<button
+													key={index}
+													className="w-full px-3 py-2 text-left hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+													onClick={() => addTag(tag)}
+												>
+													{tag}
+												</button>
+											))}
+										</div>
+									)}
 								</div>
 							</div>
 
 							{/* Options */}
 							<div>
-								<label className="block text-sm font-medium text-gray-700 mb-2">Options *</label>
+								<div className="flex items-center justify-between mb-2">
+									<label className="block text-sm font-medium text-gray-700">Options *</label>
+									<div className="flex items-center space-x-2">
+										<button
+											type="button"
+											onClick={addOption}
+											disabled={options.length >= 6}
+											className="px-2 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+										>
+											+ Add Option
+										</button>
+										<span className="text-xs text-gray-500">{options.length}/6</span>
+									</div>
+								</div>
+								{errors.options && (
+									<p className="mb-2 text-sm text-red-600">{errors.options}</p>
+								)}
+								{errors.correctAnswer && (
+									<p className="mb-2 text-sm text-red-600">{errors.correctAnswer}</p>
+								)}
 								<div className="space-y-3">
 									{options.map((option, index) => (
 										<div key={index} className="flex items-center space-x-3">
@@ -415,27 +742,34 @@ export default function EditQuestionPage() {
 												type="radio"
 												name="correctOption"
 												checked={option.isCorrect}
-												onChange={() => {
-													const newOptions = options.map((opt, i) => ({
-														...opt,
-														isCorrect: i === index
-													}));
-													setOptions(newOptions);
-												}}
+												onChange={() => updateOption(index, 'isCorrect', true)}
 												className="text-blue-600 focus:ring-blue-500"
 											/>
 											<input 
 												className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
 												placeholder={`Option ${index + 1}`} 
 												value={option.text} 
-												onChange={e => {
-													const newOptions = [...options];
-													newOptions[index] = { ...newOptions[index], text: e.target.value };
-													setOptions(newOptions);
-												}}
+												onChange={e => updateOption(index, 'text', e.target.value)}
 											/>
 											{option.isCorrect && (
-												<span className="text-green-600 text-sm font-medium">Correct Answer</span>
+												<span className="text-green-600 text-sm font-medium flex items-center">
+													<svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+													</svg>
+													Correct
+												</span>
+											)}
+											{options.length > 2 && (
+												<button
+													type="button"
+													onClick={() => removeOption(index)}
+													className="p-1 text-red-600 hover:text-red-800"
+													title="Remove option"
+												>
+													<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+													</svg>
+												</button>
 											)}
 										</div>
 									))}
@@ -463,6 +797,18 @@ export default function EditQuestionPage() {
 									)}
 								</button>
 								<button 
+									className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+									onClick={saveDraft}
+								>
+									Save Draft
+								</button>
+								<button 
+									className="px-6 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+									onClick={loadDraft}
+								>
+									Load Draft
+								</button>
+								<button 
 									className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
 									onClick={resetForm}
 								>
@@ -474,6 +820,11 @@ export default function EditQuestionPage() {
 								>
 									Cancel
 								</button>
+							</div>
+
+							{/* Keyboard Shortcuts Help */}
+							<div className="text-xs text-gray-500 border-t border-gray-200 pt-4">
+								💡 Keyboard shortcuts: Ctrl+S (Save), Ctrl+Shift+Enter (Save & Continue)
 							</div>
 						</div>
 					</div>
