@@ -41,6 +41,18 @@ let AdminQuestionsController = class AdminQuestionsController {
             orderBy: { createdAt: 'desc' },
         });
     }
+    findOne(id) {
+        return this.prisma.question.findUnique({
+            where: { id },
+            include: {
+                options: true,
+                tags: { include: { tag: true } },
+                subject: true,
+                topic: true,
+                subtopic: true
+            }
+        });
+    }
     async create(body) {
         const question = await this.prisma.question.create({ data: {
                 stem: body.stem,
@@ -157,6 +169,13 @@ __decorate([
     __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", void 0)
 ], AdminQuestionsController.prototype, "list", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AdminQuestionsController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

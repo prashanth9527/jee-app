@@ -32,6 +32,20 @@ export class AdminQuestionsController {
 		});
 	}
 
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.prisma.question.findUnique({
+			where: { id },
+			include: { 
+				options: true, 
+				tags: { include: { tag: true } },
+				subject: true,
+				topic: true,
+				subtopic: true
+			}
+		});
+	}
+
 	@Post()
 	async create(@Body() body: { stem: string; explanation?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; topicId?: string; subtopicId?: string; options: { text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
 		const question = await this.prisma.question.create({ data: {

@@ -56,6 +56,59 @@ export declare class AdminQuestionsController {
         createdAt: Date;
         updatedAt: Date;
     })[]>;
+    findOne(id: string): import(".prisma/client").Prisma.Prisma__QuestionClient<({
+        subject: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string | null;
+        } | null;
+        topic: {
+            id: string;
+            subjectId: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string | null;
+        } | null;
+        subtopic: {
+            id: string;
+            topicId: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string | null;
+        } | null;
+        tags: ({
+            tag: {
+                id: string;
+                name: string;
+            };
+        } & {
+            questionId: string;
+            tagId: string;
+        })[];
+        options: {
+            id: string;
+            questionId: string;
+            text: string;
+            isCorrect: boolean;
+            order: number;
+        }[];
+    } & {
+        id: string;
+        stem: string;
+        explanation: string | null;
+        difficulty: import(".prisma/client").$Enums.Difficulty;
+        yearAppeared: number | null;
+        isPreviousYear: boolean;
+        subjectId: string | null;
+        topicId: string | null;
+        subtopicId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }) | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     create(body: {
         stem: string;
         explanation?: string;

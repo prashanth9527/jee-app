@@ -86,8 +86,6 @@ export default function QuestionsPage() {
 	
 	// Loading states
 	const [loading, setLoading] = useState(true);
-	const [adding, setAdding] = useState(false);
-	const [editing, setEditing] = useState<string | null>(null);
 	
 	// Pagination states
 	const [currentPage, setCurrentPage] = useState(1);
@@ -102,37 +100,11 @@ export default function QuestionsPage() {
 	const [selectedSubtopic, setSelectedSubtopic] = useState('');
 	const [selectedDifficulty, setSelectedDifficulty] = useState('');
 	
-	// Form states
-	const [stem, setStem] = useState('');
-	const [explanation, setExplanation] = useState('');
-	const [difficulty, setDifficulty] = useState<'EASY' | 'MEDIUM' | 'HARD'>('MEDIUM');
-	const [yearAppeared, setYearAppeared] = useState('');
-	const [isPreviousYear, setIsPreviousYear] = useState(false);
-	const [subjectId, setSubjectId] = useState('');
-	const [topicId, setTopicId] = useState('');
-	const [subtopicId, setSubtopicId] = useState('');
-	const [options, setOptions] = useState<{ text: string; isCorrect: boolean }[]>([
-		{ text: '', isCorrect: true },
-		{ text: '', isCorrect: false },
-		{ text: '', isCorrect: false },
-		{ text: '', isCorrect: false }
-	]);
-	const [tagNames, setTagNames] = useState('');
+
 	
-	// Edit form states
-	const [editStem, setEditStem] = useState('');
-	const [editExplanation, setEditExplanation] = useState('');
-	const [editDifficulty, setEditDifficulty] = useState<'EASY' | 'MEDIUM' | 'HARD'>('MEDIUM');
-	const [editYearAppeared, setEditYearAppeared] = useState('');
-	const [editIsPreviousYear, setEditIsPreviousYear] = useState(false);
-	const [editSubjectId, setEditSubjectId] = useState('');
-	const [editTopicId, setEditTopicId] = useState('');
-	const [editSubtopicId, setEditSubtopicId] = useState('');
-	const [editOptions, setEditOptions] = useState<{ text: string; isCorrect: boolean }[]>([]);
-	const [editTagNames, setEditTagNames] = useState('');
+
 	
-	// Toggle states
-	const [showAddForm, setShowAddForm] = useState(false);
+
 
 	const refresh = async (page = 1) => {
 		try {
@@ -149,14 +121,14 @@ export default function QuestionsPage() {
 			const [questionsResponse, subjectsResponse, topicsResponse, subtopicsResponse] = await Promise.all([
 				api.get(`/admin/questions?${params}`),
 				api.get('/admin/subjects'),
-				api.get('/admin/topics'),
-				api.get('/admin/subtopics')
+				api.get('/admin/topics?limit=1000'), // Get all topics
+				api.get('/admin/subtopics?limit=1000') // Get all subtopics
 			]);
 			
 			setQuestions(questionsResponse.data.questions || questionsResponse.data);
 			setSubjects(subjectsResponse.data);
-			setTopics(topicsResponse.data);
-			setSubtopics(subtopicsResponse.data);
+			setTopics(topicsResponse.data.topics || topicsResponse.data);
+			setSubtopics(subtopicsResponse.data.subtopics || subtopicsResponse.data);
 			
 			// Handle pagination data
 			if (questionsResponse.data.pagination) {
@@ -241,153 +213,9 @@ export default function QuestionsPage() {
 		? subtopics.filter(subtopic => subtopic.topic.id === selectedTopic)
 		: Array.isArray(subtopics) ? subtopics : [];
 
-	const add = async () => {
-		if (!stem.trim() || !subjectId || options.some(opt => !opt.text.trim())) {
-			Swal.fire({
-				title: 'Validation Error',
-				text: 'Please fill in all required fields including question stem, subject, and all options.',
-				icon: 'warning',
-				confirmButtonText: 'OK'
-			});
-			return;
-		}
-		
-		setAdding(true);
-		try {
-			const tagNamesArray = tagNames.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
-			
-			await api.post('/admin/questions', { 
-				stem: stem.trim(),
-				explanation: explanation.trim() || undefined,
-				difficulty,
-				yearAppeared: yearAppeared ? parseInt(yearAppeared) : undefined,
-				isPreviousYear,
-				subjectId,
-				topicId: topicId || undefined,
-				subtopicId: subtopicId || undefined,
-				options,
-				tagNames: tagNamesArray.length > 0 ? tagNamesArray : undefined
-			});
-			
-			// Reset form
-			setStem('');
-			setExplanation('');
-			setDifficulty('MEDIUM');
-			setYearAppeared('');
-			setIsPreviousYear(false);
-			setSubjectId('');
-			setTopicId('');
-			setSubtopicId('');
-			setOptions([
-				{ text: '', isCorrect: true },
-				{ text: '', isCorrect: false },
-				{ text: '', isCorrect: false },
-				{ text: '', isCorrect: false }
-			]);
-			setTagNames('');
-			
-			Swal.fire({
-				title: 'Success!',
-				text: 'Question has been added successfully.',
-				icon: 'success',
-				timer: 2000,
-				showConfirmButton: false
-			});
-			
-			refresh(currentPage);
-			
-			// Hide the form after successful addition
-			setTimeout(() => {
-				setShowAddForm(false);
-			}, 2000);
-		} catch (error: any) {
-			console.error('Error adding question:', error);
-			Swal.fire({
-				title: 'Error!',
-				text: error.response?.data?.message || 'Failed to add the question. Please try again.',
-				icon: 'error',
-				confirmButtonText: 'OK'
-			});
-		} finally {
-			setAdding(false);
-		}
-	};
 
-	const startEdit = (question: Question) => {
-		setEditing(question.id);
-		setEditStem(question.stem);
-		setEditExplanation(question.explanation || '');
-		setEditDifficulty(question.difficulty);
-		setEditYearAppeared(question.yearAppeared?.toString() || '');
-		setEditIsPreviousYear(question.isPreviousYear);
-		setEditSubjectId(question.subjectId || '');
-		setEditTopicId(question.topicId || '');
-		setEditSubtopicId(question.subtopicId || '');
-		setEditOptions(question.options.map(opt => ({ text: opt.text, isCorrect: opt.isCorrect })));
-		setEditTagNames(question.tags.map(t => t.tag.name).join(', '));
-	};
 
-	const cancelEdit = () => {
-		setEditing(null);
-		setEditStem('');
-		setEditExplanation('');
-		setEditDifficulty('MEDIUM');
-		setEditYearAppeared('');
-		setEditIsPreviousYear(false);
-		setEditSubjectId('');
-		setEditTopicId('');
-		setEditSubtopicId('');
-		setEditOptions([]);
-		setEditTagNames('');
-	};
 
-	const update = async (questionId: string) => {
-		if (!editStem.trim() || !editSubjectId || editOptions.some(opt => !opt.text.trim())) {
-			Swal.fire({
-				title: 'Validation Error',
-				text: 'Please fill in all required fields including question stem, subject, and all options.',
-				icon: 'warning',
-				confirmButtonText: 'OK'
-			});
-			return;
-		}
-
-		try {
-			const tagNamesArray = editTagNames.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
-			
-			await api.put(`/admin/questions/${questionId}`, { 
-				stem: editStem.trim(),
-				explanation: editExplanation.trim() || undefined,
-				difficulty: editDifficulty,
-				yearAppeared: editYearAppeared ? parseInt(editYearAppeared) : undefined,
-				isPreviousYear: editIsPreviousYear,
-				subjectId: editSubjectId,
-				topicId: editTopicId || undefined,
-				subtopicId: editSubtopicId || undefined,
-				options: editOptions,
-				tagNames: tagNamesArray.length > 0 ? tagNamesArray : undefined
-			});
-			
-			Swal.fire({
-				title: 'Success!',
-				text: 'Question has been updated successfully.',
-				icon: 'success',
-				timer: 2000,
-				showConfirmButton: false
-			});
-			
-			cancelEdit();
-			refresh(currentPage);
-		} catch (error: any) {
-			console.error('Error updating question:', error);
-			Swal.fire({
-				title: 'Error!',
-				text: error.response?.data?.message || 'Failed to update the question. Please try again.',
-				icon: 'error',
-				confirmButtonText: 'OK'
-			});
-		}
-	};
 
 	const deleteQuestion = async (id: string, questionStem: string) => {
 		const result = await Swal.fire({
@@ -509,24 +337,13 @@ export default function QuestionsPage() {
 						</div>
 						<div className="flex items-center space-x-4">
 							<button 
-								onClick={() => setShowAddForm(!showAddForm)}
+								onClick={() => router.push('/admin/questions/add')}
 								className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center"
 							>
-								{showAddForm ? (
-									<>
-										<svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-										</svg>
-										Cancel
-									</>
-								) : (
-									<>
-										<svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-										</svg>
-										Add
-									</>
-								)}
+								<svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+								</svg>
+								Add Question
 							</button>
 							<div className="text-sm text-gray-500">
 								{totalItems} question{totalItems !== 1 ? 's' : ''} • Page {currentPage} of {totalPages}
@@ -534,231 +351,7 @@ export default function QuestionsPage() {
 						</div>
 					</div>
 
-					{/* Add New Question Section */}
-					<div className="bg-white rounded-lg shadow p-6">
-						<div className="flex items-center justify-between mb-4">
-							<h2 className="text-lg font-semibold text-gray-900">Add New Question</h2>
-						</div>
-						
-						{showAddForm && (
-							<div className="space-y-6">
-								{/* Basic Question Details */}
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">Question Stem *</label>
-										<textarea 
-											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-											rows={4}
-											placeholder="Enter the question text..." 
-											value={stem} 
-											onChange={e => setStem(e.target.value)}
-										/>
-									</div>
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">Explanation (Optional)</label>
-										<textarea 
-											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-											rows={4}
-											placeholder="Enter explanation for the answer..." 
-											value={explanation} 
-											onChange={e => setExplanation(e.target.value)}
-										/>
-									</div>
-								</div>
 
-								{/* Question Metadata */}
-								<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
-										<select 
-											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
-											value={subjectId}
-											onChange={e => {
-												setSubjectId(e.target.value);
-												setTopicId('');
-												setSubtopicId('');
-											}}
-										>
-											<option value="">Select Subject</option>
-											{Array.isArray(subjects) && subjects.map(subject => (
-												<option key={subject.id} value={subject.id}>
-													{subject.name}
-												</option>
-											))}
-										</select>
-									</div>
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">Topic</label>
-										<select 
-											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
-											value={topicId}
-											onChange={e => {
-												setTopicId(e.target.value);
-												setSubtopicId('');
-											}}
-											disabled={!subjectId}
-										>
-											<option value="">Select Topic</option>
-											{Array.isArray(topics) && topics
-												.filter(topic => topic.subject.id === subjectId)
-												.map(topic => (
-													<option key={topic.id} value={topic.id}>
-														{topic.name}
-													</option>
-												))
-											}
-										</select>
-									</div>
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">Subtopic</label>
-										<select 
-											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
-											value={subtopicId}
-											onChange={e => setSubtopicId(e.target.value)}
-											disabled={!topicId}
-										>
-											<option value="">Select Subtopic</option>
-											{Array.isArray(subtopics) && subtopics
-												.filter(subtopic => subtopic.topic.id === topicId)
-												.map(subtopic => (
-													<option key={subtopic.id} value={subtopic.id}>
-														{subtopic.name}
-													</option>
-												))
-											}
-										</select>
-									</div>
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">Difficulty</label>
-										<select 
-											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
-											value={difficulty}
-											onChange={e => setDifficulty(e.target.value as 'EASY' | 'MEDIUM' | 'HARD')}
-										>
-											<option value="EASY">Easy</option>
-											<option value="MEDIUM">Medium</option>
-											<option value="HARD">Hard</option>
-										</select>
-									</div>
-								</div>
-
-								{/* Additional Metadata */}
-								<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">Year Appeared</label>
-										<input 
-											type="number"
-											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-											placeholder="e.g., 2023" 
-											value={yearAppeared} 
-											onChange={e => setYearAppeared(e.target.value)}
-										/>
-									</div>
-									<div className="flex items-center">
-										<label className="flex items-center">
-											<input 
-												type="checkbox"
-												className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-												checked={isPreviousYear}
-												onChange={e => setIsPreviousYear(e.target.checked)}
-											/>
-											<span className="ml-2 text-sm text-gray-700">Previous Year Question</span>
-										</label>
-									</div>
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">Tags (comma-separated)</label>
-										<input 
-											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-											placeholder="e.g., previous year, important, formula" 
-											value={tagNames} 
-											onChange={e => setTagNames(e.target.value)}
-										/>
-									</div>
-								</div>
-
-								{/* Options */}
-								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-2">Options *</label>
-									<div className="space-y-3">
-										{options.map((option, index) => (
-											<div key={index} className="flex items-center space-x-3">
-												<input 
-													type="radio"
-													name="correctOption"
-													checked={option.isCorrect}
-													onChange={() => {
-														const newOptions = options.map((opt, i) => ({
-															...opt,
-															isCorrect: i === index
-														}));
-														setOptions(newOptions);
-													}}
-													className="text-blue-600 focus:ring-blue-500"
-												/>
-												<input 
-													className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-													placeholder={`Option ${index + 1}`} 
-													value={option.text} 
-													onChange={e => {
-														const newOptions = [...options];
-														newOptions[index] = { ...newOptions[index], text: e.target.value };
-														setOptions(newOptions);
-													}}
-												/>
-												{option.isCorrect && (
-													<span className="text-green-600 text-sm font-medium">Correct Answer</span>
-												)}
-											</div>
-										))}
-									</div>
-								</div>
-
-								{/* Action Buttons */}
-								<div className="flex space-x-3">
-									<button 
-										className={`px-6 py-2 rounded-md text-white font-medium transition-colors ${
-											adding || !stem.trim() || !subjectId || options.some(opt => !opt.text.trim())
-												? 'bg-gray-400 cursor-not-allowed' 
-												: 'bg-blue-600 hover:bg-blue-700'
-										}`}
-										onClick={add}
-										disabled={adding || !stem.trim() || !subjectId || options.some(opt => !opt.text.trim())}
-									>
-										{adding ? (
-											<div className="flex items-center">
-												<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-												Adding...
-											</div>
-										) : (
-											'Add Question'
-										)}
-									</button>
-									<button 
-										className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
-										onClick={() => {
-											setStem('');
-											setExplanation('');
-											setDifficulty('MEDIUM');
-											setYearAppeared('');
-											setIsPreviousYear(false);
-											setSubjectId('');
-											setTopicId('');
-											setSubtopicId('');
-											setOptions([
-												{ text: '', isCorrect: true },
-												{ text: '', isCorrect: false },
-												{ text: '', isCorrect: false },
-												{ text: '', isCorrect: false }
-											]);
-											setTagNames('');
-										}}
-									>
-										Clear Form
-									</button>
-								</div>
-							</div>
-						)}
-					</div>
 
 					{/* Filters Section */}
 					<div className="bg-white rounded-lg shadow p-6">
@@ -874,201 +467,7 @@ export default function QuestionsPage() {
 							<div className="divide-y divide-gray-200">
 								{questions.map((question) => (
 									<div key={question.id} className="p-6 hover:bg-gray-50 transition-colors">
-										{editing === question.id ? (
-											<div className="space-y-6">
-												{/* Basic Question Details */}
-												<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-													<div>
-														<label className="block text-sm font-medium text-gray-700 mb-2">Question Stem *</label>
-														<textarea 
-															className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-															rows={4}
-															placeholder="Enter the question text..." 
-															value={editStem} 
-															onChange={e => setEditStem(e.target.value)}
-														/>
-													</div>
-													<div>
-														<label className="block text-sm font-medium text-gray-700 mb-2">Explanation (Optional)</label>
-														<textarea 
-															className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-															rows={4}
-															placeholder="Enter explanation for the answer..." 
-															value={editExplanation} 
-															onChange={e => setEditExplanation(e.target.value)}
-														/>
-													</div>
-												</div>
-
-												{/* Question Metadata */}
-												<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-													<div>
-														<label className="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
-														<select 
-															className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
-															value={editSubjectId}
-															onChange={e => {
-																setEditSubjectId(e.target.value);
-																setEditTopicId('');
-																setEditSubtopicId('');
-															}}
-														>
-															<option value="">Select Subject</option>
-															{Array.isArray(subjects) && subjects.map(subject => (
-																<option key={subject.id} value={subject.id}>
-																	{subject.name}
-																</option>
-															))}
-														</select>
-													</div>
-													<div>
-														<label className="block text-sm font-medium text-gray-700 mb-2">Topic</label>
-														<select 
-															className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
-															value={editTopicId}
-															onChange={e => {
-																setEditTopicId(e.target.value);
-																setEditSubtopicId('');
-															}}
-															disabled={!editSubjectId}
-														>
-															<option value="">Select Topic</option>
-															{Array.isArray(topics) && topics
-																.filter(topic => topic.subject.id === editSubjectId)
-																.map(topic => (
-																	<option key={topic.id} value={topic.id}>
-																		{topic.name}
-																	</option>
-																))
-															}
-														</select>
-													</div>
-													<div>
-														<label className="block text-sm font-medium text-gray-700 mb-2">Subtopic</label>
-														<select 
-															className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
-															value={editSubtopicId}
-															onChange={e => setEditSubtopicId(e.target.value)}
-															disabled={!editTopicId}
-														>
-															<option value="">Select Subtopic</option>
-															{Array.isArray(subtopics) && subtopics
-																.filter(subtopic => subtopic.topic.id === editTopicId)
-																.map(subtopic => (
-																	<option key={subtopic.id} value={subtopic.id}>
-																		{subtopic.name}
-																	</option>
-																))
-															}
-														</select>
-													</div>
-													<div>
-														<label className="block text-sm font-medium text-gray-700 mb-2">Difficulty</label>
-														<select 
-															className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
-															value={editDifficulty}
-															onChange={e => setEditDifficulty(e.target.value as 'EASY' | 'MEDIUM' | 'HARD')}
-														>
-															<option value="EASY">Easy</option>
-															<option value="MEDIUM">Medium</option>
-															<option value="HARD">Hard</option>
-														</select>
-													</div>
-												</div>
-
-												{/* Additional Metadata */}
-												<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-													<div>
-														<label className="block text-sm font-medium text-gray-700 mb-2">Year Appeared</label>
-														<input 
-															type="number"
-															className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-															placeholder="e.g., 2023" 
-															value={editYearAppeared} 
-															onChange={e => setEditYearAppeared(e.target.value)}
-														/>
-													</div>
-													<div className="flex items-center">
-														<label className="flex items-center">
-															<input 
-																type="checkbox"
-																className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-																checked={editIsPreviousYear}
-																onChange={e => setEditIsPreviousYear(e.target.checked)}
-															/>
-															<span className="ml-2 text-sm text-gray-700">Previous Year Question</span>
-														</label>
-													</div>
-													<div>
-														<label className="block text-sm font-medium text-gray-700 mb-2">Tags (comma-separated)</label>
-														<input 
-															className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-															placeholder="e.g., previous year, important, formula" 
-															value={editTagNames} 
-															onChange={e => setEditTagNames(e.target.value)}
-														/>
-													</div>
-												</div>
-
-												{/* Options */}
-												<div>
-													<label className="block text-sm font-medium text-gray-700 mb-2">Options *</label>
-													<div className="space-y-3">
-														{editOptions.map((option, index) => (
-															<div key={index} className="flex items-center space-x-3">
-																<input 
-																	type="radio"
-																	name="editCorrectOption"
-																	checked={option.isCorrect}
-																	onChange={() => {
-																		const newOptions = editOptions.map((opt, i) => ({
-																			...opt,
-																			isCorrect: i === index
-																		}));
-																		setEditOptions(newOptions);
-																	}}
-																	className="text-blue-600 focus:ring-blue-500"
-																/>
-																<input 
-																	className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-																	placeholder={`Option ${index + 1}`} 
-																	value={option.text} 
-																	onChange={e => {
-																		const newOptions = [...editOptions];
-																		newOptions[index] = { ...newOptions[index], text: e.target.value };
-																		setEditOptions(newOptions);
-																	}}
-																/>
-																{option.isCorrect && (
-																	<span className="text-green-600 text-sm font-medium">Correct Answer</span>
-																)}
-															</div>
-														))}
-													</div>
-												</div>
-
-												{/* Action Buttons */}
-												<div className="flex space-x-3">
-													<button 
-														className={`px-6 py-2 rounded-md text-white font-medium transition-colors ${
-															!editStem.trim() || !editSubjectId || editOptions.some(opt => !opt.text.trim())
-																? 'bg-gray-400 cursor-not-allowed' 
-																: 'bg-green-600 hover:bg-green-700'
-														}`}
-														onClick={() => update(question.id)}
-														disabled={!editStem.trim() || !editSubjectId || editOptions.some(opt => !opt.text.trim())}
-													>
-														Save Changes
-													</button>
-													<button 
-														className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
-														onClick={cancelEdit}
-													>
-														Cancel
-													</button>
-												</div>
-											</div>
-										) : (
+										<div className="space-y-3">
 											<div className="space-y-3">
 												<div className="flex items-start justify-between">
 													<div className="flex-1">
@@ -1137,7 +536,7 @@ export default function QuestionsPage() {
 													</div>
 													<div className="flex space-x-2 ml-4">
 														<button 
-															onClick={() => startEdit(question)}
+															onClick={() => router.push(`/admin/questions/edit/${question.id}`)}
 															className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
 															title="Edit question"
 														>
@@ -1157,7 +556,7 @@ export default function QuestionsPage() {
 													</div>
 												</div>
 											</div>
-										)}
+										</div>
 									</div>
 								))}
 							</div>
