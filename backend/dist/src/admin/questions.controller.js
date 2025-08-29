@@ -20,6 +20,7 @@ const roles_guard_1 = require("../auth/roles.guard");
 const roles_decorator_1 = require("../auth/roles.decorator");
 const platform_express_1 = require("@nestjs/platform-express");
 const fast_csv_1 = require("fast-csv");
+const stream_1 = require("stream");
 let AdminQuestionsController = class AdminQuestionsController {
     constructor(prisma) {
         this.prisma = prisma;
@@ -133,6 +134,23 @@ let AdminQuestionsController = class AdminQuestionsController {
     remove(id) {
         return this.prisma.question.delete({ where: { id } });
     }
+    async bulkDelete(body) {
+        if (!body.ids || !Array.isArray(body.ids) || body.ids.length === 0) {
+            throw new common_1.BadRequestException('Question IDs array is required');
+        }
+        const result = await this.prisma.question.deleteMany({
+            where: {
+                id: {
+                    in: body.ids
+                }
+            }
+        });
+        return {
+            ok: true,
+            deletedCount: result.count,
+            message: `Successfully deleted ${result.count} question${result.count !== 1 ? 's' : ''}`
+        };
+    }
     async importCsv(file) {
         if (!file || !file.buffer)
             throw new common_1.BadRequestException('File is required');
@@ -236,6 +254,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminQuestionsController.prototype, "remove", null);
 __decorate([
+    (0, common_1.Delete)('bulk'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AdminQuestionsController.prototype, "bulkDelete", null);
+__decorate([
     (0, common_1.Post)('import'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
     __param(0, (0, common_1.UploadedFile)()),
@@ -257,13 +282,11 @@ exports.AdminQuestionsController = AdminQuestionsController = __decorate([
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], AdminQuestionsController);
 function parseString(content, rows, cb) {
-    Promise.resolve().then(() => require('stream')).then(({ Readable }) => {
-        const stream = Readable.from([content]);
-        stream
-            .pipe((0, fast_csv_1.parse)({ headers: true }))
-            .on('error', (error) => cb(error))
-            .on('data', (row) => rows.push(row))
-            .on('end', () => cb());
-    });
+    const stream = stream_1.Readable.from([content]);
+    stream
+        .pipe((0, fast_csv_1.parse)({ headers: true }))
+        .on('error', (error) => cb(error))
+        .on('data', (row) => rows.push(row))
+        .on('end', () => cb());
 }
 //# sourceMappingURL=questions.controller.js.map

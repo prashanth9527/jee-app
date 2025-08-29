@@ -6,6 +6,7 @@ import { Roles } from '../auth/roles.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { parse } from 'fast-csv';
+import { Readable } from 'stream';
 
 @Controller('admin/questions')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -146,6 +147,27 @@ export class AdminQuestionsController {
 		return this.prisma.question.delete({ where: { id } });
 	}
 
+	@Delete('bulk')
+	async bulkDelete(@Body() body: { ids: string[] }) {
+		if (!body.ids || !Array.isArray(body.ids) || body.ids.length === 0) {
+			throw new BadRequestException('Question IDs array is required');
+		}
+		
+		const result = await this.prisma.question.deleteMany({
+			where: {
+				id: {
+					in: body.ids
+				}
+			}
+		});
+		
+		return { 
+			ok: true, 
+			deletedCount: result.count,
+			message: `Successfully deleted ${result.count} question${result.count !== 1 ? 's' : ''}`
+		};
+	}
+
 	@Post('import')
 	@UseInterceptors(FileInterceptor('file'))
 	async importCsv(@UploadedFile() file?: Express.Multer.File) {
@@ -204,12 +226,10 @@ export class AdminQuestionsController {
 }
 
 function parseString(content: string, rows: any[], cb: (err?: Error) => void) {
-	import('stream').then(({ Readable }) => {
-		const stream = Readable.from([content]);
-		stream
-			.pipe(parse({ headers: true }))
-			.on('error', (error) => cb(error as any))
-			.on('data', (row) => rows.push(row))
-			.on('end', () => cb());
-	});
+	const stream = Readable.from([content]);
+	stream
+		.pipe(parse({ headers: true }))
+		.on('error', (error) => cb(error as any))
+		.on('data', (row) => rows.push(row))
+		.on('end', () => cb());
 } 

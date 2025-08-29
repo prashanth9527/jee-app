@@ -100,6 +100,10 @@ export default function QuestionsPage() {
 	const [selectedSubtopic, setSelectedSubtopic] = useState('');
 	const [selectedDifficulty, setSelectedDifficulty] = useState('');
 	
+	// Bulk selection states
+	const [selectedQuestions, setSelectedQuestions] = useState<string[]>([]);
+	const [selectAll, setSelectAll] = useState(false);
+	
 
 	
 
@@ -159,12 +163,16 @@ export default function QuestionsPage() {
 	// Handle page change
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
+		setSelectedQuestions([]);
+		setSelectAll(false);
 		refresh(page);
 	};
 
 	// Handle search
 	const handleSearch = () => {
 		setCurrentPage(1);
+		setSelectedQuestions([]);
+		setSelectAll(false);
 		refresh(1);
 	};
 
@@ -174,6 +182,8 @@ export default function QuestionsPage() {
 		setSelectedTopic('');
 		setSelectedSubtopic('');
 		setCurrentPage(1);
+		setSelectedQuestions([]);
+		setSelectAll(false);
 		refresh(1);
 	};
 
@@ -182,6 +192,8 @@ export default function QuestionsPage() {
 		setSelectedTopic(topicId);
 		setSelectedSubtopic('');
 		setCurrentPage(1);
+		setSelectedQuestions([]);
+		setSelectAll(false);
 		refresh(1);
 	};
 
@@ -189,6 +201,8 @@ export default function QuestionsPage() {
 	const handleSubtopicChange = (subtopicId: string) => {
 		setSelectedSubtopic(subtopicId);
 		setCurrentPage(1);
+		setSelectedQuestions([]);
+		setSelectAll(false);
 		refresh(1);
 	};
 
@@ -200,6 +214,8 @@ export default function QuestionsPage() {
 		setSelectedSubtopic('');
 		setSelectedDifficulty('');
 		setCurrentPage(1);
+		setSelectedQuestions([]);
+		setSelectAll(false);
 		refresh(1);
 	};
 
@@ -264,8 +280,145 @@ export default function QuestionsPage() {
 		}
 	};
 
-	const exportCsv = () => {
-		window.location.href = (process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001') + '/admin/questions/export';
+	const bulkDeleteQuestions = async () => {
+		if (selectedQuestions.length === 0) {
+			Swal.fire({
+				title: 'No Questions Selected',
+				text: 'Please select questions to delete.',
+				icon: 'info',
+				confirmButtonText: 'OK'
+			});
+			return;
+		}
+
+		const result = await Swal.fire({
+			title: 'Are you sure?',
+			text: `You are about to delete ${selectedQuestions.length} question${selectedQuestions.length !== 1 ? 's' : ''}. This action cannot be undone!`,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete them!',
+			cancelButtonText: 'Cancel',
+			reverseButtons: true
+		});
+
+		if (result.isConfirmed) {
+			try {
+				Swal.fire({
+					title: 'Deleting...',
+					text: 'Please wait while we delete the questions.',
+					allowOutsideClick: false,
+					didOpen: () => {
+						Swal.showLoading();
+					}
+				});
+
+				const response = await api.delete('/admin/questions/bulk', { data: { ids: selectedQuestions } });
+				
+				Swal.fire({
+					title: 'Deleted!',
+					text: response.data.message || 'Questions have been deleted successfully.',
+					icon: 'success',
+					timer: 2000,
+					showConfirmButton: false
+				});
+
+				setSelectedQuestions([]);
+				setSelectAll(false);
+				refresh(currentPage);
+			} catch (error: any) {
+				console.error('Error deleting questions:', error);
+				Swal.fire({
+					title: 'Error!',
+					text: error.response?.data?.message || 'Failed to delete the questions. Please try again.',
+					icon: 'error',
+					confirmButtonText: 'OK'
+				});
+			}
+		}
+	};
+
+	const handleSelectAll = () => {
+		if (selectAll) {
+			setSelectedQuestions([]);
+			setSelectAll(false);
+		} else {
+			setSelectedQuestions(questions.map(q => q.id));
+			setSelectAll(true);
+		}
+	};
+
+	const handleSelectQuestion = (questionId: string) => {
+		setSelectedQuestions(prev => {
+			if (prev.includes(questionId)) {
+				const newSelection = prev.filter(id => id !== questionId);
+				setSelectAll(false);
+				return newSelection;
+			} else {
+				const newSelection = [...prev, questionId];
+				setSelectAll(newSelection.length === questions.length);
+				return newSelection;
+			}
+		});
+	};
+
+	const exportCsv = async () => {
+		try {
+			// Get the token from localStorage
+			const token = localStorage.getItem('token');
+			if (!token) {
+				Swal.fire({
+					title: 'Authentication Error',
+					text: 'Please log in again to export questions.',
+					icon: 'error',
+					confirmButtonText: 'OK'
+				});
+				return;
+			}
+
+			// Create a temporary link element
+			const link = document.createElement('a');
+			link.href = (process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001') + '/admin/questions/export';
+			link.download = 'questions.csv';
+			
+			// Add authorization header to the request
+			const response = await fetch(link.href, {
+				headers: {
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			// Get the blob and create download
+			const blob = await response.blob();
+			const url = window.URL.createObjectURL(blob);
+			link.href = url;
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			window.URL.revokeObjectURL(url);
+
+			Swal.fire({
+				title: 'Success!',
+				text: 'Questions exported successfully.',
+				icon: 'success',
+				timer: 2000,
+				showConfirmButton: false
+			});
+		} catch (error: any) {
+			console.error('Error exporting questions:', error);
+			Swal.fire({
+				title: 'Error!',
+				text: error.message || 'Failed to export questions. Please try again.',
+				icon: 'error',
+				confirmButtonText: 'OK'
+			});
+		}
 	};
 
 	const onImport = async (e: any) => {
@@ -406,6 +559,8 @@ export default function QuestionsPage() {
 								onChange={e => {
 									setSelectedDifficulty(e.target.value);
 									setCurrentPage(1);
+									setSelectedQuestions([]);
+									setSelectAll(false);
 									refresh(1);
 								}}
 							>
@@ -447,8 +602,29 @@ export default function QuestionsPage() {
 
 					{/* All Questions Section */}
 					<div className="bg-white rounded-lg shadow">
-						<div className="px-6 py-4 border-b border-gray-200">
-							<h2 className="text-lg font-semibold text-gray-900">All Questions</h2>
+						<div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+							<div className="flex items-center space-x-3">
+								<input
+									type="checkbox"
+									checked={selectAll}
+									onChange={handleSelectAll}
+									className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+								/>
+								<h2 className="text-lg font-semibold text-gray-900">All Questions</h2>
+							</div>
+							{selectedQuestions.length > 0 && (
+								<div className="flex items-center space-x-3">
+									<span className="text-sm text-gray-600">
+										{selectedQuestions.length} question{selectedQuestions.length !== 1 ? 's' : ''} selected
+									</span>
+									<button 
+										onClick={bulkDeleteQuestions}
+										className="px-3 py-1 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 transition-colors"
+									>
+										Delete Selected
+									</button>
+								</div>
+							)}
 						</div>
 						
 						{questions.length === 0 ? (
@@ -468,8 +644,14 @@ export default function QuestionsPage() {
 								{questions.map((question) => (
 									<div key={question.id} className="p-6 hover:bg-gray-50 transition-colors">
 										<div className="space-y-3">
-											<div className="space-y-3">
-												<div className="flex items-start justify-between">
+											<div className="flex items-start justify-between">
+												<div className="flex items-start space-x-3 flex-1">
+													<input
+														type="checkbox"
+														checked={selectedQuestions.includes(question.id)}
+														onChange={() => handleSelectQuestion(question.id)}
+														className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+													/>
 													<div className="flex-1">
 														<h3 className="text-lg font-medium text-gray-900 mb-2">{question.stem}</h3>
 														{question.explanation && (
@@ -534,26 +716,26 @@ export default function QuestionsPage() {
 															</div>
 														)}
 													</div>
-													<div className="flex space-x-2 ml-4">
-														<button 
-															onClick={() => router.push(`/admin/questions/edit/${question.id}`)}
-															className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
-															title="Edit question"
-														>
-															<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-																<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-															</svg>
-														</button>
-														<button 
-															onClick={() => deleteQuestion(question.id, question.stem)}
-															className="p-2 text-gray-400 hover:text-red-600 transition-colors"
-															title="Delete question"
-														>
-															<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-																<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-															</svg>
-														</button>
-													</div>
+												</div>
+												<div className="flex space-x-2 ml-4">
+													<button 
+														onClick={() => router.push(`/admin/questions/edit/${question.id}`)}
+														className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+														title="Edit question"
+													>
+														<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+															<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+														</svg>
+													</button>
+													<button 
+														onClick={() => deleteQuestion(question.id, question.stem)}
+														className="p-2 text-gray-400 hover:text-red-600 transition-colors"
+														title="Delete question"
+													>
+														<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+															<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+														</svg>
+													</button>
 												</div>
 											</div>
 										</div>
