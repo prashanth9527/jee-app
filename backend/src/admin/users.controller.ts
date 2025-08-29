@@ -128,8 +128,7 @@ export class AdminUsersController {
 							}
 						}
 					},
-					take: 10,
-					orderBy: { createdAt: 'desc' }
+					take: 10
 				}
 			}
 		});
@@ -328,7 +327,7 @@ export class AdminUsersController {
 			}
 		});
 
-		// Get users with most exam submissions
+		// Get users with most exam submissions (simplified query)
 		const topExamUsers = await this.prisma.user.findMany({
 			take: 5,
 			select: {

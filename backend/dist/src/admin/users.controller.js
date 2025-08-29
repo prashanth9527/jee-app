@@ -119,8 +119,7 @@ let AdminUsersController = class AdminUsersController {
                             }
                         }
                     },
-                    take: 10,
-                    orderBy: { createdAt: 'desc' }
+                    take: 10
                 }
             }
         });

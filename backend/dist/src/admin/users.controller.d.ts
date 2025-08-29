@@ -15,10 +15,10 @@ export declare class AdminUsersController {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                startedAt: Date;
-                userId: string;
                 status: import(".prisma/client").$Enums.SubscriptionStatus;
+                userId: string;
                 planId: string;
+                startedAt: Date;
                 endsAt: Date | null;
                 stripeCustomerId: string | null;
                 stripeSubId: string | null;
@@ -52,6 +52,47 @@ export declare class AdminUsersController {
         };
     }>;
     findUser(id: string): Promise<{
+        subscriptions: ({
+            plan: {
+                id: string;
+                name: string;
+                priceCents: number;
+                currency: string;
+                interval: import(".prisma/client").$Enums.PlanInterval;
+            };
+        } & {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: import(".prisma/client").$Enums.SubscriptionStatus;
+            userId: string;
+            planId: string;
+            startedAt: Date;
+            endsAt: Date | null;
+            stripeCustomerId: string | null;
+            stripeSubId: string | null;
+            stripeStatus: string | null;
+        })[];
+        examSubmissions: ({
+            examPaper: {
+                id: string;
+                title: string;
+            };
+        } & {
+            id: string;
+            userId: string;
+            startedAt: Date;
+            examPaperId: string;
+            submittedAt: Date | null;
+            totalQuestions: number;
+            correctCount: number;
+            scorePercent: number | null;
+        })[];
+        _count: {
+            subscriptions: number;
+            examSubmissions: number;
+        };
+    } & {
         id: string;
         email: string;
         phone: string | null;
