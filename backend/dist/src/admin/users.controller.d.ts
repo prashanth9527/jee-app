@@ -15,10 +15,10 @@ export declare class AdminUsersController {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                status: import(".prisma/client").$Enums.SubscriptionStatus;
-                userId: string;
-                planId: string;
                 startedAt: Date;
+                userId: string;
+                status: import(".prisma/client").$Enums.SubscriptionStatus;
+                planId: string;
                 endsAt: Date | null;
                 stripeCustomerId: string | null;
                 stripeSubId: string | null;
@@ -64,10 +64,10 @@ export declare class AdminUsersController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            status: import(".prisma/client").$Enums.SubscriptionStatus;
-            userId: string;
-            planId: string;
             startedAt: Date;
+            userId: string;
+            status: import(".prisma/client").$Enums.SubscriptionStatus;
+            planId: string;
             endsAt: Date | null;
             stripeCustomerId: string | null;
             stripeSubId: string | null;
@@ -80,13 +80,13 @@ export declare class AdminUsersController {
             };
         } & {
             id: string;
-            userId: string;
             startedAt: Date;
-            examPaperId: string;
             submittedAt: Date | null;
             totalQuestions: number;
             correctCount: number;
             scorePercent: number | null;
+            userId: string;
+            examPaperId: string;
         })[];
         _count: {
             subscriptions: number;

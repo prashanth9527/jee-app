@@ -17,13 +17,14 @@ const questions_controller_1 = require("./questions.controller");
 const exam_papers_controller_1 = require("./exam-papers.controller");
 const subscriptions_controller_1 = require("./subscriptions.controller");
 const users_controller_1 = require("./users.controller");
+const analytics_controller_1 = require("./analytics.controller");
 let AdminModule = class AdminModule {
 };
 exports.AdminModule = AdminModule;
 exports.AdminModule = AdminModule = __decorate([
     (0, common_1.Module)({
         imports: [prisma_module_1.PrismaModule],
-        controllers: [subjects_controller_1.AdminSubjectsController, topics_controller_1.AdminTopicsController, subtopics_controller_1.AdminSubtopicsController, tags_controller_1.AdminTagsController, questions_controller_1.AdminQuestionsController, exam_papers_controller_1.AdminExamPapersController, subscriptions_controller_1.AdminSubscriptionsController, users_controller_1.AdminUsersController],
+        controllers: [subjects_controller_1.AdminSubjectsController, topics_controller_1.AdminTopicsController, subtopics_controller_1.AdminSubtopicsController, tags_controller_1.AdminTagsController, questions_controller_1.AdminQuestionsController, exam_papers_controller_1.AdminExamPapersController, subscriptions_controller_1.AdminSubscriptionsController, users_controller_1.AdminUsersController, analytics_controller_1.AdminAnalyticsController],
     })
 ], AdminModule);
 //# sourceMappingURL=admin.module.js.map
