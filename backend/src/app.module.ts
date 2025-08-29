@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
+import { StudentModule } from './student/student.module';
 import { ExamsModule } from './exams/exams.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 
@@ -15,6 +16,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 		UsersModule,
 		AuthModule,
 		AdminModule,
+		StudentModule,
 		ExamsModule,
 		SubscriptionsModule,
 	],

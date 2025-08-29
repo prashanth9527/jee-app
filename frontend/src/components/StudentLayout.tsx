@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
+import api from '@/lib/api';
 
 interface StudentLayoutProps {
   children: React.ReactNode;
@@ -20,20 +22,20 @@ const menuItems = [
     ),
   },
   {
+    name: 'Exam Papers',
+    href: '/student/exam-papers',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    ),
+  },
+  {
     name: 'Practice Tests',
     href: '/student/practice',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-  },
-  {
-    name: 'My Exams',
-    href: '/student/exams',
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>
     ),
   },
@@ -68,11 +70,27 @@ const menuItems = [
 
 export default function StudentLayout({ children }: StudentLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<any>(null);
   const pathname = usePathname();
+  const { logout, user } = useAuth();
+
+  useEffect(() => {
+    const fetchSubscriptionStatus = async () => {
+      if (user?.role === 'STUDENT') {
+        try {
+          const response = await api.get('/student/subscription-status');
+          setSubscriptionStatus(response.data.subscriptionStatus);
+        } catch (error) {
+          console.error('Error fetching subscription status:', error);
+        }
+      }
+    };
+
+    fetchSubscriptionStatus();
+  }, [user]);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
+    logout();
   };
 
   return (
@@ -142,12 +160,28 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
             </button>
             <div className="flex items-center space-x-4">
               <div className="text-sm text-gray-600">
-                Welcome, Student
+                Welcome, {user?.fullName || 'Student'}
               </div>
               <div className="flex items-center space-x-2">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                  Free Trial
-                </span>
+                {subscriptionStatus && (
+                  <>
+                    {subscriptionStatus.isOnTrial && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        Trial - {subscriptionStatus.daysRemaining} days
+                      </span>
+                    )}
+                    {subscriptionStatus.hasValidSubscription && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        Active - {subscriptionStatus.daysRemaining} days
+                      </span>
+                    )}
+                    {subscriptionStatus.needsSubscription && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                        Expired
+                      </span>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>

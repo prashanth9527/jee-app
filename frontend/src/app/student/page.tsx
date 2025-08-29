@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import SubscriptionGuard from '@/components/SubscriptionGuard';
 import api from '@/lib/api';
 
 interface StudentStats {
@@ -20,32 +21,27 @@ interface StudentStats {
 
 export default function StudentDashboard() {
   const [stats, setStats] = useState<StudentStats | null>(null);
+  const [recentExams, setRecentExams] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const fetchData = async () => {
       try {
-        // Mock data for now
-        const mockStats: StudentStats = {
-          totalExamsTaken: 12,
-          averageScore: 78.5,
-          totalQuestionsAnswered: 240,
-          correctAnswers: 188,
-          subjects: [
-            { name: 'Physics', score: 82, questions: 80 },
-            { name: 'Chemistry', score: 75, questions: 80 },
-            { name: 'Mathematics', score: 78, questions: 80 },
-          ],
-        };
-        setStats(mockStats);
+        const [statsResponse, historyResponse] = await Promise.all([
+          api.get('/student/dashboard'),
+          api.get('/student/exam-history?limit=3')
+        ]);
+        
+        setStats(statsResponse.data);
+        setRecentExams(historyResponse.data.submissions || []);
       } catch (error) {
-        console.error('Error fetching stats:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchStats();
+    fetchData();
   }, []);
 
   const practiceOptions = [
@@ -72,29 +68,7 @@ export default function StudentDashboard() {
     },
   ];
 
-  const recentExams = [
-    {
-      id: 1,
-      title: 'Physics Practice Test - Mechanics',
-      score: 85,
-      date: '2 hours ago',
-      status: 'completed',
-    },
-    {
-      id: 2,
-      title: 'Chemistry Practice Test - Physical Chemistry',
-      score: 72,
-      date: '1 day ago',
-      status: 'completed',
-    },
-    {
-      id: 3,
-      title: 'Mathematics Practice Test - Algebra',
-      score: 78,
-      date: '2 days ago',
-      status: 'completed',
-    },
-  ];
+
 
   if (loading) {
     return (
@@ -109,7 +83,8 @@ export default function StudentDashboard() {
 
   return (
     <ProtectedRoute requiredRole="STUDENT">
-      <StudentLayout>
+      <SubscriptionGuard>
+        <StudentLayout>
         <div className="space-y-6">
           {/* Header */}
           <div>
@@ -236,24 +211,30 @@ export default function StudentDashboard() {
             <div className="bg-white rounded-lg shadow p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Exams</h3>
               <div className="space-y-4">
-                {recentExams.map((exam) => (
-                  <div key={exam.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-900">{exam.title}</h4>
-                      <p className="text-xs text-gray-500">{exam.date}</p>
+                {recentExams.length > 0 ? (
+                  recentExams.map((exam) => (
+                    <div key={exam.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900">{exam.examPaper.title}</h4>
+                        <p className="text-xs text-gray-500">
+                          {new Date(exam.submittedAt).toLocaleDateString()} • {exam.examPaper.subjects?.join(', ')}
+                        </p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm font-medium text-gray-900">{Math.round(exam.scorePercent || 0)}%</span>
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          Completed
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm font-medium text-gray-900">{exam.score}%</span>
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        Completed
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-500 text-center py-4">No exams taken yet</p>
+                )}
               </div>
               <div className="mt-4">
                 <Link
-                  href="/student/exams"
+                  href="/student/exam-papers"
                   className="text-blue-600 hover:text-blue-700 text-sm font-medium"
                 >
                   View all exams →
@@ -267,7 +248,7 @@ export default function StudentDashboard() {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Link
-                href="/student/practice"
+                href="/student/exam-papers"
                 className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -296,7 +277,8 @@ export default function StudentDashboard() {
             </div>
           </div>
         </div>
-      </StudentLayout>
+        </StudentLayout>
+      </SubscriptionGuard>
     </ProtectedRoute>
   );
 } 

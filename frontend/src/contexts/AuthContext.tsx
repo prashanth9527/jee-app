@@ -28,13 +28,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = (token: string, userData: User) => {
     console.log('AuthContext login called with:', { token: token.substring(0, 20) + '...', userData }); // Debug log
     localStorage.setItem('token', token);
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     setUser(userData);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    delete api.defaults.headers.common['Authorization'];
     setUser(null);
     window.location.href = '/login';
   };
@@ -42,7 +40,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const handleTokenExpiration = () => {
     console.log('Handling token expiration...');
     localStorage.removeItem('token');
-    delete api.defaults.headers.common['Authorization'];
     setUser(null);
     
     // Show user-friendly message
@@ -83,19 +80,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const { data } = await api.get('/auth/me');
+      console.log('Auth check successful:', data); // Debug log
       setUser(data);
     } catch (error: any) {
       console.error('Auth check failed:', error);
       
       // Check if it's a 401 error (token expired)
       if (error.response?.status === 401) {
+        console.log('Token expired, handling expiration...'); // Debug log
         handleTokenExpiration();
       } else {
         // For other errors, just clear the token and redirect
+        console.log('Other error, clearing token...'); // Debug log
         localStorage.removeItem('token');
-        delete api.defaults.headers.common['Authorization'];
         setUser(null);
         
         if (typeof window !== 'undefined') {
@@ -114,20 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     checkAuth();
   }, []);
 
-  // Add visibility change listener to check token when user returns to tab
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden && user) {
-        // User has returned to the tab, check if token is still valid
-        checkAuth();
-      }
-    };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [user, checkAuth]);
 
   return (
     <AuthContext.Provider value={{ user, loading, login, logout, checkAuth, handleTokenExpiration }}>

@@ -29,11 +29,11 @@ export declare class AdminAnalyticsController {
         trialUsers: number;
         topUsers: {
             id: string;
+            email: string;
+            fullName: string;
             _count: {
                 examSubmissions: number;
             };
-            email: string;
-            fullName: string;
         }[];
     }>;
     getExamAnalytics(): Promise<{
@@ -55,20 +55,20 @@ export declare class AdminAnalyticsController {
             };
         } & {
             id: string;
-            userId: string;
             startedAt: Date;
-            scorePercent: number | null;
+            submittedAt: Date | null;
             totalQuestions: number;
             correctCount: number;
+            scorePercent: number | null;
+            userId: string;
             examPaperId: string;
-            submittedAt: Date | null;
         })[];
         examPaperPopularity: {
             id: string;
+            title: string;
             _count: {
                 submissions: number;
             };
-            title: string;
         }[];
     }>;
     getQuestionAnalytics(): Promise<{
@@ -142,17 +142,17 @@ export declare class AdminAnalyticsController {
                 currency: string;
             };
         } & {
-            status: import(".prisma/client").$Enums.SubscriptionStatus;
             id: string;
-            userId: string;
-            planId: string;
+            createdAt: Date;
+            updatedAt: Date;
             startedAt: Date;
+            userId: string;
+            status: import(".prisma/client").$Enums.SubscriptionStatus;
+            planId: string;
             endsAt: Date | null;
             stripeCustomerId: string | null;
             stripeSubId: string | null;
             stripeStatus: string | null;
-            createdAt: Date;
-            updatedAt: Date;
         })[];
     }>;
     getContentAnalytics(): Promise<{
@@ -167,32 +167,32 @@ export declare class AdminAnalyticsController {
             id: string;
             name: string;
             _count: {
-                topics: number;
                 questions: number;
+                topics: number;
             };
         }[];
         topicsWithCounts: {
             id: string;
             name: string;
+            subject: {
+                name: string;
+            };
             _count: {
                 questions: number;
                 subtopics: number;
-            };
-            subject: {
-                name: string;
             };
         }[];
         subtopicsWithCounts: {
             id: string;
             name: string;
-            _count: {
-                questions: number;
-            };
             topic: {
                 name: string;
                 subject: {
                     name: string;
                 };
+            };
+            _count: {
+                questions: number;
             };
         }[];
         tagUsage: {
@@ -230,11 +230,11 @@ export declare class AdminAnalyticsController {
             trialUsers: number;
             topUsers: {
                 id: string;
+                email: string;
+                fullName: string;
                 _count: {
                     examSubmissions: number;
                 };
-                email: string;
-                fullName: string;
             }[];
         };
         examAnalytics: {
@@ -256,20 +256,20 @@ export declare class AdminAnalyticsController {
                 };
             } & {
                 id: string;
-                userId: string;
                 startedAt: Date;
-                scorePercent: number | null;
+                submittedAt: Date | null;
                 totalQuestions: number;
                 correctCount: number;
+                scorePercent: number | null;
+                userId: string;
                 examPaperId: string;
-                submittedAt: Date | null;
             })[];
             examPaperPopularity: {
                 id: string;
+                title: string;
                 _count: {
                     submissions: number;
                 };
-                title: string;
             }[];
         };
         questionAnalytics: {
@@ -343,17 +343,17 @@ export declare class AdminAnalyticsController {
                     currency: string;
                 };
             } & {
-                status: import(".prisma/client").$Enums.SubscriptionStatus;
                 id: string;
-                userId: string;
-                planId: string;
+                createdAt: Date;
+                updatedAt: Date;
                 startedAt: Date;
+                userId: string;
+                status: import(".prisma/client").$Enums.SubscriptionStatus;
+                planId: string;
                 endsAt: Date | null;
                 stripeCustomerId: string | null;
                 stripeSubId: string | null;
                 stripeStatus: string | null;
-                createdAt: Date;
-                updatedAt: Date;
             })[];
         };
         contentAnalytics: {
@@ -368,32 +368,32 @@ export declare class AdminAnalyticsController {
                 id: string;
                 name: string;
                 _count: {
-                    topics: number;
                     questions: number;
+                    topics: number;
                 };
             }[];
             topicsWithCounts: {
                 id: string;
                 name: string;
+                subject: {
+                    name: string;
+                };
                 _count: {
                     questions: number;
                     subtopics: number;
-                };
-                subject: {
-                    name: string;
                 };
             }[];
             subtopicsWithCounts: {
                 id: string;
                 name: string;
-                _count: {
-                    questions: number;
-                };
                 topic: {
                     name: string;
                     subject: {
                         name: string;
                     };
+                };
+                _count: {
+                    questions: number;
                 };
             }[];
             tagUsage: {
