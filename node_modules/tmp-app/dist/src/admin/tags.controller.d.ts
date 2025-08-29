@@ -25,39 +25,39 @@ export declare class AdminTagsController {
             question: {
                 subject: {
                     id: string;
-                    name: string;
                     createdAt: Date;
                     updatedAt: Date;
+                    name: string;
                     description: string | null;
                 } | null;
                 topic: {
                     id: string;
-                    name: string;
                     createdAt: Date;
-                    subjectId: string;
                     updatedAt: Date;
+                    name: string;
                     description: string | null;
+                    subjectId: string;
                 } | null;
                 subtopic: {
                     id: string;
-                    name: string;
                     createdAt: Date;
-                    topicId: string;
                     updatedAt: Date;
+                    name: string;
                     description: string | null;
+                    topicId: string;
                 } | null;
             } & {
                 id: string;
                 createdAt: Date;
+                updatedAt: Date;
+                subjectId: string | null;
+                topicId: string | null;
+                subtopicId: string | null;
                 stem: string;
                 explanation: string | null;
                 difficulty: import(".prisma/client").$Enums.Difficulty;
                 yearAppeared: number | null;
                 isPreviousYear: boolean;
-                subjectId: string | null;
-                topicId: string | null;
-                subtopicId: string | null;
-                updatedAt: Date;
             };
         } & {
             questionId: string;

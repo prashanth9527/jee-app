@@ -9,15 +9,15 @@ export declare class AdminExamPapersController {
             };
         } & {
             id: string;
-            title: string;
+            createdAt: Date;
+            updatedAt: Date;
             description: string | null;
+            title: string;
             subjectIds: string[];
             topicIds: string[];
             subtopicIds: string[];
             questionIds: string[];
             timeLimitMin: number | null;
-            createdAt: Date;
-            updatedAt: Date;
         })[];
         pagination: {
             currentPage: number;
@@ -39,26 +39,26 @@ export declare class AdminExamPapersController {
         } & {
             id: string;
             startedAt: Date;
-            userId: string;
-            examPaperId: string;
             submittedAt: Date | null;
             totalQuestions: number;
             correctCount: number;
             scorePercent: number | null;
+            userId: string;
+            examPaperId: string;
         })[];
         _count: {
             submissions: number;
         };
         id: string;
-        title: string;
+        createdAt: Date;
+        updatedAt: Date;
         description: string | null;
+        title: string;
         subjectIds: string[];
         topicIds: string[];
         subtopicIds: string[];
         questionIds: string[];
         timeLimitMin: number | null;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     create(body: {
         title: string;
@@ -75,15 +75,15 @@ export declare class AdminExamPapersController {
         };
     } & {
         id: string;
-        title: string;
+        createdAt: Date;
+        updatedAt: Date;
         description: string | null;
+        title: string;
         subjectIds: string[];
         topicIds: string[];
         subtopicIds: string[];
         questionIds: string[];
         timeLimitMin: number | null;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     update(id: string, body: {
         title?: string;
@@ -100,27 +100,27 @@ export declare class AdminExamPapersController {
         };
     } & {
         id: string;
-        title: string;
+        createdAt: Date;
+        updatedAt: Date;
         description: string | null;
+        title: string;
         subjectIds: string[];
         topicIds: string[];
         subtopicIds: string[];
         questionIds: string[];
         timeLimitMin: number | null;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     remove(id: string): Promise<{
         id: string;
-        title: string;
+        createdAt: Date;
+        updatedAt: Date;
         description: string | null;
+        title: string;
         subjectIds: string[];
         topicIds: string[];
         subtopicIds: string[];
         questionIds: string[];
         timeLimitMin: number | null;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     bulkDelete(body: {
         ids: string[];
@@ -136,15 +136,15 @@ export declare class AdminExamPapersController {
             };
         } & {
             id: string;
-            title: string;
+            createdAt: Date;
+            updatedAt: Date;
             description: string | null;
+            title: string;
             subjectIds: string[];
             topicIds: string[];
             subtopicIds: string[];
             questionIds: string[];
             timeLimitMin: number | null;
-            createdAt: Date;
-            updatedAt: Date;
         };
         statistics: {
             totalSubmissions: number;
