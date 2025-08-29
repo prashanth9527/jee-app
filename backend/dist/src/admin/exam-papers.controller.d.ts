@@ -30,6 +30,9 @@ export declare class AdminExamPapersController {
     }>;
     findOne(id: string): Promise<{
         questions: any[];
+        _count: {
+            submissions: number;
+        };
         submissions: ({
             user: {
                 id: string;
@@ -46,9 +49,6 @@ export declare class AdminExamPapersController {
             userId: string;
             examPaperId: string;
         })[];
-        _count: {
-            submissions: number;
-        };
         id: string;
         createdAt: Date;
         updatedAt: Date;

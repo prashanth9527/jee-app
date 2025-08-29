@@ -29,6 +29,27 @@ let ExamsController = class ExamsController {
     submit(submissionId, body) {
         return this.exams.submitAnswer(submissionId, body.questionId, body.selectedOptionId || null);
     }
+    async getSubmission(req, submissionId) {
+        const submission = await this.exams.getSubmission(submissionId);
+        if (submission.userId !== req.user.id) {
+            throw new common_1.ForbiddenException('You can only access your own exam submissions');
+        }
+        return submission;
+    }
+    async getSubmissionQuestions(req, submissionId) {
+        const submission = await this.exams.getSubmission(submissionId);
+        if (submission.userId !== req.user.id) {
+            throw new common_1.ForbiddenException('You can only access your own exam submissions');
+        }
+        return this.exams.getSubmissionQuestions(submissionId);
+    }
+    async getExamResults(req, submissionId) {
+        const submission = await this.exams.getSubmission(submissionId);
+        if (submission.userId !== req.user.id) {
+            throw new common_1.ForbiddenException('You can only access your own exam submissions');
+        }
+        return this.exams.getExamResults(submissionId);
+    }
     finalize(submissionId) {
         return this.exams.finalize(submissionId);
     }
@@ -66,6 +87,30 @@ __decorate([
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "submit", null);
+__decorate([
+    (0, common_1.Get)('submissions/:submissionId'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('submissionId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], ExamsController.prototype, "getSubmission", null);
+__decorate([
+    (0, common_1.Get)('submissions/:submissionId/questions'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('submissionId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], ExamsController.prototype, "getSubmissionQuestions", null);
+__decorate([
+    (0, common_1.Get)('submissions/:submissionId/results'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('submissionId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], ExamsController.prototype, "getExamResults", null);
 __decorate([
     (0, common_1.Post)('submissions/:submissionId/finalize'),
     __param(0, (0, common_1.Param)('submissionId')),

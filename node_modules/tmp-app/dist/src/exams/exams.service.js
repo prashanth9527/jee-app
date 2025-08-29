@@ -106,6 +106,116 @@ let ExamsService = class ExamsService {
 			 GROUP BY q."subtopicId"`, userId);
         return rows;
     }
+    async getSubmission(submissionId) {
+        const submission = await this.prisma.examSubmission.findUnique({
+            where: { id: submissionId },
+            include: {
+                examPaper: {
+                    select: {
+                        id: true,
+                        title: true,
+                        timeLimitMin: true,
+                        questionIds: true,
+                    }
+                }
+            }
+        });
+        if (!submission) {
+            throw new Error('Submission not found');
+        }
+        return {
+            id: submission.id,
+            userId: submission.userId,
+            examPaper: submission.examPaper,
+            startedAt: submission.startedAt,
+            totalQuestions: submission.totalQuestions,
+            questionIds: submission.examPaper.questionIds,
+        };
+    }
+    async getSubmissionQuestions(submissionId) {
+        const submission = await this.prisma.examSubmission.findUnique({
+            where: { id: submissionId },
+            include: {
+                examPaper: {
+                    select: { questionIds: true }
+                }
+            }
+        });
+        if (!submission) {
+            throw new Error('Submission not found');
+        }
+        const questions = await this.prisma.question.findMany({
+            where: { id: { in: submission.examPaper.questionIds } },
+            include: {
+                options: {
+                    select: {
+                        id: true,
+                        text: true,
+                        isCorrect: true,
+                    }
+                }
+            },
+            orderBy: { createdAt: 'asc' }
+        });
+        return questions;
+    }
+    async getExamResults(submissionId) {
+        const submission = await this.prisma.examSubmission.findUnique({
+            where: { id: submissionId },
+            include: {
+                examPaper: {
+                    select: {
+                        id: true,
+                        title: true,
+                        timeLimitMin: true,
+                        questionIds: true,
+                    }
+                },
+                answers: {
+                    include: {
+                        question: {
+                            include: {
+                                options: {
+                                    select: {
+                                        id: true,
+                                        text: true,
+                                        isCorrect: true,
+                                    }
+                                }
+                            }
+                        },
+                        selectedOption: {
+                            select: {
+                                id: true,
+                                text: true,
+                                isCorrect: true,
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        if (!submission) {
+            throw new Error('Submission not found');
+        }
+        return {
+            submission: {
+                id: submission.id,
+                examPaper: submission.examPaper,
+                startedAt: submission.startedAt,
+                submittedAt: submission.submittedAt,
+                totalQuestions: submission.totalQuestions,
+                correctCount: submission.correctCount,
+                scorePercent: submission.scorePercent,
+            },
+            answers: submission.answers.map(answer => ({
+                questionId: answer.questionId,
+                question: answer.question,
+                selectedOption: answer.selectedOption,
+                isCorrect: answer.isCorrect,
+            }))
+        };
+    }
 };
 exports.ExamsService = ExamsService;
 exports.ExamsService = ExamsService = __decorate([

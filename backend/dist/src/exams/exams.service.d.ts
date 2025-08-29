@@ -47,4 +47,80 @@ export declare class ExamsService {
     analyticsBySubject(userId: string): Promise<any[]>;
     analyticsByTopic(userId: string): Promise<any[]>;
     analyticsBySubtopic(userId: string): Promise<any[]>;
+    getSubmission(submissionId: string): Promise<{
+        id: string;
+        userId: string;
+        examPaper: {
+            id: string;
+            title: string;
+            questionIds: string[];
+            timeLimitMin: number | null;
+        };
+        startedAt: Date;
+        totalQuestions: number;
+        questionIds: string[];
+    }>;
+    getSubmissionQuestions(submissionId: string): Promise<({
+        options: {
+            id: string;
+            text: string;
+            isCorrect: boolean;
+        }[];
+    } & {
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        subjectId: string | null;
+        topicId: string | null;
+        subtopicId: string | null;
+        stem: string;
+        explanation: string | null;
+        difficulty: import(".prisma/client").$Enums.Difficulty;
+        yearAppeared: number | null;
+        isPreviousYear: boolean;
+    })[]>;
+    getExamResults(submissionId: string): Promise<{
+        submission: {
+            id: string;
+            examPaper: {
+                id: string;
+                title: string;
+                questionIds: string[];
+                timeLimitMin: number | null;
+            };
+            startedAt: Date;
+            submittedAt: Date | null;
+            totalQuestions: number;
+            correctCount: number;
+            scorePercent: number | null;
+        };
+        answers: {
+            questionId: string;
+            question: {
+                options: {
+                    id: string;
+                    text: string;
+                    isCorrect: boolean;
+                }[];
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                subjectId: string | null;
+                topicId: string | null;
+                subtopicId: string | null;
+                stem: string;
+                explanation: string | null;
+                difficulty: import(".prisma/client").$Enums.Difficulty;
+                yearAppeared: number | null;
+                isPreviousYear: boolean;
+            };
+            selectedOption: {
+                id: string;
+                text: string;
+                isCorrect: boolean;
+            } | null;
+            isCorrect: boolean;
+        }[];
+    }>;
 }

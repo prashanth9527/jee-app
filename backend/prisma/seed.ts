@@ -453,7 +453,30 @@ async function main() {
 
   console.log('❓ Created questions with options');
 
-  // Create some exam papers
+  // Get all questions for assignment to exam papers
+  const allQuestions = await prisma.question.findMany({
+    include: {
+      subtopic: {
+        include: {
+          topic: true
+        }
+      },
+      topic: true
+    }
+  });
+
+  // Group questions by subject/topic
+  const physicsQuestions = allQuestions.filter(q => 
+    q.subtopic?.topic?.subjectId === physics.id || q.topic?.subjectId === physics.id
+  );
+  const chemistryQuestions = allQuestions.filter(q => 
+    q.subtopic?.topic?.subjectId === chemistry.id || q.topic?.subjectId === chemistry.id
+  );
+  const mathQuestions = allQuestions.filter(q => 
+    q.subtopic?.topic?.subjectId === mathematics.id || q.topic?.subjectId === mathematics.id
+  );
+
+  // Create some exam papers with assigned questions
   const examPapers = await Promise.all([
     prisma.examPaper.create({
       data: {
@@ -462,6 +485,7 @@ async function main() {
         timeLimitMin: 60, // 60 minutes
         subjectIds: [physics.id],
         topicIds: [mechanics.id],
+        questionIds: physicsQuestions.slice(0, 5).map(q => q.id), // Assign first 5 physics questions
       },
     }),
     prisma.examPaper.create({
@@ -471,6 +495,7 @@ async function main() {
         timeLimitMin: 45,
         subjectIds: [chemistry.id],
         topicIds: [physicalChemistry.id],
+        questionIds: chemistryQuestions.slice(0, 4).map(q => q.id), // Assign first 4 chemistry questions
       },
     }),
     prisma.examPaper.create({
@@ -480,6 +505,7 @@ async function main() {
         timeLimitMin: 90,
         subjectIds: [mathematics.id],
         topicIds: [algebra.id],
+        questionIds: mathQuestions.slice(0, 6).map(q => q.id), // Assign first 6 math questions
       },
     }),
   ]);
@@ -493,9 +519,9 @@ async function main() {
       examPaperId: examPapers[0].id,
       startedAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
       submittedAt: new Date(Date.now() - 1.5 * 60 * 60 * 1000), // 1.5 hours ago
-      totalQuestions: 10,
-      correctCount: 7,
-      scorePercent: 70.0,
+      totalQuestions: examPapers[0].questionIds.length,
+      correctCount: 3,
+      scorePercent: 60.0,
     },
   });
 
@@ -505,9 +531,9 @@ async function main() {
       examPaperId: examPapers[1].id,
       startedAt: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hour ago
       submittedAt: new Date(Date.now() - 0.75 * 60 * 60 * 1000), // 45 minutes ago
-      totalQuestions: 8,
-      correctCount: 7,
-      scorePercent: 87.5,
+      totalQuestions: examPapers[1].questionIds.length,
+      correctCount: 3,
+      scorePercent: 75.0,
     },
   });
 

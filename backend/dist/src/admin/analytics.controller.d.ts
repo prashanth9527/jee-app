@@ -65,10 +65,10 @@ export declare class AdminAnalyticsController {
         })[];
         examPaperPopularity: {
             id: string;
-            title: string;
             _count: {
                 submissions: number;
             };
+            title: string;
         }[];
     }>;
     getQuestionAnalytics(): Promise<{
@@ -266,10 +266,10 @@ export declare class AdminAnalyticsController {
             })[];
             examPaperPopularity: {
                 id: string;
-                title: string;
                 _count: {
                     submissions: number;
                 };
+                title: string;
             }[];
         };
         questionAnalytics: {
