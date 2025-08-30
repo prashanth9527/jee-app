@@ -143,8 +143,9 @@ export default function ExamPapersPage() {
           <StudentLayout>
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                <p className="mt-4 text-gray-600">Loading exam papers...</p>
+                <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600 mx-auto"></div>
+                <p className="mt-6 text-lg font-medium text-gray-700">Loading exam papers...</p>
+                <p className="mt-2 text-sm text-gray-500">Please wait while we fetch your available exams</p>
               </div>
             </div>
           </StudentLayout>
@@ -157,35 +158,35 @@ export default function ExamPapersPage() {
     <ProtectedRoute requiredRole="STUDENT">
       <SubscriptionGuard>
         <StudentLayout>
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Header */}
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Available Exams</h1>
-            <p className="text-gray-600">Choose an exam to start practicing</p>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Available Exams</h1>
+            <p className="text-lg text-gray-600">Choose an exam to start practicing</p>
           </div>
 
           {/* Filters */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Search */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-3">Search</label>
                 <input
                   type="text"
                   placeholder="Search exam papers..."
                   value={searchText}
                   onChange={(e) => handleSearch(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 placeholder-gray-500"
                 />
               </div>
 
               {/* Subject Filter */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-3">Subject</label>
                 <select
                   value={selectedSubject}
                   onChange={(e) => handleSubjectChange(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
                 >
                   <option value="">All Subjects</option>
                   {subjects.map((subject) => (
@@ -198,11 +199,11 @@ export default function ExamPapersPage() {
 
               {/* Items per page */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Items per page</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-3">Items per page</label>
                 <select
                   value={itemsPerPage}
                   onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
                 >
                   <option value={5}>5</option>
                   <option value={10}>10</option>
@@ -215,46 +216,58 @@ export default function ExamPapersPage() {
 
           {/* Results count */}
           {pagination && (
-            <div className="text-sm text-gray-600">
-              Showing {((pagination.currentPage - 1) * pagination.itemsPerPage) + 1} to{' '}
-              {Math.min(pagination.currentPage * pagination.itemsPerPage, pagination.totalItems)} of{' '}
-              {pagination.totalItems} exam papers
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-6 py-4">
+              <div className="text-sm font-medium text-gray-700">
+                Showing {((pagination.currentPage - 1) * pagination.itemsPerPage) + 1} to{' '}
+                {Math.min(pagination.currentPage * pagination.itemsPerPage, pagination.totalItems)} of{' '}
+                {pagination.totalItems} exam papers
+              </div>
+            </div>
+          )}
+
+          {/* Loading overlay for subsequent loads */}
+          {loading && papers.length > 0 && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg p-6 flex items-center space-x-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-200 border-t-blue-600"></div>
+                <p className="text-gray-700 font-medium">Updating results...</p>
+              </div>
             </div>
           )}
 
           {/* Exam Papers Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {papers.map((paper) => (
-              <div key={paper.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div key={paper.id} className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">{paper.title}</h3>
+                    <h3 className="text-xl font-bold text-gray-900 line-clamp-2 leading-tight">{paper.title}</h3>
                     {paper.hasAttempted && (
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800 border border-blue-200">
                         Attempted
                       </span>
                     )}
                   </div>
 
                   {paper.description && (
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">{paper.description}</p>
+                    <p className="text-gray-600 text-base mb-6 line-clamp-3 leading-relaxed">{paper.description}</p>
                   )}
 
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center text-sm text-gray-500">
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center text-sm text-gray-700 font-medium">
+                      <svg className="w-5 h-5 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       {formatDuration(paper.timeLimitMin)}
                     </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center text-sm text-gray-700 font-medium">
+                      <svg className="w-5 h-5 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       {paper.questionCount} questions
                     </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center text-sm text-gray-700 font-medium">
+                      <svg className="w-5 h-5 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                       </svg>
                       {paper.subjects.map(s => s.name).join(', ')}
@@ -263,7 +276,7 @@ export default function ExamPapersPage() {
 
                   <button
                     onClick={() => handleStartExam(paper.id, paper.title)}
-                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-medium"
+                    className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-semibold text-base shadow-md hover:shadow-lg transform hover:scale-105"
                   >
                     {paper.hasAttempted ? 'Retake Exam' : 'Start Exam'}
                   </button>
@@ -274,38 +287,40 @@ export default function ExamPapersPage() {
 
           {/* Empty state */}
           {!loading && papers.length === 0 && (
-            <div className="text-center py-12">
-              <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 text-center py-16">
+              <svg className="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No exam papers found</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                {searchText || selectedSubject ? 'Try adjusting your search criteria.' : 'No exam papers are available at the moment.'}
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No exam papers found</h3>
+              <p className="text-gray-600 max-w-md mx-auto">
+                {searchText || selectedSubject ? 'Try adjusting your search criteria to find more exam papers.' : 'No exam papers are available at the moment. Please check back later.'}
               </p>
             </div>
           )}
 
           {/* Pagination */}
           {pagination && pagination.totalPages > 1 && (
-            <div className="flex items-center justify-between bg-white rounded-lg shadow px-6 py-3">
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => handlePageChange(pagination.currentPage - 1)}
-                  disabled={pagination.currentPage === 1}
-                  className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Previous
-                </button>
-                <span className="text-sm text-gray-700">
-                  Page {pagination.currentPage} of {pagination.totalPages}
-                </span>
-                <button
-                  onClick={() => handlePageChange(pagination.currentPage + 1)}
-                  disabled={pagination.currentPage === pagination.totalPages}
-                  className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Next
-                </button>
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-6 py-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={() => handlePageChange(pagination.currentPage - 1)}
+                    disabled={pagination.currentPage === 1}
+                    className="px-4 py-2 text-sm font-medium border-2 border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all duration-200"
+                  >
+                    Previous
+                  </button>
+                  <span className="text-sm font-medium text-gray-700">
+                    Page {pagination.currentPage} of {pagination.totalPages}
+                  </span>
+                  <button
+                    onClick={() => handlePageChange(pagination.currentPage + 1)}
+                    disabled={pagination.currentPage === pagination.totalPages}
+                    className="px-4 py-2 text-sm font-medium border-2 border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all duration-200"
+                  >
+                    Next
+                  </button>
+                </div>
               </div>
             </div>
           )}
