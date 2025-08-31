@@ -70,36 +70,39 @@ async function main() {
   console.log('👥 Created users');
 
   // Create subscription plans
-  const basicPlan = await prisma.plan.create({
+  const manualPlan = await prisma.plan.create({
     data: {
-      name: 'Basic Plan',
-      description: 'Access to all subjects and topics',
+      name: 'Manual Plan',
+      description: 'Access to practice tests with database questions',
       priceCents: 99900, // 999 INR in cents
       currency: 'INR',
       interval: 'MONTH',
-      stripePriceId: 'price_basic_monthly',
+      planType: 'MANUAL',
+      stripePriceId: 'price_manual_monthly',
     },
   });
 
-  const premiumPlan = await prisma.plan.create({
+  const aiPlan = await prisma.plan.create({
     data: {
-      name: 'Premium Plan',
-      description: 'Everything in Basic + Advanced features',
+      name: 'AI Enabled Plan',
+      description: 'Access to AI-generated questions and explanations',
       priceCents: 199900, // 1999 INR in cents
       currency: 'INR',
       interval: 'MONTH',
-      stripePriceId: 'price_premium_monthly',
+      planType: 'AI_ENABLED',
+      stripePriceId: 'price_ai_monthly',
     },
   });
 
   const yearlyPlan = await prisma.plan.create({
     data: {
-      name: 'Yearly Plan',
-      description: 'Best value - 2 months free',
-      priceCents: 999900, // 9999 INR in cents
+      name: 'Yearly AI Plan',
+      description: 'Best value - AI features with 2 months free',
+      priceCents: 1999900, // 19999 INR in cents
       currency: 'INR',
       interval: 'YEAR',
-      stripePriceId: 'price_yearly',
+      planType: 'AI_ENABLED',
+      stripePriceId: 'price_ai_yearly',
     },
   });
 

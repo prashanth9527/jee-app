@@ -56,6 +56,8 @@ export declare class AdminQuestionsController {
             difficulty: import(".prisma/client").$Enums.Difficulty;
             yearAppeared: number | null;
             isPreviousYear: boolean;
+            isAIGenerated: boolean;
+            aiPrompt: string | null;
         })[];
         pagination: {
             currentPage: number;
@@ -118,6 +120,8 @@ export declare class AdminQuestionsController {
         difficulty: import(".prisma/client").$Enums.Difficulty;
         yearAppeared: number | null;
         isPreviousYear: boolean;
+        isAIGenerated: boolean;
+        aiPrompt: string | null;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     create(body: {
         stem: string;
@@ -163,6 +167,8 @@ export declare class AdminQuestionsController {
         difficulty: import(".prisma/client").$Enums.Difficulty;
         yearAppeared: number | null;
         isPreviousYear: boolean;
+        isAIGenerated: boolean;
+        aiPrompt: string | null;
     }) | null>;
     update(id: string, body: {
         stem?: string;
@@ -209,6 +215,8 @@ export declare class AdminQuestionsController {
         difficulty: import(".prisma/client").$Enums.Difficulty;
         yearAppeared: number | null;
         isPreviousYear: boolean;
+        isAIGenerated: boolean;
+        aiPrompt: string | null;
     }) | null>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__QuestionClient<{
         id: string;
@@ -222,6 +230,8 @@ export declare class AdminQuestionsController {
         difficulty: import(".prisma/client").$Enums.Difficulty;
         yearAppeared: number | null;
         isPreviousYear: boolean;
+        isAIGenerated: boolean;
+        aiPrompt: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     bulkDelete(body: {
         ids: string[];

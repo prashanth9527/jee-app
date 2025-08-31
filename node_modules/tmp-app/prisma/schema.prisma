@@ -96,6 +96,8 @@ model Question {
   difficulty     Difficulty @default(MEDIUM)
   yearAppeared   Int?
   isPreviousYear Boolean    @default(false)
+  isAIGenerated  Boolean    @default(false)
+  aiPrompt       String?    // Store the prompt used to generate this question
 
   subject    Subject?  @relation(fields: [subjectId], references: [id])
   subjectId  String?
@@ -203,6 +205,7 @@ model Plan {
   priceCents    Int // price in cents
   currency      String       @default("usd")
   interval      PlanInterval @default(MONTH)
+  planType      PlanType     @default(MANUAL)
   stripePriceId String?      @unique
   isActive      Boolean      @default(true)
 
@@ -210,6 +213,11 @@ model Plan {
   updatedAt DateTime @updatedAt
 
   subscriptions Subscription[]
+}
+
+enum PlanType {
+  MANUAL
+  AI_ENABLED
 }
 
 enum PlanInterval {

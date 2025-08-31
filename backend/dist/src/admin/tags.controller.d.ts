@@ -58,6 +58,8 @@ export declare class AdminTagsController {
                 difficulty: import(".prisma/client").$Enums.Difficulty;
                 yearAppeared: number | null;
                 isPreviousYear: boolean;
+                isAIGenerated: boolean;
+                aiPrompt: string | null;
             };
         } & {
             questionId: string;

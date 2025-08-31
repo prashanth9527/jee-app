@@ -1,7 +1,9 @@
 import { PrismaService } from '../prisma/prisma.service';
+import { AIService } from '../ai/ai.service';
 export declare class ExamsService {
     private readonly prisma;
-    constructor(prisma: PrismaService);
+    private readonly aiService;
+    constructor(prisma: PrismaService, aiService: AIService);
     createPaper(data: {
         title: string;
         description?: string;
@@ -78,6 +80,8 @@ export declare class ExamsService {
         difficulty: import(".prisma/client").$Enums.Difficulty;
         yearAppeared: number | null;
         isPreviousYear: boolean;
+        isAIGenerated: boolean;
+        aiPrompt: string | null;
     })[]>;
     getExamResults(submissionId: string): Promise<{
         submission: {
@@ -114,6 +118,8 @@ export declare class ExamsService {
                 difficulty: import(".prisma/client").$Enums.Difficulty;
                 yearAppeared: number | null;
                 isPreviousYear: boolean;
+                isAIGenerated: boolean;
+                aiPrompt: string | null;
             };
             selectedOption: {
                 id: string;
@@ -122,5 +128,98 @@ export declare class ExamsService {
             } | null;
             isCorrect: boolean;
         }[];
+    }>;
+    generateAIPracticeTest(userId: string, request: {
+        subjectId: string;
+        topicId?: string;
+        subtopicId?: string;
+        questionCount: number;
+        difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+        timeLimitMin: number;
+    }): Promise<{
+        examPaper: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            description: string | null;
+            title: string;
+            subjectIds: string[];
+            topicIds: string[];
+            subtopicIds: string[];
+            questionIds: string[];
+            timeLimitMin: number | null;
+        };
+        questions: ({
+            options: {
+                id: string;
+                text: string;
+                isCorrect: boolean;
+                order: number;
+                questionId: string;
+            }[];
+        } & {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            subjectId: string | null;
+            topicId: string | null;
+            subtopicId: string | null;
+            stem: string;
+            explanation: string | null;
+            difficulty: import(".prisma/client").$Enums.Difficulty;
+            yearAppeared: number | null;
+            isPreviousYear: boolean;
+            isAIGenerated: boolean;
+            aiPrompt: string | null;
+        })[];
+    }>;
+    generateAIExplanation(questionId: string, userId: string, userAnswer?: string): Promise<{
+        questionId: string;
+        explanation: string;
+        isAIGenerated: boolean;
+    }>;
+    generateManualPracticeTest(userId: string, request: {
+        subjectId: string;
+        topicId?: string;
+        subtopicId?: string;
+        questionCount: number;
+        difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
+        timeLimitMin: number;
+    }): Promise<{
+        examPaper: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            description: string | null;
+            title: string;
+            subjectIds: string[];
+            topicIds: string[];
+            subtopicIds: string[];
+            questionIds: string[];
+            timeLimitMin: number | null;
+        };
+        questions: ({
+            options: {
+                id: string;
+                text: string;
+                isCorrect: boolean;
+                order: number;
+                questionId: string;
+            }[];
+        } & {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            subjectId: string | null;
+            topicId: string | null;
+            subtopicId: string | null;
+            stem: string;
+            explanation: string | null;
+            difficulty: import(".prisma/client").$Enums.Difficulty;
+            yearAppeared: number | null;
+            isPreviousYear: boolean;
+            isAIGenerated: boolean;
+            aiPrompt: string | null;
+        })[];
     }>;
 }

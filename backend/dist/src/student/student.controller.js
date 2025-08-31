@@ -436,6 +436,32 @@ let StudentController = class StudentController {
             }
         });
     }
+    async getQuestionAvailability(subjectId, topicId, subtopicId, difficulty) {
+        const where = {};
+        if (subjectId)
+            where.subjectId = subjectId;
+        if (topicId)
+            where.topicId = topicId;
+        if (subtopicId)
+            where.subtopicId = subtopicId;
+        if (difficulty && difficulty !== 'MIXED')
+            where.difficulty = difficulty;
+        const totalQuestions = await this.prisma.question.count({ where });
+        const difficultyBreakdown = await this.prisma.question.groupBy({
+            by: ['difficulty'],
+            where,
+            _count: {
+                difficulty: true
+            }
+        });
+        return {
+            totalQuestions,
+            difficultyBreakdown: difficultyBreakdown.map(d => ({
+                difficulty: d.difficulty,
+                count: d._count.difficulty
+            }))
+        };
+    }
 };
 exports.StudentController = StudentController;
 __decorate([
@@ -515,6 +541,16 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getSubtopics", null);
+__decorate([
+    (0, common_1.Get)('question-availability'),
+    __param(0, (0, common_1.Query)('subjectId')),
+    __param(1, (0, common_1.Query)('topicId')),
+    __param(2, (0, common_1.Query)('subtopicId')),
+    __param(3, (0, common_1.Query)('difficulty')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], StudentController.prototype, "getQuestionAvailability", null);
 exports.StudentController = StudentController = __decorate([
     (0, common_1.Controller)('student'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),

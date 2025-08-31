@@ -51,6 +51,7 @@ let SubscriptionValidationService = class SubscriptionValidationService {
                     subscriptionEndsAt: subscriptionEndsAt || undefined,
                     daysRemaining,
                     needsSubscription: false,
+                    planType: subscription.plan.planType,
                     message: `Active subscription - ${daysRemaining} days remaining`,
                 };
             }
@@ -113,6 +114,13 @@ let SubscriptionValidationService = class SubscriptionValidationService {
             subscriptionStatus: status,
             subscriptions: user.subscriptions,
         };
+    }
+    async hasAIAccess(userId) {
+        const status = await this.validateStudentSubscription(userId);
+        if (!status.hasValidSubscription) {
+            return false;
+        }
+        return status.planType === 'AI_ENABLED';
     }
 };
 exports.SubscriptionValidationService = SubscriptionValidationService;

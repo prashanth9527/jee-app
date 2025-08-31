@@ -7,6 +7,7 @@ export interface SubscriptionStatus {
     daysRemaining: number;
     needsSubscription: boolean;
     message: string;
+    planType?: 'MANUAL' | 'AI_ENABLED';
 }
 export declare class SubscriptionValidationService {
     private readonly prisma;
@@ -32,6 +33,7 @@ export declare class SubscriptionValidationService {
                 priceCents: number;
                 currency: string;
                 interval: import(".prisma/client").$Enums.PlanInterval;
+                planType: import(".prisma/client").$Enums.PlanType;
                 stripePriceId: string | null;
                 isActive: boolean;
             };
@@ -49,4 +51,5 @@ export declare class SubscriptionValidationService {
             stripeStatus: string | null;
         })[];
     } | null>;
+    hasAIAccess(userId: string): Promise<boolean>;
 }

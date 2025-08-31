@@ -117,6 +117,7 @@ export declare class StudentController {
                     priceCents: number;
                     currency: string;
                     interval: import(".prisma/client").$Enums.PlanInterval;
+                    planType: import(".prisma/client").$Enums.PlanType;
                     stripePriceId: string | null;
                     isActive: boolean;
                 };
@@ -220,4 +221,11 @@ export declare class StudentController {
         description: string | null;
         topicId: string;
     })[]>;
+    getQuestionAvailability(subjectId?: string, topicId?: string, subtopicId?: string, difficulty?: string): Promise<{
+        totalQuestions: number;
+        difficultyBreakdown: {
+            difficulty: import(".prisma/client").$Enums.Difficulty;
+            count: number;
+        }[];
+    }>;
 }

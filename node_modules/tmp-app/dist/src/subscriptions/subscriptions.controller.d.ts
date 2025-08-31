@@ -11,6 +11,7 @@ export declare class SubscriptionsController {
         priceCents: number;
         currency: string;
         interval: import(".prisma/client").$Enums.PlanInterval;
+        planType: import(".prisma/client").$Enums.PlanType;
         stripePriceId: string | null;
         isActive: boolean;
     }[]>;
@@ -29,6 +30,7 @@ export declare class SubscriptionsController {
         priceCents: number;
         currency: string;
         interval: import(".prisma/client").$Enums.PlanInterval;
+        planType: import(".prisma/client").$Enums.PlanType;
         stripePriceId: string | null;
         isActive: boolean;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
@@ -48,6 +50,7 @@ export declare class SubscriptionsController {
         priceCents: number;
         currency: string;
         interval: import(".prisma/client").$Enums.PlanInterval;
+        planType: import(".prisma/client").$Enums.PlanType;
         stripePriceId: string | null;
         isActive: boolean;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;

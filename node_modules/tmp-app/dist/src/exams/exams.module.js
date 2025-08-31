@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExamsModule = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_module_1 = require("../prisma/prisma.module");
+const ai_module_1 = require("../ai/ai.module");
 const exams_service_1 = require("./exams.service");
 const exams_controller_1 = require("./exams.controller");
 let ExamsModule = class ExamsModule {
@@ -16,7 +17,7 @@ let ExamsModule = class ExamsModule {
 exports.ExamsModule = ExamsModule;
 exports.ExamsModule = ExamsModule = __decorate([
     (0, common_1.Module)({
-        imports: [prisma_module_1.PrismaModule],
+        imports: [prisma_module_1.PrismaModule, ai_module_1.AIModule],
         providers: [exams_service_1.ExamsService],
         controllers: [exams_controller_1.ExamsController],
     })

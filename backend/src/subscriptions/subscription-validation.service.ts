@@ -9,6 +9,7 @@ export interface SubscriptionStatus {
   daysRemaining: number;
   needsSubscription: boolean;
   message: string;
+  planType?: 'MANUAL' | 'AI_ENABLED';
 }
 
 @Injectable()
@@ -55,6 +56,7 @@ export class SubscriptionValidationService {
           subscriptionEndsAt: subscriptionEndsAt || undefined,
           daysRemaining,
           needsSubscription: false,
+          planType: subscription.plan.planType,
           message: `Active subscription - ${daysRemaining} days remaining`,
         };
       } else {
@@ -126,5 +128,19 @@ export class SubscriptionValidationService {
       subscriptionStatus: status,
       subscriptions: user.subscriptions,
     };
+  }
+
+  async hasAIAccess(userId: string): Promise<boolean> {
+    const status = await this.validateStudentSubscription(userId);
+    
+    // For now, only active subscriptions with AI_ENABLED plan type have AI access
+    // Trial users don't get AI access
+    if (!status.hasValidSubscription) {
+      return false;
+    }
+
+    // Check if the plan type is AI_ENABLED
+    // This will work once we regenerate the Prisma client
+    return status.planType === 'AI_ENABLED';
   }
 } 

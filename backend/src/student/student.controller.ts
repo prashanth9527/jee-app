@@ -507,4 +507,38 @@ export class StudentController {
 			}
 		});
 	}
+
+	@Get('question-availability')
+	async getQuestionAvailability(
+		@Query('subjectId') subjectId?: string,
+		@Query('topicId') topicId?: string,
+		@Query('subtopicId') subtopicId?: string,
+		@Query('difficulty') difficulty?: string
+	) {
+		const where: any = {};
+		
+		if (subjectId) where.subjectId = subjectId;
+		if (topicId) where.topicId = topicId;
+		if (subtopicId) where.subtopicId = subtopicId;
+		if (difficulty && difficulty !== 'MIXED') where.difficulty = difficulty;
+
+		const totalQuestions = await this.prisma.question.count({ where });
+
+		// Get breakdown by difficulty
+		const difficultyBreakdown = await this.prisma.question.groupBy({
+			by: ['difficulty'],
+			where,
+			_count: {
+				difficulty: true
+			}
+		});
+
+		return {
+			totalQuestions,
+			difficultyBreakdown: difficultyBreakdown.map(d => ({
+				difficulty: d.difficulty,
+				count: d._count.difficulty
+			}))
+		};
+	}
 } 

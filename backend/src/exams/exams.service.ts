@@ -1,9 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { AIService } from '../ai/ai.service';
 
 @Injectable()
 export class ExamsService {
-	constructor(private readonly prisma: PrismaService) {}
+	constructor(
+		private readonly prisma: PrismaService,
+		private readonly aiService: AIService
+	) {}
 
 	async createPaper(data: { title: string; description?: string; subjectIds?: string[]; topicIds?: string[]; subtopicIds?: string[]; questionIds?: string[]; timeLimitMin?: number }) {
 		return this.prisma.examPaper.create({ data: {
@@ -222,6 +226,202 @@ export class ExamsService {
 				selectedOption: answer.selectedOption,
 				isCorrect: answer.isCorrect,
 			}))
+		};
+	}
+
+	async generateAIPracticeTest(userId: string, request: {
+		subjectId: string;
+		topicId?: string;
+		subtopicId?: string;
+		questionCount: number;
+		difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+		timeLimitMin: number;
+	}) {
+		// Check if user has AI access
+		const aiAccess = await this.aiService.validateSubscription(userId);
+		if (!aiAccess.hasAIAccess) {
+			throw new Error('AI question generation requires AI-enabled subscription');
+		}
+
+		// Get subject, topic, and subtopic names
+		const subject = await this.prisma.subject.findUnique({
+			where: { id: request.subjectId }
+		});
+
+		const topic = request.topicId ? await this.prisma.topic.findUnique({
+			where: { id: request.topicId }
+		}) : null;
+
+		const subtopic = request.subtopicId ? await this.prisma.subtopic.findUnique({
+			where: { id: request.subtopicId }
+		}) : null;
+
+		// Generate AI questions
+		const aiQuestions = await this.aiService.generateQuestions({
+			subject: subject?.name || 'General',
+			topic: topic?.name,
+			subtopic: subtopic?.name,
+			difficulty: request.difficulty,
+			questionCount: request.questionCount
+		});
+
+		// Save AI questions to database
+		const savedQuestions = [];
+		for (const aiQuestion of aiQuestions) {
+			const question = await this.prisma.question.create({
+				data: {
+					stem: aiQuestion.stem,
+					explanation: aiQuestion.explanation,
+					difficulty: aiQuestion.difficulty,
+					subjectId: request.subjectId,
+					topicId: request.topicId,
+					subtopicId: request.subtopicId,
+					isAIGenerated: true,
+					aiPrompt: `Generated for ${subject?.name}${topic ? ` - ${topic.name}` : ''}${subtopic ? ` - ${subtopic.name}` : ''} (${request.difficulty})`,
+					options: {
+						create: aiQuestion.options.map((opt, index) => ({
+							text: opt.text,
+							isCorrect: opt.isCorrect,
+							order: index
+						}))
+					}
+				},
+				include: {
+					options: true
+				}
+			});
+			savedQuestions.push(question);
+		}
+
+		// Create exam paper with AI questions
+		const examPaper = await this.prisma.examPaper.create({
+			data: {
+				title: `AI Practice Test - ${subject?.name}${topic ? ` - ${topic.name}` : ''}${subtopic ? ` - ${subtopic.name}` : ''}`,
+				description: `AI-generated practice test with ${request.questionCount} ${request.difficulty.toLowerCase()} questions`,
+				subjectIds: [request.subjectId],
+				topicIds: request.topicId ? [request.topicId] : [],
+				subtopicIds: request.subtopicId ? [request.subtopicId] : [],
+				questionIds: savedQuestions.map(q => q.id),
+				timeLimitMin: request.timeLimitMin
+			}
+		});
+
+		return {
+			examPaper,
+			questions: savedQuestions
+		};
+	}
+
+	async generateAIExplanation(questionId: string, userId: string, userAnswer?: string) {
+		// Check if user has AI access
+		const aiAccess = await this.aiService.validateSubscription(userId);
+		if (!aiAccess.hasAIAccess) {
+			throw new Error('AI explanations require AI-enabled subscription');
+		}
+
+		// Get question details
+		const question = await this.prisma.question.findUnique({
+			where: { id: questionId },
+			include: {
+				options: {
+					where: { isCorrect: true },
+					take: 1
+				}
+			}
+		});
+
+		if (!question) {
+			throw new Error('Question not found');
+		}
+
+		const correctAnswer = question.options[0]?.text || '';
+		
+		// Generate AI explanation
+		const explanation = await this.aiService.generateExplanation(
+			question.stem,
+			correctAnswer,
+			userAnswer
+		);
+
+		return {
+			questionId,
+			explanation,
+			isAIGenerated: true
+		};
+	}
+
+	async generateManualPracticeTest(userId: string, request: {
+		subjectId: string;
+		topicId?: string;
+		subtopicId?: string;
+		questionCount: number;
+		difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
+		timeLimitMin: number;
+	}) {
+		// Build where clause for question selection
+		const where: any = {
+			subjectId: request.subjectId
+		};
+
+		if (request.topicId) {
+			where.topicId = request.topicId;
+		}
+
+		if (request.subtopicId) {
+			where.subtopicId = request.subtopicId;
+		}
+
+		// Filter by difficulty if not mixed
+		if (request.difficulty !== 'MIXED') {
+			where.difficulty = request.difficulty;
+		}
+
+		// Get questions from database
+		const questions = await this.prisma.question.findMany({
+			where,
+			include: {
+				options: true
+			},
+			take: request.questionCount,
+			orderBy: {
+				// Random selection for variety
+				id: 'asc'
+			}
+		});
+
+		if (questions.length === 0) {
+			throw new Error('No questions found for the selected criteria');
+		}
+
+		// Get subject, topic, and subtopic names for paper title
+		const subject = await this.prisma.subject.findUnique({
+			where: { id: request.subjectId }
+		});
+
+		const topic = request.topicId ? await this.prisma.topic.findUnique({
+			where: { id: request.topicId }
+		}) : null;
+
+		const subtopic = request.subtopicId ? await this.prisma.subtopic.findUnique({
+			where: { id: request.subtopicId }
+		}) : null;
+
+		// Create exam paper with selected questions
+		const examPaper = await this.prisma.examPaper.create({
+			data: {
+				title: `Practice Test - ${subject?.name}${topic ? ` - ${topic.name}` : ''}${subtopic ? ` - ${subtopic.name}` : ''}`,
+				description: `Practice test with ${questions.length} ${request.difficulty.toLowerCase()} questions from database`,
+				subjectIds: [request.subjectId],
+				topicIds: request.topicId ? [request.topicId] : [],
+				subtopicIds: request.subtopicId ? [request.subtopicId] : [],
+				questionIds: questions.map(q => q.id),
+				timeLimitMin: request.timeLimitMin
+			}
+		});
+
+		return {
+			examPaper,
+			questions
 		};
 	}
 } 
