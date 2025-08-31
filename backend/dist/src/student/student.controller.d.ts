@@ -24,17 +24,17 @@ export declare class StudentController {
             hasAttempted: boolean;
             questionCount: number;
             id: string;
+            createdAt: Date;
+            description: string | null;
             _count: {
                 submissions: number;
             };
             title: string;
-            description: string | null;
             subjectIds: string[];
             topicIds: string[];
             subtopicIds: string[];
             questionIds: string[];
             timeLimitMin: number | null;
-            createdAt: Date;
         }[];
         pagination: {
             currentPage: number;
@@ -104,10 +104,10 @@ export declare class StudentController {
             subscriptions: ({
                 plan: {
                     id: string;
-                    name: string;
-                    description: string | null;
                     createdAt: Date;
                     updatedAt: Date;
+                    name: string;
+                    description: string | null;
                     priceCents: number;
                     currency: string;
                     interval: import(".prisma/client").$Enums.PlanInterval;
@@ -116,13 +116,13 @@ export declare class StudentController {
                     isActive: boolean;
                 };
             } & {
-                userId: string;
                 id: string;
-                startedAt: Date;
                 createdAt: Date;
                 updatedAt: Date;
-                planId: string;
+                startedAt: Date;
+                userId: string;
                 status: import(".prisma/client").$Enums.SubscriptionStatus;
+                planId: string;
                 endsAt: Date | null;
                 stripeCustomerId: string | null;
                 stripeSubId: string | null;
@@ -132,13 +132,13 @@ export declare class StudentController {
     }>;
     getProfile(req: any): Promise<{
         id: string;
-        createdAt: Date;
         email: string;
         phone: string | null;
         emailVerified: boolean;
         phoneVerified: boolean;
         fullName: string;
         role: import(".prisma/client").$Enums.UserRole;
+        createdAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
         subscriptions: ({
@@ -149,13 +149,13 @@ export declare class StudentController {
                 interval: import(".prisma/client").$Enums.PlanInterval;
             };
         } & {
-            userId: string;
             id: string;
-            startedAt: Date;
             createdAt: Date;
             updatedAt: Date;
-            planId: string;
+            startedAt: Date;
+            userId: string;
             status: import(".prisma/client").$Enums.SubscriptionStatus;
+            planId: string;
             endsAt: Date | null;
             stripeCustomerId: string | null;
             stripeSubId: string | null;
@@ -176,43 +176,43 @@ export declare class StudentController {
     }>;
     getSubjects(req: any): Promise<{
         id: string;
-        _count: {
-            questions: number;
-        };
         name: string;
         description: string | null;
-    }[]>;
-    getTopics(subjectId?: string): Promise<({
         _count: {
             questions: number;
         };
+    }[]>;
+    getTopics(subjectId?: string): Promise<({
         subject: {
             name: string;
         };
-    } & {
-        id: string;
-        name: string;
-        description: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        subjectId: string;
-    })[]>;
-    getSubtopics(topicId?: string, subjectId?: string): Promise<({
         _count: {
             questions: number;
         };
+    } & {
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string;
+        description: string | null;
+        subjectId: string;
+    })[]>;
+    getSubtopics(topicId?: string, subjectId?: string): Promise<({
         topic: {
             name: string;
             subject: {
                 name: string;
             };
         };
+        _count: {
+            questions: number;
+        };
     } & {
         id: string;
-        name: string;
-        description: string | null;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
+        description: string | null;
         topicId: string;
     })[]>;
     getQuestionAvailability(subjectId?: string, topicId?: string, subtopicId?: string, difficulty?: string): Promise<{

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRole?: 'ADMIN' | 'STUDENT';
+  requiredRole?: 'ADMIN' | 'STUDENT' | 'EXPERT';
 }
 
 export default function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
@@ -24,6 +24,8 @@ export default function ProtectedRoute({ children, requiredRole }: ProtectedRout
         // Redirect to appropriate dashboard based on user role
         if (user.role === 'ADMIN') {
           router.push('/admin');
+        } else if (user.role === 'EXPERT') {
+          router.push('/expert');
         } else {
           router.push('/student');
         }

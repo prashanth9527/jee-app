@@ -11,6 +11,8 @@ import { ReferralsModule } from './referrals/referrals.module';
 import { AIModule } from './ai/ai.module';
 import { ExamsModule } from './exams/exams.module';
 import { StreamsModule } from './streams/streams.module';
+import { ExpertModule } from './expert/expert.module';
+import { AwsModule } from './aws/aws.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { StreamsModule } from './streams/streams.module';
     AIModule,
     ExamsModule,
     StreamsModule,
+    ExpertModule,
+    AwsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

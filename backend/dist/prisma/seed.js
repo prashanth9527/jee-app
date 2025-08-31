@@ -61,6 +61,17 @@ async function main() {
             trialEndsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
         },
     });
+    const expertUser = await prisma.user.create({
+        data: {
+            email: 'expert@jeeapp.com',
+            phone: '+919876543213',
+            fullName: 'Dr. Expert User',
+            hashedPassword: await bcrypt.hash('expert123', 10),
+            role: 'EXPERT',
+            emailVerified: true,
+            phoneVerified: true,
+        },
+    });
     console.log('👥 Created users');
     const manualPlan = await prisma.plan.create({
         data: {

@@ -7,7 +7,7 @@ interface User {
   id: string;
   email: string;
   fullName: string;
-  role: 'ADMIN' | 'STUDENT';
+  role: 'ADMIN' | 'STUDENT' | 'EXPERT';
   profilePicture?: string;
   stream?: {
     id: string;

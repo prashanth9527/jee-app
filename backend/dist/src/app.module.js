@@ -20,6 +20,8 @@ const referrals_module_1 = require("./referrals/referrals.module");
 const ai_module_1 = require("./ai/ai.module");
 const exams_module_1 = require("./exams/exams.module");
 const streams_module_1 = require("./streams/streams.module");
+const expert_module_1 = require("./expert/expert.module");
+const aws_module_1 = require("./aws/aws.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -36,6 +38,8 @@ exports.AppModule = AppModule = __decorate([
             ai_module_1.AIModule,
             exams_module_1.ExamsModule,
             streams_module_1.StreamsModule,
+            expert_module_1.ExpertModule,
+            aws_module_1.AwsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

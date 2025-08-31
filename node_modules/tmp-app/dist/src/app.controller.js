@@ -11,9 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
+const app_service_1 = require("./app.service");
+const system_settings_service_1 = require("./admin/system-settings.service");
 let AppController = class AppController {
-    getHealth() {
-        return { ok: true };
+    constructor(appService, systemSettingsService) {
+        this.appService = appService;
+        this.systemSettingsService = systemSettingsService;
+    }
+    getHello() {
+        return this.appService.getHello();
+    }
+    async getSystemSettings() {
+        return this.systemSettingsService.getSettings();
     }
 };
 exports.AppController = AppController;
@@ -21,9 +30,17 @@ __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], AppController.prototype, "getHealth", null);
+    __metadata("design:returntype", String)
+], AppController.prototype, "getHello", null);
+__decorate([
+    (0, common_1.Get)('system-settings'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getSystemSettings", null);
 exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)('health')
+    (0, common_1.Controller)(),
+    __metadata("design:paramtypes", [app_service_1.AppService,
+        system_settings_service_1.SystemSettingsService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map
