@@ -138,8 +138,8 @@ export default function PracticeTestResultsPage() {
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600 mx-auto"></div>
-                <p className="mt-6 text-lg font-medium text-gray-700">Loading results...</p>
-                <p className="mt-2 text-sm text-gray-500">Please wait while we analyze your performance</p>
+                <p className="mt-6 text-lg font-medium text-gray-900">Loading results...</p>
+                <p className="mt-2 text-sm text-gray-700">Please wait while we analyze your performance</p>
               </div>
             </div>
           </StudentLayout>
@@ -156,7 +156,7 @@ export default function PracticeTestResultsPage() {
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-900 mb-4">Results Not Found</h1>
-                <p className="text-gray-600 mb-6">The test results you're looking for could not be found.</p>
+                <p className="text-gray-700 mb-6">The test results you're looking for could not be found.</p>
                 <button
                   onClick={() => router.push('/student/practice')}
                   className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
@@ -184,7 +184,7 @@ export default function PracticeTestResultsPage() {
             {/* Header */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Test Results</h1>
-              <p className="text-lg text-gray-600">{submission.examPaper.title}</p>
+              <p className="text-lg text-gray-700">{submission.examPaper.title}</p>
             </div>
 
             {/* Score Summary */}
@@ -195,7 +195,7 @@ export default function PracticeTestResultsPage() {
                 <div className={`text-5xl font-bold mb-2 ${getScoreColor(submission.scorePercent)}`}>
                   {submission.scorePercent.toFixed(1)}%
                 </div>
-                <p className="text-lg text-gray-600 mb-4">{getScoreMessage(submission.scorePercent)}</p>
+                <p className="text-lg text-gray-800 mb-4">{getScoreMessage(submission.scorePercent)}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -208,8 +208,8 @@ export default function PracticeTestResultsPage() {
                   <div className="text-sm text-red-700">Incorrect</div>
                 </div>
                 <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="text-2xl font-bold text-gray-600">{unansweredCount}</div>
-                  <div className="text-sm text-gray-700">Unanswered</div>
+                  <div className="text-2xl font-bold text-gray-700">{unansweredCount}</div>
+                  <div className="text-sm text-gray-800">Unanswered</div>
                 </div>
                 <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
                   <div className="text-2xl font-bold text-blue-600">{submission.totalQuestions}</div>
@@ -220,20 +220,20 @@ export default function PracticeTestResultsPage() {
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Time Taken:</span>
-                    <span className="font-semibold">{formatDuration(submission.startedAt, submission.submittedAt)}</span>
+                    <span className="text-gray-700 font-medium">Time Taken:</span>
+                    <span className="font-semibold text-gray-900">{formatDuration(submission.startedAt, submission.submittedAt)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Started:</span>
-                    <span className="font-semibold">{new Date(submission.startedAt).toLocaleString()}</span>
+                    <span className="text-gray-700 font-medium">Started:</span>
+                    <span className="font-semibold text-gray-900">{new Date(submission.startedAt).toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Completed:</span>
-                    <span className="font-semibold">{new Date(submission.submittedAt).toLocaleString()}</span>
+                    <span className="text-gray-700 font-medium">Completed:</span>
+                    <span className="font-semibold text-gray-900">{new Date(submission.submittedAt).toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Time Limit:</span>
-                    <span className="font-semibold">
+                    <span className="text-gray-700 font-medium">Time Limit:</span>
+                    <span className="font-semibold text-gray-900">
                       {submission.examPaper.timeLimitMin ? `${submission.examPaper.timeLimitMin} minutes` : 'No limit'}
                     </span>
                   </div>
@@ -271,11 +271,11 @@ export default function PracticeTestResultsPage() {
                     <div className="mt-4 space-y-2 text-sm">
                       <div className="flex items-center space-x-2">
                         <div className="w-3 h-3 bg-green-100 border border-green-300 rounded"></div>
-                        <span className="text-gray-600">Correct</span>
+                        <span className="text-gray-700">Correct</span>
                       </div>
                       <div className="flex items-center space-x-2">
                         <div className="w-3 h-3 bg-red-100 border border-red-300 rounded"></div>
-                        <span className="text-gray-600">Incorrect</span>
+                        <span className="text-gray-700">Incorrect</span>
                       </div>
                     </div>
                   </div>
@@ -352,7 +352,7 @@ export default function PracticeTestResultsPage() {
                                       }`}>
                                         {option.text}
                                       </span>
-                                      {isSelected && <span className="text-sm text-gray-500">(Your answer)</span>}
+                                      {isSelected && <span className="text-sm text-gray-600">(Your answer)</span>}
                                       {isCorrect && <span className="text-sm text-green-600 font-medium">(Correct answer)</span>}
                                     </div>
                                   </div>
@@ -394,9 +394,7 @@ export default function PracticeTestResultsPage() {
                                             {altExp.source === 'REPORT_APPROVED' ? 'Student Suggested' : 'Community'}
                                           </span>
                                         </div>
-                                        <p className="text-green-800 leading-relaxed whitespace-pre-wrap">
-                                          {altExp.explanation}
-                                        </p>
+                                        <p className="text-green-800 leading-relaxed whitespace-pre-wrap">{altExp.explanation}</p>
                                         <div className="mt-2 text-xs text-green-600">
                                           Added on {new Date(altExp.createdAt).toLocaleDateString()}
                                         </div>
@@ -411,57 +409,25 @@ export default function PracticeTestResultsPage() {
                       })()}
                     </div>
                   )}
-
-                  {selectedQuestionIndex === null && (
-                    <div className="text-center py-12">
-                      <div className="text-4xl mb-4">📝</div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Select a Question</h3>
-                      <p className="text-gray-600">Click on any question number to review your answer and see the explanation.</p>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={() => router.push('/student/practice')}
-                  className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-                >
-                  Take Another Test
-                </button>
-                <button
-                  onClick={() => router.push('/student/performance')}
-                  className="flex-1 bg-gray-600 text-white py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors font-semibold"
-                >
-                  View Performance
-                </button>
-                <button
-                  onClick={() => router.push('/student')}
-                  className="flex-1 bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors font-semibold"
-                >
-                  Back to Dashboard
-                </button>
-              </div>
-            </div>
+            {/* Question Report Modal */}
+            {reportModalOpen && selectedQuestionForReport && (
+              <QuestionReportModal
+                isOpen={reportModalOpen}
+                onClose={() => {
+                  setReportModalOpen(false);
+                  setSelectedQuestionForReport(null);
+                }}
+                questionId={selectedQuestionForReport.id}
+                questionStem={selectedQuestionForReport.stem}
+                currentExplanation={selectedQuestionForReport.explanation}
+                currentOptions={selectedQuestionForReport.options}
+              />
+            )}
           </div>
-
-          {/* Question Report Modal */}
-          {reportModalOpen && selectedQuestionForReport && (
-            <QuestionReportModal
-              isOpen={reportModalOpen}
-              onClose={() => {
-                setReportModalOpen(false);
-                setSelectedQuestionForReport(null);
-              }}
-              questionId={selectedQuestionForReport.id}
-              questionStem={selectedQuestionForReport.stem}
-              currentExplanation={selectedQuestionForReport.explanation}
-              currentOptions={selectedQuestionForReport.options}
-            />
-          )}
         </StudentLayout>
       </SubscriptionGuard>
     </ProtectedRoute>

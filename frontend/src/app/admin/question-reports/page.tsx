@@ -110,6 +110,11 @@ export default function AdminQuestionReportsPage() {
       setTotalPages(response.data.pagination.pages);
     } catch (error) {
       console.error('Error loading reports:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to load question reports'
+      });
     } finally {
       setLoading(false);
     }
@@ -121,46 +126,6 @@ export default function AdminQuestionReportsPage() {
       setStats(response.data);
     } catch (error) {
       console.error('Error loading stats:', error);
-    }
-  };
-
-  const handleReview = async () => {
-    if (!selectedReport) return;
-
-    try {
-      await api.post(`/admin/question-reports/${selectedReport.id}/review`, {
-        status: reviewStatus,
-        reviewNotes: reviewNotes || undefined
-      });
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Report Reviewed',
-        text: `Report has been ${reviewStatus.toLowerCase()} successfully.`
-      });
-
-      setReviewModalOpen(false);
-      setSelectedReport(null);
-      setReviewStatus('APPROVED');
-      setReviewNotes('');
-      loadReports();
-      loadStats();
-    } catch (error) {
-      console.error('Error reviewing report:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Review Failed',
-        text: 'Failed to review the report. Please try again.'
-      });
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'PENDING': return 'bg-yellow-100 text-yellow-800';
-      case 'APPROVED': return 'bg-green-100 text-green-800';
-      case 'REJECTED': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -176,12 +141,55 @@ export default function AdminQuestionReportsPage() {
     }
   };
 
-  if (loading && !stats) {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'PENDING': return 'bg-yellow-100 text-yellow-800';
+      case 'APPROVED': return 'bg-green-100 text-green-800';
+      case 'REJECTED': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const handleReview = async () => {
+    if (!selectedReport) return;
+
+    try {
+      await api.post(`/admin/question-reports/${selectedReport.id}/review`, {
+        status: reviewStatus,
+        reviewNotes: reviewNotes || undefined
+      });
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: `Report ${reviewStatus.toLowerCase()} successfully`
+      });
+
+      setReviewModalOpen(false);
+      setSelectedReport(null);
+      setReviewStatus('APPROVED');
+      setReviewNotes('');
+      loadReports();
+      loadStats();
+    } catch (error) {
+      console.error('Error reviewing report:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to review report'
+      });
+    }
+  };
+
+  if (loading) {
     return (
       <ProtectedRoute requiredRole="ADMIN">
         <AdminLayout>
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-700">Loading question reports...</p>
+            </div>
           </div>
         </AdminLayout>
       </ProtectedRoute>
@@ -193,9 +201,9 @@ export default function AdminQuestionReportsPage() {
       <AdminLayout>
         <div className="space-y-6">
           {/* Header */}
-          <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-lg p-6 text-white">
+          <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-6 text-white">
             <h1 className="text-3xl font-bold mb-2">Question Reports</h1>
-            <p className="text-orange-100">Manage and review student question reports</p>
+            <p className="text-red-100">Manage and review student question reports</p>
           </div>
 
           {/* Stats Cards */}
@@ -261,28 +269,29 @@ export default function AdminQuestionReportsPage() {
 
           {/* Filters */}
           <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex flex-col md:flex-row gap-4">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Filters</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex-1">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Status</label>
                 <select
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                 >
                   {statusOptions.map(option => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
+                    <option key={option.value} value={option.value} className="text-gray-900 bg-white">{option.label}</option>
                   ))}
                 </select>
               </div>
               <div className="flex-1">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Type</label>
                 <select
                   value={selectedType}
                   onChange={(e) => setSelectedType(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                 >
                   {reportTypes.map(option => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
+                    <option key={option.value} value={option.value} className="text-gray-900 bg-white">{option.label}</option>
                   ))}
                 </select>
               </div>
@@ -329,28 +338,28 @@ export default function AdminQuestionReportsPage() {
                             <div className="text-sm font-medium text-gray-900">
                               {report.reportType.replace(/_/g, ' ')}
                             </div>
-                            <div className="text-sm text-gray-500">{report.reason}</div>
+                            <div className="text-sm text-gray-700">{report.reason}</div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="max-w-xs">
                           <div className="text-sm text-gray-900 truncate">{report.question.stem}</div>
-                          <div className="text-sm text-gray-500">
-                            {report.question.subject.name} ({report.question.subject.stream.code})
+                          <div className="text-sm text-gray-700">
+                            {report.question.subject?.name || 'No Subject'} ({report.question.subject?.stream?.code || 'No Stream'})
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">{report.user.fullName}</div>
-                        <div className="text-sm text-gray-500">{report.user.email}</div>
+                        <div className="text-sm text-gray-700">{report.user.email}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(report.status)}`}>
                           {report.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                         {new Date(report.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -365,7 +374,7 @@ export default function AdminQuestionReportsPage() {
                             Review
                           </button>
                         ) : (
-                          <span className="text-gray-500">Reviewed</span>
+                          <span className="text-gray-700">Reviewed</span>
                         )}
                       </td>
                     </tr>
@@ -382,7 +391,7 @@ export default function AdminQuestionReportsPage() {
                   </svg>
                 </div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No Reports Found</h3>
-                <p className="text-gray-600">No question reports match your current filters.</p>
+                <p className="text-gray-700">No question reports match your current filters.</p>
               </div>
             )}
 
@@ -428,47 +437,56 @@ export default function AdminQuestionReportsPage() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h3 className="font-medium text-gray-900 mb-2">Report Details</h3>
                   <div className="space-y-2 text-sm">
-                    <div><strong>Type:</strong> {selectedReport.reportType.replace(/_/g, ' ')}</div>
-                    <div><strong>Reason:</strong> {selectedReport.reason}</div>
+                    <div className="text-gray-900"><strong>Type:</strong> {selectedReport.reportType.replace(/_/g, ' ')}</div>
+                    <div className="text-gray-900"><strong>Reason:</strong> {selectedReport.reason}</div>
                     {selectedReport.description && (
-                      <div><strong>Description:</strong> {selectedReport.description}</div>
+                      <div className="text-gray-900"><strong>Description:</strong> {selectedReport.description}</div>
                     )}
+                    <div className="text-gray-900"><strong>Student:</strong> {selectedReport.user.fullName} ({selectedReport.user.email})</div>
+                    <div className="text-gray-900"><strong>Date:</strong> {new Date(selectedReport.createdAt).toLocaleString()}</div>
                   </div>
                 </div>
 
                 {/* Question Details */}
                 <div className="bg-gray-50 rounded-lg p-4">
-                  <h3 className="font-medium text-gray-900 mb-2">Question</h3>
-                  <p className="text-sm text-gray-700 mb-2">{selectedReport.question.stem}</p>
-                  {selectedReport.question.explanation && (
-                    <div>
-                      <strong className="text-sm">Current Explanation:</strong>
-                      <p className="text-sm text-gray-700 mt-1">{selectedReport.question.explanation}</p>
-                    </div>
-                  )}
+                  <h3 className="font-medium text-gray-900 mb-2">Question Details</h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="text-gray-900"><strong>Question:</strong> {selectedReport.question.stem}</div>
+                    <div className="text-gray-900"><strong>Subject:</strong> {selectedReport.question.subject?.name || 'No Subject'} ({selectedReport.question.subject?.stream?.code || 'No Stream'})</div>
+                    {selectedReport.question.explanation && (
+                      <div className="text-gray-900"><strong>Current Explanation:</strong> {selectedReport.question.explanation}</div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Alternative Explanation */}
-                {selectedReport.alternativeExplanation && (
+                {selectedReport.reportType === 'SUGGESTED_EXPLANATION' && selectedReport.alternativeExplanation && (
                   <div className="bg-blue-50 rounded-lg p-4">
                     <h3 className="font-medium text-blue-900 mb-2">Suggested Explanation</h3>
-                    <p className="text-sm text-blue-700">{selectedReport.alternativeExplanation}</p>
+                    <p className="text-blue-800 text-sm">{selectedReport.alternativeExplanation}</p>
+                  </div>
+                )}
+
+                {/* Suggested Answer */}
+                {selectedReport.reportType === 'INCORRECT_ANSWER' && selectedReport.suggestedAnswer && (
+                  <div className="bg-green-50 rounded-lg p-4">
+                    <h3 className="font-medium text-green-900 mb-2">Suggested Answer</h3>
+                    <p className="text-green-800 text-sm">{selectedReport.suggestedAnswer}</p>
                   </div>
                 )}
 
                 {/* Suggested Options */}
-                {selectedReport.suggestedOptions.length > 0 && (
+                {selectedReport.reportType === 'INCORRECT_ANSWER' && selectedReport.suggestedOptions && selectedReport.suggestedOptions.length > 0 && (
                   <div className="bg-green-50 rounded-lg p-4">
                     <h3 className="font-medium text-green-900 mb-2">Suggested Options</h3>
                     <div className="space-y-2">
                       {selectedReport.suggestedOptions.map((option, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <span className={`w-4 h-4 rounded-full flex items-center justify-center text-xs ${
-                            option.isCorrect ? 'bg-green-500 text-white' : 'bg-gray-300'
-                          }`}>
-                            {option.isCorrect ? '✓' : '○'}
-                          </span>
-                          <span className="text-sm text-green-700">{option.text}</span>
+                        <div key={index} className="flex items-center space-x-2">
+                          <span className="text-sm text-green-800">{index + 1}.</span>
+                          <span className="text-sm text-green-800">{option.text}</span>
+                          {option.isCorrect && (
+                            <span className="text-xs bg-green-200 text-green-800 px-2 py-1 rounded">Correct</span>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -477,10 +495,8 @@ export default function AdminQuestionReportsPage() {
 
                 {/* Review Decision */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
-                    Review Decision *
-                  </label>
-                  <div className="flex space-x-4">
+                  <label className="block text-sm font-medium text-gray-900 mb-2">Review Decision</label>
+                  <div className="space-y-2">
                     <label className="flex items-center">
                       <input
                         type="radio"
@@ -489,7 +505,7 @@ export default function AdminQuestionReportsPage() {
                         onChange={(e) => setReviewStatus(e.target.value as 'APPROVED' | 'REJECTED')}
                         className="mr-2"
                       />
-                      <span className="text-sm text-gray-700">Approve</span>
+                      <span className="text-sm text-gray-900">Approve</span>
                     </label>
                     <label className="flex items-center">
                       <input
@@ -499,22 +515,20 @@ export default function AdminQuestionReportsPage() {
                         onChange={(e) => setReviewStatus(e.target.value as 'APPROVED' | 'REJECTED')}
                         className="mr-2"
                       />
-                      <span className="text-sm text-gray-700">Reject</span>
+                      <span className="text-sm text-gray-900">Reject</span>
                     </label>
                   </div>
                 </div>
 
                 {/* Review Notes */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Review Notes
-                  </label>
+                  <label className="block text-sm font-medium text-gray-900 mb-2">Review Notes (Optional)</label>
                   <textarea
                     value={reviewNotes}
                     onChange={(e) => setReviewNotes(e.target.value)}
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Add notes about your decision..."
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                    placeholder="Add any notes about your decision..."
                   />
                 </div>
               </div>
@@ -533,13 +547,9 @@ export default function AdminQuestionReportsPage() {
                 </button>
                 <button
                   onClick={handleReview}
-                  className={`px-4 py-2 text-white rounded-md transition-colors ${
-                    reviewStatus === 'APPROVED' 
-                      ? 'bg-green-500 hover:bg-green-600' 
-                      : 'bg-red-500 hover:bg-red-600'
-                  }`}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
                 >
-                  {reviewStatus === 'APPROVED' ? 'Approve' : 'Reject'}
+                  Submit Review
                 </button>
               </div>
             </div>
