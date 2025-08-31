@@ -108,6 +108,39 @@ async function main() {
         },
     });
     console.log('🎁 Created free trial plan for referrals');
+    const jeeStream = await prisma.stream.create({
+        data: {
+            name: 'JEE (Joint Entrance Examination)',
+            description: 'Engineering entrance examination for IITs, NITs, and other engineering colleges',
+            code: 'JEE',
+            isActive: true,
+        },
+    });
+    const neetStream = await prisma.stream.create({
+        data: {
+            name: 'NEET (National Eligibility cum Entrance Test)',
+            description: 'Medical entrance examination for MBBS, BDS, and other medical courses',
+            code: 'NEET',
+            isActive: true,
+        },
+    });
+    const clatStream = await prisma.stream.create({
+        data: {
+            name: 'CLAT (Common Law Admission Test)',
+            description: 'Law entrance examination for NLUs and other law colleges',
+            code: 'CLAT',
+            isActive: true,
+        },
+    });
+    const competitiveStream = await prisma.stream.create({
+        data: {
+            name: 'Other Competitive Exams',
+            description: 'Various other competitive examinations',
+            code: 'COMPETITIVE',
+            isActive: true,
+        },
+    });
+    console.log('🎯 Created streams');
     const tags = await Promise.all([
         prisma.tag.create({ data: { name: 'Previous Year' } }),
         prisma.tag.create({ data: { name: 'JEE Mains' } }),
@@ -123,21 +156,73 @@ async function main() {
         data: {
             name: 'Physics',
             description: 'Physics for JEE Mains and Advanced',
+            streamId: jeeStream.id,
         },
     });
     const chemistry = await prisma.subject.create({
         data: {
             name: 'Chemistry',
             description: 'Chemistry for JEE Mains and Advanced',
+            streamId: jeeStream.id,
         },
     });
     const mathematics = await prisma.subject.create({
         data: {
             name: 'Mathematics',
             description: 'Mathematics for JEE Mains and Advanced',
+            streamId: jeeStream.id,
         },
     });
-    console.log('📚 Created subjects');
+    const neetPhysics = await prisma.subject.create({
+        data: {
+            name: 'Physics',
+            description: 'Physics for NEET',
+            streamId: neetStream.id,
+        },
+    });
+    const neetChemistry = await prisma.subject.create({
+        data: {
+            name: 'Chemistry',
+            description: 'Chemistry for NEET',
+            streamId: neetStream.id,
+        },
+    });
+    const biology = await prisma.subject.create({
+        data: {
+            name: 'Biology',
+            description: 'Biology for NEET',
+            streamId: neetStream.id,
+        },
+    });
+    const english = await prisma.subject.create({
+        data: {
+            name: 'English',
+            description: 'English for CLAT',
+            streamId: clatStream.id,
+        },
+    });
+    const logicalReasoning = await prisma.subject.create({
+        data: {
+            name: 'Logical Reasoning',
+            description: 'Logical Reasoning for CLAT',
+            streamId: clatStream.id,
+        },
+    });
+    const legalAptitude = await prisma.subject.create({
+        data: {
+            name: 'Legal Aptitude',
+            description: 'Legal Aptitude for CLAT',
+            streamId: clatStream.id,
+        },
+    });
+    const generalKnowledge = await prisma.subject.create({
+        data: {
+            name: 'General Knowledge',
+            description: 'General Knowledge for CLAT',
+            streamId: clatStream.id,
+        },
+    });
+    console.log('📚 Created subjects for all streams');
     const mechanics = await prisma.topic.create({
         data: {
             name: 'Mechanics',

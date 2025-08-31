@@ -17,8 +17,16 @@ let UsersService = class UsersService {
         this.prisma = prisma;
     }
     createUser(params) {
-        const { email, fullName, hashedPassword, phone } = params;
-        return this.prisma.user.create({ data: { email, fullName, hashedPassword, phone: phone || null } });
+        const { email, fullName, hashedPassword, phone, streamId } = params;
+        return this.prisma.user.create({
+            data: {
+                email,
+                fullName,
+                hashedPassword,
+                phone: phone || null,
+                streamId: streamId || null
+            }
+        });
     }
     findByEmail(email) {
         return this.prisma.user.findUnique({ where: { email } });

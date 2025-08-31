@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { OtpService } from './otp.service';
 import { ReferralsService } from '../referrals/referrals.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
@@ -12,13 +13,27 @@ export class AuthService {
 		private readonly jwt: JwtService,
 		private readonly otp: OtpService,
 		private readonly referralsService: ReferralsService,
+		private readonly prisma: PrismaService,
 	) {}
 
-	async register(params: { email: string; password: string; fullName: string; phone?: string; referralCode?: string }) {
+	async register(params: { email: string; password: string; fullName: string; phone?: string; referralCode?: string; streamId: string }) {
 		const existing = await this.users.findByEmail(params.email);
 		if (existing) throw new BadRequestException('Email already registered');
+		
+		// Validate stream exists
+		const stream = await this.prisma.stream.findUnique({
+			where: { id: params.streamId, isActive: true }
+		});
+		if (!stream) throw new BadRequestException('Invalid stream selected');
+		
 		const hashedPassword = await bcrypt.hash(params.password, 10);
-		const user = await this.users.createUser({ email: params.email, fullName: params.fullName, hashedPassword, phone: params.phone });
+		const user = await this.users.createUser({ 
+			email: params.email, 
+			fullName: params.fullName, 
+			hashedPassword, 
+			phone: params.phone,
+			streamId: params.streamId
+		});
 		const days = Number(process.env.FREE_TRIAL_DAYS || 2);
 		const started = new Date();
 		const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);

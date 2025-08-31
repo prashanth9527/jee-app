@@ -9,6 +9,7 @@ export declare class AdminQuestionsController {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
+                streamId: string;
                 name: string;
                 description: string | null;
             } | null;
@@ -73,6 +74,7 @@ export declare class AdminQuestionsController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            streamId: string;
             name: string;
             description: string | null;
         } | null;

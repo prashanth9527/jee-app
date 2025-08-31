@@ -6,6 +6,7 @@ export declare class AdminSubjectsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        streamId: string;
         name: string;
         description: string | null;
     }[]>;
@@ -16,6 +17,7 @@ export declare class AdminSubjectsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        streamId: string;
         name: string;
         description: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
@@ -26,6 +28,7 @@ export declare class AdminSubjectsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        streamId: string;
         name: string;
         description: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
@@ -33,6 +36,7 @@ export declare class AdminSubjectsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        streamId: string;
         name: string;
         description: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;

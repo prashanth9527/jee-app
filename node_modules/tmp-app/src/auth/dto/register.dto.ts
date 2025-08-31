@@ -1,4 +1,4 @@
-import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MinLength, IsNotEmpty } from 'class-validator';
 
 export class RegisterDto {
 	@IsEmail()
@@ -18,4 +18,8 @@ export class RegisterDto {
 	@IsOptional()
 	@IsString()
 	referralCode?: string;
+
+	@IsNotEmpty()
+	@IsString()
+	streamId!: string;
 } 

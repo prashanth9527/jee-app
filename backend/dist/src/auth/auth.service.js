@@ -16,19 +16,32 @@ const jwt_1 = require("@nestjs/jwt");
 const bcrypt = require("bcrypt");
 const otp_service_1 = require("./otp.service");
 const referrals_service_1 = require("../referrals/referrals.service");
+const prisma_service_1 = require("../prisma/prisma.service");
 let AuthService = class AuthService {
-    constructor(users, jwt, otp, referralsService) {
+    constructor(users, jwt, otp, referralsService, prisma) {
         this.users = users;
         this.jwt = jwt;
         this.otp = otp;
         this.referralsService = referralsService;
+        this.prisma = prisma;
     }
     async register(params) {
         const existing = await this.users.findByEmail(params.email);
         if (existing)
             throw new common_1.BadRequestException('Email already registered');
+        const stream = await this.prisma.stream.findUnique({
+            where: { id: params.streamId, isActive: true }
+        });
+        if (!stream)
+            throw new common_1.BadRequestException('Invalid stream selected');
         const hashedPassword = await bcrypt.hash(params.password, 10);
-        const user = await this.users.createUser({ email: params.email, fullName: params.fullName, hashedPassword, phone: params.phone });
+        const user = await this.users.createUser({
+            email: params.email,
+            fullName: params.fullName,
+            hashedPassword,
+            phone: params.phone,
+            streamId: params.streamId
+        });
         const days = Number(process.env.FREE_TRIAL_DAYS || 2);
         const started = new Date();
         const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);
@@ -98,6 +111,7 @@ exports.AuthService = AuthService = __decorate([
     __metadata("design:paramtypes", [users_service_1.UsersService,
         jwt_1.JwtService,
         otp_service_1.OtpService,
-        referrals_service_1.ReferralsService])
+        referrals_service_1.ReferralsService,
+        prisma_service_1.PrismaService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

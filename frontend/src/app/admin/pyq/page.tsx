@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { api } from '@/lib/api';
+import api from '@/lib/api';
 import Swal from 'sweetalert2';
 
 interface Question {
@@ -10,9 +10,9 @@ interface Question {
   explanation?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   yearAppeared?: number;
-  subject?: { name: string };
-  topic?: { name: string };
-  subtopic?: { name: string };
+  subject?: { id: string; name: string };
+  topic?: { id: string; name: string };
+  subtopic?: { id: string; name: string };
   options: { id: string; text: string; isCorrect: boolean; order: number }[];
   tags: { tag: { name: string } }[];
 }

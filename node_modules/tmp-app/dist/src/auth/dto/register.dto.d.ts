@@ -4,4 +4,5 @@ export declare class RegisterDto {
     password: string;
     fullName: string;
     referralCode?: string;
+    streamId: string;
 }

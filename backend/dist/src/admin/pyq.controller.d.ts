@@ -19,6 +19,7 @@ export declare class AdminPYQController {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
+                streamId: string;
                 name: string;
                 description: string | null;
             } | null;
@@ -97,6 +98,7 @@ export declare class AdminPYQController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            streamId: string;
             name: string;
             description: string | null;
         } | null;
@@ -167,6 +169,7 @@ export declare class AdminPYQController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            streamId: string;
             name: string;
             description: string | null;
         } | null;

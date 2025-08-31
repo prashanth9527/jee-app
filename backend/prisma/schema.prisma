@@ -26,6 +26,8 @@ model User {
   hashedPassword String
   fullName       String
   role           UserRole @default(STUDENT)
+  stream         Stream?  @relation(fields: [streamId], references: [id])
+  streamId       String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -52,16 +54,35 @@ enum UserRole {
 }
 
 // -------------------------------------------
+// Streams & Subjects
+// -------------------------------------------
+model Stream {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String?
+  code        String     @unique // JEE, NEET, CLAT, etc.
+  isActive    Boolean    @default(true)
+  subjects    Subject[]
+  users       User[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+// -------------------------------------------
 // Content Hierarchy: Subject -> Topic -> Subtopic
 // -------------------------------------------
 model Subject {
   id          String     @id @default(cuid())
-  name        String     @unique
+  name        String
   description String?
+  stream      Stream     @relation(fields: [streamId], references: [id], onDelete: Cascade)
+  streamId    String
   topics      Topic[]
   questions   Question[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+
+  @@unique([streamId, name])
 }
 
 model Topic {

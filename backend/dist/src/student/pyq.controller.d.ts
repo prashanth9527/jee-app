@@ -11,6 +11,7 @@ export declare class PYQController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        streamId: string;
         name: string;
         description: string | null;
     })[]>;
@@ -19,6 +20,7 @@ export declare class PYQController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            streamId: string;
             name: string;
             description: string | null;
         };
@@ -39,6 +41,7 @@ export declare class PYQController {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
+                streamId: string;
                 name: string;
                 description: string | null;
             } | null;
@@ -103,6 +106,7 @@ export declare class PYQController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            streamId: string;
             name: string;
             description: string | null;
         } | null;
@@ -174,6 +178,7 @@ export declare class PYQController {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
+                streamId: string;
                 name: string;
                 description: string | null;
             } | null;

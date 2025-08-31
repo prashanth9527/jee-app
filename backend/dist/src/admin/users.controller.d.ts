@@ -41,6 +41,7 @@ export declare class AdminUsersController {
             updatedAt: Date;
             trialStartedAt: Date | null;
             trialEndsAt: Date | null;
+            streamId: string | null;
         })[];
         pagination: {
             currentPage: number;
@@ -105,6 +106,7 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }>;
     updateUser(id: string, body: {
         fullName?: string;
@@ -131,6 +133,7 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }>;
     deleteUser(id: string): Promise<{
         id: string;
@@ -145,6 +148,7 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }>;
     verifyEmail(id: string): Promise<{
         id: string;
@@ -159,6 +163,7 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }>;
     verifyPhone(id: string): Promise<{
         id: string;
@@ -173,6 +178,7 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }>;
     startTrial(id: string, body: {
         days?: number;
@@ -189,6 +195,7 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }>;
     endTrial(id: string): Promise<{
         id: string;
@@ -203,6 +210,7 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }>;
     getAnalytics(): Promise<{
         overview: {

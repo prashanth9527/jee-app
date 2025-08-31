@@ -27,6 +27,7 @@ export declare class AdminTagsController {
                     id: string;
                     createdAt: Date;
                     updatedAt: Date;
+                    streamId: string;
                     name: string;
                     description: string | null;
                 } | null;

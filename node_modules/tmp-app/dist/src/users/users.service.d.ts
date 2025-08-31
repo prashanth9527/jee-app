@@ -7,6 +7,7 @@ export declare class UsersService {
         fullName: string;
         hashedPassword: string;
         phone?: string | null;
+        streamId?: string;
     }): import(".prisma/client").Prisma.Prisma__UserClient<{
         id: string;
         email: string;
@@ -20,6 +21,7 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     findByEmail(email: string): import(".prisma/client").Prisma.Prisma__UserClient<{
         id: string;
@@ -34,6 +36,7 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     } | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     findById(id: string): import(".prisma/client").Prisma.Prisma__UserClient<{
         id: string;
@@ -48,6 +51,7 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     } | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     setEmailVerified(userId: string): Promise<{
         id: string;
@@ -62,6 +66,7 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }>;
     setPhoneVerified(userId: string): Promise<{
         id: string;
@@ -76,6 +81,7 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }>;
     updateTrial(userId: string, startedAt: Date, endsAt: Date): Promise<{
         id: string;
@@ -90,5 +96,6 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        streamId: string | null;
     }>;
 }
