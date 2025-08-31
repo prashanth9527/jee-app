@@ -12,17 +12,41 @@ export class AdminSubjectsController {
 
 	@Get()
 	list() {
-		return this.prisma.subject.findMany({ orderBy: { name: 'asc' } });
+		return this.prisma.subject.findMany({ 
+			orderBy: { name: 'asc' },
+			include: {
+				stream: {
+					select: {
+						id: true,
+						name: true,
+						code: true
+					}
+				}
+			}
+		});
 	}
 
 	@Post()
-	create(@Body() body: { name: string; description?: string }) {
-		return this.prisma.subject.create({ data: { name: body.name, description: body.description || null } });
+	create(@Body() body: { name: string; description?: string; streamId: string }) {
+		return this.prisma.subject.create({ 
+			data: { 
+				name: body.name, 
+				description: body.description || null,
+				streamId: body.streamId
+			} 
+		});
 	}
 
 	@Put(':id')
-	update(@Param('id') id: string, @Body() body: { name?: string; description?: string }) {
-		return this.prisma.subject.update({ where: { id }, data: { name: body.name, description: body.description } });
+	update(@Param('id') id: string, @Body() body: { name?: string; description?: string; streamId?: string }) {
+		return this.prisma.subject.update({ 
+			where: { id }, 
+			data: { 
+				name: body.name, 
+				description: body.description,
+				streamId: body.streamId
+			} 
+		});
 	}
 
 	@Delete(':id')

@@ -8,33 +8,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const config_1 = require("@nestjs/config");
 const app_controller_1 = require("./app.controller");
+const app_service_1 = require("./app.service");
 const prisma_module_1 = require("./prisma/prisma.module");
-const users_module_1 = require("./users/users.module");
 const auth_module_1 = require("./auth/auth.module");
+const users_module_1 = require("./users/users.module");
 const admin_module_1 = require("./admin/admin.module");
 const student_module_1 = require("./student/student.module");
-const exams_module_1 = require("./exams/exams.module");
 const subscriptions_module_1 = require("./subscriptions/subscriptions.module");
 const referrals_module_1 = require("./referrals/referrals.module");
+const ai_module_1 = require("./ai/ai.module");
+const exams_module_1 = require("./exams/exams.module");
+const streams_module_1 = require("./streams/streams.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            config_1.ConfigModule.forRoot({ isGlobal: true }),
             prisma_module_1.PrismaModule,
-            users_module_1.UsersModule,
             auth_module_1.AuthModule,
+            users_module_1.UsersModule,
             admin_module_1.AdminModule,
             student_module_1.StudentModule,
-            exams_module_1.ExamsModule,
             subscriptions_module_1.SubscriptionsModule,
             referrals_module_1.ReferralsModule,
+            ai_module_1.AIModule,
+            exams_module_1.ExamsModule,
+            streams_module_1.StreamsModule,
         ],
         controllers: [app_controller_1.AppController],
+        providers: [app_service_1.AppService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

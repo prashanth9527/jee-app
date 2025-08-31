@@ -245,6 +245,11 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
             <div className="flex items-center space-x-6">
               <div className="text-sm font-medium text-gray-700">
                 Welcome, <span className="font-semibold text-gray-900">{user?.fullName || 'Student'}</span>
+                {user?.stream && (
+                  <span className="ml-2 text-xs text-gray-500">
+                    • {user.stream.name}
+                  </span>
+                )}
               </div>
               <div className="flex items-center space-x-3">
                 {subscriptionStatus && (

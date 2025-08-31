@@ -447,8 +447,21 @@ export class StudentController {
 	}
 
 	@Get('subjects')
-	async getSubjects() {
+	async getSubjects(@Req() req: any) {
+		const userId = req.user.id;
+		
+		// Get user's stream
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: { streamId: true }
+		});
+
+		if (!user?.streamId) {
+			throw new ForbiddenException('No stream assigned to user');
+		}
+
 		return this.prisma.subject.findMany({
+			where: { streamId: user.streamId },
 			orderBy: { name: 'asc' },
 			select: {
 				id: true,

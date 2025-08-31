@@ -382,8 +382,17 @@ let StudentController = class StudentController {
             }
         });
     }
-    async getSubjects() {
+    async getSubjects(req) {
+        const userId = req.user.id;
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+            select: { streamId: true }
+        });
+        if (!user?.streamId) {
+            throw new common_1.ForbiddenException('No stream assigned to user');
+        }
         return this.prisma.subject.findMany({
+            where: { streamId: user.streamId },
             orderBy: { name: 'asc' },
             select: {
                 id: true,
@@ -522,8 +531,9 @@ __decorate([
 ], StudentController.prototype, "updateProfile", null);
 __decorate([
     (0, common_1.Get)('subjects'),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getSubjects", null);
 __decorate([

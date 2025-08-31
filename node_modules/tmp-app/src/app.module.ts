@@ -1,27 +1,31 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
-import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 import { AdminModule } from './admin/admin.module';
 import { StudentModule } from './student/student.module';
-import { ExamsModule } from './exams/exams.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { ReferralsModule } from './referrals/referrals.module';
+import { AIModule } from './ai/ai.module';
+import { ExamsModule } from './exams/exams.module';
+import { StreamsModule } from './streams/streams.module';
 
 @Module({
-	imports: [
-		ConfigModule.forRoot({ isGlobal: true }),
-		PrismaModule,
-		UsersModule,
-		AuthModule,
-		AdminModule,
-		StudentModule,
-		ExamsModule,
-		SubscriptionsModule,
-		ReferralsModule,
-	],
-	controllers: [AppController],
+  imports: [
+    PrismaModule,
+    AuthModule,
+    UsersModule,
+    AdminModule,
+    StudentModule,
+    SubscriptionsModule,
+    ReferralsModule,
+    AIModule,
+    ExamsModule,
+    StreamsModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

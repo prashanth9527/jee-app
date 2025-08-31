@@ -1,51 +1,55 @@
 import { PrismaService } from '../prisma/prisma.service';
-export declare class AdminSubjectsController {
+export declare class AdminStreamsController {
     private readonly prisma;
     constructor(prisma: PrismaService);
     list(): import(".prisma/client").Prisma.PrismaPromise<({
-        stream: {
-            id: string;
-            name: string;
-            code: string;
+        _count: {
+            subjects: number;
+            users: number;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        streamId: string;
         name: string;
         description: string | null;
+        isActive: boolean;
+        code: string;
     })[]>;
     create(body: {
         name: string;
         description?: string;
-        streamId: string;
-    }): import(".prisma/client").Prisma.Prisma__SubjectClient<{
+        code: string;
+    }): import(".prisma/client").Prisma.Prisma__StreamClient<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        streamId: string;
         name: string;
         description: string | null;
+        isActive: boolean;
+        code: string;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     update(id: string, body: {
         name?: string;
         description?: string;
-        streamId?: string;
-    }): import(".prisma/client").Prisma.Prisma__SubjectClient<{
+        code?: string;
+        isActive?: boolean;
+    }): Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        streamId: string;
         name: string;
         description: string | null;
-    }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
-    remove(id: string): import(".prisma/client").Prisma.Prisma__SubjectClient<{
+        isActive: boolean;
+        code: string;
+    }>;
+    remove(id: string): Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        streamId: string;
         name: string;
         description: string | null;
-    }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
+        isActive: boolean;
+        code: string;
+    }>;
 }

@@ -9,6 +9,11 @@ interface User {
   fullName: string;
   role: 'ADMIN' | 'STUDENT';
   profilePicture?: string;
+  stream?: {
+    id: string;
+    name: string;
+    code: string;
+  };
 }
 
 interface AuthContextType {

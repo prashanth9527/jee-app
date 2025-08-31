@@ -10,6 +10,7 @@ exports.AdminModule = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_module_1 = require("../prisma/prisma.module");
 const subjects_controller_1 = require("./subjects.controller");
+const streams_controller_1 = require("./streams.controller");
 const topics_controller_1 = require("./topics.controller");
 const subtopics_controller_1 = require("./subtopics.controller");
 const tags_controller_1 = require("./tags.controller");
@@ -25,7 +26,12 @@ exports.AdminModule = AdminModule;
 exports.AdminModule = AdminModule = __decorate([
     (0, common_1.Module)({
         imports: [prisma_module_1.PrismaModule],
-        controllers: [subjects_controller_1.AdminSubjectsController, topics_controller_1.AdminTopicsController, subtopics_controller_1.AdminSubtopicsController, tags_controller_1.AdminTagsController, questions_controller_1.AdminQuestionsController, pyq_controller_1.AdminPYQController, exam_papers_controller_1.AdminExamPapersController, subscriptions_controller_1.AdminSubscriptionsController, users_controller_1.AdminUsersController, analytics_controller_1.AdminAnalyticsController],
+        controllers: [
+            subjects_controller_1.AdminSubjectsController, streams_controller_1.AdminStreamsController, topics_controller_1.AdminTopicsController, subtopics_controller_1.AdminSubtopicsController,
+            tags_controller_1.AdminTagsController, questions_controller_1.AdminQuestionsController, pyq_controller_1.AdminPYQController,
+            exam_papers_controller_1.AdminExamPapersController, subscriptions_controller_1.AdminSubscriptionsController, users_controller_1.AdminUsersController,
+            analytics_controller_1.AdminAnalyticsController
+        ],
     })
 ], AdminModule);
 //# sourceMappingURL=admin.module.js.map

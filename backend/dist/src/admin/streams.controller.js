@@ -12,86 +12,113 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminSubjectsController = void 0;
+exports.AdminStreamsController = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const jwt_guard_1 = require("../auth/jwt.guard");
 const roles_guard_1 = require("../auth/roles.guard");
 const roles_decorator_1 = require("../auth/roles.decorator");
-let AdminSubjectsController = class AdminSubjectsController {
+let AdminStreamsController = class AdminStreamsController {
     constructor(prisma) {
         this.prisma = prisma;
     }
     list() {
-        return this.prisma.subject.findMany({
+        return this.prisma.stream.findMany({
             orderBy: { name: 'asc' },
             include: {
-                stream: {
+                _count: {
                     select: {
-                        id: true,
-                        name: true,
-                        code: true
+                        subjects: true,
+                        users: true,
                     }
                 }
             }
         });
     }
     create(body) {
-        return this.prisma.subject.create({
+        return this.prisma.stream.create({
             data: {
                 name: body.name,
                 description: body.description || null,
-                streamId: body.streamId
+                code: body.code.toUpperCase(),
+                isActive: true
             }
         });
     }
-    update(id, body) {
-        return this.prisma.subject.update({
+    async update(id, body) {
+        console.log('Updating stream:', id, 'with data:', body);
+        try {
+            const updatedStream = await this.prisma.stream.update({
+                where: { id },
+                data: {
+                    name: body.name,
+                    description: body.description,
+                    code: body.code?.toUpperCase(),
+                    isActive: body.isActive
+                }
+            });
+            console.log('Stream updated successfully:', updatedStream);
+            return updatedStream;
+        }
+        catch (error) {
+            console.error('Error updating stream:', error);
+            throw error;
+        }
+    }
+    async remove(id) {
+        const stream = await this.prisma.stream.findUnique({
             where: { id },
-            data: {
-                name: body.name,
-                description: body.description,
-                streamId: body.streamId
+            include: {
+                _count: {
+                    select: {
+                        subjects: true,
+                        users: true,
+                    }
+                }
             }
         });
-    }
-    remove(id) {
-        return this.prisma.subject.delete({ where: { id } });
+        if (!stream) {
+            throw new Error('Stream not found');
+        }
+        if (stream._count.subjects > 0 || stream._count.users > 0) {
+            throw new Error(`Cannot delete stream with ${stream._count.subjects} subjects and ${stream._count.users} users`);
+        }
+        return this.prisma.stream.delete({ where: { id } });
     }
 };
-exports.AdminSubjectsController = AdminSubjectsController;
+exports.AdminStreamsController = AdminStreamsController;
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], AdminSubjectsController.prototype, "list", null);
+], AdminStreamsController.prototype, "list", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], AdminSubjectsController.prototype, "create", null);
+], AdminStreamsController.prototype, "create", null);
 __decorate([
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
-], AdminSubjectsController.prototype, "update", null);
+    __metadata("design:returntype", Promise)
+], AdminStreamsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], AdminSubjectsController.prototype, "remove", null);
-exports.AdminSubjectsController = AdminSubjectsController = __decorate([
-    (0, common_1.Controller)('admin/subjects'),
+    __metadata("design:returntype", Promise)
+], AdminStreamsController.prototype, "remove", null);
+exports.AdminStreamsController = AdminStreamsController = __decorate([
+    (0, common_1.Controller)('admin/streams'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)('ADMIN'),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
-], AdminSubjectsController);
-//# sourceMappingURL=subjects.controller.js.map
+], AdminStreamsController);
+//# sourceMappingURL=streams.controller.js.map

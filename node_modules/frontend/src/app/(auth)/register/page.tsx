@@ -5,6 +5,17 @@ import { useSearchParams } from 'next/navigation';
 import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 
+interface Stream {
+  id: string;
+  name: string;
+  description: string;
+  code: string;
+  _count: {
+    subjects: number;
+    users: number;
+  };
+}
+
 export default function RegisterPage() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -12,11 +23,31 @@ export default function RegisterPage() {
 	const [fullName, setFullName] = useState('');
 	const [phone, setPhone] = useState('');
 	const [password, setPassword] = useState('');
+	const [streamId, setStreamId] = useState('');
 	const [referralCode, setReferralCode] = useState('');
+	const [streams, setStreams] = useState<Stream[]>([]);
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [ok, setOk] = useState(false);
 	const [validatingCode, setValidatingCode] = useState(false);
 	const [codeValid, setCodeValid] = useState<boolean | null>(null);
+
+	// Fetch available streams
+	useEffect(() => {
+		const fetchStreams = async () => {
+			try {
+				const response = await api.get('/streams');
+				setStreams(response.data);
+			} catch (error) {
+				console.error('Error fetching streams:', error);
+				setError('Failed to load streams. Please refresh the page.');
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchStreams();
+	}, []);
 
 	// Check for referral code in URL
 	useEffect(() => {
@@ -44,8 +75,14 @@ export default function RegisterPage() {
 	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError(null);
+		
+		if (!streamId) {
+			setError('Please select a stream');
+			return;
+		}
+
 		try {
-			const registrationData: any = { email, fullName, phone, password };
+			const registrationData: any = { email, fullName, phone, password, streamId };
 			if (referralCode) {
 				registrationData.referralCode = referralCode;
 			}
@@ -57,6 +94,23 @@ export default function RegisterPage() {
 			setError(err?.response?.data?.message || 'Registration failed');
 		}
 	};
+
+	if (loading) {
+		return (
+			<div className="max-w-md mx-auto p-6">
+				<div className="animate-pulse">
+					<div className="h-8 bg-gray-200 rounded mb-4"></div>
+					<div className="space-y-3">
+						<div className="h-10 bg-gray-200 rounded"></div>
+						<div className="h-10 bg-gray-200 rounded"></div>
+						<div className="h-10 bg-gray-200 rounded"></div>
+						<div className="h-10 bg-gray-200 rounded"></div>
+						<div className="h-10 bg-gray-200 rounded"></div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="max-w-md mx-auto p-6">
@@ -115,6 +169,32 @@ export default function RegisterPage() {
 					required
 					minLength={6}
 				/>
+				
+				{/* Stream Selection */}
+				<div>
+					<label className="block text-sm font-medium text-gray-700 mb-1">
+						Select Your Stream *
+					</label>
+					<select
+						className="border p-2 w-full"
+						value={streamId}
+						onChange={(e) => setStreamId(e.target.value)}
+						required
+					>
+						<option value="">Choose your competitive exam stream</option>
+						{streams.map((stream) => (
+							<option key={stream.id} value={stream.id}>
+								{stream.name} ({stream.code})
+							</option>
+						))}
+					</select>
+					{streamId && (
+						<div className="mt-1 text-xs text-gray-600">
+							{streams.find(s => s.id === streamId)?.description}
+						</div>
+					)}
+				</div>
+
 				<input 
 					className="border p-2 w-full" 
 					placeholder="Referral code (optional)" 

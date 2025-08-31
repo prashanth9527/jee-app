@@ -180,7 +180,7 @@ export declare class StudentController {
         fullName: string;
         role: import(".prisma/client").$Enums.UserRole;
     }>;
-    getSubjects(): Promise<{
+    getSubjects(req: any): Promise<{
         id: string;
         name: string;
         description: string | null;

@@ -6,25 +6,44 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
 
+interface Stream {
+  id: string;
+  name: string;
+  code: string;
+}
+
 interface Subject {
   id: string;
   name: string;
+  description?: string;
   createdAt: string;
   updatedAt: string;
+  stream?: {
+    id: string;
+    name: string;
+    code: string;
+  };
 }
 
 export default function AdminSubjectsPage() {
 	const [subjects, setSubjects] = useState<Subject[]>([]);
+	const [streams, setStreams] = useState<Stream[]>([]);
 	const [name, setName] = useState('');
+	const [description, setDescription] = useState('');
+	const [streamId, setStreamId] = useState('');
 	const [loading, setLoading] = useState(true);
 	const [adding, setAdding] = useState(false);
 
 	const refresh = async () => {
 		try {
-			const { data } = await api.get('/admin/subjects');
-			setSubjects(data);
+			const [subjectsResponse, streamsResponse] = await Promise.all([
+				api.get('/admin/subjects'),
+				api.get('/streams')
+			]);
+			setSubjects(subjectsResponse.data);
+			setStreams(streamsResponse.data);
 		} catch (error) {
-			console.error('Error fetching subjects:', error);
+			console.error('Error fetching data:', error);
 		} finally {
 			setLoading(false);
 		}
@@ -35,12 +54,26 @@ export default function AdminSubjectsPage() {
 	}, []);
 
 	const add = async () => {
-		if (!name.trim()) return;
+		if (!name.trim() || !streamId) {
+			Swal.fire({
+				title: 'Validation Error',
+				text: 'Please provide both subject name and stream.',
+				icon: 'warning',
+				confirmButtonText: 'OK'
+			});
+			return;
+		}
 		
 		setAdding(true);
 		try {
-			await api.post('/admin/subjects', { name: name.trim() });
+			await api.post('/admin/subjects', { 
+				name: name.trim(), 
+				description: description.trim() || undefined,
+				streamId 
+			});
 			setName('');
+			setDescription('');
+			setStreamId('');
 			
 			// Show success message
 			Swal.fire({
@@ -137,7 +170,7 @@ export default function AdminSubjectsPage() {
 					<div className="flex items-center justify-between">
 						<div>
 							<h1 className="text-2xl font-bold text-gray-900">Subjects</h1>
-							<p className="text-gray-600">Manage JEE subjects and topics</p>
+							<p className="text-gray-600">Manage subjects for all competitive exam streams</p>
 						</div>
 						<div className="text-sm text-gray-500">
 							{subjects.length} subject{subjects.length !== 1 ? 's' : ''}
@@ -147,32 +180,70 @@ export default function AdminSubjectsPage() {
 					{/* Add Subject Form */}
 					<div className="bg-white rounded-lg shadow p-6">
 						<h2 className="text-lg font-semibold text-gray-900 mb-4">Add New Subject</h2>
-						<div className="flex gap-3">
-							<input 
-								className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-								placeholder="Enter subject name (e.g., Physics, Chemistry, Mathematics)" 
-								value={name} 
-								onChange={e => setName(e.target.value)}
-								onKeyPress={e => e.key === 'Enter' && add()}
-							/>
-							<button 
-								className={`px-4 py-2 rounded-md text-white font-medium transition-colors ${
-									adding || !name.trim() 
-										? 'bg-gray-400 cursor-not-allowed' 
-										: 'bg-blue-600 hover:bg-blue-700'
-								}`}
-								onClick={add}
-								disabled={adding || !name.trim()}
-							>
-								{adding ? (
-									<div className="flex items-center">
-										<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-										Adding...
-									</div>
-								) : (
-									'Add Subject'
-								)}
-							</button>
+						<div className="space-y-4">
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+								<div>
+									<label className="block text-sm font-medium text-gray-700 mb-1">
+										Subject Name *
+									</label>
+									<input 
+										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+										placeholder="Enter subject name (e.g., Physics, Chemistry, Mathematics)" 
+										value={name} 
+										onChange={e => setName(e.target.value)}
+										onKeyPress={e => e.key === 'Enter' && add()}
+									/>
+								</div>
+								<div>
+									<label className="block text-sm font-medium text-gray-700 mb-1">
+										Stream *
+									</label>
+									<select
+										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+										value={streamId}
+										onChange={e => setStreamId(e.target.value)}
+									>
+										<option value="">Select a stream</option>
+										{streams.map((stream) => (
+											<option key={stream.id} value={stream.id}>
+												{stream.name} ({stream.code})
+											</option>
+										))}
+									</select>
+								</div>
+							</div>
+							<div>
+								<label className="block text-sm font-medium text-gray-700 mb-1">
+									Description (Optional)
+								</label>
+								<textarea
+									className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+									placeholder="Enter subject description"
+									value={description}
+									onChange={e => setDescription(e.target.value)}
+									rows={2}
+								/>
+							</div>
+							<div className="flex justify-end">
+								<button 
+									className={`px-4 py-2 rounded-md text-white font-medium transition-colors ${
+										adding || !name.trim() || !streamId
+											? 'bg-gray-400 cursor-not-allowed' 
+											: 'bg-blue-600 hover:bg-blue-700'
+									}`}
+									onClick={add}
+									disabled={adding || !name.trim() || !streamId}
+								>
+									{adding ? (
+										<div className="flex items-center">
+											<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+											Adding...
+										</div>
+									) : (
+										'Add Subject'
+									)}
+								</button>
+							</div>
 						</div>
 					</div>
 
@@ -204,6 +275,22 @@ export default function AdminSubjectsPage() {
 											<div className="ml-4">
 												<div className="text-sm font-medium text-gray-900">{subject.name}</div>
 												<div className="text-sm text-gray-500">
+													{subject.stream ? (
+														<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+															{subject.stream.name} ({subject.stream.code})
+														</span>
+													) : (
+														<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+															No Stream Assigned
+														</span>
+													)}
+												</div>
+												{subject.description && (
+													<div className="text-xs text-gray-400 mt-1">
+														{subject.description}
+													</div>
+												)}
+												<div className="text-xs text-gray-400 mt-1">
 													Created {new Date(subject.createdAt).toLocaleDateString()}
 												</div>
 											</div>
