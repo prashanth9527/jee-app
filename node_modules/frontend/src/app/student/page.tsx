@@ -215,9 +215,9 @@ export default function StudentDashboard() {
                   recentExams.map((exam) => (
                     <div key={exam.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                       <div>
-                        <h4 className="text-sm font-medium text-gray-900">{exam.examPaper.title}</h4>
+                        <h4 className="text-sm font-medium text-gray-900">{exam.examPaper?.title || 'Untitled Exam'}</h4>
                         <p className="text-xs text-gray-500">
-                          {new Date(exam.submittedAt).toLocaleDateString()} • {exam.examPaper.subjects?.join(', ')}
+                          {new Date(exam.submittedAt).toLocaleDateString()} • {exam.examPaper?.subjects?.join(', ') || 'No subjects'}
                         </p>
                       </div>
                       <div className="flex items-center space-x-2">

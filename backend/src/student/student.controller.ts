@@ -178,72 +178,82 @@ export class StudentController {
 		};
 	}
 
+
+
 	@Get('exam-history')
 	async getExamHistory(
 		@Req() req: any,
 		@Query('page') page = '1',
-		@Query('limit') limit = '10'
+		@Query('limit') limit = '10',
+		@Query('type') type?: string // 'practice' or 'exam'
 	) {
 		const userId = req.user.id;
-		const pageNum = parseInt(page, 10);
-		const limitNum = parseInt(limit, 10);
+		const pageNum = parseInt(page);
+		const limitNum = parseInt(limit);
 		const skip = (pageNum - 1) * limitNum;
 
+		// Check subscription status
+		const subscriptionStatus = await this.subscriptionValidation.validateStudentSubscription(userId);
+		if (!subscriptionStatus.hasValidSubscription && !subscriptionStatus.isOnTrial) {
+			throw new ForbiddenException('Subscription required to access exam history');
+		}
+
+		// Build where clause
+		const where: any = {
+			userId,
+			submittedAt: { not: null }
+		};
+
+		// Filter by type if specified
+		if (type === 'practice') {
+			where.examPaper = {
+				questionIds: { isEmpty: false } // Practice tests have question IDs
+			};
+		} else if (type === 'exam') {
+			where.examPaper = {
+				questionIds: { isEmpty: true } // Exam papers don't have question IDs
+			};
+		}
+
+		// Get submissions with pagination
 		const [submissions, total] = await Promise.all([
 			this.prisma.examSubmission.findMany({
-				where: { 
-					userId, 
-					submittedAt: { not: null } 
-				},
-				skip,
-				take: limitNum,
-				orderBy: { submittedAt: 'desc' },
+				where,
 				include: {
 					examPaper: {
 						select: {
 							id: true,
 							title: true,
-							description: true,
-							subjectIds: true
+							timeLimitMin: true
 						}
 					}
-				}
+				},
+				orderBy: { submittedAt: 'desc' },
+				skip,
+				take: limitNum
 			}),
-			this.prisma.examSubmission.count({
-				where: { 
-					userId, 
-					submittedAt: { not: null } 
-				}
-			})
+			this.prisma.examSubmission.count({ where })
 		]);
 
-		// Get subject names for each submission
-		const submissionsWithSubjects = await Promise.all(
-			submissions.map(async (submission) => {
-				const subjects = submission.examPaper.subjectIds?.length 
-					? await this.prisma.subject.findMany({
-						where: { id: { in: submission.examPaper.subjectIds } },
-						select: { name: true }
-					})
-					: [];
-
-				return {
-					...submission,
-					examPaper: {
-						...submission.examPaper,
-						subjects: subjects.map(s => s.name)
-					}
-				};
-			})
-		);
-
 		return {
-			submissions: submissionsWithSubjects,
+			submissions: submissions.map(sub => ({
+				id: sub.id,
+				title: sub.examPaper.title,
+				startedAt: sub.startedAt,
+				submittedAt: sub.submittedAt,
+				totalQuestions: sub.totalQuestions,
+				correctCount: sub.correctCount,
+				scorePercent: sub.scorePercent,
+				timeLimitMin: sub.examPaper.timeLimitMin,
+				duration: sub.submittedAt ? 
+					Math.round((new Date(sub.submittedAt).getTime() - new Date(sub.startedAt).getTime()) / 1000 / 60) : 
+					null
+			})),
 			pagination: {
-				currentPage: pageNum,
-				totalPages: Math.ceil(total / limitNum),
-				totalItems: total,
-				itemsPerPage: limitNum
+				page: pageNum,
+				limit: limitNum,
+				total,
+				pages: Math.ceil(total / limitNum)
 			}
 		};
 	}

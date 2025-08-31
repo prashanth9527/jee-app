@@ -46,6 +46,10 @@ model User {
   referralCode   ReferralCode?
   referralsMade  Referral[]     @relation("Referrer")
   referralReceived Referral?    @relation("Referee")
+  
+  // Question reports
+  questionReports QuestionReport[]
+  reviewedReports QuestionReport[] @relation("ReportReviewer")
 }
 
 enum UserRole {
@@ -135,6 +139,8 @@ model Question {
   tags    QuestionTag[]
   options QuestionOption[]
   answers ExamAnswer[]
+  reports QuestionReport[]
+  alternativeExplanations QuestionAlternativeExplanation[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -170,6 +176,76 @@ model QuestionTag {
   tagId      String
 
   @@id([questionId, tagId])
+}
+
+// -------------------------------------------
+// Question Reports & Alternative Explanations
+// -------------------------------------------
+model QuestionReport {
+  id          String           @id @default(cuid())
+  question    Question         @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId  String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  reportType  QuestionReportType
+  reason      String
+  description String?
+  status      ReportStatus     @default(PENDING)
+  
+  // For alternative explanations
+  alternativeExplanation String?
+  
+  // For answer corrections
+  suggestedAnswer String?
+  suggestedOptions QuestionReportOption[]
+  
+  // Admin/Expert review
+  reviewedBy   User?   @relation("ReportReviewer", fields: [reviewedById], references: [id])
+  reviewedById String?
+  reviewedAt   DateTime?
+  reviewNotes  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model QuestionReportOption {
+  id                String         @id @default(cuid())
+  report            QuestionReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId          String
+  text              String
+  isCorrect         Boolean        @default(false)
+  order             Int            @default(0)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum QuestionReportType {
+  INCORRECT_ANSWER
+  INCORRECT_EXPLANATION
+  SUGGESTED_EXPLANATION
+  GRAMMATICAL_ERROR
+  TECHNICAL_ERROR
+  OTHER
+}
+
+enum ReportStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model QuestionAlternativeExplanation {
+  id          String   @id @default(cuid())
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId  String
+  explanation String
+  source      String   // "ORIGINAL" or "REPORT_APPROVED"
+  reportId    String?  // Reference to the approved report if from report
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // -------------------------------------------

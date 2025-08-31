@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
+import QuestionReportModal from '@/components/QuestionReportModal';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
 
@@ -15,6 +16,12 @@ interface Question {
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   isAIGenerated?: boolean;
   aiPrompt?: string;
+  alternativeExplanations?: Array<{
+    id: string;
+    explanation: string;
+    source: string;
+    createdAt: string;
+  }>;
   options: {
     id: string;
     text: string;
@@ -60,6 +67,8 @@ export default function PracticeTestResultsPage() {
   const [results, setResults] = useState<ExamResults | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState<number | null>(null);
+  const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [selectedQuestionForReport, setSelectedQuestionForReport] = useState<Question | null>(null);
 
   useEffect(() => {
     if (submissionId) {
@@ -297,6 +306,15 @@ export default function PracticeTestResultsPage() {
                                   {answer.isCorrect ? '✓ Correct' : '✗ Incorrect'}
                                 </span>
                               </div>
+                              <button
+                                onClick={() => {
+                                  setSelectedQuestionForReport(question);
+                                  setReportModalOpen(true);
+                                }}
+                                className="px-3 py-1 text-sm bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors"
+                              >
+                                Report Issue
+                              </button>
                             </div>
 
                             {/* Question Stem */}
@@ -342,22 +360,52 @@ export default function PracticeTestResultsPage() {
                               })}
                             </div>
 
-                                                         {/* Explanation */}
-                             {question.explanation && (
-                               <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
-                                 <div className="flex items-center justify-between mb-3">
-                                   <h4 className="text-lg font-semibold text-blue-900">Explanation</h4>
-                                   {question.isAIGenerated && (
-                                     <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                                       AI Generated
-                                     </span>
-                                   )}
-                                 </div>
-                                 <p className="text-blue-800 leading-relaxed whitespace-pre-wrap">
-                                   {question.explanation}
-                                 </p>
-                               </div>
-                             )}
+                            {/* Explanations */}
+                            {(question.explanation || (question.alternativeExplanations && question.alternativeExplanations.length > 0)) && (
+                              <div className="space-y-4">
+                                {/* Original Explanation */}
+                                {question.explanation && (
+                                  <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
+                                    <div className="flex items-center justify-between mb-3">
+                                      <h4 className="text-lg font-semibold text-blue-900">Original Explanation</h4>
+                                      {question.isAIGenerated && (
+                                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                          AI Generated
+                                        </span>
+                                      )}
+                                    </div>
+                                    <p className="text-blue-800 leading-relaxed whitespace-pre-wrap">
+                                      {question.explanation}
+                                    </p>
+                                  </div>
+                                )}
+
+                                {/* Alternative Explanations */}
+                                {question.alternativeExplanations && question.alternativeExplanations.length > 0 && (
+                                  <div className="space-y-3">
+                                    <h4 className="text-lg font-semibold text-gray-900">Additional Explanations</h4>
+                                    {question.alternativeExplanations.map((altExp, index) => (
+                                      <div key={altExp.id} className="bg-green-50 rounded-lg p-6 border border-green-200">
+                                        <div className="flex items-center justify-between mb-3">
+                                          <h5 className="text-md font-semibold text-green-900">
+                                            Alternative Explanation {index + 1}
+                                          </h5>
+                                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            {altExp.source === 'REPORT_APPROVED' ? 'Student Suggested' : 'Community'}
+                                          </span>
+                                        </div>
+                                        <p className="text-green-800 leading-relaxed whitespace-pre-wrap">
+                                          {altExp.explanation}
+                                        </p>
+                                        <div className="mt-2 text-xs text-green-600">
+                                          Added on {new Date(altExp.createdAt).toLocaleDateString()}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            )}
                           </>
                         );
                       })()}
@@ -399,6 +447,21 @@ export default function PracticeTestResultsPage() {
               </div>
             </div>
           </div>
+
+          {/* Question Report Modal */}
+          {reportModalOpen && selectedQuestionForReport && (
+            <QuestionReportModal
+              isOpen={reportModalOpen}
+              onClose={() => {
+                setReportModalOpen(false);
+                setSelectedQuestionForReport(null);
+              }}
+              questionId={selectedQuestionForReport.id}
+              questionStem={selectedQuestionForReport.stem}
+              currentExplanation={selectedQuestionForReport.explanation}
+              currentOptions={selectedQuestionForReport.options}
+            />
+          )}
         </StudentLayout>
       </SubscriptionGuard>
     </ProtectedRoute>

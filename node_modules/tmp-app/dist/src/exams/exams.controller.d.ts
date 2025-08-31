@@ -103,6 +103,15 @@ export declare class ExamsController {
                     text: string;
                     isCorrect: boolean;
                 }[];
+                alternativeExplanations: {
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date;
+                    explanation: string;
+                    questionId: string;
+                    reportId: string | null;
+                    source: string;
+                }[];
             } & {
                 id: string;
                 createdAt: Date;

@@ -11,6 +11,7 @@ import { AdminExamPapersController } from './exam-papers.controller';
 import { AdminSubscriptionsController } from './subscriptions.controller';
 import { AdminUsersController } from './users.controller';
 import { AdminAnalyticsController } from './analytics.controller';
+import { AdminQuestionReportsController } from './question-reports.controller';
 
 @Module({
 	imports: [PrismaModule],
@@ -18,7 +19,7 @@ import { AdminAnalyticsController } from './analytics.controller';
 		AdminSubjectsController, AdminStreamsController, AdminTopicsController, AdminSubtopicsController,
 		AdminTagsController, AdminQuestionsController, AdminPYQController,
 		AdminExamPapersController, AdminSubscriptionsController, AdminUsersController,
-		AdminAnalyticsController
+		AdminAnalyticsController, AdminQuestionReportsController
 	],
 })
 export class AdminModule {} 

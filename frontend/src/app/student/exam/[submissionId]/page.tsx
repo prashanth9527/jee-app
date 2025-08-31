@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
+import QuestionReportModal from '@/components/QuestionReportModal';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
 
@@ -13,6 +14,12 @@ interface Question {
   stem: string;
   explanation?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  alternativeExplanations?: Array<{
+    id: string;
+    explanation: string;
+    source: string;
+    createdAt: string;
+  }>;
   options: {
     id: string;
     text: string;
@@ -54,6 +61,8 @@ export default function ExamPage() {
   const [showResults, setShowResults] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
+  const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
+  const [selectedQuestionForReport, setSelectedQuestionForReport] = useState<Question | null>(null);
   
   const questionStartTime = useRef<number>(Date.now());
   const timerRef = useRef<NodeJS.Timeout>();
@@ -356,6 +365,15 @@ export default function ExamPage() {
                           <span className="text-sm text-gray-500">
                             Time: {formatTime(answer?.timeSpent || 0)}
                           </span>
+                          <button
+                            onClick={() => {
+                              setSelectedQuestionForReport(question);
+                              setReportModalOpen(true);
+                            }}
+                            className="px-3 py-1 text-sm bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors"
+                          >
+                            Report Issue
+                          </button>
                         </div>
                       </div>
                       
@@ -403,10 +421,39 @@ export default function ExamPage() {
                         </div>
                       </div>
                       
-                      {question.explanation && (
-                        <div className="bg-blue-50 rounded-lg p-4">
-                          <h4 className="font-semibold text-blue-900 mb-2">Explanation</h4>
-                          <p className="text-blue-800">{question.explanation}</p>
+                      {/* Explanations */}
+                      {(question.explanation || (question.alternativeExplanations && question.alternativeExplanations.length > 0)) && (
+                        <div className="space-y-4">
+                          {/* Original Explanation */}
+                          {question.explanation && (
+                            <div className="bg-blue-50 rounded-lg p-4">
+                              <h4 className="font-semibold text-blue-900 mb-2">Original Explanation</h4>
+                              <p className="text-blue-800">{question.explanation}</p>
+                            </div>
+                          )}
+
+                          {/* Alternative Explanations */}
+                          {question.alternativeExplanations && question.alternativeExplanations.length > 0 && (
+                            <div className="space-y-3">
+                              <h4 className="font-semibold text-gray-900">Additional Explanations</h4>
+                              {question.alternativeExplanations.map((altExp, altIndex) => (
+                                <div key={altExp.id} className="bg-green-50 rounded-lg p-4 border border-green-200">
+                                  <div className="flex items-center justify-between mb-2">
+                                    <h5 className="text-md font-semibold text-green-900">
+                                      Alternative Explanation {altIndex + 1}
+                                    </h5>
+                                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                      {altExp.source === 'REPORT_APPROVED' ? 'Student Suggested' : 'Community'}
+                                    </span>
+                                  </div>
+                                  <p className="text-green-800">{altExp.explanation}</p>
+                                  <div className="mt-2 text-xs text-green-600">
+                                    Added on {new Date(altExp.createdAt).toLocaleDateString()}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
@@ -613,6 +660,21 @@ export default function ExamPage() {
                 </div>
               </div>
             </div>
+
+            {/* Question Report Modal */}
+            {reportModalOpen && selectedQuestionForReport && (
+              <QuestionReportModal
+                isOpen={reportModalOpen}
+                onClose={() => {
+                  setReportModalOpen(false);
+                  setSelectedQuestionForReport(null);
+                }}
+                questionId={selectedQuestionForReport.id}
+                questionStem={selectedQuestionForReport.stem}
+                currentExplanation={selectedQuestionForReport.explanation}
+                currentOptions={selectedQuestionForReport.options}
+              />
+            )}
           </div>
         </StudentLayout>
       </SubscriptionGuard>

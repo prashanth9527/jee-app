@@ -13,11 +13,11 @@ export declare class AdminSubjectsController {
         };
     } & {
         id: string;
-        name: string;
-        description: string | null;
-        streamId: string;
         createdAt: Date;
         updatedAt: Date;
+        streamId: string;
+        name: string;
+        description: string | null;
     })[]>;
     create(body: {
         name: string;
@@ -25,11 +25,11 @@ export declare class AdminSubjectsController {
         streamId: string;
     }): import(".prisma/client").Prisma.Prisma__SubjectClient<{
         id: string;
-        name: string;
-        description: string | null;
-        streamId: string;
         createdAt: Date;
         updatedAt: Date;
+        streamId: string;
+        name: string;
+        description: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     update(id: string, body: {
         name?: string;
@@ -37,18 +37,18 @@ export declare class AdminSubjectsController {
         streamId?: string;
     }): import(".prisma/client").Prisma.Prisma__SubjectClient<{
         id: string;
-        name: string;
-        description: string | null;
-        streamId: string;
         createdAt: Date;
         updatedAt: Date;
+        streamId: string;
+        name: string;
+        description: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__SubjectClient<{
         id: string;
-        name: string;
-        description: string | null;
-        streamId: string;
         createdAt: Date;
         updatedAt: Date;
+        streamId: string;
+        name: string;
+        description: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
 }

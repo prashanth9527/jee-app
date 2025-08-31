@@ -191,6 +191,9 @@ export class ExamsService {
 										text: true,
 										isCorrect: true,
 									}
+								},
+								alternativeExplanations: {
+									orderBy: { createdAt: 'asc' }
 								}
 							}
 						},

@@ -151,60 +151,66 @@ let StudentController = class StudentController {
             }
         };
     }
-    async getExamHistory(req, page = '1', limit = '10') {
+    async getExamHistory(req, page = '1', limit = '10', type) {
         const userId = req.user.id;
-        const pageNum = parseInt(page, 10);
-        const limitNum = parseInt(limit, 10);
+        const pageNum = parseInt(page);
+        const limitNum = parseInt(limit);
         const skip = (pageNum - 1) * limitNum;
+        const subscriptionStatus = await this.subscriptionValidation.validateStudentSubscription(userId);
+        if (!subscriptionStatus.hasValidSubscription && !subscriptionStatus.isOnTrial) {
+            throw new common_1.ForbiddenException('Subscription required to access exam history');
+        }
+        const where = {
+            userId,
+            submittedAt: { not: null }
+        };
+        if (type === 'practice') {
+            where.examPaper = {
+                questionIds: { isEmpty: false }
+            };
+        }
+        else if (type === 'exam') {
+            where.examPaper = {
+                questionIds: { isEmpty: true }
+            };
+        }
         const [submissions, total] = await Promise.all([
             this.prisma.examSubmission.findMany({
-                where: {
-                    userId,
-                    submittedAt: { not: null }
-                },
-                skip,
-                take: limitNum,
-                orderBy: { submittedAt: 'desc' },
+                where,
                 include: {
                     examPaper: {
                         select: {
                             id: true,
                             title: true,
-                            description: true,
-                            subjectIds: true
+                            timeLimitMin: true
                         }
                     }
-                }
+                },
+                orderBy: { submittedAt: 'desc' },
+                skip,
+                take: limitNum
             }),
-            this.prisma.examSubmission.count({
-                where: {
-                    userId,
-                    submittedAt: { not: null }
-                }
-            })
+            this.prisma.examSubmission.count({ where })
         ]);
-        const submissionsWithSubjects = await Promise.all(submissions.map(async (submission) => {
-            const subjects = submission.examPaper.subjectIds?.length
-                ? await this.prisma.subject.findMany({
-                    where: { id: { in: submission.examPaper.subjectIds } },
-                    select: { name: true }
-                })
-                : [];
-            return {
-                ...submission,
-                examPaper: {
-                    ...submission.examPaper,
-                    subjects: subjects.map(s => s.name)
-                }
-            };
-        }));
         return {
-            submissions: submissionsWithSubjects,
+            submissions: submissions.map(sub => ({
+                id: sub.id,
+                title: sub.examPaper.title,
+                startedAt: sub.startedAt,
+                submittedAt: sub.submittedAt,
+                totalQuestions: sub.totalQuestions,
+                correctCount: sub.correctCount,
+                scorePercent: sub.scorePercent,
+                timeLimitMin: sub.examPaper.timeLimitMin,
+                duration: sub.submittedAt ?
+                    Math.round((new Date(sub.submittedAt).getTime() - new Date(sub.startedAt).getTime()) / 1000 / 60) :
+                    null
+            })),
             pagination: {
-                currentPage: pageNum,
-                totalPages: Math.ceil(total / limitNum),
-                totalItems: total,
-                itemsPerPage: limitNum
+                page: pageNum,
+                limit: limitNum,
+                total,
+                pages: Math.ceil(total / limitNum)
             }
         };
     }
@@ -496,8 +502,9 @@ __decorate([
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Query)('page')),
     __param(2, (0, common_1.Query)('limit')),
+    __param(3, (0, common_1.Query)('type')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object, String]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getExamHistory", null);
 __decorate([
