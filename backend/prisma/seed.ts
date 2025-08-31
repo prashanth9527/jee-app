@@ -53,6 +53,9 @@ async function main() {
       phoneVerified: true,
       trialStartedAt: new Date(),
       trialEndsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
+      aiTestsUsed: 0,
+      aiTestsLimit: 10, // 10 AI tests per month
+      lastAiResetAt: new Date(),
     },
   });
 
@@ -67,6 +70,9 @@ async function main() {
       phoneVerified: true,
       trialStartedAt: new Date(),
       trialEndsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+      aiTestsUsed: 0,
+      aiTestsLimit: 10, // 10 AI tests per month
+      lastAiResetAt: new Date(),
     },
   });
 

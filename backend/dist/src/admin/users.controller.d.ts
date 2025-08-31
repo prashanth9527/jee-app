@@ -41,6 +41,9 @@ export declare class AdminUsersController {
             updatedAt: Date;
             trialStartedAt: Date | null;
             trialEndsAt: Date | null;
+            aiTestsUsed: number;
+            aiTestsLimit: number;
+            lastAiResetAt: Date | null;
             streamId: string | null;
         })[];
         pagination: {
@@ -106,6 +109,9 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }>;
     updateUser(id: string, body: {
@@ -133,6 +139,9 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }>;
     deleteUser(id: string): Promise<{
@@ -148,6 +157,9 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }>;
     verifyEmail(id: string): Promise<{
@@ -163,6 +175,9 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }>;
     verifyPhone(id: string): Promise<{
@@ -178,6 +193,9 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }>;
     startTrial(id: string, body: {
@@ -195,6 +213,9 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }>;
     endTrial(id: string): Promise<{
@@ -210,6 +231,9 @@ export declare class AdminUsersController {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }>;
     getAnalytics(): Promise<{

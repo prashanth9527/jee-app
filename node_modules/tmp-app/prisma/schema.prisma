@@ -35,6 +35,11 @@ model User {
   trialStartedAt DateTime?
   trialEndsAt    DateTime?
   subscriptions  Subscription[]
+  
+  // AI usage tracking
+  aiTestsUsed    Int       @default(0)
+  aiTestsLimit   Int       @default(0)
+  lastAiResetAt  DateTime? // Track when AI usage was last reset
 
   // exams
   examSubmissions ExamSubmission[]

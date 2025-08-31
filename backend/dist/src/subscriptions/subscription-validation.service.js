@@ -122,6 +122,128 @@ let SubscriptionValidationService = class SubscriptionValidationService {
         }
         return status.planType === 'AI_ENABLED';
     }
+    async validateAiUsage(userId) {
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+            include: {
+                subscriptions: {
+                    where: { status: 'ACTIVE' },
+                    include: { plan: true },
+                    orderBy: { createdAt: 'desc' },
+                    take: 1,
+                },
+            },
+        });
+        if (!user) {
+            return {
+                canUseAi: false,
+                aiTestsUsed: 0,
+                aiTestsLimit: 0,
+                aiTestsRemaining: 0,
+                message: 'User not found',
+            };
+        }
+        const subscriptionStatus = await this.validateStudentSubscription(userId);
+        if (!subscriptionStatus.hasValidSubscription && !subscriptionStatus.isOnTrial) {
+            return {
+                canUseAi: false,
+                aiTestsUsed: user.aiTestsUsed,
+                aiTestsLimit: user.aiTestsLimit,
+                aiTestsRemaining: 0,
+                message: 'No active subscription required for AI features',
+            };
+        }
+        if (user.subscriptions.length > 0) {
+            const subscription = user.subscriptions[0];
+            if (subscription.plan.planType !== 'AI_ENABLED') {
+                return {
+                    canUseAi: false,
+                    aiTestsUsed: user.aiTestsUsed,
+                    aiTestsLimit: user.aiTestsLimit,
+                    aiTestsRemaining: 0,
+                    message: 'AI features require AI-enabled subscription plan',
+                };
+            }
+        }
+        else if (subscriptionStatus.isOnTrial) {
+            const trialAiLimit = 5;
+            const remaining = Math.max(0, trialAiLimit - user.aiTestsUsed);
+            return {
+                canUseAi: remaining > 0,
+                aiTestsUsed: user.aiTestsUsed,
+                aiTestsLimit: trialAiLimit,
+                aiTestsRemaining: remaining,
+                message: remaining > 0
+                    ? `Trial AI access - ${remaining} tests remaining`
+                    : 'Trial AI limit reached',
+            };
+        }
+        await this.checkAndResetAiUsage(user);
+        const updatedUser = await this.prisma.user.findUnique({
+            where: { id: userId },
+        });
+        if (!updatedUser) {
+            return {
+                canUseAi: false,
+                aiTestsUsed: 0,
+                aiTestsLimit: 0,
+                aiTestsRemaining: 0,
+                message: 'User not found',
+            };
+        }
+        const remaining = Math.max(0, updatedUser.aiTestsLimit - updatedUser.aiTestsUsed);
+        const nextResetAt = this.calculateNextResetDate(updatedUser.lastAiResetAt || undefined);
+        return {
+            canUseAi: remaining > 0,
+            aiTestsUsed: updatedUser.aiTestsUsed,
+            aiTestsLimit: updatedUser.aiTestsLimit,
+            aiTestsRemaining: remaining,
+            lastResetAt: updatedUser.lastAiResetAt || undefined,
+            nextResetAt,
+            message: remaining > 0
+                ? `AI tests available - ${remaining} remaining`
+                : 'AI test limit reached for this month',
+        };
+    }
+    async incrementAiUsage(userId) {
+        await this.prisma.user.update({
+            where: { id: userId },
+            data: {
+                aiTestsUsed: {
+                    increment: 1,
+                },
+            },
+        });
+    }
+    async checkAndResetAiUsage(user) {
+        const now = new Date();
+        const lastReset = user.lastAiResetAt || user.createdAt;
+        const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        if (lastReset < oneMonthAgo) {
+            await this.prisma.user.update({
+                where: { id: user.id },
+                data: {
+                    aiTestsUsed: 0,
+                    lastAiResetAt: now,
+                },
+            });
+        }
+    }
+    calculateNextResetDate(lastResetAt) {
+        if (!lastResetAt) {
+            return new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+        }
+        return new Date(lastResetAt.getTime() + 30 * 24 * 60 * 60 * 1000);
+    }
+    async setAiLimitForUser(userId, limit) {
+        await this.prisma.user.update({
+            where: { id: userId },
+            data: {
+                aiTestsLimit: limit,
+                lastAiResetAt: new Date(),
+            },
+        });
+    }
 };
 exports.SubscriptionValidationService = SubscriptionValidationService;
 exports.SubscriptionValidationService = SubscriptionValidationService = __decorate([

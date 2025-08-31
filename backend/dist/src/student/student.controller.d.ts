@@ -43,6 +43,7 @@ export declare class StudentController {
             itemsPerPage: number;
         };
     }>;
+    getAiUsage(req: any): Promise<import("../subscriptions/subscription-validation.service").AiUsageStatus>;
     getExamHistory(req: any, page?: string, limit?: string, type?: string): Promise<{
         submissions: {
             id: string;

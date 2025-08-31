@@ -9,6 +9,15 @@ export interface SubscriptionStatus {
     message: string;
     planType?: 'MANUAL' | 'AI_ENABLED';
 }
+export interface AiUsageStatus {
+    canUseAi: boolean;
+    aiTestsUsed: number;
+    aiTestsLimit: number;
+    aiTestsRemaining: number;
+    lastResetAt?: Date;
+    nextResetAt?: Date;
+    message: string;
+}
 export declare class SubscriptionValidationService {
     private readonly prisma;
     constructor(prisma: PrismaService);
@@ -52,4 +61,9 @@ export declare class SubscriptionValidationService {
         })[];
     } | null>;
     hasAIAccess(userId: string): Promise<boolean>;
+    validateAiUsage(userId: string): Promise<AiUsageStatus>;
+    incrementAiUsage(userId: string): Promise<void>;
+    private checkAndResetAiUsage;
+    private calculateNextResetDate;
+    setAiLimitForUser(userId: string, limit: number): Promise<void>;
 }

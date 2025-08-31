@@ -21,6 +21,9 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     findByEmail(email: string): import(".prisma/client").Prisma.Prisma__UserClient<{
@@ -36,6 +39,9 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     } | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     findById(id: string): import(".prisma/client").Prisma.Prisma__UserClient<{
@@ -51,6 +57,9 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     } | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     setEmailVerified(userId: string): Promise<{
@@ -66,6 +75,9 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }>;
     setPhoneVerified(userId: string): Promise<{
@@ -81,6 +93,9 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }>;
     updateTrial(userId: string, startedAt: Date, endsAt: Date): Promise<{
@@ -96,6 +111,9 @@ export declare class UsersService {
         updatedAt: Date;
         trialStartedAt: Date | null;
         trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
         streamId: string | null;
     }>;
 }

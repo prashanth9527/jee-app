@@ -180,6 +180,12 @@ export class StudentController {
 
 
 
+	@Get('ai-usage')
+	async getAiUsage(@Req() req: any) {
+		const userId = req.user.id;
+		return await this.subscriptionValidation.validateAiUsage(userId);
+	}
+
 	@Get('exam-history')
 	async getExamHistory(
 		@Req() req: any,

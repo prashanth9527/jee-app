@@ -1,9 +1,11 @@
 import { PrismaService } from '../prisma/prisma.service';
 import { AIService } from '../ai/ai.service';
+import { SubscriptionValidationService } from '../subscriptions/subscription-validation.service';
 export declare class ExamsService {
     private readonly prisma;
     private readonly aiService;
-    constructor(prisma: PrismaService, aiService: AIService);
+    private readonly subscriptionValidation;
+    constructor(prisma: PrismaService, aiService: AIService, subscriptionValidation: SubscriptionValidationService);
     createPaper(data: {
         title: string;
         description?: string;

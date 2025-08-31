@@ -5,6 +5,7 @@ import Link from 'next/link';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
+import AiUsageCard from '@/components/AiUsageCard';
 import api from '@/lib/api';
 
 interface StudentStats {
@@ -94,6 +95,7 @@ export default function StudentDashboard() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <AiUsageCard />
             <div className="bg-white rounded-lg shadow p-6">
               <div className="flex items-center">
                 <div className="p-3 rounded-lg bg-blue-500 text-white">

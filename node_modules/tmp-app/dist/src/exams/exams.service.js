@@ -13,10 +13,12 @@ exports.ExamsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const ai_service_1 = require("../ai/ai.service");
+const subscription_validation_service_1 = require("../subscriptions/subscription-validation.service");
 let ExamsService = class ExamsService {
-    constructor(prisma, aiService) {
+    constructor(prisma, aiService, subscriptionValidation) {
         this.prisma = prisma;
         this.aiService = aiService;
+        this.subscriptionValidation = subscriptionValidation;
     }
     async createPaper(data) {
         return this.prisma.examPaper.create({ data: {
@@ -222,6 +224,10 @@ let ExamsService = class ExamsService {
         };
     }
     async generateAIPracticeTest(userId, request) {
+        const aiUsage = await this.subscriptionValidation.validateAiUsage(userId);
+        if (!aiUsage.canUseAi) {
+            throw new common_1.ForbiddenException(aiUsage.message);
+        }
         const aiAccess = await this.aiService.validateSubscription(userId);
         if (!aiAccess.hasAIAccess) {
             throw new Error('AI question generation requires AI-enabled subscription');
@@ -279,6 +285,7 @@ let ExamsService = class ExamsService {
                 timeLimitMin: request.timeLimitMin
             }
         });
+        await this.subscriptionValidation.incrementAiUsage(userId);
         return {
             examPaper,
             questions: savedQuestions
@@ -365,6 +372,7 @@ exports.ExamsService = ExamsService;
 exports.ExamsService = ExamsService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService,
-        ai_service_1.AIService])
+        ai_service_1.AIService,
+        subscription_validation_service_1.SubscriptionValidationService])
 ], ExamsService);
 //# sourceMappingURL=exams.service.js.map

@@ -46,6 +46,9 @@ async function main() {
             phoneVerified: true,
             trialStartedAt: new Date(),
             trialEndsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+            aiTestsUsed: 0,
+            aiTestsLimit: 10,
+            lastAiResetAt: new Date(),
         },
     });
     const student2 = await prisma.user.create({
@@ -59,6 +62,9 @@ async function main() {
             phoneVerified: true,
             trialStartedAt: new Date(),
             trialEndsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+            aiTestsUsed: 0,
+            aiTestsLimit: 10,
+            lastAiResetAt: new Date(),
         },
     });
     const expertUser = await prisma.user.create({

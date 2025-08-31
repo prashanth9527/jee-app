@@ -151,6 +151,10 @@ let StudentController = class StudentController {
             }
         };
     }
+    async getAiUsage(req) {
+        const userId = req.user.id;
+        return await this.subscriptionValidation.validateAiUsage(userId);
+    }
     async getExamHistory(req, page = '1', limit = '10', type) {
         const userId = req.user.id;
         const pageNum = parseInt(page);
@@ -497,6 +501,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, Object, String, String]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "getExamPapers", null);
+__decorate([
+    (0, common_1.Get)('ai-usage'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], StudentController.prototype, "getAiUsage", null);
 __decorate([
     (0, common_1.Get)('exam-history'),
     __param(0, (0, common_1.Req)()),

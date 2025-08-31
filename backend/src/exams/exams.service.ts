@@ -1,12 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AIService } from '../ai/ai.service';
+import { SubscriptionValidationService } from '../subscriptions/subscription-validation.service';
 
 @Injectable()
 export class ExamsService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly aiService: AIService
+		private readonly aiService: AIService,
+		private readonly subscriptionValidation: SubscriptionValidationService
 	) {}
 
 	async createPaper(data: { title: string; description?: string; subjectIds?: string[]; topicIds?: string[]; subtopicIds?: string[]; questionIds?: string[]; timeLimitMin?: number }) {
@@ -240,6 +242,12 @@ export class ExamsService {
 		difficulty: 'EASY' | 'MEDIUM' | 'HARD';
 		timeLimitMin: number;
 	}) {
+		// Check AI usage limits
+		const aiUsage = await this.subscriptionValidation.validateAiUsage(userId);
+		if (!aiUsage.canUseAi) {
+			throw new ForbiddenException(aiUsage.message);
+		}
+
 		// Check if user has AI access
 		const aiAccess = await this.aiService.validateSubscription(userId);
 		if (!aiAccess.hasAIAccess) {
@@ -308,6 +316,9 @@ export class ExamsService {
 				timeLimitMin: request.timeLimitMin
 			}
 		});
+
+		// Increment AI usage
+		await this.subscriptionValidation.incrementAiUsage(userId);
 
 		return {
 			examPaper,
