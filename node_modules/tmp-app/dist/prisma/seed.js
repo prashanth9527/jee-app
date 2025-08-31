@@ -8,15 +8,18 @@ async function main() {
     await prisma.examAnswer.deleteMany();
     await prisma.examSubmission.deleteMany();
     await prisma.examPaper.deleteMany();
-    await prisma.questionOption.deleteMany();
     await prisma.questionTag.deleteMany();
+    await prisma.questionOption.deleteMany();
     await prisma.question.deleteMany();
-    await prisma.subscription.deleteMany();
-    await prisma.plan.deleteMany();
     await prisma.tag.deleteMany();
     await prisma.subtopic.deleteMany();
     await prisma.topic.deleteMany();
     await prisma.subject.deleteMany();
+    await prisma.referralReward.deleteMany();
+    await prisma.referral.deleteMany();
+    await prisma.referralCode.deleteMany();
+    await prisma.subscription.deleteMany();
+    await prisma.plan.deleteMany();
     await prisma.otp.deleteMany();
     await prisma.user.deleteMany();
     console.log('🗑️ Cleared existing data');
@@ -391,6 +394,102 @@ async function main() {
         })));
     }
     console.log('❓ Created questions with options');
+    const pyq1 = await prisma.question.create({
+        data: {
+            stem: 'A particle moves in a straight line with constant acceleration. If the initial velocity is 5 m/s and the final velocity after 10 seconds is 25 m/s, what is the acceleration?',
+            explanation: 'Using the equation v = u + at, where v = final velocity, u = initial velocity, a = acceleration, t = time. 25 = 5 + a(10), so a = 2 m/s².',
+            difficulty: 'EASY',
+            yearAppeared: 2023,
+            isPreviousYear: true,
+            subjectId: physics.id,
+            topicId: mechanics.id,
+            options: {
+                create: [
+                    { text: '1 m/s²', isCorrect: false, order: 0 },
+                    { text: '2 m/s²', isCorrect: true, order: 1 },
+                    { text: '3 m/s²', isCorrect: false, order: 2 },
+                    { text: '4 m/s²', isCorrect: false, order: 3 }
+                ]
+            }
+        }
+    });
+    const pyq2 = await prisma.question.create({
+        data: {
+            stem: 'What is the IUPAC name of CH₃-CH₂-CH=CH₂?',
+            explanation: 'The compound has 4 carbon atoms with a double bond at position 1. The IUPAC name is 1-Butene.',
+            difficulty: 'MEDIUM',
+            yearAppeared: 2022,
+            isPreviousYear: true,
+            subjectId: chemistry.id,
+            topicId: organicChemistry.id,
+            options: {
+                create: [
+                    { text: 'Propene', isCorrect: false, order: 0 },
+                    { text: '1-Butene', isCorrect: true, order: 1 },
+                    { text: '2-Butene', isCorrect: false, order: 2 },
+                    { text: 'Butane', isCorrect: false, order: 3 }
+                ]
+            }
+        }
+    });
+    const pyq3 = await prisma.question.create({
+        data: {
+            stem: 'If the roots of the quadratic equation x² - 5x + 6 = 0 are α and β, then what is the value of α² + β²?',
+            explanation: 'For a quadratic equation ax² + bx + c = 0, if roots are α and β, then α + β = -b/a = 5 and αβ = c/a = 6. Now, α² + β² = (α + β)² - 2αβ = 25 - 12 = 13.',
+            difficulty: 'HARD',
+            yearAppeared: 2021,
+            isPreviousYear: true,
+            subjectId: mathematics.id,
+            topicId: algebra.id,
+            options: {
+                create: [
+                    { text: '11', isCorrect: false, order: 0 },
+                    { text: '13', isCorrect: true, order: 1 },
+                    { text: '15', isCorrect: false, order: 2 },
+                    { text: '17', isCorrect: false, order: 3 }
+                ]
+            }
+        }
+    });
+    const pyq4 = await prisma.question.create({
+        data: {
+            stem: 'A ball is thrown vertically upwards with a velocity of 20 m/s. What is the maximum height reached by the ball? (Take g = 10 m/s²)',
+            explanation: 'Using the equation v² = u² - 2gh, where v = final velocity (0 at max height), u = initial velocity, g = acceleration due to gravity, h = height. 0 = 400 - 20h, so h = 20 m.',
+            difficulty: 'MEDIUM',
+            yearAppeared: 2023,
+            isPreviousYear: true,
+            subjectId: physics.id,
+            topicId: mechanics.id,
+            options: {
+                create: [
+                    { text: '15 m', isCorrect: false, order: 0 },
+                    { text: '20 m', isCorrect: true, order: 1 },
+                    { text: '25 m', isCorrect: false, order: 2 },
+                    { text: '30 m', isCorrect: false, order: 3 }
+                ]
+            }
+        }
+    });
+    const pyq5 = await prisma.question.create({
+        data: {
+            stem: 'Which of the following is a strong electrolyte?',
+            explanation: 'HCl is a strong acid that completely dissociates in water, making it a strong electrolyte. The other options are weak electrolytes or non-electrolytes.',
+            difficulty: 'EASY',
+            yearAppeared: 2022,
+            isPreviousYear: true,
+            subjectId: chemistry.id,
+            topicId: physicalChemistry.id,
+            options: {
+                create: [
+                    { text: 'Acetic acid', isCorrect: false, order: 0 },
+                    { text: 'HCl', isCorrect: true, order: 1 },
+                    { text: 'NH₄OH', isCorrect: false, order: 2 },
+                    { text: 'H₂O', isCorrect: false, order: 3 }
+                ]
+            }
+        }
+    });
+    console.log('📚 Created Previous Year Questions');
     const allQuestions = await prisma.question.findMany({
         include: {
             subtopic: {
