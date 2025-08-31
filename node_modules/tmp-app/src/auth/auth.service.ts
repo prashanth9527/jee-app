@@ -3,6 +3,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { OtpService } from './otp.service';
+import { ReferralsService } from '../referrals/referrals.service';
 
 @Injectable()
 export class AuthService {
@@ -10,9 +11,10 @@ export class AuthService {
 		private readonly users: UsersService,
 		private readonly jwt: JwtService,
 		private readonly otp: OtpService,
+		private readonly referralsService: ReferralsService,
 	) {}
 
-	async register(params: { email: string; password: string; fullName: string; phone?: string }) {
+	async register(params: { email: string; password: string; fullName: string; phone?: string; referralCode?: string }) {
 		const existing = await this.users.findByEmail(params.email);
 		if (existing) throw new BadRequestException('Email already registered');
 		const hashedPassword = await bcrypt.hash(params.password, 10);
@@ -21,6 +23,17 @@ export class AuthService {
 		const started = new Date();
 		const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);
 		await this.users.updateTrial(user.id, started, ends);
+		
+		// Apply referral code if provided
+		if (params.referralCode) {
+			try {
+				await this.referralsService.applyReferralCode(user.id, params.referralCode);
+			} catch (error) {
+				// Log error but don't fail registration
+				console.error('Failed to apply referral code:', error);
+			}
+		}
+		
 		await this.otp.sendEmailOtp(user.id, user.email);
 		if (user.phone) await this.otp.sendPhoneOtp(user.id, user.phone);
 		return { id: user.id, email: user.email };

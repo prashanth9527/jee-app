@@ -3,4 +3,5 @@ export declare class RegisterDto {
     phone?: string;
     password: string;
     fullName: string;
+    referralCode?: string;
 }

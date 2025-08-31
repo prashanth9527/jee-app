@@ -17,6 +17,7 @@ const admin_module_1 = require("./admin/admin.module");
 const student_module_1 = require("./student/student.module");
 const exams_module_1 = require("./exams/exams.module");
 const subscriptions_module_1 = require("./subscriptions/subscriptions.module");
+const referrals_module_1 = require("./referrals/referrals.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -31,6 +32,7 @@ exports.AppModule = AppModule = __decorate([
             student_module_1.StudentModule,
             exams_module_1.ExamsModule,
             subscriptions_module_1.SubscriptionsModule,
+            referrals_module_1.ReferralsModule,
         ],
         controllers: [app_controller_1.AppController],
     })

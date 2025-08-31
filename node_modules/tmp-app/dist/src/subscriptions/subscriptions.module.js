@@ -11,15 +11,16 @@ const common_1 = require("@nestjs/common");
 const prisma_module_1 = require("../prisma/prisma.module");
 const subscriptions_service_1 = require("./subscriptions.service");
 const subscriptions_controller_1 = require("./subscriptions.controller");
+const subscription_validation_service_1 = require("./subscription-validation.service");
 let SubscriptionsModule = class SubscriptionsModule {
 };
 exports.SubscriptionsModule = SubscriptionsModule;
 exports.SubscriptionsModule = SubscriptionsModule = __decorate([
     (0, common_1.Module)({
         imports: [prisma_module_1.PrismaModule],
-        providers: [subscriptions_service_1.SubscriptionsService],
+        providers: [subscriptions_service_1.SubscriptionsService, subscription_validation_service_1.SubscriptionValidationService],
         controllers: [subscriptions_controller_1.SubscriptionsController],
-        exports: [subscriptions_service_1.SubscriptionsService],
+        exports: [subscriptions_service_1.SubscriptionsService, subscription_validation_service_1.SubscriptionValidationService],
     })
 ], SubscriptionsModule);
 //# sourceMappingURL=subscriptions.module.js.map

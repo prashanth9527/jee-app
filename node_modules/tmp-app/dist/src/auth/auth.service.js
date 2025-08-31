@@ -15,11 +15,13 @@ const users_service_1 = require("../users/users.service");
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = require("bcrypt");
 const otp_service_1 = require("./otp.service");
+const referrals_service_1 = require("../referrals/referrals.service");
 let AuthService = class AuthService {
-    constructor(users, jwt, otp) {
+    constructor(users, jwt, otp, referralsService) {
         this.users = users;
         this.jwt = jwt;
         this.otp = otp;
+        this.referralsService = referralsService;
     }
     async register(params) {
         const existing = await this.users.findByEmail(params.email);
@@ -31,6 +33,14 @@ let AuthService = class AuthService {
         const started = new Date();
         const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);
         await this.users.updateTrial(user.id, started, ends);
+        if (params.referralCode) {
+            try {
+                await this.referralsService.applyReferralCode(user.id, params.referralCode);
+            }
+            catch (error) {
+                console.error('Failed to apply referral code:', error);
+            }
+        }
         await this.otp.sendEmailOtp(user.id, user.email);
         if (user.phone)
             await this.otp.sendPhoneOtp(user.id, user.phone);
@@ -87,6 +97,7 @@ exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [users_service_1.UsersService,
         jwt_1.JwtService,
-        otp_service_1.OtpService])
+        otp_service_1.OtpService,
+        referrals_service_1.ReferralsService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

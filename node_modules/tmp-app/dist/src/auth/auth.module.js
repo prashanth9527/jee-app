@@ -14,6 +14,7 @@ const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
 const users_module_1 = require("../users/users.module");
 const prisma_module_1 = require("../prisma/prisma.module");
+const referrals_module_1 = require("../referrals/referrals.module");
 const jwt_strategy_1 = require("./jwt.strategy");
 const otp_service_1 = require("./otp.service");
 const mailer_service_1 = require("./mailer.service");
@@ -26,6 +27,7 @@ exports.AuthModule = AuthModule = __decorate([
         imports: [
             users_module_1.UsersModule,
             prisma_module_1.PrismaModule,
+            referrals_module_1.ReferralsModule,
             passport_1.PassportModule.register({ defaultStrategy: 'jwt' }),
             jwt_1.JwtModule.registerAsync({
                 useFactory: () => ({

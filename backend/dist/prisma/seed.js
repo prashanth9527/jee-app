@@ -93,6 +93,18 @@ async function main() {
         },
     });
     console.log('💳 Created subscription plans');
+    const freeTrialPlan = await prisma.plan.create({
+        data: {
+            name: 'Free Trial',
+            description: 'Free trial plan for referral rewards',
+            priceCents: 0,
+            currency: 'INR',
+            interval: 'MONTH',
+            planType: 'MANUAL',
+            stripePriceId: 'free_trial_plan',
+        },
+    });
+    console.log('🎁 Created free trial plan for referrals');
     const tags = await Promise.all([
         prisma.tag.create({ data: { name: 'Previous Year' } }),
         prisma.tag.create({ data: { name: 'JEE Mains' } }),

@@ -1,16 +1,19 @@
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { OtpService } from './otp.service';
+import { ReferralsService } from '../referrals/referrals.service';
 export declare class AuthService {
     private readonly users;
     private readonly jwt;
     private readonly otp;
-    constructor(users: UsersService, jwt: JwtService, otp: OtpService);
+    private readonly referralsService;
+    constructor(users: UsersService, jwt: JwtService, otp: OtpService, referralsService: ReferralsService);
     register(params: {
         email: string;
         password: string;
         fullName: string;
         phone?: string;
+        referralCode?: string;
     }): Promise<{
         id: string;
         email: string;
