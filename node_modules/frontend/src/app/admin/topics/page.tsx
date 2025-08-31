@@ -9,13 +9,26 @@ import Swal from 'sweetalert2';
 interface Subject {
   id: string;
   name: string;
+  stream?: {
+    id: string;
+    name: string;
+    code: string;
+  };
 }
 
 interface Topic {
   id: string;
   name: string;
   subjectId: string;
-  subject: Subject;
+  subject: {
+    id: string;
+    name: string;
+    stream?: {
+      id: string;
+      name: string;
+      code: string;
+    };
+  };
   createdAt: string;
   updatedAt: string;
 }
@@ -332,21 +345,21 @@ export default function AdminTopicsPage() {
 						{showAddForm && (
 							<div className="grid grid-cols-1 md:grid-cols-4 gap-3">
 								<input 
-									className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+									className="border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
 									placeholder="Enter topic name" 
 									value={name} 
 									onChange={e => setName(e.target.value)}
 									onKeyPress={e => e.key === 'Enter' && add()}
 								/>
 								<select 
-									className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+									className="border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
 									value={subjectId}
 									onChange={e => setSubjectId(e.target.value)}
 								>
-									<option value="">Select Subject</option>
+									<option value="" className="text-gray-600">Select Subject</option>
 									{subjects.map(subject => (
-										<option key={subject.id} value={subject.id}>
-											{subject.name}
+										<option key={subject.id} value={subject.id} className="text-gray-900">
+											{subject.name} ({subject.stream?.code || 'N/A'})
 										</option>
 									))}
 								</select>
@@ -386,21 +399,21 @@ export default function AdminTopicsPage() {
 						<h2 className="text-lg font-semibold text-gray-900 mb-4">Filters</h2>
 						<div className="grid grid-cols-1 md:grid-cols-4 gap-3">
 							<input 
-								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+								className="border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
 								placeholder="Search topics or subjects..." 
 								value={searchText}
 								onChange={e => setSearchText(e.target.value)}
 								onKeyPress={e => e.key === 'Enter' && handleSearch()}
 							/>
 							<select 
-								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+								className="border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
 								value={selectedSubject}
 								onChange={e => handleSubjectChange(e.target.value)}
 							>
-								<option value="">All Subjects</option>
+								<option value="" className="text-gray-600">All Subjects</option>
 								{subjects.map(subject => (
-									<option key={subject.id} value={subject.id}>
-										{subject.name}
+									<option key={subject.id} value={subject.id} className="text-gray-900">
+										{subject.name} ({subject.stream?.code || 'N/A'})
 									</option>
 								))}
 							</select>
@@ -442,18 +455,18 @@ export default function AdminTopicsPage() {
 											// Edit Mode
 											<div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
 												<input 
-													className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+													className="border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
 													value={editName} 
 													onChange={e => setEditName(e.target.value)}
 												/>
 												<select 
-													className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+													className="border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
 													value={editSubjectId}
 													onChange={e => setEditSubjectId(e.target.value)}
 												>
 													{subjects.map(subject => (
-														<option key={subject.id} value={subject.id}>
-															{subject.name}
+														<option key={subject.id} value={subject.id} className="text-gray-900">
+															{subject.name} ({subject.stream?.code || 'N/A'})
 														</option>
 													))}
 												</select>
@@ -478,21 +491,25 @@ export default function AdminTopicsPage() {
 												<div className="flex items-center">
 													<div className="flex-shrink-0">
 														<div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
-															<span className="text-sm font-medium text-green-600">
+															<span className="text-sm font-semibold text-green-700">
 																{topic.name.charAt(0).toUpperCase()}
 															</span>
 														</div>
 													</div>
 													<div className="ml-4">
-														<div className="text-sm font-medium text-gray-900">{topic.name}</div>
-														<div className="text-sm text-gray-500">
-															Subject: {topic.subject?.name || 'Unknown Subject'} • Created {new Date(topic.createdAt).toLocaleDateString()}
+														<div className="text-sm font-semibold text-gray-900">{topic.name}</div>
+														<div className="text-sm text-gray-700 mt-1">
+															Subject: <span className="font-semibold">{topic.subject?.name || 'Unknown Subject'}</span>
+															{topic.subject?.stream && (
+																<span className="text-gray-600"> ({topic.subject.stream.code})</span>
+															)}
+															• Created {new Date(topic.createdAt).toLocaleDateString()}
 														</div>
 													</div>
 												</div>
 												<div className="flex items-center space-x-2">
 													<button 
-														className="text-gray-400 hover:text-gray-600 p-1"
+														className="text-gray-500 hover:text-gray-700 p-1 transition-colors"
 														onClick={() => startEdit(topic)}
 													>
 														<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -500,7 +517,7 @@ export default function AdminTopicsPage() {
 														</svg>
 													</button>
 													<button 
-														className="text-gray-400 hover:text-red-600 p-1"
+														className="text-gray-500 hover:text-red-600 p-1 transition-colors"
 														onClick={() => deleteTopic(topic.id, topic.name)}
 													>
 														<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

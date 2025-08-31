@@ -42,8 +42,17 @@ export class AdminQuestionsController {
 				{ stem: { contains: search, mode: 'insensitive' } },
 				{ explanation: { contains: search, mode: 'insensitive' } },
 				{ subject: { name: { contains: search, mode: 'insensitive' } } },
+				{ subject: { stream: { name: { contains: search, mode: 'insensitive' } } } },
+				{ subject: { stream: { code: { contains: search, mode: 'insensitive' } } } },
 				{ topic: { name: { contains: search, mode: 'insensitive' } } },
+				{ topic: { subject: { name: { contains: search, mode: 'insensitive' } } } },
+				{ topic: { subject: { stream: { name: { contains: search, mode: 'insensitive' } } } } },
+				{ topic: { subject: { stream: { code: { contains: search, mode: 'insensitive' } } } } },
 				{ subtopic: { name: { contains: search, mode: 'insensitive' } } },
+				{ subtopic: { topic: { name: { contains: search, mode: 'insensitive' } } } },
+				{ subtopic: { topic: { subject: { name: { contains: search, mode: 'insensitive' } } } } },
+				{ subtopic: { topic: { subject: { stream: { name: { contains: search, mode: 'insensitive' } } } } } },
+				{ subtopic: { topic: { subject: { stream: { code: { contains: search, mode: 'insensitive' } } } } } },
 				{ tags: { tag: { name: { contains: search, mode: 'insensitive' } } } }
 			];
 		}
@@ -58,9 +67,63 @@ export class AdminQuestionsController {
 			include: { 
 				options: true, 
 				tags: { include: { tag: true } },
-				subject: true,
-				topic: true,
-				subtopic: true
+				subject: {
+					select: {
+						id: true,
+						name: true,
+						stream: {
+							select: {
+								id: true,
+								name: true,
+								code: true
+							}
+						}
+					}
+				},
+				topic: {
+					select: {
+						id: true,
+						name: true,
+						subject: {
+							select: {
+								id: true,
+								name: true,
+								stream: {
+									select: {
+										id: true,
+										name: true,
+										code: true
+									}
+								}
+							}
+						}
+					}
+				},
+				subtopic: {
+					select: {
+						id: true,
+						name: true,
+						topic: {
+							select: {
+								id: true,
+								name: true,
+								subject: {
+									select: {
+										id: true,
+										name: true,
+										stream: {
+											select: {
+												id: true,
+												name: true,
+												code: true
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			},
 			orderBy: { createdAt: 'desc' },
 			skip,
@@ -87,9 +150,63 @@ export class AdminQuestionsController {
 			include: { 
 				options: true, 
 				tags: { include: { tag: true } },
-				subject: true,
-				topic: true,
-				subtopic: true
+				subject: {
+					select: {
+						id: true,
+						name: true,
+						stream: {
+							select: {
+								id: true,
+								name: true,
+								code: true
+							}
+						}
+					}
+				},
+				topic: {
+					select: {
+						id: true,
+						name: true,
+						subject: {
+							select: {
+								id: true,
+								name: true,
+								stream: {
+									select: {
+										id: true,
+										name: true,
+										code: true
+									}
+								}
+							}
+						}
+					}
+				},
+				subtopic: {
+					select: {
+						id: true,
+						name: true,
+						topic: {
+							select: {
+								id: true,
+								name: true,
+								subject: {
+									select: {
+										id: true,
+										name: true,
+										stream: {
+											select: {
+												id: true,
+												name: true,
+												code: true
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		});
 	}

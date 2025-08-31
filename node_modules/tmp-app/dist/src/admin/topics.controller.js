@@ -33,7 +33,9 @@ let AdminTopicsController = class AdminTopicsController {
         if (search) {
             where.OR = [
                 { name: { contains: search, mode: 'insensitive' } },
-                { subject: { name: { contains: search, mode: 'insensitive' } } }
+                { subject: { name: { contains: search, mode: 'insensitive' } } },
+                { subject: { stream: { name: { contains: search, mode: 'insensitive' } } } },
+                { subject: { stream: { code: { contains: search, mode: 'insensitive' } } } }
             ];
         }
         const totalItems = await this.prisma.topic.count({ where });
@@ -44,7 +46,14 @@ let AdminTopicsController = class AdminTopicsController {
                 subject: {
                     select: {
                         id: true,
-                        name: true
+                        name: true,
+                        stream: {
+                            select: {
+                                id: true,
+                                name: true,
+                                code: true
+                            }
+                        }
                     }
                 }
             },
@@ -71,7 +80,14 @@ let AdminTopicsController = class AdminTopicsController {
                 subject: {
                     select: {
                         id: true,
-                        name: true
+                        name: true,
+                        stream: {
+                            select: {
+                                id: true,
+                                name: true,
+                                code: true
+                            }
+                        }
                     }
                 }
             }
@@ -85,7 +101,14 @@ let AdminTopicsController = class AdminTopicsController {
                 subject: {
                     select: {
                         id: true,
-                        name: true
+                        name: true,
+                        stream: {
+                            select: {
+                                id: true,
+                                name: true,
+                                code: true
+                            }
+                        }
                     }
                 }
             }

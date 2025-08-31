@@ -10,15 +10,20 @@ export declare class AdminSubtopicsController {
                 subject: {
                     id: string;
                     name: string;
+                    stream: {
+                        id: string;
+                        name: string;
+                        code: string;
+                    };
                 };
             };
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
             name: string;
             description: string | null;
             topicId: string;
+            createdAt: Date;
+            updatedAt: Date;
         })[];
         pagination: {
             currentPage: number;
@@ -33,29 +38,29 @@ export declare class AdminSubtopicsController {
         description?: string;
     }): import(".prisma/client").Prisma.Prisma__SubtopicClient<{
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         name: string;
         description: string | null;
         topicId: string;
+        createdAt: Date;
+        updatedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     update(id: string, body: {
         name?: string;
         description?: string;
     }): import(".prisma/client").Prisma.Prisma__SubtopicClient<{
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         name: string;
         description: string | null;
         topicId: string;
+        createdAt: Date;
+        updatedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__SubtopicClient<{
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         name: string;
         description: string | null;
         topicId: string;
+        createdAt: Date;
+        updatedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
 }

@@ -17,35 +17,29 @@ export declare class AdminPYQController {
         questions: ({
             subject: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                streamId: string;
                 name: string;
-                description: string | null;
+                stream: {
+                    id: string;
+                    name: string;
+                    code: string;
+                };
             } | null;
             topic: {
                 id: string;
+                subjectId: string;
                 createdAt: Date;
                 updatedAt: Date;
                 name: string;
                 description: string | null;
-                subjectId: string;
             } | null;
             subtopic: {
                 id: string;
+                topicId: string;
                 createdAt: Date;
                 updatedAt: Date;
                 name: string;
                 description: string | null;
-                topicId: string;
             } | null;
-            options: {
-                id: string;
-                text: string;
-                isCorrect: boolean;
-                order: number;
-                questionId: string;
-            }[];
             tags: ({
                 tag: {
                     id: string;
@@ -55,20 +49,27 @@ export declare class AdminPYQController {
                 questionId: string;
                 tagId: string;
             })[];
+            options: {
+                id: string;
+                order: number;
+                questionId: string;
+                text: string;
+                isCorrect: boolean;
+            }[];
         } & {
+            isPreviousYear: boolean;
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            subjectId: string | null;
-            topicId: string | null;
-            subtopicId: string | null;
             stem: string;
             explanation: string | null;
             difficulty: import(".prisma/client").$Enums.Difficulty;
             yearAppeared: number | null;
-            isPreviousYear: boolean;
             isAIGenerated: boolean;
             aiPrompt: string | null;
+            subjectId: string | null;
+            topicId: string | null;
+            subtopicId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
         })[];
         pagination: {
             currentPage: number;
@@ -98,33 +99,26 @@ export declare class AdminPYQController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            streamId: string;
             name: string;
             description: string | null;
+            streamId: string;
         } | null;
         topic: {
             id: string;
+            subjectId: string;
             createdAt: Date;
             updatedAt: Date;
             name: string;
             description: string | null;
-            subjectId: string;
         } | null;
         subtopic: {
             id: string;
+            topicId: string;
             createdAt: Date;
             updatedAt: Date;
             name: string;
             description: string | null;
-            topicId: string;
         } | null;
-        options: {
-            id: string;
-            text: string;
-            isCorrect: boolean;
-            order: number;
-            questionId: string;
-        }[];
         tags: ({
             tag: {
                 id: string;
@@ -134,20 +128,27 @@ export declare class AdminPYQController {
             questionId: string;
             tagId: string;
         })[];
+        options: {
+            id: string;
+            order: number;
+            questionId: string;
+            text: string;
+            isCorrect: boolean;
+        }[];
     } & {
+        isPreviousYear: boolean;
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        subjectId: string | null;
-        topicId: string | null;
-        subtopicId: string | null;
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
         yearAppeared: number | null;
-        isPreviousYear: boolean;
         isAIGenerated: boolean;
         aiPrompt: string | null;
+        subjectId: string | null;
+        topicId: string | null;
+        subtopicId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }) | null>;
     updatePYQQuestion(id: string, body: {
         stem?: string;
@@ -169,33 +170,26 @@ export declare class AdminPYQController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            streamId: string;
             name: string;
             description: string | null;
+            streamId: string;
         } | null;
         topic: {
             id: string;
+            subjectId: string;
             createdAt: Date;
             updatedAt: Date;
             name: string;
             description: string | null;
-            subjectId: string;
         } | null;
         subtopic: {
             id: string;
+            topicId: string;
             createdAt: Date;
             updatedAt: Date;
             name: string;
             description: string | null;
-            topicId: string;
         } | null;
-        options: {
-            id: string;
-            text: string;
-            isCorrect: boolean;
-            order: number;
-            questionId: string;
-        }[];
         tags: ({
             tag: {
                 id: string;
@@ -205,35 +199,42 @@ export declare class AdminPYQController {
             questionId: string;
             tagId: string;
         })[];
+        options: {
+            id: string;
+            order: number;
+            questionId: string;
+            text: string;
+            isCorrect: boolean;
+        }[];
     } & {
+        isPreviousYear: boolean;
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        subjectId: string | null;
-        topicId: string | null;
-        subtopicId: string | null;
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
         yearAppeared: number | null;
-        isPreviousYear: boolean;
         isAIGenerated: boolean;
         aiPrompt: string | null;
+        subjectId: string | null;
+        topicId: string | null;
+        subtopicId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }) | null>;
     deletePYQQuestion(id: string): Promise<{
+        isPreviousYear: boolean;
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        subjectId: string | null;
-        topicId: string | null;
-        subtopicId: string | null;
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
         yearAppeared: number | null;
-        isPreviousYear: boolean;
         isAIGenerated: boolean;
         aiPrompt: string | null;
+        subjectId: string | null;
+        topicId: string | null;
+        subtopicId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     bulkImportPYQ(file: Express.Multer.File): Promise<{
         message: string;

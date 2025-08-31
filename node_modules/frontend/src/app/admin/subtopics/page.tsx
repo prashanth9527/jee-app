@@ -18,6 +18,11 @@ interface Subtopic {
 		subject: {
 			id: string;
 			name: string;
+			stream?: {
+				id: string;
+				name: string;
+				code: string;
+			};
 		};
 	};
 	createdAt: string;
@@ -29,12 +34,22 @@ interface Topic {
 	subject: {
 		id: string;
 		name: string;
+		stream?: {
+			id: string;
+			name: string;
+			code: string;
+		};
 	};
 }
 
 interface Subject {
 	id: string;
 	name: string;
+	stream?: {
+		id: string;
+		name: string;
+		code: string;
+	};
 }
 
 export default function SubtopicsPage() {
@@ -426,7 +441,7 @@ export default function SubtopicsPage() {
 									<option value="">Select Subject</option>
 									{Array.isArray(subjects) && subjects.map(subject => (
 										<option key={subject.id} value={subject.id}>
-											{subject.name}
+											{subject.name} ({subject.stream?.code || 'N/A'})
 										</option>
 									))}
 								</select>
@@ -441,7 +456,7 @@ export default function SubtopicsPage() {
 										console.log('Rendering topics dropdown with:', addFormTopics);
 										return Array.isArray(addFormTopics) && addFormTopics.map(topic => (
 											<option key={topic.id} value={topic.id}>
-												{topic.name}
+												{topic.name} ({topic.subject?.stream?.code || 'N/A'})
 											</option>
 										));
 									})()}
@@ -499,7 +514,7 @@ export default function SubtopicsPage() {
 								<option value="">All Subjects</option>
 								{Array.isArray(subjects) && subjects.map(subject => (
 									<option key={subject.id} value={subject.id}>
-										{subject.name}
+										{subject.name} ({subject.stream?.code || 'N/A'})
 									</option>
 								))}
 							</select>
@@ -511,7 +526,7 @@ export default function SubtopicsPage() {
 								<option value="">All Topics</option>
 								{Array.isArray(filteredTopics) && filteredTopics.map(topic => (
 									<option key={topic.id} value={topic.id}>
-										{topic.name}
+										{topic.name} ({topic.subject?.stream?.code || 'N/A'})
 									</option>
 								))}
 							</select>
@@ -594,6 +609,9 @@ export default function SubtopicsPage() {
 														<h3 className="text-lg font-medium text-gray-900">{subtopic.name}</h3>
 														<p className="text-sm text-gray-500">
 															Topic: {subtopic.topic.name} • Subject: {subtopic.topic.subject.name}
+															{subtopic.topic.subject?.stream && (
+																<span className="text-gray-600"> ({subtopic.topic.subject.stream.code})</span>
+															)}
 															{subtopic.description && ` • ${subtopic.description}`}
 														</p>
 														<p className="text-xs text-gray-400">

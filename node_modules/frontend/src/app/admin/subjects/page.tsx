@@ -183,11 +183,11 @@ export default function AdminSubjectsPage() {
 						<div className="space-y-4">
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-1">
+									<label className="block text-sm font-semibold text-gray-800 mb-2">
 										Subject Name *
 									</label>
 									<input 
-										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+										className="w-full border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
 										placeholder="Enter subject name (e.g., Physics, Chemistry, Mathematics)" 
 										value={name} 
 										onChange={e => setName(e.target.value)}
@@ -195,17 +195,17 @@ export default function AdminSubjectsPage() {
 									/>
 								</div>
 								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-1">
+									<label className="block text-sm font-semibold text-gray-800 mb-2">
 										Stream *
 									</label>
 									<select
-										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+										className="w-full border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
 										value={streamId}
 										onChange={e => setStreamId(e.target.value)}
 									>
-										<option value="">Select a stream</option>
+										<option value="" className="text-gray-600">Select a stream</option>
 										{streams.map((stream) => (
-											<option key={stream.id} value={stream.id}>
+											<option key={stream.id} value={stream.id} className="text-gray-900">
 												{stream.name} ({stream.code})
 											</option>
 										))}
@@ -213,11 +213,11 @@ export default function AdminSubjectsPage() {
 								</div>
 							</div>
 							<div>
-								<label className="block text-sm font-medium text-gray-700 mb-1">
+								<label className="block text-sm font-semibold text-gray-800 mb-2">
 									Description (Optional)
 								</label>
 								<textarea
-									className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+									className="w-full border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
 									placeholder="Enter subject description"
 									value={description}
 									onChange={e => setDescription(e.target.value)}
@@ -267,42 +267,42 @@ export default function AdminSubjectsPage() {
 										<div className="flex items-center">
 											<div className="flex-shrink-0">
 												<div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-													<span className="text-sm font-medium text-blue-600">
+													<span className="text-sm font-semibold text-blue-700">
 														{subject.name.charAt(0).toUpperCase()}
 													</span>
 												</div>
 											</div>
 											<div className="ml-4">
-												<div className="text-sm font-medium text-gray-900">{subject.name}</div>
-												<div className="text-sm text-gray-500">
+												<div className="text-sm font-semibold text-gray-900">{subject.name}</div>
+												<div className="text-sm text-gray-700 mt-1">
 													{subject.stream ? (
-														<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+														<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">
 															{subject.stream.name} ({subject.stream.code})
 														</span>
 													) : (
-														<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+														<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 border border-gray-200">
 															No Stream Assigned
 														</span>
 													)}
 												</div>
 												{subject.description && (
-													<div className="text-xs text-gray-400 mt-1">
+													<div className="text-sm text-gray-600 mt-1">
 														{subject.description}
 													</div>
 												)}
-												<div className="text-xs text-gray-400 mt-1">
+												<div className="text-xs text-gray-500 mt-1">
 													Created {new Date(subject.createdAt).toLocaleDateString()}
 												</div>
 											</div>
 										</div>
 										<div className="flex items-center space-x-2">
-											<button className="text-gray-400 hover:text-gray-600 p-1">
+											<button className="text-gray-500 hover:text-gray-700 p-1 transition-colors">
 												<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
 												</svg>
 											</button>
 											<button 
-												className="text-gray-400 hover:text-red-600 p-1"
+												className="text-gray-500 hover:text-red-600 p-1 transition-colors"
 												onClick={() => deleteSubject(subject.id, subject.name)}
 											>
 												<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

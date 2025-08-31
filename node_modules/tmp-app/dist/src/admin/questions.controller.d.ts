@@ -7,35 +7,43 @@ export declare class AdminQuestionsController {
         questions: ({
             subject: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                streamId: string;
                 name: string;
-                description: string | null;
+                stream: {
+                    id: string;
+                    name: string;
+                    code: string;
+                };
             } | null;
             topic: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
+                subject: {
+                    id: string;
+                    name: string;
+                    stream: {
+                        id: string;
+                        name: string;
+                        code: string;
+                    };
+                };
                 name: string;
-                description: string | null;
-                subjectId: string;
             } | null;
             subtopic: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
+                topic: {
+                    id: string;
+                    subject: {
+                        id: string;
+                        name: string;
+                        stream: {
+                            id: string;
+                            name: string;
+                            code: string;
+                        };
+                    };
+                    name: string;
+                };
                 name: string;
-                description: string | null;
-                topicId: string;
             } | null;
-            options: {
-                id: string;
-                text: string;
-                isCorrect: boolean;
-                order: number;
-                questionId: string;
-            }[];
             tags: ({
                 tag: {
                     id: string;
@@ -45,13 +53,15 @@ export declare class AdminQuestionsController {
                 questionId: string;
                 tagId: string;
             })[];
+            options: {
+                id: string;
+                questionId: string;
+                text: string;
+                isCorrect: boolean;
+                order: number;
+            }[];
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            subjectId: string | null;
-            topicId: string | null;
-            subtopicId: string | null;
             stem: string;
             explanation: string | null;
             difficulty: import(".prisma/client").$Enums.Difficulty;
@@ -59,6 +69,11 @@ export declare class AdminQuestionsController {
             isPreviousYear: boolean;
             isAIGenerated: boolean;
             aiPrompt: string | null;
+            subjectId: string | null;
+            topicId: string | null;
+            subtopicId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
         })[];
         pagination: {
             currentPage: number;
@@ -72,35 +87,43 @@ export declare class AdminQuestionsController {
     findOne(id: string): import(".prisma/client").Prisma.Prisma__QuestionClient<({
         subject: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            streamId: string;
             name: string;
-            description: string | null;
+            stream: {
+                id: string;
+                name: string;
+                code: string;
+            };
         } | null;
         topic: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
+            subject: {
+                id: string;
+                name: string;
+                stream: {
+                    id: string;
+                    name: string;
+                    code: string;
+                };
+            };
             name: string;
-            description: string | null;
-            subjectId: string;
         } | null;
         subtopic: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
+            topic: {
+                id: string;
+                subject: {
+                    id: string;
+                    name: string;
+                    stream: {
+                        id: string;
+                        name: string;
+                        code: string;
+                    };
+                };
+                name: string;
+            };
             name: string;
-            description: string | null;
-            topicId: string;
         } | null;
-        options: {
-            id: string;
-            text: string;
-            isCorrect: boolean;
-            order: number;
-            questionId: string;
-        }[];
         tags: ({
             tag: {
                 id: string;
@@ -110,13 +133,15 @@ export declare class AdminQuestionsController {
             questionId: string;
             tagId: string;
         })[];
+        options: {
+            id: string;
+            questionId: string;
+            text: string;
+            isCorrect: boolean;
+            order: number;
+        }[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        subjectId: string | null;
-        topicId: string | null;
-        subtopicId: string | null;
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
@@ -124,6 +149,11 @@ export declare class AdminQuestionsController {
         isPreviousYear: boolean;
         isAIGenerated: boolean;
         aiPrompt: string | null;
+        subjectId: string | null;
+        topicId: string | null;
+        subtopicId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     create(body: {
         stem: string;
@@ -141,13 +171,6 @@ export declare class AdminQuestionsController {
         }[];
         tagNames?: string[];
     }): Promise<({
-        options: {
-            id: string;
-            text: string;
-            isCorrect: boolean;
-            order: number;
-            questionId: string;
-        }[];
         tags: ({
             tag: {
                 id: string;
@@ -157,13 +180,15 @@ export declare class AdminQuestionsController {
             questionId: string;
             tagId: string;
         })[];
+        options: {
+            id: string;
+            questionId: string;
+            text: string;
+            isCorrect: boolean;
+            order: number;
+        }[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        subjectId: string | null;
-        topicId: string | null;
-        subtopicId: string | null;
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
@@ -171,6 +196,11 @@ export declare class AdminQuestionsController {
         isPreviousYear: boolean;
         isAIGenerated: boolean;
         aiPrompt: string | null;
+        subjectId: string | null;
+        topicId: string | null;
+        subtopicId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }) | null>;
     update(id: string, body: {
         stem?: string;
@@ -189,13 +219,6 @@ export declare class AdminQuestionsController {
         }[];
         tagNames?: string[];
     }): Promise<({
-        options: {
-            id: string;
-            text: string;
-            isCorrect: boolean;
-            order: number;
-            questionId: string;
-        }[];
         tags: ({
             tag: {
                 id: string;
@@ -205,13 +228,15 @@ export declare class AdminQuestionsController {
             questionId: string;
             tagId: string;
         })[];
+        options: {
+            id: string;
+            questionId: string;
+            text: string;
+            isCorrect: boolean;
+            order: number;
+        }[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        subjectId: string | null;
-        topicId: string | null;
-        subtopicId: string | null;
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
@@ -219,14 +244,14 @@ export declare class AdminQuestionsController {
         isPreviousYear: boolean;
         isAIGenerated: boolean;
         aiPrompt: string | null;
+        subjectId: string | null;
+        topicId: string | null;
+        subtopicId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }) | null>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__QuestionClient<{
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        subjectId: string | null;
-        topicId: string | null;
-        subtopicId: string | null;
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
@@ -234,6 +259,11 @@ export declare class AdminQuestionsController {
         isPreviousYear: boolean;
         isAIGenerated: boolean;
         aiPrompt: string | null;
+        subjectId: string | null;
+        topicId: string | null;
+        subtopicId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     bulkDelete(body: {
         ids: string[];

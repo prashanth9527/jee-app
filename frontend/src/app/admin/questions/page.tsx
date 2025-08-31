@@ -20,14 +20,41 @@ interface Question {
 	subject?: {
 		id: string;
 		name: string;
+		stream?: {
+			id: string;
+			name: string;
+			code: string;
+		};
 	};
 	topic?: {
 		id: string;
 		name: string;
+		subject?: {
+			id: string;
+			name: string;
+			stream?: {
+				id: string;
+				name: string;
+				code: string;
+			};
+		};
 	};
 	subtopic?: {
 		id: string;
 		name: string;
+		topic?: {
+			id: string;
+			name: string;
+			subject?: {
+				id: string;
+				name: string;
+				stream?: {
+					id: string;
+					name: string;
+					code: string;
+				};
+			};
+		};
 	};
 	options: QuestionOption[];
 	tags: QuestionTag[];
@@ -51,6 +78,11 @@ interface QuestionTag {
 interface Subject {
 	id: string;
 	name: string;
+	stream?: {
+		id: string;
+		name: string;
+		code: string;
+	};
 }
 
 interface Topic {
@@ -59,6 +91,11 @@ interface Topic {
 	subject: {
 		id: string;
 		name: string;
+		stream?: {
+			id: string;
+			name: string;
+			code: string;
+		};
 	};
 }
 
@@ -71,6 +108,11 @@ interface Subtopic {
 		subject: {
 			id: string;
 			name: string;
+			stream?: {
+				id: string;
+				name: string;
+				code: string;
+			};
 		};
 	};
 }
@@ -525,7 +567,7 @@ export default function QuestionsPage() {
 								<option value="">All Subjects</option>
 								{Array.isArray(subjects) && subjects.map(subject => (
 									<option key={subject.id} value={subject.id}>
-										{subject.name}
+										{subject.name} ({subject.stream?.code || 'N/A'})
 									</option>
 								))}
 							</select>
@@ -537,7 +579,7 @@ export default function QuestionsPage() {
 								<option value="">All Topics</option>
 								{Array.isArray(filteredTopics) && filteredTopics.map(topic => (
 									<option key={topic.id} value={topic.id}>
-										{topic.name}
+										{topic.name} ({topic.subject?.stream?.code || 'N/A'})
 									</option>
 								))}
 							</select>
@@ -549,7 +591,7 @@ export default function QuestionsPage() {
 								<option value="">All Subtopics</option>
 								{Array.isArray(filteredSubtopics) && filteredSubtopics.map(subtopic => (
 									<option key={subtopic.id} value={subtopic.id}>
-										{subtopic.name}
+										{subtopic.name} ({subtopic.topic?.subject?.stream?.code || 'N/A'})
 									</option>
 								))}
 							</select>
@@ -661,16 +703,25 @@ export default function QuestionsPage() {
 															{question.subject && (
 																<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
 																	{question.subject.name}
+																	{question.subject.stream && (
+																		<span className="ml-1 text-blue-600">({question.subject.stream.code})</span>
+																	)}
 																</span>
 															)}
 															{question.topic && (
 																<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
 																	{question.topic.name}
+																	{question.topic.subject?.stream && (
+																		<span className="ml-1 text-green-600">({question.topic.subject.stream.code})</span>
+																	)}
 																</span>
 															)}
 															{question.subtopic && (
 																<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
 																	{question.subtopic.name}
+																	{question.subtopic.topic?.subject?.stream && (
+																		<span className="ml-1 text-purple-600">({question.subtopic.topic.subject.stream.code})</span>
+																	)}
 																</span>
 															)}
 															<span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${

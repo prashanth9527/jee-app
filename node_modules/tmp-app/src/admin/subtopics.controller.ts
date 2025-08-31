@@ -60,6 +60,30 @@ export class AdminSubtopicsController {
 							}
 						}
 					}
+				},
+				{
+					topic: {
+						subject: {
+							stream: {
+								name: {
+									contains: search,
+									mode: 'insensitive'
+								}
+							}
+						}
+					}
+				},
+				{
+					topic: {
+						subject: {
+							stream: {
+								code: {
+									contains: search,
+									mode: 'insensitive'
+								}
+							}
+						}
+					}
 				}
 			];
 		}
@@ -76,7 +100,14 @@ export class AdminSubtopicsController {
 							subject: {
 								select: {
 									id: true,
-									name: true
+									name: true,
+									stream: {
+										select: {
+											id: true,
+											name: true,
+											code: true
+										}
+									}
 								}
 							}
 						}

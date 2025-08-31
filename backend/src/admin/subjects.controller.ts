@@ -21,6 +21,11 @@ export class AdminSubjectsController {
 						name: true,
 						code: true
 					}
+				},
+				_count: {
+					select: {
+						questions: true
+					}
 				}
 			}
 		});
