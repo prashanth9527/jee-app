@@ -13,6 +13,7 @@ interface Question {
   id: string;
   stem: string;
   explanation?: string;
+  tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   alternativeExplanations?: Array<{
     id: string;
@@ -65,7 +66,7 @@ export default function ExamPage() {
   const [selectedQuestionForReport, setSelectedQuestionForReport] = useState<Question | null>(null);
   
   const questionStartTime = useRef<number>(Date.now());
-  const timerRef = useRef<NodeJS.Timeout>();
+  const timerRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const fetchExamData = async () => {
     try {
@@ -421,6 +422,14 @@ export default function ExamPage() {
                         </div>
                       </div>
                       
+                      {/* Tips & Formulas */}
+                      {question.tip_formula && (
+                        <div className="bg-yellow-50 rounded-lg p-4 mb-4 border border-yellow-200">
+                          <h4 className="font-semibold text-yellow-900 mb-2">💡 Tips & Formulas</h4>
+                          <p className="text-yellow-800">{question.tip_formula}</p>
+                        </div>
+                      )}
+
                       {/* Explanations */}
                       {(question.explanation || (question.alternativeExplanations && question.alternativeExplanations.length > 0)) && (
                         <div className="space-y-4">

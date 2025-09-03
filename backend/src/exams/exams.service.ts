@@ -267,13 +267,16 @@ export class ExamsService {
 			where: { id: request.subtopicId }
 		}) : null;
 
-		// Generate AI questions
-		const aiQuestions = await this.aiService.generateQuestions({
+		// Generate AI questions with tips integration
+		const aiQuestions = await this.aiService.generateQuestionsWithTips({
 			subject: subject?.name || 'General',
 			topic: topic?.name,
 			subtopic: subtopic?.name,
 			difficulty: request.difficulty,
-			questionCount: request.questionCount
+			questionCount: request.questionCount,
+			subjectId: request.subjectId,
+			topicId: request.topicId,
+			subtopicId: request.subtopicId
 		});
 
 		// Save AI questions to database
@@ -283,6 +286,7 @@ export class ExamsService {
 				data: {
 					stem: aiQuestion.stem,
 					explanation: aiQuestion.explanation,
+					tip_formula: aiQuestion.tip_formula,
 					difficulty: aiQuestion.difficulty,
 					subjectId: request.subjectId,
 					topicId: request.topicId,
@@ -350,11 +354,12 @@ export class ExamsService {
 
 		const correctAnswer = question.options[0]?.text || '';
 		
-		// Generate AI explanation
-		const explanation = await this.aiService.generateExplanation(
+		// Generate AI explanation with tips integration
+		const explanation = await this.aiService.generateExplanationWithTips(
 			question.stem,
 			correctAnswer,
-			userAnswer
+			userAnswer,
+			question.tip_formula || undefined
 		);
 
 		return {

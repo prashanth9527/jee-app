@@ -10,6 +10,7 @@ interface Question {
   id: string;
   stem: string;
   explanation?: string;
+  tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   yearAppeared?: number;
   isPreviousYear: boolean;
@@ -125,6 +126,7 @@ export default function ExpertQuestionsPage() {
   const [formData, setFormData] = useState({
     stem: '',
     explanation: '',
+    tip_formula: '',
     difficulty: 'MEDIUM' as 'EASY' | 'MEDIUM' | 'HARD',
     yearAppeared: '',
     isPreviousYear: false,
@@ -244,6 +246,7 @@ export default function ExpertQuestionsPage() {
     setFormData({
       stem: question.stem,
       explanation: question.explanation || '',
+      tip_formula: question.tip_formula || '',
       difficulty: question.difficulty,
       yearAppeared: question.yearAppeared?.toString() || '',
       isPreviousYear: question.isPreviousYear,
@@ -286,6 +289,7 @@ export default function ExpertQuestionsPage() {
     setFormData({
       stem: '',
       explanation: '',
+      tip_formula: '',
       difficulty: 'MEDIUM',
       yearAppeared: '',
       isPreviousYear: false,
@@ -568,6 +572,19 @@ export default function ExpertQuestionsPage() {
                         rows={4}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
                         placeholder="Enter explanation..."
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-900 mb-2">
+                        Tips & Formulas
+                      </label>
+                      <textarea
+                        value={formData.tip_formula}
+                        onChange={(e) => setFormData(prev => ({ ...prev, tip_formula: e.target.value }))}
+                        rows={3}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
+                        placeholder="Enter helpful tips, formulas, or hints..."
                       />
                     </div>
                   </div>

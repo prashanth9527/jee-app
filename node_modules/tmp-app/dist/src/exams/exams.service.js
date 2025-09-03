@@ -241,12 +241,15 @@ let ExamsService = class ExamsService {
         const subtopic = request.subtopicId ? await this.prisma.subtopic.findUnique({
             where: { id: request.subtopicId }
         }) : null;
-        const aiQuestions = await this.aiService.generateQuestions({
+        const aiQuestions = await this.aiService.generateQuestionsWithTips({
             subject: subject?.name || 'General',
             topic: topic?.name,
             subtopic: subtopic?.name,
             difficulty: request.difficulty,
-            questionCount: request.questionCount
+            questionCount: request.questionCount,
+            subjectId: request.subjectId,
+            topicId: request.topicId,
+            subtopicId: request.subtopicId
         });
         const savedQuestions = [];
         for (const aiQuestion of aiQuestions) {
@@ -254,6 +257,7 @@ let ExamsService = class ExamsService {
                 data: {
                     stem: aiQuestion.stem,
                     explanation: aiQuestion.explanation,
+                    tip_formula: aiQuestion.tip_formula,
                     difficulty: aiQuestion.difficulty,
                     subjectId: request.subjectId,
                     topicId: request.topicId,
@@ -309,7 +313,7 @@ let ExamsService = class ExamsService {
             throw new Error('Question not found');
         }
         const correctAnswer = question.options[0]?.text || '';
-        const explanation = await this.aiService.generateExplanation(question.stem, correctAnswer, userAnswer);
+        const explanation = await this.aiService.generateExplanationWithTips(question.stem, correctAnswer, userAnswer, question.tip_formula || undefined);
         return {
             questionId,
             explanation,

@@ -10,6 +10,7 @@ interface Question {
   id: string;
   stem: string;
   explanation?: string;
+  tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   yearAppeared?: number;
   subject?: { 
@@ -69,6 +70,7 @@ export default function AdminPYQPage() {
   const [formData, setFormData] = useState({
     stem: '',
     explanation: '',
+    tip_formula: '',
     difficulty: 'MEDIUM' as 'EASY' | 'MEDIUM' | 'HARD',
     yearAppeared: new Date().getFullYear(),
     subjectId: '',
@@ -253,6 +255,7 @@ export default function AdminPYQPage() {
     setFormData({
       stem: '',
       explanation: '',
+      tip_formula: '',
       difficulty: 'MEDIUM',
       yearAppeared: new Date().getFullYear(),
       subjectId: '',
@@ -274,6 +277,7 @@ export default function AdminPYQPage() {
     setFormData({
       stem: question.stem,
       explanation: question.explanation || '',
+      tip_formula: question.tip_formula || '',
       difficulty: question.difficulty,
       yearAppeared: question.yearAppeared || new Date().getFullYear(),
       subjectId: question.subject?.id || '',
@@ -643,6 +647,17 @@ export default function AdminPYQPage() {
                             rows={3}
                             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Enter explanation (optional)..."
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Tips & Formulas</label>
+                          <textarea
+                            value={formData.tip_formula}
+                            onChange={(e) => setFormData(prev => ({ ...prev, tip_formula: e.target.value }))}
+                            rows={3}
+                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter helpful tips, formulas, or hints..."
                           />
                         </div>
 

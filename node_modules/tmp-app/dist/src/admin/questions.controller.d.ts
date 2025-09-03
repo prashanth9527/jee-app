@@ -70,6 +70,7 @@ export declare class AdminQuestionsController {
             stem: string;
             explanation: string | null;
             difficulty: import(".prisma/client").$Enums.Difficulty;
+            tip_formula: string | null;
             yearAppeared: number | null;
             isPreviousYear: boolean;
             isAIGenerated: boolean;
@@ -150,6 +151,7 @@ export declare class AdminQuestionsController {
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
+        tip_formula: string | null;
         yearAppeared: number | null;
         isPreviousYear: boolean;
         isAIGenerated: boolean;
@@ -158,6 +160,7 @@ export declare class AdminQuestionsController {
     create(body: {
         stem: string;
         explanation?: string;
+        tip_formula?: string;
         difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
         yearAppeared?: number;
         isPreviousYear?: boolean;
@@ -197,6 +200,7 @@ export declare class AdminQuestionsController {
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
+        tip_formula: string | null;
         yearAppeared: number | null;
         isPreviousYear: boolean;
         isAIGenerated: boolean;
@@ -205,6 +209,7 @@ export declare class AdminQuestionsController {
     update(id: string, body: {
         stem?: string;
         explanation?: string;
+        tip_formula?: string;
         difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
         yearAppeared?: number;
         isPreviousYear?: boolean;
@@ -245,6 +250,7 @@ export declare class AdminQuestionsController {
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
+        tip_formula: string | null;
         yearAppeared: number | null;
         isPreviousYear: boolean;
         isAIGenerated: boolean;
@@ -260,6 +266,7 @@ export declare class AdminQuestionsController {
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
+        tip_formula: string | null;
         yearAppeared: number | null;
         isPreviousYear: boolean;
         isAIGenerated: boolean;

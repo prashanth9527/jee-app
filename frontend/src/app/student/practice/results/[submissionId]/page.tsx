@@ -13,6 +13,7 @@ interface Question {
   id: string;
   stem: string;
   explanation?: string;
+  tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   isAIGenerated?: boolean;
   aiPrompt?: string;
@@ -359,6 +360,21 @@ export default function PracticeTestResultsPage() {
                                 );
                               })}
                             </div>
+
+                            {/* Tips & Formulas */}
+                            {question.tip_formula && (
+                              <div className="bg-yellow-50 rounded-lg p-6 border border-yellow-200 mb-4">
+                                <div className="flex items-center justify-between mb-3">
+                                  <h4 className="text-lg font-semibold text-yellow-900">💡 Tips & Formulas</h4>
+                                  <span className="px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                    Helpful Hints
+                                  </span>
+                                </div>
+                                <p className="text-yellow-800 leading-relaxed whitespace-pre-wrap">
+                                  {question.tip_formula}
+                                </p>
+                              </div>
+                            )}
 
                             {/* Explanations */}
                             {(question.explanation || (question.alternativeExplanations && question.alternativeExplanations.length > 0)) && (

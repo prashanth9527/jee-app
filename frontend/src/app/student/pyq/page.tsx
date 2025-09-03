@@ -11,6 +11,7 @@ interface Question {
   id: string;
   stem: string;
   explanation?: string;
+  tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   yearAppeared?: number;
   subject?: { id: string; name: string };
@@ -396,6 +397,13 @@ export default function PYQPage() {
                           <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
                             <p className="text-sm font-medium text-green-800 mb-1">Explanation:</p>
                             <p className="text-sm text-green-700">{question.explanation}</p>
+                          </div>
+                        )}
+
+                        {question.tip_formula && (
+                          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                            <p className="text-sm font-medium text-yellow-800 mb-1">💡 Tips & Formulas:</p>
+                            <p className="text-sm text-yellow-700">{question.tip_formula}</p>
                           </div>
                         )}
 

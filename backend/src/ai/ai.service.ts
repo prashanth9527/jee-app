@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SubscriptionValidationService } from '../subscriptions/subscription-validation.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 interface AIQuestionRequest {
   subject: string;
@@ -8,11 +9,13 @@ interface AIQuestionRequest {
   subtopic?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   questionCount: number;
+  existingTips?: string[]; // Array of existing tips from similar questions
 }
 
 interface AIQuestion {
   stem: string;
   explanation: string;
+  tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   options: {
     text: string;
@@ -28,7 +31,8 @@ export class AIService {
 
   constructor(
     private configService: ConfigService,
-    private subscriptionValidation: SubscriptionValidationService
+    private subscriptionValidation: SubscriptionValidationService,
+    private prisma: PrismaService
   ) {
     this.openaiApiKey = this.configService.get<string>('OPENAI_API_KEY') || '';
     this.openaiBaseUrl = this.configService.get<string>('OPENAI_BASE_URL') || 'https://api.openai.com/v1';
@@ -66,8 +70,24 @@ export class AIService {
     }
   }
 
+  async generateExplanationWithTips(question: string, correctAnswer: string, userAnswer?: string, tipFormula?: string): Promise<string> {
+    if (!this.openaiApiKey) {
+      return 'Explanation not available';
+    }
+
+    try {
+      const prompt = this.buildExplanationPromptWithTips(question, correctAnswer, userAnswer, tipFormula);
+      const response = await this.callOpenAI(prompt);
+      
+      return this.parseExplanationResponse(response);
+    } catch (error) {
+      this.logger.error('Error generating explanation with tips:', error);
+      return 'Explanation not available';
+    }
+  }
+
   private buildQuestionPrompt(request: AIQuestionRequest): string {
-    const { subject, topic, subtopic, difficulty, questionCount } = request;
+    const { subject, topic, subtopic, difficulty, questionCount, existingTips } = request;
     
     let context = `Generate ${questionCount} JEE (Joint Entrance Examination) level questions for ${subject}`;
     
@@ -81,7 +101,7 @@ export class AIService {
     
     context += `. The questions should be ${difficulty.toLowerCase()} difficulty level.`;
 
-    return `You are an expert JEE tutor. ${context}
+    let prompt = `You are an expert JEE tutor. ${context}
 
 Please generate exactly ${questionCount} multiple-choice questions in the following JSON format:
 
@@ -89,6 +109,7 @@ Please generate exactly ${questionCount} multiple-choice questions in the follow
   {
     "stem": "Question text here",
     "explanation": "Detailed explanation of the correct answer",
+    "tip_formula": "Helpful tips, formulas, or solving strategies for this question",
     "difficulty": "${difficulty}",
     "options": [
       {
@@ -109,16 +130,28 @@ Please generate exactly ${questionCount} multiple-choice questions in the follow
       }
     ]
   }
-]
+]`;
 
-Requirements:
+    // Add existing tips context if available
+    if (existingTips && existingTips.length > 0) {
+      prompt += `\n\nIMPORTANT: Use the following existing tips and formulas from similar questions to improve your question generation:
+
+${existingTips.map((tip, index) => `${index + 1}. ${tip}`).join('\n')}
+
+Incorporate these insights to create more relevant and helpful questions. Ensure your generated questions include appropriate tip_formula fields that build upon these existing tips.`;
+    }
+
+    prompt += `\n\nRequirements:
 1. Each question must have exactly 4 options
 2. Only one option should be marked as correct (isCorrect: true)
 3. Questions should be relevant to JEE syllabus
 4. Explanations should be educational and help students understand the concept
-5. Return only valid JSON, no additional text
+5. Each question must include a helpful tip_formula with solving strategies, key formulas, or conceptual hints
+6. Return only valid JSON, no additional text
 
 Generate the questions now:`;
+
+    return prompt;
   }
 
   private buildExplanationPrompt(question: string, correctAnswer: string, userAnswer?: string): string {
@@ -135,6 +168,33 @@ Correct Answer: ${correctAnswer}`;
     }
 
     prompt += `\n\nMake the explanation educational and help the student understand the underlying concept.`;
+
+    return prompt;
+  }
+
+  private buildExplanationPromptWithTips(question: string, correctAnswer: string, userAnswer?: string, tipFormula?: string): string {
+    let prompt = `You are an expert JEE tutor. Please provide a detailed explanation for this question:
+
+Question: ${question}
+Correct Answer: ${correctAnswer}`;
+
+    if (tipFormula) {
+      prompt += `\n\nAvailable Tips & Formulas: ${tipFormula}`;
+      prompt += `\n\nUse these tips and formulas to enhance your explanation and provide more helpful guidance to the student.`;
+    }
+
+    if (userAnswer && userAnswer !== correctAnswer) {
+      prompt += `\nStudent's Answer: ${userAnswer}`;
+      prompt += `\n\nPlease explain why the student's answer is incorrect and provide the correct reasoning.`;
+    } else {
+      prompt += `\n\nPlease provide a detailed explanation of why this is the correct answer.`;
+    }
+
+    prompt += `\n\nMake the explanation educational and help the student understand the underlying concept.`;
+    
+    if (tipFormula) {
+      prompt += `\n\nIncorporate the provided tips and formulas naturally into your explanation to make it more comprehensive and helpful.`;
+    }
 
     return prompt;
   }
@@ -200,6 +260,7 @@ Correct Answer: ${correctAnswer}`;
         return {
           stem: q.stem,
           explanation: q.explanation || 'Explanation not provided',
+          tip_formula: q.tip_formula || 'Tip not provided',
           difficulty: q.difficulty || 'MEDIUM',
           options: q.options.map((opt: any, optIndex: number) => ({
             text: opt.text,
@@ -227,5 +288,78 @@ Correct Answer: ${correctAnswer}`;
       hasAIAccess,
       planType: status.planType || 'MANUAL'
     };
+  }
+
+  /**
+   * Fetch existing tips from similar questions to improve AI generation
+   */
+  private async fetchExistingTips(subjectId: string, topicId?: string, subtopicId?: string): Promise<string[]> {
+    try {
+      const whereClause: any = {
+        subjectId,
+        tip_formula: { not: null },
+        NOT: { tip_formula: '' }
+      };
+
+      if (topicId) {
+        whereClause.topicId = topicId;
+      }
+
+      if (subtopicId) {
+        whereClause.subtopicId = subtopicId;
+      }
+
+      const questionsWithTips = await this.prisma.question.findMany({
+        where: whereClause,
+        select: {
+          tip_formula: true,
+          stem: true
+        },
+        take: 10, // Limit to 10 tips to avoid overwhelming the AI
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+
+      // Filter out tips that are too short or generic
+      const usefulTips = questionsWithTips
+        .filter(q => q.tip_formula && q.tip_formula.length > 10)
+        .map(q => q.tip_formula!)
+        .slice(0, 5); // Take top 5 most useful tips
+
+      this.logger.log(`Found ${usefulTips.length} existing tips for AI question generation`);
+      return usefulTips;
+    } catch (error) {
+      this.logger.error('Error fetching existing tips:', error);
+      return []; // Return empty array if there's an error
+    }
+  }
+
+  /**
+   * Enhanced question generation with existing tips integration
+   */
+  async generateQuestionsWithTips(request: AIQuestionRequest & { subjectId: string; topicId?: string; subtopicId?: string }): Promise<AIQuestion[]> {
+    if (!this.openaiApiKey) {
+      throw new Error('OpenAI API key not configured');
+    }
+
+    try {
+      // Fetch existing tips from similar questions
+      const existingTips = await this.fetchExistingTips(request.subjectId, request.topicId, request.subtopicId);
+      
+      // Create enhanced request with tips
+      const enhancedRequest = {
+        ...request,
+        existingTips
+      };
+
+      const prompt = this.buildQuestionPrompt(enhancedRequest);
+      const response = await this.callOpenAI(prompt);
+      
+      return this.parseAIResponse(response);
+    } catch (error) {
+      this.logger.error('Error generating AI questions with tips:', error);
+      throw new Error('Failed to generate AI questions with tips');
+    }
   }
 } 

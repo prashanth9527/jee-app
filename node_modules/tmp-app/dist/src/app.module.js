@@ -18,6 +18,7 @@ const student_module_1 = require("./student/student.module");
 const subscriptions_module_1 = require("./subscriptions/subscriptions.module");
 const referrals_module_1 = require("./referrals/referrals.module");
 const ai_module_1 = require("./ai/ai.module");
+const ai_suggestions_module_1 = require("./ai/ai-suggestions.module");
 const exams_module_1 = require("./exams/exams.module");
 const streams_module_1 = require("./streams/streams.module");
 const expert_module_1 = require("./expert/expert.module");
@@ -36,6 +37,7 @@ exports.AppModule = AppModule = __decorate([
             subscriptions_module_1.SubscriptionsModule,
             referrals_module_1.ReferralsModule,
             ai_module_1.AIModule,
+            ai_suggestions_module_1.AISuggestionsModule,
             exams_module_1.ExamsModule,
             streams_module_1.StreamsModule,
             expert_module_1.ExpertModule,

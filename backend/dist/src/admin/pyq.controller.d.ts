@@ -66,6 +66,7 @@ export declare class AdminPYQController {
             stem: string;
             explanation: string | null;
             difficulty: import(".prisma/client").$Enums.Difficulty;
+            tip_formula: string | null;
             yearAppeared: number | null;
             isPreviousYear: boolean;
             isAIGenerated: boolean;
@@ -145,6 +146,7 @@ export declare class AdminPYQController {
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
+        tip_formula: string | null;
         yearAppeared: number | null;
         isPreviousYear: boolean;
         isAIGenerated: boolean;
@@ -216,6 +218,7 @@ export declare class AdminPYQController {
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
+        tip_formula: string | null;
         yearAppeared: number | null;
         isPreviousYear: boolean;
         isAIGenerated: boolean;
@@ -231,6 +234,7 @@ export declare class AdminPYQController {
         stem: string;
         explanation: string | null;
         difficulty: import(".prisma/client").$Enums.Difficulty;
+        tip_formula: string | null;
         yearAppeared: number | null;
         isPreviousYear: boolean;
         isAIGenerated: boolean;

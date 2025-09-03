@@ -12,6 +12,7 @@ interface Question {
   id: string;
   stem: string;
   explanation?: string;
+  tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   options: {
     id: string;
@@ -311,6 +312,19 @@ export default function PracticeTestPage() {
                           {currentQuestion.stem}
                         </p>
                       </div>
+
+                      {/* Tips & Formulas */}
+                      {currentQuestion.tip_formula && (
+                        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                          <div className="flex items-center mb-2">
+                            <span className="text-lg mr-2">💡</span>
+                            <h4 className="text-sm font-semibold text-yellow-800">Tips & Formulas</h4>
+                          </div>
+                          <p className="text-sm text-yellow-700 leading-relaxed">
+                            {currentQuestion.tip_formula}
+                          </p>
+                        </div>
+                      )}
 
                       {/* Options */}
                       <div className="space-y-4">

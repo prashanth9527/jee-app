@@ -212,10 +212,11 @@ export class AdminQuestionsController {
 	}
 
 	@Post()
-	async create(@Body() body: { stem: string; explanation?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; topicId?: string; subtopicId?: string; options: { text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
+	async create(@Body() body: { stem: string; explanation?: string; tip_formula?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; topicId?: string; subtopicId?: string; options: { text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
 		const question = await this.prisma.question.create({ data: {
 			stem: body.stem,
 			explanation: body.explanation || null,
+			tip_formula: body.tip_formula || null,
 			difficulty: body.difficulty || 'MEDIUM',
 			yearAppeared: body.yearAppeared || null,
 			isPreviousYear: !!body.isPreviousYear,
@@ -234,10 +235,11 @@ export class AdminQuestionsController {
 	}
 
 	@Put(':id')
-	async update(@Param('id') id: string, @Body() body: { stem?: string; explanation?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; topicId?: string; subtopicId?: string; options?: { id?: string; text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
+	async update(@Param('id') id: string, @Body() body: { stem?: string; explanation?: string; tip_formula?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; topicId?: string; subtopicId?: string; options?: { id?: string; text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
 		await this.prisma.question.update({ where: { id }, data: {
 			stem: body.stem,
 			explanation: body.explanation,
+			tip_formula: body.tip_formula,
 			difficulty: body.difficulty,
 			yearAppeared: body.yearAppeared,
 			isPreviousYear: body.isPreviousYear,

@@ -9,6 +9,7 @@ import { StudentModule } from './student/student.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { ReferralsModule } from './referrals/referrals.module';
 import { AIModule } from './ai/ai.module';
+import { AISuggestionsModule } from './ai/ai-suggestions.module';
 import { ExamsModule } from './exams/exams.module';
 import { StreamsModule } from './streams/streams.module';
 import { ExpertModule } from './expert/expert.module';
@@ -24,6 +25,7 @@ import { AwsModule } from './aws/aws.module';
     SubscriptionsModule,
     ReferralsModule,
     AIModule,
+    AISuggestionsModule,
     ExamsModule,
     StreamsModule,
     ExpertModule,

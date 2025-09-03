@@ -208,6 +208,7 @@ let AdminQuestionsController = class AdminQuestionsController {
         const question = await this.prisma.question.create({ data: {
                 stem: body.stem,
                 explanation: body.explanation || null,
+                tip_formula: body.tip_formula || null,
                 difficulty: body.difficulty || 'MEDIUM',
                 yearAppeared: body.yearAppeared || null,
                 isPreviousYear: !!body.isPreviousYear,
@@ -228,6 +229,7 @@ let AdminQuestionsController = class AdminQuestionsController {
         await this.prisma.question.update({ where: { id }, data: {
                 stem: body.stem,
                 explanation: body.explanation,
+                tip_formula: body.tip_formula,
                 difficulty: body.difficulty,
                 yearAppeared: body.yearAppeared,
                 isPreviousYear: body.isPreviousYear,

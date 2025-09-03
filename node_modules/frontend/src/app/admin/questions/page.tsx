@@ -11,6 +11,7 @@ interface Question {
 	id: string;
 	stem: string;
 	explanation?: string;
+	tip_formula?: string;
 	difficulty: 'EASY' | 'MEDIUM' | 'HARD';
 	yearAppeared?: number;
 	isPreviousYear: boolean;

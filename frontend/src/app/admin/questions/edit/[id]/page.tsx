@@ -11,6 +11,7 @@ interface Question {
 	id: string;
 	stem: string;
 	explanation?: string;
+	tip_formula?: string;
 	difficulty: 'EASY' | 'MEDIUM' | 'HARD';
 	yearAppeared?: number;
 	isPreviousYear: boolean;
@@ -99,6 +100,7 @@ export default function EditQuestionPage() {
 	// Form states
 	const [stem, setStem] = useState('');
 	const [explanation, setExplanation] = useState('');
+	const [tipFormula, setTipFormula] = useState('');
 	const [difficulty, setDifficulty] = useState<'EASY' | 'MEDIUM' | 'HARD'>('MEDIUM');
 	const [yearAppeared, setYearAppeared] = useState('');
 	const [isPreviousYear, setIsPreviousYear] = useState(false);
@@ -138,6 +140,7 @@ export default function EditQuestionPage() {
 			// Populate form with question data
 			setStem(questionData.stem);
 			setExplanation(questionData.explanation || '');
+			setTipFormula(questionData.tip_formula || '');
 			setDifficulty(questionData.difficulty);
 			setYearAppeared(questionData.yearAppeared?.toString() || '');
 			setIsPreviousYear(questionData.isPreviousYear);
@@ -176,7 +179,7 @@ export default function EditQuestionPage() {
 
 			return () => clearTimeout(timer);
 		}
-	}, [stem, explanation, difficulty, yearAppeared, isPreviousYear, subjectId, topicId, subtopicId, options, tagNames, hasUnsavedChanges, loading]);
+	}, [stem, explanation, tipFormula, difficulty, yearAppeared, isPreviousYear, subjectId, topicId, subtopicId, options, tagNames, hasUnsavedChanges, loading]);
 
 	// Calculate form progress
 	useEffect(() => {
@@ -186,10 +189,10 @@ export default function EditQuestionPage() {
 		if (options.every(opt => opt.text.trim())) progress += 25;
 		if (options.some(opt => opt.isCorrect)) progress += 15;
 		if (difficulty) progress += 10;
-		if (explanation.trim() || yearAppeared || tagNames.trim()) progress += 5;
+		if (explanation.trim() || tipFormula.trim() || yearAppeared || tagNames.trim()) progress += 5;
 		
 		setFormProgress(Math.min(progress, 100));
-	}, [stem, subjectId, options, difficulty, explanation, yearAppeared, tagNames]);
+	}, [stem, subjectId, options, difficulty, explanation, tipFormula, yearAppeared, tagNames]);
 
 	// Validate form
 	const validateForm = useCallback(() => {
@@ -289,6 +292,7 @@ export default function EditQuestionPage() {
 			questionId,
 			stem,
 			explanation,
+			tipFormula,
 			difficulty,
 			yearAppeared,
 			isPreviousYear,
@@ -312,6 +316,7 @@ export default function EditQuestionPage() {
 				const parsed = JSON.parse(draft);
 				setStem(parsed.stem || '');
 				setExplanation(parsed.explanation || '');
+				setTipFormula(parsed.tipFormula || '');
 				setDifficulty(parsed.difficulty || 'MEDIUM');
 				setYearAppeared(parsed.yearAppeared || '');
 				setIsPreviousYear(parsed.isPreviousYear || false);
@@ -353,6 +358,7 @@ export default function EditQuestionPage() {
 			await api.put(`/admin/questions/${questionId}`, { 
 				stem: stem.trim(),
 				explanation: explanation.trim() || undefined,
+				tip_formula: tipFormula.trim() || undefined,
 				difficulty,
 				yearAppeared: yearAppeared ? parseInt(yearAppeared) : undefined,
 				isPreviousYear,
@@ -555,6 +561,28 @@ export default function EditQuestionPage() {
 										}}
 										maxLength={500}
 									/>
+								</div>
+							</div>
+
+							{/* Tips and Formulas */}
+							<div>
+								<label className="block text-sm font-medium text-gray-700 mb-2">
+									Tips & Formulas (Optional)
+									<span className="text-xs text-gray-500 ml-2">({tipFormula.length}/300)</span>
+								</label>
+								<textarea 
+									className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
+									rows={4}
+									placeholder="Enter helpful tips, formulas, or hints to solve this question..." 
+									value={tipFormula} 
+									onChange={e => {
+										setTipFormula(e.target.value);
+										setHasUnsavedChanges(true);
+									}}
+									maxLength={300}
+								/>
+								<div className="mt-2 text-xs text-gray-500">
+									💡 Tip: Include key formulas, concepts, or solving strategies that would help students
 								</div>
 							</div>
 
