@@ -7,10 +7,11 @@ import { useEffect } from 'react';
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requiredRole?: 'ADMIN' | 'STUDENT' | 'EXPERT';
+  allowedRoles?: Array<'ADMIN' | 'STUDENT' | 'EXPERT'>;
 }
 
-export default function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
-  const { user, loading, checkAuth } = useAuth();
+export default function ProtectedRoute({ children, requiredRole, allowedRoles }: ProtectedRouteProps) {
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -20,7 +21,8 @@ export default function ProtectedRoute({ children, requiredRole }: ProtectedRout
         return;
       }
 
-      if (requiredRole && user.role !== requiredRole) {
+      const roleAllowed = allowedRoles ? allowedRoles.includes(user.role as any) : true;
+      if ((requiredRole && user.role !== requiredRole) || !roleAllowed) {
         // Redirect to appropriate dashboard based on user role
         if (user.role === 'ADMIN') {
           router.push('/admin');
@@ -32,7 +34,7 @@ export default function ProtectedRoute({ children, requiredRole }: ProtectedRout
         return;
       }
     }
-  }, [user, loading, requiredRole, router]);
+  }, [user, loading, requiredRole, allowedRoles, router]);
 
 
 
@@ -51,7 +53,8 @@ export default function ProtectedRoute({ children, requiredRole }: ProtectedRout
     return null; // Will redirect to login
   }
 
-  if (requiredRole && user.role !== requiredRole) {
+  const roleAllowed = allowedRoles ? allowedRoles.includes(user.role as any) : true;
+  if ((requiredRole && user.role !== requiredRole) || !roleAllowed) {
     return null; // Will redirect to appropriate dashboard
   }
 

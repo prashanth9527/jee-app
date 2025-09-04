@@ -53,8 +53,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const currentPath = window.location.pathname;
       if (currentPath.startsWith('/admin') || currentPath.startsWith('/student')) {
         // Use SweetAlert if available, otherwise use alert
-        if (typeof window !== 'undefined' && (window as any).Swal) {
-          (window as any).Swal.fire({
+        if (typeof window !== 'undefined' && (window as unknown as { Swal: any }).Swal) {
+          (window as unknown as { Swal: any }).Swal.fire({
             title: 'Session Expired',
             text: 'Your session has expired. Please log in again to continue.',
             icon: 'warning',

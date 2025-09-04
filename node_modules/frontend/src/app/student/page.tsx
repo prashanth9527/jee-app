@@ -22,7 +22,7 @@ interface StudentStats {
 
 export default function StudentDashboard() {
   const [stats, setStats] = useState<StudentStats | null>(null);
-  const [recentExams, setRecentExams] = useState<any[]>([]);
+  const [recentExams, setRecentExams] = useState<{ id: string; examPaper?: { title?: string; subjects?: string[] }; submittedAt: string; scorePercent?: number }[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

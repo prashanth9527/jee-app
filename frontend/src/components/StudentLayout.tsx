@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -49,6 +50,15 @@ const menuItems = [
               ),
             },
             {
+    name: 'Learning Content',
+    href: '/student/lms',
+    icon: (
+      <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' />
+      </svg>
+    ),
+  },
+  {
     name: 'AI Suggestions',
     href: '/student/ai-suggestions',
     icon: (
@@ -130,7 +140,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
     }
     return false;
   });
-  const [subscriptionStatus, setSubscriptionStatus] = useState<any>(null);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<{ type: string; status: string; isOnTrial?: boolean; daysRemaining?: number } | null>(null);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const pathname = usePathname();
   const { logout, user } = useAuth();
@@ -304,12 +314,12 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                         Trial - {subscriptionStatus.daysRemaining} days
                       </span>
                     )}
-                    {subscriptionStatus.hasValidSubscription && (
+                    {(subscriptionStatus as any).hasValidSubscription && (
                       <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">
                         Active - {subscriptionStatus.daysRemaining} days
                       </span>
                     )}
-                    {subscriptionStatus.needsSubscription && (
+                    {(subscriptionStatus as any).needsSubscription && (
                       <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
                         Expired
                       </span>
@@ -328,7 +338,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                 {/* User Avatar */}
                 <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
                   {user?.profilePicture ? (
-                    <img 
+                    <Image 
                       src={user.profilePicture} 
                       alt={user?.fullName || 'User'} 
                       className="w-8 h-8 rounded-full object-cover"
@@ -363,7 +373,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
                         {user?.profilePicture ? (
-                          <img 
+                          <Image 
                             src={user.profilePicture} 
                             alt={user?.fullName || 'User'} 
                             className="w-10 h-10 rounded-full object-cover"

@@ -38,7 +38,7 @@ function RegisterForm() {
 			try {
 				const response = await api.get('/streams');
 				setStreams(response.data);
-			} catch (error) {
+			} catch { // error
 				console.error('Error fetching streams:', error);
 				setError('Failed to load streams. Please refresh the page.');
 			} finally {
@@ -65,7 +65,7 @@ function RegisterForm() {
 			setValidatingCode(true);
 			const response = await api.get(`/referrals/validate/${code}`);
 			setCodeValid(response.data.valid);
-		} catch (error) {
+		} catch { // error
 			setCodeValid(false);
 		} finally {
 			setValidatingCode(false);
@@ -132,7 +132,7 @@ function RegisterForm() {
 					</div>
 					{codeValid === true && (
 						<p className="text-sm text-green-700 mt-1">
-							You'll get 3 days free subscription when you register!
+							You&apos;ll get 3 days free subscription when you register!
 						</p>
 					)}
 				</div>

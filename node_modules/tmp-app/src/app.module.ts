@@ -15,6 +15,8 @@ import { StreamsModule } from './streams/streams.module';
 import { ExpertModule } from './expert/expert.module';
 import { AwsModule } from './aws/aws.module';
 
+
+
 @Module({
   imports: [
     PrismaModule,
@@ -30,6 +32,7 @@ import { AwsModule } from './aws/aws.module';
     StreamsModule,
     ExpertModule,
     AwsModule,
+    
   ],
   controllers: [AppController],
   providers: [AppService],

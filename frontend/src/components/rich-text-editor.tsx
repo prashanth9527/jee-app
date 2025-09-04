@@ -32,7 +32,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   useEffect(() => {
     // Register KaTeX with window object so Quill can access it
     if (typeof window !== 'undefined') {
-      (window as any).katex = katex
+      (window as unknown as { katex: typeof katex }).katex = katex
     }
     
     setMounted(true)
