@@ -429,7 +429,7 @@ export default function ExamPage() {
                           <p className="text-yellow-800">{question.tip_formula}</p>
                         </div>
                       )}
-
+                      
                       {/* Explanations */}
                       {(question.explanation || (question.alternativeExplanations && question.alternativeExplanations.length > 0)) && (
                         <div className="space-y-4">

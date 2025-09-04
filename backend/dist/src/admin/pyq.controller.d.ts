@@ -81,9 +81,68 @@ export declare class AdminPYQController {
             hasPreviousPage: boolean;
         };
     }>;
+    getPYQQuestion(id: string): Promise<{
+        subject: {
+            id: string;
+            stream: {
+                id: string;
+                name: string;
+                code: string;
+            };
+            name: string;
+        } | null;
+        topic: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string | null;
+            subjectId: string;
+        } | null;
+        subtopic: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string | null;
+            topicId: string;
+        } | null;
+        options: {
+            id: string;
+            text: string;
+            isCorrect: boolean;
+            order: number;
+            questionId: string;
+        }[];
+        tags: ({
+            tag: {
+                id: string;
+                name: string;
+            };
+        } & {
+            questionId: string;
+            tagId: string;
+        })[];
+    } & {
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        subjectId: string | null;
+        topicId: string | null;
+        subtopicId: string | null;
+        stem: string;
+        explanation: string | null;
+        difficulty: import(".prisma/client").$Enums.Difficulty;
+        tip_formula: string | null;
+        yearAppeared: number | null;
+        isPreviousYear: boolean;
+        isAIGenerated: boolean;
+        aiPrompt: string | null;
+    }>;
     createPYQQuestion(body: {
         stem: string;
         explanation?: string;
+        tip_formula?: string;
         difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
         yearAppeared: number;
         subjectId?: string;
@@ -155,6 +214,7 @@ export declare class AdminPYQController {
     updatePYQQuestion(id: string, body: {
         stem?: string;
         explanation?: string;
+        tip_formula?: string;
         difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
         yearAppeared?: number;
         subjectId?: string;

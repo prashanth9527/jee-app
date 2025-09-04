@@ -144,10 +144,50 @@ export class AdminPYQController {
     };
   }
 
+  @Get(':id')
+  async getPYQQuestion(@Param('id') id: string) {
+    const question = await this.prisma.question.findUnique({
+      where: { 
+        id,
+        isPreviousYear: true
+      },
+      include: {
+        options: {
+          orderBy: { order: 'asc' }
+        },
+        tags: { 
+          include: { tag: true } 
+        },
+        subject: {
+          select: {
+            id: true,
+            name: true,
+            stream: {
+              select: {
+                id: true,
+                name: true,
+                code: true
+              }
+            }
+          }
+        },
+        topic: true,
+        subtopic: true
+      }
+    });
+
+    if (!question) {
+      throw new Error('PYQ Question not found');
+    }
+
+    return question;
+  }
+
   @Post('questions')
   async createPYQQuestion(@Body() body: {
     stem: string;
     explanation?: string;
+    tip_formula?: string;
     difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
     yearAppeared: number;
     subjectId?: string;
@@ -160,6 +200,7 @@ export class AdminPYQController {
       data: {
         stem: body.stem,
         explanation: body.explanation,
+        tip_formula: body.tip_formula,
         difficulty: body.difficulty || 'MEDIUM',
         yearAppeared: body.yearAppeared,
         isPreviousYear: true,
@@ -208,6 +249,7 @@ export class AdminPYQController {
     @Body() body: {
       stem?: string;
       explanation?: string;
+      tip_formula?: string;
       difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
       yearAppeared?: number;
       subjectId?: string;
@@ -222,6 +264,7 @@ export class AdminPYQController {
       data: {
         stem: body.stem,
         explanation: body.explanation,
+        tip_formula: body.tip_formula,
         difficulty: body.difficulty,
         yearAppeared: body.yearAppeared,
         subjectId: body.subjectId,

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -64,26 +65,8 @@ export default function AdminPYQPage() {
     search: ''
   });
 
-  // Form for creating/editing
-  const [showForm, setShowForm] = useState(false);
-  const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
-  const [formData, setFormData] = useState({
-    stem: '',
-    explanation: '',
-    tip_formula: '',
-    difficulty: 'MEDIUM' as 'EASY' | 'MEDIUM' | 'HARD',
-    yearAppeared: new Date().getFullYear(),
-    subjectId: '',
-    topicId: '',
-    subtopicId: '',
-    options: [
-      { text: '', isCorrect: false, order: 0 },
-      { text: '', isCorrect: false, order: 1 },
-      { text: '', isCorrect: false, order: 2 },
-      { text: '', isCorrect: false, order: 3 }
-    ],
-    tagNames: [] as string[]
-  });
+  // Navigation
+  const router = useRouter();
 
   useEffect(() => {
     loadInitialData();
@@ -251,64 +234,11 @@ export default function AdminPYQPage() {
   };
 
   const openCreateForm = () => {
-    setEditingQuestion(null);
-    setFormData({
-      stem: '',
-      explanation: '',
-      tip_formula: '',
-      difficulty: 'MEDIUM',
-      yearAppeared: new Date().getFullYear(),
-      subjectId: '',
-      topicId: '',
-      subtopicId: '',
-      options: [
-        { text: '', isCorrect: false, order: 0 },
-        { text: '', isCorrect: false, order: 1 },
-        { text: '', isCorrect: false, order: 2 },
-        { text: '', isCorrect: false, order: 3 }
-      ],
-      tagNames: []
-    });
-    setShowForm(true);
+    router.push('/admin/pyq/add');
   };
 
   const openEditForm = (question: Question) => {
-    setEditingQuestion(question);
-    setFormData({
-      stem: question.stem,
-      explanation: question.explanation || '',
-      tip_formula: question.tip_formula || '',
-      difficulty: question.difficulty,
-      yearAppeared: question.yearAppeared || new Date().getFullYear(),
-      subjectId: question.subject?.id || '',
-      topicId: question.topic?.id || '',
-      subtopicId: question.subtopic?.id || '',
-      options: question.options.map(opt => ({
-        text: opt.text,
-        isCorrect: opt.isCorrect,
-        order: opt.order
-      })),
-      tagNames: question.tags.map(tag => tag.tag.name)
-    });
-    setShowForm(true);
-  };
-
-  const handleSubmitForm = async () => {
-    try {
-      if (editingQuestion) {
-        await api.put(`/admin/pyq/questions/${editingQuestion.id}`, formData);
-        Swal.fire('Success', 'Question updated successfully', 'success');
-      } else {
-        await api.post('/admin/pyq/questions', formData);
-        Swal.fire('Success', 'Question created successfully', 'success');
-      }
-      
-      setShowForm(false);
-      loadQuestions();
-    } catch (error) {
-      console.error('Failed to save question:', error);
-      Swal.fire('Error', 'Failed to save question', 'error');
-    }
+    router.push(`/admin/pyq/edit/${question.id}`);
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -337,7 +267,7 @@ export default function AdminPYQPage() {
                   <p className="text-gray-600">Manage and organize previous year JEE questions.</p>
                 </div>
                 <button
-                  onClick={() => setShowForm(true)}
+                  onClick={openCreateForm}
                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                 >
                   Add New PYQ
@@ -397,13 +327,21 @@ export default function AdminPYQPage() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
-                    <input
-                      type="number"
-                      placeholder="Enter year"
+                    <select
                       value={filters.year}
                       onChange={(e) => handleFilterChange('year', e.target.value)}
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white placeholder-gray-500"
-                    />
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
+                    >
+                      <option value="" className="text-gray-600">All Years</option>
+                      {Array.from({ length: new Date().getFullYear() - 1949 }, (_, i) => {
+                        const year = new Date().getFullYear() - i;
+                        return (
+                          <option key={year} value={year.toString()} className="text-gray-900">
+                            {year}
+                          </option>
+                        );
+                      })}
+                    </select>
                   </div>
 
                   <div>
@@ -593,128 +531,7 @@ export default function AdminPYQPage() {
                 )}
               </div>
 
-              {/* Create/Edit Form Modal */}
-              {showForm && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-                  <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
-                    <div className="mt-3">
-                      <h3 className="text-lg font-medium text-gray-900 mb-4">
-                        {editingQuestion ? 'Edit PYQ Question' : 'Create New PYQ Question'}
-                      </h3>
-                      
-                      <div className="space-y-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Question</label>
-                          <textarea
-                            value={formData.stem}
-                            onChange={(e) => setFormData(prev => ({ ...prev, stem: e.target.value }))}
-                            rows={4}
-                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter the question text..."
-                          />
-                        </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Year Appeared</label>
-                            <input
-                              type="number"
-                              value={formData.yearAppeared}
-                              onChange={(e) => setFormData(prev => ({ ...prev, yearAppeared: parseInt(e.target.value) }))}
-                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
-                            <select
-                              value={formData.difficulty}
-                              onChange={(e) => setFormData(prev => ({ ...prev, difficulty: e.target.value as 'EASY' | 'MEDIUM' | 'HARD' }))}
-                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
-                              <option value="EASY">Easy</option>
-                              <option value="MEDIUM">Medium</option>
-                              <option value="HARD">Hard</option>
-                            </select>
-                          </div>
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Explanation</label>
-                          <textarea
-                            value={formData.explanation}
-                            onChange={(e) => setFormData(prev => ({ ...prev, explanation: e.target.value }))}
-                            rows={3}
-                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter explanation (optional)..."
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Tips & Formulas</label>
-                          <textarea
-                            value={formData.tip_formula}
-                            onChange={(e) => setFormData(prev => ({ ...prev, tip_formula: e.target.value }))}
-                            rows={3}
-                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter helpful tips, formulas, or hints..."
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Options</label>
-                          <div className="space-y-2">
-                            {formData.options.map((option, index) => (
-                              <div key={index} className="flex items-center space-x-2">
-                                <input
-                                  type="text"
-                                  value={option.text}
-                                  onChange={(e) => {
-                                    const newOptions = [...formData.options];
-                                    newOptions[index].text = e.target.value;
-                                    setFormData(prev => ({ ...prev, options: newOptions }));
-                                  }}
-                                  className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                  placeholder={`Option ${String.fromCharCode(65 + index)}`}
-                                />
-                                <input
-                                  type="radio"
-                                  name="correctOption"
-                                  checked={option.isCorrect}
-                                  onChange={() => {
-                                    const newOptions = formData.options.map((opt, i) => ({
-                                      ...opt,
-                                      isCorrect: i === index
-                                    }));
-                                    setFormData(prev => ({ ...prev, options: newOptions }));
-                                  }}
-                                  className="text-blue-600 focus:ring-blue-500"
-                                />
-                                <span className="text-sm text-gray-600">Correct</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex justify-end space-x-3 mt-6">
-                        <button
-                          onClick={() => setShowForm(false)}
-                          className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          onClick={handleSubmitForm}
-                          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                        >
-                          {editingQuestion ? 'Update' : 'Create'}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </>
           )}
         </div>

@@ -135,11 +135,47 @@ let AdminPYQController = class AdminPYQController {
             }
         };
     }
+    async getPYQQuestion(id) {
+        const question = await this.prisma.question.findUnique({
+            where: {
+                id,
+                isPreviousYear: true
+            },
+            include: {
+                options: {
+                    orderBy: { order: 'asc' }
+                },
+                tags: {
+                    include: { tag: true }
+                },
+                subject: {
+                    select: {
+                        id: true,
+                        name: true,
+                        stream: {
+                            select: {
+                                id: true,
+                                name: true,
+                                code: true
+                            }
+                        }
+                    }
+                },
+                topic: true,
+                subtopic: true
+            }
+        });
+        if (!question) {
+            throw new Error('PYQ Question not found');
+        }
+        return question;
+    }
     async createPYQQuestion(body) {
         const question = await this.prisma.question.create({
             data: {
                 stem: body.stem,
                 explanation: body.explanation,
+                tip_formula: body.tip_formula,
                 difficulty: body.difficulty || 'MEDIUM',
                 yearAppeared: body.yearAppeared,
                 isPreviousYear: true,
@@ -184,6 +220,7 @@ let AdminPYQController = class AdminPYQController {
             data: {
                 stem: body.stem,
                 explanation: body.explanation,
+                tip_formula: body.tip_formula,
                 difficulty: body.difficulty,
                 yearAppeared: body.yearAppeared,
                 subjectId: body.subjectId,
@@ -285,6 +322,13 @@ __decorate([
     __metadata("design:paramtypes", [String, String, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], AdminPYQController.prototype, "getPYQQuestions", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AdminPYQController.prototype, "getPYQQuestion", null);
 __decorate([
     (0, common_1.Post)('questions'),
     __param(0, (0, common_1.Body)()),
