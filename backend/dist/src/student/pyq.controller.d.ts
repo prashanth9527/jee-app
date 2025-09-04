@@ -161,10 +161,7 @@ export declare class PYQController {
     }) | null>;
     getPYQAnalytics(): Promise<{
         totalPYQ: number;
-        byYear: {
-            year: number | null;
-            count: number;
-        }[];
+        byYear: any;
         bySubject: {
             name: string;
             count: number;

@@ -1,174 +1,156 @@
 'use client';
 
+import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 
-interface SystemSettings {
+interface SEOData {
   siteTitle: string;
-  siteDescription?: string;
-  siteKeywords?: string;
-  logoUrl?: string;
-  faviconUrl?: string;
-  ogImageUrl?: string;
-  googleAnalyticsId?: string;
-  facebookPixelId?: string;
-  customCss?: string;
-  customJs?: string;
+  siteDescription: string;
+  siteKeywords: string;
+  title?: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
+  url?: string;
+  type?: string;
+  twitterHandle?: string;
 }
 
 interface DynamicHeadProps {
   title?: string;
   description?: string;
   keywords?: string;
-  ogImage?: string;
+  image?: string;
+  url?: string;
+  type?: 'website' | 'article' | 'profile';
 }
 
 export default function DynamicHead({ 
   title, 
   description, 
   keywords, 
-  ogImage 
+  image,
+  url,
+  type = 'website'
 }: DynamicHeadProps) {
-  const [settings, setSettings] = useState<SystemSettings | null>(null);
+  const [seoData, setSeoData] = useState<SEOData | null>(null);
 
   useEffect(() => {
-    const fetchSettings = async () => {
+    const fetchSEOData = async () => {
       try {
         const response = await api.get('/system-settings');
-        setSettings(response.data);
-      } catch (error) {
-        console.error('Error fetching system settings:', error);
+        setSeoData(response.data);
+      } catch {
+        // Fallback SEO data
+        setSeoData({
+          siteTitle: 'JEE Master - Complete JEE Preparation Platform',
+          siteDescription: 'Master JEE Main & Advanced with AI-powered practice tests, 50,000+ questions, detailed analytics, and comprehensive study materials.',
+          siteKeywords: 'JEE preparation, JEE Main, JEE Advanced, practice tests, AI learning, physics, chemistry, mathematics, online coaching, mock tests',
+          twitterHandle: '@jeemaster'
+        });
       }
     };
 
-    fetchSettings();
+    fetchSEOData();
   }, []);
 
-  useEffect(() => {
-    if (!settings) return;
+  if (!seoData) return null;
 
-    // Update document title
-    const pageTitle = title ? `${title} - ${settings.siteTitle}` : settings.siteTitle;
-    document.title = pageTitle;
+  const finalTitle = title ? `${title} | ${seoData.siteTitle}` : seoData.siteTitle;
+  const finalDescription = description || seoData.siteDescription;
+  const finalKeywords = keywords || seoData.siteKeywords;
+  const finalImage = image || '/og-image.jpg';
+  const finalUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
 
-    // Update meta description
-    const metaDescription = description || settings.siteDescription;
-    let metaDescElement = document.querySelector('meta[name="description"]');
-    if (!metaDescElement) {
-      metaDescElement = document.createElement('meta');
-      metaDescElement.setAttribute('name', 'description');
-      document.head.appendChild(metaDescElement);
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": seoData.siteTitle,
+    "description": seoData.siteDescription,
+    "url": finalUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${finalUrl}/logo.png`
+    },
+    "sameAs": [
+      "https://facebook.com/jeemaster",
+      "https://twitter.com/jeemaster",
+      "https://instagram.com/jeemaster"
+    ],
+    "offers": {
+      "@type": "Offer",
+      "category": "Education",
+      "description": "JEE preparation courses and practice tests"
     }
-    metaDescElement.setAttribute('content', metaDescription || '');
+  };
 
-    // Update meta keywords
-    const metaKeywords = keywords || settings.siteKeywords;
-    let metaKeywordsElement = document.querySelector('meta[name="keywords"]');
-    if (!metaKeywordsElement) {
-      metaKeywordsElement = document.createElement('meta');
-      metaKeywordsElement.setAttribute('name', 'keywords');
-      document.head.appendChild(metaKeywordsElement);
-    }
-    metaKeywordsElement.setAttribute('content', metaKeywords || '');
+  return (
+    <Head>
+      {/* Basic Meta Tags */}
+      <title>{finalTitle}</title>
+      <meta name="description" content={finalDescription} />
+      <meta name="keywords" content={finalKeywords} />
+      <meta name="author" content={seoData.siteTitle} />
+      <meta name="robots" content="index, follow" />
+      <meta name="language" content="en" />
+      <meta name="revisit-after" content="7 days" />
 
-    // Update favicon
-    if (settings.faviconUrl) {
-      let faviconElement = document.querySelector('link[rel="icon"]');
-      if (!faviconElement) {
-        faviconElement = document.createElement('link');
-        faviconElement.setAttribute('rel', 'icon');
-        document.head.appendChild(faviconElement);
-      }
-      faviconElement.setAttribute('href', settings.faviconUrl);
-    }
+      {/* Viewport and Mobile */}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-    // Update Open Graph tags
-    const ogTitle = title || settings.siteTitle;
-    let ogTitleElement = document.querySelector('meta[property="og:title"]');
-    if (!ogTitleElement) {
-      ogTitleElement = document.createElement('meta');
-      ogTitleElement.setAttribute('property', 'og:title');
-      document.head.appendChild(ogTitleElement);
-    }
-    ogTitleElement.setAttribute('content', ogTitle);
+      {/* Open Graph Meta Tags */}
+      <meta property="og:type" content={type} />
+      <meta property="og:title" content={finalTitle} />
+      <meta property="og:description" content={finalDescription} />
+      <meta property="og:image" content={finalImage} />
+      <meta property="og:url" content={finalUrl} />
+      <meta property="og:site_name" content={seoData.siteTitle} />
+      <meta property="og:locale" content="en_US" />
 
-    const ogDesc = description || settings.siteDescription;
-    let ogDescElement = document.querySelector('meta[property="og:description"]');
-    if (!ogDescElement) {
-      ogDescElement = document.createElement('meta');
-      ogDescElement.setAttribute('property', 'og:description');
-      document.head.appendChild(ogDescElement);
-    }
-    ogDescElement.setAttribute('content', ogDesc || '');
+      {/* Twitter Card Meta Tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={finalTitle} />
+      <meta name="twitter:description" content={finalDescription} />
+      <meta name="twitter:image" content={finalImage} />
+      <meta name="twitter:site" content={seoData.twitterHandle || '@jeemaster'} />
+      <meta name="twitter:creator" content={seoData.twitterHandle || '@jeemaster'} />
 
-    const ogImg = ogImage || settings.ogImageUrl;
-    if (ogImg) {
-      let ogImgElement = document.querySelector('meta[property="og:image"]');
-      if (!ogImgElement) {
-        ogImgElement = document.createElement('meta');
-        ogImgElement.setAttribute('property', 'og:image');
-        document.head.appendChild(ogImgElement);
-      }
-      ogImgElement.setAttribute('content', ogImg);
-    }
+      {/* Additional Meta Tags */}
+      <meta name="theme-color" content="#ea580c" />
+      <meta name="msapplication-TileColor" content="#ea580c" />
+      <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
 
-    // Add Google Analytics
-    if (settings.googleAnalyticsId) {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${settings.googleAnalyticsId}`;
-      document.head.appendChild(script);
+      {/* Canonical URL */}
+      <link rel="canonical" href={finalUrl} />
 
-      const gtagScript = document.createElement('script');
-      gtagScript.innerHTML = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${settings.googleAnalyticsId}');
-      `;
-      document.head.appendChild(gtagScript);
-    }
+      {/* Favicons */}
+      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-    // Add Facebook Pixel
-    if (settings.facebookPixelId) {
-      const script = document.createElement('script');
-      script.innerHTML = `
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '${settings.facebookPixelId}');
-        fbq('track', 'PageView');
-      `;
-      document.head.appendChild(script);
-    }
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData)
+        }}
+      />
 
-    // Add custom CSS
-    if (settings.customCss) {
-      let customCssElement = document.getElementById('custom-css');
-      if (!customCssElement) {
-        customCssElement = document.createElement('style');
-        customCssElement.id = 'custom-css';
-        document.head.appendChild(customCssElement);
-      }
-      customCssElement.textContent = settings.customCss;
-    }
+      {/* Preconnect for Performance */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://accounts.google.com" />
 
-    // Add custom JavaScript
-    if (settings.customJs) {
-      let customJsElement = document.getElementById('custom-js');
-      if (!customJsElement) {
-        customJsElement = document.createElement('script');
-        customJsElement.id = 'custom-js';
-        document.head.appendChild(customJsElement);
-      }
-      customJsElement.textContent = settings.customJs;
-    }
-  }, [settings, title, description, keywords, ogImage]);
-
-  return null; // This component doesn't render anything
+      {/* Google Fonts */}
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </Head>
+  );
 } 

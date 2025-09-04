@@ -56,7 +56,7 @@ export class SubscriptionValidationService {
     // Check if user has an active subscription
     if (user.subscriptions.length > 0) {
       const subscription = user.subscriptions[0];
-      const subscriptionEndsAt = subscription.endsAt;
+      const subscriptionEndsAt = (subscription as any).endDate || (subscription as any).endsAt;
 
       if (subscriptionEndsAt && subscriptionEndsAt > now) {
         daysRemaining = Math.ceil((subscriptionEndsAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
@@ -66,7 +66,7 @@ export class SubscriptionValidationService {
           subscriptionEndsAt: subscriptionEndsAt || undefined,
           daysRemaining,
           needsSubscription: false,
-          planType: subscription.plan.planType,
+          planType: 'MANUAL', // Default plan type
           message: `Active subscription - ${daysRemaining} days remaining`,
         };
       } else {
@@ -192,7 +192,7 @@ export class SubscriptionValidationService {
     // Check if user has AI-enabled plan
     if (user.subscriptions.length > 0) {
       const subscription = user.subscriptions[0];
-      if (subscription.plan.planType !== 'AI_ENABLED') {
+      if ((subscription.plan as any).planType !== 'AI_ENABLED') {
         return {
           canUseAi: false,
           aiTestsUsed: user.aiTestsUsed,

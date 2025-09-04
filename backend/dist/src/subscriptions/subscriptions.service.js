@@ -28,8 +28,8 @@ let SubscriptionsService = class SubscriptionsService {
                 name: data.name,
                 description: data.description || null,
                 priceCents: data.priceCents,
-                currency: data.currency || 'usd',
-                interval: (data.interval || 'MONTH'),
+                currency: data.currency || 'INR',
+                interval: data.interval || 'MONTHLY',
             } });
     }
     updatePlan(id, data) {
@@ -42,18 +42,14 @@ let SubscriptionsService = class SubscriptionsService {
         const plan = await this.prisma.plan.findUnique({ where: { id: planId } });
         if (!plan)
             throw new Error('Plan not found');
-        let priceId = plan.stripePriceId || undefined;
-        if (!priceId) {
-            const product = await this.stripe.products.create({ name: plan.name, description: plan.description || undefined });
-            const price = await this.stripe.prices.create({
-                unit_amount: plan.priceCents,
-                currency: plan.currency,
-                recurring: { interval: plan.interval === 'YEAR' ? 'year' : 'month' },
-                product: product.id,
-            });
-            priceId = price.id;
-            await this.prisma.plan.update({ where: { id: plan.id }, data: { stripePriceId: priceId } });
-        }
+        const product = await this.stripe.products.create({ name: plan.name, description: plan.description || undefined });
+        const price = await this.stripe.prices.create({
+            unit_amount: plan.priceCents,
+            currency: plan.currency,
+            recurring: { interval: plan.interval === 'YEARLY' ? 'year' : 'month' },
+            product: product.id,
+        });
+        const priceId = price.id;
         const session = await this.stripe.checkout.sessions.create({
             mode: 'subscription',
             line_items: [{ price: priceId, quantity: 1 }],
@@ -70,13 +66,17 @@ let SubscriptionsService = class SubscriptionsService {
                 const userId = (session.client_reference_id || '').toString();
                 const subId = session.subscription || undefined;
                 if (userId && subId) {
-                    const line = session.line_items?.data?.[0];
-                    const priceId = line?.price?.id;
-                    if (priceId) {
-                        const plan = await this.prisma.plan.findFirst({ where: { stripePriceId: priceId } });
-                        if (plan) {
-                            await this.prisma.subscription.create({ data: { userId, planId: plan.id, status: 'ACTIVE', stripeSubId: subId } });
-                        }
+                    const plans = await this.prisma.plan.findMany({ where: { isActive: true } });
+                    if (plans.length > 0) {
+                        await this.prisma.subscription.create({
+                            data: {
+                                userId,
+                                planId: plans[0].id,
+                                status: 'ACTIVE',
+                                startedAt: new Date(),
+                                endsAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+                            }
+                        });
                     }
                 }
                 break;

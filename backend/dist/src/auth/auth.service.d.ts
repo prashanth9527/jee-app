@@ -45,4 +45,5 @@ export declare class AuthService {
     verifyPhone(userId: string, code: string): Promise<{
         ok: boolean;
     }>;
+    generateJwtToken(user: any): Promise<string>;
 }

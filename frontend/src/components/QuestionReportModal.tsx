@@ -69,26 +69,26 @@ export default function QuestionReportModal({
       <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold">Report Question Issue</h2>
-          <button
+            <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+              className="text-gray-400 hover:text-gray-600"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
         </div>
 
         <div className="mb-4 p-4 bg-gray-50 rounded-lg">
-          <h3 className="font-medium text-gray-900 mb-2">Question:</h3>
+            <h3 className="font-medium text-gray-900 mb-2">Question:</h3>
           <p className="text-gray-700 text-sm">{questionStem}</p>
-          {currentExplanation && (
+            {currentExplanation && (
             <>
               <h3 className="font-medium text-gray-900 mb-2 mt-4">Current Explanation:</h3>
               <p className="text-gray-700 text-sm">{currentExplanation}</p>
             </>
-          )}
-        </div>
+            )}
+          </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -152,23 +152,23 @@ export default function QuestionReportModal({
           )}
 
           <div className="flex justify-end space-x-3 pt-4">
-            <button
-              type="button"
+                <button
+                  type="button"
               onClick={onClose}
               className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
+          >
+            Cancel
+          </button>
+          <button
               type="submit"
               disabled={!reportType || submitting}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
+          >
               {submitting ? 'Submitting...' : 'Submit Report'}
-            </button>
-          </div>
+          </button>
+        </div>
         </form>
       </div>
     </div>
   );
-}
+} 

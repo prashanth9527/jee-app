@@ -41,7 +41,7 @@ let StudentQuestionReportsController = class StudentQuestionReportsController {
                 userId,
                 reportType: createReportDto.reportType,
                 reason: createReportDto.reason,
-                description: createReportDto.description,
+                description: createReportDto.description || '',
                 alternativeExplanation: createReportDto.alternativeExplanation,
                 suggestedAnswer: createReportDto.suggestedAnswer,
                 suggestedOptions: createReportDto.suggestedOptions ? {

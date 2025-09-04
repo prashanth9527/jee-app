@@ -12,6 +12,7 @@ const jwt_1 = require("@nestjs/jwt");
 const passport_1 = require("@nestjs/passport");
 const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
+const google_auth_controller_1 = require("./google-auth.controller");
 const users_module_1 = require("../users/users.module");
 const prisma_module_1 = require("../prisma/prisma.module");
 const referrals_module_1 = require("../referrals/referrals.module");
@@ -37,7 +38,7 @@ exports.AuthModule = AuthModule = __decorate([
             }),
         ],
         providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy, otp_service_1.OtpService, mailer_service_1.MailerService, sms_service_1.SmsService],
-        controllers: [auth_controller_1.AuthController],
+        controllers: [auth_controller_1.AuthController, google_auth_controller_1.GoogleAuthController],
         exports: [auth_service_1.AuthService],
     })
 ], AuthModule);

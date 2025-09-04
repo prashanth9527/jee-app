@@ -42,7 +42,7 @@ let SubscriptionValidationService = class SubscriptionValidationService {
         let message = '';
         if (user.subscriptions.length > 0) {
             const subscription = user.subscriptions[0];
-            const subscriptionEndsAt = subscription.endsAt;
+            const subscriptionEndsAt = subscription.endDate || subscription.endsAt;
             if (subscriptionEndsAt && subscriptionEndsAt > now) {
                 daysRemaining = Math.ceil((subscriptionEndsAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
                 return {
@@ -51,7 +51,7 @@ let SubscriptionValidationService = class SubscriptionValidationService {
                     subscriptionEndsAt: subscriptionEndsAt || undefined,
                     daysRemaining,
                     needsSubscription: false,
-                    planType: subscription.plan.planType,
+                    planType: 'MANUAL',
                     message: `Active subscription - ${daysRemaining} days remaining`,
                 };
             }

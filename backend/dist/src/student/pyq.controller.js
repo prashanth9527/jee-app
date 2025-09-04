@@ -177,16 +177,16 @@ let PYQController = class PYQController {
             where: { isPreviousYear: true }
         });
         const byYear = await this.prisma.question.groupBy({
-            by: ['yearAppeared'],
+            by: ['pyqYear'],
             where: {
-                isPreviousYear: true,
-                yearAppeared: { not: null }
+                isFromPYQ: true,
+                pyqYear: { not: null }
             },
             _count: {
                 id: true
             },
             orderBy: {
-                yearAppeared: 'desc'
+                pyqYear: 'desc'
             }
         });
         const bySubject = await this.prisma.subject.findMany({
@@ -212,9 +212,9 @@ let PYQController = class PYQController {
         });
         return {
             totalPYQ,
-            byYear: byYear.map(item => ({
-                year: item.yearAppeared,
-                count: item._count.id
+            byYear: byYear.map((item) => ({
+                year: item.pyqYear,
+                count: item._count?.id || 0
             })),
             bySubject: bySubject.map(subject => ({
                 name: subject.name,

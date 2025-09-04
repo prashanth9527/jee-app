@@ -21,7 +21,7 @@ export declare class SubscriptionsService {
         description?: string;
         priceCents: number;
         currency?: string;
-        interval?: 'MONTH' | 'YEAR';
+        interval?: any;
     }): import(".prisma/client").Prisma.Prisma__PlanClient<{
         id: string;
         createdAt: Date;
@@ -35,14 +35,7 @@ export declare class SubscriptionsService {
         stripePriceId: string | null;
         isActive: boolean;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
-    updatePlan(id: string, data: {
-        name?: string;
-        description?: string;
-        priceCents?: number;
-        currency?: string;
-        interval?: 'MONTH' | 'YEAR';
-        isActive?: boolean;
-    }): import(".prisma/client").Prisma.Prisma__PlanClient<{
+    updatePlan(id: string, data: any): import(".prisma/client").Prisma.Prisma__PlanClient<{
         id: string;
         createdAt: Date;
         updatedAt: Date;

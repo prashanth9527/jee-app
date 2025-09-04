@@ -47,9 +47,9 @@ export class StudentQuestionReportsController {
       data: {
         questionId: createReportDto.questionId,
         userId,
-        reportType: createReportDto.reportType,
+        reportType: createReportDto.reportType as any,
         reason: createReportDto.reason,
-        description: createReportDto.description,
+        description: createReportDto.description || '',
         alternativeExplanation: createReportDto.alternativeExplanation,
         suggestedAnswer: createReportDto.suggestedAnswer,
         suggestedOptions: createReportDto.suggestedOptions ? {

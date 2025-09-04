@@ -197,17 +197,17 @@ export class PYQController {
     });
 
     // Get PYQ count by year
-    const byYear = await this.prisma.question.groupBy({
-      by: ['yearAppeared'],
+    const byYear = await (this.prisma.question as any).groupBy({
+      by: ['pyqYear'],
       where: { 
-        isPreviousYear: true,
-        yearAppeared: { not: null }
+        isFromPYQ: true,
+        pyqYear: { not: null }
       },
       _count: {
         id: true
       },
       orderBy: {
-        yearAppeared: 'desc'
+        pyqYear: 'desc'
       }
     });
 
@@ -238,9 +238,9 @@ export class PYQController {
 
     return {
       totalPYQ,
-      byYear: byYear.map(item => ({
-        year: item.yearAppeared,
-        count: item._count.id
+      byYear: byYear.map((item: any) => ({
+        year: item.pyqYear,
+        count: item._count?.id || 0
       })),
       bySubject: bySubject.map(subject => ({
         name: subject.name,

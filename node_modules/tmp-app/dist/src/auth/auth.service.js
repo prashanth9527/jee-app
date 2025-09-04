@@ -67,6 +67,9 @@ let AuthService = class AuthService {
             throw new common_1.UnauthorizedException('Invalid credentials');
         }
         console.log('User found:', { id: user.id, email: user.email, role: user.role });
+        if (!user.hashedPassword) {
+            throw new common_1.UnauthorizedException('Invalid credentials');
+        }
         const ok = await bcrypt.compare(params.password, user.hashedPassword);
         console.log('Password comparison result:', ok);
         if (!ok) {
@@ -103,6 +106,14 @@ let AuthService = class AuthService {
         await this.otp.verifyOtp(userId, code, 'PHONE');
         await this.users.setPhoneVerified(userId);
         return { ok: true };
+    }
+    async generateJwtToken(user) {
+        const payload = {
+            sub: user.id,
+            email: user.email,
+            role: user.role
+        };
+        return this.jwt.signAsync(payload);
     }
 };
 exports.AuthService = AuthService;

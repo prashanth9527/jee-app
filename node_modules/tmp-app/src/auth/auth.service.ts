@@ -65,6 +65,9 @@ export class AuthService {
 		
 		console.log('User found:', { id: user.id, email: user.email, role: user.role }); // Debug log
 		
+		if (!user.hashedPassword) {
+			throw new UnauthorizedException('Invalid credentials');
+		}
 		const ok = await bcrypt.compare(params.password, user.hashedPassword);
 		console.log('Password comparison result:', ok); // Debug log
 		
@@ -108,5 +111,14 @@ export class AuthService {
 		await this.otp.verifyOtp(userId, code, 'PHONE');
 		await this.users.setPhoneVerified(userId);
 		return { ok: true };
+	}
+
+	async generateJwtToken(user: any): Promise<string> {
+		const payload = {
+			sub: user.id,
+			email: user.email,
+			role: user.role
+		};
+		return this.jwt.signAsync(payload);
 	}
 } 

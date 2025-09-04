@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { GoogleAuthController } from './google-auth.controller';
 import { UsersModule } from '../users/users.module';
 import { PrismaModule } from '../prisma/prisma.module';
 import { ReferralsModule } from '../referrals/referrals.module';
@@ -25,7 +26,7 @@ import { SmsService } from './sms.service';
 		}),
 	],
 	providers: [AuthService, JwtStrategy, OtpService, MailerService, SmsService],
-	controllers: [AuthController],
+	controllers: [AuthController, GoogleAuthController],
 	exports: [AuthService],
 })
 export class AuthModule {} 
