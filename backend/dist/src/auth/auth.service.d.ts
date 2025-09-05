@@ -59,8 +59,8 @@ export declare class AuthService {
                 updatedAt: Date;
                 name: string;
                 description: string | null;
-                code: string;
                 isActive: boolean;
+                code: string;
             } | null;
             emailVerified: boolean;
         };
