@@ -25,6 +25,18 @@ let AuthController = class AuthController {
     register(dto) {
         return this.auth.register(dto);
     }
+    startRegistration(dto) {
+        return this.auth.startRegistration(dto);
+    }
+    completeRegistration(body) {
+        return this.auth.completeRegistration(body.userId, body.otpCode);
+    }
+    async resendEmailOtp(body) {
+        return this.auth.resendEmailOtp(body.userId, body.email);
+    }
+    completeProfile(req, body) {
+        return this.auth.completeProfile(req.user.id, body.phone, body.streamId);
+    }
     login(dto) {
         return this.auth.login(dto);
     }
@@ -34,14 +46,22 @@ let AuthController = class AuthController {
     sendPhoneOtp(req, phone) {
         return this.auth.sendPhoneOtp(req.user.id, phone);
     }
+    sendLoginOtp(phone) {
+        return this.auth.sendLoginOtp(phone);
+    }
     verifyEmail(req, code) {
         return this.auth.verifyEmail(req.user.id, code);
     }
     verifyPhone(req, code) {
         return this.auth.verifyPhone(req.user.id, code);
     }
-    me(req) {
-        return req.user;
+    async me(req) {
+        const user = req.user;
+        const needsProfileCompletion = user.role === 'STUDENT' && (!user.streamId || !user.phone);
+        return {
+            ...user,
+            needsProfileCompletion
+        };
     }
 };
 exports.AuthController = AuthController;
@@ -52,6 +72,36 @@ __decorate([
     __metadata("design:paramtypes", [register_dto_1.RegisterDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "register", null);
+__decorate([
+    (0, common_1.Post)('start-registration'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [register_dto_1.RegisterDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "startRegistration", null);
+__decorate([
+    (0, common_1.Post)('complete-registration'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "completeRegistration", null);
+__decorate([
+    (0, common_1.Post)('resend-email-otp'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "resendEmailOtp", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Post)('complete-profile'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "completeProfile", null);
 __decorate([
     (0, common_1.Post)('login'),
     __param(0, (0, common_1.Body)()),
@@ -77,6 +127,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "sendPhoneOtp", null);
 __decorate([
+    (0, common_1.Post)('send-login-otp'),
+    __param(0, (0, common_1.Body)('phone')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "sendLoginOtp", null);
+__decorate([
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, common_1.Post)('verify-email'),
     __param(0, (0, common_1.Req)()),
@@ -100,7 +157,7 @@ __decorate([
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AuthController.prototype, "me", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),

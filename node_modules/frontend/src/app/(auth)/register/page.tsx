@@ -42,6 +42,7 @@ function RegisterForm() {
 	const [validatingCode, setValidatingCode] = useState(false);
 	const [codeValid, setCodeValid] = useState<boolean | null>(null);
 	const [showPassword, setShowPassword] = useState(false);
+	const [isRegistering, setIsRegistering] = useState(false);
 
 	// Fetch available streams and system settings
 	useEffect(() => {
@@ -91,9 +92,11 @@ function RegisterForm() {
 	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError(null);
+		setIsRegistering(true);
 		
 		if (!streamId) {
 			setError('Please select a stream');
+			setIsRegistering(false);
 			return;
 		}
 
@@ -103,34 +106,61 @@ function RegisterForm() {
 				registrationData.referralCode = referralCode;
 			}
 			
-			await api.post('/auth/register', registrationData);
-			setOk(true);
-			setTimeout(()=>router.push('/login'), 1000);
+			const response = await api.post('/auth/start-registration', registrationData);
+			// Redirect to email verification page
+			router.push(`/verify-email?email=${encodeURIComponent(email)}&userId=${response.data.id}`);
 		} catch (err: any) {
 			setError(err?.response?.data?.message || 'Registration failed');
+		} finally {
+			setIsRegistering(false);
 		}
 	};
 
 	const handleGoogleSuccess = async (googleUser: GoogleUser) => {
-		setOk(true);
 		setError(null);
 
 		try {
-			const response = await api.post('/auth/google/register', {
-				googleId: googleUser.id,
-				email: googleUser.email,
-				name: googleUser.name,
-				picture: googleUser.picture,
-				streamId: streamId
-			});
+			// First try to login (in case user already exists)
+			let response;
+			try {
+				response = await api.post('/auth/google/login', {
+					googleId: googleUser.id,
+					email: googleUser.email,
+					name: googleUser.name,
+					picture: googleUser.picture
+				});
+			} catch (loginError: any) {
+				// If login fails, try registration
+				if (!streamId) {
+					setError('Please select a stream before registering with Google');
+					return;
+				}
+				
+				response = await api.post('/auth/google/register', {
+					googleId: googleUser.id,
+					email: googleUser.email,
+					name: googleUser.name,
+					picture: googleUser.picture,
+					streamId: streamId
+				});
+			}
 
 			const { data } = response;
 			if (data.access_token && data.user) {
-				// Redirect to login page or dashboard
-				setTimeout(() => router.push('/login'), 1000);
+				setOk(true);
+				// Redirect based on user role
+				setTimeout(() => {
+					if (data.user.role === 'ADMIN') {
+						router.push('/admin');
+					} else if (data.user.role === 'EXPERT') {
+						router.push('/expert');
+					} else {
+						router.push('/student');
+					}
+				}, 1000);
 			}
 		} catch (err: any) {
-			setError(err?.response?.data?.message || 'Google registration failed');
+			setError(err?.response?.data?.message || 'Google authentication failed');
 			setOk(false);
 		}
 	};
@@ -206,14 +236,14 @@ function RegisterForm() {
 							<label htmlFor="fullName" className="block text-sm font-semibold text-gray-900 mb-2">
 								Full Name
 							</label>
-				<input 
+							<input 
 								id="fullName"
 								name="fullName"
 								type="text"
 								required
 								className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
 								placeholder="Enter your full name"
-					value={fullName} 
+								value={fullName} 
 								onChange={e => setFullName(e.target.value)}
 							/>
 						</div>
@@ -334,13 +364,13 @@ function RegisterForm() {
 							<label htmlFor="referralCode" className="block text-sm font-semibold text-gray-900 mb-2">
 								Referral Code <span className="text-gray-600 font-normal">(Optional)</span>
 							</label>
-				<input 
+							<input 
 								id="referralCode"
 								name="referralCode"
 								type="text"
 								className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
 								placeholder="Enter referral code"
-					value={referralCode} 
+								value={referralCode} 
 								onChange={e => {
 									setReferralCode(e.target.value);
 									if (e.target.value) {
@@ -349,7 +379,7 @@ function RegisterForm() {
 										setCodeValid(null);
 									}
 								}}
-				/>
+							/>
 						</div>
 
 						{/* Error Message */}
@@ -359,7 +389,7 @@ function RegisterForm() {
 							</div>
 						)}
 
-						{/* Success Message */}
+
 						{ok && (
 							<div className="p-4 bg-green-50 border border-green-300 rounded-lg">
 								<p className="text-green-900 text-sm font-semibold">Registration successful! Redirecting to login...</p>
@@ -369,10 +399,19 @@ function RegisterForm() {
 						{/* Submit Button */}
 				<button 
 					type="submit"
-							disabled={ok}
-							className="w-full flex justify-center py-4 px-6 border border-transparent rounded-lg shadow-sm text-base font-semibold text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+					disabled={ok || isRegistering}
+					className="w-full flex justify-center py-4 px-6 border border-transparent rounded-lg shadow-sm text-base font-semibold text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
 				>
-							{ok ? 'Registration Successful...' : 'Create Account'}
+					{isRegistering ? (
+						<>
+							<span className="mr-2">⏳</span>
+							Registering...
+						</>
+					) : ok ? (
+						'Registration Successful...'
+					) : (
+						'Create Account'
+					)}
 				</button>
 			</form>
 

@@ -21,14 +21,26 @@ export class OtpService {
 		const code = generateOtp();
 		const ttlMin = Number(process.env.OTP_TTL_MIN || 10);
 		await this.prisma.otp.create({ data: { userId, code, type: 'EMAIL', target: email, expiresAt: new Date(Date.now() + ttlMin * 60 * 1000) } });
-		await this.mailer.sendOtpEmail(email, code);
+		
+		try {
+			await this.mailer.sendOtpEmail(email, code);
+		} catch (error) {
+			console.error('Failed to send email OTP:', error);
+			// Don't throw error - OTP is still created and can be used
+		}
 	}
 
 	async sendPhoneOtp(userId: string, phone: string) {
 		const code = generateOtp();
 		const ttlMin = Number(process.env.OTP_TTL_MIN || 10);
 		await this.prisma.otp.create({ data: { userId, code, type: 'PHONE', target: phone, expiresAt: new Date(Date.now() + ttlMin * 60 * 1000) } });
-		await this.sms.sendOtpSms(phone, code);
+		
+		try {
+			await this.sms.sendOtpSms(phone, code);
+		} catch (error) {
+			console.error('Failed to send SMS OTP:', error);
+			// Don't throw error - OTP is still created and can be used
+		}
 	}
 
 	async verifyOtp(userId: string, code: string, type: OtpTypeLiteral) {

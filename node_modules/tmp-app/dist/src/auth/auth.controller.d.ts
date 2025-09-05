@@ -8,6 +8,52 @@ export declare class AuthController {
         id: string;
         email: string;
     }>;
+    startRegistration(dto: RegisterDto): Promise<{
+        id: string;
+        email: string;
+        message: string;
+    }>;
+    completeRegistration(body: {
+        userId: string;
+        otpCode: string;
+    }): Promise<{
+        access_token: string;
+        message: string;
+        user: {
+            id: string;
+            email: string;
+            fullName: string;
+            emailVerified: boolean;
+        };
+    }>;
+    resendEmailOtp(body: {
+        userId: string;
+        email: string;
+    }): Promise<{
+        message: string;
+    }>;
+    completeProfile(req: any, body: {
+        phone: string;
+        streamId?: string;
+    }): Promise<{
+        message: string;
+        user: {
+            id: string;
+            email: string;
+            fullName: string;
+            phone: string | null;
+            stream: {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                name: string;
+                description: string | null;
+                code: string;
+                isActive: boolean;
+            } | null;
+            emailVerified: boolean;
+        };
+    }>;
     login(dto: LoginDto): Promise<{
         access_token: string;
         user: {
@@ -23,11 +69,15 @@ export declare class AuthController {
     sendPhoneOtp(req: any, phone: string): Promise<{
         ok: boolean;
     }>;
+    sendLoginOtp(phone: string): Promise<{
+        ok: boolean;
+        message: string;
+    }>;
     verifyEmail(req: any, code: string): Promise<{
         ok: boolean;
     }>;
     verifyPhone(req: any, code: string): Promise<{
         ok: boolean;
     }>;
-    me(req: any): any;
+    me(req: any): Promise<any>;
 }

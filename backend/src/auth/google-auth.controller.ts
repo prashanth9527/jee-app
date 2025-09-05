@@ -1,12 +1,18 @@
 import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { PrismaService } from '../prisma/prisma.service';
+import axios from 'axios';
 
 interface GoogleLoginDto {
   googleId: string;
   email: string;
   name: string;
   picture?: string;
+}
+
+interface GoogleTokenExchangeDto {
+  code: string;
+  redirectUri: string;
 }
 
 @Controller('auth/google')
@@ -63,7 +69,7 @@ export class GoogleAuthController {
           });
         }
       } else {
-        // Create new user
+        // Create new user without stream (needs profile completion)
         user = await this.prisma.user.create({
           data: {
             googleId: googleId,
@@ -71,7 +77,8 @@ export class GoogleAuthController {
             fullName: name,
             profilePicture: picture,
             emailVerified: true, // Google emails are pre-verified
-            role: 'STUDENT' // Default role for Google sign-ups
+            role: 'STUDENT', // Default role for Google sign-ups
+            streamId: null // User needs to select stream
           },
           include: {
             stream: true,
@@ -87,6 +94,9 @@ export class GoogleAuthController {
       // Generate JWT token
       const token = await this.authService.generateJwtToken(user);
 
+      // Check if user needs profile completion (only for students)
+      const needsProfileCompletion = user.role === 'STUDENT' && (!user.streamId || !user.phone);
+
       return {
         access_token: token,
         user: {
@@ -97,7 +107,8 @@ export class GoogleAuthController {
           profilePicture: user.profilePicture,
           emailVerified: user.emailVerified,
           stream: user.stream,
-          subscriptions: user.subscriptions
+          subscriptions: user.subscriptions,
+          needsProfileCompletion
         }
       };
     } catch (error) {
@@ -197,6 +208,62 @@ export class GoogleAuthController {
       
       throw new HttpException(
         'Google registration failed', 
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Post('token')
+  async exchangeToken(@Body() tokenData: GoogleTokenExchangeDto) {
+    try {
+      const { code, redirectUri } = tokenData;
+
+      if (!code || !redirectUri) {
+        throw new HttpException('Missing code or redirectUri', HttpStatus.BAD_REQUEST);
+      }
+
+      // Exchange authorization code for access token
+      const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        code,
+        grant_type: 'authorization_code',
+        redirect_uri: redirectUri,
+      }, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+
+      const { access_token } = tokenResponse.data;
+
+      // Get user information from Google
+      const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      const userInfo = userInfoResponse.data;
+
+      return {
+        access_token,
+        user: {
+          id: userInfo.id,
+          email: userInfo.email,
+          name: userInfo.name,
+          picture: userInfo.picture,
+        },
+      };
+    } catch (error) {
+      console.error('Google token exchange error:', error);
+      
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      
+      throw new HttpException(
+        'Failed to exchange Google authorization code',
         HttpStatus.INTERNAL_SERVER_ERROR
       );
     }

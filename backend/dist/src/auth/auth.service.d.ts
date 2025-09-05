@@ -21,10 +21,74 @@ export declare class AuthService {
         id: string;
         email: string;
     }>;
-    login(params: {
+    startRegistration(params: {
         email: string;
         password: string;
+        fullName: string;
+        phone?: string;
+        referralCode?: string;
+        streamId: string;
     }): Promise<{
+        id: string;
+        email: string;
+        message: string;
+    }>;
+    completeRegistration(userId: string, otpCode: string): Promise<{
+        access_token: string;
+        message: string;
+        user: {
+            id: string;
+            email: string;
+            fullName: string;
+            emailVerified: boolean;
+        };
+    }>;
+    resendEmailOtp(userId: string, email: string): Promise<{
+        message: string;
+    }>;
+    completeProfile(userId: string, phone: string, streamId?: string): Promise<{
+        message: string;
+        user: {
+            id: string;
+            email: string;
+            fullName: string;
+            phone: string | null;
+            stream: {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                name: string;
+                description: string | null;
+                code: string;
+                isActive: boolean;
+            } | null;
+            emailVerified: boolean;
+        };
+    }>;
+    login(params: {
+        email?: string;
+        password?: string;
+        phone?: string;
+        otpCode?: string;
+    }): Promise<{
+        access_token: string;
+        user: {
+            id: string;
+            email: string;
+            fullName: string;
+            role: import(".prisma/client").$Enums.UserRole;
+        };
+    }>;
+    loginWithPassword(email: string, password: string): Promise<{
+        access_token: string;
+        user: {
+            id: string;
+            email: string;
+            fullName: string;
+            role: import(".prisma/client").$Enums.UserRole;
+        };
+    }>;
+    loginWithPhoneOtp(phone: string, otpCode: string): Promise<{
         access_token: string;
         user: {
             id: string;
@@ -38,6 +102,10 @@ export declare class AuthService {
     }>;
     sendPhoneOtp(userId: string, phone: string): Promise<{
         ok: boolean;
+    }>;
+    sendLoginOtp(phone: string): Promise<{
+        ok: boolean;
+        message: string;
     }>;
     verifyEmail(userId: string, code: string): Promise<{
         ok: boolean;

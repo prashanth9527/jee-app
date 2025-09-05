@@ -89,6 +89,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { data } = await api.get('/auth/me');
       console.log('Auth check successful:', data); // Debug log
       setUser(data);
+      
+      // Check if user needs profile completion
+      if (data.needsProfileCompletion && typeof window !== 'undefined') {
+        const pathname = window.location.pathname;
+        if (pathname !== '/profile/complete') {
+          window.location.href = '/profile/complete';
+          return;
+        }
+      }
     } catch (error: any) {
       console.error('Auth check failed:', error);
       

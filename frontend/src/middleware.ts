@@ -5,14 +5,14 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Public routes that don't require authentication
-  const publicRoutes = ['/', '/login', '/register'];
+  const publicRoutes = ['/', '/login', '/register', '/auth/google/callback', '/profile/complete', '/verify-email'];
   if (publicRoutes.includes(pathname)) {
     return NextResponse.next();
   }
 
   // For protected routes, let the client-side handle authentication
   // The AuthContext will check localStorage and redirect if needed
-  if (pathname.startsWith('/admin') || pathname.startsWith('/student')) {
+  if (pathname.startsWith('/admin') || pathname.startsWith('/student') || pathname.startsWith('/expert')) {
     return NextResponse.next();
   }
 

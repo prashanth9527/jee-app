@@ -13,6 +13,27 @@ export class AuthController {
 		return this.auth.register(dto);
 	}
 
+	@Post('start-registration')
+	startRegistration(@Body() dto: RegisterDto) {
+		return this.auth.startRegistration(dto);
+	}
+
+	@Post('complete-registration')
+	completeRegistration(@Body() body: { userId: string; otpCode: string }) {
+		return this.auth.completeRegistration(body.userId, body.otpCode);
+	}
+
+	@Post('resend-email-otp')
+	async resendEmailOtp(@Body() body: { userId: string; email: string }) {
+		return this.auth.resendEmailOtp(body.userId, body.email);
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post('complete-profile')
+	completeProfile(@Req() req: any, @Body() body: { phone: string; streamId?: string }) {
+		return this.auth.completeProfile(req.user.id, body.phone, body.streamId);
+	}
+
 	@Post('login')
 	login(@Body() dto: LoginDto) {
 		return this.auth.login(dto);
@@ -30,6 +51,11 @@ export class AuthController {
 		return this.auth.sendPhoneOtp(req.user.id, phone);
 	}
 
+	@Post('send-login-otp')
+	sendLoginOtp(@Body('phone') phone: string) {
+		return this.auth.sendLoginOtp(phone);
+	}
+
 	@UseGuards(JwtAuthGuard)
 	@Post('verify-email')
 	verifyEmail(@Req() req: any, @Body('code') code: string) {
@@ -44,7 +70,15 @@ export class AuthController {
 
 	@UseGuards(JwtAuthGuard)
 	@Get('me')
-	me(@Req() req: any) {
-		return req.user;
+	async me(@Req() req: any) {
+		const user = req.user;
+		
+		// Check if user needs profile completion (only for students)
+		const needsProfileCompletion = user.role === 'STUDENT' && (!user.streamId || !user.phone);
+		
+		return {
+			...user,
+			needsProfileCompletion
+		};
 	}
 } 

@@ -17,19 +17,23 @@ let UsersService = class UsersService {
         this.prisma = prisma;
     }
     createUser(params) {
-        const { email, fullName, hashedPassword, phone, streamId } = params;
+        const { email, fullName, hashedPassword, phone, streamId, emailVerified } = params;
         return this.prisma.user.create({
             data: {
                 email,
                 fullName,
                 hashedPassword,
                 phone: phone || null,
-                streamId: streamId || null
+                streamId: streamId || null,
+                emailVerified: emailVerified !== undefined ? emailVerified : true
             }
         });
     }
     findByEmail(email) {
         return this.prisma.user.findUnique({ where: { email } });
+    }
+    findByPhone(phone) {
+        return this.prisma.user.findUnique({ where: { phone } });
     }
     findById(id) {
         return this.prisma.user.findUnique({ where: { id } });

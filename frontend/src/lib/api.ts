@@ -10,8 +10,13 @@ console.log('API Base URL:', process.env.NEXT_PUBLIC_API_BASE || 'http://localho
 api.interceptors.request.use(
 	(config) => {
 		const token = localStorage.getItem('token');
+		console.log('API Interceptor - Token exists:', !!token);
+		console.log('API Interceptor - Request URL:', config.url);
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
+			console.log('API Interceptor - Authorization header set');
+		} else {
+			console.log('API Interceptor - No token found');
 		}
 		return config;
 	},

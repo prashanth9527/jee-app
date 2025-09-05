@@ -8,6 +8,7 @@ export declare class UsersService {
         hashedPassword: string;
         phone?: string | null;
         streamId?: string;
+        emailVerified?: boolean;
     }): import(".prisma/client").Prisma.Prisma__UserClient<{
         id: string;
         email: string;
@@ -29,6 +30,26 @@ export declare class UsersService {
         streamId: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     findByEmail(email: string): import(".prisma/client").Prisma.Prisma__UserClient<{
+        id: string;
+        email: string;
+        phone: string | null;
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        hashedPassword: string | null;
+        fullName: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        googleId: string | null;
+        profilePicture: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        trialStartedAt: Date | null;
+        trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
+        streamId: string | null;
+    } | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
+    findByPhone(phone: string): import(".prisma/client").Prisma.Prisma__UserClient<{
         id: string;
         email: string;
         phone: string | null;

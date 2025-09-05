@@ -54,6 +54,10 @@ TWILIO_FROM="+10000000000"
 STRIPE_PUBLIC_KEY="pk_test_xxx"
 STRIPE_SECRET_KEY="sk_test_xxx"
 STRIPE_WEBHOOK_SECRET="whsec_xxx"
+
+# Google OAuth for social login
+GOOGLE_CLIENT_ID="your-google-client-id.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
 ```
 
 #### Frontend (.env.local)
@@ -61,6 +65,8 @@ STRIPE_WEBHOOK_SECRET="whsec_xxx"
 cd frontend
 echo "NEXT_PUBLIC_API_BASE=http://localhost:3001" > .env.local
 echo "NEXT_PUBLIC_SITE_URL=http://localhost:3000" >> .env.local
+echo "NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com" >> .env.local
+echo "NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=your-google-client-secret" >> .env.local
 ```
 
 #### Mobile (.env)
@@ -134,12 +140,19 @@ npm run build:frontend
 ## 📋 API Endpoints
 
 ### Auth
-- `POST /auth/register` - User registration
-- `POST /auth/login` - User login
-- `POST /auth/send-email-otp` - Send email OTP
-- `POST /auth/send-phone-otp` - Send SMS OTP
+- `POST /auth/register` - User registration (legacy)
+- `POST /auth/start-registration` - Start registration with email OTP verification
+- `POST /auth/complete-registration` - Complete registration with OTP verification
+- `POST /auth/login` - User login (supports email/password or phone/OTP)
+- `POST /auth/send-login-otp` - Send OTP for phone login
+- `POST /auth/complete-profile` - Complete user profile (phone, stream)
+- `POST /auth/send-email-otp` - Send email OTP (authenticated)
+- `POST /auth/send-phone-otp` - Send SMS OTP (authenticated)
 - `POST /auth/verify-email` - Verify email OTP
 - `POST /auth/verify-phone` - Verify SMS OTP
+- `POST /auth/google/login` - Google OAuth login
+- `POST /auth/google/register` - Google OAuth registration
+- `POST /auth/google/token` - Exchange Google auth code for token
 
 ### Admin (ADMIN role required)
 - `GET /admin/subjects` - List subjects
@@ -174,7 +187,8 @@ npm run build:frontend
 
 ### Backend
 - ✅ JWT authentication with role-based access
-- ✅ Email/SMS OTP verification
+- ✅ Multiple login methods (Email/Password, Phone OTP, Google OAuth)
+- ✅ Email/SMS OTP verification with Twilio integration
 - ✅ Content hierarchy (Subject → Topic → Subtopic)
 - ✅ Question management with options and tags
 - ✅ CSV import/export for bulk question management
@@ -229,6 +243,98 @@ jee-app/
 └── package.json            # Root scripts
 ```
 
+## 🔐 Authentication Methods
+
+The platform supports multiple authentication methods for user convenience:
+
+### 1. Email & Password Login
+- Traditional login with email and password
+- Secure password hashing with bcrypt
+- Remember me functionality
+
+### 2. Phone OTP Login
+- Login using phone number and SMS OTP
+- Powered by Twilio SMS service
+- Two-step process: Send OTP → Verify OTP
+- Automatic user lookup by phone number
+
+### 3. Google OAuth Login
+- One-click login with Google account
+- Automatic account creation for new users
+- Profile picture and email sync
+- Secure token exchange on backend
+
+### Registration Flow
+1. **Email Registration**: Fill form → Send email OTP → Verify OTP → Account created → Redirect to login
+2. **Google Registration**: Click Google button → Authorize → Create account → Redirect to profile completion → Fill phone/stream → Redirect to dashboard
+
+### Login Flow
+1. **Email/Password**: Enter credentials → Authenticate → Check profile completion → Redirect to dashboard
+2. **Phone OTP**: Enter phone → Send OTP → Enter OTP → Authenticate → Check profile completion → Redirect
+3. **Google OAuth**: Click Google button → Authorize → Authenticate → Check profile completion → Redirect
+
+### Profile Completion
+- **Required for**: Users without phone number or stream selection
+- **Blocks access to**: All protected pages until completed
+- **Information needed**: Phone number and stream selection
+
+## 🔐 Google OAuth Setup
+
+### 1. Create Google OAuth Application
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google+ API:
+   - Go to "APIs & Services" > "Library"
+   - Search for "Google+ API" and enable it
+4. Create OAuth 2.0 credentials:
+   - Go to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" > "OAuth 2.0 Client IDs"
+   - Choose "Web application"
+   - Add authorized redirect URIs:
+     - `http://localhost:3000/auth/google/callback` (development)
+     - `https://yourdomain.com/auth/google/callback` (production)
+
+### 2. Configure Environment Variables
+
+#### Backend (.env)
+```env
+GOOGLE_CLIENT_ID="your-google-client-id.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+```
+
+#### Frontend (.env.local)
+```env
+NEXT_PUBLIC_GOOGLE_CLIENT_ID="your-google-client-id.apps.googleusercontent.com"
+```
+
+### 3. Google OAuth Flow
+
+The application supports two Google OAuth flows:
+
+#### Login Flow
+1. User clicks "Continue with Google" on login page
+2. Redirects to Google OAuth consent screen
+3. User authorizes the application
+4. Google redirects to `/auth/google/callback` with authorization code
+5. Backend exchanges code for access token
+6. Backend fetches user info from Google
+7. User is logged in and redirected to appropriate dashboard
+
+#### Registration Flow
+1. User clicks "Continue with Google" on registration page
+2. Same OAuth flow as login
+3. If user doesn't exist, creates new account with selected stream
+4. If user exists, logs them in directly
+
+### 4. Security Features
+
+- **Secure Token Exchange**: Client secret is kept on backend only
+- **State Parameter**: Prevents CSRF attacks during OAuth flow
+- **Email Verification**: Google emails are automatically verified
+- **Profile Picture**: Automatically syncs Google profile picture
+- **Stream Selection**: New users must select a stream during registration
+
 ## 🚨 Troubleshooting
 
 ### Database Connection Issues
@@ -263,6 +369,13 @@ The seeder creates:
 - Install Expo Go app on your device
 - Ensure device and computer are on same network
 - Use `npm run dev:mobile` to start Expo server
+
+### Google OAuth Issues
+- **"Invalid redirect URI"**: Ensure redirect URI in Google Console matches your callback URL
+- **"Client ID not configured"**: Check that `NEXT_PUBLIC_GOOGLE_CLIENT_ID` is set in frontend `.env.local`
+- **"Client secret not configured"**: Check that `GOOGLE_CLIENT_SECRET` is set in backend `.env`
+- **"Access blocked"**: Ensure Google+ API is enabled in Google Cloud Console
+- **"State parameter mismatch"**: Clear browser cache and try again
 
 ## 📄 License
 

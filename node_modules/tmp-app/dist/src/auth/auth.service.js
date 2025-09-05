@@ -59,9 +59,132 @@ let AuthService = class AuthService {
             await this.otp.sendPhoneOtp(user.id, user.phone);
         return { id: user.id, email: user.email };
     }
+    async startRegistration(params) {
+        const existing = await this.users.findByEmail(params.email);
+        if (existing)
+            throw new common_1.BadRequestException('Email already registered');
+        const stream = await this.prisma.stream.findUnique({
+            where: { id: params.streamId, isActive: true }
+        });
+        if (!stream)
+            throw new common_1.BadRequestException('Invalid stream selected');
+        const hashedPassword = await bcrypt.hash(params.password, 10);
+        const user = await this.users.createUser({
+            email: params.email,
+            fullName: params.fullName,
+            hashedPassword,
+            phone: params.phone,
+            streamId: params.streamId,
+            emailVerified: false
+        });
+        await this.otp.sendEmailOtp(user.id, user.email);
+        return {
+            id: user.id,
+            email: user.email,
+            message: 'Registration initiated. Please check your email for OTP verification.'
+        };
+    }
+    async completeRegistration(userId, otpCode) {
+        await this.otp.verifyOtp(userId, otpCode, 'EMAIL');
+        await this.users.setEmailVerified(userId);
+        const days = Number(process.env.FREE_TRIAL_DAYS || 2);
+        const started = new Date();
+        const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);
+        await this.users.updateTrial(userId, started, ends);
+        const user = await this.users.findById(userId);
+        if (!user)
+            throw new common_1.BadRequestException('User not found');
+        if (user.phone) {
+            await this.otp.sendPhoneOtp(user.id, user.phone);
+        }
+        const token = this.jwt.sign({
+            sub: user.id,
+            email: user.email,
+            role: user.role
+        });
+        return {
+            access_token: token,
+            message: 'Registration completed successfully!',
+            user: {
+                id: user.id,
+                email: user.email,
+                fullName: user.fullName,
+                emailVerified: user.emailVerified
+            }
+        };
+    }
+    async resendEmailOtp(userId, email) {
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId }
+        });
+        if (!user) {
+            throw new common_1.BadRequestException('User not found');
+        }
+        if (user.email !== email) {
+            throw new common_1.BadRequestException('Email mismatch');
+        }
+        if (user.emailVerified) {
+            throw new common_1.BadRequestException('Email already verified');
+        }
+        await this.otp.sendEmailOtp(userId, email);
+        return {
+            message: 'Email OTP sent successfully'
+        };
+    }
+    async completeProfile(userId, phone, streamId) {
+        const currentUser = await this.prisma.user.findUnique({
+            where: { id: userId }
+        });
+        if (!currentUser)
+            throw new common_1.BadRequestException('User not found');
+        if (currentUser.role !== 'ADMIN' && streamId) {
+            const stream = await this.prisma.stream.findUnique({
+                where: { id: streamId, isActive: true }
+            });
+            if (!stream)
+                throw new common_1.BadRequestException('Invalid stream selected');
+        }
+        const updateData = { phone };
+        if (streamId) {
+            updateData.streamId = streamId;
+        }
+        const user = await this.prisma.user.update({
+            where: { id: userId },
+            data: updateData,
+            include: {
+                stream: true,
+                subscriptions: {
+                    include: {
+                        plan: true
+                    }
+                }
+            }
+        });
+        await this.otp.sendPhoneOtp(user.id, phone);
+        return {
+            message: 'Profile completed successfully!',
+            user: {
+                id: user.id,
+                email: user.email,
+                fullName: user.fullName,
+                phone: user.phone,
+                stream: user.stream,
+                emailVerified: user.emailVerified
+            }
+        };
+    }
     async login(params) {
-        console.log('Login attempt for email:', params.email);
-        const user = await this.users.findByEmail(params.email);
+        if (params.phone && params.otpCode) {
+            return this.loginWithPhoneOtp(params.phone, params.otpCode);
+        }
+        if (params.email && params.password) {
+            return this.loginWithPassword(params.email, params.password);
+        }
+        throw new common_1.BadRequestException('Invalid login parameters. Provide either email/password or phone/otpCode.');
+    }
+    async loginWithPassword(email, password) {
+        console.log('Login attempt for email:', email);
+        const user = await this.users.findByEmail(email);
         if (!user) {
             console.log('User not found');
             throw new common_1.UnauthorizedException('Invalid credentials');
@@ -70,7 +193,7 @@ let AuthService = class AuthService {
         if (!user.hashedPassword) {
             throw new common_1.UnauthorizedException('Invalid credentials');
         }
-        const ok = await bcrypt.compare(params.password, user.hashedPassword);
+        const ok = await bcrypt.compare(password, user.hashedPassword);
         console.log('Password comparison result:', ok);
         if (!ok) {
             console.log('Password mismatch');
@@ -89,6 +212,28 @@ let AuthService = class AuthService {
         console.log('Login successful, returning:', response);
         return response;
     }
+    async loginWithPhoneOtp(phone, otpCode) {
+        console.log('Phone OTP login attempt for phone:', phone);
+        const user = await this.users.findByPhone(phone);
+        if (!user) {
+            console.log('User not found with phone:', phone);
+            throw new common_1.UnauthorizedException('Invalid phone number or OTP');
+        }
+        console.log('User found:', { id: user.id, email: user.email, role: user.role });
+        await this.otp.verifyOtp(user.id, otpCode, 'PHONE');
+        const token = await this.jwt.signAsync({ sub: user.id, email: user.email, role: user.role });
+        const response = {
+            access_token: token,
+            user: {
+                id: user.id,
+                email: user.email,
+                fullName: user.fullName,
+                role: user.role
+            }
+        };
+        console.log('Phone OTP login successful, returning:', response);
+        return response;
+    }
     async sendEmailOtp(userId, email) {
         await this.otp.sendEmailOtp(userId, email);
         return { ok: true };
@@ -96,6 +241,14 @@ let AuthService = class AuthService {
     async sendPhoneOtp(userId, phone) {
         await this.otp.sendPhoneOtp(userId, phone);
         return { ok: true };
+    }
+    async sendLoginOtp(phone) {
+        const user = await this.users.findByPhone(phone);
+        if (!user) {
+            throw new common_1.UnauthorizedException('No account found with this phone number');
+        }
+        await this.otp.sendPhoneOtp(user.id, phone);
+        return { ok: true, message: 'OTP sent to your phone number' };
     }
     async verifyEmail(userId, code) {
         await this.otp.verifyOtp(userId, code, 'EMAIL');

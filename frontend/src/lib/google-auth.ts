@@ -60,19 +60,17 @@ class GoogleAuthService {
     return `${GOOGLE_AUTH_URL}?${params.toString()}`;
   }
 
-  // Exchange authorization code for access token
+  // Exchange authorization code for access token via backend
   async exchangeCodeForToken(code: string, redirectUri: string): Promise<GoogleAuthResponse> {
-    const response = await fetch(GOOGLE_TOKEN_URL, {
+    const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+    const response = await fetch(`${apiBase}/auth/google/token`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-      body: new URLSearchParams({
-        client_id: this.clientId,
-        client_secret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || '',
+      body: JSON.stringify({
         code,
-        grant_type: 'authorization_code',
-        redirect_uri: redirectUri,
+        redirectUri,
       }),
     });
 
@@ -180,5 +178,5 @@ export const googleAuth = new GoogleAuthService();
 
 // Utility function to check if Google OAuth is configured
 export const isGoogleAuthConfigured = (): boolean => {
-  return !!(GOOGLE_CLIENT_ID && process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET);
+  return !!GOOGLE_CLIENT_ID;
 }; 
