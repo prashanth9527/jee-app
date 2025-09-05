@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import api from '@/lib/api';
 
@@ -140,9 +140,10 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
     }
     return false;
   });
-  const [subscriptionStatus, setSubscriptionStatus] = useState<{ type: string; status: string; isOnTrial?: boolean; daysRemaining?: number } | null>(null);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<{ type: string; status: string; isOnTrial?: boolean; daysRemaining?: number; needsSubscription?: boolean } | null>(null);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const { logout, user } = useAuth();
 
   useEffect(() => {
@@ -150,7 +151,14 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
       if (user?.role === 'STUDENT') {
         try {
           const response = await api.get('/student/subscription-status');
-          setSubscriptionStatus(response.data.subscriptionStatus);
+          const status = response.data.subscriptionStatus;
+          setSubscriptionStatus(status);
+          
+          // Check if trial is expired and redirect to subscription page
+          if (status.needsSubscription && pathname !== '/student/subscriptions') {
+            console.log('Trial expired, redirecting to subscription page');
+            router.push('/student/subscriptions');
+          }
         } catch (error) {
           console.error('Error fetching subscription status:', error);
         }
@@ -158,7 +166,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
     };
 
     fetchSubscriptionStatus();
-  }, [user]);
+  }, [user, pathname, router]);
 
   // Close dropdown when clicking outside
   useEffect(() => {

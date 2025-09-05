@@ -14,6 +14,15 @@ interface User {
     name: string;
     code: string;
   };
+  subscriptionStatus?: {
+    hasValidSubscription: boolean;
+    isOnTrial: boolean;
+    trialEndsAt?: string;
+    subscriptionEndsAt?: string;
+    daysRemaining: number;
+    needsSubscription: boolean;
+    message: string;
+  };
 }
 
 interface AuthContextType {
@@ -96,6 +105,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (pathname !== '/profile/complete') {
           window.location.href = '/profile/complete';
           return;
+        }
+      }
+
+      // Check subscription status for students
+      if (data.role === 'STUDENT' && typeof window !== 'undefined') {
+        try {
+          const subscriptionResponse = await api.get('/student/subscription-status');
+          const subscriptionData = subscriptionResponse.data;
+          
+          // Update user with subscription status
+          setUser(prev => prev ? { ...prev, subscriptionStatus: subscriptionData.subscriptionStatus } : null);
+          
+          // Check if trial is expired and user needs subscription
+          if (subscriptionData.subscriptionStatus.needsSubscription) {
+            const pathname = window.location.pathname;
+            // Allow access to subscription page and logout
+            if (pathname !== '/student/subscriptions' && pathname !== '/login') {
+              console.log('Trial expired, redirecting to subscription page');
+              window.location.href = '/student/subscriptions';
+              return;
+            }
+          }
+        } catch (subscriptionError) {
+          console.error('Failed to check subscription status:', subscriptionError);
+          // Don't block access if subscription check fails
         }
       }
     } catch (error: any) {

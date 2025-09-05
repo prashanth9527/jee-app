@@ -152,6 +152,25 @@ export default function SubscriptionsPage() {
             </div>
           )}
 
+          {/* Trial Expired Message */}
+          {subscriptionStatus?.needsSubscription && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 19.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-red-800">Trial Period Expired</h3>
+                  <p className="text-red-700 mt-1">
+                    Your 2-day free trial has ended. To continue accessing all features of JEE Master, please choose a subscription plan below.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Plans Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {plans.map((plan) => (
