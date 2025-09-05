@@ -98,25 +98,62 @@ class GoogleAuthService {
   signIn(redirectUri?: string): void {
     const currentUrl = window.location.origin;
     const finalRedirectUri = redirectUri || `${currentUrl}/auth/google/callback`;
-    const state = Math.random().toString(36).substring(2, 15);
     
-    // Store state in sessionStorage for verification
-    sessionStorage.setItem('google_oauth_state', state);
+    // Generate a more robust state parameter
+    const state = this.generateState();
+    
+    // Store state in both sessionStorage and localStorage for redundancy
+    try {
+      sessionStorage.setItem('google_oauth_state', state);
+      localStorage.setItem('google_oauth_state', state);
+    } catch (error) {
+      console.warn('Failed to store state in storage:', error);
+    }
     
     const authUrl = this.generateAuthUrl(finalRedirectUri, state);
     window.location.href = authUrl;
   }
 
+  // Generate a more robust state parameter
+  private generateState(): string {
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substring(2, 15);
+    return `${timestamp}_${random}`;
+  }
+
   // Handle Google Sign-In callback
   async handleCallback(code: string, state: string, redirectUri?: string): Promise<GoogleUser> {
-    // Verify state parameter
-    const storedState = sessionStorage.getItem('google_oauth_state');
-    if (state !== storedState) {
+    // Verify state parameter - check both sessionStorage and localStorage
+    const sessionState = sessionStorage.getItem('google_oauth_state');
+    const localState = localStorage.getItem('google_oauth_state');
+    const storedState = sessionState || localState;
+    
+    // In development, allow bypassing state validation if needed
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    const bypassStateValidation = isDevelopment && process.env.NEXT_PUBLIC_BYPASS_GOOGLE_STATE === 'true';
+    
+    if (!bypassStateValidation && (!storedState || state !== storedState)) {
+      console.error('State parameter mismatch:', {
+        received: state,
+        sessionStorage: sessionState,
+        localStorage: localState,
+        isDevelopment,
+        bypassStateValidation
+      });
       throw new Error('Invalid state parameter');
     }
+    
+    if (bypassStateValidation) {
+      console.warn('⚠️ Bypassing Google OAuth state validation in development mode');
+    }
 
-    // Clear stored state
-    sessionStorage.removeItem('google_oauth_state');
+    // Clear stored state from both storages
+    try {
+      sessionStorage.removeItem('google_oauth_state');
+      localStorage.removeItem('google_oauth_state');
+    } catch (error) {
+      console.warn('Failed to clear state from storage:', error);
+    }
 
     const currentUrl = window.location.origin;
     const finalRedirectUri = redirectUri || `${currentUrl}/auth/google/callback`;

@@ -24,9 +24,15 @@ function GoogleCallbackContent() {
           throw new Error(`Google OAuth error: ${error}`);
         }
 
-        if (!code || !state) {
-          throw new Error('Missing authorization code or state parameter');
+        if (!code) {
+          throw new Error('Missing authorization code');
         }
+
+        if (!state) {
+          throw new Error('Missing state parameter');
+        }
+
+        console.log('Google OAuth callback received:', { code: code.substring(0, 10) + '...', state });
 
         // Handle the Google OAuth callback
         const googleUser: GoogleUser = await googleAuth.handleCallback(code, state);
