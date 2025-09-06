@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { googleAuth, GoogleUser } from '@/lib/google-auth';
 import api from '@/lib/api';
@@ -12,9 +12,16 @@ function GoogleCallbackContent() {
   const { login } = useAuth();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [error, setError] = useState<string | null>(null);
+  const processedRef = useRef(false);
 
   useEffect(() => {
     const handleCallback = async () => {
+      // Prevent multiple processing of the same callback
+      if (processedRef.current) {
+        console.log('Callback already processed, skipping...');
+        return;
+      }
+      processedRef.current = true;
       try {
         const code = searchParams.get('code');
         const state = searchParams.get('state');

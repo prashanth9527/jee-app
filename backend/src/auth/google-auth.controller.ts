@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { OAuthStateService } from './oauth-state.service';
@@ -23,6 +23,8 @@ interface GoogleStateDto {
 
 @Controller('auth/google')
 export class GoogleAuthController {
+  private usedCodes = new Set<string>(); // Track used authorization codes
+  
   constructor(
     private authService: AuthService,
     private prisma: PrismaService,
@@ -248,6 +250,22 @@ export class GoogleAuthController {
         throw new HttpException('Missing code or redirectUri', HttpStatus.BAD_REQUEST);
       }
 
+      // Check if this authorization code has already been used
+      if (this.usedCodes.has(code)) {
+        console.log('Authorization code already used:', code.substring(0, 10) + '...');
+        throw new HttpException('Authorization code has already been used. Please try logging in again.', HttpStatus.BAD_REQUEST);
+      }
+
+      // Mark this code as used
+      this.usedCodes.add(code);
+      
+      // Clean up old codes periodically (keep only last 100 codes)
+      if (this.usedCodes.size > 100) {
+        const codesArray = Array.from(this.usedCodes);
+        this.usedCodes.clear();
+        codesArray.slice(-50).forEach(c => this.usedCodes.add(c));
+      }
+
       // Validate state parameter if provided
       if (state) {
         try {
@@ -261,17 +279,40 @@ export class GoogleAuthController {
       }
 
       // Exchange authorization code for access token
-      const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
-        client_id: process.env.GOOGLE_CLIENT_ID,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        code,
-        grant_type: 'authorization_code',
-        redirect_uri: redirectUri,
-      }, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
+      console.log('Attempting to exchange authorization code with Google:', {
+        code: code.substring(0, 10) + '...',
+        redirectUri,
+        clientId: process.env.GOOGLE_CLIENT_ID ? 'present' : 'missing'
       });
+
+      let tokenResponse;
+      try {
+        tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
+          client_id: process.env.GOOGLE_CLIENT_ID,
+          client_secret: process.env.GOOGLE_CLIENT_SECRET,
+          code,
+          grant_type: 'authorization_code',
+          redirect_uri: redirectUri,
+        }, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        });
+      } catch (tokenError: any) {
+        console.error('Google token exchange error:', tokenError);
+        console.error('Token exchange request details:', {
+          code: code.substring(0, 10) + '...',
+          redirectUri,
+          clientId: process.env.GOOGLE_CLIENT_ID ? 'present' : 'missing',
+          errorResponse: tokenError.response?.data
+        });
+        
+        if (tokenError.response?.status === 400) {
+          throw new BadRequestException('Invalid or expired authorization code. Please try logging in again.');
+        }
+        
+        throw new BadRequestException('Failed to exchange Google authorization code');
+      }
 
       const { access_token } = tokenResponse.data;
 
