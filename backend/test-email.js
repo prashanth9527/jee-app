@@ -149,7 +149,7 @@ async function testOTPEmail() {
     
     const otpEmail = {
         from: process.env.SMTP_FROM || 'no-reply@jeemaster.com',
-        to: 'test@example.com',
+        to: 'prashantht9527@gmail.com',
         subject: 'Email Verification Code - JEE Master',
         html: `
             <!DOCTYPE html>
