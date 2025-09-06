@@ -37,6 +37,8 @@ function GoogleCallbackContent() {
         // Handle the Google OAuth callback
         const googleUser: GoogleUser = await googleAuth.handleCallback(code, state);
         
+        console.log('Google user received:', googleUser);
+        
         // Send user data to backend for authentication
         const response = await api.post('/auth/google/login', {
           googleId: googleUser.id,
@@ -50,9 +52,12 @@ function GoogleCallbackContent() {
           login(data.access_token, data.user);
           setStatus('success');
           
-          // Redirect based on user role
+          // Redirect based on user needs
           setTimeout(() => {
-            if (data.user.role === 'ADMIN') {
+            if (data.user.needsProfileCompletion) {
+              // User needs to complete profile first
+              router.push('/profile/complete');
+            } else if (data.user.role === 'ADMIN') {
               router.push('/admin');
             } else if (data.user.role === 'EXPERT') {
               router.push('/expert');
@@ -65,7 +70,20 @@ function GoogleCallbackContent() {
         }
       } catch (err: any) {
         console.error('Google callback error:', err);
-        setError(err.message || 'Authentication failed');
+        console.error('Error details:', {
+          message: err.message,
+          response: err.response?.data,
+          status: err.response?.status
+        });
+        
+        let errorMessage = 'Authentication failed';
+        if (err.message) {
+          errorMessage = err.message;
+        } else if (err.response?.data?.message) {
+          errorMessage = err.response.data.message;
+        }
+        
+        setError(errorMessage);
         setStatus('error');
         
         // Redirect to login page after 3 seconds

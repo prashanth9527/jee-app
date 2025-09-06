@@ -8,10 +8,10 @@ import { SubscriptionsService } from './subscriptions.service';
 export class SubscriptionsController {
 	constructor(private readonly subs: SubscriptionsService) {}
 
-	@UseGuards(JwtAuthGuard, RolesGuard)
-	@Roles('ADMIN')
+	@UseGuards(JwtAuthGuard)
 	@Get('plans')
-	listPlans() {
+	listPlans(@Req() req: any) {
+		console.log('Plans request - User:', req.user);
 		return this.subs.listPlans();
 	}
 

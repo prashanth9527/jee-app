@@ -20,6 +20,7 @@ const jwt_strategy_1 = require("./jwt.strategy");
 const otp_service_1 = require("./otp.service");
 const mailer_service_1 = require("./mailer.service");
 const sms_service_1 = require("./sms.service");
+const oauth_state_service_1 = require("./oauth-state.service");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -37,7 +38,7 @@ exports.AuthModule = AuthModule = __decorate([
                 }),
             }),
         ],
-        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy, otp_service_1.OtpService, mailer_service_1.MailerService, sms_service_1.SmsService],
+        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy, otp_service_1.OtpService, mailer_service_1.MailerService, sms_service_1.SmsService, oauth_state_service_1.OAuthStateService],
         controllers: [auth_controller_1.AuthController, google_auth_controller_1.GoogleAuthController],
         exports: [auth_service_1.AuthService],
     })

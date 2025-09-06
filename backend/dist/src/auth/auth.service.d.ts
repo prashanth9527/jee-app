@@ -114,4 +114,24 @@ export declare class AuthService {
         ok: boolean;
     }>;
     generateJwtToken(user: any): Promise<string>;
+    getUserById(userId: string): Promise<{
+        id: string;
+        email: string;
+        phone: string | null;
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        hashedPassword: string | null;
+        fullName: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        googleId: string | null;
+        profilePicture: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        trialStartedAt: Date | null;
+        trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
+        streamId: string | null;
+    } | null>;
 }

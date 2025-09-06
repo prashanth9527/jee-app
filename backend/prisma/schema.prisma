@@ -476,3 +476,17 @@ model SystemSettings {
 
   @@map("system_settings")
 }
+
+// -------------------------------------------
+// OAuth State Management
+// -------------------------------------------
+model OAuthState {
+  id        String   @id @default(cuid())
+  state     String   @unique
+  provider  String   // 'google', 'facebook', etc.
+  redirectUri String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("oauth_states")
+}

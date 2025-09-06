@@ -8,7 +8,9 @@ interface User {
   email: string;
   fullName: string;
   role: 'ADMIN' | 'STUDENT' | 'EXPERT';
+  phone?: string;
   profilePicture?: string;
+  needsProfileCompletion?: boolean;
   stream?: {
     id: string;
     name: string;
@@ -39,6 +41,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authCheckInProgress, setAuthCheckInProgress] = useState(false);
 
   const login = (token: string, userData: User) => {
     console.log('AuthContext login called with:', { token: token.substring(0, 20) + '...', userData }); // Debug log
@@ -81,9 +84,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const checkAuth = async () => {
+    // Prevent multiple simultaneous auth checks
+    if (authCheckInProgress) {
+      return;
+    }
+    
+    setAuthCheckInProgress(true);
+    
     const token = localStorage.getItem('token');
     if (!token) {
       setLoading(false);
+      setAuthCheckInProgress(false);
       // Redirect to login if on protected route and no token
       if (typeof window !== 'undefined') {
         const pathname = window.location.pathname;
@@ -102,14 +113,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Check if user needs profile completion
       if (data.needsProfileCompletion && typeof window !== 'undefined') {
         const pathname = window.location.pathname;
+        // Only redirect if not already on profile completion page
         if (pathname !== '/profile/complete') {
+          console.log('User needs profile completion, redirecting to profile completion page');
           window.location.href = '/profile/complete';
           return;
         }
       }
 
-      // Check subscription status for students
-      if (data.role === 'STUDENT' && typeof window !== 'undefined') {
+      // Check subscription status for students (only if profile is complete)
+      if (data.role === 'STUDENT' && !data.needsProfileCompletion && typeof window !== 'undefined') {
         try {
           const subscriptionResponse = await api.get('/student/subscription-status');
           const subscriptionData = subscriptionResponse.data;
@@ -120,8 +133,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           // Check if trial is expired and user needs subscription
           if (subscriptionData.subscriptionStatus.needsSubscription) {
             const pathname = window.location.pathname;
-            // Allow access to subscription page and logout
-            if (pathname !== '/student/subscriptions' && pathname !== '/login') {
+            // Allow access to subscription page and logout, but don't redirect if already on subscription page
+            if (pathname !== '/student/subscriptions' && pathname !== '/login' && pathname !== '/profile/complete') {
               console.log('Trial expired, redirecting to subscription page');
               window.location.href = '/student/subscriptions';
               return;
@@ -154,6 +167,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } finally {
       setLoading(false);
+      setAuthCheckInProgress(false);
     }
   };
 

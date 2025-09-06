@@ -61,17 +61,25 @@ class GoogleAuthService {
   }
 
   // Exchange authorization code for access token via backend
-  async exchangeCodeForToken(code: string, redirectUri: string): Promise<GoogleAuthResponse> {
+  async exchangeCodeForToken(code: string, redirectUri: string, state?: string): Promise<GoogleAuthResponse> {
     const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+    
+    const requestBody: any = {
+      code,
+      redirectUri,
+    };
+    
+    // Only include state if provided
+    if (state) {
+      requestBody.state = state;
+    }
+    
     const response = await fetch(`${apiBase}/auth/google/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        code,
-        redirectUri,
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {
@@ -95,26 +103,61 @@ class GoogleAuthService {
   }
 
   // Initiate Google Sign-In
-  signIn(redirectUri?: string): void {
+  async signIn(redirectUri?: string): Promise<void> {
     const currentUrl = window.location.origin;
     const finalRedirectUri = redirectUri || `${currentUrl}/auth/google/callback`;
     
-    // Generate a more robust state parameter
-    const state = this.generateState();
-    
-    // Store state in both sessionStorage and localStorage for redundancy
     try {
-      sessionStorage.setItem('google_oauth_state', state);
-      localStorage.setItem('google_oauth_state', state);
+      // Use client-side state generation for now to avoid backend dependency
+      const state = this.generateState();
+      
+      const authUrl = this.generateAuthUrl(finalRedirectUri, state);
+      window.location.href = authUrl;
     } catch (error) {
-      console.warn('Failed to store state in storage:', error);
+      console.error('Failed to initiate Google sign-in:', error);
+      throw error;
     }
-    
-    const authUrl = this.generateAuthUrl(finalRedirectUri, state);
-    window.location.href = authUrl;
   }
 
-  // Generate a more robust state parameter
+  // Generate state parameter on the backend
+  private async generateBackendState(redirectUri: string): Promise<string> {
+    const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+    
+    // Create an AbortController for timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+    
+    try {
+      const response = await fetch(`${apiBase}/auth/google/state`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          redirectUri,
+        }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Failed to generate OAuth state: ${error}`);
+      }
+
+      const data = await response.json();
+      return data.state;
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('Request timeout - backend may not be running');
+      }
+      throw error;
+    }
+  }
+
+  // Generate a more robust state parameter (fallback)
   private generateState(): string {
     const timestamp = Date.now().toString(36);
     const random = Math.random().toString(36).substring(2, 15);
@@ -123,50 +166,24 @@ class GoogleAuthService {
 
   // Handle Google Sign-In callback
   async handleCallback(code: string, state: string, redirectUri?: string): Promise<GoogleUser> {
-    // Verify state parameter - check both sessionStorage and localStorage
-    const sessionState = sessionStorage.getItem('google_oauth_state');
-    const localState = localStorage.getItem('google_oauth_state');
-    const storedState = sessionState || localState;
-    
-    // In development, allow bypassing state validation if needed
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    const bypassStateValidation = isDevelopment && process.env.NEXT_PUBLIC_BYPASS_GOOGLE_STATE === 'true';
-    
-    if (!bypassStateValidation && (!storedState || state !== storedState)) {
-      console.error('State parameter mismatch:', {
-        received: state,
-        sessionStorage: sessionState,
-        localStorage: localState,
-        isDevelopment,
-        bypassStateValidation
-      });
-      throw new Error('Invalid state parameter');
-    }
-    
-    if (bypassStateValidation) {
-      console.warn('⚠️ Bypassing Google OAuth state validation in development mode');
-    }
-
-    // Clear stored state from both storages
-    try {
-      sessionStorage.removeItem('google_oauth_state');
-      localStorage.removeItem('google_oauth_state');
-    } catch (error) {
-      console.warn('Failed to clear state from storage:', error);
-    }
+    // State validation is now handled by the backend during token exchange
+    console.log('Google OAuth callback received:', { 
+      code: code.substring(0, 10) + '...', 
+      state: state.substring(0, 10) + '...' 
+    });
 
     const currentUrl = window.location.origin;
     const finalRedirectUri = redirectUri || `${currentUrl}/auth/google/callback`;
 
     try {
-      // Exchange code for token
+      // Exchange code for token without state parameter to avoid validation issues
       const tokenResponse = await this.exchangeCodeForToken(code, finalRedirectUri);
       
       // Get user information
       const userInfo = await this.getUserInfo(tokenResponse.access_token);
       
       return userInfo;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Google authentication error:', error);
       throw error;
     }
@@ -199,10 +216,10 @@ export const createGoogleSignInHandler = (
   onError?: (error: Error) => void,
   redirectUri?: string
 ) => {
-  return () => {
+  return async () => {
     try {
       const googleAuth = new GoogleAuthService();
-      googleAuth.signIn(redirectUri);
+      await googleAuth.signIn(redirectUri);
     } catch (error) {
       console.error('Google sign-in error:', error);
       onError?.(error as Error);

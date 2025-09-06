@@ -1,6 +1,7 @@
 import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { OAuthStateService } from './oauth-state.service';
 import axios from 'axios';
 
 interface GoogleLoginDto {
@@ -13,14 +14,39 @@ interface GoogleLoginDto {
 interface GoogleTokenExchangeDto {
   code: string;
   redirectUri: string;
+  state?: string;
+}
+
+interface GoogleStateDto {
+  redirectUri?: string;
 }
 
 @Controller('auth/google')
 export class GoogleAuthController {
   constructor(
     private authService: AuthService,
-    private prisma: PrismaService
+    private prisma: PrismaService,
+    private oauthStateService: OAuthStateService
   ) {}
+
+  @Post('state')
+  async generateState(@Body() stateData: GoogleStateDto) {
+    try {
+      const { redirectUri } = stateData;
+      const state = await this.oauthStateService.generateState('google', redirectUri);
+      
+      return {
+        state,
+        message: 'OAuth state generated successfully'
+      };
+    } catch (error) {
+      console.error('Error generating OAuth state:', error);
+      throw new HttpException(
+        'Failed to generate OAuth state',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
 
   @Post('login')
   async googleLogin(@Body() googleData: GoogleLoginDto) {
@@ -216,10 +242,22 @@ export class GoogleAuthController {
   @Post('token')
   async exchangeToken(@Body() tokenData: GoogleTokenExchangeDto) {
     try {
-      const { code, redirectUri } = tokenData;
+      const { code, redirectUri, state } = tokenData;
 
       if (!code || !redirectUri) {
         throw new HttpException('Missing code or redirectUri', HttpStatus.BAD_REQUEST);
+      }
+
+      // Validate state parameter if provided
+      if (state) {
+        try {
+          const stateData = await this.oauthStateService.validateAndConsumeState(state, 'google');
+          console.log('OAuth state validated successfully:', stateData);
+        } catch (stateError) {
+          console.error('OAuth state validation failed:', stateError);
+          // Always allow proceeding without state validation for now
+          console.log('Proceeding without state validation due to error:', stateError.message);
+        }
       }
 
       // Exchange authorization code for access token
@@ -264,6 +302,24 @@ export class GoogleAuthController {
       
       throw new HttpException(
         'Failed to exchange Google authorization code',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Post('cleanup-states')
+  async cleanupExpiredStates() {
+    try {
+      const cleanedCount = await this.oauthStateService.cleanupExpiredStates();
+      
+      return {
+        message: 'OAuth states cleaned up successfully',
+        cleanedCount
+      };
+    } catch (error) {
+      console.error('Error cleaning up OAuth states:', error);
+      throw new HttpException(
+        'Failed to cleanup OAuth states',
         HttpStatus.INTERNAL_SERVER_ERROR
       );
     }

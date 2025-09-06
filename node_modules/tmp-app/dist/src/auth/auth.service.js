@@ -132,11 +132,28 @@ let AuthService = class AuthService {
         };
     }
     async completeProfile(userId, phone, streamId) {
+        console.log('Complete profile called with:', { userId, phone, streamId });
         const currentUser = await this.prisma.user.findUnique({
             where: { id: userId }
         });
         if (!currentUser)
             throw new common_1.BadRequestException('User not found');
+        console.log('Current user data:', {
+            id: currentUser.id,
+            email: currentUser.email,
+            role: currentUser.role,
+            currentPhone: currentUser.phone,
+            currentStreamId: currentUser.streamId
+        });
+        const existingUserWithPhone = await this.prisma.user.findFirst({
+            where: {
+                phone: phone,
+                id: { not: userId }
+            }
+        });
+        if (existingUserWithPhone) {
+            throw new common_1.BadRequestException('This phone number is already registered with another account');
+        }
         if (currentUser.role !== 'ADMIN' && streamId) {
             const stream = await this.prisma.stream.findUnique({
                 where: { id: streamId, isActive: true }
@@ -148,30 +165,47 @@ let AuthService = class AuthService {
         if (streamId) {
             updateData.streamId = streamId;
         }
-        const user = await this.prisma.user.update({
-            where: { id: userId },
-            data: updateData,
-            include: {
-                stream: true,
-                subscriptions: {
-                    include: {
-                        plan: true
+        try {
+            const user = await this.prisma.user.update({
+                where: { id: userId },
+                data: updateData,
+                include: {
+                    stream: true,
+                    subscriptions: {
+                        include: {
+                            plan: true
+                        }
                     }
                 }
-            }
-        });
-        await this.otp.sendPhoneOtp(user.id, phone);
-        return {
-            message: 'Profile completed successfully!',
-            user: {
+            });
+            console.log('Profile updated successfully:', {
                 id: user.id,
-                email: user.email,
-                fullName: user.fullName,
                 phone: user.phone,
-                stream: user.stream,
-                emailVerified: user.emailVerified
+                streamId: user.streamId,
+                stream: user.stream
+            });
+            await this.otp.sendPhoneOtp(user.id, phone);
+            return {
+                message: 'Profile completed successfully!',
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    fullName: user.fullName,
+                    phone: user.phone,
+                    stream: user.stream,
+                    emailVerified: user.emailVerified
+                }
+            };
+        }
+        catch (error) {
+            if (error.code === 'P2002') {
+                if (error.meta?.target?.includes('phone')) {
+                    throw new common_1.BadRequestException('This phone number is already registered with another account');
+                }
+                throw new common_1.BadRequestException('A field with this value already exists');
             }
-        };
+            throw error;
+        }
     }
     async login(params) {
         if (params.phone && params.otpCode) {
@@ -267,6 +301,18 @@ let AuthService = class AuthService {
             role: user.role
         };
         return this.jwt.signAsync(payload);
+    }
+    async getUserById(userId) {
+        const user = await this.users.findById(userId);
+        console.log('getUserById called for userId:', userId);
+        console.log('User found:', user ? {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+            phone: user.phone,
+            streamId: user.streamId
+        } : 'User not found');
+        return user;
     }
 };
 exports.AuthService = AuthService;

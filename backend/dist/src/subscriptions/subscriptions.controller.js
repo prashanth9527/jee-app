@@ -22,7 +22,8 @@ let SubscriptionsController = class SubscriptionsController {
     constructor(subs) {
         this.subs = subs;
     }
-    listPlans() {
+    listPlans(req) {
+        console.log('Plans request - User:', req.user);
         return this.subs.listPlans();
     }
     createPlan(body) {
@@ -40,11 +41,11 @@ let SubscriptionsController = class SubscriptionsController {
 };
 exports.SubscriptionsController = SubscriptionsController;
 __decorate([
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)('ADMIN'),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, common_1.Get)('plans'),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], SubscriptionsController.prototype, "listPlans", null);
 __decorate([

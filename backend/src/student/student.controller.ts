@@ -385,6 +385,7 @@ export class StudentController {
 
 	@Get('subscription-status')
 	async getSubscriptionStatus(@Req() req: any) {
+		console.log('Subscription status request - User:', req.user);
 		const userId = req.user.id;
 		const subscriptionStatus = await this.subscriptionValidation.validateStudentSubscription(userId);
 		const subscriptionDetails = await this.subscriptionValidation.getSubscriptionDetails(userId);

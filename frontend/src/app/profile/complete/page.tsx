@@ -30,21 +30,27 @@ export default function CompleteProfilePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [streamsRes] = await Promise.all([
-          api.get('/streams'),
-          checkAuth()
-        ]);
+        console.log('Fetching streams data...');
+        const streamsRes = await api.get('/streams');
+        console.log('Streams data received:', streamsRes.data);
         setStreams(streamsRes.data);
-      } catch (err) {
+        
+        // Pre-fill phone number if user already has one
+        if (user?.phone) {
+          setPhone(user.phone);
+        }
+      } catch (err: any) {
         console.error('Error fetching data:', err);
-        setError('Failed to load profile completion form. Please refresh the page.');
+        console.error('Error response:', err.response?.data);
+        console.error('Error status:', err.response?.status);
+        setError(`Failed to load profile completion form: ${err.response?.data?.message || err.message}. Please refresh the page.`);
       } finally {
         setPageLoading(false);
       }
     };
 
     fetchData();
-  }, [checkAuth]);
+  }, [user?.phone]); // Add user.phone as dependency to pre-fill phone
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,26 +68,29 @@ export default function CompleteProfilePage() {
         ? { phone }
         : { phone, streamId };
       
-      await api.post('/auth/complete-profile', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        ...profileData
-      });
+      console.log('Submitting profile data:', profileData);
+      console.log('User role:', user?.role);
+      
+      await api.post('/auth/complete-profile', profileData);
 
-      // Refresh user data
+      // Refresh user data to get updated profile completion status
       await checkAuth();
       
-      // Redirect to appropriate dashboard
-      if (user?.role === 'ADMIN') {
-        router.push('/admin');
-      } else if (user?.role === 'EXPERT') {
-        router.push('/expert');
-      } else {
-        router.push('/student');
-      }
+      // Wait a moment for the state to update, then redirect
+      setTimeout(() => {
+        // Redirect to appropriate dashboard
+        if (user?.role === 'ADMIN') {
+          router.push('/admin');
+        } else if (user?.role === 'EXPERT') {
+          router.push('/expert');
+        } else {
+          router.push('/student');
+        }
+      }, 500);
     } catch (err: any) {
-      setError(err?.response?.data?.message || 'Failed to complete profile');
+      console.error('Profile completion error:', err);
+      const errorMessage = err?.response?.data?.message || err?.message || 'Failed to complete profile';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -140,6 +149,11 @@ export default function CompleteProfilePage() {
                   value={phone}
                   onChange={e => setPhone(e.target.value)}
                 />
+                {user?.phone && (
+                  <p className="mt-2 text-sm text-blue-600">
+                    Current phone: {user.phone} - You can update it if needed
+                  </p>
+                )}
               </div>
 
               {/* Stream Selection - Only for non-admin users */}

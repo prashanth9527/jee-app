@@ -56,10 +56,27 @@ let AuthController = class AuthController {
         return this.auth.verifyPhone(req.user.id, code);
     }
     async me(req) {
-        const user = req.user;
-        const needsProfileCompletion = user.role === 'STUDENT' && (!user.streamId || !user.phone);
+        const jwtUser = req.user;
+        console.log('Auth /me endpoint - JWT User:', {
+            id: jwtUser.id,
+            email: jwtUser.email,
+            role: jwtUser.role
+        });
+        const currentUser = await this.auth.getUserById(jwtUser.id);
+        if (!currentUser) {
+            throw new common_1.BadRequestException('User not found');
+        }
+        const needsProfileCompletion = currentUser.role === 'STUDENT' && (!currentUser.streamId || !currentUser.phone);
+        console.log('Auth /me endpoint - Database User data:', {
+            id: currentUser.id,
+            email: currentUser.email,
+            role: currentUser.role,
+            streamId: currentUser.streamId,
+            phone: currentUser.phone,
+            needsProfileCompletion
+        });
         return {
-            ...user,
+            ...currentUser,
             needsProfileCompletion
         };
     }

@@ -11,6 +11,7 @@ import { JwtStrategy } from './jwt.strategy';
 import { OtpService } from './otp.service';
 import { MailerService } from './mailer.service';
 import { SmsService } from './sms.service';
+import { OAuthStateService } from './oauth-state.service';
 
 @Module({
 	imports: [
@@ -25,7 +26,7 @@ import { SmsService } from './sms.service';
 			}),
 		}),
 	],
-	providers: [AuthService, JwtStrategy, OtpService, MailerService, SmsService],
+	providers: [AuthService, JwtStrategy, OtpService, MailerService, SmsService, OAuthStateService],
 	controllers: [AuthController, GoogleAuthController],
 	exports: [AuthService],
 })

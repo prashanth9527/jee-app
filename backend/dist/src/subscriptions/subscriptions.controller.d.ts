@@ -2,7 +2,7 @@ import { SubscriptionsService } from './subscriptions.service';
 export declare class SubscriptionsController {
     private readonly subs;
     constructor(subs: SubscriptionsService);
-    listPlans(): import(".prisma/client").Prisma.PrismaPromise<{
+    listPlans(req: any): import(".prisma/client").Prisma.PrismaPromise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;

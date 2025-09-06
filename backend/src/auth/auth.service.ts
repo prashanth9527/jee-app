@@ -153,11 +153,32 @@ export class AuthService {
 	}
 
 	async completeProfile(userId: string, phone: string, streamId?: string) {
+		console.log('Complete profile called with:', { userId, phone, streamId });
+		
 		// Get user to check role
 		const currentUser = await this.prisma.user.findUnique({
 			where: { id: userId }
 		});
 		if (!currentUser) throw new BadRequestException('User not found');
+		
+		console.log('Current user data:', {
+			id: currentUser.id,
+			email: currentUser.email,
+			role: currentUser.role,
+			currentPhone: currentUser.phone,
+			currentStreamId: currentUser.streamId
+		});
+
+		// Check if phone number is already registered by another user
+		const existingUserWithPhone = await this.prisma.user.findFirst({
+			where: { 
+				phone: phone,
+				id: { not: userId } // Exclude current user
+			}
+		});
+		if (existingUserWithPhone) {
+			throw new BadRequestException('This phone number is already registered with another account');
+		}
 
 		// For non-admin users, validate stream exists
 		if (currentUser.role !== 'ADMIN' && streamId) {
@@ -173,34 +194,52 @@ export class AuthService {
 			updateData.streamId = streamId;
 		}
 
-		// Update user profile
-		const user = await this.prisma.user.update({
-			where: { id: userId },
-			data: updateData,
-			include: {
-				stream: true,
-				subscriptions: {
-					include: {
-						plan: true
+		try {
+			// Update user profile
+			const user = await this.prisma.user.update({
+				where: { id: userId },
+				data: updateData,
+				include: {
+					stream: true,
+					subscriptions: {
+						include: {
+							plan: true
+						}
 					}
 				}
-			}
-		});
+			});
 
-		// Send phone OTP for verification
-		await this.otp.sendPhoneOtp(user.id, phone);
-
-		return {
-			message: 'Profile completed successfully!',
-			user: {
+			console.log('Profile updated successfully:', {
 				id: user.id,
-				email: user.email,
-				fullName: user.fullName,
 				phone: user.phone,
-				stream: user.stream,
-				emailVerified: user.emailVerified
+				streamId: user.streamId,
+				stream: user.stream
+			});
+
+			// Send phone OTP for verification
+			await this.otp.sendPhoneOtp(user.id, phone);
+
+			return {
+				message: 'Profile completed successfully!',
+				user: {
+					id: user.id,
+					email: user.email,
+					fullName: user.fullName,
+					phone: user.phone,
+					stream: user.stream,
+					emailVerified: user.emailVerified
+				}
+			};
+		} catch (error: any) {
+			// Handle unique constraint errors
+			if (error.code === 'P2002') {
+				if (error.meta?.target?.includes('phone')) {
+					throw new BadRequestException('This phone number is already registered with another account');
+				}
+				throw new BadRequestException('A field with this value already exists');
 			}
-		};
+			throw error;
+		}
 	}
 
 	async login(params: { email?: string; password?: string; phone?: string; otpCode?: string }) {
@@ -324,5 +363,18 @@ export class AuthService {
 			role: user.role
 		};
 		return this.jwt.signAsync(payload);
+	}
+
+	async getUserById(userId: string) {
+		const user = await this.users.findById(userId);
+		console.log('getUserById called for userId:', userId);
+		console.log('User found:', user ? {
+			id: user.id,
+			email: user.email,
+			role: user.role,
+			phone: user.phone,
+			streamId: user.streamId
+		} : 'User not found');
+		return user;
 	}
 } 

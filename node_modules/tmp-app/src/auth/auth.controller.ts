@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -71,13 +71,35 @@ export class AuthController {
 	@UseGuards(JwtAuthGuard)
 	@Get('me')
 	async me(@Req() req: any) {
-		const user = req.user;
+		const jwtUser = req.user;
+		
+		console.log('Auth /me endpoint - JWT User:', {
+			id: jwtUser.id,
+			email: jwtUser.email,
+			role: jwtUser.role
+		});
+		
+		// Fetch current user data from database to get updated profile information
+		const currentUser = await this.auth.getUserById(jwtUser.id);
+		
+		if (!currentUser) {
+			throw new BadRequestException('User not found');
+		}
 		
 		// Check if user needs profile completion (only for students)
-		const needsProfileCompletion = user.role === 'STUDENT' && (!user.streamId || !user.phone);
+		const needsProfileCompletion = currentUser.role === 'STUDENT' && (!currentUser.streamId || !currentUser.phone);
+		
+		console.log('Auth /me endpoint - Database User data:', {
+			id: currentUser.id,
+			email: currentUser.email,
+			role: currentUser.role,
+			streamId: currentUser.streamId,
+			phone: currentUser.phone,
+			needsProfileCompletion
+		});
 		
 		return {
-			...user,
+			...currentUser,
 			needsProfileCompletion
 		};
 	}

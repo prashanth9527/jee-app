@@ -38,18 +38,36 @@ export default function SubscriptionsPage() {
 
   const fetchData = async () => {
     try {
+      console.log('Fetching subscription data...');
+      console.log('Token exists:', !!localStorage.getItem('token'));
+      
       const [plansResponse, statusResponse] = await Promise.all([
         api.get('/subscriptions/plans'),
         api.get('/student/subscription-status')
       ]);
       
+      console.log('Plans response:', plansResponse.data);
+      console.log('Status response:', statusResponse.data);
+      
       setPlans(plansResponse.data);
       setSubscriptionStatus(statusResponse.data.subscriptionStatus);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching subscription data:', error);
+      console.error('Error response:', error.response?.data);
+      console.error('Error status:', error.response?.status);
+      
+      let errorMessage = 'Failed to load subscription information';
+      if (error.response?.status === 403) {
+        errorMessage = 'Access denied. Please make sure you are logged in and have the correct permissions.';
+      } else if (error.response?.status === 401) {
+        errorMessage = 'Authentication required. Please log in again.';
+      } else if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      }
+      
       Swal.fire({
         title: 'Error',
-        text: 'Failed to load subscription information',
+        text: errorMessage,
         icon: 'error',
       });
     } finally {

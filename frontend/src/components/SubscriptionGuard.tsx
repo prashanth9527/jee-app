@@ -33,6 +33,12 @@ export default function SubscriptionGuard({ children, fallback }: SubscriptionGu
         return;
       }
 
+      // Don't check subscription if user needs profile completion
+      if (user.needsProfileCompletion) {
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await api.get('/student/subscription-status');
         const data = response.data;
@@ -41,7 +47,7 @@ export default function SubscriptionGuard({ children, fallback }: SubscriptionGu
         // If user needs subscription and is not on subscription page, redirect
         if (data.subscriptionStatus.needsSubscription) {
           const currentPath = window.location.pathname;
-          if (currentPath !== '/student/subscriptions') {
+          if (currentPath !== '/student/subscriptions' && currentPath !== '/profile/complete') {
             router.push('/student/subscriptions');
             return;
           }

@@ -79,5 +79,25 @@ export declare class AuthController {
     verifyPhone(req: any, code: string): Promise<{
         ok: boolean;
     }>;
-    me(req: any): Promise<any>;
+    me(req: any): Promise<{
+        needsProfileCompletion: boolean;
+        id: string;
+        email: string;
+        phone: string | null;
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        hashedPassword: string | null;
+        fullName: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        googleId: string | null;
+        profilePicture: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        trialStartedAt: Date | null;
+        trialEndsAt: Date | null;
+        aiTestsUsed: number;
+        aiTestsLimit: number;
+        lastAiResetAt: Date | null;
+        streamId: string | null;
+    }>;
 }
