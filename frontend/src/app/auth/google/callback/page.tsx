@@ -41,9 +41,23 @@ function GoogleCallbackContent() {
 
         console.log('Google OAuth callback received:', { code: code.substring(0, 10) + '...', state });
 
-        // Handle the Google OAuth callback
-        const googleUser: GoogleUser = await googleAuth.handleCallback(code, state);
+        // Exchange code for token and get user info
+        const tokenResponse = await googleAuth.exchangeCodeForToken(code, `${window.location.origin}/auth/google/callback`);
         
+        console.log('Token exchange successful:', tokenResponse);
+        
+        // Get user info from Google using the access token
+        const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+          headers: {
+            Authorization: `Bearer ${tokenResponse.access_token}`,
+          },
+        });
+        
+        if (!userInfoResponse.ok) {
+          throw new Error('Failed to get user info from Google');
+        }
+        
+        const googleUser = await userInfoResponse.json();
         console.log('Google user received:', googleUser);
         
         // Send user data to backend for authentication
