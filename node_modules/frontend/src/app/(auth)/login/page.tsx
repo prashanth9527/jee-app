@@ -388,20 +388,31 @@ export default function LoginPage() {
 				{/* Divider */}
 				<div className="relative">
 					<div className="absolute inset-0 flex items-center">
-						<div className="w-full border-t border-gray-300"></div>
+						<div className="w-full border-t-2 border-gradient-to-r from-orange-200 via-blue-200 to-orange-200"></div>
 					</div>
 					<div className="relative flex justify-center text-sm">
-						<span className="px-2 bg-gray-50 text-gray-800 font-medium">Or continue with</span>
+						<span className="px-4 py-2 bg-gradient-to-r from-orange-50 to-blue-50 text-gray-700 font-semibold rounded-full border border-gray-200 shadow-sm">
+							✨ Or continue with
+						</span>
 					</div>
 				</div>
 
 				{/* Google Sign-In */}
-				<div className="bg-white rounded-xl shadow-xl p-6 border border-gray-200">
+				<div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-2xl p-8 border-2 border-blue-100 hover:border-blue-200 transition-all duration-300 transform hover:scale-[1.02]">
+					<div className="text-center mb-4">
+						<h3 className="text-lg font-bold text-gray-800 mb-2">Quick & Secure Login</h3>
+						<p className="text-sm text-gray-600">Sign in with your Google account</p>
+					</div>
 					<GoogleSignInButton
 						onSuccess={handleGoogleSuccess}
 						onError={handleGoogleError}
 						disabled={loading}
 					/>
+					<div className="mt-4 text-center">
+						<p className="text-xs text-gray-500">
+							🔒 Your data is protected with Google's security
+						</p>
+					</div>
 				</div>
 
 				{/* Quick Access Info */}

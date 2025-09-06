@@ -51,6 +51,7 @@ const config: Config = {
         'slide-up': 'slideUp 0.3s ease-out',
         'slide-down': 'slideDown 0.3s ease-out',
         'bounce-gentle': 'bounceGentle 2s infinite',
+        'pulse-subtle': 'pulseSubtle 3s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -68,6 +69,16 @@ const config: Config = {
         bounceGentle: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-5px)' },
+        },
+        pulseSubtle: {
+          '0%, 100%': { 
+            boxShadow: '0 10px 25px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05)',
+            transform: 'scale(1)'
+          },
+          '50%': { 
+            boxShadow: '0 20px 40px -3px rgba(59, 130, 246, 0.2), 0 8px 12px -2px rgba(59, 130, 246, 0.1)',
+            transform: 'scale(1.01)'
+          },
         },
       },
       screens: {
