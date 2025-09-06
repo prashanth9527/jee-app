@@ -6,6 +6,7 @@ import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
 import AiUsageCard from '@/components/AiUsageCard';
+import NotificationBanner from '@/components/NotificationBanner';
 import api from '@/lib/api';
 
 interface StudentStats {
@@ -86,6 +87,7 @@ export default function StudentDashboard() {
     <ProtectedRoute requiredRole="STUDENT">
       <SubscriptionGuard>
         <StudentLayout>
+        <NotificationBanner />
         <div className="space-y-6">
           {/* Header */}
           <div>

@@ -6,7 +6,7 @@ import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
 import QuestionReportModal from '@/components/QuestionReportModal';
-import api from '@/lib/api';
+import api, { bookmarkApi } from '@/lib/api';
 import Swal from 'sweetalert2';
 
 interface Question {
@@ -70,6 +70,8 @@ export default function PracticeTestResultsPage() {
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState<number | null>(null);
   const [reportModalOpen, setReportModalOpen] = useState(false);
   const [selectedQuestionForReport, setSelectedQuestionForReport] = useState<Question | null>(null);
+  const [bookmarkedQuestions, setBookmarkedQuestions] = useState<Set<string>>(new Set());
+  const [bookmarkLoading, setBookmarkLoading] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (submissionId) {
@@ -81,6 +83,22 @@ export default function PracticeTestResultsPage() {
     try {
       const response = await api.get(`/exams/submissions/${submissionId}/results`);
       setResults(response.data);
+      
+      // Fetch bookmark status for all questions
+      if (response.data.answers) {
+        const questionIds = response.data.answers.map((answer: any) => answer.question.id);
+        try {
+          const bookmarkResponse = await bookmarkApi.getBookmarkStatus(questionIds);
+          const bookmarkedSet = new Set<string>(
+            bookmarkResponse.data
+              .filter((item: any) => item.isBookmarked)
+              .map((item: any) => item.questionId as string)
+          );
+          setBookmarkedQuestions(bookmarkedSet);
+        } catch (bookmarkError) {
+          console.error('Error fetching bookmark status:', bookmarkError);
+        }
+      }
     } catch (error: any) {
       console.error('Error fetching results:', error);
       Swal.fire({
@@ -101,6 +119,55 @@ export default function PracticeTestResultsPage() {
       case 'MEDIUM': return 'text-yellow-600 bg-yellow-100';
       case 'HARD': return 'text-red-600 bg-red-100';
       default: return 'text-gray-600 bg-gray-100';
+    }
+  };
+
+  const toggleBookmark = async (questionId: string) => {
+    if (bookmarkLoading.has(questionId)) return;
+    
+    setBookmarkLoading(prev => new Set(prev).add(questionId));
+    
+    try {
+      const isBookmarked = bookmarkedQuestions.has(questionId);
+      
+      if (isBookmarked) {
+        await bookmarkApi.remove(questionId);
+        setBookmarkedQuestions(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(questionId);
+          return newSet;
+        });
+        Swal.fire({
+          title: 'Bookmark Removed',
+          text: 'Question removed from bookmarks',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      } else {
+        await bookmarkApi.create(questionId);
+        setBookmarkedQuestions(prev => new Set(prev).add(questionId));
+        Swal.fire({
+          title: 'Bookmark Added',
+          text: 'Question added to bookmarks',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error: any) {
+      console.error('Error toggling bookmark:', error);
+      Swal.fire({
+        title: 'Error',
+        text: error?.response?.data?.message || 'Failed to update bookmark',
+        icon: 'error',
+      });
+    } finally {
+      setBookmarkLoading(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(questionId);
+        return newSet;
+      });
     }
   };
 
@@ -307,15 +374,54 @@ export default function PracticeTestResultsPage() {
                                   {answer.isCorrect ? '✓ Correct' : '✗ Incorrect'}
                                 </span>
                               </div>
-                              <button
-                                onClick={() => {
-                                  setSelectedQuestionForReport(question);
-                                  setReportModalOpen(true);
-                                }}
-                                className="px-3 py-1 text-sm bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors"
-                              >
-                                Report Issue
-                              </button>
+                              <div className="flex items-center space-x-2">
+                                <button
+                                  onClick={() => toggleBookmark(question.id)}
+                                  disabled={bookmarkLoading.has(question.id)}
+                                  className={`px-3 py-1 text-sm rounded-md transition-colors flex items-center space-x-1 ${
+                                    bookmarkedQuestions.has(question.id)
+                                      ? 'bg-blue-500 text-white hover:bg-blue-600'
+                                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                  } ${bookmarkLoading.has(question.id) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                >
+                                  {bookmarkLoading.has(question.id) ? (
+                                    <>
+                                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                      </svg>
+                                      <span>Loading...</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      {bookmarkedQuestions.has(question.id) ? (
+                                        <>
+                                          <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
+                                          </svg>
+                                          <span>Bookmarked</span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                                          </svg>
+                                          <span>Bookmark</span>
+                                        </>
+                                      )}
+                                    </>
+                                  )}
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    setSelectedQuestionForReport(question);
+                                    setReportModalOpen(true);
+                                  }}
+                                  className="px-3 py-1 text-sm bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors"
+                                >
+                                  Report Issue
+                                </button>
+                              </div>
                             </div>
 
                             {/* Question Stem */}

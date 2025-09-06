@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "JEE Practice Platform - Backend, Frontend, and Mobile",
   "scripts": {
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../mobile && npm install",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run dev:mobile\"",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "cd backend && npm run start:dev",
     "dev:frontend": "cd frontend && npm run dev",
     "dev:mobile": "cd mobile && npm run start",

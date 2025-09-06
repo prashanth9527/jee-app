@@ -14,6 +14,9 @@ import { ExamsModule } from './exams/exams.module';
 import { StreamsModule } from './streams/streams.module';
 import { ExpertModule } from './expert/expert.module';
 import { AwsModule } from './aws/aws.module';
+import { BookmarksModule } from './bookmarks/bookmarks.module';
+import { FormulasModule } from './formulas/formulas.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 
 
@@ -32,6 +35,9 @@ import { AwsModule } from './aws/aws.module';
     StreamsModule,
     ExpertModule,
     AwsModule,
+    BookmarksModule,
+    FormulasModule,
+    NotificationsModule,
     
   ],
   controllers: [AppController],

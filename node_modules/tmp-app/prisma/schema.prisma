@@ -60,6 +60,9 @@ model User {
   // Question reports
   questionReports QuestionReport[]
   reviewedReports QuestionReport[] @relation("ReportReviewer")
+  
+  // Bookmarks
+  bookmarks Bookmark[]
 }
 
 enum UserRole {
@@ -153,6 +156,7 @@ model Question {
   answers ExamAnswer[]
   reports QuestionReport[]
   alternativeExplanations QuestionAlternativeExplanation[]
+  bookmarks Bookmark[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -475,6 +479,67 @@ model SystemSettings {
   updatedAt         DateTime @updatedAt
 
   @@map("system_settings")
+}
+
+// -------------------------------------------
+// Bookmark System
+// -------------------------------------------
+model Bookmark {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  question  Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, questionId])
+  @@map("bookmarks")
+}
+
+// -------------------------------------------
+// Formula Bank
+// -------------------------------------------
+model Formula {
+  id          String   @id @default(cuid())
+  title       String
+  formula     String
+  description String?
+  subject     String?
+  tags        String[] @default([])
+  topicId     String?
+  subtopicId  String?
+  targetRole  UserRole @default(STUDENT)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("formulas")
+}
+
+// -------------------------------------------
+// Notifications
+// -------------------------------------------
+model Notification {
+  id          String   @id @default(cuid())
+  title       String
+  message     String?  @db.Text
+  link        String?  // Optional link for the notification
+  validFrom   DateTime
+  validUntil  DateTime
+  isActive    Boolean  @default(true)
+  priority    NotificationPriority @default(NORMAL)
+  targetRole  UserRole @default(STUDENT) // Which user role this notification is for
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("notifications")
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
 }
 
 // -------------------------------------------

@@ -63,6 +63,13 @@ export default function PracticeScreen({ navigation }: any) {
 				<Text style={styles.startButtonText}>Start Practice Paper</Text>
 			</TouchableOpacity>
 
+			<TouchableOpacity 
+				style={styles.bookmarksButton} 
+				onPress={() => navigation.navigate('Bookmarks')}
+			>
+				<Text style={styles.bookmarksButtonText}>📚 View Bookmarks</Text>
+			</TouchableOpacity>
+
 			{analytics && (
 				<View style={styles.analytics}>
 					<Text style={styles.sectionTitle}>Your Performance</Text>
@@ -121,6 +128,19 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 	},
 	startButtonText: {
+		color: 'white',
+		textAlign: 'center',
+		fontWeight: 'bold',
+		fontSize: 16,
+	},
+	bookmarksButton: {
+		backgroundColor: '#34C759',
+		margin: 20,
+		marginTop: 10,
+		padding: 15,
+		borderRadius: 8,
+	},
+	bookmarksButtonText: {
 		color: 'white',
 		textAlign: 'center',
 		fontWeight: 'bold',

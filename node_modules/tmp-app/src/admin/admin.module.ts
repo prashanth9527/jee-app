@@ -13,16 +13,18 @@ import { AdminSubscriptionsController } from './subscriptions.controller';
 import { AdminUsersController } from './users.controller';
 import { AdminAnalyticsController } from './analytics.controller';
 import { AdminQuestionReportsController } from './question-reports.controller';
+import { AdminNotificationsController } from './notifications.controller';
 import { SystemSettingsController } from './system-settings.controller';
 import { SystemSettingsService } from './system-settings.service';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
-	imports: [PrismaModule, AwsModule],
+	imports: [PrismaModule, AwsModule, NotificationsModule],
 	controllers: [
 		AdminSubjectsController, AdminStreamsController, AdminTopicsController, AdminSubtopicsController,
 		AdminTagsController, AdminQuestionsController, AdminPYQController,
 		AdminExamPapersController, AdminSubscriptionsController, AdminUsersController,
-		AdminAnalyticsController, AdminQuestionReportsController, SystemSettingsController
+		AdminAnalyticsController, AdminQuestionReportsController, AdminNotificationsController, SystemSettingsController
 	],
 	providers: [SystemSettingsService],
 	exports: [SystemSettingsService],

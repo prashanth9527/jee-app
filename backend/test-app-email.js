@@ -42,3 +42,4 @@ testApplicationEmail().catch(error => {
     console.error('\n💥 Test failed:', error);
     process.exit(1);
 });
+
