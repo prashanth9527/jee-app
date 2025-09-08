@@ -5,7 +5,6 @@ import * as bcrypt from 'bcryptjs';
 import { OtpService } from './otp.service';
 import { ReferralsService } from '../referrals/referrals.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { normalizeIndianPhone, isValidIndianMobile, formatPhoneForDisplay } from './utils/phone.utils';
 
 @Injectable()
 export class AuthService {
@@ -18,11 +17,22 @@ export class AuthService {
 	) {}
 
 	async register(params: { email: string; password: string; fullName: string; phone: string; referralCode?: string; streamId: string }) {
-		// Normalize phone number by adding +91
-		const normalizedPhone = normalizeIndianPhone(params.phone);
+		// Simple phone number normalization for Indian numbers
+		let normalizedPhone = params.phone;
+		normalizedPhone = normalizedPhone.replace(/[\s\-\(\)]/g, '');
+		
+		if (normalizedPhone.startsWith('+91')) {
+			// Already normalized
+		} else if (normalizedPhone.startsWith('91')) {
+			normalizedPhone = '+' + normalizedPhone;
+		} else if (normalizedPhone.startsWith('0')) {
+			normalizedPhone = '+91' + normalizedPhone.substring(1);
+		} else {
+			normalizedPhone = '+91' + normalizedPhone;
+		}
 		
 		// Validate Indian mobile number format
-		if (!isValidIndianMobile(normalizedPhone)) {
+		if (!/^\+91[6-9]\d{9}$/.test(normalizedPhone)) {
 			throw new BadRequestException('Please enter a valid 10-digit Indian mobile number');
 		}
 
@@ -67,11 +77,22 @@ export class AuthService {
 	}
 
 	async startRegistration(params: { email: string; password: string; fullName: string; phone: string; referralCode?: string; streamId: string }) {
-		// Normalize phone number by adding +91
-		const normalizedPhone = normalizeIndianPhone(params.phone);
+		// Simple phone number normalization for Indian numbers
+		let normalizedPhone = params.phone;
+		normalizedPhone = normalizedPhone.replace(/[\s\-\(\)]/g, '');
+		
+		if (normalizedPhone.startsWith('+91')) {
+			// Already normalized
+		} else if (normalizedPhone.startsWith('91')) {
+			normalizedPhone = '+' + normalizedPhone;
+		} else if (normalizedPhone.startsWith('0')) {
+			normalizedPhone = '+91' + normalizedPhone.substring(1);
+		} else {
+			normalizedPhone = '+91' + normalizedPhone;
+		}
 		
 		// Validate Indian mobile number format
-		if (!isValidIndianMobile(normalizedPhone)) {
+		if (!/^\+91[6-9]\d{9}$/.test(normalizedPhone)) {
 			throw new BadRequestException('Please enter a valid 10-digit Indian mobile number');
 		}
 
@@ -318,8 +339,28 @@ export class AuthService {
 	}
 
 	async loginWithPhoneOtp(phone: string, otpCode: string) {
-		// Normalize phone number by adding +91
-		const normalizedPhone = normalizeIndianPhone(phone);
+		// Simple phone number normalization for Indian numbers
+		let normalizedPhone = phone;
+		
+		// Remove any spaces, dashes, or parentheses
+		normalizedPhone = normalizedPhone.replace(/[\s\-\(\)]/g, '');
+		
+		// If it already starts with +91, use as is
+		if (normalizedPhone.startsWith('+91')) {
+			// Do nothing, already normalized
+		}
+		// If it starts with 91, add +
+		else if (normalizedPhone.startsWith('91')) {
+			normalizedPhone = '+' + normalizedPhone;
+		}
+		// If it starts with 0, remove it and add +91
+		else if (normalizedPhone.startsWith('0')) {
+			normalizedPhone = '+91' + normalizedPhone.substring(1);
+		}
+		// Otherwise, add +91 prefix
+		else {
+			normalizedPhone = '+91' + normalizedPhone;
+		}
 		
 		console.log('Phone OTP login attempt for phone:', normalizedPhone); // Debug log
 		
@@ -360,11 +401,31 @@ export class AuthService {
 	}
 
 	async sendLoginOtp(phone: string) {
-		// Normalize phone number by adding +91
-		const normalizedPhone = normalizeIndianPhone(phone);
+		// Simple phone number normalization for Indian numbers
+		let normalizedPhone = phone;
 		
-		// Validate Indian mobile number format
-		if (!isValidIndianMobile(normalizedPhone)) {
+		// Remove any spaces, dashes, or parentheses
+		normalizedPhone = normalizedPhone.replace(/[\s\-\(\)]/g, '');
+		
+		// If it already starts with +91, use as is
+		if (normalizedPhone.startsWith('+91')) {
+			// Do nothing, already normalized
+		}
+		// If it starts with 91, add +
+		else if (normalizedPhone.startsWith('91')) {
+			normalizedPhone = '+' + normalizedPhone;
+		}
+		// If it starts with 0, remove it and add +91
+		else if (normalizedPhone.startsWith('0')) {
+			normalizedPhone = '+91' + normalizedPhone.substring(1);
+		}
+		// Otherwise, add +91 prefix
+		else {
+			normalizedPhone = '+91' + normalizedPhone;
+		}
+		
+		// Validate Indian mobile number format (should be +91 followed by 10 digits starting with 6,7,8,9)
+		if (!/^\+91[6-9]\d{9}$/.test(normalizedPhone)) {
 			throw new UnauthorizedException('Please enter a valid 10-digit Indian mobile number');
 		}
 
@@ -443,7 +504,7 @@ export class AuthService {
 		return { 
 			ok: true, 
 			message: 'Phone verification OTP sent successfully',
-			phone: formatPhoneForDisplay(user.phone)
+			phone: user.phone ? user.phone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') : null
 		};
 	}
 
@@ -457,154 +518,11 @@ export class AuthService {
 			emailVerified: user.emailVerified,
 			phoneVerified: user.phoneVerified,
 			hasPhone: !!user.phone,
-			phone: user.phone ? formatPhoneForDisplay(user.phone) : null,
+			phone: user.phone ? user.phone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') : null,
 			needsPhoneVerification: !!user.phone && !user.phoneVerified,
 			canVerifyPhone: !!user.phone && !user.phoneVerified
 		};
 	}
 
-	async changePhone(userId: string, newPhone: string) {
-		// Normalize phone number by adding +91
-		const normalizedPhone = normalizeIndianPhone(newPhone);
-		
-		// Validate Indian mobile number format
-		if (!isValidIndianMobile(normalizedPhone)) {
-			throw new BadRequestException('Please enter a valid 10-digit Indian mobile number');
-		}
-
-		// Check if the new phone number is already registered by another user
-		const existingUser = await this.prisma.user.findFirst({
-			where: { 
-				phone: normalizedPhone,
-				id: { not: userId }
-			}
-		});
-
-		if (existingUser) {
-			throw new BadRequestException('This phone number is already registered with another account');
-		}
-
-		// Get current user
-		const user = await this.users.findById(userId);
-		if (!user) {
-			throw new BadRequestException('User not found');
-		}
-
-		// Check if it's the same phone number
-		if (user.phone === normalizedPhone) {
-			throw new BadRequestException('This is already your current phone number');
-		}
-
-		// Store the new phone number temporarily for verification
-		// We'll use a separate table or add a field to track pending phone changes
-		await this.prisma.user.update({
-			where: { id: userId },
-			data: { 
-				pendingPhone: normalizedPhone,
-				phoneVerified: false // Reset verification status
-			}
-		});
-
-		// Send OTP to the new phone number
-		await this.otp.sendPhoneOtp(userId, normalizedPhone);
-
-		return {
-			ok: true,
-			message: 'OTP sent to new phone number for verification',
-			newPhone: formatPhoneForDisplay(normalizedPhone)
-		};
-	}
-
-	async verifyPhoneChange(userId: string, code: string) {
-		// Get user with pending phone
-		const user = await this.prisma.user.findUnique({
-			where: { id: userId }
-		});
-
-		if (!user) {
-			throw new BadRequestException('User not found');
-		}
-
-		if (!user.pendingPhone) {
-			throw new BadRequestException('No pending phone number change found');
-		}
-
-		// Verify OTP
-		await this.otp.verifyOtp(userId, code, 'PHONE');
-
-		// Update the phone number and clear pending phone
-		const updatedUser = await this.prisma.user.update({
-			where: { id: userId },
-			data: {
-				phone: user.pendingPhone,
-				pendingPhone: null,
-				phoneVerified: true
-			},
-			select: {
-				id: true,
-				email: true,
-				fullName: true,
-				phone: true,
-				emailVerified: true,
-				phoneVerified: true,
-				role: true
-			}
-		});
-
-		return {
-			ok: true,
-			message: 'Phone number changed and verified successfully',
-			user: updatedUser
-		};
-	}
-
-	async getPhoneChangeStatus(userId: string) {
-		const user = await this.prisma.user.findUnique({
-			where: { id: userId },
-			select: {
-				id: true,
-				phone: true,
-				pendingPhone: true,
-				phoneVerified: true
-			}
-		});
-
-		if (!user) {
-			throw new BadRequestException('User not found');
-		}
-
-		return {
-			currentPhone: user.phone,
-			pendingPhone: user.pendingPhone,
-			phoneVerified: user.phoneVerified,
-			hasPendingChange: !!user.pendingPhone,
-			currentPhoneDisplay: user.phone ? formatPhoneForDisplay(user.phone) : null,
-			pendingPhoneDisplay: user.pendingPhone ? formatPhoneForDisplay(user.pendingPhone) : null
-		};
-	}
-
-	async cancelPhoneChange(userId: string) {
-		const user = await this.prisma.user.findUnique({
-			where: { id: userId }
-		});
-
-		if (!user) {
-			throw new BadRequestException('User not found');
-		}
-
-		if (!user.pendingPhone) {
-			throw new BadRequestException('No pending phone number change to cancel');
-		}
-
-		// Clear the pending phone number
-		await this.prisma.user.update({
-			where: { id: userId },
-			data: { pendingPhone: null }
-		});
-
-		return {
-			ok: true,
-			message: 'Phone number change cancelled successfully'
-		};
-	}
+	// Phone change functionality removed for now - focus on basic login fix
 } 
