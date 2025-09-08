@@ -5,14 +5,14 @@ import { PrismaService } from '../prisma/prisma.service';
 export class UsersService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	createUser(params: { email: string; fullName: string; hashedPassword: string; phone?: string | null; streamId?: string; emailVerified?: boolean }) {
+	createUser(params: { email: string; fullName: string; hashedPassword: string; phone: string; streamId?: string; emailVerified?: boolean }) {
 		const { email, fullName, hashedPassword, phone, streamId, emailVerified } = params;
 		return this.prisma.user.create({ 
 			data: { 
 				email, 
 				fullName, 
 				hashedPassword, 
-				phone: phone || null,
+				phone,
 				streamId: streamId || null,
 				emailVerified: emailVerified !== undefined ? emailVerified : true
 			} 

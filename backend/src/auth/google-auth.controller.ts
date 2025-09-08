@@ -154,12 +154,16 @@ export class GoogleAuthController {
   }
 
   @Post('register')
-  async googleRegister(@Body() googleData: GoogleLoginDto & { streamId?: string }) {
+  async googleRegister(@Body() googleData: GoogleLoginDto & { streamId?: string; phone?: string }) {
     try {
-      const { googleId, email, name, picture, streamId } = googleData;
+      const { googleId, email, name, picture, streamId, phone } = googleData;
 
       if (!googleId || !email || !name) {
         throw new HttpException('Missing required Google user data', HttpStatus.BAD_REQUEST);
+      }
+
+      if (!phone) {
+        throw new HttpException('Phone number is required for registration', HttpStatus.BAD_REQUEST);
       }
 
       // Check if user already exists
@@ -167,13 +171,14 @@ export class GoogleAuthController {
         where: {
           OR: [
             { googleId: googleId },
-            { email: email }
+            { email: email },
+            { phone: phone }
           ]
         }
       });
 
       if (existingUser) {
-        throw new HttpException('User already exists with this email or Google account', HttpStatus.CONFLICT);
+        throw new HttpException('User already exists with this email, phone number, or Google account', HttpStatus.CONFLICT);
       }
 
       // Create new user
@@ -182,6 +187,7 @@ export class GoogleAuthController {
         email: email,
         fullName: name,
         profilePicture: picture,
+        phone: phone,
         emailVerified: true,
         role: 'STUDENT'
       };

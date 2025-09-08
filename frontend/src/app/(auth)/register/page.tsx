@@ -94,6 +94,31 @@ function RegisterForm() {
 		setError(null);
 		setIsRegistering(true);
 		
+		// Validate required fields
+		if (!fullName.trim()) {
+			setError('Full name is required');
+			setIsRegistering(false);
+			return;
+		}
+		
+		if (!email.trim()) {
+			setError('Email address is required');
+			setIsRegistering(false);
+			return;
+		}
+		
+		if (!phone.trim()) {
+			setError('Phone number is required');
+			setIsRegistering(false);
+			return;
+		}
+		
+		if (!password.trim()) {
+			setError('Password is required');
+			setIsRegistering(false);
+			return;
+		}
+		
 		if (!streamId) {
 			setError('Please select a stream');
 			setIsRegistering(false);
@@ -234,7 +259,7 @@ function RegisterForm() {
 						{/* Full Name */}
 						<div>
 							<label htmlFor="fullName" className="block text-sm font-semibold text-gray-900 mb-2">
-								Full Name
+								Full Name <span className="text-red-500">*</span>
 							</label>
 							<input 
 								id="fullName"
@@ -251,7 +276,7 @@ function RegisterForm() {
 						{/* Email */}
 						<div>
 							<label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
-								Email Address
+								Email Address <span className="text-red-500">*</span>
 							</label>
 				<input 
 								id="email"
@@ -263,28 +288,35 @@ function RegisterForm() {
 					value={email} 
 								onChange={e => setEmail(e.target.value)}
 							/>
+							<p className="mt-1 text-xs text-gray-600">
+								📧 OTP verification code will be sent to this email address
+							</p>
 						</div>
 
 						{/* Phone */}
 						<div>
 							<label htmlFor="phone" className="block text-sm font-semibold text-gray-900 mb-2">
-								Phone Number <span className="text-gray-600 font-normal">(Optional)</span>
+								Phone Number <span className="text-red-500">*</span>
 							</label>
 				<input 
 								id="phone"
 								name="phone"
 								type="tel"
+								required
 								className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
-								placeholder="Enter your phone number"
+								placeholder="Enter your phone number (e.g., +91 9876543210)"
 					value={phone} 
 								onChange={e => setPhone(e.target.value)}
 				/>
+							<p className="mt-1 text-xs text-gray-600">
+								📱 OTP verification code will also be sent to this phone number
+							</p>
 						</div>
 
 						{/* Password */}
 						<div>
 							<label htmlFor="password" className="block text-sm font-semibold text-gray-900 mb-2">
-								Password
+								Password <span className="text-red-500">*</span>
 							</label>
 							<div className="relative">
 				<input 

@@ -424,38 +424,31 @@ export class StudentController {
 			}
 		});
 
-		return user;
+		// Add verification status information
+		return {
+			...user,
+			needsPhoneVerification: !!user?.phone && !user?.phoneVerified,
+			canVerifyPhone: !!user?.phone && !user?.phoneVerified,
+			phoneDisplay: user?.phone ? user.phone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') : null
+		};
 	}
 
 	@Put('profile')
-	async updateProfile(@Req() req: any, @Body() body: { fullName?: string; phone?: string }) {
+	async updateProfile(@Req() req: any, @Body() body: { fullName?: string }) {
 		const userId = req.user.id;
 
-		// Check if phone is already taken by another user
-		if (body.phone) {
-			const existingUser = await this.prisma.user.findFirst({
-				where: { 
-					phone: body.phone,
-					id: { not: userId }
-				}
-			});
-			if (existingUser) {
-				throw new Error('Phone number is already registered');
-			}
-		}
-
+		// Only allow updating fullName, phone changes should go through the verification flow
 		return this.prisma.user.update({
 			where: { id: userId },
 			data: {
-				fullName: body.fullName,
-				phone: body.phone,
-				phoneVerified: body.phone ? false : undefined // Reset verification if phone changed
+				fullName: body.fullName
 			},
 			select: {
 				id: true,
 				email: true,
 				fullName: true,
 				phone: true,
+				pendingPhone: true,
 				emailVerified: true,
 				phoneVerified: true,
 				role: true

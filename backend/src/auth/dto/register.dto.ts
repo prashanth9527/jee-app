@@ -1,12 +1,13 @@
-import { IsEmail, IsOptional, IsString, MinLength, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MinLength, IsNotEmpty, IsPhoneNumber } from 'class-validator';
 
 export class RegisterDto {
 	@IsEmail()
 	email!: string;
 
-	@IsOptional()
+	@IsNotEmpty()
 	@IsString()
-	phone?: string;
+	@IsPhoneNumber('IN') // Assuming Indian phone numbers, adjust as needed
+	phone!: string;
 
 	@IsString()
 	@MinLength(6)

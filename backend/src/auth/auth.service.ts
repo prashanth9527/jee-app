@@ -16,9 +16,12 @@ export class AuthService {
 		private readonly prisma: PrismaService,
 	) {}
 
-	async register(params: { email: string; password: string; fullName: string; phone?: string; referralCode?: string; streamId: string }) {
-		const existing = await this.users.findByEmail(params.email);
-		if (existing) throw new BadRequestException('Email already registered');
+	async register(params: { email: string; password: string; fullName: string; phone: string; referralCode?: string; streamId: string }) {
+		const existingEmail = await this.users.findByEmail(params.email);
+		if (existingEmail) throw new BadRequestException('Email already registered');
+		
+		const existingPhone = await this.users.findByPhone(params.phone);
+		if (existingPhone) throw new BadRequestException('Phone number already registered');
 		
 		// Validate stream exists
 		const stream = await this.prisma.stream.findUnique({
@@ -54,9 +57,12 @@ export class AuthService {
 		return { id: user.id, email: user.email };
 	}
 
-	async startRegistration(params: { email: string; password: string; fullName: string; phone?: string; referralCode?: string; streamId: string }) {
-		const existing = await this.users.findByEmail(params.email);
-		if (existing) throw new BadRequestException('Email already registered');
+	async startRegistration(params: { email: string; password: string; fullName: string; phone: string; referralCode?: string; streamId: string }) {
+		const existingEmail = await this.users.findByEmail(params.email);
+		if (existingEmail) throw new BadRequestException('Email already registered');
+		
+		const existingPhone = await this.users.findByPhone(params.phone);
+		if (existingPhone) throw new BadRequestException('Phone number already registered');
 		
 		// Validate stream exists
 		const stream = await this.prisma.stream.findUnique({
@@ -75,13 +81,14 @@ export class AuthService {
 			emailVerified: false // User needs to verify email first
 		});
 		
-		// Send email OTP for verification
+		// Send email and phone OTP for verification
 		await this.otp.sendEmailOtp(user.id, user.email);
+		await this.otp.sendPhoneOtp(user.id, user.phone!);
 		
 		return { 
 			id: user.id, 
 			email: user.email,
-			message: 'Registration initiated. Please check your email for OTP verification.'
+			message: 'Registration initiated. Please check your email and phone for OTP verification.'
 		};
 	}
 
@@ -376,5 +383,197 @@ export class AuthService {
 			streamId: user.streamId
 		} : 'User not found');
 		return user;
+	}
+
+	async sendPhoneOtpForRegistration(phone: string, ipAddress?: string) {
+		await this.otp.sendPhoneOtpForRegistration(phone, ipAddress);
+		return { ok: true };
+	}
+
+	async getOtpUsageStats(userId: string, type: 'EMAIL' | 'PHONE') {
+		return this.otp.getOtpUsageStats(userId, type);
+	}
+
+	async sendPhoneVerificationOtp(userId: string) {
+		// Get user to check if they have a phone number
+		const user = await this.users.findById(userId);
+		if (!user) {
+			throw new BadRequestException('User not found');
+		}
+
+		if (!user.phone) {
+			throw new BadRequestException('No phone number found. Please add a phone number to your profile first.');
+		}
+
+		if (user.phoneVerified) {
+			throw new BadRequestException('Phone number is already verified');
+		}
+
+		// Send OTP to the user's phone number
+		await this.otp.sendPhoneOtp(userId, user.phone);
+		
+		return { 
+			ok: true, 
+			message: 'Phone verification OTP sent successfully',
+			phone: user.phone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') // Mask phone number
+		};
+	}
+
+	async getVerificationStatus(userId: string) {
+		const user = await this.users.findById(userId);
+		if (!user) {
+			throw new BadRequestException('User not found');
+		}
+
+		return {
+			emailVerified: user.emailVerified,
+			phoneVerified: user.phoneVerified,
+			hasPhone: !!user.phone,
+			phone: user.phone ? user.phone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') : null,
+			needsPhoneVerification: !!user.phone && !user.phoneVerified,
+			canVerifyPhone: !!user.phone && !user.phoneVerified
+		};
+	}
+
+	async changePhone(userId: string, newPhone: string) {
+		// Validate phone number format
+		if (!newPhone || newPhone.length < 10) {
+			throw new BadRequestException('Please provide a valid phone number');
+		}
+
+		// Check if the new phone number is already registered by another user
+		const existingUser = await this.prisma.user.findFirst({
+			where: { 
+				phone: newPhone,
+				id: { not: userId }
+			}
+		});
+
+		if (existingUser) {
+			throw new BadRequestException('This phone number is already registered with another account');
+		}
+
+		// Get current user
+		const user = await this.users.findById(userId);
+		if (!user) {
+			throw new BadRequestException('User not found');
+		}
+
+		// Check if it's the same phone number
+		if (user.phone === newPhone) {
+			throw new BadRequestException('This is already your current phone number');
+		}
+
+		// Store the new phone number temporarily for verification
+		// We'll use a separate table or add a field to track pending phone changes
+		await this.prisma.user.update({
+			where: { id: userId },
+			data: { 
+				pendingPhone: newPhone,
+				phoneVerified: false // Reset verification status
+			}
+		});
+
+		// Send OTP to the new phone number
+		await this.otp.sendPhoneOtp(userId, newPhone);
+
+		return {
+			ok: true,
+			message: 'OTP sent to new phone number for verification',
+			newPhone: newPhone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2')
+		};
+	}
+
+	async verifyPhoneChange(userId: string, code: string) {
+		// Get user with pending phone
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId }
+		});
+
+		if (!user) {
+			throw new BadRequestException('User not found');
+		}
+
+		if (!user.pendingPhone) {
+			throw new BadRequestException('No pending phone number change found');
+		}
+
+		// Verify OTP
+		await this.otp.verifyOtp(userId, code, 'PHONE');
+
+		// Update the phone number and clear pending phone
+		const updatedUser = await this.prisma.user.update({
+			where: { id: userId },
+			data: {
+				phone: user.pendingPhone,
+				pendingPhone: null,
+				phoneVerified: true
+			},
+			select: {
+				id: true,
+				email: true,
+				fullName: true,
+				phone: true,
+				emailVerified: true,
+				phoneVerified: true,
+				role: true
+			}
+		});
+
+		return {
+			ok: true,
+			message: 'Phone number changed and verified successfully',
+			user: updatedUser
+		};
+	}
+
+	async getPhoneChangeStatus(userId: string) {
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: {
+				id: true,
+				phone: true,
+				pendingPhone: true,
+				phoneVerified: true
+			}
+		});
+
+		if (!user) {
+			throw new BadRequestException('User not found');
+		}
+
+		return {
+			currentPhone: user.phone,
+			pendingPhone: user.pendingPhone,
+			phoneVerified: user.phoneVerified,
+			hasPendingChange: !!user.pendingPhone,
+			currentPhoneDisplay: user.phone ? user.phone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') : null,
+			pendingPhoneDisplay: user.pendingPhone ? user.pendingPhone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') : null
+		};
+	}
+
+	async cancelPhoneChange(userId: string) {
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId }
+		});
+
+		if (!user) {
+			throw new BadRequestException('User not found');
+		}
+
+		if (!user.pendingPhone) {
+			throw new BadRequestException('No pending phone number change to cancel');
+		}
+
+		// Clear the pending phone number
+		await this.prisma.user.update({
+			where: { id: userId },
+			data: { pendingPhone: null }
+		});
+
+		return {
+			ok: true,
+			message: 'Phone number change cancelled successfully'
+		};
 	}
 } 

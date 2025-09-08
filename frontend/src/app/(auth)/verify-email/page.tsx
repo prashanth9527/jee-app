@@ -198,17 +198,18 @@ function VerifyEmailContent() {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <div className="mx-auto h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center">
-            <span className="text-2xl">📧</span>
+            <span className="text-2xl">📱📧</span>
           </div>
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            Verify your email
+            Verify your account
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            We've sent a 6-digit verification code to{' '}
+            We've sent 6-digit verification codes to{' '}
             <span className="font-medium text-gray-900">{email}</span>
+            {' '}and your registered phone number
           </p>
           <p className="mt-1 text-xs text-gray-500">
-            Please check your inbox and spam folder. The code will expire in 5 minutes.
+            Please check your email inbox, spam folder, and SMS messages. The codes will expire in 5 minutes.
           </p>
         </div>
 
