@@ -298,14 +298,14 @@ function RegisterForm() {
 							<label htmlFor="phone" className="block text-sm font-semibold text-gray-900 mb-2">
 								Phone Number <span className="text-red-500">*</span>
 							</label>
-				<input 
+							<input 
 								id="phone"
 								name="phone"
 								type="tel"
 								required
 								className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
-								placeholder="Enter your phone number (e.g., +91 9876543210)"
-					value={phone} 
+								placeholder="Enter your 10-digit mobile number (e.g., 9876543210)"
+								value={phone} 
 								onChange={e => setPhone(e.target.value)}
 				/>
 							<p className="mt-1 text-xs text-gray-600">

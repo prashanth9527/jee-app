@@ -5,6 +5,7 @@ import * as bcrypt from 'bcryptjs';
 import { OtpService } from './otp.service';
 import { ReferralsService } from '../referrals/referrals.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { normalizeIndianPhone, isValidIndianMobile, formatPhoneForDisplay } from './utils/phone.utils';
 
 @Injectable()
 export class AuthService {
@@ -17,10 +18,18 @@ export class AuthService {
 	) {}
 
 	async register(params: { email: string; password: string; fullName: string; phone: string; referralCode?: string; streamId: string }) {
+		// Normalize phone number by adding +91
+		const normalizedPhone = normalizeIndianPhone(params.phone);
+		
+		// Validate Indian mobile number format
+		if (!isValidIndianMobile(normalizedPhone)) {
+			throw new BadRequestException('Please enter a valid 10-digit Indian mobile number');
+		}
+
 		const existingEmail = await this.users.findByEmail(params.email);
 		if (existingEmail) throw new BadRequestException('Email already registered');
 		
-		const existingPhone = await this.users.findByPhone(params.phone);
+		const existingPhone = await this.users.findByPhone(normalizedPhone);
 		if (existingPhone) throw new BadRequestException('Phone number already registered');
 		
 		// Validate stream exists
@@ -34,7 +43,7 @@ export class AuthService {
 			email: params.email, 
 			fullName: params.fullName, 
 			hashedPassword, 
-			phone: params.phone,
+			phone: normalizedPhone,
 			streamId: params.streamId
 		});
 		const days = Number(process.env.FREE_TRIAL_DAYS || 2);
@@ -58,10 +67,18 @@ export class AuthService {
 	}
 
 	async startRegistration(params: { email: string; password: string; fullName: string; phone: string; referralCode?: string; streamId: string }) {
+		// Normalize phone number by adding +91
+		const normalizedPhone = normalizeIndianPhone(params.phone);
+		
+		// Validate Indian mobile number format
+		if (!isValidIndianMobile(normalizedPhone)) {
+			throw new BadRequestException('Please enter a valid 10-digit Indian mobile number');
+		}
+
 		const existingEmail = await this.users.findByEmail(params.email);
 		if (existingEmail) throw new BadRequestException('Email already registered');
 		
-		const existingPhone = await this.users.findByPhone(params.phone);
+		const existingPhone = await this.users.findByPhone(normalizedPhone);
 		if (existingPhone) throw new BadRequestException('Phone number already registered');
 		
 		// Validate stream exists
@@ -76,7 +93,7 @@ export class AuthService {
 			email: params.email, 
 			fullName: params.fullName, 
 			hashedPassword, 
-			phone: params.phone,
+			phone: normalizedPhone,
 			streamId: params.streamId,
 			emailVerified: false // User needs to verify email first
 		});
@@ -415,7 +432,7 @@ export class AuthService {
 		return { 
 			ok: true, 
 			message: 'Phone verification OTP sent successfully',
-			phone: user.phone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') // Mask phone number
+			phone: formatPhoneForDisplay(user.phone)
 		};
 	}
 
@@ -429,22 +446,25 @@ export class AuthService {
 			emailVerified: user.emailVerified,
 			phoneVerified: user.phoneVerified,
 			hasPhone: !!user.phone,
-			phone: user.phone ? user.phone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') : null,
+			phone: user.phone ? formatPhoneForDisplay(user.phone) : null,
 			needsPhoneVerification: !!user.phone && !user.phoneVerified,
 			canVerifyPhone: !!user.phone && !user.phoneVerified
 		};
 	}
 
 	async changePhone(userId: string, newPhone: string) {
-		// Validate phone number format
-		if (!newPhone || newPhone.length < 10) {
-			throw new BadRequestException('Please provide a valid phone number');
+		// Normalize phone number by adding +91
+		const normalizedPhone = normalizeIndianPhone(newPhone);
+		
+		// Validate Indian mobile number format
+		if (!isValidIndianMobile(normalizedPhone)) {
+			throw new BadRequestException('Please enter a valid 10-digit Indian mobile number');
 		}
 
 		// Check if the new phone number is already registered by another user
 		const existingUser = await this.prisma.user.findFirst({
 			where: { 
-				phone: newPhone,
+				phone: normalizedPhone,
 				id: { not: userId }
 			}
 		});
@@ -460,7 +480,7 @@ export class AuthService {
 		}
 
 		// Check if it's the same phone number
-		if (user.phone === newPhone) {
+		if (user.phone === normalizedPhone) {
 			throw new BadRequestException('This is already your current phone number');
 		}
 
@@ -469,18 +489,18 @@ export class AuthService {
 		await this.prisma.user.update({
 			where: { id: userId },
 			data: { 
-				pendingPhone: newPhone,
+				pendingPhone: normalizedPhone,
 				phoneVerified: false // Reset verification status
 			}
 		});
 
 		// Send OTP to the new phone number
-		await this.otp.sendPhoneOtp(userId, newPhone);
+		await this.otp.sendPhoneOtp(userId, normalizedPhone);
 
 		return {
 			ok: true,
 			message: 'OTP sent to new phone number for verification',
-			newPhone: newPhone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2')
+			newPhone: formatPhoneForDisplay(normalizedPhone)
 		};
 	}
 
@@ -547,8 +567,8 @@ export class AuthService {
 			pendingPhone: user.pendingPhone,
 			phoneVerified: user.phoneVerified,
 			hasPendingChange: !!user.pendingPhone,
-			currentPhoneDisplay: user.phone ? user.phone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') : null,
-			pendingPhoneDisplay: user.pendingPhone ? user.pendingPhone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') : null
+			currentPhoneDisplay: user.phone ? formatPhoneForDisplay(user.phone) : null,
+			pendingPhoneDisplay: user.pendingPhone ? formatPhoneForDisplay(user.pendingPhone) : null
 		};
 	}
 

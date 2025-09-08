@@ -6,7 +6,7 @@ export class RegisterDto {
 
 	@IsNotEmpty()
 	@IsString()
-	@IsPhoneNumber('IN') // Assuming Indian phone numbers, adjust as needed
+	@MinLength(10)
 	phone!: string;
 
 	@IsString()

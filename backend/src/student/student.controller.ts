@@ -4,6 +4,7 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { PrismaService } from '../prisma/prisma.service';
 import { SubscriptionValidationService } from '../subscriptions/subscription-validation.service';
+import { formatPhoneForDisplay } from '../auth/utils/phone.utils';
 
 @Controller('student')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -429,7 +430,7 @@ export class StudentController {
 			...user,
 			needsPhoneVerification: !!user?.phone && !user?.phoneVerified,
 			canVerifyPhone: !!user?.phone && !user?.phoneVerified,
-			phoneDisplay: user?.phone ? user.phone.replace(/(\d{2})\d{6}(\d{2})/, '$1******$2') : null
+			phoneDisplay: user?.phone ? formatPhoneForDisplay(user.phone) : null
 		};
 	}
 

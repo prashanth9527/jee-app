@@ -2,6 +2,7 @@ import { Controller, Post, Body, HttpException, HttpStatus, BadRequestException 
 import { AuthService } from './auth.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { OAuthStateService } from './oauth-state.service';
+import { normalizeIndianPhone, isValidIndianMobile } from './utils/phone.utils';
 import axios from 'axios';
 
 interface GoogleLoginDto {
@@ -166,13 +167,21 @@ export class GoogleAuthController {
         throw new HttpException('Phone number is required for registration', HttpStatus.BAD_REQUEST);
       }
 
+      // Normalize phone number by adding +91
+      const normalizedPhone = normalizeIndianPhone(phone);
+      
+      // Validate Indian mobile number format
+      if (!isValidIndianMobile(normalizedPhone)) {
+        throw new HttpException('Please enter a valid 10-digit Indian mobile number', HttpStatus.BAD_REQUEST);
+      }
+
       // Check if user already exists
       const existingUser = await this.prisma.user.findFirst({
         where: {
           OR: [
             { googleId: googleId },
             { email: email },
-            { phone: phone }
+            { phone: normalizedPhone }
           ]
         }
       });
@@ -187,7 +196,7 @@ export class GoogleAuthController {
         email: email,
         fullName: name,
         profilePicture: picture,
-        phone: phone,
+        phone: normalizedPhone,
         emailVerified: true,
         role: 'STUDENT'
       };
