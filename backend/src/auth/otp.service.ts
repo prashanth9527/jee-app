@@ -2,6 +2,7 @@ import { Injectable, BadRequestException, HttpException, HttpStatus } from '@nes
 import { PrismaService } from '../prisma/prisma.service';
 import { MailerService } from './mailer.service';
 import { SmsService } from './sms.service';
+import { normalizeIndianPhone, isValidIndianMobile } from './utils/phone.utils';
 
 type OtpTypeLiteral = 'EMAIL' | 'PHONE';
 
@@ -183,8 +184,16 @@ export class OtpService {
 
 	// Method for anonymous users (registration) - stricter limits
 	async sendPhoneOtpForRegistration(phone: string, ipAddress?: string) {
+		// Normalize phone number by adding +91
+		const normalizedPhone = normalizeIndianPhone(phone);
+		
+		// Validate Indian mobile number format
+		if (!isValidIndianMobile(normalizedPhone)) {
+			throw new BadRequestException('Please enter a valid 10-digit Indian mobile number');
+		}
+
 		// For anonymous users, we use phone number as identifier
-		const identifier = `anon_${phone}`;
+		const identifier = `anon_${normalizedPhone}`;
 		
 		// Stricter limits for anonymous users
 		const anonymousLimits = {
@@ -200,7 +209,7 @@ export class OtpService {
 		// Check if phone number has been used recently (prevent spam)
 		const recentOtps = await this.prisma.otp.count({
 			where: {
-				target: phone,
+				target: normalizedPhone,
 				type: 'PHONE',
 				createdAt: { gte: oneHourAgo }
 			}
@@ -216,7 +225,7 @@ export class OtpService {
 		// Check daily limit
 		const dailyOtps = await this.prisma.otp.count({
 			where: {
-				target: phone,
+				target: normalizedPhone,
 				type: 'PHONE',
 				createdAt: { gte: oneDayAgo }
 			}
@@ -232,7 +241,7 @@ export class OtpService {
 		// Check cooldown
 		const lastOtp = await this.prisma.otp.findFirst({
 			where: {
-				target: phone,
+				target: normalizedPhone,
 				type: 'PHONE'
 			},
 			orderBy: { createdAt: 'desc' }
@@ -261,13 +270,13 @@ export class OtpService {
 				userId: identifier, // Use phone as temporary identifier
 				code, 
 				type: 'PHONE', 
-				target: phone, 
+				target: normalizedPhone, 
 				expiresAt: new Date(Date.now() + ttlMin * 60 * 1000) 
 			} 
 		});
 		
 		try {
-			await this.sms.sendOtpSms(phone, code);
+			await this.sms.sendOtpSms(normalizedPhone, code);
 		} catch (error) {
 			console.error('Failed to send SMS OTP:', error);
 			// Don't throw error - OTP is still created and can be used

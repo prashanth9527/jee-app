@@ -318,11 +318,14 @@ export class AuthService {
 	}
 
 	async loginWithPhoneOtp(phone: string, otpCode: string) {
-		console.log('Phone OTP login attempt for phone:', phone); // Debug log
+		// Normalize phone number by adding +91
+		const normalizedPhone = normalizeIndianPhone(phone);
 		
-		const user = await this.users.findByPhone(phone);
+		console.log('Phone OTP login attempt for phone:', normalizedPhone); // Debug log
+		
+		const user = await this.users.findByPhone(normalizedPhone);
 		if (!user) {
-			console.log('User not found with phone:', phone); // Debug log
+			console.log('User not found with phone:', normalizedPhone); // Debug log
 			throw new UnauthorizedException('Invalid phone number or OTP');
 		}
 		
@@ -357,14 +360,22 @@ export class AuthService {
 	}
 
 	async sendLoginOtp(phone: string) {
-		// Find user by phone number
-		const user = await this.users.findByPhone(phone);
+		// Normalize phone number by adding +91
+		const normalizedPhone = normalizeIndianPhone(phone);
+		
+		// Validate Indian mobile number format
+		if (!isValidIndianMobile(normalizedPhone)) {
+			throw new UnauthorizedException('Please enter a valid 10-digit Indian mobile number');
+		}
+
+		// Find user by normalized phone number
+		const user = await this.users.findByPhone(normalizedPhone);
 		if (!user) {
 			throw new UnauthorizedException('No account found with this phone number');
 		}
 		
-		// Send OTP
-		await this.otp.sendPhoneOtp(user.id, phone);
+		// Send OTP to normalized phone number
+		await this.otp.sendPhoneOtp(user.id, normalizedPhone);
 		return { ok: true, message: 'OTP sent to your phone number' };
 	}
 
