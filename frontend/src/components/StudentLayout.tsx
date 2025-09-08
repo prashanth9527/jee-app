@@ -90,6 +90,15 @@ const menuSections = [
           </svg>
         ),
       },
+      {
+        name: 'Formula Bank',
+        href: '/student/formulas',
+        icon: (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+        ),
+      },
     ],
   },
   {
@@ -137,6 +146,15 @@ const menuSections = [
     title: 'Account & Support',
     items: [
       {
+        name: 'Notifications',
+        href: '/student/notifications',
+        icon: (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM4.828 7l2.586 2.586a2 2 0 002.828 0L12.828 7H4.828zM4 5h8.586l-2.586 2.586a2 2 0 01-2.828 0L4 5z" />
+          </svg>
+        ),
+      },
+      {
         name: 'Subscriptions',
         href: '/student/subscriptions',
         icon: (
@@ -174,6 +192,23 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
       return localStorage.getItem('studentSidebarCollapsed') === 'true';
     }
     return false;
+  });
+  const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('studentCollapsedSections');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+      // Default to collapsed for all sections with multiple items
+      const defaultCollapsed: Record<string, boolean> = {};
+      menuSections.forEach(section => {
+        if (section.items.length > 1) {
+          defaultCollapsed[section.title] = true;
+        }
+      });
+      return defaultCollapsed;
+    }
+    return {};
   });
   const [subscriptionStatus, setSubscriptionStatus] = useState<{ type: string; status: string; isOnTrial?: boolean; daysRemaining?: number; needsSubscription?: boolean } | null>(null);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
@@ -226,6 +261,15 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
     localStorage.setItem('studentSidebarCollapsed', newState.toString());
   };
 
+  const toggleSection = (sectionTitle: string) => {
+    const newCollapsedSections = {
+      ...collapsedSections,
+      [sectionTitle]: !collapsedSections[sectionTitle]
+    };
+    setCollapsedSections(newCollapsedSections);
+    localStorage.setItem('studentCollapsedSections', JSON.stringify(newCollapsedSections));
+  };
+
   const toggleProfileDropdown = () => {
     setProfileDropdownOpen(!profileDropdownOpen);
   };
@@ -276,52 +320,75 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
         {/* Navigation */}
         <nav className="mt-6 px-3 flex-1">
           <div className="space-y-6">
-            {menuSections.map((section, sectionIndex) => (
-              <div key={section.title}>
-                {/* Section Header */}
-                {!sidebarCollapsed && (
-                  <div className="px-3 mb-2">
-                    <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      {section.title}
-                    </h3>
-                  </div>
-                )}
-                
-                {/* Section Items */}
-                <div className="space-y-2">
-                  {section.items.map((item) => {
-                    const isActive = pathname === item.href;
-                    return (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className={`flex items-center px-3 py-3 text-sm font-semibold rounded-lg transition-all duration-200 group relative ${
-                          isActive
-                            ? 'bg-blue-100 text-blue-800 border-r-4 border-blue-600 shadow-sm'
-                            : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+            {menuSections.map((section, sectionIndex) => {
+              const isSectionCollapsed = collapsedSections[section.title];
+              const hasMultipleItems = section.items.length > 1;
+              
+              return (
+                <div key={section.title}>
+                  {/* Section Header */}
+                  {!sidebarCollapsed && (
+                    <div className="px-3 mb-2">
+                      <button
+                        onClick={() => hasMultipleItems && toggleSection(section.title)}
+                        className={`flex items-center justify-between w-full text-xs font-semibold text-gray-500 uppercase tracking-wider hover:text-gray-700 transition-colors ${
+                          hasMultipleItems ? 'cursor-pointer' : 'cursor-default'
                         }`}
-                        title={sidebarCollapsed ? item.name : undefined}
+                        disabled={!hasMultipleItems}
                       >
-                        <span className={`${sidebarCollapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
-                        {!sidebarCollapsed && <span>{item.name}</span>}
-                        
-                        {/* Tooltip for collapsed state */}
-                        {sidebarCollapsed && (
-                          <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
-                            {item.name}
-                          </div>
+                        <span>{section.title}</span>
+                        {hasMultipleItems && (
+                          <svg 
+                            className={`w-3 h-3 transition-transform duration-200 ${isSectionCollapsed ? 'rotate-180' : ''}`} 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
                         )}
-                      </Link>
-                    );
-                  })}
+                      </button>
+                    </div>
+                  )}
+                  
+                  {/* Section Items */}
+                  {(!sidebarCollapsed && !isSectionCollapsed) || sidebarCollapsed ? (
+                    <div className="space-y-2">
+                      {section.items.map((item) => {
+                        const isActive = pathname === item.href;
+                        return (
+                          <Link
+                            key={item.name}
+                            href={item.href}
+                            className={`flex items-center px-3 py-3 text-sm font-semibold rounded-lg transition-all duration-200 group relative ${
+                              isActive
+                                ? 'bg-blue-100 text-blue-800 border-r-4 border-blue-600 shadow-sm'
+                                : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                            }`}
+                            title={sidebarCollapsed ? item.name : undefined}
+                          >
+                            <span className={`${sidebarCollapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
+                            {!sidebarCollapsed && <span>{item.name}</span>}
+                            
+                            {/* Tooltip for collapsed state */}
+                            {sidebarCollapsed && (
+                              <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                                {item.name}
+                              </div>
+                            )}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                  
+                  {/* Section Separator (except for last section) */}
+                  {sectionIndex < menuSections.length - 1 && !sidebarCollapsed && (
+                    <div className="mt-4 mb-2 border-t border-gray-200"></div>
+                  )}
                 </div>
-                
-                {/* Section Separator (except for last section) */}
-                {sectionIndex < menuSections.length - 1 && !sidebarCollapsed && (
-                  <div className="mt-4 mb-2 border-t border-gray-200"></div>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </nav>
 

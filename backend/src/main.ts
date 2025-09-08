@@ -13,7 +13,13 @@ async function bootstrap() {
 	// Configure CORS based on environment
 	// Enable CORS
 	app.enableCors({
-		origin: 'https://rankora.in', // frontend URL
+		origin: [
+			'https://rankora.in',     // production frontend URL
+			'http://localhost:3000',  // local development frontend
+			'http://localhost:3001',  // local development frontend (alternative port)
+			'http://127.0.0.1:3000',  // local development frontend
+			'http://127.0.0.1:3001',  // local development frontend (alternative port)
+		],
 		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 		credentials: true,            // if you send cookies or auth headers
 	  });
@@ -23,6 +29,12 @@ async function bootstrap() {
 	await app.listen(port as number);
 	// eslint-disable-next-line no-console
 	console.log(`API listening on http://localhost:${port}`);
-	console.log('CORS configured for origins:', 'https://rankora.in');
+	console.log('CORS configured for origins:', [
+		'https://rankora.in',
+		'http://localhost:3000',
+		'http://localhost:3001',
+		'http://127.0.0.1:3000',
+		'http://127.0.0.1:3001'
+	]);
 }
 bootstrap();
