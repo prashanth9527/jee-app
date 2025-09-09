@@ -5,6 +5,7 @@ import * as bcrypt from 'bcryptjs';
 import { OtpService } from './otp.service';
 import { ReferralsService } from '../referrals/referrals.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { SessionService } from './session.service';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
 		private readonly otp: OtpService,
 		private readonly referralsService: ReferralsService,
 		private readonly prisma: PrismaService,
+		private readonly sessionService: SessionService,
 	) {}
 
 	async register(params: { email: string; password: string; fullName: string; phone: string; referralCode?: string; streamId: string }) {
@@ -152,11 +154,15 @@ export class AuthService {
 			await this.otp.sendPhoneOtp(user.id, user.phone);
 		}
 		
+		// Create session for the user
+		const sessionId = await this.sessionService.createSession(user.id);
+
 		// Generate JWT token
 		const token = this.jwt.sign({ 
 			sub: user.id, 
 			email: user.email, 
-			role: user.role 
+			role: user.role,
+			sessionId: sessionId
 		});
 
 		return { 
@@ -287,21 +293,52 @@ export class AuthService {
 		}
 	}
 
-	async login(params: { email?: string; password?: string; phone?: string; otpCode?: string }) {
+	async login(params: { 
+		email?: string; 
+		password?: string; 
+		phone?: string; 
+		otpCode?: string;
+		deviceInfo?: string;
+		ipAddress?: string;
+		userAgent?: string;
+	}) {
 		// Check if this is a phone OTP login
 		if (params.phone && params.otpCode) {
-			return this.loginWithPhoneOtp(params.phone, params.otpCode);
+			return this.loginWithPhoneOtp(
+				params.phone, 
+				params.otpCode, 
+				params.deviceInfo, 
+				params.ipAddress, 
+				params.userAgent
+			);
+		}
+		
+		// Check if this is an email OTP login
+		if (params.email && params.otpCode && !params.password) {
+			return this.loginWithEmailOtp(
+				params.email, 
+				params.otpCode, 
+				params.deviceInfo, 
+				params.ipAddress, 
+				params.userAgent
+			);
 		}
 		
 		// Traditional email/password login
 		if (params.email && params.password) {
-			return this.loginWithPassword(params.email, params.password);
+			return this.loginWithPassword(
+				params.email, 
+				params.password, 
+				params.deviceInfo, 
+				params.ipAddress, 
+				params.userAgent
+			);
 		}
 		
-		throw new BadRequestException('Invalid login parameters. Provide either email/password or phone/otpCode.');
+		throw new BadRequestException('Invalid login parameters. Provide either email/password, email/otpCode, or phone/otpCode.');
 	}
 
-	async loginWithPassword(email: string, password: string) {
+	async loginWithPassword(email: string, password: string, deviceInfo?: string, ipAddress?: string, userAgent?: string) {
 		console.log('Login attempt for email:', email); // Debug log
 		
 		const user = await this.users.findByEmail(email);
@@ -322,8 +359,21 @@ export class AuthService {
 			console.log('Password mismatch'); // Debug log
 			throw new UnauthorizedException('Invalid credentials');
 		}
+
+		// Create session for the user
+		const sessionId = await this.sessionService.createSession(
+			user.id,
+			deviceInfo,
+			ipAddress,
+			userAgent
+		);
 		
-		const token = await this.jwt.signAsync({ sub: user.id, email: user.email, role: user.role });
+		const token = await this.jwt.signAsync({ 
+			sub: user.id, 
+			email: user.email, 
+			role: user.role,
+			sessionId: sessionId
+		});
 		const response = { 
 			access_token: token,
 			user: {
@@ -338,7 +388,7 @@ export class AuthService {
 		return response;
 	}
 
-	async loginWithPhoneOtp(phone: string, otpCode: string) {
+	async loginWithPhoneOtp(phone: string, otpCode: string, deviceInfo?: string, ipAddress?: string, userAgent?: string) {
 		// Simple phone number normalization for Indian numbers
 		let normalizedPhone = phone;
 		
@@ -374,8 +424,21 @@ export class AuthService {
 		
 		// Verify OTP
 		await this.otp.verifyOtp(user.id, otpCode, 'PHONE');
+
+		// Create session for the user
+		const sessionId = await this.sessionService.createSession(
+			user.id,
+			deviceInfo,
+			ipAddress,
+			userAgent
+		);
 		
-		const token = await this.jwt.signAsync({ sub: user.id, email: user.email, role: user.role });
+		const token = await this.jwt.signAsync({ 
+			sub: user.id, 
+			email: user.email, 
+			role: user.role,
+			sessionId: sessionId
+		});
 		const response = { 
 			access_token: token,
 			user: {
@@ -387,6 +450,54 @@ export class AuthService {
 		};
 		
 		console.log('Phone OTP login successful, returning:', response); // Debug log
+		return response;
+	}
+
+	async loginWithEmailOtp(email: string, otpCode: string, deviceInfo?: string, ipAddress?: string, userAgent?: string) {
+		// Validate email format
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(email)) {
+			throw new UnauthorizedException('Please enter a valid email address');
+		}
+		
+		console.log('Email OTP login attempt for email:', email); // Debug log
+		
+		const user = await this.users.findByEmail(email);
+		if (!user) {
+			console.log('User not found with email:', email); // Debug log
+			throw new UnauthorizedException('Invalid email address or OTP');
+		}
+		
+		console.log('User found:', { id: user.id, email: user.email, role: user.role }); // Debug log
+		
+		// Verify OTP
+		await this.otp.verifyOtp(user.id, otpCode, 'EMAIL');
+
+		// Create session for the user
+		const sessionId = await this.sessionService.createSession(
+			user.id,
+			deviceInfo,
+			ipAddress,
+			userAgent
+		);
+		
+		const token = await this.jwt.signAsync({ 
+			sub: user.id, 
+			email: user.email, 
+			role: user.role,
+			sessionId: sessionId
+		});
+		const response = { 
+			access_token: token,
+			user: {
+				id: user.id,
+				email: user.email,
+				fullName: user.fullName,
+				role: user.role
+			}
+		};
+		
+		console.log('Email OTP login successful, returning:', response); // Debug log
 		return response;
 	}
 
@@ -438,6 +549,24 @@ export class AuthService {
 		// Send OTP to normalized phone number
 		await this.otp.sendPhoneOtp(user.id, normalizedPhone);
 		return { ok: true, message: 'OTP sent to your phone number' };
+	}
+
+	async sendEmailLoginOtp(email: string) {
+		// Validate email format
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(email)) {
+			throw new UnauthorizedException('Please enter a valid email address');
+		}
+
+		// Find user by email
+		const user = await this.users.findByEmail(email);
+		if (!user) {
+			throw new UnauthorizedException('No account found with this email address');
+		}
+		
+		// Send OTP to email
+		await this.otp.sendEmailOtp(user.id, email);
+		return { ok: true, message: 'OTP sent to your email address' };
 	}
 
 	async verifyEmail(userId: string, code: string) {
@@ -525,4 +654,25 @@ export class AuthService {
 	}
 
 	// Phone change functionality removed for now - focus on basic login fix
+
+	/**
+	 * Logout user by invalidating their session
+	 */
+	async logout(sessionId: string): Promise<void> {
+		await this.sessionService.invalidateSession(sessionId);
+	}
+
+	/**
+	 * Logout user from all devices (invalidate all sessions)
+	 */
+	async logoutAllDevices(userId: string): Promise<void> {
+		await this.sessionService.invalidateAllUserSessions(userId);
+	}
+
+	/**
+	 * Get user's active sessions
+	 */
+	async getUserSessions(userId: string) {
+		return this.sessionService.getUserActiveSessions(userId);
+	}
 } 

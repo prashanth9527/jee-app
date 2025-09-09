@@ -67,6 +67,9 @@ model User {
   
   // Bookmarks
   bookmarks Bookmark[]
+  
+  // Sessions
+  sessions UserSession[]
 }
 
 enum UserRole {
@@ -558,4 +561,25 @@ model OAuthState {
   createdAt DateTime @default(now())
 
   @@map("oauth_states")
+}
+
+// -------------------------------------------
+// User Sessions for Single Login Restriction
+// -------------------------------------------
+model UserSession {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  sessionId String   @unique // Unique session identifier
+  deviceInfo String? // Optional device/browser info
+  ipAddress String?  // Optional IP address
+  userAgent String?  // Optional user agent string
+  isActive  Boolean  @default(true)
+  lastActivityAt DateTime @default(now())
+  expiresAt DateTime // Session expiration time
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, isActive])
+  @@map("user_sessions")
 }

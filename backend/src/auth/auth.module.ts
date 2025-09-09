@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { GoogleAuthController } from './google-auth.controller';
@@ -12,12 +13,15 @@ import { OtpService } from './otp.service';
 import { MailerService } from './mailer.service';
 import { SmsService } from './sms.service';
 import { OAuthStateService } from './oauth-state.service';
+import { SessionService } from './session.service';
+import { SessionCleanupService } from './session-cleanup.service';
 
 @Module({
 	imports: [
 		UsersModule,
 		PrismaModule,
 		ReferralsModule,
+		ScheduleModule.forRoot(),
 		PassportModule.register({ defaultStrategy: 'jwt' }),
 		JwtModule.registerAsync({
 			useFactory: () => ({
@@ -26,7 +30,7 @@ import { OAuthStateService } from './oauth-state.service';
 			}),
 		}),
 	],
-	providers: [AuthService, JwtStrategy, OtpService, MailerService, SmsService, OAuthStateService],
+	providers: [AuthService, JwtStrategy, OtpService, MailerService, SmsService, OAuthStateService, SessionService, SessionCleanupService],
 	controllers: [AuthController, GoogleAuthController],
 	exports: [AuthService],
 })

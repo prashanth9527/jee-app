@@ -35,8 +35,18 @@ export class AuthController {
 	}
 
 	@Post('login')
-	login(@Body() dto: LoginDto) {
-		return this.auth.login(dto);
+	login(@Body() dto: LoginDto, @Req() req: any) {
+		// Extract device information from request
+		const deviceInfo = req.headers['user-agent'] || 'Unknown Device';
+		const ipAddress = req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
+		const userAgent = req.headers['user-agent'];
+
+		return this.auth.login({
+			...dto,
+			deviceInfo,
+			ipAddress,
+			userAgent
+		});
 	}
 
 	@UseGuards(JwtAuthGuard)
@@ -54,6 +64,11 @@ export class AuthController {
 	@Post('send-login-otp')
 	sendLoginOtp(@Body('phone') phone: string) {
 		return this.auth.sendLoginOtp(phone);
+	}
+
+	@Post('send-email-login-otp')
+	sendEmailLoginOtp(@Body('email') email: string) {
+		return this.auth.sendEmailLoginOtp(email);
 	}
 
 	@Post('send-phone-otp-registration')
@@ -95,6 +110,28 @@ export class AuthController {
 	}
 
 	// Phone change endpoints removed for now - focus on basic login fix
+
+	@UseGuards(JwtAuthGuard)
+	@Post('logout')
+	async logout(@Req() req: any) {
+		if (req.user.sessionId) {
+			await this.auth.logout(req.user.sessionId);
+		}
+		return { message: 'Logged out successfully' };
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post('logout-all-devices')
+	async logoutAllDevices(@Req() req: any) {
+		await this.auth.logoutAllDevices(req.user.id);
+		return { message: 'Logged out from all devices successfully' };
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get('sessions')
+	async getUserSessions(@Req() req: any) {
+		return this.auth.getUserSessions(req.user.id);
+	}
 
 	@UseGuards(JwtAuthGuard)
 	@Get('me')

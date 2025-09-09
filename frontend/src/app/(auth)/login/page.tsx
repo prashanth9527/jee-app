@@ -22,8 +22,9 @@ export default function LoginPage() {
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
-	const [loginMethod, setLoginMethod] = useState<'email' | 'phone'>('email');
+	const [loginMethod, setLoginMethod] = useState<'email' | 'phone' | 'emailCode'>('email');
 	const [otpSent, setOtpSent] = useState(false);
+	const [emailOtpSent, setEmailOtpSent] = useState(false);
 	const [systemSettings, setSystemSettings] = useState<SystemSettings | null>(null);
 	const [pageLoading, setPageLoading] = useState(true);
 
@@ -56,7 +57,7 @@ export default function LoginPage() {
 			
 			if (loginMethod === 'email') {
 				response = await api.post('/auth/login', { email, password });
-			} else {
+			} else if (loginMethod === 'phone') {
 				// Phone OTP login
 				if (!otpSent) {
 					// Send OTP first
@@ -67,6 +68,18 @@ export default function LoginPage() {
 				} else {
 					// Verify OTP and login
 					response = await api.post('/auth/login', { phone, otpCode });
+				}
+			} else if (loginMethod === 'emailCode') {
+				// Email Code login
+				if (!emailOtpSent) {
+					// Send email OTP first
+					await api.post('/auth/send-email-login-otp', { email });
+					setEmailOtpSent(true);
+					setLoading(false);
+					return;
+				} else {
+					// Verify email OTP and login
+					response = await api.post('/auth/login', { email, otpCode });
 				}
 			}
 			
@@ -87,7 +100,7 @@ export default function LoginPage() {
 				} else {
 					window.location.href = '/student';
 				}
-			} else if (!otpSent) {
+			} else if (!otpSent && !emailOtpSent) {
 				setError('Invalid response from server');
 			}
 		} catch (err: any) {
@@ -139,10 +152,11 @@ export default function LoginPage() {
 		setError('Google authentication failed: ' + error.message);
 	};
 
-	const switchLoginMethod = (method: 'email' | 'phone') => {
+	const switchLoginMethod = (method: 'email' | 'phone' | 'emailCode') => {
 		setLoginMethod(method);
 		setError(null);
 		setOtpSent(false);
+		setEmailOtpSent(false);
 		setOtpCode('');
 		setPhone('');
 		setEmail('');
@@ -192,7 +206,7 @@ export default function LoginPage() {
 						<button
 							type="button"
 							onClick={() => switchLoginMethod('email')}
-							className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
 								loginMethod === 'email'
 									? 'bg-white text-orange-600 shadow-sm'
 									: 'text-gray-600 hover:text-gray-900'
@@ -203,7 +217,7 @@ export default function LoginPage() {
 						<button
 							type="button"
 							onClick={() => switchLoginMethod('phone')}
-							className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
 								loginMethod === 'phone'
 									? 'bg-white text-orange-600 shadow-sm'
 									: 'text-gray-600 hover:text-gray-900'
@@ -211,10 +225,21 @@ export default function LoginPage() {
 						>
 							Phone OTP
 						</button>
+						<button
+							type="button"
+							onClick={() => switchLoginMethod('emailCode')}
+							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+								loginMethod === 'emailCode'
+									? 'bg-white text-orange-600 shadow-sm'
+									: 'text-gray-600 hover:text-gray-900'
+							}`}
+						>
+							Email Code
+						</button>
 					</div>
 
 					<form onSubmit={onSubmit} className="space-y-6">
-						{loginMethod === 'email' ? (
+						{loginMethod === 'email' && (
 							<>
 								{/* Email */}
 								<div>
@@ -270,7 +295,9 @@ export default function LoginPage() {
 									</div>
 								</div>
 							</>
-						) : (
+						)}
+
+						{loginMethod === 'phone' && (
 							<>
 								{/* Phone Number */}
 								<div>
@@ -326,26 +353,84 @@ export default function LoginPage() {
 							</>
 						)}
 
-						{/* Remember Me & Forgot Password */}
-						<div className="flex items-center justify-between">
-							<div className="flex items-center">
-								<input
-									id="remember-me"
-									name="remember-me"
-									type="checkbox"
-									className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
-								/>
-								<label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 font-medium">
-									Remember me
-								</label>
-							</div>
+						{loginMethod === 'emailCode' && (
+							<>
+								{/* Email for Code */}
+								<div>
+									<label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
+										Email Address
+									</label>
+									<input
+										id="email"
+										name="email"
+										type="email"
+										autoComplete="email"
+										required
+										className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
+										placeholder="Enter your email"
+										value={email}
+										onChange={e => setEmail(e.target.value)}
+										disabled={emailOtpSent}
+									/>
+								</div>
 
-							<div className="text-sm">
-								<a href="#" className="font-semibold text-orange-600 hover:text-orange-500 transition-colors">
-									Forgot your password?
-								</a>
+								{/* Email OTP Code */}
+								{emailOtpSent && (
+									<div>
+										<label htmlFor="otpCode" className="block text-sm font-semibold text-gray-900 mb-2">
+											Verification Code
+										</label>
+										<input
+											id="otpCode"
+											name="otpCode"
+											type="text"
+											required
+											className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
+											placeholder="Enter 6-digit code"
+											value={otpCode}
+											onChange={e => setOtpCode(e.target.value)}
+											maxLength={6}
+										/>
+										<p className="mt-2 text-sm text-gray-600">
+											Code sent to {email}. Didn't receive?{' '}
+											<button
+												type="button"
+												onClick={() => {
+													setEmailOtpSent(false);
+													setOtpCode('');
+												}}
+												className="text-orange-600 hover:text-orange-500 font-medium"
+											>
+												Resend
+											</button>
+										</p>
+									</div>
+								)}
+							</>
+						)}
+
+						{/* Remember Me & Forgot Password - Only for email/password login */}
+						{loginMethod === 'email' && (
+							<div className="flex items-center justify-between">
+								<div className="flex items-center">
+									<input
+										id="remember-me"
+										name="remember-me"
+										type="checkbox"
+										className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+									/>
+									<label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 font-medium">
+										Remember me
+									</label>
+								</div>
+
+								<div className="text-sm">
+									<a href="#" className="font-semibold text-orange-600 hover:text-orange-500 transition-colors">
+										Forgot your password?
+									</a>
+								</div>
 							</div>
-						</div>
+						)}
 
 						{/* Error Message */}
 						{error && (
@@ -366,10 +451,12 @@ export default function LoginPage() {
 										<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
 										<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
 									</svg>
-									{loginMethod === 'phone' && !otpSent ? 'Sending OTP...' : 'Signing in...'}
+									{loginMethod === 'phone' && !otpSent ? 'Sending OTP...' : 
+									 loginMethod === 'emailCode' && !emailOtpSent ? 'Sending Code...' : 'Signing in...'}
 								</>
 							) : (
-								loginMethod === 'phone' && !otpSent ? 'Send OTP' : 'Sign in'
+								loginMethod === 'phone' && !otpSent ? 'Send OTP' : 
+								loginMethod === 'emailCode' && !emailOtpSent ? 'Send Code' : 'Sign in'
 							)}
 						</button>
 			</form>
