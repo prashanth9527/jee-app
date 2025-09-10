@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsOptional, IsArray, IsEnum } from 'class-validator';
-import { UserRole } from '@prisma/client';
+import { UserRole } from '../../types/prisma.types';
 
 export class CreateFormulaDto {
   @IsString()

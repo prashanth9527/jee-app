@@ -37,7 +37,7 @@ export class StudentController {
 		});
 
 		const averageScore = submissions.length > 0 
-			? submissions.reduce((sum, sub) => sum + (sub.scorePercent || 0), 0) / submissions.length 
+			? submissions.reduce((sum: number, sub: any) => sum + (sub.scorePercent || 0), 0) / submissions.length 
 			: 0;
 
 		// Get total questions answered and correct answers
@@ -52,7 +52,7 @@ export class StudentController {
 		});
 
 		const totalQuestionsAnswered = answers.length;
-		const correctAnswers = answers.filter(a => a.isCorrect).length;
+		const correctAnswers = answers.filter((a: any) => a.isCorrect).length;
 
 		// Get subject performance
 		const subjectStats = await this.prisma.$queryRawUnsafe(`
@@ -151,7 +151,7 @@ export class StudentController {
 
 		// Get subject names for each paper
 		const papersWithSubjects = await Promise.all(
-			papers.map(async (paper) => {
+			papers.map(async (paper: any) => {
 				const subjects = paper.subjectIds?.length 
 					? await this.prisma.subject.findMany({
 						where: { id: { in: paper.subjectIds } },
@@ -243,7 +243,7 @@ export class StudentController {
 		]);
 
 		return {
-			submissions: submissions.map(sub => ({
+			submissions: submissions.map((sub: any) => ({
 				id: sub.id,
 				title: sub.examPaper.title,
 				startedAt: sub.startedAt,
@@ -376,7 +376,7 @@ export class StudentController {
 				correctAnswers: d.correctAnswers,
 				score: parseFloat(d.score) || 0
 			})),
-			recentTrend: recentTrend.map(r => ({
+			recentTrend: recentTrend.map((r: any) => ({
 				score: r.scorePercent || 0,
 				date: r.submittedAt,
 				examTitle: r.examPaper.title
@@ -559,7 +559,7 @@ export class StudentController {
 
 		return {
 			totalQuestions,
-			difficultyBreakdown: difficultyBreakdown.map(d => ({
+			difficultyBreakdown: difficultyBreakdown.map((d: any) => ({
 				difficulty: d.difficulty,
 				count: d._count.difficulty
 			}))

@@ -157,7 +157,7 @@ export class AdminExamPapersController {
 				take: body.questionCount,
 				orderBy: { createdAt: 'desc' }
 			});
-			questionIds = questions.map(q => q.id);
+			questionIds = questions.map((q: any) => q.id);
 		}
 
 		return this.prisma.examPaper.create({ 
@@ -228,7 +228,7 @@ export class AdminExamPapersController {
 				take: body.questionCount,
 				orderBy: { createdAt: 'desc' }
 			});
-			questionIds = questions.map(q => q.id);
+			questionIds = questions.map((q: any) => q.id);
 		}
 
 		return this.prisma.examPaper.update({ 
@@ -298,10 +298,10 @@ export class AdminExamPapersController {
 			}
 		});
 
-		const papersWithSubmissions = examPapersWithSubmissions.filter(paper => paper._count.submissions > 0);
+		const papersWithSubmissions = examPapersWithSubmissions.filter((paper: any) => paper._count.submissions > 0);
 		
 		if (papersWithSubmissions.length > 0) {
-			const paperTitles = papersWithSubmissions.map(paper => `"${paper.title}"`).join(', ');
+			const paperTitles = papersWithSubmissions.map((paper: any) => `"${paper.title}"`).join(', ');
 			throw new BadRequestException(`Cannot delete the following exam papers as they have submissions: ${paperTitles}. Please delete all submissions first.`);
 		}
 
@@ -349,7 +349,7 @@ export class AdminExamPapersController {
 			}
 		});
 
-		const completedSubmissions = submissions.filter(s => s.submittedAt);
+		const completedSubmissions = submissions.filter((s: any) => s.submittedAt);
 		const totalSubmissions = submissions.length;
 		const completedCount = completedSubmissions.length;
 
@@ -358,8 +358,8 @@ export class AdminExamPapersController {
 		let lowestScore = 100;
 
 		if (completedCount > 0) {
-			const scores = completedSubmissions.map(s => s.scorePercent || 0);
-			averageScore = scores.reduce((sum, score) => sum + score, 0) / completedCount;
+		const scores = completedSubmissions.map((s: any) => s.scorePercent || 0);
+		averageScore = scores.reduce((sum: number, score: number) => sum + score, 0) / completedCount;
 			highestScore = Math.max(...scores);
 			lowestScore = Math.min(...scores);
 		}

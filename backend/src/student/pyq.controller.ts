@@ -26,7 +26,7 @@ export class PYQController {
       }
     });
 
-    return years.map(y => y.yearAppeared).filter(Boolean);
+	return years.map((y: any) => y.yearAppeared).filter(Boolean);
   }
 
   @Get('subjects')
@@ -242,11 +242,11 @@ export class PYQController {
         year: item.pyqYear,
         count: item._count?.id || 0
       })),
-      bySubject: bySubject.map(subject => ({
+	bySubject: bySubject.map((subject: any) => ({
         name: subject.name,
         count: subject._count.questions
       })),
-      byDifficulty: byDifficulty.map(item => ({
+	byDifficulty: byDifficulty.map((item: any) => ({
         difficulty: item.difficulty,
         count: item._count.id
       }))

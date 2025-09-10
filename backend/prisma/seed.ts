@@ -727,13 +727,13 @@ async function main() {
   });
 
   // Group questions by subject/topic
-  const physicsQuestions = allQuestions.filter(q => 
+  const physicsQuestions = allQuestions.filter((q: any) => 
     q.subtopic?.topic?.subjectId === physics.id || q.topic?.subjectId === physics.id
   );
-  const chemistryQuestions = allQuestions.filter(q => 
+  const chemistryQuestions = allQuestions.filter((q: any) => 
     q.subtopic?.topic?.subjectId === chemistry.id || q.topic?.subjectId === chemistry.id
   );
-  const mathQuestions = allQuestions.filter(q => 
+  const mathQuestions = allQuestions.filter((q: any) => 
     q.subtopic?.topic?.subjectId === mathematics.id || q.topic?.subjectId === mathematics.id
   );
 
@@ -746,7 +746,7 @@ async function main() {
         timeLimitMin: 60, // 60 minutes
         subjectIds: [physics.id],
         topicIds: [mechanics.id],
-        questionIds: physicsQuestions.slice(0, 5).map(q => q.id), // Assign first 5 physics questions
+        questionIds: physicsQuestions.slice(0, 5).map((q: any) => q.id), // Assign first 5 physics questions
       },
     }),
     prisma.examPaper.create({
@@ -756,7 +756,7 @@ async function main() {
         timeLimitMin: 45,
         subjectIds: [chemistry.id],
         topicIds: [physicalChemistry.id],
-        questionIds: chemistryQuestions.slice(0, 4).map(q => q.id), // Assign first 4 chemistry questions
+        questionIds: chemistryQuestions.slice(0, 4).map((q: any) => q.id), // Assign first 4 chemistry questions
       },
     }),
     prisma.examPaper.create({
@@ -766,7 +766,7 @@ async function main() {
         timeLimitMin: 90,
         subjectIds: [mathematics.id],
         topicIds: [algebra.id],
-        questionIds: mathQuestions.slice(0, 6).map(q => q.id), // Assign first 6 math questions
+        questionIds: mathQuestions.slice(0, 6).map((q: any) => q.id), // Assign first 6 math questions
       },
     }),
   ]);

@@ -363,7 +363,7 @@ export class AdminSubscriptionsController {
 		});
 
 		// Calculate monthly recurring revenue (MRR)
-		const mrr = subscriptions.reduce((total, sub) => {
+		const mrr = subscriptions.reduce((total: number, sub: any) => {
 			if (sub.plan.interval === 'MONTH') {
 				return total + sub.plan.priceCents;
 			} else {

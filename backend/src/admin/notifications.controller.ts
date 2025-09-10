@@ -5,7 +5,7 @@ import { UpdateNotificationDto } from '../notifications/dto/update-notification.
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-import { UserRole, NotificationPriority } from '@prisma/client';
+import { UserRole, NotificationPriority } from '../types/prisma.types';
 
 @Controller('admin/notifications')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -32,9 +32,9 @@ export class AdminNotificationsController {
   @Get('stats')
   async getStats() {
     const all = await this.notificationsService.findAll();
-    const active = all.filter(n => n.isActive);
-    const expired = all.filter(n => new Date(n.validUntil) < new Date());
-    const upcoming = all.filter(n => new Date(n.validFrom) > new Date());
+	const active = all.filter((n: any) => n.isActive);
+	const expired = all.filter((n: any) => new Date(n.validUntil) < new Date());
+	const upcoming = all.filter((n: any) => new Date(n.validFrom) > new Date());
     
     return {
       total: all.length,
