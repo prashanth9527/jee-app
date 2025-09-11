@@ -8,6 +8,7 @@ interface SEOData {
   siteTitle: string;
   siteDescription: string;
   siteKeywords: string;
+  siteFavicon?: string;
   title?: string;
   description?: string;
   keywords?: string;
@@ -44,7 +45,7 @@ export default function DynamicHead({
       } catch {
         // Fallback SEO data
         setSeoData({
-          siteTitle: 'JEE Master - Complete JEE Preparation Platform',
+          siteTitle: 'JEE App - Complete JEE Preparation Platform',
           siteDescription: 'Master JEE Main & Advanced with AI-powered practice tests, 50,000+ questions, detailed analytics, and comprehensive study materials.',
           siteKeywords: 'JEE preparation, JEE Main, JEE Advanced, practice tests, AI learning, physics, chemistry, mathematics, online coaching, mock tests',
           twitterHandle: '@jeemaster'
@@ -127,11 +128,11 @@ export default function DynamicHead({
       {/* Canonical URL */}
       <link rel="canonical" href={finalUrl} />
 
-      {/* Favicons */}
-      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      {/* Favicons - Dynamic from SystemSettings */}
+      <link rel="icon" type="image/x-icon" href={seoData.siteFavicon || '/favicon.ico'} />
+      <link rel="icon" type="image/png" sizes="32x32" href={seoData.siteFavicon || '/favicon-32x32.png'} />
+      <link rel="icon" type="image/png" sizes="16x16" href={seoData.siteFavicon || '/favicon-16x16.png'} />
+      <link rel="apple-touch-icon" sizes="180x180" href={seoData.siteFavicon || '/apple-touch-icon.png'} />
 
       {/* Structured Data */}
       <script
