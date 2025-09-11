@@ -106,7 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      const { data } = await api.get('/auth/me');
+      const { data } = await api.get('/user/me');
       console.log('Auth check successful:', data); // Debug log
       setUser(data);
       

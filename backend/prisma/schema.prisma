@@ -381,9 +381,11 @@ model Otp {
   userId    String
   code      String
   type      OtpType
-  target    String // email or phone value used
+  target    String? // email or phone value used (optional for change operations)
   expiresAt DateTime
   consumed  Boolean  @default(false)
+  used      Boolean  @default(false) // Track if OTP has been used
+  metadata  String? // JSON string for additional data (like newEmail, newPhone)
   createdAt DateTime @default(now())
 
   @@index([userId, type])
@@ -392,6 +394,8 @@ model Otp {
 enum OtpType {
   EMAIL
   PHONE
+  EMAIL_CHANGE
+  PHONE_CHANGE
 }
 
 // -------------------------------------------
