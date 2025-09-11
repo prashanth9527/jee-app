@@ -254,16 +254,16 @@ export default function HomePage() {
                   </button>
                   <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                     <div className="py-1">
-                      <a href="#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">AI Learning</a>
-                      <a href="#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Analytics</a>
-                      <a href="#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">PYQ Bank</a>
-                      <a href="#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Leaderboard</a>
+                      <Link href="/#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">AI Learning</Link>
+                      <Link href="/#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Analytics</Link>
+                      <Link href="/#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">PYQ Bank</Link>
+                      <Link href="/#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Leaderboard</Link>
                     </div>
                   </div>
                 </div>
-                <a href="#subjects" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Subjects</a>
-                <a href="#testimonials" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Success Stories</a>
-                <a href="#pricing" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Pricing</a>
+                <Link href="/#subjects" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Subjects</Link>
+                <Link href="/#testimonials" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Success Stories</Link>
+                <Link href="/#pricing" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Pricing</Link>
                 <div className="relative group">
                   <button className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
                     More
@@ -320,15 +320,15 @@ export default function HomePage() {
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
               <div className="space-y-1">
                 <div className="px-3 py-2 text-sm font-medium text-gray-500 uppercase tracking-wider">Features</div>
-                <a href="#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">AI Learning</a>
-                <a href="#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Analytics</a>
-                <a href="#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">PYQ Bank</a>
-                <a href="#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Leaderboard</a>
+                <Link href="/#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">AI Learning</Link>
+                <Link href="/#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Analytics</Link>
+                <Link href="/#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">PYQ Bank</Link>
+                <Link href="/#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Leaderboard</Link>
               </div>
               
-              <a href="#subjects" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Subjects</a>
-              <a href="#testimonials" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Success Stories</a>
-              <a href="#pricing" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Pricing</a>
+              <Link href="/#subjects" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Subjects</Link>
+              <Link href="/#testimonials" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Success Stories</Link>
+              <Link href="/#pricing" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Pricing</Link>
               
               <div className="border-t border-gray-200 pt-2">
                 <div className="px-3 py-2 text-sm font-medium text-gray-500 uppercase tracking-wider">More</div>
@@ -754,10 +754,10 @@ export default function HomePage() {
             <div>
               <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platform</h3>
               <ul className="space-y-3">
-                <li><a href="#features" className="text-gray-300 hover:text-white transition-colors">Practice Tests</a></li>
-                <li><a href="#features" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</a></li>
-                <li><a href="#features" className="text-gray-300 hover:text-white transition-colors">Analytics</a></li>
-                <li><a href="#features" className="text-gray-300 hover:text-white transition-colors">Leaderboard</a></li>
+                <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
+                <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
+                <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
+                <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
               </ul>
             </div>
             <div>

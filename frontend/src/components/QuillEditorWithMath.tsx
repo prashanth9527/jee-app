@@ -92,7 +92,7 @@ export default function QuillEditorWithMath({ value, onChange, placeholder = "St
   }
 
   // Dynamically import ReactQuill only after math support is ready
-  const ReactQuill = dynamic(() => import('react-quill'), {
+  const ReactQuill = dynamic(() => import('react-quill') as any, {
     ssr: false,
     loading: () => (
       <div className="flex items-center justify-center h-64 border border-gray-300 rounded-lg bg-white">
@@ -102,7 +102,7 @@ export default function QuillEditorWithMath({ value, onChange, placeholder = "St
         </div>
       </div>
     ),
-  })
+  }) as any
 
   return (
     <div className="quill-editor-container">

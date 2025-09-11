@@ -24,7 +24,10 @@ interface DynamicHeadProps {
   keywords?: string;
   image?: string;
   url?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
   type?: 'website' | 'article' | 'profile';
+  structuredData?: any;
 }
 
 export default function DynamicHead({ 
@@ -33,7 +36,10 @@ export default function DynamicHead({
   keywords, 
   image,
   url,
-  type = 'website'
+  canonicalUrl,
+  ogImage,
+  type = 'website',
+  structuredData
 }: DynamicHeadProps) {
   const [seoData, setSeoData] = useState<SEOData | null>(null);
 
@@ -61,10 +67,10 @@ export default function DynamicHead({
   const finalTitle = title ? `${title} | ${seoData.siteTitle}` : seoData.siteTitle;
   const finalDescription = description || seoData.siteDescription;
   const finalKeywords = keywords || seoData.siteKeywords;
-  const finalImage = image || '/og-image.jpg';
-  const finalUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
+  const finalImage = ogImage || image || '/og-image.jpg';
+  const finalUrl = canonicalUrl || url || (typeof window !== 'undefined' ? window.location.href : '');
 
-  const structuredData = {
+  const finalStructuredData = structuredData || {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     "name": seoData.siteTitle,
@@ -138,7 +144,7 @@ export default function DynamicHead({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData)
+          __html: JSON.stringify(finalStructuredData)
         }}
       />
 

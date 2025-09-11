@@ -13,6 +13,14 @@ interface SystemSettings {
   siteLogo?: string;
   siteFavicon?: string;
   ogImage?: string;
+  companyName?: string;
+  socialMediaLinks?: {
+    facebook?: string;
+    twitter?: string;
+    youtube?: string;
+    instagram?: string;
+    linkedin?: string;
+  };
 }
 
 export default function TermsPage() {
@@ -407,10 +415,10 @@ export default function TermsPage() {
               <div>
                 <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platform</h3>
                 <ul className="space-y-3">
-                  <li><a href="/#features" className="text-gray-300 hover:text-white transition-colors">Practice Tests</a></li>
-                  <li><a href="/#features" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</a></li>
-                  <li><a href="/#features" className="text-gray-300 hover:text-white transition-colors">Analytics</a></li>
-                  <li><a href="/#features" className="text-gray-300 hover:text-white transition-colors">Leaderboard</a></li>
+                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
+                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
+                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
+                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
                 </ul>
               </div>
               <div>
