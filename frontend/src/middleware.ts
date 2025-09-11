@@ -12,6 +12,8 @@ export function middleware(request: NextRequest) {
     '/auth/google/callback', 
     '/profile/complete', 
     '/verify-email',
+    '/forgot-password',
+    '/reset-password',
     '/about',
     '/contact', 
     '/help',
