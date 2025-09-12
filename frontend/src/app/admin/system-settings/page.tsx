@@ -15,6 +15,9 @@ interface SystemSettings {
   faviconUrl?: string;
   ogImageUrl?: string;
   contactEmail?: string;
+  supportEmail?: string;
+  privacyEmail?: string;
+  legalEmail?: string;
   contactPhone?: string;
   address?: string;
   facebookUrl?: string;
@@ -43,6 +46,9 @@ export default function SystemSettingsPage() {
     siteDescription: '',
     siteKeywords: '',
     contactEmail: '',
+    supportEmail: '',
+    privacyEmail: '',
+    legalEmail: '',
     contactPhone: '',
     address: '',
     facebookUrl: '',
@@ -71,6 +77,9 @@ export default function SystemSettingsPage() {
         siteDescription: response.data.siteDescription || '',
         siteKeywords: response.data.siteKeywords || '',
         contactEmail: response.data.contactEmail || '',
+        supportEmail: response.data.supportEmail || '',
+        privacyEmail: response.data.privacyEmail || '',
+        legalEmail: response.data.legalEmail || '',
         contactPhone: response.data.contactPhone || '',
         address: response.data.address || '',
         facebookUrl: response.data.facebookUrl || '',
@@ -249,6 +258,45 @@ export default function SystemSettingsPage() {
                       onChange={(e) => setFormData(prev => ({ ...prev, contactEmail: e.target.value }))}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
                       placeholder="contact@example.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 mb-2">
+                      Support Email
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.supportEmail}
+                      onChange={(e) => setFormData(prev => ({ ...prev, supportEmail: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
+                      placeholder="support@example.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 mb-2">
+                      Privacy Email
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.privacyEmail}
+                      onChange={(e) => setFormData(prev => ({ ...prev, privacyEmail: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
+                      placeholder="privacy@example.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 mb-2">
+                      Legal Email
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.legalEmail}
+                      onChange={(e) => setFormData(prev => ({ ...prev, legalEmail: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
+                      placeholder="legal@example.com"
                     />
                   </div>
 

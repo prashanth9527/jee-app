@@ -5,7 +5,21 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Public routes that don't require authentication
-  const publicRoutes = ['/', '/login', '/register', '/auth/google/callback', '/profile/complete', '/verify-email'];
+  const publicRoutes = [
+    '/', 
+    '/login', 
+    '/register', 
+    '/auth/google/callback', 
+    '/profile/complete', 
+    '/verify-email',
+    '/forgot-password',
+    '/reset-password',
+    '/about',
+    '/contact', 
+    '/help',
+    '/privacy',
+    '/terms'
+  ];
   if (publicRoutes.includes(pathname)) {
     return NextResponse.next();
   }

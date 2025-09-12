@@ -42,16 +42,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [authCheckInProgress, setAuthCheckInProgress] = useState(false);
+  const [subscriptionChecked, setSubscriptionChecked] = useState(false);
 
   const login = (token: string, userData: User) => {
     console.log('AuthContext login called with:', { token: token.substring(0, 20) + '...', userData }); // Debug log
+    console.log('Storing token in localStorage...');
     localStorage.setItem('token', token);
+    console.log('Token stored, setting user data...');
     setUser(userData);
+    console.log('Login function completed successfully');
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
+    setSubscriptionChecked(false); // Reset subscription check flag
     window.location.href = '/login';
   };
 
@@ -59,6 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     console.log('Handling token expiration...');
     localStorage.removeItem('token');
     setUser(null);
+    setSubscriptionChecked(false); // Reset subscription check flag
     
     // Show user-friendly message
     if (typeof window !== 'undefined') {
@@ -86,13 +92,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const checkAuth = async () => {
     // Prevent multiple simultaneous auth checks
     if (authCheckInProgress) {
+      console.log('Auth check already in progress, skipping...');
       return;
     }
     
     setAuthCheckInProgress(true);
     
     const token = localStorage.getItem('token');
+    console.log('Auth check - Token exists:', !!token);
+    console.log('Auth check - Token (first 20 chars):', token ? token.substring(0, 20) + '...' : 'No token');
+    
     if (!token) {
+      console.log('Auth check - No token found, redirecting to login');
       setLoading(false);
       setAuthCheckInProgress(false);
       // Redirect to login if on protected route and no token
@@ -106,9 +117,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      const { data } = await api.get('/auth/me');
+      console.log('Auth check - Making API call to /user/me');
+      const { data } = await api.get('/user/me');
       console.log('Auth check successful:', data); // Debug log
       setUser(data);
+      setLoading(false); // Set loading to false on successful auth
       
       // Check if user needs profile completion
       if (data.needsProfileCompletion && typeof window !== 'undefined') {
@@ -121,8 +134,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // Check subscription status for students (only if profile is complete)
-      if (data.role === 'STUDENT' && !data.needsProfileCompletion && typeof window !== 'undefined') {
+      // Check subscription status for students (only if profile is complete and not already checked)
+      if (data.role === 'STUDENT' && !data.needsProfileCompletion && !subscriptionChecked && typeof window !== 'undefined') {
+        setSubscriptionChecked(true); // Mark as checked to prevent infinite loop
         try {
           const subscriptionResponse = await api.get('/student/subscription-status');
           const subscriptionData = subscriptionResponse.data;
@@ -147,10 +161,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (error: any) {
       console.error('Auth check failed:', error);
+      console.error('Auth check error details:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        message: error.message
+      });
       
       // Check if it's a 401 error (token expired)
       if (error.response?.status === 401) {
-        console.log('Token expired, handling expiration...'); // Debug log
+        console.log('Token expired (401), handling expiration...'); // Debug log
         handleTokenExpiration();
       } else {
         // For other errors, just clear the token and redirect
@@ -173,7 +193,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, []); // Empty dependency array ensures this only runs once on mount
 
 
 
