@@ -168,4 +168,25 @@ export class AuthController {
 			needsProfileCompletion
 		};
 	}
+
+	// Forgot Password Endpoints
+	@Post('forgot-password/email')
+	async forgotPasswordEmail(@Body('email') email: string) {
+		return this.auth.forgotPasswordEmail(email);
+	}
+
+	@Post('forgot-password/phone')
+	async forgotPasswordPhone(@Body('phone') phone: string) {
+		return this.auth.forgotPasswordPhone(phone);
+	}
+
+	@Post('forgot-password/verify-otp')
+	async verifyPasswordResetOtp(@Body() body: { userId: string; code: string; type: 'EMAIL' | 'PHONE' }) {
+		return this.auth.verifyPasswordResetOtp(body.userId, body.code, body.type);
+	}
+
+	@Post('forgot-password/reset')
+	async resetPassword(@Body() body: { resetToken: string; newPassword: string }) {
+		return this.auth.resetPassword(body.resetToken, body.newPassword);
+	}
 } 

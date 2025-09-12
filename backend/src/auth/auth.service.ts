@@ -675,4 +675,110 @@ export class AuthService {
 	async getUserSessions(userId: string) {
 		return this.sessionService.getUserActiveSessions(userId);
 	}
+
+	/**
+	 * Forgot Password - Send OTP via Email
+	 */
+	async forgotPasswordEmail(email: string) {
+		const user = await this.prisma.user.findUnique({ where: { email } });
+		if (!user) {
+			// Don't reveal if email exists or not for security
+			return { message: 'If the email exists, a reset code has been sent.' };
+		}
+
+		// Send email OTP for password reset
+		await this.otp.sendEmailOtp(user.id, user.email);
+		
+		return { 
+			message: 'If the email exists, a reset code has been sent.',
+			userId: user.id // Return userId for frontend to use in next step
+		};
+	}
+
+	/**
+	 * Forgot Password - Send OTP via Phone
+	 */
+	async forgotPasswordPhone(phone: string) {
+		const user = await this.prisma.user.findUnique({ where: { phone } });
+		if (!user) {
+			// Don't reveal if phone exists or not for security
+			return { message: 'If the phone number exists, a reset code has been sent.' };
+		}
+
+		// Send phone OTP for password reset
+		await this.otp.sendPhoneOtp(user.id, user.phone!);
+		
+		return { 
+			message: 'If the phone number exists, a reset code has been sent.',
+			userId: user.id // Return userId for frontend to use in next step
+		};
+	}
+
+	/**
+	 * Verify OTP for Password Reset
+	 */
+	async verifyPasswordResetOtp(userId: string, code: string, type: 'EMAIL' | 'PHONE') {
+		const user = await this.prisma.user.findUnique({ where: { id: userId } });
+		if (!user) {
+			throw new BadRequestException('Invalid request');
+		}
+
+		// Verify the OTP
+		await this.otp.verifyOtp(userId, code, type);
+		
+		// Generate a temporary token for password reset (valid for 15 minutes)
+		const resetToken = this.jwt.sign(
+			{ 
+				sub: userId, 
+				email: user.email, 
+				purpose: 'password_reset',
+				type: type
+			},
+			{ expiresIn: '15m' }
+		);
+
+		return { 
+			message: 'OTP verified successfully',
+			resetToken 
+		};
+	}
+
+	/**
+	 * Reset Password with Token
+	 */
+	async resetPassword(resetToken: string, newPassword: string) {
+		try {
+			// Verify the reset token
+			const payload = this.jwt.verify(resetToken);
+			
+			if (payload.purpose !== 'password_reset') {
+				throw new BadRequestException('Invalid reset token');
+			}
+
+			const userId = payload.sub;
+			const user = await this.prisma.user.findUnique({ where: { id: userId } });
+			if (!user) {
+				throw new BadRequestException('User not found');
+			}
+
+			// Hash the new password
+			const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+			// Update the password
+			await this.prisma.user.update({
+				where: { id: userId },
+				data: { hashedPassword }
+			});
+
+			// Invalidate all existing sessions for security
+			await this.sessionService.invalidateAllUserSessions(userId);
+
+			return { message: 'Password reset successfully' };
+		} catch (error) {
+			if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+				throw new BadRequestException('Invalid or expired reset token');
+			}
+			throw error;
+		}
+	}
 } 
