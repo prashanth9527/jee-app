@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Login Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #f97316;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #ea580c;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .back-btn {
+            background-color: #6b7280;
+        }
+        .back-btn:hover {
+            background-color: #4b5563;
+        }
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        .error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎓 JEE Master - Email Login</h2>
+        
+        <!-- Step 1: Enter Email -->
+        <div id="emailStep" class="step active">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your registered email" required>
+            </div>
+            <button id="sendOtpBtn" onclick="sendEmailOtp()">Send Verification Code</button>
+            <div id="emailMessage"></div>
+        </div>
+
+        <!-- Step 2: Enter OTP -->
+        <div id="otpStep" class="step">
+            <div class="form-group">
+                <label for="otpCode">Verification Code</label>
+                <input type="text" id="otpCode" placeholder="Enter 6-digit code" maxlength="6" required>
+            </div>
+            <button id="loginBtn" onclick="loginWithOtp()">Login</button>
+            <button class="back-btn" onclick="goBackToEmail()">Back to Email</button>
+            <div id="otpMessage"></div>
+        </div>
+
+        <!-- Step 3: Success -->
+        <div id="successStep" class="step">
+            <div class="message success">
+                <h3>✅ Login Successful!</h3>
+                <p>Welcome back to JEE Master!</p>
+                <div id="userInfo"></div>
+            </div>
+            <button onclick="resetForm()">Login Again</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3001';
+        let currentEmail = '';
+
+        function showMessage(elementId, message, isError = false) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `message ${isError ? 'error' : 'success'}`;
+            element.style.display = 'block';
+        }
+
+        function hideMessage(elementId) {
+            document.getElementById(elementId).style.display = 'none';
+        }
+
+        function showStep(stepId) {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById(stepId).classList.add('active');
+        }
+
+        async function sendEmailOtp() {
+            const email = document.getElementById('email').value.trim();
+            const sendBtn = document.getElementById('sendOtpBtn');
+            
+            if (!email) {
+                showMessage('emailMessage', 'Please enter your email address', true);
+                return;
+            }
+
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Sending...';
+            hideMessage('emailMessage');
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/send-email-login-otp`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    currentEmail = email;
+                    showMessage('emailMessage', data.message);
+                    setTimeout(() => {
+                        showStep('otpStep');
+                    }, 1000);
+                } else {
+                    showMessage('emailMessage', data.message || 'Failed to send OTP', true);
+                }
+            } catch (error) {
+                showMessage('emailMessage', 'Network error. Please try again.', true);
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send Verification Code';
+            }
+        }
+
+        async function loginWithOtp() {
+            const otpCode = document.getElementById('otpCode').value.trim();
+            const loginBtn = document.getElementById('loginBtn');
+            
+            if (!otpCode || otpCode.length !== 6) {
+                showMessage('otpMessage', 'Please enter a valid 6-digit code', true);
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Logging in...';
+            hideMessage('otpMessage');
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        email: currentEmail, 
+                        otpCode: otpCode 
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store token for future requests
+                    localStorage.setItem('access_token', data.access_token);
+                    
+                    // Show success message with user info
+                    document.getElementById('userInfo').innerHTML = `
+                        <p><strong>Name:</strong> ${data.user.fullName}</p>
+                        <p><strong>Email:</strong> ${data.user.email}</p>
+                        <p><strong>Role:</strong> ${data.user.role}</p>
+                    `;
+                    
+                    showStep('successStep');
+                } else {
+                    showMessage('otpMessage', data.message || 'Login failed', true);
+                }
+            } catch (error) {
+                showMessage('otpMessage', 'Network error. Please try again.', true);
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Login';
+            }
+        }
+
+        function goBackToEmail() {
+            showStep('emailStep');
+            document.getElementById('otpCode').value = '';
+            hideMessage('otpMessage');
+        }
+
+        function resetForm() {
+            showStep('emailStep');
+            document.getElementById('email').value = '';
+            document.getElementById('otpCode').value = '';
+            currentEmail = '';
+            hideMessage('emailMessage');
+            hideMessage('otpMessage');
+        }
+
+        // Allow Enter key to submit forms
+        document.getElementById('email').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendEmailOtp();
+            }
+        });
+
+        document.getElementById('otpCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginWithOtp();
+            }
+        });
+    </script>
+</body>
+</html>

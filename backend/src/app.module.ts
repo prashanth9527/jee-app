@@ -17,6 +17,7 @@ import { AwsModule } from './aws/aws.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { FormulasModule } from './formulas/formulas.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { ContactModule } from './contact/contact.module';
 
 
 
@@ -38,6 +39,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     BookmarksModule,
     FormulasModule,
     NotificationsModule,
+    ContactModule,
     
   ],
   controllers: [AppController],

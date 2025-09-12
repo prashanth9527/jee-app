@@ -104,7 +104,7 @@ export class AdminQuestionReportsController {
       pending,
       approved,
       rejected,
-      typeStats: typeStats.map(stat => ({
+	typeStats: typeStats.map((stat: any) => ({
         type: stat.reportType,
         count: stat._count.reportType
       }))
@@ -179,7 +179,7 @@ export class AdminQuestionReportsController {
     }
 
     // Start a transaction to handle the review and potential explanation addition
-    const result = await this.prisma.$transaction(async (prisma) => {
+	const result = await this.prisma.$transaction(async (prisma: any) => {
       // Update the report
       const updatedReport = await prisma.questionReport.update({
         where: { id },

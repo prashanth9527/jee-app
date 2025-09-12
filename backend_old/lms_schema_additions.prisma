@@ -1,0 +1,102 @@
+﻿// -------------------------------------------
+// Learning Management System (LMS)
+// -------------------------------------------
+
+// LMS Content Types
+enum ContentType {
+  H5P           // H5P interactive content
+  SCORM         // SCORM packages
+  FILE          // PDF, DOC, PPT, etc.
+  URL           // External links
+  IFRAME        // Embedded iframe content
+  YOUTUBE       // YouTube videos
+  TEXT          // Rich text content
+  VIDEO         // Direct video files
+  AUDIO         // Audio files
+  IMAGE         // Image files
+  QUIZ          // Interactive quizzes
+  ASSIGNMENT    // Assignments
+}
+
+// LMS Content Status
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  SCHEDULED
+}
+
+// LMS Access Control
+enum AccessType {
+  FREE           // Free for all users
+  SUBSCRIPTION   // Requires active subscription
+  PREMIUM        // Premium content only
+  TRIAL          // Available during trial
+}
+
+// LMS Content Model
+model LMSContent {
+  id          String        @id @default(cuid())
+  title       String
+  description String?       @db.Text
+  contentType ContentType
+  status      ContentStatus @default(DRAFT)
+  accessType  AccessType    @default(FREE)
+  
+  // Content-specific fields
+  contentData Json?         // Flexible JSON for content-specific data
+  
+  // File/URL content
+  fileUrl     String?       // AWS S3 URL for files
+  fileSize    Int?          // File size in bytes
+  fileType    String?       // MIME type
+  originalFileName String?  // Original filename
+  
+  // URL/Iframe content
+  externalUrl String?       // External URL
+  iframeCode  String?       // Iframe embed code
+  
+  // YouTube content
+  youtubeId   String?       // YouTube video ID
+  youtubeUrl  String?       // Full YouTube URL
+  
+  // H5P/SCORM content
+  h5pContent  Json?         // H5P content data
+  scormData   Json?         // SCORM package data
+  
+  // Organization
+  subject     Subject?      @relation(fields: [subjectId], references: [id])
+  subjectId   String?
+  topic       Topic?        @relation(fields: [topicId], references: [id])
+  topicId     String?
+  subtopic    Subtopic?     @relation(fields: [subtopicId], references: [id])
+  subtopicId  String?
+  
+  // Drip content settings
+  isDripContent Boolean     @default(false)
+  dripDelay     Int?        // Delay in days from course start
+  dripDate      DateTime?   // Specific date to release
+  
+  // Content metadata
+  duration     Int?         // Duration in minutes
+  difficulty   Difficulty?  // Content difficulty level
+  tags         String[]     // Content tags
+  
+  // Ordering and structure
+  order        Int          @default(0)
+  parentId     String?      // For nested content
+  parent       LMSContent?  @relation("ContentHierarchy", fields: [parentId], references: [id])
+  children     LMSContent[] @relation("ContentHierarchy")
+  
+  // Progress tracking
+  progress     LMSProgress[]
+  
+  // Analytics
+  views        Int          @default(0)
+  completions  Int          @default(0)
+  
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  
+  @@map("lms_content")
+}

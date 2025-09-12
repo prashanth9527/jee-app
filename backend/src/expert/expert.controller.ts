@@ -441,7 +441,7 @@ export class ExpertController {
 			pending,
 			approved,
 			rejected,
-			typeStats: typeStats.map(stat => ({
+			typeStats: typeStats.map((stat: any) => ({
 				type: stat.reportType,
 				count: stat._count.reportType
 			}))
@@ -524,7 +524,7 @@ export class ExpertController {
 			throw new ForbiddenException('Report has already been reviewed');
 		}
 
-		const result = await this.prisma.$transaction(async (prisma) => {
+		const result = await this.prisma.$transaction(async (prisma: any) => {
 			const updatedReport = await prisma.questionReport.update({
 				where: { id },
 				data: {

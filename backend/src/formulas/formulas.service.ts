@@ -60,7 +60,7 @@ export class FormulasService {
     ]);
 
     const formulaDtos = await Promise.all(
-      formulas.map(formula => this.mapToResponseDto(formula))
+	formulas.map((formula: any) => this.mapToResponseDto(formula))
     );
 
     return {

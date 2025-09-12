@@ -15,7 +15,7 @@ import { BookmarksService } from './bookmarks.service';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-import { UserRole } from '@prisma/client';
+import { UserRole } from '../types/prisma.types';
 
 @Controller('bookmarks')
 @UseGuards(JwtAuthGuard, RolesGuard)
