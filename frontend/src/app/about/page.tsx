@@ -17,6 +17,10 @@ interface SystemSettings {
   companyAddress?: string;
   companyPhone?: string;
   companyEmail?: string;
+  contactEmail?: string;
+  supportEmail?: string;
+  privacyEmail?: string;
+  legalEmail?: string;
   socialMediaLinks?: {
     facebook?: string;
     twitter?: string;
@@ -66,9 +70,13 @@ export default function AboutPage() {
           siteFavicon: '/favicon.ico',
           ogImage: '/og-image.jpg',
           companyName: 'JEE App Education Pvt. Ltd.',
-          companyAddress: 'Tech Park, Sector 5, Gurgaon, Haryana 122001, India',
-          companyPhone: '+91 98765 43210',
-          companyEmail: 'support@jeemaster.com',
+          companyAddress: '',
+          companyPhone: '',
+          companyEmail: '',
+          contactEmail: '',
+          supportEmail: '',
+          privacyEmail: '',
+          legalEmail: '',
           socialMediaLinks: {
             facebook: 'https://facebook.com/jeemaster',
             twitter: 'https://twitter.com/jeemaster',
@@ -191,19 +199,19 @@ export default function AboutPage() {
           "url": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}`,
           "logo": systemSettings?.siteLogo ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}${systemSettings.siteLogo}` : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/logo.png`,
           "description": systemSettings?.siteDescription || 'Comprehensive JEE preparation platform',
-          "address": {
+          "address": systemSettings?.companyAddress ? {
             "@type": "PostalAddress",
-            "streetAddress": systemSettings?.companyAddress?.split(',')[0] || "Tech Park, Sector 5",
-            "addressLocality": "Gurgaon",
-            "addressRegion": "Haryana",
-            "postalCode": "122001",
-            "addressCountry": "India"
-          },
+            "streetAddress": systemSettings.companyAddress.split(',')[0],
+            "addressLocality": systemSettings.companyAddress.split(',')[1]?.trim(),
+            "addressRegion": systemSettings.companyAddress.split(',')[2]?.trim(),
+            "postalCode": systemSettings.companyAddress.split(',')[3]?.trim(),
+            "addressCountry": systemSettings.companyAddress.split(',')[4]?.trim()
+          } : undefined,
           "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": systemSettings?.companyPhone || "+91 98765 43210",
+            "telephone": systemSettings?.companyPhone,
             "contactType": "Customer Support",
-            "email": systemSettings?.companyEmail || "support@jeemaster.com"
+            "email": systemSettings?.supportEmail || systemSettings?.contactEmail || systemSettings?.companyEmail
           },
           "sameAs": systemSettings?.socialMediaLinks ? Object.values(systemSettings.socialMediaLinks).filter(Boolean) : [],
           "foundingDate": "2020",
@@ -513,10 +521,11 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platform</h3>
                 <ul className="space-y-3">
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
+                  <li><Link href="/student/practice" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
+                  <li><Link href="/student/practice" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
+                  <li><Link href="/student/pyq" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
+                  <li><Link href="/student/performance" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
+                  <li><Link href="/student/leaderboard" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
                 </ul>
               </div>
               <div>

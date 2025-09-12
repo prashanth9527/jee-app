@@ -226,7 +226,7 @@ export default function HomePage() {
         title="Home"
         description={systemSettings?.siteDescription}
       />
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white scroll-smooth">
       {/* Enhanced Navigation */}
         <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -254,10 +254,10 @@ export default function HomePage() {
                   </button>
                   <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                     <div className="py-1">
-                      <Link href="/#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">AI Learning</Link>
-                      <Link href="/#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Analytics</Link>
-                      <Link href="/#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">PYQ Bank</Link>
-                      <Link href="/#features" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Leaderboard</Link>
+                      <Link href="/#ai-learning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">AI Learning</Link>
+                      <Link href="/#analytics" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Analytics</Link>
+                      <Link href="/#pyq-bank" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">PYQ Bank</Link>
+                      <Link href="/#leaderboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Leaderboard</Link>
                     </div>
                   </div>
                 </div>
@@ -320,10 +320,10 @@ export default function HomePage() {
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
               <div className="space-y-1">
                 <div className="px-3 py-2 text-sm font-medium text-gray-500 uppercase tracking-wider">Features</div>
-                <Link href="/#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">AI Learning</Link>
-                <Link href="/#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Analytics</Link>
-                <Link href="/#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">PYQ Bank</Link>
-                <Link href="/#features" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Leaderboard</Link>
+                <Link href="/#ai-learning" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">AI Learning</Link>
+                <Link href="/#analytics" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Analytics</Link>
+                <Link href="/#pyq-bank" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">PYQ Bank</Link>
+                <Link href="/#leaderboard" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Leaderboard</Link>
               </div>
               
               <Link href="/#subjects" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Subjects</Link>
@@ -353,7 +353,7 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section with Feature Carousel */}
-      <section className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50">
+      <section id="features" className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
@@ -393,7 +393,7 @@ export default function HomePage() {
                     style={{ transform: `translateX(-${currentFeature * 100}%)` }}
                   >
                     {appFeatures.map((feature, index) => (
-                      <div key={index} className="w-full flex-shrink-0">
+                      <div key={index} id={`feature-${index}`} className="w-full flex-shrink-0">
                         <div className={`h-48 bg-gradient-to-br ${feature.bgGradient} flex items-center justify-center`}>
                           <img 
                             src={feature.image} 
@@ -444,6 +444,189 @@ export default function HomePage() {
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Learning Section */}
+      <section id="ai-learning" className="py-16 bg-gradient-to-br from-orange-50 to-orange-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="text-4xl mb-4">🤖</div>
+            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+              AI-Powered Learning
+            </h2>
+            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+              Advanced AI generates personalized questions and provides intelligent explanations based on your performance patterns
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <div className="text-2xl mb-4">🎯</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Personalized Questions</h3>
+              <p className="text-gray-600">AI analyzes your performance and generates questions tailored to your weak areas</p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <div className="text-2xl mb-4">🧠</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Smart Explanations</h3>
+              <p className="text-gray-600">Get detailed explanations with step-by-step solutions and concept reinforcement</p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <div className="text-2xl mb-4">📈</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Adaptive Learning</h3>
+              <p className="text-gray-600">Difficulty adjusts automatically based on your progress and understanding level</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Analytics Section */}
+      <section id="analytics" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="text-4xl mb-4">📊</div>
+            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+              Detailed Analytics
+            </h2>
+            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+              Comprehensive performance tracking with subject-wise analysis, weak area identification, and progress trends
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 text-white">
+              <div className="text-2xl mb-3">📈</div>
+              <h3 className="text-lg font-semibold mb-2">Performance Trends</h3>
+              <p className="text-orange-100 text-sm">Track your improvement over time with detailed progress charts</p>
+            </div>
+            <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-6 text-white">
+              <div className="text-2xl mb-3">🎯</div>
+              <h3 className="text-lg font-semibold mb-2">Weak Areas</h3>
+              <p className="text-red-100 text-sm">Identify topics that need more attention and practice</p>
+            </div>
+            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
+              <div className="text-2xl mb-3">📚</div>
+              <h3 className="text-lg font-semibold mb-2">Subject Analysis</h3>
+              <p className="text-blue-100 text-sm">Detailed breakdown of performance across Physics, Chemistry, and Math</p>
+            </div>
+            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white">
+              <div className="text-2xl mb-3">⚡</div>
+              <h3 className="text-lg font-semibold mb-2">Speed Analysis</h3>
+              <p className="text-green-100 text-sm">Monitor your solving speed and time management skills</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PYQ Bank Section */}
+      <section id="pyq-bank" className="py-16 bg-gradient-to-br from-red-50 to-red-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="text-4xl mb-4">📚</div>
+            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+              Previous Year Questions Bank
+            </h2>
+            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+              Extensive collection of JEE Main & Advanced questions from past 15+ years with detailed solutions and tips
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-xl p-8 shadow-lg">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">JEE Main PYQs</h3>
+              <ul className="space-y-3 text-gray-600">
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
+                  25,000+ questions from 2010-2024
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
+                  Topic-wise categorization
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
+                  Difficulty level classification
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
+                  Detailed solutions with explanations
+                </li>
+              </ul>
+            </div>
+            <div className="bg-white rounded-xl p-8 shadow-lg">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">JEE Advanced PYQs</h3>
+              <ul className="space-y-3 text-gray-600">
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
+                  15,000+ questions from 2010-2024
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
+                  Advanced level problem solving
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
+                  Multiple solution approaches
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
+                  Expert tips and shortcuts
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Leaderboard Section */}
+      <section id="leaderboard" className="py-16 bg-gradient-to-br from-amber-50 to-orange-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="text-4xl mb-4">🏆</div>
+            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+              Leaderboard & Competition
+            </h2>
+            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+              Compete with thousands of JEE aspirants, track your rank in real-time, and stay motivated with gamification
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg text-center">
+              <div className="text-3xl mb-4">🥇</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Global Rankings</h3>
+              <p className="text-gray-600">See how you rank among 25,000+ students nationwide</p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-lg text-center">
+              <div className="text-3xl mb-4">⚡</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Real-time Updates</h3>
+              <p className="text-gray-600">Your rank updates instantly after every test attempt</p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-lg text-center">
+              <div className="text-3xl mb-4">🎮</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Gamification</h3>
+              <p className="text-gray-600">Earn badges, streaks, and achievements to stay motivated</p>
+            </div>
+          </div>
+          <div className="mt-12 bg-white rounded-xl p-8 shadow-lg">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Sample Leaderboard</h3>
+            <div className="space-y-4">
+              {[
+                { rank: 1, name: "Rahul Sharma", score: "98.7%", badge: "🥇" },
+                { rank: 2, name: "Priya Patel", score: "98.2%", badge: "🥈" },
+                { rank: 3, name: "Arjun Kumar", score: "97.8%", badge: "🥉" },
+                { rank: 4, name: "You", score: "95.4%", badge: "🎯" },
+                { rank: 5, name: "Sneha Singh", score: "94.9%", badge: "⭐" }
+              ].map((student, index) => (
+                <div key={index} className={`flex items-center justify-between p-4 rounded-lg ${
+                  student.name === "You" ? "bg-orange-50 border-2 border-orange-200" : "bg-gray-50"
+                }`}>
+                  <div className="flex items-center">
+                    <span className="text-2xl mr-3">{student.badge}</span>
+                    <span className="font-semibold text-gray-900">#{student.rank}</span>
+                    <span className="ml-4 text-gray-700">{student.name}</span>
+                  </div>
+                  <span className="font-bold text-orange-600">{student.score}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -754,10 +937,10 @@ export default function HomePage() {
             <div>
               <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platform</h3>
               <ul className="space-y-3">
-                <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
-                <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
-                <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
-                <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
+                <li><Link href="/student/practice" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
+                <li><Link href="/student/pyq" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
+                <li><Link href="/student/performance" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
+                <li><Link href="/student/leaderboard" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
               </ul>
             </div>
             <div>

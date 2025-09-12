@@ -7,6 +7,9 @@ export interface UpdateSystemSettingsDto {
   siteDescription?: string;
   siteKeywords?: string;
   contactEmail?: string;
+  supportEmail?: string;
+  privacyEmail?: string;
+  legalEmail?: string;
   contactPhone?: string;
   address?: string;
   facebookUrl?: string;

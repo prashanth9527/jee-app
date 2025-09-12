@@ -17,7 +17,10 @@ interface SystemSettings {
   companyAddress?: string;
   companyPhone?: string;
   companyEmail?: string;
+  contactEmail?: string;
   supportEmail?: string;
+  privacyEmail?: string;
+  legalEmail?: string;
   supportPhone?: string;
   officeHours?: string;
   contactContent?: {
@@ -119,11 +122,19 @@ export default function ContactPage() {
     setSubmitStatus('idle');
 
     try {
-      // Simulate API call - replace with actual contact form submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Here you would typically send the form data to your backend
-      // await api.post('/contact', formData);
+      // Send the form data to the backend
+      await api.post('/contact/tickets', {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || undefined,
+        subject: formData.subject,
+        message: formData.message,
+        category: formData.subject === 'general' ? 'GENERAL' :
+                 formData.subject === 'support' ? 'TECHNICAL_SUPPORT' :
+                 formData.subject === 'billing' ? 'BILLING' :
+                 formData.subject === 'feedback' ? 'FEEDBACK' :
+                 formData.subject === 'partnership' ? 'PARTNERSHIP' : 'OTHER'
+      });
       
       setSubmitStatus('success');
       setFormData({
@@ -172,21 +183,21 @@ export default function ContactPage() {
             "contactPoint": [
               {
                 "@type": "ContactPoint",
-                "telephone": systemSettings?.supportPhone || systemSettings?.companyPhone || "+91 98765 43210",
+                "telephone": systemSettings?.supportPhone || systemSettings?.companyPhone,
                 "contactType": "Customer Support",
-                "email": systemSettings?.supportEmail || systemSettings?.companyEmail || "support@jeemaster.com",
+                "email": systemSettings?.supportEmail || systemSettings?.contactEmail || systemSettings?.companyEmail,
                 "availableLanguage": ["English", "Hindi"],
                 "areaServed": "IN"
               }
             ],
-            "address": {
+            "address": systemSettings?.companyAddress ? {
               "@type": "PostalAddress",
-              "streetAddress": systemSettings?.companyAddress?.split(',')[0] || "Tech Park, Sector 5",
-              "addressLocality": "Gurgaon",
-              "addressRegion": "Haryana",
-              "postalCode": "122001",
-              "addressCountry": "India"
-            }
+              "streetAddress": systemSettings.companyAddress.split(',')[0],
+              "addressLocality": systemSettings.companyAddress.split(',')[1]?.trim(),
+              "addressRegion": systemSettings.companyAddress.split(',')[2]?.trim(),
+              "postalCode": systemSettings.companyAddress.split(',')[3]?.trim(),
+              "addressCountry": systemSettings.companyAddress.split(',')[4]?.trim()
+            } : undefined
           }
         }}
       />
@@ -321,7 +332,7 @@ export default function ContactPage() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                        placeholder="+91 98765 43210"
+                        placeholder="Enter your phone number"
                       />
                     </div>
                     <div>
@@ -399,7 +410,7 @@ export default function ContactPage() {
                     </div>
                     <div className="ml-4">
                       <h3 className="text-lg font-semibold text-gray-900">Email Support</h3>
-                      <p className="text-gray-600">support@jeemaster.com</p>
+                      <p className="text-gray-600">{systemSettings?.supportEmail || systemSettings?.contactEmail || systemSettings?.companyEmail || 'support@jeemaster.com'}</p>
                       <p className="text-sm text-gray-500 mt-1">We respond within 24 hours</p>
                     </div>
                   </div>
@@ -408,14 +419,14 @@ export default function ContactPage() {
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
                         <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900">Phone Support</h3>
-                      <p className="text-gray-600">+91 98765 43210</p>
-                      <p className="text-sm text-gray-500 mt-1">Mon-Fri 9 AM - 6 PM IST</p>
+                      <h3 className="text-lg font-semibold text-gray-900">Study Support</h3>
+                      <p className="text-gray-600">Get help with practice tests and concepts</p>
+                      <p className="text-sm text-gray-500 mt-1">Expert guidance for JEE preparation</p>
                     </div>
                   </div>
 
@@ -423,14 +434,14 @@ export default function ContactPage() {
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
                         <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                         </svg>
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900">Live Chat</h3>
-                      <p className="text-gray-600">Available on our platform</p>
-                      <p className="text-sm text-gray-500 mt-1">Instant support during study hours</p>
+                      <h3 className="text-lg font-semibold text-gray-900">Billing & Subscriptions</h3>
+                      <p className="text-gray-600">Manage your premium plans and payments</p>
+                      <p className="text-sm text-gray-500 mt-1">Quick resolution for account issues</p>
                     </div>
                   </div>
 
@@ -438,19 +449,14 @@ export default function ContactPage() {
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
                         <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-900">Office Address</h3>
-                      <p className="text-gray-600">
-                        JEE App Education Pvt. Ltd.<br />
-                        Tech Park, Sector 5<br />
-                        Gurgaon, Haryana 122001<br />
-                        India
-                      </p>
+                      <h3 className="text-lg font-semibold text-gray-900">Technical Issues</h3>
+                      <p className="text-gray-600">Report bugs and platform problems</p>
+                      <p className="text-sm text-gray-500 mt-1">We fix issues within 24 hours</p>
                     </div>
                   </div>
                 </div>
@@ -490,12 +496,12 @@ export default function ContactPage() {
                 </p>
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platform</h3>
+                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platformwww</h3>
                 <ul className="space-y-3">
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
+                  <li><Link href="/student/practice" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
+                  <li><Link href="/student/pyq" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
+                  <li><Link href="/student/performance" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
+                  <li><Link href="/student/leaderboard" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
                 </ul>
               </div>
               <div>

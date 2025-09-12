@@ -13,6 +13,10 @@ interface SystemSettings {
   siteLogo?: string;
   siteFavicon?: string;
   ogImage?: string;
+  contactEmail?: string;
+  supportEmail?: string;
+  privacyEmail?: string;
+  legalEmail?: string;
 }
 
 interface FAQ {
@@ -85,7 +89,7 @@ export default function HelpPage() {
     {
       id: '8',
       question: 'I\'m having trouble logging in. What should I do?',
-      answer: 'If you\'re having login issues, try resetting your password using the "Forgot Password" link on the login page. Make sure you\'re using the correct email address. If problems persist, contact our support team at support@jeemaster.com.',
+      answer: 'If you\'re having login issues, try resetting your password using the "Forgot Password" link on the login page. Make sure you\'re using the correct email address. If problems persist, contact our support team.',
       category: 'technical'
     },
     {
@@ -109,7 +113,7 @@ export default function HelpPage() {
     {
       id: '12',
       question: 'How do I contact support if I need help?',
-      answer: 'You can reach our support team through multiple channels: Email us at support@jeemaster.com, use the contact form on our website, or chat with us live during support hours (Mon-Fri 9 AM - 6 PM IST). We typically respond within 24 hours.',
+      answer: 'You can reach our support team through multiple channels: Email us, use the contact form on our website, or chat with us live during support hours (Mon-Fri 9 AM - 6 PM IST). We typically respond within 24 hours.',
       category: 'technical'
     }
   ];
@@ -222,7 +226,7 @@ export default function HelpPage() {
           }
         }}
       />
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white scroll-smooth">
         {/* Navigation */}
         <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -308,22 +312,43 @@ export default function HelpPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Quick Links</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Link href="#getting-started" className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200">
+              <button 
+                onClick={() => {
+                  setSelectedCategory('getting-started');
+                  setSearchQuery('');
+                  document.getElementById('getting-started')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200 text-left w-full"
+              >
                 <div className="text-3xl mb-3">🚀</div>
                 <h3 className="font-semibold text-gray-900 mb-2">Getting Started</h3>
                 <p className="text-sm text-gray-600">Learn how to set up your account and begin your JEE preparation journey.</p>
-              </Link>
-              <Link href="#practice-tests" className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200">
+              </button>
+              <button 
+                onClick={() => {
+                  setSelectedCategory('practice-tests');
+                  setSearchQuery('');
+                  document.getElementById('practice-tests')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200 text-left w-full"
+              >
                 <div className="text-3xl mb-3">📝</div>
                 <h3 className="font-semibold text-gray-900 mb-2">Practice Tests</h3>
                 <p className="text-sm text-gray-600">Understand how to take practice tests and interpret your results.</p>
-              </Link>
-              <Link href="#account" className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200">
+              </button>
+              <button 
+                onClick={() => {
+                  setSelectedCategory('account');
+                  setSearchQuery('');
+                  document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200 text-left w-full"
+              >
                 <div className="text-3xl mb-3">💳</div>
                 <h3 className="font-semibold text-gray-900 mb-2">Account & Billing</h3>
                 <p className="text-sm text-gray-600">Manage your subscription, billing, and account settings.</p>
-              </Link>
-              <Link href="/contact" className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200">
+              </button>
+              <Link href="/contact" className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200 block">
                 <div className="text-3xl mb-3">📞</div>
                 <h3 className="font-semibold text-gray-900 mb-2">Contact Support</h3>
                 <p className="text-sm text-gray-600">Still need help? Get in touch with our support team.</p>
@@ -346,34 +371,189 @@ export default function HelpPage() {
                 <p className="text-gray-600">Try adjusting your search terms or browse different categories.</p>
               </div>
             ) : (
-              <div className="space-y-4">
-                {filteredFAQs.map((faq) => (
-                  <div key={faq.id} className="border border-gray-200 rounded-lg">
-                    <button
-                      onClick={() => toggleFAQ(faq.id)}
-                      className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
-                    >
-                      <h3 className="font-semibold text-gray-900 pr-4">{faq.question}</h3>
-                      <svg
-                        className={`w-5 h-5 text-gray-500 transition-transform ${
-                          expandedFAQ === faq.id ? 'rotate-180' : ''
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                    {expandedFAQ === faq.id && (
-                      <div className="px-6 pb-4">
-                        <div className="pt-4 border-t border-gray-200">
-                          <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+              <div className="space-y-6">
+                {/* Getting Started Section */}
+                {selectedCategory === 'getting-started' && (
+                  <div id="getting-started" className="scroll-mt-20">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                      <span className="text-2xl mr-2">🚀</span>
+                      Getting Started
+                    </h3>
+                    <div className="space-y-4">
+                      {filteredFAQs.filter(faq => faq.category === 'getting-started').map((faq) => (
+                        <div key={faq.id} className="border border-gray-200 rounded-lg">
+                          <button
+                            onClick={() => toggleFAQ(faq.id)}
+                            className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                          >
+                            <h4 className="font-semibold text-gray-900 pr-4">{faq.question}</h4>
+                            <svg
+                              className={`w-5 h-5 text-gray-500 transition-transform ${
+                                expandedFAQ === faq.id ? 'rotate-180' : ''
+                              }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          {expandedFAQ === faq.id && (
+                            <div className="px-6 pb-4">
+                              <div className="pt-4 border-t border-gray-200">
+                                <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    )}
+                      ))}
+                    </div>
                   </div>
-                ))}
+                )}
+
+                {/* Practice Tests Section */}
+                {selectedCategory === 'practice-tests' && (
+                  <div id="practice-tests" className="scroll-mt-20">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                      <span className="text-2xl mr-2">📝</span>
+                      Practice Tests
+                    </h3>
+                    <div className="space-y-4">
+                      {filteredFAQs.filter(faq => faq.category === 'practice-tests').map((faq) => (
+                        <div key={faq.id} className="border border-gray-200 rounded-lg">
+                          <button
+                            onClick={() => toggleFAQ(faq.id)}
+                            className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                          >
+                            <h4 className="font-semibold text-gray-900 pr-4">{faq.question}</h4>
+                            <svg
+                              className={`w-5 h-5 text-gray-500 transition-transform ${
+                                expandedFAQ === faq.id ? 'rotate-180' : ''
+                              }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          {expandedFAQ === faq.id && (
+                            <div className="px-6 pb-4">
+                              <div className="pt-4 border-t border-gray-200">
+                                <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Account & Billing Section */}
+                {selectedCategory === 'account' && (
+                  <div id="account" className="scroll-mt-20">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                      <span className="text-2xl mr-2">💳</span>
+                      Account & Billing
+                    </h3>
+                    <div className="space-y-4">
+                      {filteredFAQs.filter(faq => faq.category === 'account').map((faq) => (
+                        <div key={faq.id} className="border border-gray-200 rounded-lg">
+                          <button
+                            onClick={() => toggleFAQ(faq.id)}
+                            className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                          >
+                            <h4 className="font-semibold text-gray-900 pr-4">{faq.question}</h4>
+                            <svg
+                              className={`w-5 h-5 text-gray-500 transition-transform ${
+                                expandedFAQ === faq.id ? 'rotate-180' : ''
+                              }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          {expandedFAQ === faq.id && (
+                            <div className="px-6 pb-4">
+                              <div className="pt-4 border-t border-gray-200">
+                                <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* All FAQs (when no specific category is selected) */}
+                {selectedCategory === 'all' && (
+                  <div className="space-y-4">
+                    {filteredFAQs.map((faq) => (
+                      <div key={faq.id} className="border border-gray-200 rounded-lg">
+                        <button
+                          onClick={() => toggleFAQ(faq.id)}
+                          className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                        >
+                          <h3 className="font-semibold text-gray-900 pr-4">{faq.question}</h3>
+                          <svg
+                            className={`w-5 h-5 text-gray-500 transition-transform ${
+                              expandedFAQ === faq.id ? 'rotate-180' : ''
+                            }`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        {expandedFAQ === faq.id && (
+                          <div className="px-6 pb-4">
+                            <div className="pt-4 border-t border-gray-200">
+                              <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Other categories */}
+                {!['all', 'getting-started', 'practice-tests', 'account'].includes(selectedCategory) && (
+                  <div className="space-y-4">
+                    {filteredFAQs.map((faq) => (
+                      <div key={faq.id} className="border border-gray-200 rounded-lg">
+                        <button
+                          onClick={() => toggleFAQ(faq.id)}
+                          className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                        >
+                          <h3 className="font-semibold text-gray-900 pr-4">{faq.question}</h3>
+                          <svg
+                            className={`w-5 h-5 text-gray-500 transition-transform ${
+                              expandedFAQ === faq.id ? 'rotate-180' : ''
+                            }`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        {expandedFAQ === faq.id && (
+                          <div className="px-6 pb-4">
+                            <div className="pt-4 border-t border-gray-200">
+                              <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -395,7 +575,7 @@ export default function HelpPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Link>
-              <a href="mailto:support@jeemaster.com" className="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-lg text-white hover:bg-white hover:text-orange-600 transition-colors">
+              <a href={`mailto:${systemSettings?.supportEmail || systemSettings?.contactEmail || 'support@jeemaster.com'}`} className="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-lg text-white hover:bg-white hover:text-orange-600 transition-colors">
                 Email Us
                 <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -422,10 +602,10 @@ export default function HelpPage() {
               <div>
                 <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platform</h3>
                 <ul className="space-y-3">
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
+                  <li><Link href="/student/practice" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
+                  <li><Link href="/student/pyq" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
+                  <li><Link href="/student/performance" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
+                  <li><Link href="/student/leaderboard" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
                 </ul>
               </div>
               <div>

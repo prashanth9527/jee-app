@@ -14,6 +14,10 @@ interface SystemSettings {
   siteFavicon?: string;
   ogImage?: string;
   companyName?: string;
+  contactEmail?: string;
+  supportEmail?: string;
+  privacyEmail?: string;
+  legalEmail?: string;
   socialMediaLinks?: {
     facebook?: string;
     twitter?: string;
@@ -346,7 +350,7 @@ export default function TermsPage() {
                   <ol className="list-decimal list-inside ml-4 space-y-2">
                     <li>Contact us first to attempt informal resolution</li>
                     <li>If informal resolution fails, disputes will be resolved through binding arbitration</li>
-                    <li>Arbitration will be conducted in Gurgaon, India</li>
+                    <li>Arbitration will be conducted in India</li>
                     <li>You may opt out of arbitration within 30 days of account creation</li>
                   </ol>
                 </div>
@@ -387,9 +391,7 @@ export default function TermsPage() {
                 <div className="space-y-4 text-gray-700">
                   <p>If you have questions about these Terms, please contact us:</p>
                   <div className="bg-orange-50 p-6 rounded-lg">
-                    <p><strong>Email:</strong> legal@jeemaster.com</p>
-                    <p><strong>Address:</strong> JEE App Education Pvt. Ltd., Tech Park, Sector 5, Gurgaon, Haryana 122001, India</p>
-                    <p><strong>Phone:</strong> +91 98765 43210</p>
+                    <p><strong>Email:</strong> {systemSettings?.legalEmail || systemSettings?.contactEmail || 'legal@jeemaster.com'}</p>
                   </div>
                 </div>
               </div>
@@ -413,12 +415,12 @@ export default function TermsPage() {
                 </p>
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platform</h3>
+                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platformdddd</h3>
                 <ul className="space-y-3">
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
-                  <li><Link href="/#features" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
+                  <li><Link href="/student/practice" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
+                  <li><Link href="/student/pyq" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
+                  <li><Link href="/student/performance" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
+                  <li><Link href="/student/leaderboard" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
                 </ul>
               </div>
               <div>

@@ -304,7 +304,7 @@ function RegisterForm() {
 								type="tel"
 								required
 								className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
-								placeholder="Enter your 10-digit mobile number (e.g., 9876543210)"
+								placeholder="Enter your 10-digit mobile number"
 								value={phone} 
 								onChange={e => setPhone(e.target.value)}
 				/>
