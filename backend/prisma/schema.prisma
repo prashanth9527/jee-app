@@ -70,10 +70,6 @@ model User {
   
   // Sessions
   sessions UserSession[]
-  
-  // Contact tickets
-  contactTickets ContactTicket[]
-  ticketResponses TicketResponse[]
 }
 
 enum UserRole {
@@ -385,11 +381,9 @@ model Otp {
   userId    String
   code      String
   type      OtpType
-  target    String? // email or phone value used (optional for change operations)
+  target    String // email or phone value used
   expiresAt DateTime
   consumed  Boolean  @default(false)
-  used      Boolean  @default(false) // Track if OTP has been used
-  metadata  String? // JSON string for additional data (like newEmail, newPhone)
   createdAt DateTime @default(now())
 
   @@index([userId, type])
@@ -398,8 +392,6 @@ model Otp {
 enum OtpType {
   EMAIL
   PHONE
-  EMAIL_CHANGE
-  PHONE_CHANGE
 }
 
 // -------------------------------------------
@@ -476,10 +468,7 @@ model SystemSettings {
   logoUrl           String?
   faviconUrl        String?
   ogImageUrl        String?  // Open Graph image for social media
-  contactEmail      String?  // General contact email
-  supportEmail      String?  // Support/help email
-  privacyEmail      String?  // Privacy policy contact email
-  legalEmail        String?  // Legal/terms contact email
+  contactEmail      String?
   contactPhone      String?
   address           String?  @db.Text
   facebookUrl       String?
@@ -593,75 +582,4 @@ model UserSession {
 
   @@index([userId, isActive])
   @@map("user_sessions")
-}
-
-// -------------------------------------------
-// Contact & Support Tickets
-// -------------------------------------------
-model ContactTicket {
-  id          String            @id @default(cuid())
-  name        String
-  email       String
-  phone       String?
-  subject     String
-  message     String            @db.Text
-  status      TicketStatus      @default(OPEN)
-  priority    TicketPriority    @default(NORMAL)
-  category    TicketCategory    @default(GENERAL)
-  
-  // Optional user association (if user is logged in)
-  user        User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
-  userId      String?
-  
-  // Admin responses
-  responses   TicketResponse[]
-  
-  // Metadata
-  ipAddress   String?
-  userAgent   String?
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-
-  @@map("contact_tickets")
-}
-
-model TicketResponse {
-  id          String        @id @default(cuid())
-  ticket      ContactTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
-  ticketId    String
-  message     String        @db.Text
-  isInternal  Boolean       @default(false) // Internal notes vs user-visible responses
-  
-  // Who responded
-  responder   User          @relation(fields: [responderId], references: [id])
-  responderId String
-  
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-
-  @@map("ticket_responses")
-}
-
-enum TicketStatus {
-  OPEN
-  IN_PROGRESS
-  WAITING_FOR_USER
-  RESOLVED
-  CLOSED
-}
-
-enum TicketPriority {
-  LOW
-  NORMAL
-  HIGH
-  URGENT
-}
-
-enum TicketCategory {
-  GENERAL
-  TECHNICAL_SUPPORT
-  BILLING
-  FEEDBACK
-  PARTNERSHIP
-  OTHER
 }

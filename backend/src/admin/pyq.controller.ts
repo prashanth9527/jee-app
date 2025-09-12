@@ -48,11 +48,11 @@ export class AdminPYQController {
 
     return {
       totalPYQ,
-	byYear: byYear.map((item: any) => ({
+      byYear: byYear.map(item => ({
         year: item.yearAppeared,
         count: item._count.id
       })),
-	bySubject: bySubject.map((subject: any) => ({
+      bySubject: bySubject.map(subject => ({
         name: subject.name,
         count: subject._count.questions
       }))

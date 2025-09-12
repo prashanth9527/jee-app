@@ -160,7 +160,7 @@ export class BookmarksService {
     });
 
     const bookmarkMap = new Map(
-	bookmarks.map((bookmark: any) => [bookmark.questionId, true])
+      bookmarks.map((bookmark) => [bookmark.questionId, true])
     );
 
     return questionIds.map((questionId) => ({

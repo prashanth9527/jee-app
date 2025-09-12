@@ -205,10 +205,10 @@ export class AdminTagsController {
 			}
 		});
 
-		const tagsWithQuestionsList = tagsWithQuestions.filter((tag: any) => tag._count.questions > 0);
+		const tagsWithQuestionsList = tagsWithQuestions.filter(tag => tag._count.questions > 0);
 		
 		if (tagsWithQuestionsList.length > 0) {
-			const tagNames = tagsWithQuestionsList.map((tag: any) => `"${tag.name}"`).join(', ');
+			const tagNames = tagsWithQuestionsList.map(tag => `"${tag.name}"`).join(', ');
 			throw new BadRequestException(`Cannot delete the following tags as they are used by questions: ${tagNames}. Please remove them from all questions first.`);
 		}
 

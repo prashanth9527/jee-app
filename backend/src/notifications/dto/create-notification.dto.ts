@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsOptional, IsEnum, IsDateString } from 'class-validator';
-import { UserRole } from '../../types/prisma.types';
+import { UserRole } from '@prisma/client';
 
 export class CreateNotificationDto {
   @IsString()

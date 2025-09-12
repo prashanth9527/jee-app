@@ -76,6 +76,24 @@ async function main() {
     },
   });
 
+  // Create test user with the phone number from screenshot
+  const testUser = await prisma.user.create({
+    data: {
+      email: 'test@example.com',
+      phone: '+919866211858',
+      fullName: 'Test User',
+      hashedPassword: await bcrypt.hash('test123', 10),
+      role: 'STUDENT',
+      emailVerified: true,
+      phoneVerified: true,
+      trialStartedAt: new Date(),
+      trialEndsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+      aiTestsUsed: 0,
+      aiTestsLimit: 10,
+      lastAiResetAt: new Date(),
+    },
+  });
+
   // Create expert user
   const expertUser = await prisma.user.create({
     data: {
@@ -709,13 +727,13 @@ async function main() {
   });
 
   // Group questions by subject/topic
-  const physicsQuestions = allQuestions.filter((q: any) => 
+  const physicsQuestions = allQuestions.filter(q => 
     q.subtopic?.topic?.subjectId === physics.id || q.topic?.subjectId === physics.id
   );
-  const chemistryQuestions = allQuestions.filter((q: any) => 
+  const chemistryQuestions = allQuestions.filter(q => 
     q.subtopic?.topic?.subjectId === chemistry.id || q.topic?.subjectId === chemistry.id
   );
-  const mathQuestions = allQuestions.filter((q: any) => 
+  const mathQuestions = allQuestions.filter(q => 
     q.subtopic?.topic?.subjectId === mathematics.id || q.topic?.subjectId === mathematics.id
   );
 
@@ -728,7 +746,7 @@ async function main() {
         timeLimitMin: 60, // 60 minutes
         subjectIds: [physics.id],
         topicIds: [mechanics.id],
-        questionIds: physicsQuestions.slice(0, 5).map((q: any) => q.id), // Assign first 5 physics questions
+        questionIds: physicsQuestions.slice(0, 5).map(q => q.id), // Assign first 5 physics questions
       },
     }),
     prisma.examPaper.create({
@@ -738,7 +756,7 @@ async function main() {
         timeLimitMin: 45,
         subjectIds: [chemistry.id],
         topicIds: [physicalChemistry.id],
-        questionIds: chemistryQuestions.slice(0, 4).map((q: any) => q.id), // Assign first 4 chemistry questions
+        questionIds: chemistryQuestions.slice(0, 4).map(q => q.id), // Assign first 4 chemistry questions
       },
     }),
     prisma.examPaper.create({
@@ -748,7 +766,7 @@ async function main() {
         timeLimitMin: 90,
         subjectIds: [mathematics.id],
         topicIds: [algebra.id],
-        questionIds: mathQuestions.slice(0, 6).map((q: any) => q.id), // Assign first 6 math questions
+        questionIds: mathQuestions.slice(0, 6).map(q => q.id), // Assign first 6 math questions
       },
     }),
   ]);

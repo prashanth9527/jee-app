@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
-import { NotificationPriority, UserRole } from '../types/prisma.types';
+import { NotificationPriority, UserRole } from '@prisma/client';
 
 @Injectable()
 export class NotificationsService {

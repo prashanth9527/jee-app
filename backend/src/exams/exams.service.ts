@@ -225,7 +225,7 @@ export class ExamsService {
 				correctCount: submission.correctCount,
 				scorePercent: submission.scorePercent,
 			},
-			answers: submission.answers.map((answer: any) => ({
+			answers: submission.answers.map(answer => ({
 				questionId: answer.questionId,
 				question: answer.question,
 				selectedOption: answer.selectedOption,
@@ -433,7 +433,7 @@ export class ExamsService {
 				subjectIds: [request.subjectId],
 				topicIds: request.topicId ? [request.topicId] : [],
 				subtopicIds: request.subtopicId ? [request.subtopicId] : [],
-				questionIds: questions.map((q: any) => q.id),
+				questionIds: questions.map(q => q.id),
 				timeLimitMin: request.timeLimitMin
 			}
 		});

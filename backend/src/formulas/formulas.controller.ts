@@ -18,7 +18,7 @@ import { UpdateFormulaDto } from './dto/update-formula.dto';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-import { UserRole } from '../types/prisma.types';
+import { UserRole } from '@prisma/client';
 
 @Controller('formulas')
 export class FormulasController {

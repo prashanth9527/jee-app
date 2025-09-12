@@ -83,26 +83,16 @@ export default function LoginPage() {
 				}
 			}
 			
-			console.log('Login response received:', response);
-			if (response) {
-				console.log('Response data:', response.data);
-				console.log('Access token exists:', !!response.data.access_token);
-				console.log('User data exists:', !!response.data.user);
-			}
-			
 			if (response && response.data.access_token && response.data.user) {
-				console.log('Calling login function with token and user data');
 				login(response.data.access_token, response.data.user);
 				
 				// Check if user needs profile completion
 				if (response.data.user.needsProfileCompletion) {
-					console.log('User needs profile completion, redirecting...');
 					window.location.href = '/profile/complete';
 					return;
 				}
 				
 				// Redirect based on user role
-				console.log('Redirecting based on role:', response.data.user.role);
 				if (response.data.user.role === 'ADMIN') {
 					window.location.href = '/admin';
 				} else if (response.data.user.role === 'EXPERT') {
@@ -111,7 +101,6 @@ export default function LoginPage() {
 					window.location.href = '/student';
 				}
 			} else if (!otpSent && !emailOtpSent) {
-				console.error('Invalid response from server:', response);
 				setError('Invalid response from server');
 			}
 		} catch (err: any) {
@@ -436,9 +425,9 @@ export default function LoginPage() {
 								</div>
 
 								<div className="text-sm">
-									<Link href="/forgot-password" className="font-semibold text-orange-600 hover:text-orange-500 transition-colors">
+									<a href="#" className="font-semibold text-orange-600 hover:text-orange-500 transition-colors">
 										Forgot your password?
-									</Link>
+									</a>
 								</div>
 							</div>
 						)}

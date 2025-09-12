@@ -59,7 +59,7 @@ export class AdminAnalyticsController {
 			}
 		});
 
-		const mrr = activeSubscriptionsWithPlans.reduce((total: number, sub: any) => {
+		const mrr = activeSubscriptionsWithPlans.reduce((total, sub) => {
 			if (sub.plan.interval === 'MONTH') {
 				return total + sub.plan.priceCents;
 			} else {
@@ -101,7 +101,7 @@ export class AdminAnalyticsController {
 		});
 
 		// Group by month
-		const monthlyData = monthlyRegistrations.reduce((acc: Record<string, number>, item: any) => {
+		const monthlyData = monthlyRegistrations.reduce((acc, item) => {
 			const month = new Date(item.createdAt).toISOString().slice(0, 7); // YYYY-MM
 			acc[month] = (acc[month] || 0) + item._count;
 			return acc;
@@ -271,7 +271,7 @@ export class AdminAnalyticsController {
 		});
 
 		// Get subject names for the grouped data
-		const subjectIds = questionsBySubject.map((q: any) => q.subjectId).filter((id: any) => id !== null) as string[];
+		const subjectIds = questionsBySubject.map(q => q.subjectId).filter(id => id !== null) as string[];
 		const subjects = await this.prisma.subject.findMany({
 			where: { id: { in: subjectIds } },
 			select: { id: true, name: true }
@@ -284,7 +284,7 @@ export class AdminAnalyticsController {
 		});
 
 		// Get topic names for the grouped data
-		const topicIds = questionsByTopic.map((q: any) => q.topicId).filter((id: any) => id !== null) as string[];
+		const topicIds = questionsByTopic.map(q => q.topicId).filter(id => id !== null) as string[];
 		const topics = await this.prisma.topic.findMany({
 			where: { id: { in: topicIds } },
 			select: { 
@@ -301,7 +301,7 @@ export class AdminAnalyticsController {
 		});
 
 		// Get subtopic names for the grouped data
-		const subtopicIds = questionsBySubtopic.map((q: any) => q.subtopicId).filter((id: any) => id !== null) as string[];
+		const subtopicIds = questionsBySubtopic.map(q => q.subtopicId).filter(id => id !== null) as string[];
 		const subtopics = await this.prisma.subtopic.findMany({
 			where: { id: { in: subtopicIds } },
 			select: { 
@@ -363,16 +363,16 @@ export class AdminAnalyticsController {
 		`) as any[];
 
 		// Combine the grouped data with the actual subject/topic/subtopic names
-	const questionsBySubjectWithNames = questionsBySubject.map((q: any) => {
-		const subject = subjects.find((s: any) => s.id === q.subjectId);
+		const questionsBySubjectWithNames = questionsBySubject.map(q => {
+			const subject = subjects.find(s => s.id === q.subjectId);
 			return {
 				...q,
 				subject: { name: subject?.name || 'Unknown Subject' }
 			};
 		});
 
-	const questionsByTopicWithNames = questionsByTopic.map((q: any) => {
-		const topic = topics.find((t: any) => t.id === q.topicId);
+		const questionsByTopicWithNames = questionsByTopic.map(q => {
+			const topic = topics.find(t => t.id === q.topicId);
 			return {
 				...q,
 				topic: { 
@@ -382,8 +382,8 @@ export class AdminAnalyticsController {
 			};
 		});
 
-	const questionsBySubtopicWithNames = questionsBySubtopic.map((q: any) => {
-		const subtopic = subtopics.find((s: any) => s.id === q.subtopicId);
+		const questionsBySubtopicWithNames = questionsBySubtopic.map(q => {
+			const subtopic = subtopics.find(s => s.id === q.subtopicId);
 			return {
 				...q,
 				subtopic: { 
@@ -436,7 +436,7 @@ export class AdminAnalyticsController {
 		});
 
 		// Calculate MRR and ARR
-		const mrr = subscriptionsWithPlans.reduce((total: number, sub: any) => {
+		const mrr = subscriptionsWithPlans.reduce((total, sub) => {
 			if (sub.plan.interval === 'MONTH') {
 				return total + sub.plan.priceCents;
 			} else {
@@ -444,7 +444,7 @@ export class AdminAnalyticsController {
 			}
 		}, 0);
 
-		const arr = subscriptionsWithPlans.reduce((total: number, sub: any) => {
+		const arr = subscriptionsWithPlans.reduce((total, sub) => {
 			if (sub.plan.interval === 'YEAR') {
 				return total + sub.plan.priceCents;
 			} else {
@@ -486,7 +486,7 @@ export class AdminAnalyticsController {
 		});
 
 		// Group by month
-		const monthlyData = monthlySubscriptions.reduce((acc: Record<string, number>, item: any) => {
+		const monthlyData = monthlySubscriptions.reduce((acc, item) => {
 			const month = new Date(item.createdAt).toISOString().slice(0, 7); // YYYY-MM
 			acc[month] = (acc[month] || 0) + item._count;
 			return acc;
@@ -640,7 +640,7 @@ export class AdminAnalyticsController {
 		});
 
 		// Group by month
-		const monthlyData = monthlyQuestions.reduce((acc: Record<string, number>, item: any) => {
+		const monthlyData = monthlyQuestions.reduce((acc, item) => {
 			const month = new Date(item.createdAt).toISOString().slice(0, 7); // YYYY-MM
 			acc[month] = (acc[month] || 0) + item._count;
 			return acc;

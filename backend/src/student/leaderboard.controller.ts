@@ -78,7 +78,7 @@ export class StudentLeaderboardController {
 
     // Calculate scores based on various metrics
     const leaderboard = await Promise.all(
-	students.map(async (student: any) => {
+      students.map(async (student) => {
         // Get average scores from exam submissions
         const examScores = await this.prisma.examSubmission.findMany({
           where: { userId: student.id },
@@ -86,13 +86,13 @@ export class StudentLeaderboardController {
         });
 
         // Calculate overall score
-	const totalScore = examScores.reduce((sum: number, submission: any) => sum + (submission.scorePercent || 0), 0);
+        const totalScore = examScores.reduce((sum, submission) => sum + (submission.scorePercent || 0), 0);
         const totalTests = examScores.length;
         const averageScore = totalTests > 0 ? totalScore / totalTests : 0;
 
         // Calculate total correct answers
-	const totalCorrect = examScores.reduce((sum: number, submission: any) => sum + submission.correctCount, 0);
-	const totalQuestions = examScores.reduce((sum: number, submission: any) => sum + submission.totalQuestions, 0);
+        const totalCorrect = examScores.reduce((sum, submission) => sum + submission.correctCount, 0);
+        const totalQuestions = examScores.reduce((sum, submission) => sum + submission.totalQuestions, 0);
 
         return {
           userId: student.id,
@@ -132,7 +132,7 @@ export class StudentLeaderboardController {
     });
 
     const leaderboard = await Promise.all(
-	students.map(async (student: any) => {
+      students.map(async (student) => {
         const practiceSubmissions = await this.prisma.examSubmission.findMany({
           where: { 
             userId: student.id
@@ -177,7 +177,7 @@ export class StudentLeaderboardController {
     });
 
     const leaderboard = await Promise.all(
-	students.map(async (student: any) => {
+      students.map(async (student) => {
         const examSubmissions = await this.prisma.examSubmission.findMany({
           where: { 
             userId: student.id
@@ -222,7 +222,7 @@ export class StudentLeaderboardController {
     });
 
     const leaderboard = await Promise.all(
-	students.map(async (student: any) => {
+      students.map(async (student) => {
         // Get PYQ-related submissions (questions marked as previous year)
         const pyqSubmissions = await this.prisma.examSubmission.findMany({
           where: { 

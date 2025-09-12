@@ -416,7 +416,7 @@ export class ReferralsService {
       take: limit
     });
 
-	return leaderboard.map((user: any) => ({
+    return leaderboard.map(user => ({
       id: user.id,
       fullName: user.fullName,
       email: user.email,

@@ -323,8 +323,8 @@ Correct Answer: ${correctAnswer}`;
 
       // Filter out tips that are too short or generic
       const usefulTips = questionsWithTips
-	.filter((q: any) => q.tip_formula && q.tip_formula.length > 10)
-	.map((q: any) => q.tip_formula!)
+        .filter(q => q.tip_formula && q.tip_formula.length > 10)
+        .map(q => q.tip_formula!)
         .slice(0, 5); // Take top 5 most useful tips
 
       this.logger.log(`Found ${usefulTips.length} existing tips for AI question generation`);

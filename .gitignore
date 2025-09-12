@@ -9,7 +9,6 @@ frontend/.env.local
 frontend/.env.development.local
 frontend/.env.test.local
 frontend/.env.production.local
-equation/frontend/node_modules
 .env
 .env.local
 .env.development.local

@@ -73,14 +73,4 @@ export class AwsService {
   getFileUrl(key: string): string {
     return `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${key}`;
   }
-
-  async getPresignedUploadUrl(key: string, contentType: string): Promise<string> {
-    const command = new PutObjectCommand({
-      Bucket: this.bucketName,
-      Key: key,
-      ContentType: contentType,
-    });
-
-    return await getSignedUrl(this.s3Client, command, { expiresIn: 3600 });
-  }
 } 
