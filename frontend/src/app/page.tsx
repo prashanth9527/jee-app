@@ -4,22 +4,11 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import DynamicHead from '@/components/DynamicHead';
-import DynamicLogo from '@/components/DynamicLogo';
 
 interface SystemSettings {
   siteTitle: string;
   siteDescription: string;
   siteKeywords: string;
-  siteLogo?: string;
-  siteFavicon?: string;
-  ogImage?: string;
-  socialMediaLinks?: {
-    facebook?: string;
-    twitter?: string;
-    instagram?: string;
-    youtube?: string;
-    linkedin?: string;
-  };
 }
 
 interface Subject {
@@ -52,7 +41,6 @@ export default function HomePage() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const testimonials = [
     {
@@ -143,19 +131,9 @@ export default function HomePage() {
         console.error('Error fetching data:', error);
         // Set defaults if API fails
         setSystemSettings({
-          siteTitle: 'JEE App',
+          siteTitle: 'JEE Master',
           siteDescription: 'Comprehensive JEE preparation platform',
-          siteKeywords: 'JEE, preparation, practice tests',
-          siteLogo: '/logo.png',
-          siteFavicon: '/favicon.ico',
-          ogImage: '/og-image.jpg',
-          socialMediaLinks: {
-            facebook: 'https://facebook.com/jeemaster',
-            twitter: 'https://twitter.com/jeemaster',
-            instagram: 'https://instagram.com/jeemaster',
-            youtube: 'https://youtube.com/jeemaster',
-            linkedin: 'https://linkedin.com/company/jeemaster'
-          }
+          siteKeywords: 'JEE, preparation, practice tests'
         });
       } finally {
         setLoading(false);
@@ -179,32 +157,6 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, []);
 
-  // Close mobile menu when clicking outside or on window resize
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (mobileMenuOpen) {
-        const target = event.target as Element;
-        if (!target.closest('nav')) {
-          setMobileMenuOpen(false);
-        }
-      }
-    };
-
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) { // lg breakpoint
-        setMobileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [mobileMenuOpen]);
-
   const formatPrice = (priceCents: number) => {
     return `₹${(priceCents / 100).toLocaleString()}`;
   };
@@ -226,134 +178,40 @@ export default function HomePage() {
         title="Home"
         description={systemSettings?.siteDescription}
       />
-      <div className="min-h-screen bg-white scroll-smooth">
-      {/* Enhanced Navigation */}
+      <div className="min-h-screen bg-white">
+      {/* Navigation */}
         <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Logo */}
             <div className="flex items-center">
               <div className="flex-shrink-0 flex items-center">
-                <DynamicLogo 
-                  systemSettings={systemSettings} 
-                  size="md"
-                  showText={true}
-                />
+                <span className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                  {systemSettings?.siteTitle || 'JEE Master'}
+                </span>
               </div>
             </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden lg:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                <div className="relative group">
-                  <button className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
-                    Features
-                    <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                  <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div className="py-1">
-                      <Link href="/#ai-learning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">AI Learning</Link>
-                      <Link href="/#analytics" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Analytics</Link>
-                      <Link href="/#pyq-bank" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">PYQ Bank</Link>
-                      <Link href="/#leaderboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Leaderboard</Link>
-                    </div>
-                  </div>
-                </div>
-                <Link href="/#subjects" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Subjects</Link>
-                <Link href="/#testimonials" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Success Stories</Link>
-                <Link href="/#pricing" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Pricing</Link>
-                <div className="relative group">
-                  <button className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
-                    More
-                    <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                  <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div className="py-1">
-                      <Link href="/about" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">About Us</Link>
-                      <Link href="/contact" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Contact</Link>
-                      <Link href="/help" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Help Center</Link>
-                      <Link href="/privacy" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Privacy Policy</Link>
-                      <Link href="/terms" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">Terms of Service</Link>
-                    </div>
-                  </div>
-                </div>
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4">
+                <a href="#features" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Features</a>
+                <a href="#subjects" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Subjects</a>
+                <a href="#testimonials" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Success Stories</a>
+                <a href="#pricing" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Pricing</a>
               </div>
             </div>
-
-            {/* Desktop Auth Buttons */}
-            <div className="hidden lg:flex items-center space-x-4">
+            <div className="flex items-center space-x-4">
               <Link href="/login" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 Login
               </Link>
-              <Link href="/register" className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors shadow-md hover:shadow-lg">
+              <Link href="/register" className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors">
                 Get Started Free
               </Link>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="lg:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
-                aria-expanded="false"
-              >
-                <span className="sr-only">Open main menu</span>
-                {!mobileMenuOpen ? (
-                  <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                ) : (
-                  <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile menu */}
-          <div className={`lg:hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
-              <div className="space-y-1">
-                <div className="px-3 py-2 text-sm font-medium text-gray-500 uppercase tracking-wider">Features</div>
-                <Link href="/#ai-learning" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">AI Learning</Link>
-                <Link href="/#analytics" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Analytics</Link>
-                <Link href="/#pyq-bank" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">PYQ Bank</Link>
-                <Link href="/#leaderboard" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Leaderboard</Link>
-              </div>
-              
-              <Link href="/#subjects" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Subjects</Link>
-              <Link href="/#testimonials" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Success Stories</Link>
-              <Link href="/#pricing" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Pricing</Link>
-              
-              <div className="border-t border-gray-200 pt-2">
-                <div className="px-3 py-2 text-sm font-medium text-gray-500 uppercase tracking-wider">More</div>
-                <Link href="/about" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">About Us</Link>
-                <Link href="/contact" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Contact</Link>
-                <Link href="/help" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Help Center</Link>
-                <Link href="/privacy" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Privacy Policy</Link>
-                <Link href="/terms" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">Terms of Service</Link>
-              </div>
-              
-              <div className="border-t border-gray-200 pt-2 space-y-2">
-                <Link href="/login" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-md transition-colors">
-                  Login
-                </Link>
-                <Link href="/register" className="block px-3 py-2 text-base font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-md text-center transition-colors">
-                  Get Started Free
-                </Link>
-              </div>
             </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section with Feature Carousel */}
-      <section id="features" className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50">
+      <section className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
@@ -393,7 +251,7 @@ export default function HomePage() {
                     style={{ transform: `translateX(-${currentFeature * 100}%)` }}
                   >
                     {appFeatures.map((feature, index) => (
-                      <div key={index} id={`feature-${index}`} className="w-full flex-shrink-0">
+                      <div key={index} className="w-full flex-shrink-0">
                         <div className={`h-48 bg-gradient-to-br ${feature.bgGradient} flex items-center justify-center`}>
                           <img 
                             src={feature.image} 
@@ -444,189 +302,6 @@ export default function HomePage() {
                   </button>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* AI Learning Section */}
-      <section id="ai-learning" className="py-16 bg-gradient-to-br from-orange-50 to-orange-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="text-4xl mb-4">🤖</div>
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-              AI-Powered Learning
-            </h2>
-            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Advanced AI generates personalized questions and provides intelligent explanations based on your performance patterns
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl p-6 shadow-lg">
-              <div className="text-2xl mb-4">🎯</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Personalized Questions</h3>
-              <p className="text-gray-600">AI analyzes your performance and generates questions tailored to your weak areas</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-lg">
-              <div className="text-2xl mb-4">🧠</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Smart Explanations</h3>
-              <p className="text-gray-600">Get detailed explanations with step-by-step solutions and concept reinforcement</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-lg">
-              <div className="text-2xl mb-4">📈</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Adaptive Learning</h3>
-              <p className="text-gray-600">Difficulty adjusts automatically based on your progress and understanding level</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Analytics Section */}
-      <section id="analytics" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="text-4xl mb-4">📊</div>
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-              Detailed Analytics
-            </h2>
-            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Comprehensive performance tracking with subject-wise analysis, weak area identification, and progress trends
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 text-white">
-              <div className="text-2xl mb-3">📈</div>
-              <h3 className="text-lg font-semibold mb-2">Performance Trends</h3>
-              <p className="text-orange-100 text-sm">Track your improvement over time with detailed progress charts</p>
-            </div>
-            <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-6 text-white">
-              <div className="text-2xl mb-3">🎯</div>
-              <h3 className="text-lg font-semibold mb-2">Weak Areas</h3>
-              <p className="text-red-100 text-sm">Identify topics that need more attention and practice</p>
-            </div>
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
-              <div className="text-2xl mb-3">📚</div>
-              <h3 className="text-lg font-semibold mb-2">Subject Analysis</h3>
-              <p className="text-blue-100 text-sm">Detailed breakdown of performance across Physics, Chemistry, and Math</p>
-            </div>
-            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white">
-              <div className="text-2xl mb-3">⚡</div>
-              <h3 className="text-lg font-semibold mb-2">Speed Analysis</h3>
-              <p className="text-green-100 text-sm">Monitor your solving speed and time management skills</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PYQ Bank Section */}
-      <section id="pyq-bank" className="py-16 bg-gradient-to-br from-red-50 to-red-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="text-4xl mb-4">📚</div>
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-              Previous Year Questions Bank
-            </h2>
-            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Extensive collection of JEE Main & Advanced questions from past 15+ years with detailed solutions and tips
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-xl p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">JEE Main PYQs</h3>
-              <ul className="space-y-3 text-gray-600">
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
-                  25,000+ questions from 2010-2024
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
-                  Topic-wise categorization
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
-                  Difficulty level classification
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
-                  Detailed solutions with explanations
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white rounded-xl p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">JEE Advanced PYQs</h3>
-              <ul className="space-y-3 text-gray-600">
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
-                  15,000+ questions from 2010-2024
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
-                  Advanced level problem solving
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
-                  Multiple solution approaches
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
-                  Expert tips and shortcuts
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Leaderboard Section */}
-      <section id="leaderboard" className="py-16 bg-gradient-to-br from-amber-50 to-orange-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="text-4xl mb-4">🏆</div>
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-              Leaderboard & Competition
-            </h2>
-            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Compete with thousands of JEE aspirants, track your rank in real-time, and stay motivated with gamification
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl p-6 shadow-lg text-center">
-              <div className="text-3xl mb-4">🥇</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Global Rankings</h3>
-              <p className="text-gray-600">See how you rank among 25,000+ students nationwide</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-lg text-center">
-              <div className="text-3xl mb-4">⚡</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Real-time Updates</h3>
-              <p className="text-gray-600">Your rank updates instantly after every test attempt</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-lg text-center">
-              <div className="text-3xl mb-4">🎮</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Gamification</h3>
-              <p className="text-gray-600">Earn badges, streaks, and achievements to stay motivated</p>
-            </div>
-          </div>
-          <div className="mt-12 bg-white rounded-xl p-8 shadow-lg">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Sample Leaderboard</h3>
-            <div className="space-y-4">
-              {[
-                { rank: 1, name: "Rahul Sharma", score: "98.7%", badge: "🥇" },
-                { rank: 2, name: "Priya Patel", score: "98.2%", badge: "🥈" },
-                { rank: 3, name: "Arjun Kumar", score: "97.8%", badge: "🥉" },
-                { rank: 4, name: "You", score: "95.4%", badge: "🎯" },
-                { rank: 5, name: "Sneha Singh", score: "94.9%", badge: "⭐" }
-              ].map((student, index) => (
-                <div key={index} className={`flex items-center justify-between p-4 rounded-lg ${
-                  student.name === "You" ? "bg-orange-50 border-2 border-orange-200" : "bg-gray-50"
-                }`}>
-                  <div className="flex items-center">
-                    <span className="text-2xl mr-3">{student.badge}</span>
-                    <span className="font-semibold text-gray-900">#{student.rank}</span>
-                    <span className="ml-4 text-gray-700">{student.name}</span>
-                  </div>
-                  <span className="font-bold text-orange-600">{student.score}</span>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -862,7 +537,7 @@ export default function HomePage() {
             Ready to Start Your JEE Journey?
           </h2>
           <p className="mt-4 text-xl text-orange-100">
-            Join 25,000+ students who are already preparing with {systemSettings?.siteTitle || 'JEE App'}
+            Join 25,000+ students who are already preparing with {systemSettings?.siteTitle || 'JEE Master'}
           </p>
           <div className="mt-8">
             <Link href="/register" className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-orange-600 bg-white hover:bg-gray-50 transition-colors">
@@ -880,82 +555,57 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
-                <div className="flex items-center mb-4">
-                  <DynamicLogo 
-                    systemSettings={systemSettings} 
-                    size="md"
-                    showText={true}
-                    className="text-orange-400"
-                  />
-                </div>
+              <div className="flex items-center mb-4">
+                <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+                  {systemSettings?.siteTitle || 'JEE Master'}
+                </span>
+              </div>
               <p className="text-gray-400 mb-4">
                 {systemSettings?.siteDescription || 'The most comprehensive JEE preparation platform with AI-powered features, extensive question banks, and detailed analytics to ensure your success.'}
               </p>
               <div className="flex space-x-4">
-                {systemSettings?.socialMediaLinks?.facebook && (
-                  <a href={systemSettings.socialMediaLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                    <span className="sr-only">Facebook</span>
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-                    </svg>
-                  </a>
-                )}
-                {systemSettings?.socialMediaLinks?.twitter && (
-                  <a href={systemSettings.socialMediaLinks.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                    <span className="sr-only">Twitter</span>
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                    </svg>
-                  </a>
-                )}
-                {systemSettings?.socialMediaLinks?.youtube && (
-                  <a href={systemSettings.socialMediaLinks.youtube} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                    <span className="sr-only">YouTube</span>
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path fillRule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clipRule="evenodd" />
-                    </svg>
-                  </a>
-                )}
-                {systemSettings?.socialMediaLinks?.instagram && (
-                  <a href={systemSettings.socialMediaLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                    <span className="sr-only">Instagram</span>
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path fillRule="evenodd" d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.348-1.051-2.348-2.348s1.051-2.348 2.348-2.348 2.348 1.051 2.348 2.348-1.051 2.348-2.348 2.348zm7.718 0c-1.297 0-2.348-1.051-2.348-2.348s1.051-2.348 2.348-2.348 2.348 1.051 2.348 2.348-1.051 2.348-2.348 2.348z" clipRule="evenodd" />
-                    </svg>
-                  </a>
-                )}
-                {systemSettings?.socialMediaLinks?.linkedin && (
-                  <a href={systemSettings.socialMediaLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                    <span className="sr-only">LinkedIn</span>
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path fillRule="evenodd" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" clipRule="evenodd" />
-                    </svg>
-                  </a>
-                )}
-              </div>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <span className="sr-only">Facebook</span>
+                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+                  </svg>
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <span className="sr-only">Twitter</span>
+                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                  </svg>
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <span className="sr-only">YouTube</span>
+                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clipRule="evenodd" />
+                  </svg>
+                </a>
+            </div>
             </div>
             <div>
               <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platform</h3>
               <ul className="space-y-3">
-                <li><Link href="/student/practice" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
-                <li><Link href="/student/pyq" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
-                <li><Link href="/student/performance" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
-                <li><Link href="/student/leaderboard" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
+                <li><a href="#" className="text-gray-300 hover:text-white">Practice Tests</a></li>
+                <li><a href="#" className="text-gray-300 hover:text-white">Previous Year Questions</a></li>
+                <li><a href="#" className="text-gray-300 hover:text-white">Analytics</a></li>
+                <li><a href="#" className="text-gray-300 hover:text-white">Leaderboard</a></li>
               </ul>
             </div>
             <div>
               <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Support</h3>
               <ul className="space-y-3">
-                <li><Link href="/help" className="text-gray-300 hover:text-white transition-colors">Help Center</Link></li>
-                <li><Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact Us</Link></li>
-                <li><Link href="/privacy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="text-gray-300 hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><a href="#" className="text-gray-300 hover:text-white">Help Center</a></li>
+                <li><a href="#" className="text-gray-300 hover:text-white">Contact Us</a></li>
+                <li><a href="#" className="text-gray-300 hover:text-white">Privacy Policy</a></li>
+                <li><a href="#" className="text-gray-300 hover:text-white">Terms of Service</a></li>
               </ul>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-800 text-center">
             <p className="text-gray-400">
-              © 2024 {systemSettings?.siteTitle || 'JEE App'}. All rights reserved. Built for JEE aspirants by JEE experts.
+              © 2024 {systemSettings?.siteTitle || 'JEE Master'}. All rights reserved. Built for JEE aspirants by JEE experts.
             </p>
           </div>
         </div>

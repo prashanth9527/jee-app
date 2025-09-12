@@ -179,13 +179,6 @@ export default function ExpertLayout({ children }: { children: React.ReactNode }
                     <p className="font-medium">{user?.fullName}</p>
                     <p className="text-gray-500">{user?.email}</p>
                   </div>
-                  <Link
-                    href="/profile/settings"
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => setProfileDropdownOpen(false)}
-                  >
-                    Profile Settings
-                  </Link>
                   <button
                     onClick={handleLogout}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

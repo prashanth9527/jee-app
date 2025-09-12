@@ -13,18 +13,41 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://jeemaster.com'),
   title: {
-    default: 'JEE App - Complete JEE Preparation Platform',
-    template: '%s | JEE App'
+    default: 'JEE Master - Complete JEE Preparation Platform',
+    template: '%s | JEE Master'
   },
   description: 'Master JEE Main & Advanced with AI-powered practice tests, 50,000+ questions, detailed analytics, and comprehensive study materials.',
   keywords: 'JEE preparation, JEE Main, JEE Advanced, practice tests, AI learning, physics, chemistry, mathematics, online coaching, mock tests',
-  authors: [{ name: 'JEE App Team' }],
-  creator: 'JEE App',
-  publisher: 'JEE App',
+  authors: [{ name: 'JEE Master Team' }],
+  creator: 'JEE Master',
+  publisher: 'JEE Master',
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://jeemaster.com',
+    siteName: 'JEE Master',
+    title: 'JEE Master - Complete JEE Preparation Platform',
+    description: 'Master JEE Main & Advanced with AI-powered practice tests, 50,000+ questions, detailed analytics, and comprehensive study materials.',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'JEE Master - Complete JEE Preparation Platform',
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'JEE Master - Complete JEE Preparation Platform',
+    description: 'Master JEE Main & Advanced with AI-powered practice tests, 50,000+ questions, detailed analytics, and comprehensive study materials.',
+    images: ['/og-image.jpg'],
+    creator: '@jeemaster',
   },
   robots: {
     index: true,
@@ -59,7 +82,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#ea580c" />
         <meta name="msapplication-TileColor" content="#ea580c" />
         
-        {/* Favicon and app icons - These will be overridden by DynamicHead component */}
+        {/* Favicon and app icons */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -81,7 +104,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "EducationalOrganization",
-              "name": "JEE App",
+              "name": "JEE Master",
               "description": "Complete JEE preparation platform with AI-powered learning",
               "url": "https://jeemaster.com",
               "logo": {
