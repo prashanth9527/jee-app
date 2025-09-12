@@ -118,6 +118,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { data } = await api.get('/user/me');
       console.log('Auth check successful:', data); // Debug log
       setUser(data);
+      setLoading(false); // Set loading to false on successful auth
       
       // Check if user needs profile completion
       if (data.needsProfileCompletion && typeof window !== 'undefined') {
@@ -188,7 +189,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, []); // Empty dependency array ensures this only runs once on mount
 
 
 
