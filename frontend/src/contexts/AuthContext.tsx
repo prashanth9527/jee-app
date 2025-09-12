@@ -45,8 +45,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = (token: string, userData: User) => {
     console.log('AuthContext login called with:', { token: token.substring(0, 20) + '...', userData }); // Debug log
+    console.log('Storing token in localStorage...');
     localStorage.setItem('token', token);
+    console.log('Token stored, setting user data...');
     setUser(userData);
+    console.log('Login function completed successfully');
   };
 
   const logout = () => {
