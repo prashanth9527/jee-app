@@ -42,6 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [authCheckInProgress, setAuthCheckInProgress] = useState(false);
+  const [subscriptionChecked, setSubscriptionChecked] = useState(false);
 
   const login = (token: string, userData: User) => {
     console.log('AuthContext login called with:', { token: token.substring(0, 20) + '...', userData }); // Debug log
@@ -55,6 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
+    setSubscriptionChecked(false); // Reset subscription check flag
     window.location.href = '/login';
   };
 
@@ -62,6 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     console.log('Handling token expiration...');
     localStorage.removeItem('token');
     setUser(null);
+    setSubscriptionChecked(false); // Reset subscription check flag
     
     // Show user-friendly message
     if (typeof window !== 'undefined') {
@@ -131,8 +134,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // Check subscription status for students (only if profile is complete)
-      if (data.role === 'STUDENT' && !data.needsProfileCompletion && typeof window !== 'undefined') {
+      // Check subscription status for students (only if profile is complete and not already checked)
+      if (data.role === 'STUDENT' && !data.needsProfileCompletion && !subscriptionChecked && typeof window !== 'undefined') {
+        setSubscriptionChecked(true); // Mark as checked to prevent infinite loop
         try {
           const subscriptionResponse = await api.get('/student/subscription-status');
           const subscriptionData = subscriptionResponse.data;
