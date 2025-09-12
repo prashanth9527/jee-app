@@ -9,8 +9,38 @@ export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Get('me')
-	me(@Req() req: any) {
-		return req.user || null;
+	async me(@Req() req: any) {
+		const jwtUser = req.user;
+		
+		console.log('User /me endpoint - JWT User:', {
+			id: jwtUser.id,
+			email: jwtUser.email,
+			role: jwtUser.role
+		});
+		
+		// Fetch current user data from database to get updated profile information
+		const currentUser = await this.usersService.findById(jwtUser.id);
+		
+		if (!currentUser) {
+			throw new BadRequestException('User not found');
+		}
+		
+		// Check if user needs profile completion (only for students)
+		const needsProfileCompletion = currentUser.role === 'STUDENT' && (!currentUser.streamId || !currentUser.phone);
+		
+		console.log('User /me endpoint - Database User data:', {
+			id: currentUser.id,
+			email: currentUser.email,
+			role: currentUser.role,
+			streamId: currentUser.streamId,
+			phone: currentUser.phone,
+			needsProfileCompletion
+		});
+		
+		return {
+			...currentUser,
+			needsProfileCompletion
+		};
 	}
 
 	@Put('profile')

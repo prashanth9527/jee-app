@@ -86,13 +86,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const checkAuth = async () => {
     // Prevent multiple simultaneous auth checks
     if (authCheckInProgress) {
+      console.log('Auth check already in progress, skipping...');
       return;
     }
     
     setAuthCheckInProgress(true);
     
     const token = localStorage.getItem('token');
+    console.log('Auth check - Token exists:', !!token);
+    console.log('Auth check - Token (first 20 chars):', token ? token.substring(0, 20) + '...' : 'No token');
+    
     if (!token) {
+      console.log('Auth check - No token found, redirecting to login');
       setLoading(false);
       setAuthCheckInProgress(false);
       // Redirect to login if on protected route and no token
@@ -106,6 +111,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     try {
+      console.log('Auth check - Making API call to /user/me');
       const { data } = await api.get('/user/me');
       console.log('Auth check successful:', data); // Debug log
       setUser(data);
@@ -147,10 +153,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (error: any) {
       console.error('Auth check failed:', error);
+      console.error('Auth check error details:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        message: error.message
+      });
       
       // Check if it's a 401 error (token expired)
       if (error.response?.status === 401) {
-        console.log('Token expired, handling expiration...'); // Debug log
+        console.log('Token expired (401), handling expiration...'); // Debug log
         handleTokenExpiration();
       } else {
         // For other errors, just clear the token and redirect
