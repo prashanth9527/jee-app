@@ -89,7 +89,11 @@ export class AuthController {
 		return this.auth.getVerificationStatus(req.user.id);
 	}
 
-	// Phone change status endpoint removed for now
+	@UseGuards(JwtAuthGuard)
+	@Get('phone-change-status')
+	getPhoneChangeStatus(@Req() req: any) {
+		return this.auth.getPhoneChangeStatus(req.user.id);
+	}
 
 	@UseGuards(JwtAuthGuard)
 	@Post('verify-email')
@@ -109,7 +113,23 @@ export class AuthController {
 		return this.auth.verifyPhone(req.user.id, code);
 	}
 
-	// Phone change endpoints removed for now - focus on basic login fix
+	@UseGuards(JwtAuthGuard)
+	@Post('change-phone')
+	changePhone(@Req() req: any, @Body('newPhone') newPhone: string) {
+		return this.auth.changePhone(req.user.id, newPhone);
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post('verify-phone-change')
+	verifyPhoneChange(@Req() req: any, @Body('code') code: string) {
+		return this.auth.verifyPhoneChange(req.user.id, code);
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post('cancel-phone-change')
+	cancelPhoneChange(@Req() req: any) {
+		return this.auth.cancelPhoneChange(req.user.id);
+	}
 
 	@UseGuards(JwtAuthGuard)
 	@Post('logout')
