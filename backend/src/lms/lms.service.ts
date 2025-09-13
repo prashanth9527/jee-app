@@ -108,7 +108,7 @@ export class LMSService {
 
     // Validate parent content exists if provided
     if (data.parentId) {
-      const parent = await this.prisma.lMSContent.findUnique({
+      const parent = await this.prisma.LMSContent.findUnique({
         where: { id: data.parentId }
       });
       if (!parent) {
@@ -204,7 +204,7 @@ export class LMSService {
       order: data.order || 0,
     });
 
-    const content = await this.prisma.lMSContent.create({
+    const content = await this.prisma.LMSContent.create({
       data: contentData,
       include: {
         stream: true,
@@ -225,7 +225,7 @@ export class LMSService {
   }
 
   async updateContent(id: string, data: UpdateLMSContentDto) {
-    const existingContent = await this.prisma.lMSContent.findUnique({
+    const existingContent = await this.prisma.LMSContent.findUnique({
       where: { id }
     });
 
@@ -263,7 +263,7 @@ export class LMSService {
       }
     }
 
-    const content = await this.prisma.lMSContent.update({
+    const content = await this.prisma.LMSContent.update({
       where: { id },
       data: {
       ...data,
@@ -288,7 +288,7 @@ export class LMSService {
   }
 
   async getContent(id: string) {
-    const content = await this.prisma.lMSContent.findUnique({
+    const content = await this.prisma.LMSContent.findUnique({
       where: { id },
       include: {
         stream: true,
@@ -369,11 +369,11 @@ export class LMSService {
     }
 
     // Get total count
-    const totalItems = await this.prisma.lMSContent.count({ where });
+    const totalItems = await this.prisma.LMSContent.count({ where });
     const totalPages = Math.ceil(totalItems / limit);
 
     // Get content
-    const content = await this.prisma.lMSContent.findMany({
+    const content = await this.prisma.LMSContent.findMany({
       where,
       include: {
         stream: true,
@@ -410,7 +410,7 @@ export class LMSService {
   }
 
   async deleteContent(id: string) {
-    const content = await this.prisma.lMSContent.findUnique({
+    const content = await this.prisma.LMSContent.findUnique({
       where: { id },
       include: {
         children: true,
@@ -439,7 +439,7 @@ export class LMSService {
       }
     }
 
-    await this.prisma.lMSContent.delete({
+    await this.prisma.LMSContent.delete({
       where: { id }
     });
 
@@ -447,7 +447,7 @@ export class LMSService {
   }
 
   async bulkDeleteContent(contentIds: string[]) {
-    const contents = await this.prisma.lMSContent.findMany({
+    const contents = await this.prisma.LMSContent.findMany({
       where: { id: { in: contentIds } },
       include: {
         children: true,
@@ -472,7 +472,7 @@ export class LMSService {
       }
     }
 
-    const result = await this.prisma.lMSContent.deleteMany({
+    const result = await this.prisma.LMSContent.deleteMany({
       where: { id: { in: contentIds } }
     });
 
@@ -480,7 +480,7 @@ export class LMSService {
   }
 
   async bulkUpdateStatus(contentIds: string[], status: string) {
-    const result = await this.prisma.lMSContent.updateMany({
+    const result = await this.prisma.LMSContent.updateMany({
       where: { id: { in: contentIds } },
       data: { status: status as any }
     });
@@ -497,23 +497,23 @@ export class LMSService {
       totalViews,
       totalCompletions
     ] = await Promise.all([
-      this.prisma.lMSContent.count(),
-      this.prisma.lMSContent.groupBy({
+      this.prisma.LMSContent.count(),
+      this.prisma.LMSContent.groupBy({
         by: ['contentType'],
         _count: { contentType: true }
       }),
-      this.prisma.lMSContent.groupBy({
+      this.prisma.LMSContent.groupBy({
         by: ['status'],
         _count: { status: true }
       }),
-      this.prisma.lMSContent.groupBy({
+      this.prisma.LMSContent.groupBy({
         by: ['accessType'],
         _count: { accessType: true }
       }),
-      this.prisma.lMSContent.aggregate({
+      this.prisma.LMSContent.aggregate({
         _sum: { views: true }
       }),
-      this.prisma.lMSContent.aggregate({
+      this.prisma.LMSContent.aggregate({
         _sum: { completions: true }
       })
     ]);
@@ -654,11 +654,11 @@ export class LMSService {
     }
 
     // Get total count
-    const totalItems = await this.prisma.lMSContent.count({ where });
+    const totalItems = await this.prisma.LMSContent.count({ where });
     const totalPages = Math.ceil(totalItems / limit);
 
     // Get content with progress
-    const content = await this.prisma.lMSContent.findMany({
+    const content = await this.prisma.LMSContent.findMany({
       where,
       include: {
         stream: true,
@@ -693,7 +693,7 @@ export class LMSService {
 
   async trackProgress(userId: string, contentId: string, progress: number, timeSpent?: number) {
     // Validate content exists
-    const content = await this.prisma.lMSContent.findUnique({
+    const content = await this.prisma.LMSContent.findUnique({
       where: { id: contentId }
     });
 
@@ -740,7 +740,7 @@ export class LMSService {
 
     // Update content completion count if completed
     if (progress >= 100 && status === 'COMPLETED') {
-      await this.prisma.lMSContent.update({
+      await this.prisma.LMSContent.update({
         where: { id: contentId },
         data: {
           completions: { increment: 1 }
@@ -778,7 +778,7 @@ export class LMSService {
   }
 
   async getContentAnalytics(contentId: string) {
-    const content = await this.prisma.lMSContent.findUnique({
+    const content = await this.prisma.LMSContent.findUnique({
       where: { id: contentId },
       include: {
         subject: true,
@@ -826,7 +826,7 @@ export class LMSService {
   }
 
   async duplicateContent(id: string, newTitle?: string) {
-    const originalContent = await this.prisma.lMSContent.findUnique({
+    const originalContent = await this.prisma.LMSContent.findUnique({
       where: { id }
     });
 
@@ -834,7 +834,7 @@ export class LMSService {
       throw new NotFoundException('Content not found');
     }
 
-    const duplicatedContent = await this.prisma.lMSContent.create({
+    const duplicatedContent = await this.prisma.LMSContent.create({
       data: {
         title: newTitle || `${originalContent.title} (Copy)`,
         description: originalContent.description,

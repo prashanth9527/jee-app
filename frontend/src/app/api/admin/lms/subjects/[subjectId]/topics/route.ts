@@ -4,10 +4,11 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { subjectId: string } }
+  { params }: { params: Promise<{ subjectId: string }> }
 ) {
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/lms/subjects/${params.subjectId}/topics`, {
+    const { subjectId } = await params;
+    const response = await fetch(`${API_BASE_URL}/admin/lms/subjects/${subjectId}/topics`, {
       headers: {
         'Authorization': request.headers.get('Authorization') || '',
       },

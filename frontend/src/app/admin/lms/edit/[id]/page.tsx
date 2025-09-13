@@ -125,6 +125,7 @@ export default function LMSEditPage() {
           contentType: contentData.contentType || 'TEXT',
           status: contentData.status || 'DRAFT',
           accessType: contentData.accessType || 'FREE',
+          streamId: contentData.streamId || '',
           subjectId: contentData.subjectId || '',
           topicId: contentData.topicId || '',
           subtopicId: contentData.subtopicId || '',
@@ -248,19 +249,19 @@ export default function LMSEditPage() {
     try {
       setUploadProgress(0);
       
-      const formData = new FormData();
-      formData.append('file', file);
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', file);
       
-      const response = await fetch('/api/admin/lms/upload', {
-        method: 'POST',
-        body: formData
+      const response = await api.post('/admin/lms/upload', uploadFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
       
-      if (response.ok) {
-        const result = await response.json();
+      if (response.data) {
         setFormData(prev => ({
           ...prev,
-          fileUrl: result.url
+          fileUrl: response.data.url
         }));
         setUploadedFile(file);
       }
@@ -280,23 +281,15 @@ export default function LMSEditPage() {
     try {
       setSubmitting(true);
       
-      const response = await fetch(`/api/admin/lms/content/${contentId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      const response = await api.put(`/admin/lms/content/${contentId}`, formData);
       
-      if (response.ok) {
+      if (response.data) {
         router.push('/admin/lms');
-      } else {
-        const error = await response.json();
-        alert(error.message || 'Error updating content');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating content:', error);
-      alert('Error updating content');
+      const errorMessage = error.response?.data?.message || error.message || 'Error updating content';
+      alert(errorMessage);
     } finally {
       setSubmitting(false);
     }
