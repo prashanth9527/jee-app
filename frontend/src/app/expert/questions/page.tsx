@@ -692,13 +692,14 @@ export default function ExpertQuestionsPage() {
                             }}
                             className="text-blue-600"
                           />
-                          <input
-                            type="text"
-                            value={option.text}
-                            onChange={(e) => updateOption(index, 'text', e.target.value)}
-                            placeholder={`Option ${index + 1}`}
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
-                          />
+                          <div className="flex-1">
+                            <RichTextEditor
+                              value={option.text}
+                              onChange={(content) => updateOption(index, 'text', content)}
+                              placeholder={`Option ${index + 1}... (Supports rich text formatting and math equations)`}
+                              height={150}
+                            />
+                          </div>
                           {formData.options.length > 2 && (
                             <button
                               type="button"

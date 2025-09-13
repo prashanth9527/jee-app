@@ -521,12 +521,11 @@ export default function EditPYQQuestionPage() {
                           </span>
                         </div>
                         <div className="flex-1">
-                          <input
-                            type="text"
+                          <RichTextEditor
                             value={option.text}
-                            onChange={(e) => handleOptionChange(index, 'text', e.target.value)}
-                            className="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-                            placeholder={`Option ${String.fromCharCode(65 + index)}`}
+                            onChange={(content) => handleOptionChange(index, 'text', content)}
+                            placeholder={`Option ${String.fromCharCode(65 + index)}... (Supports rich text formatting and math equations)`}
+                            height={150}
                           />
                         </div>
                         <div className="flex items-center space-x-2">

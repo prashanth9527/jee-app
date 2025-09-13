@@ -711,12 +711,14 @@ export default function AddQuestionPage() {
 												onChange={() => updateOption(index, 'isCorrect', true)}
 												className="text-blue-600 focus:ring-blue-500"
 											/>
-											<input 
-												className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-												placeholder={`Option ${index + 1}`} 
-												value={option.text} 
-												onChange={e => updateOption(index, 'text', e.target.value)}
-											/>
+											<div className="flex-1">
+												<RichTextEditor
+													value={option.text}
+													onChange={(content) => updateOption(index, 'text', content)}
+													placeholder={`Option ${index + 1}... (Supports rich text formatting and math equations)`}
+													height={150}
+												/>
+											</div>
 											{option.isCorrect && (
 												<span className="text-green-600 text-sm font-medium flex items-center">
 													<svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
