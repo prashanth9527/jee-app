@@ -13,6 +13,7 @@ interface Plan {
   priceCents: number;
   currency: string;
   interval: 'MONTH' | 'YEAR';
+  planType: 'MANUAL' | 'AI_ENABLED';
   isActive: boolean;
 }
 
@@ -111,6 +112,20 @@ export default function SubscriptionsPage() {
     return interval === 'MONTH' ? 'month' : 'year';
   };
 
+  // Filter out trial plans for users who already have a subscription or are renewing
+  const getAvailablePlans = () => {
+    if (subscriptionStatus?.hasValidSubscription || subscriptionStatus?.isOnTrial) {
+      // For existing subscribers or trial users, exclude free/trial plans
+      return plans.filter(plan => plan.priceCents > 0);
+    }
+    // For new users, show all plans
+    return plans;
+  };
+
+  const isRecommendedPlan = (plan: Plan) => {
+    return plan.planType === 'AI_ENABLED';
+  };
+
   if (loading) {
     return (
       <ProtectedRoute requiredRole="STUDENT">
@@ -191,8 +206,17 @@ export default function SubscriptionsPage() {
 
           {/* Plans Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {plans.map((plan) => (
-              <div key={plan.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            {getAvailablePlans().map((plan) => (
+              <div key={plan.id} className={`bg-white rounded-lg shadow-md overflow-hidden relative ${
+                isRecommendedPlan(plan) ? 'ring-2 ring-orange-500' : ''
+              }`}>
+                {isRecommendedPlan(plan) && (
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      Recommended
+                    </span>
+                  </div>
+                )}
                 <div className="p-6">
                   <div className="text-center">
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">{plan.name}</h3>
@@ -248,6 +272,8 @@ export default function SubscriptionsPage() {
                     className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
                       subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        : isRecommendedPlan(plan)
+                        ? 'bg-orange-600 text-white hover:bg-orange-700'
                         : 'bg-blue-600 text-white hover:bg-blue-700'
                     }`}
                   >
