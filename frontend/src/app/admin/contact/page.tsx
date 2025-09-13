@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import api from '@/lib/api';
 import DynamicHead from '@/components/DynamicHead';
 import ProtectedRoute from '@/components/ProtectedRoute';
