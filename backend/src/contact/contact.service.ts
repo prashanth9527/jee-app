@@ -37,11 +37,11 @@ export class ContactService {
     status?: string;
     category?: string;
     priority?: string;
-    page?: number;
-    limit?: number;
+    page?: number | string;
+    limit?: number | string;
   }) {
-    const page = filters?.page || 1;
-    const limit = filters?.limit || 20;
+    const page = parseInt(String(filters?.page || 1), 10);
+    const limit = parseInt(String(filters?.limit || 20), 10);
     const skip = (page - 1) * limit;
 
     const where: any = {};
