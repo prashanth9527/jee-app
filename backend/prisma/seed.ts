@@ -114,7 +114,7 @@ async function main() {
     data: {
       name: 'Manual Plan',
       description: 'Access to practice tests with database questions',
-      priceCents: 99900, // 999 INR in cents
+      priceCents: 49, // 999 INR in cents
       currency: 'INR',
       interval: 'MONTH',
       planType: 'MANUAL',
@@ -126,7 +126,7 @@ async function main() {
     data: {
       name: 'AI Enabled Plan',
       description: 'Access to AI-generated questions and explanations',
-      priceCents: 199900, // 1999 INR in cents
+      priceCents: 99, // 1999 INR in cents
       currency: 'INR',
       interval: 'MONTH',
       planType: 'AI_ENABLED',
