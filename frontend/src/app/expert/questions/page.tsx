@@ -5,6 +5,7 @@ import api from '@/lib/api';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import ExpertLayout from '@/components/ExpertLayout';
 import Swal from 'sweetalert2';
+import RichTextEditor from '@/components/RichTextEditor';
 
 interface Question {
   id: string;
@@ -552,13 +553,11 @@ export default function ExpertQuestionsPage() {
                       <label className="block text-sm font-medium text-gray-900 mb-2">
                         Question Stem *
                       </label>
-                      <textarea
-                        required
+                      <RichTextEditor
                         value={formData.stem}
-                        onChange={(e) => setFormData(prev => ({ ...prev, stem: e.target.value }))}
-                        rows={4}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
-                        placeholder="Enter the question..."
+                        onChange={(content) => setFormData(prev => ({ ...prev, stem: content }))}
+                        placeholder="Enter the question... (Supports rich text formatting and math equations)"
+                        height={200}
                       />
                     </div>
 
@@ -566,12 +565,11 @@ export default function ExpertQuestionsPage() {
                       <label className="block text-sm font-medium text-gray-900 mb-2">
                         Explanation
                       </label>
-                      <textarea
+                      <RichTextEditor
                         value={formData.explanation}
-                        onChange={(e) => setFormData(prev => ({ ...prev, explanation: e.target.value }))}
-                        rows={4}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
-                        placeholder="Enter explanation..."
+                        onChange={(content) => setFormData(prev => ({ ...prev, explanation: content }))}
+                        placeholder="Enter explanation... (Supports rich text formatting and math equations)"
+                        height={200}
                       />
                     </div>
 
@@ -579,12 +577,11 @@ export default function ExpertQuestionsPage() {
                       <label className="block text-sm font-medium text-gray-900 mb-2">
                         Tips & Formulas
                       </label>
-                      <textarea
+                      <RichTextEditor
                         value={formData.tip_formula}
-                        onChange={(e) => setFormData(prev => ({ ...prev, tip_formula: e.target.value }))}
-                        rows={3}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
-                        placeholder="Enter helpful tips, formulas, or hints..."
+                        onChange={(content) => setFormData(prev => ({ ...prev, tip_formula: content }))}
+                        placeholder="Enter helpful tips, formulas, or hints... (Supports rich text formatting and math equations)"
+                        height={150}
                       />
                     </div>
                   </div>

@@ -6,6 +6,7 @@ import api from '@/lib/api';
 import Swal from 'sweetalert2';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
+import RichTextEditor from '@/components/RichTextEditor';
 
 interface Question {
   id: string;
@@ -359,18 +360,17 @@ export default function EditPYQQuestionPage() {
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Question Text <span className="text-red-500">*</span>
                       </label>
-                      <textarea
-                        value={formData.stem}
-                        onChange={(e) => {
-                          setFormData(prev => ({ ...prev, stem: e.target.value }));
-                          if (errors.stem) setErrors(prev => ({ ...prev, stem: '' }));
-                        }}
-                        rows={6}
-                        className={`w-full border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
-                          errors.stem ? 'border-red-500' : 'border-gray-300'
-                        }`}
-                        placeholder="Enter the complete question text..."
-                      />
+                      <div className={`${errors.stem ? 'border border-red-500 rounded-md' : ''}`}>
+                        <RichTextEditor
+                          value={formData.stem}
+                          onChange={(content) => {
+                            setFormData(prev => ({ ...prev, stem: content }));
+                            if (errors.stem) setErrors(prev => ({ ...prev, stem: '' }));
+                          }}
+                          placeholder="Enter the complete question text... (Supports rich text formatting and math equations)"
+                          height={200}
+                        />
+                      </div>
                       {errors.stem && <p className="mt-1 text-sm text-red-600">{errors.stem}</p>}
                     </div>
 
@@ -486,26 +486,24 @@ export default function EditPYQQuestionPage() {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Explanation</label>
-                      <textarea
+                      <RichTextEditor
                         value={formData.explanation}
-                        onChange={(e) => setFormData(prev => ({ ...prev, explanation: e.target.value }))}
-                        rows={4}
-                        className="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-                        placeholder="Provide a detailed explanation of the solution..."
+                        onChange={(content) => setFormData(prev => ({ ...prev, explanation: content }))}
+                        placeholder="Provide a detailed explanation of the solution... (Supports rich text formatting and math equations)"
+                        height={200}
                       />
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Tips & Formulas</label>
-                      <textarea
+                      <RichTextEditor
                         value={formData.tip_formula}
-                        onChange={(e) => setFormData(prev => ({ ...prev, tip_formula: e.target.value }))}
-                        rows={3}
-                        className="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-                        placeholder="Enter helpful tips, formulas, or hints to solve this question..."
+                        onChange={(content) => setFormData(prev => ({ ...prev, tip_formula: content }))}
+                        placeholder="Enter helpful tips, formulas, or hints to solve this question... (Supports rich text formatting and math equations)"
+                        height={150}
                       />
                       <p className="mt-1 text-sm text-gray-500">
-                        💡 Include key formulas, concepts, or solving strategies that would help students
+                        💡 Include key formulas, concepts, or solving strategies. Use the Math button (∑) for mathematical expressions
                       </p>
                     </div>
                   </div>

@@ -6,6 +6,7 @@ import api from '@/lib/api';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
 import Swal from 'sweetalert2';
+import RichTextEditor from '@/components/RichTextEditor';
 
 interface Question {
 	id: string;
@@ -522,27 +523,25 @@ export default function EditQuestionPage() {
 										Question Stem * 
 										<span className="text-xs text-gray-500 ml-2">({stem.length}/1000)</span>
 									</label>
-									<textarea 
-										className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium ${
-											errors.stem ? 'border-red-300' : 'border-gray-300'
-										}`}
-										rows={6}
-										placeholder="Enter the question text... (Supports basic formatting)" 
-										value={stem} 
-										onChange={e => {
-											setStem(e.target.value);
-											setHasUnsavedChanges(true);
-											if (errors.stem) {
-												setErrors(prev => ({ ...prev, stem: '' }));
-											}
-										}}
-										maxLength={1000}
-									/>
+									<div className={`${errors.stem ? 'border border-red-300 rounded-md' : ''}`}>
+										<RichTextEditor
+											value={stem}
+											onChange={(content) => {
+												setStem(content);
+												setHasUnsavedChanges(true);
+												if (errors.stem) {
+													setErrors(prev => ({ ...prev, stem: '' }));
+												}
+											}}
+											placeholder="Enter the question text... (Supports rich text formatting and math equations)"
+											height={200}
+										/>
+									</div>
 									{errors.stem && (
 										<p className="mt-1 text-sm text-red-600">{errors.stem}</p>
 									)}
 									<div className="mt-2 text-xs text-gray-500">
-										💡 Tip: Use **bold**, *italic*, and `code` for better formatting
+										💡 Tip: Use the toolbar for formatting, and click the Math button (∑) to insert equations
 									</div>
 								</div>
 								<div>
@@ -550,16 +549,14 @@ export default function EditQuestionPage() {
 										Explanation (Optional)
 										<span className="text-xs text-gray-500 ml-2">({explanation.length}/500)</span>
 									</label>
-									<textarea 
-										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-										rows={6}
-										placeholder="Enter detailed explanation for the answer..." 
-										value={explanation} 
-										onChange={e => {
-											setExplanation(e.target.value);
+									<RichTextEditor
+										value={explanation}
+										onChange={(content) => {
+											setExplanation(content);
 											setHasUnsavedChanges(true);
 										}}
-										maxLength={500}
+										placeholder="Enter detailed explanation for the answer... (Supports rich text formatting and math equations)"
+										height={200}
 									/>
 								</div>
 							</div>
@@ -570,19 +567,17 @@ export default function EditQuestionPage() {
 									Tips & Formulas (Optional)
 									<span className="text-xs text-gray-500 ml-2">({tipFormula.length}/300)</span>
 								</label>
-								<textarea 
-									className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium" 
-									rows={4}
-									placeholder="Enter helpful tips, formulas, or hints to solve this question..." 
-									value={tipFormula} 
-									onChange={e => {
-										setTipFormula(e.target.value);
+								<RichTextEditor
+									value={tipFormula}
+									onChange={(content) => {
+										setTipFormula(content);
 										setHasUnsavedChanges(true);
 									}}
-									maxLength={300}
+									placeholder="Enter helpful tips, formulas, or hints to solve this question... (Supports rich text formatting and math equations)"
+									height={150}
 								/>
 								<div className="mt-2 text-xs text-gray-500">
-									💡 Tip: Include key formulas, concepts, or solving strategies that would help students
+									💡 Tip: Include key formulas, concepts, or solving strategies. Use the Math button (∑) for mathematical expressions
 								</div>
 							</div>
 

@@ -29,7 +29,7 @@ export default function RichTextEditor({
   return (
     <div className={`rich-text-editor ${className}`}>
       {/* @ts-expect-error TinyMCE Editor component has TypeScript definition issues */}
-      <Editor
+      <Editor as any
         apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}    
         onInit={(evt: any, editor: any) => editorRef.current = editor}
         value={value}
