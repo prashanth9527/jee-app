@@ -18,6 +18,7 @@ import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { FormulasModule } from './formulas/formulas.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { ContactModule } from './contact/contact.module';
+import { LMSModule } from './lms/lms.module';
 
 
 
@@ -40,6 +41,7 @@ import { ContactModule } from './contact/contact.module';
     FormulasModule,
     NotificationsModule,
     ContactModule,
+    LMSModule,
     
   ],
   controllers: [AppController],

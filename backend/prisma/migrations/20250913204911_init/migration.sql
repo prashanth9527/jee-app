@@ -20,7 +20,7 @@ CREATE TYPE "public"."PlanInterval" AS ENUM ('MONTH', 'YEAR');
 CREATE TYPE "public"."SubscriptionStatus" AS ENUM ('ACTIVE', 'CANCELED', 'EXPIRED');
 
 -- CreateEnum
-CREATE TYPE "public"."OtpType" AS ENUM ('EMAIL', 'PHONE');
+CREATE TYPE "public"."OtpType" AS ENUM ('EMAIL', 'PHONE', 'EMAIL_CHANGE', 'PHONE_CHANGE');
 
 -- CreateEnum
 CREATE TYPE "public"."ReferralStatus" AS ENUM ('PENDING', 'COMPLETED', 'EXPIRED', 'CANCELLED');
@@ -30,6 +30,27 @@ CREATE TYPE "public"."RewardType" AS ENUM ('SUBSCRIPTION_DAYS', 'MONETARY_CREDIT
 
 -- CreateEnum
 CREATE TYPE "public"."NotificationPriority" AS ENUM ('LOW', 'NORMAL', 'HIGH', 'URGENT');
+
+-- CreateEnum
+CREATE TYPE "public"."TicketStatus" AS ENUM ('OPEN', 'IN_PROGRESS', 'WAITING_FOR_USER', 'RESOLVED', 'CLOSED');
+
+-- CreateEnum
+CREATE TYPE "public"."TicketPriority" AS ENUM ('LOW', 'NORMAL', 'HIGH', 'URGENT');
+
+-- CreateEnum
+CREATE TYPE "public"."TicketCategory" AS ENUM ('GENERAL', 'TECHNICAL_SUPPORT', 'BILLING', 'FEEDBACK', 'PARTNERSHIP', 'OTHER');
+
+-- CreateEnum
+CREATE TYPE "public"."ContentType" AS ENUM ('H5P', 'SCORM', 'FILE', 'URL', 'IFRAME', 'YOUTUBE', 'TEXT', 'VIDEO', 'AUDIO', 'IMAGE', 'QUIZ', 'ASSIGNMENT');
+
+-- CreateEnum
+CREATE TYPE "public"."ContentStatus" AS ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED', 'SCHEDULED');
+
+-- CreateEnum
+CREATE TYPE "public"."AccessType" AS ENUM ('FREE', 'SUBSCRIPTION', 'PREMIUM', 'TRIAL');
+
+-- CreateEnum
+CREATE TYPE "public"."ProgressStatus" AS ENUM ('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED', 'FAILED');
 
 -- CreateTable
 CREATE TABLE "public"."User" (
@@ -279,9 +300,11 @@ CREATE TABLE "public"."Otp" (
     "userId" TEXT NOT NULL,
     "code" TEXT NOT NULL,
     "type" "public"."OtpType" NOT NULL,
-    "target" TEXT NOT NULL,
+    "target" TEXT,
     "expiresAt" TIMESTAMP(3) NOT NULL,
     "consumed" BOOLEAN NOT NULL DEFAULT false,
+    "used" BOOLEAN NOT NULL DEFAULT false,
+    "metadata" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Otp_pkey" PRIMARY KEY ("id")
@@ -342,6 +365,9 @@ CREATE TABLE "public"."system_settings" (
     "faviconUrl" TEXT,
     "ogImageUrl" TEXT,
     "contactEmail" TEXT,
+    "supportEmail" TEXT,
+    "privacyEmail" TEXT,
+    "legalEmail" TEXT,
     "contactPhone" TEXT,
     "address" TEXT,
     "facebookUrl" TEXT,
@@ -435,6 +461,96 @@ CREATE TABLE "public"."user_sessions" (
     CONSTRAINT "user_sessions_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "public"."contact_tickets" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "phone" TEXT,
+    "subject" TEXT NOT NULL,
+    "message" TEXT NOT NULL,
+    "status" "public"."TicketStatus" NOT NULL DEFAULT 'OPEN',
+    "priority" "public"."TicketPriority" NOT NULL DEFAULT 'NORMAL',
+    "category" "public"."TicketCategory" NOT NULL DEFAULT 'GENERAL',
+    "userId" TEXT,
+    "ipAddress" TEXT,
+    "userAgent" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "contact_tickets_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."ticket_responses" (
+    "id" TEXT NOT NULL,
+    "ticketId" TEXT NOT NULL,
+    "message" TEXT NOT NULL,
+    "isInternal" BOOLEAN NOT NULL DEFAULT false,
+    "responderId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "ticket_responses_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."lms_content" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "contentType" "public"."ContentType" NOT NULL,
+    "status" "public"."ContentStatus" NOT NULL DEFAULT 'DRAFT',
+    "accessType" "public"."AccessType" NOT NULL DEFAULT 'FREE',
+    "contentData" JSONB,
+    "fileUrl" TEXT,
+    "fileSize" INTEGER,
+    "fileType" TEXT,
+    "originalFileName" TEXT,
+    "externalUrl" TEXT,
+    "iframeCode" TEXT,
+    "youtubeId" TEXT,
+    "youtubeUrl" TEXT,
+    "h5pContent" JSONB,
+    "scormData" JSONB,
+    "streamId" TEXT,
+    "subjectId" TEXT,
+    "topicId" TEXT,
+    "subtopicId" TEXT,
+    "isDripContent" BOOLEAN NOT NULL DEFAULT false,
+    "dripDelay" INTEGER,
+    "dripDate" TIMESTAMP(3),
+    "duration" INTEGER,
+    "difficulty" "public"."Difficulty",
+    "tags" TEXT[],
+    "order" INTEGER NOT NULL DEFAULT 0,
+    "parentId" TEXT,
+    "views" INTEGER NOT NULL DEFAULT 0,
+    "completions" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "lms_content_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."lms_progress" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "contentId" TEXT NOT NULL,
+    "status" "public"."ProgressStatus" NOT NULL DEFAULT 'NOT_STARTED',
+    "progress" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "timeSpent" INTEGER NOT NULL DEFAULT 0,
+    "startedAt" TIMESTAMP(3),
+    "completedAt" TIMESTAMP(3),
+    "lastAccessedAt" TIMESTAMP(3),
+    "score" DOUBLE PRECISION,
+    "attempts" INTEGER NOT NULL DEFAULT 0,
+    "data" JSONB,
+
+    CONSTRAINT "lms_progress_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "public"."User"("email");
 
@@ -497,6 +613,9 @@ CREATE UNIQUE INDEX "user_sessions_sessionId_key" ON "public"."user_sessions"("s
 
 -- CreateIndex
 CREATE INDEX "user_sessions_userId_isActive_idx" ON "public"."user_sessions"("userId", "isActive");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "lms_progress_userId_contentId_key" ON "public"."lms_progress"("userId", "contentId");
 
 -- AddForeignKey
 ALTER TABLE "public"."User" ADD CONSTRAINT "User_streamId_fkey" FOREIGN KEY ("streamId") REFERENCES "public"."Stream"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -590,3 +709,33 @@ ALTER TABLE "public"."bookmarks" ADD CONSTRAINT "bookmarks_questionId_fkey" FORE
 
 -- AddForeignKey
 ALTER TABLE "public"."user_sessions" ADD CONSTRAINT "user_sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."contact_tickets" ADD CONSTRAINT "contact_tickets_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."ticket_responses" ADD CONSTRAINT "ticket_responses_ticketId_fkey" FOREIGN KEY ("ticketId") REFERENCES "public"."contact_tickets"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."ticket_responses" ADD CONSTRAINT "ticket_responses_responderId_fkey" FOREIGN KEY ("responderId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_streamId_fkey" FOREIGN KEY ("streamId") REFERENCES "public"."Stream"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "public"."Subject"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_topicId_fkey" FOREIGN KEY ("topicId") REFERENCES "public"."Topic"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_subtopicId_fkey" FOREIGN KEY ("subtopicId") REFERENCES "public"."Subtopic"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "public"."lms_content"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lms_progress" ADD CONSTRAINT "lms_progress_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lms_progress" ADD CONSTRAINT "lms_progress_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES "public"."lms_content"("id") ON DELETE CASCADE ON UPDATE CASCADE;

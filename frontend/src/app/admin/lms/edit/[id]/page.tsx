@@ -1,7 +1,7 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
 import api from '@/lib/api';
@@ -59,10 +59,12 @@ interface ContentFormData {
   order: number;
 }
 
-export default function LMSAddPage() {
+export default function LMSEditPage() {
   const router = useRouter();
+  const params = useParams();
+  const contentId = params.id as string;
   
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [streams, setStreams] = useState<any[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -103,12 +105,55 @@ export default function LMSAddPage() {
   const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
-    loadInitialData();
-  }, []);
+    if (contentId) {
+      loadContentData();
+    }
+  }, [contentId]);
 
-  const loadInitialData = async () => {
+  const loadContentData = async () => {
     try {
       setLoading(true);
+      
+      // Load content details
+      const contentResponse = await api.get(`/admin/lms/content/${contentId}`);
+      const contentData = contentResponse.data;
+      
+      if (contentData) {
+        setFormData({
+          title: contentData.title || '',
+          description: contentData.description || '',
+          contentType: contentData.contentType || 'TEXT',
+          status: contentData.status || 'DRAFT',
+          accessType: contentData.accessType || 'FREE',
+          subjectId: contentData.subjectId || '',
+          topicId: contentData.topicId || '',
+          subtopicId: contentData.subtopicId || '',
+          difficulty: contentData.difficulty || 'MEDIUM',
+          duration: contentData.duration || 0,
+          tags: contentData.tags || [],
+          isDripContent: contentData.isDripContent || false,
+          dripDelay: contentData.dripDelay || 0,
+          dripDate: contentData.dripDate ? new Date(contentData.dripDate).toISOString().slice(0, 16) : '',
+          contentData: contentData.contentData,
+          fileUrl: contentData.fileUrl || '',
+          externalUrl: contentData.externalUrl || '',
+          iframeCode: contentData.iframeCode || '',
+          youtubeId: contentData.youtubeId || '',
+          youtubeUrl: contentData.youtubeUrl || '',
+          h5pContent: contentData.h5pContent,
+          scormData: contentData.scormData,
+          parentId: contentData.parentId || '',
+          order: contentData.order || 0
+        });
+        
+        // Load related data based on content
+        if (contentData.subjectId) {
+          await loadTopics(contentData.subjectId);
+        }
+        if (contentData.topicId) {
+          await loadSubtopics(contentData.topicId);
+        }
+      }
       
       // Load streams
       const streamsResponse = await api.get('/admin/lms/streams');
@@ -121,12 +166,12 @@ export default function LMSAddPage() {
       setSubjects(Array.isArray(subjectsData) ? subjectsData : []);
       
       // Load parent content for hierarchy
-      const contentResponse = await api.get('/admin/lms/content?limit=100');
-      const contentData = contentResponse.data;
-      setParentContent(contentData.content || []);
+      const parentResponse = await api.get('/admin/lms/content?limit=100');
+      const parentData = parentResponse.data;
+      setParentContent(parentData.content?.filter((c: any) => c.id !== contentId) || []);
       
     } catch (error) {
-      console.error('Error loading initial data:', error);
+      console.error('Error loading content data:', error);
     } finally {
       setLoading(false);
     }
@@ -144,7 +189,6 @@ export default function LMSAddPage() {
       const data = response.data;
       setTopics(Array.isArray(data) ? data : []);
       setSubtopics([]);
-      setFormData(prev => ({ ...prev, topicId: '', subtopicId: '' }));
     } catch (error) {
       console.error('Error loading topics:', error);
     }
@@ -160,7 +204,6 @@ export default function LMSAddPage() {
       const response = await api.get(`/admin/lms/topics/${topicId}/subtopics`);
       const data = response.data;
       setSubtopics(Array.isArray(data) ? data : []);
-      setFormData(prev => ({ ...prev, subtopicId: '' }));
     } catch (error) {
       console.error('Error loading subtopics:', error);
     }
@@ -177,8 +220,10 @@ export default function LMSAddPage() {
       setSubtopics([]);
     } else if (field === 'subjectId') {
       loadTopics(value);
+      setFormData(prev => ({ ...prev, topicId: '', subtopicId: '' }));
     } else if (field === 'topicId') {
       loadSubtopics(value);
+      setFormData(prev => ({ ...prev, subtopicId: '' }));
     }
   };
 
@@ -203,19 +248,19 @@ export default function LMSAddPage() {
     try {
       setUploadProgress(0);
       
-      const uploadFormData = new FormData();
-      uploadFormData.append('file', file);
+      const formData = new FormData();
+      formData.append('file', file);
       
-      const response = await api.post('/admin/lms/upload', uploadFormData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const response = await fetch('/api/admin/lms/upload', {
+        method: 'POST',
+        body: formData
       });
       
-      if (response.data) {
+      if (response.ok) {
+        const result = await response.json();
         setFormData(prev => ({
           ...prev,
-          fileUrl: response.data.url
+          fileUrl: result.url
         }));
         setUploadedFile(file);
       }
@@ -235,15 +280,23 @@ export default function LMSAddPage() {
     try {
       setSubmitting(true);
       
-      const response = await api.post('/admin/lms/content', formData);
+      const response = await fetch(`/api/admin/lms/content/${contentId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
       
-      if (response.data) {
+      if (response.ok) {
         router.push('/admin/lms');
+      } else {
+        const error = await response.json();
+        alert(error.message || 'Error updating content');
       }
-    } catch (error: any) {
-      console.error('Error creating content:', error);
-      const errorMessage = error.response?.data?.message || error.message || 'Error creating content';
-      alert(errorMessage);
+    } catch (error) {
+      console.error('Error updating content:', error);
+      alert('Error updating content');
     } finally {
       setSubmitting(false);
     }
@@ -274,6 +327,11 @@ export default function LMSAddPage() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Upload File
               </label>
+              {formData.fileUrl && (
+                <div className="mb-2 text-sm text-green-600">
+                  ✅ Current file: {formData.fileUrl.split('/').pop()}
+                </div>
+              )}
               <input
                 type="file"
                 onChange={(e) => {
@@ -287,7 +345,7 @@ export default function LMSAddPage() {
               />
               {uploadedFile && (
                 <div className="mt-2 text-sm text-green-600">
-                  ✅ File uploaded: {uploadedFile.name}
+                  ✅ New file uploaded: {uploadedFile.name}
                 </div>
               )}
               {uploadProgress > 0 && uploadProgress < 100 && (
@@ -454,8 +512,8 @@ export default function LMSAddPage() {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Add LMS Content</h1>
-              <p className="text-gray-600 mt-1">Create new learning content</p>
+              <h1 className="text-2xl font-bold text-gray-900">Edit LMS Content</h1>
+              <p className="text-gray-600 mt-1">Update learning content</p>
             </div>
             <button
               onClick={() => router.back()}
@@ -805,7 +863,7 @@ export default function LMSAddPage() {
                 disabled={submitting}
                 className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {submitting ? 'Creating...' : 'Create Content'}
+                {submitting ? 'Updating...' : 'Update Content'}
               </button>
             </div>
           </form>

@@ -376,6 +376,15 @@ async function main() {
     },
   });
 
+  // Create topics for Biology (NEET)
+  const cellBiology = await prisma.topic.create({
+    data: {
+      name: 'Cell Biology',
+      description: 'Cell structure and function',
+      subjectId: biology.id,
+    },
+  });
+
   console.log('📖 Created topics');
 
   // Create subtopics
@@ -800,11 +809,112 @@ async function main() {
 
   console.log('📊 Created exam submissions');
 
+  // Create sample LMS content
+  console.log('📚 Creating LMS content...');
+
+  const lmsContent1 = await prisma.lMSContent.create({
+    data: {
+      title: 'Introduction to Physics - Mechanics',
+      description: 'Fundamental concepts of mechanics including Newton\'s laws, kinematics, and dynamics.',
+      contentType: 'VIDEO',
+      status: 'PUBLISHED',
+      accessType: 'FREE',
+      streamId: jeeStream.id,
+      subjectId: physics.id,
+      topicId: mechanics.id,
+      difficulty: 'MEDIUM',
+      duration: 45,
+      tags: ['mechanics', 'newton', 'kinematics', 'fundamentals'],
+      contentData: {
+        videoUrl: 'https://example.com/videos/mechanics-intro.mp4',
+        transcript: 'Welcome to our introduction to mechanics...'
+      }
+    }
+  });
+
+  const lmsContent2 = await prisma.lMSContent.create({
+    data: {
+      title: 'Chemical Bonding Fundamentals',
+      description: 'Understanding ionic, covalent, and metallic bonds in chemistry.',
+      contentType: 'TEXT',
+      status: 'PUBLISHED',
+      accessType: 'SUBSCRIPTION',
+      streamId: jeeStream.id,
+      subjectId: chemistry.id,
+      topicId: organicChemistry.id,
+      difficulty: 'EASY',
+      duration: 30,
+      tags: ['bonding', 'ionic', 'covalent', 'fundamentals'],
+      contentData: {
+        content: 'Chemical bonding is the force that holds atoms together in compounds...',
+        sections: [
+          { title: 'Ionic Bonds', content: 'Ionic bonds form between metals and non-metals...' },
+          { title: 'Covalent Bonds', content: 'Covalent bonds form when atoms share electrons...' }
+        ]
+      }
+    }
+  });
+
+  const lmsContent3 = await prisma.lMSContent.create({
+    data: {
+      title: 'NEET Biology - Cell Structure',
+      description: 'Detailed study of cell structure and organelles for NEET preparation.',
+      contentType: 'IMAGE',
+      status: 'PUBLISHED',
+      accessType: 'PREMIUM',
+      streamId: neetStream.id,
+      subjectId: biology.id,
+      topicId: cellBiology.id,
+      difficulty: 'HARD',
+      duration: 60,
+      tags: ['cell', 'organelles', 'structure', 'neet'],
+      contentData: {
+        images: [
+          { url: 'https://example.com/images/cell-structure-1.jpg', caption: 'Animal Cell Structure' },
+          { url: 'https://example.com/images/cell-structure-2.jpg', caption: 'Plant Cell Structure' }
+        ]
+      }
+    }
+  });
+
+  const lmsContent4 = await prisma.lMSContent.create({
+    data: {
+      title: 'Mathematics Quiz - Algebra',
+      description: 'Interactive quiz to test your algebra knowledge.',
+      contentType: 'QUIZ',
+      status: 'PUBLISHED',
+      accessType: 'FREE',
+      streamId: jeeStream.id,
+      subjectId: mathematics.id,
+      topicId: algebra.id,
+      difficulty: 'MEDIUM',
+      duration: 20,
+      tags: ['algebra', 'quiz', 'practice', 'math'],
+      contentData: {
+        questions: [
+          {
+            question: 'What is the solution to x + 5 = 10?',
+            options: ['x = 5', 'x = 15', 'x = 2', 'x = -5'],
+            correctAnswer: 0
+          },
+          {
+            question: 'Simplify: 2x + 3x',
+            options: ['5x', '6x', '5x²', '6x²'],
+            correctAnswer: 0
+          }
+        ]
+      }
+    }
+  });
+
+  console.log('📚 Created LMS content');
+
   console.log('✅ Database seeding completed successfully!');
   console.log('');
   console.log('📋 Demo Data Summary:');
   console.log(`- Users: ${await prisma.user.count()} (1 admin, 2 students)`);
-  console.log(`- Subjects: ${await prisma.subject.count()} (Physics, Chemistry, Mathematics)`);
+  console.log(`- Streams: ${await prisma.stream.count()} (JEE, NEET, CLAT)`);
+  console.log(`- Subjects: ${await prisma.subject.count()} (Physics, Chemistry, Mathematics, Biology)`);
   console.log(`- Topics: ${await prisma.topic.count()}`);
   console.log(`- Subtopics: ${await prisma.subtopic.count()}`);
   console.log(`- Questions: ${await prisma.question.count()}`);
@@ -812,6 +922,7 @@ async function main() {
   console.log(`- Plans: ${await prisma.plan.count()}`);
   console.log(`- Exam Papers: ${await prisma.examPaper.count()}`);
   console.log(`- Submissions: ${await prisma.examSubmission.count()}`);
+  console.log(`- LMS Content: ${await prisma.lMSContent.count()}`);
   console.log('');
   console.log('🔑 Login Credentials:');
   console.log('Admin: admin@jeeapp.com / admin123');

@@ -41,6 +41,16 @@ export class LMSController {
     return this.lmsService.bulkDeleteContent(body.contentIds);
   }
 
+  @Put('content/bulk/status')
+  async bulkUpdateStatus(@Body() body: { contentIds: string[]; status: string }) {
+    return this.lmsService.bulkUpdateStatus(body.contentIds, body.status);
+  }
+
+  @Post('content/:id/duplicate')
+  async duplicateContent(@Param('id') id: string, @Body() body?: { newTitle?: string }) {
+    return this.lmsService.duplicateContent(id, body?.newTitle);
+  }
+
   @Get('stats')
   async getStats() {
     return this.lmsService.getStats();
@@ -55,6 +65,55 @@ export class LMSController {
   @Get('content/:id/analytics')
   async getContentAnalytics(@Param('id') id: string) {
     return this.lmsService.getContentAnalytics(id);
+  }
+
+  @Get('streams')
+  async getStreams() {
+    return this.lmsService.getStreams();
+  }
+
+  @Get('subjects')
+  async getSubjects() {
+    return this.lmsService['prisma'].subject.findMany({
+      select: {
+        id: true,
+        name: true,
+        stream: {
+          select: {
+            id: true,
+            name: true,
+            code: true
+          }
+        }
+      },
+      orderBy: { name: 'asc' }
+    });
+  }
+
+  @Get('subjects/:subjectId/topics')
+  async getTopics(@Param('subjectId') subjectId: string) {
+    return this.lmsService['prisma'].topic.findMany({
+      where: { subjectId },
+      select: {
+        id: true,
+        name: true,
+        description: true
+      },
+      orderBy: { name: 'asc' }
+    });
+  }
+
+  @Get('topics/:topicId/subtopics')
+  async getSubtopics(@Param('topicId') topicId: string) {
+    return this.lmsService['prisma'].subtopic.findMany({
+      where: { topicId },
+      select: {
+        id: true,
+        name: true,
+        description: true
+      },
+      orderBy: { name: 'asc' }
+    });
   }
 }
 
