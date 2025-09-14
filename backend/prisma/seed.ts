@@ -31,23 +31,32 @@ async function main() {
   await prisma.blog.deleteMany();
   await prisma.blogCategory.deleteMany();
   
+  // Delete formula data
+  await prisma.formula.deleteMany();
+  
   await prisma.user.deleteMany();
 
   console.log('🗑️ Cleared existing data');
 
-  // Create admin user
+  // Create or find admin user
   const hashedPassword = await bcrypt.hash('admin123', 10);
-  const adminUser = await prisma.user.create({
-    data: {
-      email: 'admin@jeeapp.com',
-      phone: '+919876543210',
-      fullName: 'Admin User',
-      hashedPassword,
-      role: 'ADMIN',
-      emailVerified: true,
-      phoneVerified: true,
-    },
+  let adminUser = await prisma.user.findUnique({
+    where: { email: 'admin@jeeapp.com' }
   });
+  
+  if (!adminUser) {
+    adminUser = await prisma.user.create({
+      data: {
+        email: 'admin@jeeapp.com',
+        phone: '+919876543210',
+        fullName: 'Admin User',
+        hashedPassword,
+        role: 'ADMIN',
+        emailVerified: true,
+        phoneVerified: true,
+      },
+    });
+  }
 
   // Create demo student users
   const student1 = await prisma.user.create({
@@ -1527,9 +1536,132 @@ async function main() {
   console.log(`- Plans: ${await prisma.plan.count()}`);
   console.log(`- Exam Papers: ${await prisma.examPaper.count()}`);
   console.log(`- Submissions: ${await prisma.examSubmission.count()}`);
+  // Create sample formulas
+  console.log('📐 Creating sample formulas...');
+  
+  const formulas = await Promise.all([
+    // Physics Formulas
+    prisma.formula.create({
+      data: {
+        title: 'Newton\'s Second Law',
+        formula: 'F = ma',
+        description: 'Force equals mass times acceleration',
+        subject: 'Physics',
+        tags: ['mechanics', 'force', 'acceleration'],
+        topicId: mechanics.id,
+      },
+    }),
+    prisma.formula.create({
+      data: {
+        title: 'Kinematic Equation - Final Velocity',
+        formula: 'v = u + at',
+        description: 'Final velocity equals initial velocity plus acceleration times time',
+        subject: 'Physics',
+        tags: ['kinematics', 'velocity', 'acceleration'],
+        topicId: mechanics.id,
+      },
+    }),
+    prisma.formula.create({
+      data: {
+        title: 'Work Done',
+        formula: 'W = F ⋅ d ⋅ cos(θ)',
+        description: 'Work equals force times displacement times cosine of angle',
+        subject: 'Physics',
+        tags: ['work', 'energy', 'force'],
+        topicId: mechanics.id,
+      },
+    }),
+    prisma.formula.create({
+      data: {
+        title: 'Electric Field Strength',
+        formula: 'E = F/q',
+        description: 'Electric field strength equals force divided by charge',
+        subject: 'Physics',
+        tags: ['electricity', 'electric-field', 'charge'],
+        topicId: electricity.id,
+      },
+    }),
+    
+    // Chemistry Formulas
+    prisma.formula.create({
+      data: {
+        title: 'Ideal Gas Law',
+        formula: 'PV = nRT',
+        description: 'Pressure times volume equals moles times gas constant times temperature',
+        subject: 'Chemistry',
+        tags: ['gas-laws', 'thermodynamics', 'ideal-gas'],
+        topicId: physicalChemistry.id,
+      },
+    }),
+    prisma.formula.create({
+      data: {
+        title: 'Rate of Reaction',
+        formula: 'Rate = k[A]^m[B]^n',
+        description: 'Rate of reaction equals rate constant times concentration raised to power',
+        subject: 'Chemistry',
+        tags: ['kinetics', 'rate', 'concentration'],
+        topicId: physicalChemistry.id,
+      },
+    }),
+    prisma.formula.create({
+      data: {
+        title: 'pH Calculation',
+        formula: 'pH = -log[H⁺]',
+        description: 'pH equals negative logarithm of hydrogen ion concentration',
+        subject: 'Chemistry',
+        tags: ['acid-base', 'pH', 'concentration'],
+        topicId: physicalChemistry.id,
+      },
+    }),
+    
+    // Mathematics Formulas
+    prisma.formula.create({
+      data: {
+        title: 'Quadratic Formula',
+        formula: 'x = (-b ± √(b² - 4ac)) / 2a',
+        description: 'Solution for quadratic equation ax² + bx + c = 0',
+        subject: 'Mathematics',
+        tags: ['quadratic', 'algebra', 'roots'],
+        topicId: algebra.id,
+      },
+    }),
+    prisma.formula.create({
+      data: {
+        title: 'Derivative of xⁿ',
+        formula: 'd/dx(xⁿ) = nx^(n-1)',
+        description: 'Power rule for differentiation',
+        subject: 'Mathematics',
+        tags: ['calculus', 'derivative', 'power-rule'],
+        topicId: calculus.id,
+      },
+    }),
+    prisma.formula.create({
+      data: {
+        title: 'Distance Formula',
+        formula: 'd = √((x₂-x₁)² + (y₂-y₁)²)',
+        description: 'Distance between two points in coordinate geometry',
+        subject: 'Mathematics',
+        tags: ['coordinate-geometry', 'distance', 'points'],
+        topicId: geometry.id,
+      },
+    }),
+  ]);
+
+  console.log(`📐 Created ${formulas.length} formulas`);
+
+  console.log('📊 Database Summary:');
+  console.log(`- Users: ${await prisma.user.count()}`);
+  console.log(`- Subjects: ${await prisma.subject.count()}`);
+  console.log(`- Topics: ${await prisma.topic.count()}`);
+  console.log(`- Subtopics: ${await prisma.subtopic.count()}`);
+  console.log(`- Questions: ${await prisma.question.count()}`);
+  console.log(`- Tags: ${await prisma.tag.count()}`);
+  console.log(`- Plans: ${await prisma.plan.count()}`);
+  console.log(`- Streams: ${await prisma.stream.count()}`);
   console.log(`- LMS Content: ${await prisma.lMSContent.count()}`);
   console.log(`- Blog Categories: ${await prisma.blogCategory.count()}`);
   console.log(`- Blog Posts: ${await prisma.blog.count()}`);
+  console.log(`- Formulas: ${await prisma.formula.count()}`);
   console.log('');
   console.log('🔑 Login Credentials:');
   console.log('Admin: admin@jeeapp.com / admin123');
