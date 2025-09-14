@@ -64,9 +64,9 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
                 Blogs
               </Link>
               
-              <Link href="/previous-year-questions" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              {/* <Link href="/previous-year-questions" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 PYQ Bank
-              </Link>
+              </Link> */}
               <Link href="/help" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 Help
               </Link>
