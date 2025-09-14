@@ -77,6 +77,12 @@ model User {
   
   // LMS progress
   lmsProgress LMSProgress[]
+  
+  // Blog relations
+  blogs        Blog[]
+  blogComments BlogComment[]
+  blogLikes    BlogLike[]
+  blogBookmarks BlogBookmark[]
 }
 
 enum UserRole {
@@ -97,6 +103,7 @@ model Stream {
   subjects    Subject[]
   users       User[]
   lmsContent  LMSContent[]
+  blogs       Blog[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
@@ -113,6 +120,7 @@ model Subject {
   topics      Topic[]
   questions   Question[]
   lmsContent  LMSContent[]
+  blogs       Blog[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
@@ -811,4 +819,153 @@ model LMSProgress {
   
   @@unique([userId, contentId])
   @@map("lms_progress")
+}
+
+// -------------------------------------------
+// Blog System
+// -------------------------------------------
+model BlogCategory {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  color       String?  // Hex color for category
+  icon        String?  // Icon name or URL
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  blogs       Blog[]
+  
+  @@map("blog_categories")
+}
+
+model Blog {
+  id          String      @id @default(cuid())
+  title       String
+  slug        String      @unique
+  excerpt     String?     // Short description
+  content     String      // Rich text content
+  
+  // SEO Fields
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String?
+  
+  // Publishing
+  status          BlogStatus @default(DRAFT)
+  publishedAt     DateTime?
+  featuredImage   String?    // Image URL
+  featured        Boolean    @default(false)  // Featured blog flag
+  
+  // Categorization
+  category        BlogCategory @relation(fields: [categoryId], references: [id])
+  categoryId      String
+  tags            String[]     // Array of tag strings
+  
+  // Author & Ownership
+  author          User     @relation(fields: [authorId], references: [id])
+  authorId        String
+  
+  // Content Organization
+  stream          Stream?  @relation(fields: [streamId], references: [id])
+  streamId        String?  // Optional stream association
+  subject         Subject? @relation(fields: [subjectId], references: [id])
+  subjectId       String?  // Optional subject association
+  
+  // Analytics
+  viewCount       Int      @default(0)
+  likeCount       Int      @default(0)
+  shareCount      Int      @default(0)
+  
+  // Timestamps
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  comments        BlogComment[]
+  likes           BlogLike[]
+  bookmarks       BlogBookmark[]
+  
+  @@map("blogs")
+}
+
+model BlogComment {
+  id        String   @id @default(cuid())
+  content   String
+  
+  // Author
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  
+  // Blog
+  blog      Blog     @relation(fields: [blogId], references: [id])
+  blogId    String
+  
+  // Moderation
+  status    CommentStatus @default(PENDING)
+  moderatedAt DateTime?
+  moderatedBy String?
+  
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("blog_comments")
+}
+
+model BlogLike {
+  id       String @id @default(cuid())
+  
+  // User
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String
+  
+  // Blog
+  blog     Blog   @relation(fields: [blogId], references: [id])
+  blogId   String
+  
+  // Timestamp
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, blogId])
+  @@map("blog_likes")
+}
+
+model BlogBookmark {
+  id       String @id @default(cuid())
+  
+  // User
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String
+  
+  // Blog
+  blog     Blog   @relation(fields: [blogId], references: [id])
+  blogId   String
+  
+  // Timestamp
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, blogId])
+  @@map("blog_bookmarks")
+}
+
+// -------------------------------------------
+// Enums
+// -------------------------------------------
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  SCHEDULED
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SPAM
 }

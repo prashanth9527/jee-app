@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import DynamicHead from '@/components/DynamicHead';
+import HeaderHome from '@/components/HeaderHome';
 
 interface SystemSettings {
   siteTitle: string;
@@ -197,40 +198,7 @@ export default function HomePage() {
       />
       <div className="min-h-screen bg-white">
       {/* Navigation */}
-        <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="flex-shrink-0 flex items-center">
-                <Link 
-                  href="/" 
-                  className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent hover:from-orange-700 hover:to-red-700 transition-all duration-200"
-                  title={`${systemSettings?.siteTitle || 'JEE Master'} - ${systemSettings?.siteKeywords || 'JEE preparation platform'}`}
-                  aria-label={`${systemSettings?.siteTitle || 'JEE Master'} - Go to homepage`}
-                >
-                  {systemSettings?.siteTitle || 'JEE Master'}
-                </Link>
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <a href="#features" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Features</a>
-                <a href="#subjects" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Subjects</a>
-                <a href="#testimonials" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Success Stories</a>
-                <a href="#pricing" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">Pricing</a>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/login" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
-                Login
-              </Link>
-              <Link href="/register" className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors">
-                Get Started Free
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <HeaderHome systemSettings={systemSettings || undefined} />
 
       {/* Hero Section with Feature Carousel */}
       <section className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50">

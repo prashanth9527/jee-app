@@ -23,6 +23,14 @@ async function main() {
   await prisma.subscription.deleteMany();
   await prisma.plan.deleteMany();
   await prisma.otp.deleteMany();
+  
+  // Delete blog-related data first
+  await prisma.blogBookmark.deleteMany();
+  await prisma.blogLike.deleteMany();
+  await prisma.blogComment.deleteMany();
+  await prisma.blog.deleteMany();
+  await prisma.blogCategory.deleteMany();
+  
   await prisma.user.deleteMany();
 
   console.log('🗑️ Cleared existing data');
@@ -163,9 +171,11 @@ async function main() {
 
   console.log('🎁 Created free trial plan for referrals');
 
-  // Create streams
-  const jeeStream = await prisma.stream.create({
-    data: {
+  // Create streams (using upsert to avoid unique constraint errors)
+  const jeeStream = await prisma.stream.upsert({
+    where: { code: 'JEE' },
+    update: {},
+    create: {
       name: 'JEE (Joint Entrance Examination)',
       description: 'Engineering entrance examination for IITs, NITs, and other engineering colleges',
       code: 'JEE',
@@ -173,8 +183,10 @@ async function main() {
     },
   });
 
-  const neetStream = await prisma.stream.create({
-    data: {
+  const neetStream = await prisma.stream.upsert({
+    where: { code: 'NEET' },
+    update: {},
+    create: {
       name: 'NEET (National Eligibility cum Entrance Test)',
       description: 'Medical entrance examination for MBBS, BDS, and other medical courses',
       code: 'NEET',
@@ -182,8 +194,10 @@ async function main() {
     },
   });
 
-  const clatStream = await prisma.stream.create({
-    data: {
+  const clatStream = await prisma.stream.upsert({
+    where: { code: 'CLAT' },
+    update: {},
+    create: {
       name: 'CLAT (Common Law Admission Test)',
       description: 'Law entrance examination for NLUs and other law colleges',
       code: 'CLAT',
@@ -191,8 +205,10 @@ async function main() {
     },
   });
 
-  const competitiveStream = await prisma.stream.create({
-    data: {
+  const competitiveStream = await prisma.stream.upsert({
+    where: { code: 'COMPETITIVE' },
+    update: {},
+    create: {
       name: 'Other Competitive Exams',
       description: 'Various other competitive examinations',
       code: 'COMPETITIVE',
@@ -909,6 +925,595 @@ async function main() {
 
   console.log('📚 Created LMS content');
 
+  // ========================================
+  // BLOG CATEGORIES
+  // ========================================
+  console.log('📝 Creating blog categories...');
+
+  const studyTipsCategory = await prisma.blogCategory.create({
+    data: {
+      name: 'Study Tips',
+      slug: 'study-tips',
+      description: 'Effective study strategies and learning techniques',
+      color: '#3B82F6',
+      icon: 'academic-cap',
+      sortOrder: 1,
+    },
+  });
+
+  const examPreparationCategory = await prisma.blogCategory.create({
+    data: {
+      name: 'Exam Preparation',
+      slug: 'exam-preparation',
+      description: 'Comprehensive guides for competitive exam preparation',
+      color: '#10B981',
+      icon: 'book-open',
+      sortOrder: 2,
+    },
+  });
+
+  const careerGuidanceCategory = await prisma.blogCategory.create({
+    data: {
+      name: 'Career Guidance',
+      slug: 'career-guidance',
+      description: 'Career advice and professional development',
+      color: '#8B5CF6',
+      icon: 'briefcase',
+      sortOrder: 3,
+    },
+  });
+
+  const motivationCategory = await prisma.blogCategory.create({
+    data: {
+      name: 'Motivation & Success',
+      slug: 'motivation-success',
+      description: 'Inspirational stories and motivational content',
+      color: '#F59E0B',
+      icon: 'fire',
+      sortOrder: 4,
+    },
+  });
+
+  const technologyCategory = await prisma.blogCategory.create({
+    data: {
+      name: 'Technology',
+      slug: 'technology',
+      description: 'Latest trends in educational technology',
+      color: '#EF4444',
+      icon: 'chip',
+      sortOrder: 5,
+    },
+  });
+
+  console.log('📝 Created blog categories');
+
+  // ========================================
+  // BLOG POSTS
+  // ========================================
+  console.log('📰 Creating blog posts...');
+
+  // Get admin user for author
+  const blogAuthor = await prisma.user.findUnique({
+    where: { email: 'admin@jeeapp.com' },
+  });
+
+  if (blogAuthor) {
+    // Study Tips Blog Posts
+    await prisma.blog.create({
+      data: {
+        title: '10 Effective Study Techniques for JEE Preparation',
+        slug: '10-effective-study-techniques-jee-preparation',
+        excerpt: 'Discover proven study methods that will help you excel in JEE preparation and achieve your dream of getting into a top engineering college.',
+        content: `
+          <h2>Introduction</h2>
+          <p>Preparing for JEE (Joint Entrance Examination) requires dedication, discipline, and the right study techniques. In this comprehensive guide, we'll explore 10 proven study methods that have helped thousands of students achieve success in JEE.</p>
+          
+          <h3>1. Active Recall</h3>
+          <p>Active recall involves actively stimulating memory during the learning process. Instead of passively reading notes, test yourself regularly on the material you've studied.</p>
+          
+          <h3>2. Spaced Repetition</h3>
+          <p>Review material at increasing intervals over time. This technique helps move information from short-term to long-term memory.</p>
+          
+          <h3>3. Practice Problems</h3>
+          <p>Solve as many practice problems as possible. JEE is all about application, and regular practice builds both speed and accuracy.</p>
+          
+          <h3>4. Time Management</h3>
+          <p>Create a realistic study schedule that balances all three subjects (Physics, Chemistry, Mathematics) effectively.</p>
+          
+          <h3>5. Conceptual Understanding</h3>
+          <p>Focus on understanding concepts rather than memorizing formulas. This approach will help you solve novel problems during the exam.</p>
+          
+          <h3>6. Regular Revision</h3>
+          <p>Set aside dedicated time for revision. Regular review of previously studied topics ensures retention.</p>
+          
+          <h3>7. Mock Tests</h3>
+          <p>Take full-length mock tests regularly to simulate exam conditions and identify areas for improvement.</p>
+          
+          <h3>8. Error Analysis</h3>
+          <p>Analyze your mistakes thoroughly. Understanding why you made an error helps prevent similar mistakes in the future.</p>
+          
+          <h3>9. Healthy Lifestyle</h3>
+          <p>Maintain a balanced diet, regular exercise, and adequate sleep. Physical health directly impacts mental performance.</p>
+          
+          <h3>10. Positive Mindset</h3>
+          <p>Stay motivated and maintain a positive attitude throughout your preparation journey.</p>
+          
+          <h2>Conclusion</h2>
+          <p>Success in JEE requires a combination of hard work, smart study techniques, and consistent effort. Implement these strategies gradually and adapt them to your learning style for the best results.</p>
+        `,
+        metaTitle: '10 Effective Study Techniques for JEE Preparation | JEE Study Guide',
+        metaDescription: 'Master JEE preparation with these 10 proven study techniques. Learn active recall, spaced repetition, and other effective methods for competitive exam success.',
+        metaKeywords: 'JEE preparation, study techniques, competitive exams, engineering entrance, study tips',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800',
+        categoryId: studyTipsCategory.id,
+        authorId: blogAuthor.id,
+        streamId: jeeStream.id,
+        tags: ['JEE', 'Study Tips', 'Preparation', 'Engineering', 'Competitive Exams'],
+      },
+    });
+
+    await prisma.blog.create({
+      data: {
+        title: 'NEET Biology: Complete Study Plan for Medical Aspirants',
+        slug: 'neet-biology-complete-study-plan-medical-aspirants',
+        excerpt: 'A comprehensive study plan for NEET Biology covering all important topics, preparation strategies, and time management tips for medical entrance exam success.',
+        content: `
+          <h2>NEET Biology Study Plan Overview</h2>
+          <p>Biology carries the highest weightage in NEET (720 marks out of 720), making it crucial for your success. This comprehensive study plan will guide you through systematic preparation.</p>
+          
+          <h3>Class 11 Biology Topics</h3>
+          <ul>
+            <li><strong>Diversity in Living World:</strong> Classification, taxonomy, and biodiversity</li>
+            <li><strong>Structural Organization:</strong> Cell structure, tissues, and organ systems</li>
+            <li><strong>Plant Physiology:</strong> Photosynthesis, respiration, and transport</li>
+            <li><strong>Human Physiology:</strong> All 11 organ systems in detail</li>
+          </ul>
+          
+          <h3>Class 12 Biology Topics</h3>
+          <ul>
+            <li><strong>Reproduction:</strong> Sexual and asexual reproduction in plants and animals</li>
+            <li><strong>Genetics and Evolution:</strong> Heredity, molecular basis, and evolution</li>
+            <li><strong>Biology and Human Welfare:</strong> Health, diseases, and biotechnology</li>
+            <li><strong>Biotechnology:</strong> Principles, processes, and applications</li>
+            <li><strong>Ecology and Environment:</strong> Ecosystems, biodiversity, and conservation</li>
+          </ul>
+          
+          <h3>Study Strategy</h3>
+          <p>Allocate 60% of your study time to Biology, focusing on NCERT textbooks as the primary resource. Supplement with reference books for deeper understanding.</p>
+          
+          <h3>Daily Schedule</h3>
+          <p>Dedicate 6-8 hours daily to Biology, including 4 hours for theory and 2-4 hours for practice questions and revision.</p>
+          
+          <h3>Revision Plan</h3>
+          <p>Weekly revision of completed topics and monthly full revision of all chapters to ensure retention.</p>
+        `,
+        metaTitle: 'NEET Biology Study Plan | Complete Guide for Medical Entrance',
+        metaDescription: 'Master NEET Biology with our comprehensive study plan. Cover all Class 11 & 12 topics, preparation strategies, and tips for medical entrance success.',
+        metaKeywords: 'NEET Biology, medical entrance, study plan, preparation, NCERT, competitive exams',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800',
+        categoryId: examPreparationCategory.id,
+        authorId: blogAuthor.id,
+        streamId: neetStream.id,
+        tags: ['NEET', 'Biology', 'Medical Entrance', 'Study Plan', 'NCERT'],
+      },
+    });
+
+    await prisma.blog.create({
+      data: {
+        title: 'Career Options After Engineering: Beyond Traditional Paths',
+        slug: 'career-options-after-engineering-beyond-traditional-paths',
+        excerpt: 'Explore diverse career opportunities available to engineering graduates, from traditional roles to emerging fields like data science, entrepreneurship, and consulting.',
+        content: `
+          <h2>Traditional Engineering Careers</h2>
+          <p>While many engineering graduates pursue traditional roles in their field of specialization, there's a growing trend toward diverse career paths.</p>
+          
+          <h3>Core Engineering Roles</h3>
+          <ul>
+            <li><strong>Software Engineering:</strong> Development, testing, and maintenance of software systems</li>
+            <li><strong>Mechanical Engineering:</strong> Design, manufacturing, and maintenance of mechanical systems</li>
+            <li><strong>Civil Engineering:</strong> Infrastructure development, construction, and urban planning</li>
+            <li><strong>Electrical Engineering:</strong> Power systems, electronics, and telecommunications</li>
+          </ul>
+          
+          <h2>Emerging Career Paths</h2>
+          
+          <h3>Technology and Innovation</h3>
+          <ul>
+            <li><strong>Data Science:</strong> Analyzing large datasets to drive business decisions</li>
+            <li><strong>Artificial Intelligence:</strong> Developing intelligent systems and machine learning models</li>
+            <li><strong>Cybersecurity:</strong> Protecting digital assets and information systems</li>
+            <li><strong>Cloud Computing:</strong> Designing and managing cloud infrastructure</li>
+          </ul>
+          
+          <h3>Business and Management</h3>
+          <ul>
+            <li><strong>Management Consulting:</strong> Advising organizations on strategic decisions</li>
+            <li><strong>Product Management:</strong> Leading product development and strategy</li>
+            <li><strong>Investment Banking:</strong> Financial analysis and advisory services</li>
+            <li><strong>Entrepreneurship:</strong> Starting and scaling technology companies</li>
+          </ul>
+          
+          <h3>Creative and Design</h3>
+          <ul>
+            <li><strong>UX/UI Design:</strong> Creating user-friendly digital interfaces</li>
+            <li><strong>Technical Writing:</strong> Communicating complex technical concepts</li>
+            <li><strong>Digital Marketing:</strong> Promoting products and services online</li>
+            <li><strong>Game Development:</strong> Creating interactive entertainment experiences</li>
+          </ul>
+          
+          <h2>Skills to Develop</h2>
+          <p>Regardless of the career path you choose, focus on developing these essential skills:</p>
+          <ul>
+            <li>Problem-solving and analytical thinking</li>
+            <li>Communication and teamwork</li>
+            <li>Adaptability and continuous learning</li>
+            <li>Leadership and project management</li>
+          </ul>
+          
+          <h2>Conclusion</h2>
+          <p>Engineering education provides a strong foundation for diverse career opportunities. Stay open to exploring different paths and continuously upgrade your skills to remain competitive in the evolving job market.</p>
+        `,
+        metaTitle: 'Career Options After Engineering | Beyond Traditional Paths',
+        metaDescription: 'Discover diverse career opportunities for engineering graduates. Explore traditional roles, emerging tech careers, business paths, and creative fields.',
+        metaKeywords: 'engineering careers, career guidance, job opportunities, technology careers, entrepreneurship',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800',
+        categoryId: careerGuidanceCategory.id,
+        authorId: blogAuthor.id,
+        streamId: jeeStream.id,
+        tags: ['Career Guidance', 'Engineering', 'Job Opportunities', 'Technology', 'Future Careers'],
+      },
+    });
+
+    await prisma.blog.create({
+      data: {
+        title: 'Staying Motivated During Competitive Exam Preparation',
+        slug: 'staying-motivated-during-competitive-exam-preparation',
+        excerpt: 'Learn how to maintain motivation and mental well-being during the challenging journey of competitive exam preparation with practical tips and strategies.',
+        content: `
+          <h2>The Challenge of Long-term Preparation</h2>
+          <p>Preparing for competitive exams like JEE, NEET, or other entrance tests is a marathon, not a sprint. Maintaining motivation over months or years of preparation can be challenging but is crucial for success.</p>
+          
+          <h3>Understanding Motivation</h3>
+          <p>Motivation comes in two forms:</p>
+          <ul>
+            <li><strong>Intrinsic Motivation:</strong> Driven by internal factors like passion and interest</li>
+            <li><strong>Extrinsic Motivation:</strong> Driven by external factors like rewards and recognition</li>
+          </ul>
+          
+          <h3>Strategies to Stay Motivated</h3>
+          
+          <h4>1. Set Clear Goals</h4>
+          <p>Define both short-term and long-term goals. Break down your preparation into manageable milestones and celebrate achievements along the way.</p>
+          
+          <h4>2. Create a Vision Board</h4>
+          <p>Visualize your success by creating a board with images of your dream college, career goals, and motivational quotes.</p>
+          
+          <h4>3. Find Your "Why"</h4>
+          <p>Identify your core reasons for pursuing this path. Whether it's making your family proud, achieving financial stability, or following your passion, keep these reasons at the forefront.</p>
+          
+          <h4>4. Maintain a Study Routine</h4>
+          <p>Consistency builds momentum. Establish a daily routine that becomes second nature over time.</p>
+          
+          <h4>5. Connect with Like-minded People</h4>
+          <p>Join study groups, online communities, or forums where you can share experiences and learn from others on similar journeys.</p>
+          
+          <h4>6. Take Care of Your Mental Health</h4>
+          <p>Regular exercise, adequate sleep, and healthy eating habits directly impact your mental state and motivation levels.</p>
+          
+          <h4>7. Celebrate Small Wins</h4>
+          <p>Acknowledge and celebrate progress, no matter how small. Every step forward is a step closer to your goal.</p>
+          
+          <h4>8. Learn from Failures</h4>
+          <p>View setbacks as learning opportunities rather than failures. Each mistake teaches you something valuable.</p>
+          
+          <h4>9. Stay Inspired</h4>
+          <p>Read success stories, watch motivational videos, or listen to podcasts that inspire you to keep going.</p>
+          
+          <h4>10. Practice Gratitude</h4>
+          <p>Regularly reflect on the positive aspects of your life and the opportunities you have. Gratitude can shift your perspective and boost motivation.</p>
+          
+          <h3>Dealing with Low Motivation</h3>
+          <p>It's normal to experience periods of low motivation. When this happens:</p>
+          <ul>
+            <li>Take a short break and engage in activities you enjoy</li>
+            <li>Revisit your goals and remind yourself why you started</li>
+            <li>Seek support from family, friends, or mentors</li>
+            <li>Adjust your study plan if it's becoming overwhelming</li>
+          </ul>
+          
+          <h2>Conclusion</h2>
+          <p>Motivation is not a constant state but a skill that can be developed and maintained. By implementing these strategies and being kind to yourself during challenging times, you can sustain the motivation needed to achieve your competitive exam goals.</p>
+        `,
+        metaTitle: 'Staying Motivated During Competitive Exam Preparation | Success Tips',
+        metaDescription: 'Learn how to maintain motivation during competitive exam preparation. Discover practical strategies for mental well-being and sustained success.',
+        metaKeywords: 'exam motivation, competitive exams, study motivation, mental health, success tips',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
+        categoryId: motivationCategory.id,
+        authorId: blogAuthor.id,
+        tags: ['Motivation', 'Exam Preparation', 'Mental Health', 'Success', 'Study Tips'],
+      },
+    });
+
+    await prisma.blog.create({
+      data: {
+        title: 'The Future of Online Learning: AI and Personalized Education',
+        slug: 'future-online-learning-ai-personalized-education',
+        excerpt: 'Explore how artificial intelligence is revolutionizing online education, creating personalized learning experiences, and shaping the future of learning.',
+        content: `
+          <h2>Introduction to AI in Education</h2>
+          <p>Artificial Intelligence is transforming the educational landscape, making learning more personalized, efficient, and accessible than ever before.</p>
+          
+          <h3>Current Applications of AI in Education</h3>
+          
+          <h4>1. Personalized Learning Paths</h4>
+          <p>AI algorithms analyze student performance and learning patterns to create customized study plans that adapt to individual needs and pace.</p>
+          
+          <h4>2. Intelligent Tutoring Systems</h4>
+          <p>AI-powered tutors provide instant feedback, answer questions, and guide students through complex topics 24/7.</p>
+          
+          <h4>3. Automated Assessment</h4>
+          <p>Machine learning models can evaluate essays, code, and complex problem-solving approaches with increasing accuracy.</p>
+          
+          <h4>4. Learning Analytics</h4>
+          <p>AI systems track student engagement, identify learning gaps, and predict performance to enable proactive intervention.</p>
+          
+          <h3>Emerging Technologies</h3>
+          
+          <h4>Natural Language Processing (NLP)</h4>
+          <p>NLP enables more sophisticated interactions between students and educational platforms, allowing for natural conversation-based learning.</p>
+          
+          <h4>Computer Vision</h4>
+          <p>Visual recognition technology can analyze student behavior, attention levels, and engagement during online sessions.</p>
+          
+          <h4>Virtual and Augmented Reality</h4>
+          <p>AI-enhanced VR/AR creates immersive learning environments that adapt to student responses and provide realistic simulations.</p>
+          
+          <h3>Benefits of AI-Powered Education</h3>
+          <ul>
+            <li><strong>Personalization:</strong> Tailored learning experiences for each student</li>
+            <li><strong>Accessibility:</strong> Breaking down barriers for students with disabilities</li>
+            <li><strong>Scalability:</strong> Providing quality education to millions simultaneously</li>
+            <li><strong>Efficiency:</strong> Automated administrative tasks and instant feedback</li>
+            <li><strong>Data-Driven Insights:</strong> Evidence-based improvements in teaching methods</li>
+          </ul>
+          
+          <h3>Challenges and Considerations</h3>
+          
+          <h4>Privacy and Data Security</h4>
+          <p>Protecting student data while leveraging it for personalized learning requires robust security measures and ethical guidelines.</p>
+          
+          <h4>Digital Divide</h4>
+          <p>Ensuring equitable access to AI-powered educational tools across different socioeconomic groups.</p>
+          
+          <h4>Teacher-Student Relationship</h4>
+          <p>Balancing technology with human interaction to maintain the emotional and social aspects of education.</p>
+          
+          <h3>The Future Landscape</h3>
+          <p>As AI technology continues to evolve, we can expect:</p>
+          <ul>
+            <li>More sophisticated adaptive learning systems</li>
+            <li>Integration of AI across all educational levels</li>
+            <li>New forms of assessment and credentialing</li>
+            <li>Global collaboration through AI-powered platforms</li>
+          </ul>
+          
+          <h2>Conclusion</h2>
+          <p>AI is not replacing teachers but enhancing their capabilities and creating new possibilities for personalized, effective education. The future of learning lies in the thoughtful integration of artificial intelligence with human expertise.</p>
+        `,
+        metaTitle: 'Future of Online Learning: AI and Personalized Education | EdTech Trends',
+        metaDescription: 'Discover how AI is revolutionizing online education. Explore personalized learning, intelligent tutoring, and the future of educational technology.',
+        metaKeywords: 'AI in education, online learning, personalized education, educational technology, EdTech, future of learning',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800',
+        categoryId: technologyCategory.id,
+        authorId: blogAuthor.id,
+        tags: ['AI', 'Online Learning', 'EdTech', 'Personalized Education', 'Future Technology'],
+      },
+    });
+
+    // Add more blogs for pagination testing
+    await prisma.blog.create({
+      data: {
+        title: 'Mathematics: Mastering Calculus for JEE Main 2024',
+        slug: 'mathematics-mastering-calculus-jee-main-2024',
+        excerpt: 'A comprehensive guide to mastering calculus concepts essential for JEE Main 2024. Learn limits, derivatives, and integration techniques.',
+        content: `
+          <h2>Mastering Calculus for JEE Main 2024</h2>
+          <p>Calculus forms a significant portion of the Mathematics section in JEE Main. Understanding the fundamental concepts and mastering problem-solving techniques is crucial for success.</p>
+          
+          <h3>Limits and Continuity</h3>
+          <p>Master the concept of limits and understand how they form the foundation of calculus. Practice problems involving trigonometric, exponential, and logarithmic limits.</p>
+          
+          <h3>Differentiation</h3>
+          <p>Learn derivative rules and their applications. Focus on implicit differentiation, logarithmic differentiation, and parametric differentiation.</p>
+          
+          <h3>Integration</h3>
+          <p>Master various integration techniques including substitution, integration by parts, and partial fractions. Practice definite integrals and their applications.</p>
+        `,
+        metaTitle: 'Mathematics: Mastering Calculus for JEE Main 2024',
+        metaDescription: 'Comprehensive guide to mastering calculus concepts for JEE Main 2024. Learn limits, derivatives, and integration techniques.',
+        metaKeywords: 'calculus, JEE Main, mathematics, limits, derivatives, integration',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800',
+        categoryId: studyTipsCategory.id,
+        authorId: blogAuthor.id,
+        tags: ['Mathematics', 'Calculus', 'JEE Main', 'Study Tips'],
+      },
+    });
+
+    await prisma.blog.create({
+      data: {
+        title: 'Physics: Understanding Electromagnetic Waves for NEET',
+        slug: 'physics-understanding-electromagnetic-waves-neet',
+        excerpt: 'Master electromagnetic waves concepts for NEET preparation. Learn about wave properties, spectrum, and applications in medical imaging.',
+        content: `
+          <h2>Electromagnetic Waves in NEET Physics</h2>
+          <p>Electromagnetic waves are crucial for NEET preparation, especially for students aspiring to join medical colleges. Understanding these concepts is essential for both Physics and Biology sections.</p>
+          
+          <h3>Properties of Electromagnetic Waves</h3>
+          <p>Learn about the transverse nature of EM waves, their speed in vacuum, and how they don't require a medium to propagate.</p>
+          
+          <h3>Electromagnetic Spectrum</h3>
+          <p>Understand the complete spectrum from radio waves to gamma rays, their wavelengths, frequencies, and applications in medicine and technology.</p>
+          
+          <h3>Medical Applications</h3>
+          <p>Study how X-rays, MRI, and other imaging techniques work using electromagnetic waves principles.</p>
+        `,
+        metaTitle: 'Physics: Understanding Electromagnetic Waves for NEET',
+        metaDescription: 'Master electromagnetic waves concepts for NEET preparation. Learn wave properties, spectrum, and medical applications.',
+        metaKeywords: 'electromagnetic waves, NEET, physics, medical imaging, spectrum',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1635070041409-e63e36f27ef3?w=800',
+        categoryId: examPreparationCategory.id,
+        authorId: blogAuthor.id,
+        streamId: neetStream.id,
+        tags: ['Physics', 'Electromagnetic Waves', 'NEET', 'Medical Physics'],
+      },
+    });
+
+    await prisma.blog.create({
+      data: {
+        title: 'Chemistry: Organic Reactions Every JEE Aspirant Must Know',
+        slug: 'chemistry-organic-reactions-jee-aspirant-must-know',
+        excerpt: 'Essential organic chemistry reactions for JEE preparation. Master reaction mechanisms and synthetic pathways for success.',
+        content: `
+          <h2>Essential Organic Chemistry Reactions for JEE</h2>
+          <p>Organic chemistry is a scoring subject in JEE if you understand the reaction mechanisms and patterns. Here are the most important reactions you must master.</p>
+          
+          <h3>Substitution Reactions</h3>
+          <p>Learn SN1, SN2, and nucleophilic substitution reactions. Understand the factors affecting reaction rates and stereochemistry.</p>
+          
+          <h3>Elimination Reactions</h3>
+          <p>Master E1 and E2 elimination reactions. Practice predicting the major products and understanding regioselectivity.</p>
+          
+          <h3>Addition Reactions</h3>
+          <p>Study electrophilic and nucleophilic addition reactions. Focus on Markovnikov's rule and anti-Markovnikov additions.</p>
+        `,
+        metaTitle: 'Chemistry: Organic Reactions Every JEE Aspirant Must Know',
+        metaDescription: 'Essential organic chemistry reactions for JEE preparation. Master reaction mechanisms and synthetic pathways.',
+        metaKeywords: 'organic chemistry, JEE, reactions, mechanisms, synthesis',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800',
+        categoryId: studyTipsCategory.id,
+        authorId: blogAuthor.id,
+        streamId: jeeStream.id,
+        tags: ['Chemistry', 'Organic Reactions', 'JEE', 'Mechanisms'],
+      },
+    });
+
+    await prisma.blog.create({
+      data: {
+        title: 'Biology: Cell Division and Genetics for NEET 2024',
+        slug: 'biology-cell-division-genetics-neet-2024',
+        excerpt: 'Comprehensive study of cell division and genetics concepts for NEET 2024. Master mitosis, meiosis, and inheritance patterns.',
+        content: `
+          <h2>Cell Division and Genetics for NEET 2024</h2>
+          <p>Cell division and genetics form the backbone of Biology section in NEET. Understanding these concepts is crucial for medical aspirants.</p>
+          
+          <h3>Mitosis and Meiosis</h3>
+          <p>Learn the phases of mitosis and meiosis, their significance, and differences. Understand the importance of each phase in cell cycle.</p>
+          
+          <h3>Mendelian Genetics</h3>
+          <p>Master the laws of inheritance, Punnett squares, and genetic crosses. Practice problems involving monohybrid and dihybrid crosses.</p>
+          
+          <h3>Non-Mendelian Inheritance</h3>
+          <p>Study incomplete dominance, codominance, multiple alleles, and sex-linked inheritance patterns.</p>
+        `,
+        metaTitle: 'Biology: Cell Division and Genetics for NEET 2024',
+        metaDescription: 'Comprehensive study of cell division and genetics for NEET 2024. Master mitosis, meiosis, and inheritance patterns.',
+        metaKeywords: 'cell division, genetics, NEET, mitosis, meiosis, inheritance',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800',
+        categoryId: examPreparationCategory.id,
+        authorId: blogAuthor.id,
+        streamId: neetStream.id,
+        tags: ['Biology', 'Cell Division', 'Genetics', 'NEET'],
+      },
+    });
+
+    await prisma.blog.create({
+      data: {
+        title: 'Career Options After Engineering: Beyond Traditional Roles',
+        slug: 'career-options-after-engineering-beyond-traditional-roles',
+        excerpt: 'Explore diverse career paths available to engineering graduates. Discover opportunities in entrepreneurship, consulting, and emerging fields.',
+        content: `
+          <h2>Diverse Career Paths for Engineering Graduates</h2>
+          <p>Engineering opens doors to numerous career opportunities beyond traditional engineering roles. Let's explore the diverse paths available to engineering graduates.</p>
+          
+          <h3>Entrepreneurship and Startups</h3>
+          <p>Many engineers are founding successful startups. Learn about the entrepreneurial journey and how to start your own venture.</p>
+          
+          <h3>Consulting and Advisory</h3>
+          <p>Engineering consultants work with companies to solve complex problems and improve processes across various industries.</p>
+          
+          <h3>Research and Development</h3>
+          <p>Join R&D teams in companies or research institutions to work on cutting-edge technologies and innovations.</p>
+          
+          <h3>Management and Leadership</h3>
+          <p>Transition into management roles where your technical background provides a competitive advantage in leading technical teams.</p>
+        `,
+        metaTitle: 'Career Options After Engineering: Beyond Traditional Roles',
+        metaDescription: 'Explore diverse career paths for engineering graduates. Discover opportunities in entrepreneurship, consulting, and emerging fields.',
+        metaKeywords: 'engineering careers, entrepreneurship, consulting, career guidance, engineering jobs',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800',
+        categoryId: careerGuidanceCategory.id,
+        authorId: blogAuthor.id,
+        streamId: jeeStream.id,
+        tags: ['Career Guidance', 'Engineering', 'Entrepreneurship', 'Consulting'],
+      },
+    });
+
+    await prisma.blog.create({
+      data: {
+        title: 'Motivation: Overcoming Exam Anxiety and Building Confidence',
+        slug: 'motivation-overcoming-exam-anxiety-building-confidence',
+        excerpt: 'Learn effective strategies to overcome exam anxiety and build confidence for competitive exams. Mental preparation is as important as academic preparation.',
+        content: `
+          <h2>Overcoming Exam Anxiety: A Complete Guide</h2>
+          <p>Exam anxiety is common among students preparing for competitive exams. Learning to manage stress and build confidence is crucial for success.</p>
+          
+          <h3>Understanding Exam Anxiety</h3>
+          <p>Recognize the signs of anxiety and understand that some level of stress is normal and can even be beneficial for performance.</p>
+          
+          <h3>Breathing and Relaxation Techniques</h3>
+          <p>Practice deep breathing, meditation, and progressive muscle relaxation to manage anxiety during exams.</p>
+          
+          <h3>Building Confidence</h3>
+          <p>Set realistic goals, celebrate small achievements, and maintain a positive mindset throughout your preparation.</p>
+          
+          <h3>Exam Day Strategies</h3>
+          <p>Learn how to stay calm and focused during the actual exam. Practice time management and question prioritization.</p>
+        `,
+        metaTitle: 'Motivation: Overcoming Exam Anxiety and Building Confidence',
+        metaDescription: 'Learn effective strategies to overcome exam anxiety and build confidence for competitive exams.',
+        metaKeywords: 'exam anxiety, motivation, confidence building, stress management, mental preparation',
+        status: 'PUBLISHED',
+        publishedAt: new Date(),
+        featuredImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
+        categoryId: motivationCategory.id,
+        authorId: blogAuthor.id,
+        tags: ['Motivation', 'Exam Anxiety', 'Confidence', 'Mental Health'],
+      },
+    });
+
+    console.log('📰 Created blog posts');
+  }
+
   console.log('✅ Database seeding completed successfully!');
   console.log('');
   console.log('📋 Demo Data Summary:');
@@ -923,6 +1528,8 @@ async function main() {
   console.log(`- Exam Papers: ${await prisma.examPaper.count()}`);
   console.log(`- Submissions: ${await prisma.examSubmission.count()}`);
   console.log(`- LMS Content: ${await prisma.lMSContent.count()}`);
+  console.log(`- Blog Categories: ${await prisma.blogCategory.count()}`);
+  console.log(`- Blog Posts: ${await prisma.blog.count()}`);
   console.log('');
   console.log('🔑 Login Credentials:');
   console.log('Admin: admin@jeeapp.com / admin123');

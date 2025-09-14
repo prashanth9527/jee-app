@@ -1,365 +1,354 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { SubscriptionValidationService } from '../subscriptions/subscription-validation.service';
-import { PrismaService } from '../prisma/prisma.service';
-
-interface AIQuestionRequest {
-  subject: string;
-  topic?: string;
-  subtopic?: string;
-  difficulty: 'EASY' | 'MEDIUM' | 'HARD';
-  questionCount: number;
-  existingTips?: string[]; // Array of existing tips from similar questions
-}
-
-interface AIQuestion {
-  stem: string;
-  explanation: string;
-  tip_formula?: string;
-  difficulty: 'EASY' | 'MEDIUM' | 'HARD';
-  options: {
-    text: string;
-    isCorrect: boolean;
-  }[];
-}
 
 @Injectable()
-export class AIService {
-  private readonly logger = new Logger(AIService.name);
+export class AiService {
   private readonly openaiApiKey: string;
   private readonly openaiBaseUrl: string;
 
-  constructor(
-    private configService: ConfigService,
-    private subscriptionValidation: SubscriptionValidationService,
-    private prisma: PrismaService
-  ) {
+  constructor(private configService: ConfigService) {
     this.openaiApiKey = this.configService.get<string>('OPENAI_API_KEY') || '';
     this.openaiBaseUrl = this.configService.get<string>('OPENAI_BASE_URL') || 'https://api.openai.com/v1';
   }
 
-  async generateQuestions(request: AIQuestionRequest): Promise<AIQuestion[]> {
+  async generateBlogContent(prompt: string): Promise<string> {
     if (!this.openaiApiKey) {
       throw new Error('OpenAI API key not configured');
     }
 
     try {
-      const prompt = this.buildQuestionPrompt(request);
-      const response = await this.callOpenAI(prompt);
-      
-      return this.parseAIResponse(response);
-    } catch (error) {
-      this.logger.error('Error generating AI questions:', error);
-      throw new Error('Failed to generate AI questions');
-    }
-  }
+      const response = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.openaiApiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content: `You are an expert educational content writer specializing in JEE, NEET, and competitive exam preparation. 
+              Create comprehensive, well-structured blog posts that are:
+              - Educational and informative
+              - SEO-optimized
+              - Engaging and easy to read
+              - Accurate and up-to-date
+              - Helpful for students preparing for competitive exams
+              
+              Always include:
+              - A compelling title
+              - Clear structure with headings
+              - Practical tips and advice
+              - Relevant examples
+              - Actionable insights
+              
+              Format the response as JSON with the following structure:
+              {
+                "title": "Blog Title",
+                "excerpt": "Brief description of the blog post",
+                "content": "Full HTML content with proper formatting",
+                "tags": ["tag1", "tag2", "tag3"],
+                "metaTitle": "SEO optimized title",
+                "metaDescription": "SEO meta description",
+                "metaKeywords": "comma-separated keywords"
+              }`
+            },
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          max_tokens: 4000,
+          temperature: 0.7,
+        }),
+      });
 
-  async generateExplanation(question: string, correctAnswer: string, userAnswer?: string): Promise<string> {
-    if (!this.openaiApiKey) {
-      return 'Explanation not available';
-    }
-
-    try {
-      const prompt = this.buildExplanationPrompt(question, correctAnswer, userAnswer);
-      const response = await this.callOpenAI(prompt);
-      
-      return this.parseExplanationResponse(response);
-    } catch (error) {
-      this.logger.error('Error generating explanation:', error);
-      return 'Explanation not available';
-    }
-  }
-
-  async generateExplanationWithTips(question: string, correctAnswer: string, userAnswer?: string, tipFormula?: string): Promise<string> {
-    if (!this.openaiApiKey) {
-      return 'Explanation not available';
-    }
-
-    try {
-      const prompt = this.buildExplanationPromptWithTips(question, correctAnswer, userAnswer, tipFormula);
-      const response = await this.callOpenAI(prompt);
-      
-      return this.parseExplanationResponse(response);
-    } catch (error) {
-      this.logger.error('Error generating explanation with tips:', error);
-      return 'Explanation not available';
-    }
-  }
-
-  private buildQuestionPrompt(request: AIQuestionRequest): string {
-    const { subject, topic, subtopic, difficulty, questionCount, existingTips } = request;
-    
-    let context = `Generate ${questionCount} JEE (Joint Entrance Examination) level questions for ${subject}`;
-    
-    if (topic) {
-      context += `, specifically on the topic: ${topic}`;
-    }
-    
-    if (subtopic) {
-      context += `, focusing on: ${subtopic}`;
-    }
-    
-    context += `. The questions should be ${difficulty.toLowerCase()} difficulty level.`;
-
-    let prompt = `You are an expert JEE tutor. ${context}
-
-Please generate exactly ${questionCount} multiple-choice questions in the following JSON format:
-
-[
-  {
-    "stem": "Question text here",
-    "explanation": "Detailed explanation of the correct answer",
-    "tip_formula": "Helpful tips, formulas, or solving strategies for this question",
-    "difficulty": "${difficulty}",
-    "options": [
-      {
-        "text": "Option A text",
-        "isCorrect": false
-      },
-      {
-        "text": "Option B text", 
-        "isCorrect": true
-      },
-      {
-        "text": "Option C text",
-        "isCorrect": false
-      },
-      {
-        "text": "Option D text",
-        "isCorrect": false
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`OpenAI API error: ${errorData.error?.message || 'Unknown error'}`);
       }
-    ]
-  }
-]`;
 
-    // Add existing tips context if available
-    if (existingTips && existingTips.length > 0) {
-      prompt += `\n\nIMPORTANT: Use the following existing tips and formulas from similar questions to improve your question generation:
+      const data = await response.json();
+      const content = data.choices[0]?.message?.content;
 
-${existingTips.map((tip, index) => `${index + 1}. ${tip}`).join('\n')}
+      if (!content) {
+        throw new Error('No content generated from OpenAI');
+      }
 
-Incorporate these insights to create more relevant and helpful questions. Ensure your generated questions include appropriate tip_formula fields that build upon these existing tips.`;
+      // Parse the JSON response
+      try {
+        const parsedContent = JSON.parse(content);
+        return JSON.stringify(parsedContent);
+      } catch (parseError) {
+        // If JSON parsing fails, return the raw content
+        return content;
+      }
+    } catch (error) {
+      console.error('Error generating blog content:', error);
+      throw new Error(`Failed to generate blog content: ${error.message}`);
     }
-
-    prompt += `\n\nRequirements:
-1. Each question must have exactly 4 options
-2. Only one option should be marked as correct (isCorrect: true)
-3. Questions should be relevant to JEE syllabus
-4. Explanations should be educational and help students understand the concept
-5. Each question must include a helpful tip_formula with solving strategies, key formulas, or conceptual hints
-6. Return only valid JSON, no additional text
-
-Generate the questions now:`;
-
-    return prompt;
   }
 
-  private buildExplanationPrompt(question: string, correctAnswer: string, userAnswer?: string): string {
-    let prompt = `You are an expert JEE tutor. Please provide a detailed explanation for this question:
-
-Question: ${question}
-Correct Answer: ${correctAnswer}`;
-
-    if (userAnswer && userAnswer !== correctAnswer) {
-      prompt += `\nStudent's Answer: ${userAnswer}`;
-      prompt += `\n\nPlease explain why the student's answer is incorrect and provide the correct reasoning.`;
-    } else {
-      prompt += `\n\nPlease provide a detailed explanation of why this is the correct answer.`;
+  async generateBlogFromNews(topic: string, stream: string = 'JEE'): Promise<any> {
+    if (!this.openaiApiKey) {
+      return this.getFallbackBlogContent(topic, stream);
     }
 
-    prompt += `\n\nMake the explanation educational and help the student understand the underlying concept.`;
-
-    return prompt;
-  }
-
-  private buildExplanationPromptWithTips(question: string, correctAnswer: string, userAnswer?: string, tipFormula?: string): string {
-    let prompt = `You are an expert JEE tutor. Please provide a detailed explanation for this question:
-
-Question: ${question}
-Correct Answer: ${correctAnswer}`;
-
-    if (tipFormula) {
-      prompt += `\n\nAvailable Tips & Formulas: ${tipFormula}`;
-      prompt += `\n\nUse these tips and formulas to enhance your explanation and provide more helpful guidance to the student.`;
-    }
-
-    if (userAnswer && userAnswer !== correctAnswer) {
-      prompt += `\nStudent's Answer: ${userAnswer}`;
-      prompt += `\n\nPlease explain why the student's answer is incorrect and provide the correct reasoning.`;
-    } else {
-      prompt += `\n\nPlease provide a detailed explanation of why this is the correct answer.`;
-    }
-
-    prompt += `\n\nMake the explanation educational and help the student understand the underlying concept.`;
-    
-    if (tipFormula) {
-      prompt += `\n\nIncorporate the provided tips and formulas naturally into your explanation to make it more comprehensive and helpful.`;
-    }
-
-    return prompt;
-  }
-
-  private async callOpenAI(prompt: string): Promise<string> {
-    const response = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${this.openaiApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are an expert JEE tutor with deep knowledge of Physics, Chemistry, and Mathematics. Provide accurate, educational content suitable for JEE preparation.'
-          },
-          {
-            role: 'user',
-            content: prompt
-          }
-        ],
-        temperature: 0.7,
-        max_tokens: 2000,
-      }),
+    const currentDate = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
 
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`OpenAI API error: ${response.status} - ${error}`);
-    }
+    const prompt = `Generate a comprehensive educational blog post about "${topic}" for ${stream} aspirants based on current trends and news as of ${currentDate}. 
 
-    const data = await response.json();
-    return data.choices[0]?.message?.content || '';
-  }
+    The blog should cover:
+    1. Latest developments and trends related to ${topic} in ${stream} preparation
+    2. Current news and updates that affect ${stream} aspirants
+    3. Practical study tips and strategies
+    4. Recent changes in exam patterns or syllabus (if any)
+    5. Expert insights and recommendations
+    6. Future implications for students
+    
+    Make it relevant to ${currentDate} and include recent information that would be valuable for students preparing for ${stream} exam.`;
 
-  private parseAIResponse(response: string): AIQuestion[] {
     try {
-      // Clean the response to extract JSON
-      const jsonMatch = response.match(/\[[\s\S]*\]/);
-      if (!jsonMatch) {
-        throw new Error('No valid JSON found in response');
-      }
-
-      const questions = JSON.parse(jsonMatch[0]);
-      
-      // Validate the structure
-      if (!Array.isArray(questions)) {
-        throw new Error('Response is not an array');
-      }
-
-      return questions.map((q, index) => {
-        if (!q.stem || !q.options || !Array.isArray(q.options) || q.options.length !== 4) {
-          throw new Error(`Invalid question structure at index ${index}`);
-        }
-
-        const correctOptions = q.options.filter((opt: any) => opt.isCorrect);
-        if (correctOptions.length !== 1) {
-          throw new Error(`Question ${index + 1} must have exactly one correct answer`);
-        }
-
-        return {
-          stem: q.stem,
-          explanation: q.explanation || 'Explanation not provided',
-          tip_formula: q.tip_formula || 'Tip not provided',
-          difficulty: q.difficulty || 'MEDIUM',
-          options: q.options.map((opt: any, optIndex: number) => ({
-            text: opt.text,
-            isCorrect: opt.isCorrect || false
-          }))
-        };
-      });
+      const content = await this.generateBlogContent(prompt);
+      return this.parseBlogContent(content, topic, stream);
     } catch (error) {
-      this.logger.error('Error parsing AI response:', error);
-      this.logger.error('Raw response:', response);
-      throw new Error('Failed to parse AI response');
+      console.error('Error generating blog from news:', error);
+      return this.getFallbackBlogContent(topic, stream);
     }
   }
 
-  private parseExplanationResponse(response: string): string {
-    // Clean up the response and return the explanation
-    return response.trim().replace(/^["']|["']$/g, '');
+  private parseBlogContent(content: string, topic: string, stream: string) {
+    return JSON.parse(content);
   }
 
-  async validateSubscription(userId: string): Promise<{ hasAIAccess: boolean; planType: string }> {
-    const hasAIAccess = await this.subscriptionValidation.hasAIAccess(userId);
-    const status = await this.subscriptionValidation.validateStudentSubscription(userId);
+  async generateBlogFromTopic(topic: string, stream: string = 'JEE', category: string = 'Study Tips'): Promise<any> {
+    if (!this.openaiApiKey) {
+      return this.getFallbackBlogContent(topic, stream);
+    }
+
+    const prompt = `Create a comprehensive educational blog post about "${topic}" for ${stream} aspirants in the "${category}" category.
+
+    The blog should include:
+    1. Introduction to the topic and its importance for ${stream} preparation
+    2. Detailed explanation of concepts
+    3. Step-by-step study approach
+    4. Common mistakes to avoid
+    5. Practice strategies and tips
+    6. Real-world applications
+    7. Conclusion with key takeaways
+    
+    Make it educational, engaging, and practical for students preparing for ${stream} exam.`;
+
+    try {
+      const content = await this.generateBlogContent(prompt);
+      return this.parseBlogContent(content, topic, stream);
+    } catch (error) {
+      console.error('Error generating blog from topic:', error);
+      return this.getFallbackBlogContent(topic, stream);
+    }
+  }
+
+  async generateBlogFromKeywords(keywords: string[], stream: string = 'JEE'): Promise<any> {
+    if (!this.openaiApiKey) {
+      const topic = keywords.join(' ');
+      return this.getFallbackBlogContent(topic, stream);
+    }
+
+    const keywordString = keywords.join(', ');
+    const prompt = `Create an educational blog post for ${stream} aspirants that naturally incorporates and covers these keywords: ${keywordString}.
+
+    The blog should:
+    1. Naturally integrate all the keywords
+    2. Provide valuable educational content
+    3. Be relevant to ${stream} preparation
+    4. Include practical examples and tips
+    5. Be well-structured and easy to read
+    6. Optimize for search engines while maintaining readability
+    
+    Ensure the content flows naturally and provides genuine value to students.`;
+
+    try {
+      const content = await this.generateBlogContent(prompt);
+      return this.parseBlogContent(content, keywords.join(' '), stream);
+    } catch (error) {
+      console.error('Error generating blog from keywords:', error);
+      const topic = keywords.join(' ');
+      return this.getFallbackBlogContent(topic, stream);
+    }
+  }
+
+  async generateBlogTitle(topic: string, stream: string = 'JEE'): Promise<string[]> {
+    if (!this.openaiApiKey) {
+      // Return fallback titles when AI service is not configured
+      return this.getFallbackTitles(topic, stream);
+    }
+
+    const prompt = `Generate 5 SEO-optimized blog titles for an article about "${topic}" for ${stream} aspirants. 
+    
+    Each title should be:
+    - Under 60 characters
+    - SEO-friendly
+    - Engaging and click-worthy
+    - Relevant to ${stream} preparation
+    - Include relevant keywords
+    
+    Return only the titles, one per line.`;
+
+    try {
+      const response = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.openaiApiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          max_tokens: 300,
+          temperature: 0.8,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error('OpenAI API error:', response.status, response.statusText);
+        return this.getFallbackTitles(topic, stream);
+      }
+
+      const data = await response.json();
+      const content = data.choices[0]?.message?.content;
+      
+      if (!content) {
+        return this.getFallbackTitles(topic, stream);
+      }
+
+      // Split by newlines and clean up
+      const titles = content.split('\n')
+        .map((title: string) => title.trim())
+        .filter((title: string) => title.length > 0)
+        .slice(0, 5);
+
+      return titles.length > 0 ? titles : this.getFallbackTitles(topic, stream);
+    } catch (error) {
+      console.error('Error generating blog titles:', error);
+      return this.getFallbackTitles(topic, stream);
+    }
+  }
+
+  private getFallbackTitles(topic: string, stream: string): string[] {
+    const streamName = stream === 'JEE' ? 'JEE' : stream === 'NEET' ? 'NEET' : stream;
+    return [
+      `${topic}: Complete Guide for ${streamName} Aspirants`,
+      `Master ${topic} for ${streamName} 2024: Expert Tips`,
+      `${topic} Strategies: Boost Your ${streamName} Preparation`,
+      `Ultimate ${topic} Guide for ${streamName} Success`,
+      `${topic} Made Easy: ${streamName} Preparation Tips`
+    ];
+  }
+
+  private getFallbackBlogContent(topic: string, stream: string) {
+    const streamName = stream === 'JEE' ? 'JEE' : stream === 'NEET' ? 'NEET' : stream;
+    const title = `${topic}: Essential Guide for ${streamName} Aspirants`;
     
     return {
-      hasAIAccess,
-      planType: status.planType || 'MANUAL'
+      title,
+      content: `
+        <h2>Introduction to ${topic}</h2>
+        <p>Welcome to our comprehensive guide on ${topic} for ${streamName} aspirants. This guide will help you understand the key concepts and strategies needed for success in your ${streamName} preparation.</p>
+        
+        <h3>Key Concepts</h3>
+        <p>Understanding ${topic} is crucial for your ${streamName} preparation. Here are the essential concepts you need to master:</p>
+        <ul>
+          <li>Fundamental principles and theories</li>
+          <li>Important formulas and equations</li>
+          <li>Problem-solving strategies</li>
+          <li>Common mistakes to avoid</li>
+        </ul>
+        
+        <h3>Study Strategies</h3>
+        <p>Effective study strategies for ${topic} include:</p>
+        <ul>
+          <li>Regular practice with sample problems</li>
+          <li>Understanding concepts before memorizing formulas</li>
+          <li>Taking mock tests to assess progress</li>
+          <li>Seeking help when needed</li>
+        </ul>
+        
+        <h3>Tips for Success</h3>
+        <p>Here are some expert tips to excel in ${topic} for ${streamName}:</p>
+        <ul>
+          <li>Create a study schedule and stick to it</li>
+          <li>Focus on understanding rather than rote learning</li>
+          <li>Practice regularly with previous year questions</li>
+          <li>Stay updated with latest exam patterns</li>
+        </ul>
+        
+        <h3>Conclusion</h3>
+        <p>Mastering ${topic} requires dedication, practice, and the right approach. Follow this guide and implement the strategies mentioned to improve your ${streamName} preparation and achieve your goals.</p>
+      `,
+      excerpt: `Master ${topic} for ${streamName} preparation with our comprehensive guide. Learn key concepts, study strategies, and expert tips for success.`,
+      metaTitle: `${topic} Guide for ${streamName} Aspirants | Expert Tips & Strategies`,
+      metaDescription: `Complete guide to ${topic} for ${streamName} preparation. Learn essential concepts, study strategies, and expert tips for exam success.`,
+      metaKeywords: `${topic}, ${streamName}, preparation, study tips, exam strategies, competitive exams`,
+      tags: [topic, streamName, 'Study Tips', 'Preparation', 'Exam Strategy']
     };
   }
 
-  /**
-   * Fetch existing tips from similar questions to improve AI generation
-   */
-  private async fetchExistingTips(subjectId: string, topicId?: string, subtopicId?: string): Promise<string[]> {
+  async generateBlogOutline(topic: string, stream: string = 'JEE'): Promise<string[]> {
+    const prompt = `Create a detailed outline for a blog post about "${topic}" for ${stream} aspirants.
+
+    The outline should include:
+    1. Main headings (H2)
+    2. Sub-headings (H3)
+    3. Key points under each section
+    4. Suggested content structure
+    
+    Return the outline in a clear, hierarchical format.`;
+
     try {
-      const whereClause: any = {
-        subjectId,
-        tip_formula: { not: null },
-        NOT: { tip_formula: '' }
-      };
-
-      if (topicId) {
-        whereClause.topicId = topicId;
-      }
-
-      if (subtopicId) {
-        whereClause.subtopicId = subtopicId;
-      }
-
-      const questionsWithTips = await this.prisma.question.findMany({
-        where: whereClause,
-        select: {
-          tip_formula: true,
-          stem: true
+      const response = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.openaiApiKey}`,
         },
-        take: 10, // Limit to 10 tips to avoid overwhelming the AI
-        orderBy: {
-          createdAt: 'desc'
-        }
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          max_tokens: 1000,
+          temperature: 0.7,
+        }),
       });
 
-      // Filter out tips that are too short or generic
-      const usefulTips = questionsWithTips
-	.filter((q: any) => q.tip_formula && q.tip_formula.length > 10)
-	.map((q: any) => q.tip_formula!)
-        .slice(0, 5); // Take top 5 most useful tips
+      if (!response.ok) {
+        throw new Error('Failed to generate outline');
+      }
 
-      this.logger.log(`Found ${usefulTips.length} existing tips for AI question generation`);
-      return usefulTips;
+      const data = await response.json();
+      const content = data.choices[0]?.message?.content;
+      
+      if (!content) {
+        throw new Error('No outline generated');
+      }
+
+      return content.split('\n').filter((line: string) => line.trim().length > 0);
     } catch (error) {
-      this.logger.error('Error fetching existing tips:', error);
-      return []; // Return empty array if there's an error
+      console.error('Error generating blog outline:', error);
+      throw new Error(`Failed to generate blog outline: ${error.message}`);
     }
   }
-
-  /**
-   * Enhanced question generation with existing tips integration
-   */
-  async generateQuestionsWithTips(request: AIQuestionRequest & { subjectId: string; topicId?: string; subtopicId?: string }): Promise<AIQuestion[]> {
-    if (!this.openaiApiKey) {
-      throw new Error('OpenAI API key not configured');
-    }
-
-    try {
-      // Fetch existing tips from similar questions
-      const existingTips = await this.fetchExistingTips(request.subjectId, request.topicId, request.subtopicId);
-      
-      // Create enhanced request with tips
-      const enhancedRequest = {
-        ...request,
-        existingTips
-      };
-
-      const prompt = this.buildQuestionPrompt(enhancedRequest);
-      const response = await this.callOpenAI(prompt);
-      
-      return this.parseAIResponse(response);
-    } catch (error) {
-      this.logger.error('Error generating AI questions with tips:', error);
-      throw new Error('Failed to generate AI questions with tips');
-    }
-  }
-} 
+}

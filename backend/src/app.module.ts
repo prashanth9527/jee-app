@@ -8,7 +8,7 @@ import { AdminModule } from './admin/admin.module';
 import { StudentModule } from './student/student.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { ReferralsModule } from './referrals/referrals.module';
-import { AIModule } from './ai/ai.module';
+import { AiModule } from './ai/ai.module';
 import { AISuggestionsModule } from './ai/ai-suggestions.module';
 import { ExamsModule } from './exams/exams.module';
 import { StreamsModule } from './streams/streams.module';
@@ -19,6 +19,7 @@ import { FormulasModule } from './formulas/formulas.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { ContactModule } from './contact/contact.module';
 import { LMSModule } from './lms/lms.module';
+import { BlogsModule } from './blogs/blogs.module';
 
 
 
@@ -31,7 +32,7 @@ import { LMSModule } from './lms/lms.module';
     StudentModule,
     SubscriptionsModule,
     ReferralsModule,
-    AIModule,
+    AiModule,
     AISuggestionsModule,
     ExamsModule,
     StreamsModule,
@@ -42,6 +43,7 @@ import { LMSModule } from './lms/lms.module';
     NotificationsModule,
     ContactModule,
     LMSModule,
+    BlogsModule,
     
   ],
   controllers: [AppController],
