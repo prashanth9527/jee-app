@@ -22,6 +22,7 @@ export class AwsService {
 
     this.s3Client = new S3Client({
       region: this.region,
+      logger: console,
       credentials: {
         accessKeyId,
         secretAccessKey,
@@ -37,6 +38,7 @@ export class AwsService {
       Key: key,
       Body: file.buffer,
       ContentType: file.mimetype,
+      ACL: undefined,
     });
 
     await this.s3Client.send(command);
