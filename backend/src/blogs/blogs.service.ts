@@ -818,6 +818,53 @@ export class BlogsService {
   // AI BLOG GENERATION
   // ========================================
 
+  private async ensureDefaultCategory(): Promise<string> {
+    // Find or create a default category
+    let defaultCategory = await this.prisma.blogCategory.findFirst({
+      where: { name: 'General' }
+    });
+    
+    if (!defaultCategory) {
+      defaultCategory = await this.prisma.blogCategory.create({
+        data: {
+          name: 'General',
+          slug: 'general',
+          description: 'General blog posts',
+          color: '#6B7280',
+          icon: '📝'
+        }
+      });
+    }
+    return defaultCategory.id;
+  }
+
+  private async generateUniqueSlug(title: string): Promise<string> {
+    // Generate base slug from title
+    let baseSlug = title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim('-');
+
+    let slug = baseSlug;
+    let counter = 1;
+
+    // Check if slug exists and increment counter until we find a unique one
+    while (true) {
+      const existingBlog = await this.prisma.blog.findUnique({
+        where: { slug }
+      });
+
+      if (!existingBlog) {
+        return slug;
+      }
+
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
+  }
+
   async generateBlogFromNews(topic: string, authorId: string, streamId?: string, categoryId?: string) {
     try {
       // Ensure we have a valid authorId

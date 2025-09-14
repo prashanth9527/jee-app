@@ -862,8 +862,8 @@ model Blog {
   featured        Boolean    @default(false)  // Featured blog flag
   
   // Categorization
-  category        BlogCategory @relation(fields: [categoryId], references: [id])
-  categoryId      String
+  category        BlogCategory? @relation(fields: [categoryId], references: [id])
+  categoryId      String?
   tags            String[]     // Array of tag strings
   
   // Author & Ownership
