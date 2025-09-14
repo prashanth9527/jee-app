@@ -9,10 +9,19 @@ export async function GET(
   try {
     const { id } = await params;
     
+    // Get the authorization token from the request
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Authorization header missing' },
+        { status: 401 }
+      );
+    }
+
     const response = await fetch(`${BACKEND_URL}/formulas/${id}`, {
       method: 'GET',
       headers: {
-        'Authorization': request.headers.get('Authorization') || '',
+        'Authorization': authHeader,
         'Content-Type': 'application/json',
       },
     });
@@ -48,10 +57,19 @@ export async function PUT(
     const { id } = await params;
     const body = await request.json();
     
+    // Get the authorization token from the request
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Authorization header missing' },
+        { status: 401 }
+      );
+    }
+    
     const response = await fetch(`${BACKEND_URL}/formulas/admin/${id}`, {
       method: 'PATCH',
       headers: {
-        'Authorization': request.headers.get('Authorization') || '',
+        'Authorization': authHeader,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -87,10 +105,19 @@ export async function DELETE(
   try {
     const { id } = await params;
     
+    // Get the authorization token from the request
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Authorization header missing' },
+        { status: 401 }
+      );
+    }
+    
     const response = await fetch(`${BACKEND_URL}/formulas/admin/${id}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': request.headers.get('Authorization') || '',
+        'Authorization': authHeader,
         'Content-Type': 'application/json',
       },
     });

@@ -83,12 +83,32 @@ export default function AdminFormulasPage() {
   const fetchFormulas = async () => {
     try {
       setLoading(true);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Authentication Required',
+          text: 'Please log in to access formulas'
+        });
+        return;
+      }
+
       const params = new URLSearchParams();
       if (searchTerm) params.append('search', searchTerm);
       if (selectedSubject) params.append('subject', selectedSubject);
       if (selectedTopic) params.append('topicId', selectedTopic);
 
-      const response = await fetch(`/api/formulas/admin?${params}`);
+      const response = await fetch(`/api/formulas/admin?${params}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setFormulas(data.formulas || []);
     } catch (error) {
@@ -191,8 +211,22 @@ export default function AdminFormulasPage() {
 
     if (result.isConfirmed) {
       try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Authentication Required',
+            text: 'Please log in to delete formulas'
+          });
+          return;
+        }
+
         await fetch(`/api/formulas/${id}`, {
           method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         });
         await fetchFormulas();
         Swal.fire({
@@ -237,6 +271,16 @@ export default function AdminFormulasPage() {
     try {
       setSubmitting(true);
       
+      const token = localStorage.getItem('token');
+      if (!token) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Authentication Required',
+          text: 'Please log in to save formulas'
+        });
+        return;
+      }
+      
       const url = editingFormula 
         ? `/api/formulas/${editingFormula.id}`
         : '/api/formulas/admin';
@@ -246,6 +290,7 @@ export default function AdminFormulasPage() {
       const response = await fetch(url, {
         method,
         headers: {
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),

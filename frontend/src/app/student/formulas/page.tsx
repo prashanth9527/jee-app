@@ -65,12 +65,28 @@ export default function StudentFormulasPage() {
   const fetchFormulas = async () => {
     try {
       setLoading(true);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
       const params = new URLSearchParams();
       if (searchTerm) params.append('search', searchTerm);
       if (selectedSubject) params.append('subject', selectedSubject);
       if (selectedTag) params.append('tags', selectedTag);
 
-      const response = await fetch(`/api/formulas?${params}`);
+      const response = await fetch(`/api/formulas?${params}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setFormulas(data.formulas || []);
     } catch (error) {
@@ -99,7 +115,23 @@ export default function StudentFormulasPage() {
 
   const handleFormulaClick = async (formula: Formula) => {
     try {
-      const response = await fetch(`/api/formulas/${formula.id}`);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
+      const response = await fetch(`/api/formulas/${formula.id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setSelectedFormula(data);
       setShowModal(true);

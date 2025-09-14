@@ -12,10 +12,19 @@ export async function GET(request: NextRequest) {
       queryParams.append(key, value);
     });
 
+    // Get the authorization token from the request
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Authorization header missing' },
+        { status: 401 }
+      );
+    }
+
     const response = await fetch(`${BACKEND_URL}/formulas?${queryParams}`, {
       method: 'GET',
       headers: {
-        'Authorization': request.headers.get('Authorization') || '',
+        'Authorization': authHeader,
         'Content-Type': 'application/json',
       },
     });
@@ -47,10 +56,19 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
+    // Get the authorization token from the request
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Authorization header missing' },
+        { status: 401 }
+      );
+    }
+    
     const response = await fetch(`${BACKEND_URL}/formulas`, {
       method: 'POST',
       headers: {
-        'Authorization': request.headers.get('Authorization') || '',
+        'Authorization': authHeader,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
