@@ -122,8 +122,8 @@ export default function HomePage() {
     const fetchData = async () => {
       try {
         const [subjectsRes, plansRes] = await Promise.all([
-          api.get('/admin/subjects').catch(() => ({ data: [] })), // Fallback if not accessible
-          api.get('/subscriptions/plans').catch(() => ({ data: [] })) // Fallback if not accessible
+          api.get('/subjects').catch(() => ({ data: [] })), // Public subjects endpoint
+          api.get('/plans').catch(() => ({ data: [] })) // Public plans endpoint
         ]);
 
         setSubjects(subjectsRes.data || []);
@@ -280,21 +280,60 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {subjects.slice(0, 3).map((subject) => (
-              <div key={subject.id} className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
-                <div className="text-4xl mb-4">
-                  {subject.name === 'Physics' && '⚡'}
-                  {subject.name === 'Chemistry' && '🧪'}
-                  {subject.name === 'Mathematics' && '📐'}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {subjects.length > 0 ? (
+              subjects.map((subject) => {
+                // Function to get icon based on subject name
+                const getSubjectIcon = (name: string) => {
+                  const nameLower = name.toLowerCase();
+                  if (nameLower.includes('physics')) return '⚡';
+                  if (nameLower.includes('chemistry')) return '🧪';
+                  if (nameLower.includes('mathematics') || nameLower.includes('maths')) return '📐';
+                  if (nameLower.includes('biology')) return '🧬';
+                  if (nameLower.includes('english')) return '📚';
+                  if (nameLower.includes('computer')) return '💻';
+                  return '📖'; // Default icon
+                };
+
+                return (
+                  <div key={subject.id} className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="text-4xl mb-4">
+                      {getSubjectIcon(subject.name)}
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{subject.name}</h3>
+                    <p className="text-gray-600 mb-4 line-clamp-3">{subject.description || `Master ${subject.name} with comprehensive practice questions and detailed explanations.`}</p>
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm text-gray-500">
+                        <span className="font-medium">{subject._count.questions.toLocaleString()}</span> Questions
+                      </div>
+                      {subject.stream && (
+                        <div className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                          {subject.stream.name}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              // Fallback when no subjects are loaded
+              [
+                { id: '1', name: 'Physics', description: 'Master Physics with comprehensive practice questions covering mechanics, thermodynamics, waves, and more.', icon: '⚡', questions: 15000 },
+                { id: '2', name: 'Chemistry', description: 'Explore Chemistry concepts through detailed practice questions covering organic, inorganic, and physical chemistry.', icon: '🧪', questions: 12000 },
+                { id: '3', name: 'Mathematics', description: 'Strengthen your Mathematics foundation with practice questions covering calculus, algebra, trigonometry, and more.', icon: '📐', questions: 18000 }
+              ].map((subject) => (
+                <div key={subject.id} className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="text-4xl mb-4">
+                    {subject.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{subject.name}</h3>
+                  <p className="text-gray-600 mb-4">{subject.description}</p>
+                  <div className="text-sm text-gray-500">
+                    <span className="font-medium">{subject.questions.toLocaleString()}</span> Questions
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{subject.name}</h3>
-                <p className="text-gray-600 mb-4">{subject.description}</p>
-                <div className="text-sm text-gray-500">
-                  {subject._count.questions.toLocaleString()} Questions
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -344,88 +383,188 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {plans.length > 0 ? (
-              plans.slice(0, 3).map((plan) => (
-                <div key={plan.id} className={`bg-white rounded-lg shadow-lg p-8 ${
-                  plan.name.toLowerCase().includes('premium') || plan.name.toLowerCase().includes('pro') 
+              plans.map((plan, index) => {
+                // Determine if this is a popular/recommended plan
+                const isPopular = plan.name.toLowerCase().includes('premium') || 
+                                plan.name.toLowerCase().includes('pro') || 
+                                plan.name.toLowerCase().includes('standard') ||
+                                (plans.length === 3 && index === 1); // Middle plan in 3-plan layout
+                
+                // Get plan features based on price range
+                const getPlanFeatures = (priceCents: number) => {
+                  if (priceCents < 150000) { // Less than ₹1500
+                    return [
+                      'Basic practice questions',
+                      'Limited AI suggestions',
+                      'Basic analytics',
+                      '2-day free trial'
+                    ];
+                  } else if (priceCents < 250000) { // Less than ₹2500
+                    return [
+                      'Unlimited practice questions',
+                      'Advanced AI suggestions',
+                      'Detailed analytics',
+                      'Previous year papers',
+                      'Priority support',
+                      '2-day free trial'
+                    ];
+                  } else {
+                    return [
+                      'Everything in Premium',
+                      'Personal mentor sessions',
+                      'Custom study plans',
+                      'Exam paper analysis',
+                      'Priority support',
+                      '2-day free trial'
+                    ];
+                  }
+                };
+
+                return (
+                  <div key={plan.id} className={`bg-white rounded-lg shadow-lg p-8 relative ${
+                    isPopular 
+                      ? 'ring-2 ring-orange-600 transform scale-105' 
+                      : 'hover:shadow-xl transition-shadow duration-300'
+                  }`}>
+                    {isPopular && (
+                      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span className="bg-orange-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                          Most Popular
+                        </span>
+                      </div>
+                    )}
+                    
+                    <div className="text-center">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{plan.name}</h3>
+                      <div className="mb-4">
+                        <span className="text-4xl font-bold text-gray-900">
+                          {formatPrice(plan.priceCents)}
+                        </span>
+                        <span className="text-gray-600">/{plan.interval.toLowerCase()}</span>
+                      </div>
+                      <p className="text-gray-600 mb-6">{plan.description}</p>
+                      
+                      {/* Plan Features */}
+                      <div className="mb-6">
+                        <ul className="space-y-2 text-sm text-gray-600">
+                          {getPlanFeatures(plan.priceCents).map((feature, featureIndex) => (
+                            <li key={featureIndex} className="flex items-center justify-center">
+                              <svg className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <Link
+                        href="/register"
+                        className={`w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md transition-all duration-200 ${
+                          isPopular
+                            ? 'text-white bg-orange-600 hover:bg-orange-700 shadow-lg hover:shadow-xl'
+                            : 'text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200'
+                        }`}
+                      >
+                        Get Started
+                        {isPopular && (
+                          <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        )}
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              // Fallback pricing cards when plans are not loaded
+              [
+                { 
+                  id: 'fallback-1', 
+                  name: 'Basic', 
+                  description: 'Perfect for getting started with JEE preparation',
+                  priceCents: 99900, 
+                  interval: 'MONTH',
+                  isPopular: false,
+                  features: ['Basic practice questions', 'Limited AI suggestions', 'Basic analytics', '2-day free trial']
+                },
+                { 
+                  id: 'fallback-2', 
+                  name: 'Premium', 
+                  description: 'Most popular choice with advanced features',
+                  priceCents: 199900, 
+                  interval: 'MONTH',
+                  isPopular: true,
+                  features: ['Unlimited practice questions', 'Advanced AI suggestions', 'Detailed analytics', 'Previous year papers', 'Priority support', '2-day free trial']
+                },
+                { 
+                  id: 'fallback-3', 
+                  name: 'Pro', 
+                  description: 'Complete JEE preparation with all features',
+                  priceCents: 299900, 
+                  interval: 'MONTH',
+                  isPopular: false,
+                  features: ['Everything in Premium', 'Personal mentor sessions', 'Custom study plans', 'Exam paper analysis', 'Priority support', '2-day free trial']
+                }
+              ].map((plan) => (
+                <div key={plan.id} className={`bg-white rounded-lg shadow-lg p-8 relative ${
+                  plan.isPopular 
                     ? 'ring-2 ring-orange-600 transform scale-105' 
-                    : ''
+                    : 'hover:shadow-xl transition-shadow duration-300'
                 }`}>
+                  {plan.isPopular && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <span className="bg-orange-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                        Most Popular
+                      </span>
+                    </div>
+                  )}
+                  
                   <div className="text-center">
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">{plan.name}</h3>
                     <div className="mb-4">
                       <span className="text-4xl font-bold text-gray-900">
                         {formatPrice(plan.priceCents)}
                       </span>
-                      <span className="text-gray-600">/{plan.interval}</span>
+                      <span className="text-gray-600">/{plan.interval.toLowerCase()}</span>
                     </div>
                     <p className="text-gray-600 mb-6">{plan.description}</p>
+                    
+                    {/* Plan Features */}
+                    <div className="mb-6">
+                      <ul className="space-y-2 text-sm text-gray-600">
+                        {plan.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center justify-center">
+                            <svg className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
                     <Link
                       href="/register"
-                      className={`w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md transition-colors duration-200 ${
-                        plan.name.toLowerCase().includes('premium') || plan.name.toLowerCase().includes('pro')
-                          ? 'text-white bg-orange-600 hover:bg-orange-700'
-                          : 'text-orange-600 bg-orange-50 hover:bg-orange-100'
+                      className={`w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md transition-all duration-200 ${
+                        plan.isPopular
+                          ? 'text-white bg-orange-600 hover:bg-orange-700 shadow-lg hover:shadow-xl'
+                          : 'text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200'
                       }`}
                     >
                       Get Started
+                      {plan.isPopular && (
+                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      )}
                     </Link>
                   </div>
                 </div>
               ))
-            ) : (
-              // Fallback pricing cards when plans are not loaded
-              <>
-                <div className="bg-white rounded-lg shadow-lg p-8">
-                  <div className="text-center">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Basic</h3>
-                    <div className="mb-4">
-                      <span className="text-4xl font-bold text-gray-900">₹999</span>
-                      <span className="text-gray-600">/month</span>
-                    </div>
-                    <p className="text-gray-600 mb-6">Perfect for getting started with JEE preparation</p>
-                    <Link
-                      href="/register"
-                      className="w-full inline-flex justify-center items-center px-6 py-3 border border-orange-300 text-base font-medium rounded-md text-orange-600 bg-orange-50 hover:bg-orange-100 transition-colors duration-200"
-                    >
-                      Get Started
-                    </Link>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg p-8 ring-2 ring-orange-600 transform scale-105">
-                  <div className="text-center">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Premium</h3>
-                    <div className="mb-4">
-                      <span className="text-4xl font-bold text-gray-900">₹1,999</span>
-                      <span className="text-gray-600">/month</span>
-                    </div>
-                    <p className="text-gray-600 mb-6">Most popular choice with advanced features</p>
-                    <Link
-                      href="/register"
-                      className="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 transition-colors duration-200"
-                    >
-                      Get Started
-                    </Link>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg p-8">
-                  <div className="text-center">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Pro</h3>
-                    <div className="mb-4">
-                      <span className="text-4xl font-bold text-gray-900">₹2,999</span>
-                      <span className="text-gray-600">/month</span>
-                    </div>
-                    <p className="text-gray-600 mb-6">Complete JEE preparation with all features</p>
-                    <Link
-                      href="/register"
-                      className="w-full inline-flex justify-center items-center px-6 py-3 border border-orange-300 text-base font-medium rounded-md text-orange-600 bg-orange-50 hover:bg-orange-100 transition-colors duration-200"
-                    >
-                      Get Started
-                    </Link>
-                  </div>
-                </div>
-              </>
             )}
           </div>
 
