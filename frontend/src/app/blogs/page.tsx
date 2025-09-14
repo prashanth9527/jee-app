@@ -80,8 +80,7 @@ async function getBlogs(searchParams: { [key: string]: string | string[] | undef
     if (searchParams.search) params.append('search', searchParams.search.toString());
     if (searchParams.featured) params.append('featured', searchParams.featured.toString());
 
-    const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 
-                    (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+    const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
     
     const response = await fetch(`${baseUrl}/api/blogs?${params}`, {
       cache: 'no-store', // Ensure fresh data for SEO
@@ -122,8 +121,7 @@ async function getBlogs(searchParams: { [key: string]: string | string[] | undef
 
 async function getCategories() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 
-                    (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+    const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
     
     const response = await fetch(`${baseUrl}/api/blogs/categories`, {
       cache: 'no-store',
@@ -157,8 +155,7 @@ export default async function BlogsPage({
     ]);
 
     // Generate structured data for SEO
-    const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 
-                    (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+    const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
     
     const structuredData = {
       "@context": "https://schema.org",
