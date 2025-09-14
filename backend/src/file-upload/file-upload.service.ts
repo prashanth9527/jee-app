@@ -32,7 +32,7 @@ export class FileUploadService {
         Key: key,
         Body: buffer,
         ContentType: mimeType,
-        ACL: 'public-read',
+        ACL: undefined,
       });
 
       await this.s3Client.send(command);
