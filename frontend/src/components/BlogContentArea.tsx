@@ -49,8 +49,9 @@ interface BlogContentAreaProps {
 export default function BlogContentArea({ initialData }: BlogContentAreaProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [data, setData] = useState<BlogsResponse>(initialData);
+  const [data, setData] = useState<BlogsResponse>(initialData || { blogs: [], pagination: { page: 1, limit: 10, total: 0, totalPages: 0 } });
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -66,6 +67,7 @@ export default function BlogContentArea({ initialData }: BlogContentAreaProps) {
     const fetchNewData = async () => {
       try {
         setIsLoading(true);
+        setError(null);
         const params = new URLSearchParams();
         
         if (searchParams.get('page')) params.append('page', searchParams.get('page')!);
@@ -78,9 +80,12 @@ export default function BlogContentArea({ initialData }: BlogContentAreaProps) {
         if (response.ok) {
           const newData = await response.json();
           setData(newData);
+        } else {
+          setError('Failed to load blogs. Please try again.');
         }
       } catch (error) {
         console.error('Error fetching blogs:', error);
+        setError('Failed to load blogs. Please check your connection and try again.');
       } finally {
         setIsLoading(false);
       }
@@ -115,14 +120,40 @@ export default function BlogContentArea({ initialData }: BlogContentAreaProps) {
         </p>
       </div>
 
+      {/* Error Message */}
+      {error && (
+        <div className="text-center py-12">
+          <div className="text-red-400 mb-4">
+            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            Unable to load articles
+          </h3>
+          <p className="text-gray-600 mb-4">
+            {error}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      )}
+
       {/* Blog Grid */}
-      {data.blogs.length > 0 ? (
+      {!error && data.blogs.length > 0 && (
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-1">
           {data.blogs.map((blog) => (
             <BlogCard key={blog.id} blog={blog} />
           ))}
         </div>
-      ) : (
+      )}
+
+      {/* No Articles Found */}
+      {!error && data.blogs.length === 0 && (
         <div className="text-center py-12">
           <div className="text-gray-400 mb-4">
             <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
