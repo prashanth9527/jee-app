@@ -18,7 +18,12 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "db:seed": "ts-node prisma/seed.ts"
+    "db:seed": "ts-node prisma/seed.ts",
+    "db:seed:math-2025-s1": "ts-node \"prisma/seeds/JEE/Previous Papers/2025/Session1/Maths/seed-runner.ts\"",
+    "db:seed:2201-evening": "ts-node \"prisma/seeds/JEE/Previous Papers/2025/Session1/Maths/2201-Mathematics Paper+With+Sol. Evening.seed.ts\"",
+    "process:pdf-images": "node scripts/process-pdf-images.js",
+    "generate:seed-templates": "node scripts/generate-seed-templates.js",
+    "db:reset": "npx prisma db push --force-reset && npm run db:seed"
   },
   "prisma": {
     "seed": "ts-node ./prisma/seed.ts"
@@ -46,6 +51,8 @@
     "passport-jwt": "4.0.1",
     "pdf-parse": "^1.1.1",
     "pdf2pic": "^3.2.0",
+    "sharp": "^0.33.0",
+    "fs-extra": "^11.2.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "stripe": "14.25.0",
@@ -63,6 +70,8 @@
     "@types/nodemailer": "6.4.19",
     "@types/passport-jwt": "3.0.13",
     "@types/pdf-parse": "^1.1.5",
+    "@types/fs-extra": "^11.0.4",
+    "@types/sharp": "^0.32.0",
     "@types/supertest": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",

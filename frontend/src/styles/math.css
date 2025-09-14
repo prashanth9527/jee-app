@@ -1,0 +1,77 @@
+/* Math rendering styles */
+.question-content {
+  line-height: 1.6;
+}
+
+.question-content p {
+  margin-bottom: 0.75rem;
+}
+
+.question-content p:last-child {
+  margin-bottom: 0;
+}
+
+.question-content ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.question-content li {
+  margin-bottom: 0.25rem;
+}
+
+.question-content strong {
+  font-weight: 600;
+}
+
+.question-content em {
+  font-style: italic;
+}
+
+/* MathJax styling */
+.MathJax {
+  display: inline-block !important;
+}
+
+.MathJax_Display {
+  margin: 0.5rem 0 !important;
+  text-align: center !important;
+}
+
+/* Ensure math content is selectable */
+.question-content .MathJax {
+  user-select: text;
+}
+
+/* Math in options */
+.question-content .MathJax svg {
+  vertical-align: middle;
+}
+
+/* Loading state for math */
+.question-content .MathJax_Processing {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Responsive math */
+@media (max-width: 640px) {
+  .question-content .MathJax_Display {
+    font-size: 0.9em;
+  }
+  
+  .question-content .MathJax {
+    font-size: 0.95em;
+  }
+}
