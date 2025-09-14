@@ -254,7 +254,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white">
+      <section id="features" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -269,7 +269,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-50">
+      <section id="subjects" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
@@ -300,7 +300,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white">
+      <section id="testimonials" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
@@ -328,6 +328,117 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="mt-4 text-lg text-gray-600">
+              Choose the plan that works best for your JEE preparation
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {plans.length > 0 ? (
+              plans.slice(0, 3).map((plan) => (
+                <div key={plan.id} className={`bg-white rounded-lg shadow-lg p-8 ${
+                  plan.name.toLowerCase().includes('premium') || plan.name.toLowerCase().includes('pro') 
+                    ? 'ring-2 ring-orange-600 transform scale-105' 
+                    : ''
+                }`}>
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{plan.name}</h3>
+                    <div className="mb-4">
+                      <span className="text-4xl font-bold text-gray-900">
+                        {formatPrice(plan.priceCents)}
+                      </span>
+                      <span className="text-gray-600">/{plan.interval}</span>
+                    </div>
+                    <p className="text-gray-600 mb-6">{plan.description}</p>
+                    <Link
+                      href="/register"
+                      className={`w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md transition-colors duration-200 ${
+                        plan.name.toLowerCase().includes('premium') || plan.name.toLowerCase().includes('pro')
+                          ? 'text-white bg-orange-600 hover:bg-orange-700'
+                          : 'text-orange-600 bg-orange-50 hover:bg-orange-100'
+                      }`}
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                </div>
+              ))
+            ) : (
+              // Fallback pricing cards when plans are not loaded
+              <>
+                <div className="bg-white rounded-lg shadow-lg p-8">
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Basic</h3>
+                    <div className="mb-4">
+                      <span className="text-4xl font-bold text-gray-900">₹999</span>
+                      <span className="text-gray-600">/month</span>
+                    </div>
+                    <p className="text-gray-600 mb-6">Perfect for getting started with JEE preparation</p>
+                    <Link
+                      href="/register"
+                      className="w-full inline-flex justify-center items-center px-6 py-3 border border-orange-300 text-base font-medium rounded-md text-orange-600 bg-orange-50 hover:bg-orange-100 transition-colors duration-200"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg shadow-lg p-8 ring-2 ring-orange-600 transform scale-105">
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Premium</h3>
+                    <div className="mb-4">
+                      <span className="text-4xl font-bold text-gray-900">₹1,999</span>
+                      <span className="text-gray-600">/month</span>
+                    </div>
+                    <p className="text-gray-600 mb-6">Most popular choice with advanced features</p>
+                    <Link
+                      href="/register"
+                      className="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 transition-colors duration-200"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg shadow-lg p-8">
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Pro</h3>
+                    <div className="mb-4">
+                      <span className="text-4xl font-bold text-gray-900">₹2,999</span>
+                      <span className="text-gray-600">/month</span>
+                    </div>
+                    <p className="text-gray-600 mb-6">Complete JEE preparation with all features</p>
+                    <Link
+                      href="/register"
+                      className="w-full inline-flex justify-center items-center px-6 py-3 border border-orange-300 text-base font-medium rounded-md text-orange-600 bg-orange-50 hover:bg-orange-100 transition-colors duration-200"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-4">
+              All plans include a 2-day free trial • No credit card required
+            </p>
+            <Link
+              href="/help"
+              className="text-orange-600 hover:text-orange-700 font-medium"
+            >
+              Need help choosing? Contact us →
+            </Link>
           </div>
         </div>
       </section>
