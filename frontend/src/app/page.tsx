@@ -5,11 +5,16 @@ import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import DynamicHead from '@/components/DynamicHead';
 import HeaderHome from '@/components/HeaderHome';
+import DynamicFavicon from '@/components/DynamicFavicon';
+import { useSystemSettings } from '@/contexts/SystemSettingsContext';
 
 interface SystemSettings {
   siteTitle: string;
   siteDescription: string;
   siteKeywords: string;
+  logoUrl?: string;
+  faviconUrl?: string;
+  ogImageUrl?: string;
   contactEmail?: string;
   supportEmail?: string;
   privacyEmail?: string;
@@ -55,7 +60,7 @@ interface Plan {
 export default function HomePage() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentFeature, setCurrentFeature] = useState(0);
-  const [systemSettings, setSystemSettings] = useState<SystemSettings | null>(null);
+  const { systemSettings, loading: settingsLoading } = useSystemSettings();
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
@@ -136,23 +141,15 @@ export default function HomePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [settingsRes, subjectsRes, plansRes] = await Promise.all([
-          api.get('/system-settings'),
+        const [subjectsRes, plansRes] = await Promise.all([
           api.get('/admin/subjects').catch(() => ({ data: [] })), // Fallback if not accessible
           api.get('/subscriptions/plans').catch(() => ({ data: [] })) // Fallback if not accessible
         ]);
 
-        setSystemSettings(settingsRes.data);
         setSubjects(subjectsRes.data || []);
         setPlans(plansRes.data || []);
       } catch (error) {
         console.error('Error fetching data:', error);
-        // Set defaults if API fails
-        setSystemSettings({
-          siteTitle: 'JEE Master',
-          siteDescription: 'Comprehensive JEE preparation platform',
-          siteKeywords: 'JEE, preparation, practice tests'
-        });
       } finally {
         setLoading(false);
       }
@@ -179,7 +176,7 @@ export default function HomePage() {
     return `₹${(priceCents / 100).toLocaleString()}`;
   };
 
-  if (loading) {
+  if (loading || settingsLoading) {
     return (
       <div className="min-h-screen bg-orange-50 flex items-center justify-center">
         <div className="text-center">
@@ -192,6 +189,10 @@ export default function HomePage() {
 
   return (
     <>
+      <DynamicFavicon 
+        faviconUrl={systemSettings?.faviconUrl}
+        siteTitle={systemSettings?.siteTitle}
+      />
       <DynamicHead 
         title="Home"
         description={systemSettings?.siteDescription}

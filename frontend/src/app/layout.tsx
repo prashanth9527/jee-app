@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { SystemSettingsProvider } from '@/contexts/SystemSettingsContext';
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -82,7 +83,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#ea580c" />
         <meta name="msapplication-TileColor" content="#ea580c" />
         
-        {/* Favicon and app icons */}
+        {/* Default Favicon and app icons - will be overridden by DynamicFavicon if available */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -132,13 +133,15 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} font-sans antialiased min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300`}>
         <ThemeProvider>
-          <AuthProvider>
-            <div id="root" className="min-h-screen flex flex-col">
-              <main className="flex-1">
-                {children}
-              </main>
-            </div>
-          </AuthProvider>
+          <SystemSettingsProvider>
+            <AuthProvider>
+              <div id="root" className="min-h-screen flex flex-col">
+                <main className="flex-1">
+                  {children}
+                </main>
+              </div>
+            </AuthProvider>
+          </SystemSettingsProvider>
         </ThemeProvider>
         
         {/* Portal root for modals */}

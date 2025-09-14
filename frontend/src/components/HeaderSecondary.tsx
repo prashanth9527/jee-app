@@ -8,6 +8,7 @@ interface SystemSettings {
   siteTitle: string;
   siteDescription: string;
   siteKeywords: string;
+  logoUrl?: string;
 }
 
 interface HeaderSecondaryProps {
@@ -27,11 +28,28 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
             <div className="flex-shrink-0 flex items-center">
               <Link 
                 href="/" 
-                className="text-2xl font-bold text-orange-600 hover:text-orange-700 transition-colors"
+                className="flex items-center space-x-2 text-2xl font-bold text-orange-600 hover:text-orange-700 transition-colors"
                 title={`${systemSettings?.siteTitle || 'JEE App'} - ${systemSettings?.siteKeywords || 'JEE preparation platform'}`}
                 aria-label={`${systemSettings?.siteTitle || 'JEE App'} - Go to homepage`}
               >
-                {systemSettings?.siteTitle || 'JEE App'}
+                {systemSettings?.logoUrl ? (
+                  <img 
+                    src={systemSettings.logoUrl} 
+                    alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
+                    className="h-8 w-auto object-contain"
+                    onError={(e) => {
+                      // Fallback to text if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `<span>${systemSettings?.siteTitle || 'JEE App'}</span>`;
+                      }
+                    }}
+                  />
+                ) : (
+                  <span>{systemSettings?.siteTitle || 'JEE App'}</span>
+                )}
               </Link>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { useSystemSettings } from '@/contexts/SystemSettingsContext';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -253,6 +254,7 @@ const menuSections = [
 ];
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
+  const { systemSettings } = useSystemSettings();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -337,7 +339,27 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         {/* Sidebar Header */}
         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
           {!sidebarCollapsed && (
-            <h1 className="text-xl font-bold text-gray-900 truncate">Admin Panel</h1>
+            <div className="flex items-center space-x-2">
+              {systemSettings?.logoUrl ? (
+                <img 
+                  src={systemSettings.logoUrl} 
+                  alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
+                  className="h-8 w-auto object-contain"
+                  onError={(e) => {
+                    // Fallback to text if image fails to load
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const parent = target.parentElement;
+                    if (parent) {
+                      parent.innerHTML = `<h1 class="text-xl font-bold text-gray-900 truncate">${systemSettings?.siteTitle || 'JEE App'} Admin</h1>`;
+                    }
+                  }}
+                />
+              ) : null}
+              <h1 className="text-xl font-bold text-gray-900 truncate">
+                {systemSettings?.siteTitle || 'JEE App'} Admin
+              </h1>
+            </div>
           )}
           <div className="flex items-center space-x-2">
             <button
