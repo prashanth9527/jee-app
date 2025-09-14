@@ -36,19 +36,19 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
                   <img 
                     src={systemSettings.logoUrl} 
                     alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
-                    className="h-8 w-auto object-contain"
+                    className="h-12 w-auto object-contain"
                     onError={(e) => {
                       // Fallback to text if image fails to load
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
                       const parent = target.parentElement;
                       if (parent) {
-                        parent.innerHTML = `<span>${systemSettings?.siteTitle || 'JEE App'}</span>`;
+                        parent.innerHTML = `<span class="text-2xl font-bold">${systemSettings?.siteTitle || 'JEE App'}</span>`;
                       }
                     }}
                   />
                 ) : (
-                  <span>{systemSettings?.siteTitle || 'JEE App'}</span>
+                  <span className="text-2xl font-bold">{systemSettings?.siteTitle || 'JEE App'}</span>
                 )}
               </Link>
             </div>

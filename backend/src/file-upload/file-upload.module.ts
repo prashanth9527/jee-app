@@ -1,6 +1,6 @@
 ﻿import { Module } from '@nestjs/common';
-import { FileUploadService } from './file-upload.service';
 import { ConfigModule } from '@nestjs/config';
+import { FileUploadService } from './file-upload.service';
 
 @Module({
   imports: [ConfigModule],

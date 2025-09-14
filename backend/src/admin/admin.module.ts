@@ -16,17 +16,21 @@ import { AdminQuestionReportsController } from './question-reports.controller';
 import { AdminNotificationsController } from './notifications.controller';
 import { SystemSettingsController } from './system-settings.controller';
 import { SystemSettingsService } from './system-settings.service';
+import { ContentSeedingController } from './content-seeding.controller';
+import { ContentSeedingService } from './content-seeding.service';
 import { NotificationsModule } from '../notifications/notifications.module';
+import { FileUploadModule } from '../file-upload/file-upload.module';
 
 @Module({
-	imports: [PrismaModule, AwsModule, NotificationsModule],
+	imports: [PrismaModule, AwsModule, NotificationsModule, FileUploadModule],
 	controllers: [
 		AdminSubjectsController, AdminStreamsController, AdminTopicsController, AdminSubtopicsController,
 		AdminTagsController, AdminQuestionsController, AdminPYQController,
 		AdminExamPapersController, AdminSubscriptionsController, AdminUsersController,
-		AdminAnalyticsController, AdminQuestionReportsController, AdminNotificationsController, SystemSettingsController
+		AdminAnalyticsController, AdminQuestionReportsController, AdminNotificationsController, 
+		SystemSettingsController, ContentSeedingController
 	],
-	providers: [SystemSettingsService],
-	exports: [SystemSettingsService],
+	providers: [SystemSettingsService, ContentSeedingService],
+	exports: [SystemSettingsService, ContentSeedingService],
 })
 export class AdminModule {} 

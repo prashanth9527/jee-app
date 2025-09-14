@@ -200,31 +200,31 @@ export class AiService {
     Return only the titles, one per line.`;
 
     try {
-      const response = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
-        method: 'POST',
-        headers: {
+    const response = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
+      method: 'POST',
+      headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.openaiApiKey}`,
-        },
-        body: JSON.stringify({
+        'Authorization': `Bearer ${this.openaiApiKey}`,
+      },
+      body: JSON.stringify({
           model: 'gpt-3.5-turbo',
-          messages: [
-            {
-              role: 'user',
-              content: prompt
-            }
-          ],
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
           max_tokens: 300,
           temperature: 0.8,
-        }),
-      });
+      }),
+    });
 
-      if (!response.ok) {
+    if (!response.ok) {
         console.error('OpenAI API error:', response.status, response.statusText);
         return this.getFallbackTitles(topic, stream);
-      }
+    }
 
-      const data = await response.json();
+    const data = await response.json();
       const content = data.choices[0]?.message?.content;
       
       if (!content) {
@@ -351,4 +351,4 @@ export class AiService {
       throw new Error(`Failed to generate blog outline: ${error.message}`);
     }
   }
-}
+} 

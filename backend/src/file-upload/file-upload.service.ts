@@ -28,7 +28,7 @@ export class FileUploadService {
       const key = folder + '/' + Date.now() + '-' + fileName;
       
       const command = new PutObjectCommand({
-        Bucket: this.bucketName,
+        Bucket: this.bucketName, 
         Key: key,
         Body: buffer,
         ContentType: mimeType,

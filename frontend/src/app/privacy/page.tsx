@@ -2,55 +2,14 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import api from '@/lib/api';
 import DynamicHead from '@/components/DynamicHead';
-import DynamicLogo from '@/components/DynamicLogo';
-
-interface SystemSettings {
-  siteTitle: string;
-  siteDescription: string;
-  siteKeywords: string;
-  siteLogo?: string;
-  siteFavicon?: string;
-  ogImage?: string;
-  companyName?: string;
-  contactEmail?: string;
-  supportEmail?: string;
-  privacyEmail?: string;
-  legalEmail?: string;
-  socialMediaLinks?: {
-    facebook?: string;
-    twitter?: string;
-    youtube?: string;
-    instagram?: string;
-    linkedin?: string;
-  };
-}
+import DynamicFooter from '@/components/DynamicFooter';
+import DynamicFavicon from '@/components/DynamicFavicon';
+import { useSystemSettings } from '@/contexts/SystemSettingsContext';
 
 export default function PrivacyPage() {
-  const [systemSettings, setSystemSettings] = useState<SystemSettings | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { systemSettings, loading } = useSystemSettings();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const settingsRes = await api.get('/system-settings');
-        setSystemSettings(settingsRes.data);
-      } catch (error) {
-        console.error('Error fetching settings:', error);
-        setSystemSettings({
-          siteTitle: 'JEE App',
-          siteDescription: 'Comprehensive JEE preparation platform',
-          siteKeywords: 'JEE, preparation, practice tests'
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSettings();
-  }, []);
 
   // Close mobile menu when clicking outside or on window resize
   useEffect(() => {
@@ -64,15 +23,13 @@ export default function PrivacyPage() {
     };
 
     const handleResize = () => {
-      if (window.innerWidth >= 1024) { // lg breakpoint
+      if (window.innerWidth >= 768) {
         setMobileMenuOpen(false);
       }
     };
 
-    if (mobileMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      window.addEventListener('resize', handleResize);
-    }
+    document.addEventListener('mousedown', handleClickOutside);
+    window.addEventListener('resize', handleResize);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -93,340 +50,222 @@ export default function PrivacyPage() {
 
   return (
     <>
+      <DynamicFavicon 
+        faviconUrl={systemSettings?.faviconUrl}
+        siteTitle={systemSettings?.siteTitle}
+      />
       <DynamicHead 
         title={`Privacy Policy - ${systemSettings?.siteTitle || 'JEE App'} | Data Protection & Privacy`}
         description={`Learn how ${systemSettings?.siteTitle || 'JEE App'} protects your privacy and handles your personal information while providing the best JEE preparation experience. GDPR compliant privacy policy.`}
         keywords={`${systemSettings?.siteTitle || 'JEE App'} privacy policy, data protection, GDPR compliance, privacy rights, ${systemSettings?.siteKeywords || 'JEE, preparation, practice tests'}`}
         canonicalUrl={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/privacy`}
-        ogImage={systemSettings?.ogImage ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}${systemSettings.ogImage}` : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/og-privacy.jpg`}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          "name": `${systemSettings?.siteTitle || 'JEE App'} Privacy Policy`,
-          "description": "Privacy policy explaining how we collect, use, and protect your personal information",
-          "url": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/privacy`,
-          "dateModified": "2024-12-01",
-          "publisher": {
-            "@type": "Organization",
-            "name": systemSettings?.companyName || systemSettings?.siteTitle || 'JEE App'
-          }
-        }}
+        ogImage={systemSettings?.ogImageUrl ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}${systemSettings.ogImageUrl}` : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/og-privacy.jpg`}
       />
       <div className="min-h-screen bg-white">
         {/* Navigation */}
         <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
+              {/* Brand/Logo */}
               <div className="flex items-center">
-                <DynamicLogo 
-                  systemSettings={systemSettings} 
-                  size="md"
-                  showText={true}
-                />
+                <div className="flex-shrink-0 flex items-center">
+                  <Link 
+                    href="/" 
+                    className="flex items-center space-x-2 text-2xl font-bold text-orange-600 hover:text-orange-700 transition-colors"
+                    title={`${systemSettings?.siteTitle || 'JEE App'} - ${systemSettings?.siteKeywords || 'JEE preparation platform'}`}
+                    aria-label={`${systemSettings?.siteTitle || 'JEE App'} - Go to homepage`}
+                  >
+                    {systemSettings?.logoUrl ? (
+                      <img 
+                        src={systemSettings.logoUrl} 
+                        alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
+                        className="h-12 w-auto object-contain"
+                        onError={(e) => {
+                          // Fallback to text if image fails to load
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.innerHTML = `<span class="text-2xl font-bold">${systemSettings?.siteTitle || 'JEE App'}</span>`;
+                          }
+                        }}
+                      />
+                    ) : (
+                      <span className="text-2xl font-bold">{systemSettings?.siteTitle || 'JEE App'}</span>
+                    )}
+                  </Link>
+                </div>
               </div>
+
+              {/* Desktop Navigation */}
+              <div className="hidden md:block">
+                <div className="ml-10 flex items-baseline space-x-8">
+                  <Link href="/" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+                    Home
+                  </Link>
+                  <Link href="/blogs" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+                    Blogs
+                  </Link>
+                  <Link href="/previous-year-questions" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+                    PYQ Bank
+                  </Link>
+                  <Link href="/help" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+                    Help
+                  </Link>
+                  <Link href="/contact" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+                    Contact
+                  </Link>
+                  <Link href="/privacy" className="text-orange-600 px-3 py-2 text-sm font-medium">
+                    Privacy
+                  </Link>
+                </div>
+              </div>
+
+              {/* User Actions */}
               <div className="flex items-center space-x-4">
                 <Link href="/login" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                   Login
                 </Link>
-                <Link href="/register" className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors shadow-md hover:shadow-lg">
+                <Link href="/register" className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors">
                   Get Started Free
                 </Link>
               </div>
+
+              {/* Mobile menu button */}
+              <div className="md:hidden">
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="text-gray-600 hover:text-orange-600 focus:outline-none focus:text-orange-600"
+                >
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {mobileMenuOpen ? (
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    ) : (
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    )}
+                  </svg>
+                </button>
+              </div>
             </div>
+
+            {/* Mobile Navigation */}
+            {mobileMenuOpen && (
+              <div className="md:hidden">
+                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                  <Link href="/" className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    Home
+                  </Link>
+                  <Link href="/blogs" className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    Blogs
+                  </Link>
+                  <Link href="/previous-year-questions" className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    PYQ Bank
+                  </Link>
+                  <Link href="/help" className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    Help
+                  </Link>
+                  <Link href="/contact" className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    Contact
+                  </Link>
+                  <Link href="/privacy" className="text-orange-600 block px-3 py-2 text-base font-medium" onClick={() => setMobileMenuOpen(false)}>
+                    Privacy
+                  </Link>
+                  <Link href="/login" className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    Login
+                  </Link>
+                  <Link href="/register" className="bg-orange-600 text-white block px-3 py-2 rounded-lg text-base font-medium hover:bg-orange-700 transition-colors text-center" onClick={() => setMobileMenuOpen(false)}>
+                    Get Started Free
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         </nav>
 
-        {/* Hero Section */}
-        <section className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-gray-900 tracking-tight sm:text-5xl md:text-6xl">
-                Privacy
-                <span className="block bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-                  Policy
-                </span>
+        {/* Main Content */}
+        <main className="pt-16">
+          {/* Hero Section */}
+          <section className="bg-gradient-to-br from-orange-50 to-red-50 py-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl">
+                Privacy Policy
               </h1>
               <p className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
-                Your privacy is important to us. This policy explains how we collect, use, and protect your information.
+                Your privacy is important to us. Learn how we collect, use, and protect your personal information.
               </p>
               <p className="mt-4 text-sm text-gray-500">
-                Last updated: December 2024
+                Last updated: {new Date().toLocaleDateString()}
               </p>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Privacy Policy Content */}
-        <section className="py-16 bg-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="prose prose-lg max-w-none">
-              
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Information We Collect</h2>
-                <div className="space-y-4 text-gray-700">
-                  <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>
-                  <p>We collect information you provide directly to us, such as when you:</p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li>Create an account (name, email, phone number)</li>
-                    <li>Complete your profile (academic information, goals)</li>
-                    <li>Contact us for support</li>
-                    <li>Subscribe to our newsletter</li>
+          {/* Privacy Policy Content */}
+          <section className="py-20">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="prose prose-lg max-w-none">
+                <div className="bg-white rounded-lg shadow-lg p-8">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">1. Information We Collect</h2>
+                  <p className="text-gray-700 mb-4">
+                    We collect information you provide directly to us, such as when you create an account, 
+                    use our services, or contact us for support.
+                  </p>
+                  <ul className="list-disc list-inside text-gray-700 mb-6">
+                    <li>Account information (name, email, phone number)</li>
+                    <li>Profile information and preferences</li>
+                    <li>Payment and billing information</li>
+                    <li>Test results and performance data</li>
+                    <li>Communication preferences</li>
                   </ul>
-                  
-                  <h3 className="text-lg font-semibold text-gray-900 mt-6">Usage Information</h3>
-                  <p>We automatically collect certain information when you use our platform:</p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li>Practice test results and performance data</li>
-                    <li>Study patterns and time spent on different topics</li>
-                    <li>Device information and browser type</li>
-                    <li>IP address and general location</li>
-                    <li>Pages visited and features used</li>
-                  </ul>
-                </div>
-              </div>
 
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">2. How We Use Your Information</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>We use the information we collect to:</p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li>Provide and improve our educational services</li>
-                    <li>Generate personalized learning recommendations</li>
-                    <li>Create detailed performance analytics</li>
-                    <li>Send important updates about your account</li>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">2. How We Use Your Information</h2>
+                  <p className="text-gray-700 mb-4">
+                    We use the information we collect to provide, maintain, and improve our services:
+                  </p>
+                  <ul className="list-disc list-inside text-gray-700 mb-6">
+                    <li>Deliver personalized learning experiences</li>
+                    <li>Process payments and manage subscriptions</li>
                     <li>Provide customer support</li>
-                    <li>Ensure platform security and prevent fraud</li>
-                    <li>Comply with legal obligations</li>
+                    <li>Send important updates and notifications</li>
+                    <li>Improve our platform and develop new features</li>
                   </ul>
-                </div>
-              </div>
 
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Information Sharing</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:</p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li><strong>With your consent:</strong> When you explicitly agree to share information</li>
-                    <li><strong>Service providers:</strong> Trusted partners who help us operate our platform (data hosting, analytics, customer support)</li>
-                    <li><strong>Legal requirements:</strong> When required by law or to protect our rights</li>
-                    <li><strong>Business transfers:</strong> In case of merger, acquisition, or sale of assets</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Data Security</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>We implement appropriate security measures to protect your personal information:</p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li>Encryption of data in transit and at rest</li>
-                    <li>Regular security audits and updates</li>
-                    <li>Access controls and authentication</li>
-                    <li>Secure data centers with physical security</li>
-                    <li>Employee training on data protection</li>
-                  </ul>
-                  <p className="mt-4">
-                    However, no method of transmission over the internet is 100% secure. While we strive to protect your information, 
-                    we cannot guarantee absolute security.
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">3. Information Sharing</h2>
+                  <p className="text-gray-700 mb-4">
+                    We do not sell, trade, or otherwise transfer your personal information to third parties 
+                    without your consent, except as described in this policy.
                   </p>
-                </div>
-              </div>
 
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Data Retention</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>We retain your information for as long as necessary to:</p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li>Provide our services to you</li>
-                    <li>Maintain your learning progress and analytics</li>
-                    <li>Comply with legal obligations</li>
-                    <li>Resolve disputes and enforce agreements</li>
-                  </ul>
-                  <p className="mt-4">
-                    When you delete your account, we will remove your personal information within 30 days, 
-                    except where we need to retain it for legal or regulatory purposes.
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">4. Data Security</h2>
+                  <p className="text-gray-700 mb-4">
+                    We implement appropriate security measures to protect your personal information against 
+                    unauthorized access, alteration, disclosure, or destruction.
                   </p>
-                </div>
-              </div>
 
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Your Rights</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>You have the following rights regarding your personal information:</p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li><strong>Access:</strong> Request a copy of your personal data</li>
-                    <li><strong>Correction:</strong> Update or correct inaccurate information</li>
-                    <li><strong>Deletion:</strong> Request deletion of your personal data</li>
-                    <li><strong>Portability:</strong> Export your data in a machine-readable format</li>
-                    <li><strong>Restriction:</strong> Limit how we process your data</li>
-                    <li><strong>Objection:</strong> Object to certain types of data processing</li>
-                  </ul>
-                  <p className="mt-4">
-                    To exercise these rights, please contact us at {systemSettings?.privacyEmail || systemSettings?.contactEmail || 'privacy@jeemaster.com'}. We will respond to your request within 30 days.
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">5. Your Rights</h2>
+                  <p className="text-gray-700 mb-4">
+                    You have the right to access, update, or delete your personal information. 
+                    You can also opt out of certain communications from us.
                   </p>
-                </div>
-              </div>
 
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Cookies and Tracking</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>We use cookies and similar technologies to:</p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li>Remember your login status and preferences</li>
-                    <li>Analyze how you use our platform</li>
-                    <li>Provide personalized content and recommendations</li>
-                    <li>Improve our services and user experience</li>
-                  </ul>
-                  <p className="mt-4">
-                    You can control cookies through your browser settings. However, disabling cookies may affect 
-                    the functionality of our platform.
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">6. Contact Us</h2>
+                  <p className="text-gray-700 mb-4">
+                    If you have any questions about this Privacy Policy, please contact us at:
                   </p>
-                </div>
-              </div>
-
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Children's Privacy</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>
-                    Our services are designed for students preparing for JEE, who are typically minors. We take extra care 
-                    to protect the privacy of children under 18:
-                  </p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li>We collect only necessary information for educational purposes</li>
-                    <li>We do not share children's information with third parties for marketing</li>
-                    <li>Parents can review and delete their child's information</li>
-                    <li>We implement additional security measures for children's data</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">9. International Data Transfers</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>
-                    Your information may be transferred to and processed in countries other than your own. We ensure 
-                    appropriate safeguards are in place to protect your data during international transfers, including:
-                  </p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li>Standard contractual clauses approved by relevant authorities</li>
-                    <li>Adequacy decisions by data protection authorities</li>
-                    <li>Certification schemes and codes of conduct</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Changes to This Policy</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>
-                    We may update this Privacy Policy from time to time. When we make changes, we will:
-                  </p>
-                  <ul className="list-disc list-inside ml-4 space-y-2">
-                    <li>Post the updated policy on our website</li>
-                    <li>Update the "Last updated" date</li>
-                    <li>Notify you of significant changes via email or platform notification</li>
-                  </ul>
-                  <p className="mt-4">
-                    Your continued use of our services after changes become effective constitutes acceptance of the updated policy.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Contact Us</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
-                  <div className="bg-orange-50 p-6 rounded-lg">
-                    <p><strong>Email:</strong> {systemSettings?.privacyEmail || systemSettings?.contactEmail || 'privacy@jeemaster.com'}</p>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <p className="text-gray-700">
+                      <strong>Email:</strong> {systemSettings?.privacyEmail || 'privacy@jeemaster.com'}<br />
+                      <strong>Address:</strong> {systemSettings?.address || 'Privacy Department, JEE Master Platform'}<br />
+                      <strong>Phone:</strong> {systemSettings?.contactPhone || '+1 (555) 123-4567'}
+                    </p>
                   </div>
                 </div>
               </div>
-
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Refund Policy</h2>
-                <div className="space-y-4 text-gray-700">
-                  <p>Please note our refund policy regarding purchases and subscriptions:</p>
-                  
-                  <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg">
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-lg font-semibold text-red-800">
-                          We do not accept any refund. All sales are final.
-                        </p>
-                        <p className="mt-2 text-red-700">
-                          This policy applies to all subscriptions, courses, and digital products purchased through our platform.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-gray-50 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Important Considerations:</h3>
-                    <ul className="list-disc list-inside ml-4 space-y-2">
-                      <li>All subscription fees are non-refundable except as required by applicable law</li>
-                      <li>Digital content and services are considered consumed upon purchase</li>
-                      <li>You can cancel your subscription at any time to prevent future charges</li>
-                      <li>Cancellation does not entitle you to a refund for the current billing period</li>
-                      <li>If you have concerns about our services, please contact our support team</li>
-                    </ul>
-                  </div>
-
-                  <p className="text-sm text-gray-600">
-                    By making a purchase on our platform, you acknowledge and agree to this refund policy. 
-                    We recommend carefully reviewing our service descriptions and terms before making any purchase.
-                  </p>
-                </div>
-              </div>
-
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Footer */}
-        <footer className="bg-gray-900 text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div className="col-span-1 md:col-span-2">
-                <div className="flex items-center mb-4">
-                  <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
-                    {systemSettings?.siteTitle || 'JEE App'}
-                  </span>
-                </div>
-                <p className="text-gray-400 mb-4">
-                  {systemSettings?.siteDescription || 'The most comprehensive JEE preparation platform with AI-powered features, extensive question banks, and detailed analytics to ensure your success.'}
-                </p>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platform</h3>
-                <ul className="space-y-3">
-                  <li><Link href="/student/practice" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
-                  <li><Link href="/student/pyq" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
-                  <li><Link href="/student/performance" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
-                  <li><Link href="/student/leaderboard" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Support</h3>
-                <ul className="space-y-3">
-                  <li><Link href="/help" className="text-gray-300 hover:text-white transition-colors">Help Center</Link></li>
-                  <li><Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact Us</Link></li>
-                  <li><Link href="/privacy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</Link></li>
-                  <li><Link href="/terms" className="text-gray-300 hover:text-white transition-colors">Terms of Service</Link></li>
-                </ul>
-              </div>
-            </div>
-            <div className="mt-8 pt-8 border-t border-gray-800 text-center">
-              <p className="text-gray-400">
-                © 2024 {systemSettings?.siteTitle || 'JEE App'}. All rights reserved. Built for JEE aspirants by JEE experts.
-              </p>
-            </div>
-          </div>
-        </footer>
+          {/* Footer */}
+          <DynamicFooter />
+        </main>
       </div>
     </>
   );

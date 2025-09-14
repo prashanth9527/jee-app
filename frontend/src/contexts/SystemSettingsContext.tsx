@@ -9,6 +9,7 @@ interface SystemSettings {
   siteDescription: string;
   siteKeywords: string;
   logoUrl?: string;
+  logoFooter?: string;
   faviconUrl?: string;
   ogImageUrl?: string;
   contactEmail?: string;

@@ -489,6 +489,7 @@ model SystemSettings {
   siteDescription   String?  @db.Text
   siteKeywords      String?  @db.Text
   logoUrl           String?
+  logoFooter        String?  // Footer-specific logo
   faviconUrl        String?
   ogImageUrl        String?  // Open Graph image for social media
   contactEmail      String?  // General contact email
