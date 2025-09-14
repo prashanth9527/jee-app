@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     connectivity: {
       backendUrl: process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001',
       hasBackendUrl: !!process.env.NEXT_PUBLIC_BACKEND_URL,
-    }
+    } as any
   };
 
   // Test backend connectivity if BACKEND_URL is set
@@ -53,10 +53,10 @@ export async function GET(request: NextRequest) {
         const errorText = await response.text();
         debugInfo.connectivity.backendTest.error = errorText;
       }
-    } catch (error) {
+    } catch (error: any) {
       debugInfo.connectivity.backendTest = {
-        error: error.message,
-        type: error.name,
+        error: error?.message || 'Unknown error',
+        type: error?.name || 'Error',
       };
     }
   }

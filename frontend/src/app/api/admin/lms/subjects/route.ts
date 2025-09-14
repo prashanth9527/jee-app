@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
 
 export async function GET(request: NextRequest) {
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/lms/subjects`, {
+    const response = await fetch(`${BACKEND_URL}/admin/lms/subjects`, {
       headers: {
         'Authorization': request.headers.get('Authorization') || '',
       },

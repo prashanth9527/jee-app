@@ -508,7 +508,15 @@ export class BlogsService {
 
     // Check if user is the author or admin
     if (existingBlog.authorId !== userId) {
-      throw new BadRequestException('You can only edit your own blogs');
+      // Check if user is admin
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { role: true }
+      });
+      
+      if (!user || user.role !== 'ADMIN') {
+        throw new BadRequestException('You can only edit your own blogs');
+      }
     }
 
     // Generate slug if title is being updated
@@ -594,7 +602,15 @@ export class BlogsService {
 
     // Check if user is the author or admin
     if (existingBlog.authorId !== userId) {
-      throw new BadRequestException('You can only delete your own blogs');
+      // Check if user is admin
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { role: true }
+      });
+      
+      if (!user || user.role !== 'ADMIN') {
+        throw new BadRequestException('You can only delete your own blogs');
+      }
     }
 
     return await this.prisma.blog.delete({
@@ -845,7 +861,7 @@ export class BlogsService {
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .trim('-');
+      .replace(/^-+|-+$/g, ''); // Remove leading and trailing dashes
 
     let slug = baseSlug;
     let counter = 1;
@@ -906,18 +922,16 @@ export class BlogsService {
       // Only add categoryId and streamId if they exist
       if (categoryId) {
         blogData.categoryId = categoryId;
+      } else {
+        // Ensure we have a default category
+        blogData.categoryId = await this.ensureDefaultCategory();
       }
       if (streamId) {
         blogData.streamId = streamId;
       }
 
-      // Generate slug
-      const slug = blogData.title
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim('-');
+      // Generate unique slug
+      const slug = await this.generateUniqueSlug(blogData.title);
 
       console.log('Creating blog with data:', {
         ...blogData,
@@ -991,18 +1005,16 @@ export class BlogsService {
       // Only add categoryId and streamId if they exist
       if (categoryId) {
         blogData.categoryId = categoryId;
+      } else {
+        // Ensure we have a default category
+        blogData.categoryId = await this.ensureDefaultCategory();
       }
       if (streamId) {
         blogData.streamId = streamId;
       }
 
-      // Generate slug
-      const slug = blogData.title
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim('-');
+      // Generate unique slug
+      const slug = await this.generateUniqueSlug(blogData.title);
 
       return await this.prisma.blog.create({
         data: {
@@ -1068,18 +1080,16 @@ export class BlogsService {
       // Only add categoryId and streamId if they exist
       if (categoryId) {
         blogData.categoryId = categoryId;
+      } else {
+        // Ensure we have a default category
+        blogData.categoryId = await this.ensureDefaultCategory();
       }
       if (streamId) {
         blogData.streamId = streamId;
       }
 
-      // Generate slug
-      const slug = blogData.title
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim('-');
+      // Generate unique slug
+      const slug = await this.generateUniqueSlug(blogData.title);
 
       return await this.prisma.blog.create({
         data: {

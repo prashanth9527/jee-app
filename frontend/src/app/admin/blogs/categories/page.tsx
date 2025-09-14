@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import AdminLayout from '@/components/AdminLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import api from '@/lib/api';
+import Swal from 'sweetalert2';
 
 interface BlogCategory {
   id: string;
@@ -86,7 +87,11 @@ export default function BlogCategoriesPage() {
     e.preventDefault();
     
     if (!formData.name.trim()) {
-      alert('Please enter a category name');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Missing Name',
+        text: 'Please enter a category name.'
+      });
       return;
     }
     
@@ -99,6 +104,13 @@ export default function BlogCategoriesPage() {
         if (response.data) {
           await loadCategories();
           handleCloseModal();
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Category updated successfully.',
+            timer: 2000,
+            showConfirmButton: false
+          });
         }
       } else {
         // Create new category
@@ -106,12 +118,23 @@ export default function BlogCategoriesPage() {
         if (response.data) {
           await loadCategories();
           handleCloseModal();
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Category created successfully.',
+            timer: 2000,
+            showConfirmButton: false
+          });
         }
       }
     } catch (error: any) {
       console.error('Error saving category:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Error saving category';
-      alert(errorMessage);
+      Swal.fire({
+        icon: 'error',
+        title: 'Operation Failed',
+        text: errorMessage
+      });
     } finally {
       setSubmitting(false);
     }
@@ -132,7 +155,11 @@ export default function BlogCategoriesPage() {
 
   const handleDelete = async (category: BlogCategory) => {
     if (category._count.blogs > 0) {
-      alert('Cannot delete category with existing blog posts. Please move or delete the posts first.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Cannot Delete',
+        text: 'Cannot delete category with existing blog posts. Please move or delete the posts first.'
+      });
       return;
     }
 
@@ -143,10 +170,21 @@ export default function BlogCategoriesPage() {
     try {
       await api.delete(`/admin/blogs/categories/${category.id}`);
       await loadCategories();
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Category deleted successfully.',
+        timer: 2000,
+        showConfirmButton: false
+      });
     } catch (error: any) {
       console.error('Error deleting category:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Error deleting category';
-      alert(errorMessage);
+      Swal.fire({
+        icon: 'error',
+        title: 'Operation Failed',
+        text: errorMessage
+      });
     }
   };
 

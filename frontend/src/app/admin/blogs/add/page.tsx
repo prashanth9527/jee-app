@@ -6,6 +6,7 @@ import AdminLayout from '@/components/AdminLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import RichTextEditor from '@/components/RichTextEditor';
 import api from '@/lib/api';
+import Swal from 'sweetalert2';
 
 interface Category {
   id: string;
@@ -151,17 +152,29 @@ export default function AddBlogPage() {
     e.preventDefault();
     
     if (!formData.title.trim()) {
-      alert('Please enter a title');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Missing Title',
+        text: 'Please enter a title for the blog post.'
+      });
       return;
     }
 
     if (!formData.categoryId) {
-      alert('Please select a category');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Missing Category',
+        text: 'Please select a category for the blog post.'
+      });
       return;
     }
 
     if (!formData.content.trim()) {
-      alert('Please enter content');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Missing Content',
+        text: 'Please enter content for the blog post.'
+      });
       return;
     }
     
@@ -171,12 +184,24 @@ export default function AddBlogPage() {
       const response = await api.post('/admin/blogs', formData);
       
       if (response.data) {
-        router.push('/admin/blogs');
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Blog post created successfully.',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          router.push('/admin/blogs');
+        });
       }
     } catch (error: any) {
       console.error('Error creating blog:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Error creating blog';
-      alert(errorMessage);
+      Swal.fire({
+        icon: 'error',
+        title: 'Creation Failed',
+        text: errorMessage
+      });
     } finally {
       setSubmitting(false);
     }

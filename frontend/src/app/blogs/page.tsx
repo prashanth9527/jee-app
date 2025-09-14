@@ -6,6 +6,9 @@ import Footer from '@/components/Footer';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { Suspense } from 'react';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Educational Blogs & Articles | JEE NEET Study Resources',
   description: 'Discover expert educational content, study tips, exam strategies, and career guidance for JEE, NEET, and other competitive exams. Stay updated with the latest insights.',

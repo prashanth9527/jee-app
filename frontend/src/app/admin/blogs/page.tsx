@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import AdminLayout from '@/components/AdminLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import api from '@/lib/api';
+import Swal from 'sweetalert2';
 
 interface Blog {
   id: string;
@@ -216,9 +217,20 @@ export default function AdminBlogsPage() {
       await api.delete(`/admin/blogs/${id}`);
       loadData();
       loadStats();
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Blog deleted successfully.',
+        timer: 2000,
+        showConfirmButton: false
+      });
     } catch (error) {
       console.error('Error deleting blog:', error);
-      alert('Failed to delete blog');
+      Swal.fire({
+        icon: 'error',
+        title: 'Delete Failed',
+        text: 'Failed to delete blog'
+      });
     }
   };
 

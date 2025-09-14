@@ -31,16 +31,16 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json();
     return NextResponse.json(data);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching blog categories:', {
-      message: error.message,
-      stack: error.stack,
+      message: error?.message,
+      stack: error?.stack,
       BACKEND_URL: BACKEND_URL
     });
     return NextResponse.json(
       { 
         error: 'Failed to fetch blog categories',
-        details: error.message,
+        details: error?.message || 'Unknown error',
         backendUrl: BACKEND_URL,
         timestamp: new Date().toISOString()
       },

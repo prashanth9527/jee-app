@@ -78,6 +78,7 @@ export class LMSController {
       select: {
         id: true,
         name: true,
+        streamId: true,
         stream: {
           select: {
             id: true,

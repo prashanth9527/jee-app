@@ -60,7 +60,7 @@ export class BlogsController {
   @Post()
   @Roles('ADMIN')
   async createBlog(@Body() createBlogDto: CreateBlogDto, @Request() req: any) {
-    return this.blogsService.createBlog(createBlogDto, req.user.userId);
+    return this.blogsService.createBlog(createBlogDto, req.user.id);
   }
 
   @Get()
@@ -87,13 +87,13 @@ export class BlogsController {
   @Put(':id')
   @Roles('ADMIN')
   async updateBlog(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto, @Request() req: any) {
-    return this.blogsService.updateBlog(id, updateBlogDto, req.user.userId);
+    return this.blogsService.updateBlog(id, updateBlogDto, req.user.id);
   }
 
   @Delete(':id')
   @Roles('ADMIN')
   async deleteBlog(@Param('id') id: string, @Request() req: any) {
-    return this.blogsService.deleteBlog(id, req.user.userId);
+    return this.blogsService.deleteBlog(id, req.user.id);
   }
 
   @Get(':id/analytics')
@@ -109,13 +109,13 @@ export class BlogsController {
   @Post(':id/like')
   @UseGuards(JwtAuthGuard)
   async likeBlog(@Param('id') id: string, @Request() req: any) {
-    return this.blogsService.likeBlog(id, req.user.userId);
+    return this.blogsService.likeBlog(id, req.user.id);
   }
 
   @Post(':id/bookmark')
   @UseGuards(JwtAuthGuard)
   async bookmarkBlog(@Param('id') id: string, @Request() req: any) {
-    return this.blogsService.bookmarkBlog(id, req.user.userId);
+    return this.blogsService.bookmarkBlog(id, req.user.id);
   }
 
   // ========================================
@@ -130,7 +130,7 @@ export class BlogsController {
   ) {
     return this.blogsService.generateBlogFromNews(
       body.topic,
-      req.user.userId,
+      req.user.id,
       body.streamId,
       body.categoryId
     );
@@ -144,7 +144,7 @@ export class BlogsController {
   ) {
     return this.blogsService.generateBlogFromTopic(
       body.topic,
-      req.user.userId,
+      req.user.id,
       body.streamId,
       body.categoryId
     );
@@ -158,7 +158,7 @@ export class BlogsController {
   ) {
     return this.blogsService.generateBlogFromKeywords(
       body.keywords,
-      req.user.userId,
+      req.user.id,
       body.streamId,
       body.categoryId
     );
