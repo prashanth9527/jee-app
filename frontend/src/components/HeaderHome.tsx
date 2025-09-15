@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { getDashboardUrl } from '@/utils/dashboardUtils';
 
 interface SystemSettings {
   siteTitle: string;
@@ -19,36 +20,57 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+
   return (
     <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Brand/Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center">
               <Link 
                 href="/" 
-                className="flex items-center space-x-2 text-2xl font-bold text-orange-600 hover:text-orange-700 transition-colors"
+                className="flex items-center space-x-3 text-2xl font-bold text-orange-600 hover:text-orange-700 transition-all duration-300 hover:scale-105"
                 title={`${systemSettings?.siteTitle || 'JEE App'} - ${systemSettings?.siteKeywords || 'JEE preparation platform'}`}
                 aria-label={`${systemSettings?.siteTitle || 'JEE App'} - Go to homepage`}
               >
                 {systemSettings?.logoUrl ? (
-                  <img 
-                    src={systemSettings.logoUrl} 
-                    alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
-                    className="h-12 w-auto object-contain"
-                    onError={(e) => {
-                      // Fallback to text if image fails to load
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<span class="text-2xl font-bold">${systemSettings?.siteTitle || 'JEE App'}</span>`;
-                      }
-                    }}
-                  />
+                  <div className="flex items-center space-x-3">
+                    <div className="relative">
+                      <img 
+                        src={systemSettings.logoUrl} 
+                        alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
+                        className="h-14 w-auto object-contain drop-shadow-lg"
+                        onError={(e) => {
+                          // Fallback to text if image fails to load
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.innerHTML = `<div class="h-14 w-14 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg flex items-center justify-center"><span class="text-white font-bold text-lg">${(systemSettings?.siteTitle || 'JEE App').substring(0, 2).toUpperCase()}</span></div>`;
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                        {systemSettings?.siteTitle || 'JEE App'}
+                      </span>
+                    </div>
+                  </div>
                 ) : (
-                  <span className="text-2xl font-bold">{systemSettings?.siteTitle || 'JEE App'}</span>
+                  <div className="flex items-center space-x-3">
+                    <div className="h-14 w-14 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg flex items-center justify-center shadow-lg">
+                      <span className="text-white font-bold text-lg">
+                        {(systemSettings?.siteTitle || 'JEE App').split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                        {systemSettings?.siteTitle || 'JEE App'}
+                      </span>
+                    </div>
+                  </div>
                 )}
               </Link>
             </div>
@@ -80,7 +102,7 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
             {user ? (
               <div className="flex items-center space-x-4">
                 <Link 
-                  href="/dashboard" 
+                  href={getDashboardUrl(user.role)} 
                   className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors"
                 >
                   Dashboard
@@ -156,7 +178,7 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
               {user ? (
                 <>
                   <Link 
-                    href="/dashboard" 
+                    href={getDashboardUrl(user.role)} 
                     className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >

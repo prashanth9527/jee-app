@@ -83,7 +83,9 @@ export default function StudentProfileSettingsPage() {
     if (!user && !loading) {
       router.push('/login');
     } else if (user && user.role !== 'STUDENT') {
-      router.push('/dashboard');
+      const dashboardUrl = user.role === 'ADMIN' ? '/admin' : 
+                          user.role === 'EXPERT' ? '/expert' : '/dashboard';
+      router.push(dashboardUrl);
     }
   }, [user, loading, router]);
 

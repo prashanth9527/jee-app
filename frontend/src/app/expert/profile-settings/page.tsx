@@ -83,7 +83,9 @@ export default function ExpertProfileSettingsPage() {
     if (!user && !loading) {
       router.push('/login');
     } else if (user && user.role !== 'EXPERT') {
-      router.push('/dashboard');
+      const dashboardUrl = user.role === 'ADMIN' ? '/admin' : 
+                          user.role === 'STUDENT' ? '/student' : '/dashboard';
+      router.push(dashboardUrl);
     }
   }, [user, loading, router]);
 

@@ -119,8 +119,11 @@ function VerifyEmailContent() {
       // Store the access token
       localStorage.setItem('token', data.access_token);
       
-      // Redirect to dashboard
-      router.push('/dashboard');
+      // Redirect to appropriate dashboard based on user role
+      const dashboardUrl = data.user?.role === 'ADMIN' ? '/admin' : 
+                          data.user?.role === 'STUDENT' ? '/student' : 
+                          data.user?.role === 'EXPERT' ? '/expert' : '/dashboard';
+      router.push(dashboardUrl);
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Verification failed');

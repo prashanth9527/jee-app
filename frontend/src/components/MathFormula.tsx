@@ -40,3 +40,4 @@ export default function MathFormula({ formula, inline = false, className = '' }:
     />
   );
 }
+

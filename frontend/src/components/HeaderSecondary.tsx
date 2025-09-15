@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { getDashboardUrl } from '@/utils/dashboardUtils';
 
 interface SystemSettings {
   siteTitle: string;
@@ -18,6 +19,7 @@ interface HeaderSecondaryProps {
 export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps) {
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
   return (
     <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
@@ -81,7 +83,7 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
             {user ? (
               <div className="flex items-center space-x-4">
                 <Link 
-                  href="/dashboard" 
+                  href={getDashboardUrl(user.role)} 
                   className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors"
                 >
                   Dashboard
@@ -171,7 +173,7 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
               {user ? (
                 <>
                   <Link 
-                    href="/dashboard" 
+                    href={getDashboardUrl(user.role)} 
                     className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >

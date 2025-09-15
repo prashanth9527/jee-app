@@ -3,6 +3,7 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { getDashboardUrl } from '@/utils/dashboardUtils';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -24,13 +25,7 @@ export default function ProtectedRoute({ children, requiredRole, allowedRoles }:
       const roleAllowed = allowedRoles ? allowedRoles.includes(user.role as any) : true;
       if ((requiredRole && user.role !== requiredRole) || !roleAllowed) {
         // Redirect to appropriate dashboard based on user role
-        if (user.role === 'ADMIN') {
-          router.push('/admin');
-        } else if (user.role === 'EXPERT') {
-          router.push('/expert');
-        } else {
-          router.push('/student');
-        }
+        router.push(getDashboardUrl(user.role));
         return;
       }
     }
