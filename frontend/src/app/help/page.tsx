@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import DynamicHead from '@/components/DynamicHead';
 import DynamicFooter from '@/components/DynamicFooter';
 import DynamicFavicon from '@/components/DynamicFavicon';
+import DynamicLogo from '@/components/DynamicLogo';
 import { useSystemSettings } from '@/contexts/SystemSettingsContext';
 
 interface FAQ {
@@ -127,9 +128,26 @@ export default function HelpPage() {
       <DynamicHead 
         title={`Help Center - ${systemSettings?.siteTitle || 'JEE App'} | FAQ & Support`}
         description={`Get instant answers to common questions about ${systemSettings?.siteTitle || 'JEE App'} platform, features, account management, and JEE preparation. Find help articles, tutorials, and support resources.`}
-        keywords={`${systemSettings?.siteTitle || 'JEE App'} help, FAQ, support center, JEE preparation help, account help, ${systemSettings?.siteKeywords || 'JEE, preparation, practice tests'}`}
+        keywords={`${systemSettings?.siteTitle || 'JEE App'} help, FAQ, support center, JEE preparation help, account help, practice tests help, ${systemSettings?.siteKeywords || 'JEE, preparation, practice tests'}`}
         canonicalUrl={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/help`}
         ogImage={systemSettings?.ogImageUrl ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}${systemSettings.ogImageUrl}` : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/og-help.jpg`}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": faq.answer
+            }
+          })),
+          "publisher": {
+            "@type": "Organization",
+            "name": systemSettings?.siteTitle || 'JEE App',
+            "url": process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'
+          }
+        }}
       />
       <div className="min-h-screen bg-white">
         {/* Navigation */}
@@ -139,31 +157,12 @@ export default function HelpPage() {
               {/* Brand/Logo */}
               <div className="flex items-center">
                 <div className="flex-shrink-0 flex items-center">
-                  <Link 
-                    href="/" 
-                    className="flex items-center space-x-2 text-2xl font-bold text-orange-600 hover:text-orange-700 transition-colors"
-                    title={`${systemSettings?.siteTitle || 'JEE App'} - ${systemSettings?.siteKeywords || 'JEE preparation platform'}`}
-                    aria-label={`${systemSettings?.siteTitle || 'JEE App'} - Go to homepage`}
-                  >
-                    {systemSettings?.logoUrl ? (
-                      <img 
-                        src={systemSettings.logoUrl} 
-                        alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
-                        className="h-12 w-auto object-contain"
-                        onError={(e) => {
-                          // Fallback to text if image fails to load
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const parent = target.parentElement;
-                          if (parent) {
-                            parent.innerHTML = `<span class="text-2xl font-bold">${systemSettings?.siteTitle || 'JEE App'}</span>`;
-                          }
-                        }}
-                      />
-                    ) : (
-                      <span className="text-2xl font-bold">{systemSettings?.siteTitle || 'JEE App'}</span>
-                    )}
-                  </Link>
+                  <DynamicLogo 
+                    systemSettings={systemSettings} 
+                    size="md"
+                    showText={true}
+                    className="hover:opacity-80 transition-opacity"
+                  />
                 </div>
               </div>
 

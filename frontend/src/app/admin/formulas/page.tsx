@@ -5,7 +5,7 @@ import { Plus, Search, Edit, Trash2, Eye, Calculator, Tag, BookOpen, Filter } fr
 import AdminLayout from '@/components/AdminLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import RichTextEditor from '@/components/RichTextEditor';
-import MathRenderer from '@/components/MathRenderer';
+import MathFormula from '@/components/MathFormula';
 import Swal from 'sweetalert2';
 
 interface Formula {
@@ -478,7 +478,7 @@ export default function AdminFormulasPage() {
                             {formula.title}
                           </div>
                           <div className="mt-1">
-                            <MathRenderer formula={formula.formula} inline={true} />
+                            <MathFormula formula={formula.formula} inline={true} />
                           </div>
                         </div>
                       </td>
@@ -630,7 +630,7 @@ export default function AdminFormulasPage() {
                       {formData.formula && (
                         <div className="bg-gray-50 p-3 rounded-lg">
                           <p className="text-sm text-gray-600 mb-2">Preview:</p>
-                          <MathRenderer formula={formData.formula} />
+                          <MathFormula formula={formData.formula} />
                         </div>
                       )}
                     </div>

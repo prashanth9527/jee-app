@@ -6,11 +6,11 @@ import Image from 'next/image';
 interface DynamicLogoProps {
   systemSettings: {
     siteTitle?: string;
-    siteLogo?: string;
+    logoUrl?: string;
   } | null;
   className?: string;
   showText?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
 export default function DynamicLogo({ 
@@ -22,13 +22,15 @@ export default function DynamicLogo({
   const sizeClasses = {
     sm: 'h-6 w-6',
     md: 'h-8 w-8',
-    lg: 'h-12 w-12'
+    lg: 'h-12 w-12',
+    xl: 'h-16 w-16'
   };
 
   const textSizeClasses = {
     sm: 'text-lg',
     md: 'text-2xl',
-    lg: 'text-3xl'
+    lg: 'text-3xl',
+    xl: 'text-4xl'
   };
 
   const getLogoInitials = (title: string) => {
@@ -37,10 +39,10 @@ export default function DynamicLogo({
 
   return (
     <Link href="/" className={`flex items-center space-x-3 ${className}`}>
-      {systemSettings?.siteLogo ? (
+      {systemSettings?.logoUrl ? (
         <div className={`${sizeClasses[size]} relative`}>
           <Image
-            src={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}${systemSettings.siteLogo}`}
+            src={systemSettings.logoUrl}
             alt={`${systemSettings?.siteTitle || 'JEE App'} Logo`}
             fill
             className="object-contain"

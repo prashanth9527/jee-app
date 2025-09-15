@@ -5,13 +5,15 @@ import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import DynamicHead from '@/components/DynamicHead';
 import DynamicLogo from '@/components/DynamicLogo';
+import DynamicFavicon from '@/components/DynamicFavicon';
+import DynamicFooter from '@/components/DynamicFooter';
 
 interface SystemSettings {
   siteTitle: string;
   siteDescription: string;
   siteKeywords: string;
-  siteLogo?: string;
-  siteFavicon?: string;
+  logoUrl?: string;
+  faviconUrl?: string;
   ogImage?: string;
   companyName?: string;
   contactEmail?: string;
@@ -93,6 +95,10 @@ export default function TermsPage() {
 
   return (
     <>
+    <DynamicFavicon 
+        faviconUrl={systemSettings?.faviconUrl}
+        siteTitle={systemSettings?.siteTitle}
+      />
       <DynamicHead 
         title={`Terms of Service - ${systemSettings?.siteTitle || 'JEE App'} | Terms & Conditions`}
         description={`Read the terms and conditions for using ${systemSettings?.siteTitle || 'JEE App'} platform and services for JEE preparation. Legal terms, user agreements, and service conditions.`}
@@ -116,13 +122,14 @@ export default function TermsPage() {
         {/* Navigation */}
         <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
+            <div className="flex justify-between items-center h-20">
               <div className="flex items-center">
-                <DynamicLogo 
-                  systemSettings={systemSettings} 
-                  size="md"
-                  showText={true}
-                />
+                  <DynamicLogo 
+                    systemSettings={systemSettings} 
+                    size="xl"
+                    showText={true}
+                    className="hover:opacity-80 transition-opacity"
+                  />
               </div>
               <div className="flex items-center space-x-4">
                 <Link href="/login" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
@@ -137,27 +144,8 @@ export default function TermsPage() {
         </nav>
 
         {/* Hero Section */}
-        <section className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-gray-900 tracking-tight sm:text-5xl md:text-6xl">
-                Terms of
-                <span className="block bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-                  Service
-                </span>
-              </h1>
-              <p className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
-                Please read these terms carefully before using JEE App platform and services.
-              </p>
-              <p className="mt-4 text-sm text-gray-500">
-                Last updated: December 2024
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Terms Content */}
-        <section className="py-16 bg-white">
+         {/* Terms Content */}
+         <section className="pt-20 pb-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="prose prose-lg max-w-none">
               
@@ -400,46 +388,10 @@ export default function TermsPage() {
           </div>
         </section>
 
+        
+
         {/* Footer */}
-        <footer className="bg-gray-900 text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div className="col-span-1 md:col-span-2">
-                <div className="flex items-center mb-4">
-                  <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
-                    {systemSettings?.siteTitle || 'JEE App'}
-                  </span>
-                </div>
-                <p className="text-gray-400 mb-4">
-                  {systemSettings?.siteDescription || 'The most comprehensive JEE preparation platform with AI-powered features, extensive question banks, and detailed analytics to ensure your success.'}
-                </p>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Platformdddd</h3>
-                <ul className="space-y-3">
-                  <li><Link href="/student/practice" className="text-gray-300 hover:text-white transition-colors">Practice Tests</Link></li>
-                  <li><Link href="/student/pyq" className="text-gray-300 hover:text-white transition-colors">Previous Year Questions</Link></li>
-                  <li><Link href="/student/performance" className="text-gray-300 hover:text-white transition-colors">Analytics</Link></li>
-                  <li><Link href="/student/leaderboard" className="text-gray-300 hover:text-white transition-colors">Leaderboard</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Support</h3>
-                <ul className="space-y-3">
-                  <li><Link href="/help" className="text-gray-300 hover:text-white transition-colors">Help Center</Link></li>
-                  <li><Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact Us</Link></li>
-                  <li><Link href="/privacy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</Link></li>
-                  <li><Link href="/terms" className="text-gray-300 hover:text-white transition-colors">Terms of Service</Link></li>
-                </ul>
-              </div>
-            </div>
-            <div className="mt-8 pt-8 border-t border-gray-800 text-center">
-              <p className="text-gray-400">
-                © 2024 {systemSettings?.siteTitle || 'JEE App'}. All rights reserved. Built for JEE aspirants by JEE experts.
-              </p>
-            </div>
-          </div>
-        </footer>
+        <DynamicFooter />
       </div>
     </>
   );

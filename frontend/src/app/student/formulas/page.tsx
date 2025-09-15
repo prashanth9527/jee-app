@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Search, BookOpen, Calculator, Tag, Filter, Star, Eye, Download } from 'lucide-react';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import MathRenderer from '@/components/MathRenderer';
+import MathFormula from '@/components/MathFormula';
 
 interface Formula {
   id: string;
@@ -356,7 +356,7 @@ export default function StudentFormulasPage() {
                   
                   <div className="mb-4">
                     <div className="bg-gray-100 p-3 rounded-lg text-center">
-                      <MathRenderer formula={formula.formula} />
+                      <MathFormula formula={formula.formula} />
                     </div>
                   </div>
                   
@@ -433,7 +433,7 @@ export default function StudentFormulasPage() {
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <div className="text-center">
                       <div className="mb-2">
-                        <MathRenderer formula={selectedFormula.formula} />
+                        <MathFormula formula={selectedFormula.formula} />
                       </div>
                       <p className="text-gray-600">Mathematical Expression</p>
                     </div>

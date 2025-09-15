@@ -7,10 +7,16 @@ import { useAuth } from '@/contexts/AuthContext';
 import GoogleSignInButton from '@/components/GoogleSignInButton';
 import DynamicHead from '@/components/DynamicHead';
 import type { GoogleUser } from '@/lib/google-auth';
+import DynamicFavicon from '@/components/DynamicFavicon';
+import DynamicLogo from '@/components/DynamicLogo';
 
 interface SystemSettings {
   siteTitle: string;
   siteDescription: string;
+  faviconUrl?: string;
+  siteKeywords?: string;
+  ogImage?: string;
+  companyName?: string;
 }
 
 export default function LoginPage() {
@@ -176,22 +182,42 @@ export default function LoginPage() {
 
 	return (
 		<>
+		<DynamicFavicon 
+        faviconUrl={systemSettings?.faviconUrl}
+        siteTitle={systemSettings?.siteTitle}
+      />
 			<DynamicHead 
-				title="Sign In"
-				description="Sign in to your JEE Master account and continue your preparation journey"
+				title={`Login - ${systemSettings?.siteTitle || 'JEE App'} | Sign In to Your Account`}
+				description={`Sign in to your ${systemSettings?.siteTitle || 'JEE App'} account to continue your JEE preparation journey. Access practice tests, study materials, and personalized learning.`}
+				keywords={`${systemSettings?.siteTitle || 'JEE App'} login, sign in, JEE preparation, student login, ${systemSettings?.siteKeywords || 'JEE, preparation, practice tests'}`}
+				canonicalUrl={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/login`}
+				ogImage={systemSettings?.ogImage ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}${systemSettings.ogImage}` : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/og-login.jpg`}
+				structuredData={{
+				"@context": "https://schema.org",
+				"@type": "WebPage",
+				"name": `${systemSettings?.siteTitle || 'JEE App'} Login`,
+				"description": "Sign in to your JEE preparation account and continue your learning journey",
+				"url": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/login`,
+				"dateModified": "2024-12-01",
+				"publisher": {
+					"@type": "Organization",
+					"name": systemSettings?.companyName || systemSettings?.siteTitle || 'JEE App'
+				}
+				}}
 			/>
 			<div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 				<div className="max-w-md w-full space-y-8">
 					{/* Header */}
 					<div className="text-center">
-						<div className="flex justify-center items-center mb-6">
-							<Link href="/" className="flex-1">
-								<span className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
-									{systemSettings?.siteTitle || 'JEE Master'}
-								</span>
-							</Link>
+						<div className="flex justify-center items-center mb-8">
+							<DynamicLogo 
+								systemSettings={systemSettings} 
+								size="lg"
+								showText={true}
+								className="justify-center"
+							/>
 						</div>
-						<h2 className="mt-6 text-3xl font-bold text-gray-900">
+						<h2 className="text-3xl font-bold text-gray-900">
 							Welcome back
 						</h2>
 						<p className="mt-2 text-sm text-gray-600">

@@ -7,6 +7,8 @@ import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import GoogleSignInButton from '@/components/GoogleSignInButton';
 import DynamicHead from '@/components/DynamicHead';
+import DynamicFavicon from '@/components/DynamicFavicon';
+import DynamicLogo from '@/components/DynamicLogo';
 import type { GoogleUser } from '@/lib/google-auth';
 
 interface Stream {
@@ -23,6 +25,10 @@ interface Stream {
 interface SystemSettings {
   siteTitle: string;
   siteDescription: string;
+  faviconUrl?: string;
+  siteKeywords?: string;
+  ogImage?: string;
+  companyName?: string;
 }
 
 function RegisterForm() {
@@ -207,22 +213,42 @@ function RegisterForm() {
 
 	return (
 		<>
+			<DynamicFavicon 
+				faviconUrl={systemSettings?.faviconUrl}
+				siteTitle={systemSettings?.siteTitle}
+			/>
 			<DynamicHead 
-				title="Create Account"
-				description="Join JEE Master and start your preparation journey with our comprehensive platform"
+				title={`Register - ${systemSettings?.siteTitle || 'JEE App'} | Create Your Account`}
+				description={`Join ${systemSettings?.siteTitle || 'JEE App'} and start your JEE preparation journey with our comprehensive platform. Access practice tests, study materials, and personalized learning.`}
+				keywords={`${systemSettings?.siteTitle || 'JEE App'} register, sign up, JEE preparation, create account, student registration, ${systemSettings?.siteKeywords || 'JEE, preparation, practice tests'}`}
+				canonicalUrl={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/register`}
+				ogImage={systemSettings?.ogImage ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}${systemSettings.ogImage}` : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/og-register.jpg`}
+				structuredData={{
+				"@context": "https://schema.org",
+				"@type": "WebPage",
+				"name": `${systemSettings?.siteTitle || 'JEE App'} Registration`,
+				"description": "Create your account and start your JEE preparation journey with our comprehensive platform",
+				"url": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://jeemaster.com'}/register`,
+				"dateModified": "2024-12-01",
+				"publisher": {
+					"@type": "Organization",
+					"name": systemSettings?.companyName || systemSettings?.siteTitle || 'JEE App'
+				}
+				}}
 			/>
 			<div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 				<div className="max-w-md w-full space-y-8">
 					{/* Header */}
 					<div className="text-center">
-						<div className="flex justify-center items-center mb-6">
-							<Link href="/" className="flex-1">
-								<span className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
-									{systemSettings?.siteTitle || 'JEE Master'}
-								</span>
-							</Link>
+						<div className="flex justify-center items-center mb-8">
+							<DynamicLogo 
+								systemSettings={systemSettings} 
+								size="lg"
+								showText={true}
+								className="justify-center"
+							/>
 						</div>
-						<h2 className="mt-6 text-3xl font-bold text-gray-900">
+						<h2 className="text-3xl font-bold text-gray-900">
 							Create your account
 						</h2>
 						<p className="mt-2 text-sm text-gray-600">

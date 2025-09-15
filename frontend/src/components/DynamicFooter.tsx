@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useSystemSettings } from '@/contexts/SystemSettingsContext';
+import DynamicLogo from './DynamicLogo';
 
 export default function DynamicFooter() {
   const { systemSettings } = useSystemSettings();
@@ -12,41 +13,12 @@ export default function DynamicFooter() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
-              {systemSettings?.logoFooter ? (
-                <img 
-                  src={systemSettings.logoFooter} 
-                  alt={`${systemSettings.siteTitle || 'JEE App'} Footer Logo`}
-                  className="h-12 w-auto object-contain mr-3"
-                  onError={(e) => {
-                    // Fallback to text if image fails to load
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const parent = target.parentElement;
-                    if (parent) {
-                      parent.innerHTML = `<span class="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">${systemSettings?.siteTitle || 'JEE App'}</span>`;
-                    }
-                  }}
-                />
-              ) : systemSettings?.logoUrl ? (
-                <img 
-                  src={systemSettings.logoUrl} 
-                  alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
-                  className="h-12 w-auto object-contain mr-3"
-                  onError={(e) => {
-                    // Fallback to text if image fails to load
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const parent = target.parentElement;
-                    if (parent) {
-                      parent.innerHTML = `<span class="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">${systemSettings?.siteTitle || 'JEE App'}</span>`;
-                    }
-                  }}
-                />
-              ) : (
-                <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
-                  {systemSettings?.siteTitle || 'JEE App'}
-                </span>
-              )}
+              <DynamicLogo 
+                systemSettings={systemSettings} 
+                size="md"
+                showText={true}
+                className="text-white hover:opacity-80 transition-opacity"
+              />
             </div>
             <p className="text-gray-400 mb-4">
               {systemSettings?.siteDescription || 'The most comprehensive JEE preparation platform with AI-powered features, extensive question banks, and detailed analytics to ensure your success.'}
