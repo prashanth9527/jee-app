@@ -358,7 +358,48 @@ export default function TermsPage() {
               </div>
 
               <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Miscellaneous</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Refund Policy</h2>
+                <div className="space-y-4 text-gray-700">
+                  <p>Please note our refund policy regarding purchases and subscriptions:</p>
+                  
+                  <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg">
+                    <div className="flex">
+                      <div className="flex-shrink-0">
+                        <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-lg font-semibold text-red-800">
+                          We do not accept any refund. All sales are final.
+                        </p>
+                        <p className="mt-2 text-red-700">
+                          This policy applies to all subscriptions, courses, and digital products purchased through our platform.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-50 p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Important Considerations:</h3>
+                    <ul className="list-disc list-inside ml-4 space-y-2">
+                      <li>All subscription fees are non-refundable except as required by applicable law</li>
+                      <li>Digital content and services are considered consumed upon purchase</li>
+                      <li>You can cancel your subscription at any time to prevent future charges</li>
+                      <li>Cancellation does not entitle you to a refund for the current billing period</li>
+                      <li>If you have concerns about our services, please contact our support team</li>
+                    </ul>
+                  </div>
+
+                  <p className="text-sm text-gray-600">
+                    By making a purchase on our platform, you acknowledge and agree to this refund policy. 
+                    We recommend carefully reviewing our service descriptions and terms before making any purchase.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mb-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">13. Miscellaneous</h2>
                 <div className="space-y-4 text-gray-700">
                   <h3 className="text-lg font-semibold text-gray-900">Entire Agreement</h3>
                   <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and JEE App.</p>

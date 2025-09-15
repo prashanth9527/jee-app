@@ -49,6 +49,7 @@ function RegisterForm() {
 	const [codeValid, setCodeValid] = useState<boolean | null>(null);
 	const [showPassword, setShowPassword] = useState(false);
 	const [isRegistering, setIsRegistering] = useState(false);
+	const [agreeToTerms, setAgreeToTerms] = useState(false);
 
 	// Fetch available streams and system settings
 	useEffect(() => {
@@ -131,6 +132,12 @@ function RegisterForm() {
 			return;
 		}
 
+		if (!agreeToTerms) {
+			setError('Please agree to the Terms & Conditions to continue');
+			setIsRegistering(false);
+			return;
+		}
+
 		try {
 			const registrationData: any = { email, fullName, phone, password, streamId };
 			if (referralCode && codeValid) {
@@ -164,6 +171,11 @@ function RegisterForm() {
 				// If login fails, try registration
 				if (!streamId) {
 					setError('Please select a stream before registering with Google');
+					return;
+				}
+				
+				if (!agreeToTerms) {
+					setError('Please agree to the Terms & Conditions before registering with Google');
 					return;
 				}
 				
@@ -438,6 +450,44 @@ function RegisterForm() {
 									}
 								}}
 							/>
+						</div>
+
+						{/* Terms & Conditions Checkbox */}
+						<div className="flex items-start">
+							<div className="flex items-center h-5">
+								<input
+									id="agreeToTerms"
+									name="agreeToTerms"
+									type="checkbox"
+									required
+									checked={agreeToTerms}
+									onChange={(e) => setAgreeToTerms(e.target.checked)}
+									className="focus:ring-orange-500 h-4 w-4 text-orange-600 border-gray-300 rounded"
+								/>
+							</div>
+							<div className="ml-3 text-sm">
+								<label htmlFor="agreeToTerms" className="text-gray-700">
+									I agree to the{' '}
+									<Link 
+										href="/terms" 
+										target="_blank" 
+										rel="noopener noreferrer"
+										className="font-semibold text-orange-600 hover:text-orange-500 transition-colors underline"
+									>
+										Terms & Conditions
+									</Link>
+									{' '}and{' '}
+									<Link 
+										href="/privacy" 
+										target="_blank" 
+										rel="noopener noreferrer"
+										className="font-semibold text-orange-600 hover:text-orange-500 transition-colors underline"
+									>
+										Privacy Policy
+									</Link>
+									<span className="text-red-500 ml-1">*</span>
+								</label>
+							</div>
 						</div>
 
 						{/* Error Message */}

@@ -313,7 +313,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                   }}
                 />
               ) : null}
-              <h1 className="text-xl font-bold text-gray-900 truncate">
+              <h1 className="text-xl font-bold text-gray-900 truncate drop-shadow-sm">
                 {systemSettings?.siteTitle || 'JEE App'}
               </h1>
             </div>
@@ -353,7 +353,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                     <div className="px-3 mb-2">
                       <button
                         onClick={() => hasMultipleItems && toggleSection(section.title)}
-                        className={`flex items-center justify-between w-full text-xs font-semibold text-gray-500 uppercase tracking-wider hover:text-gray-700 transition-colors ${
+                        className={`flex items-center justify-between w-full text-xs font-bold text-gray-600 uppercase tracking-wider hover:text-gray-800 transition-colors ${
                           hasMultipleItems ? 'cursor-pointer' : 'cursor-default'
                         }`}
                         disabled={!hasMultipleItems}
@@ -382,10 +382,10 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                           <Link
                             key={item.name}
                             href={item.href}
-                            className={`flex items-center px-3 py-3 text-sm font-semibold rounded-lg transition-all duration-200 group relative ${
+                            className={`flex items-center px-3 py-3 text-sm font-bold rounded-lg transition-all duration-200 group relative ${
                               isActive
-                                ? 'bg-blue-100 text-blue-800 border-r-4 border-blue-600 shadow-sm'
-                                : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                                ? 'bg-blue-100 text-blue-900 border-r-4 border-blue-600 shadow-md'
+                                : 'text-gray-800 hover:bg-gray-100 hover:text-gray-900'
                             }`}
                             title={sidebarCollapsed ? item.name : undefined}
                           >
@@ -418,7 +418,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
         <div className="p-3 border-t border-gray-200 bg-gray-50">
           <button
             onClick={handleLogout}
-            className={`flex items-center w-full px-3 py-3 text-sm font-semibold text-gray-700 rounded-lg hover:bg-red-50 hover:text-red-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 group relative`}
+            className={`flex items-center w-full px-3 py-3 text-sm font-bold text-gray-800 rounded-lg hover:bg-red-50 hover:text-red-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 group relative`}
             title={sidebarCollapsed ? "Logout" : undefined}
           >
             <svg className={`w-5 h-5 ${sidebarCollapsed ? 'mx-auto' : 'mr-3'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -451,10 +451,10 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
             </button>
             
             <div className="flex items-center space-x-6">
-              <div className="text-sm font-medium text-gray-700">
-                Welcome, <span className="font-semibold text-gray-900">{user?.fullName || 'Student'}</span>
+              <div className="text-sm font-semibold text-gray-800">
+                Welcome, <span className="font-bold text-gray-900">{user?.fullName || 'Student'}</span>
                 {user?.stream && (
-                  <span className="ml-2 text-xs text-gray-500">
+                  <span className="ml-2 text-xs text-gray-600">
                     • {user.stream.name}
                   </span>
                 )}
@@ -505,8 +505,8 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                 
                 {/* User Name */}
                 <div className="hidden sm:block text-left">
-                  <div className="text-sm font-medium text-gray-900">{user?.fullName || 'Student'}</div>
-                  <div className="text-xs text-gray-500">{user?.email || 'student@example.com'}</div>
+                  <div className="text-sm font-bold text-gray-900">{user?.fullName || 'Student'}</div>
+                  <div className="text-xs text-gray-600">{user?.email || 'student@example.com'}</div>
                 </div>
                 
                 {/* Dropdown Arrow */}
@@ -540,8 +540,8 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                         )}
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-gray-900">{user?.fullName || 'Student'}</div>
-                        <div className="text-xs text-gray-500">{user?.email || 'student@example.com'}</div>
+                        <div className="text-sm font-bold text-gray-900">{user?.fullName || 'Student'}</div>
+                        <div className="text-xs text-gray-600">{user?.email || 'student@example.com'}</div>
                       </div>
                     </div>
                   </div>
