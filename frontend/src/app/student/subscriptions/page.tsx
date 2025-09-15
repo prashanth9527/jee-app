@@ -157,26 +157,28 @@ export default function SubscriptionsPage() {
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Current Status</h2>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">{subscriptionStatus.message}</p>
+                  <p className="text-gray-600">
+                    {subscriptionStatus.isOnTrial ? 'Trial period - 2 days remaining' : subscriptionStatus.message}
+                  </p>
                   {subscriptionStatus.daysRemaining > 0 && (
-                    <p className="text-sm text-blue-600 font-medium">
+                    <p className="text-blue-600 font-medium">
                       {subscriptionStatus.daysRemaining} days remaining
                     </p>
                   )}
                 </div>
                 <div className="flex items-center space-x-2">
                   {subscriptionStatus.isOnTrial && (
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                       Trial
                     </span>
                   )}
                   {subscriptionStatus.hasValidSubscription && (
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                       Active
                     </span>
                   )}
                   {subscriptionStatus.needsSubscription && (
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                       Expired
                     </span>
                   )}
@@ -205,30 +207,47 @@ export default function SubscriptionsPage() {
           )}
 
           {/* Plans Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {getAvailablePlans().map((plan) => (
-              <div key={plan.id} className={`bg-white rounded-lg shadow-md overflow-hidden relative ${
-                isRecommendedPlan(plan) ? 'ring-2 ring-orange-500' : ''
-              }`}>
-                {isRecommendedPlan(plan) && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Recommended
-                    </span>
-                  </div>
-                )}
-                <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+            {getAvailablePlans().map((plan, index) => {
+              // Debug: Log plan details
+              console.log('Plan:', plan.name, 'Type:', plan.planType, 'Index:', index);
+              
+              // Make the first plan recommended if it's AI_ENABLED, or if it's the first plan and contains 'ai' in name
+              const isRecommended = plan.planType === 'AI_ENABLED' || 
+                                  (index === 0 && plan.name.toLowerCase().includes('ai')) ||
+                                  (index === 0 && getAvailablePlans().length > 0 && getAvailablePlans()[0].priceCents > getAvailablePlans()[1]?.priceCents) ||
+                                  (index === 0); // Fallback: always make first plan recommended
+              
+              return (
+                <div key={plan.id} className={`bg-white rounded-lg shadow-lg overflow-hidden relative transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer ${
+                  isRecommended 
+                    ? 'ring-2 ring-orange-500 transform scale-105' 
+                    : 'hover:ring-2 hover:ring-blue-500 hover:border-blue-300 hover:bg-blue-50'
+                }`}>
+                  {isRecommended && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                      <span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
+                        Recommended
+                      </span>
+                    </div>
+                  )}
+                  <div className={`p-8 ${isRecommended ? 'pt-12' : ''}`}>
                   <div className="text-center">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{plan.name}</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                      {plan.planType === 'AI_ENABLED' ? 'AI Enabled Plan' : 'Manual Plan'}
+                    </h3>
                     <div className="mb-4">
-                      <span className="text-3xl font-bold text-gray-900">
+                      <span className="text-4xl font-bold text-gray-900">
                         {formatPrice(plan.priceCents, plan.currency)}
                       </span>
-                      <span className="text-gray-600">/{getIntervalText(plan.interval)}</span>
+                      <span className="text-gray-600 text-lg">/{getIntervalText(plan.interval)}</span>
                     </div>
-                    {plan.description && (
-                      <p className="text-gray-600 text-sm mb-6">{plan.description}</p>
-                    )}
+                    <p className="text-gray-600 mb-6">
+                      {plan.planType === 'AI_ENABLED' 
+                        ? 'Access to AI-generated questions and explanations'
+                        : 'Access to practice tests with database questions'
+                      }
+                    </p>
                   </div>
 
                   <div className="space-y-3 mb-6">
@@ -269,17 +288,17 @@ export default function SubscriptionsPage() {
                   <button
                     onClick={() => handleSubscribe(plan.id, plan.name)}
                     disabled={processingPayment || (subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription)}
-                    className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
+                    className={`w-full py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-200 ${
                       subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                         : isRecommendedPlan(plan)
-                        ? 'bg-orange-600 text-white hover:bg-orange-700'
-                        : 'bg-blue-600 text-white hover:bg-blue-700'
+                        ? 'bg-orange-600 text-white hover:bg-orange-700 hover:shadow-lg transform hover:scale-105'
+                        : 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg transform hover:scale-105'
                     }`}
                   >
                     {processingPayment ? (
                       <div className="flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
                         Processing...
                       </div>
                     ) : subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription ? (
@@ -290,7 +309,8 @@ export default function SubscriptionsPage() {
                   </button>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Features Comparison */}
