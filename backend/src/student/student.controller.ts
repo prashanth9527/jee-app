@@ -486,8 +486,28 @@ export class StudentController {
 	}
 
 	@Get('topics')
-	async getTopics(@Query('subjectId') subjectId?: string) {
-		const where = subjectId ? { subjectId } : {};
+	async getTopics(@Req() req: any, @Query('subjectId') subjectId?: string) {
+		const userId = req.user.id;
+		
+		// Get user's stream
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: { streamId: true }
+		});
+
+		if (!user?.streamId) {
+			throw new ForbiddenException('No stream assigned to user');
+		}
+
+		const where: any = {
+			subject: {
+				streamId: user.streamId
+			}
+		};
+
+		if (subjectId) {
+			where.subjectId = subjectId;
+		}
 		
 		return this.prisma.topic.findMany({
 			where,
@@ -504,13 +524,36 @@ export class StudentController {
 	}
 
 	@Get('subtopics')
-	async getSubtopics(@Query('topicId') topicId?: string, @Query('subjectId') subjectId?: string) {
-		const where: any = {};
+	async getSubtopics(@Req() req: any, @Query('topicId') topicId?: string, @Query('subjectId') subjectId?: string) {
+		const userId = req.user.id;
+		
+		// Get user's stream
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: { streamId: true }
+		});
+
+		if (!user?.streamId) {
+			throw new ForbiddenException('No stream assigned to user');
+		}
+
+		const where: any = {
+			topic: {
+				subject: {
+					streamId: user.streamId
+				}
+			}
+		};
 		
 		if (topicId) {
 			where.topicId = topicId;
 		} else if (subjectId) {
-			where.topic = { subjectId };
+			where.topic = { 
+				subjectId,
+				subject: {
+					streamId: user.streamId
+				}
+			};
 		}
 
 		return this.prisma.subtopic.findMany({

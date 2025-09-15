@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, Param, UseGuards, Req, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
@@ -30,9 +30,22 @@ export class PYQController {
   }
 
   @Get('subjects')
-  async getSubjectsWithPYQ() {
+  async getSubjectsWithPYQ(@Req() req: any) {
+    const userId = req.user.id;
+    
+    // Get user's stream
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { streamId: true }
+    });
+
+    if (!user?.streamId) {
+      throw new ForbiddenException('No stream assigned to user');
+    }
+
     const subjects = await this.prisma.subject.findMany({
       where: {
+        streamId: user.streamId,
         questions: {
           some: {
             isPreviousYear: true
@@ -59,8 +72,23 @@ export class PYQController {
   }
 
   @Get('topics')
-  async getTopicsWithPYQ(@Query('subjectId') subjectId?: string) {
+  async getTopicsWithPYQ(@Req() req: any, @Query('subjectId') subjectId?: string) {
+    const userId = req.user.id;
+    
+    // Get user's stream
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { streamId: true }
+    });
+
+    if (!user?.streamId) {
+      throw new ForbiddenException('No stream assigned to user');
+    }
+
     const where: any = {
+      subject: {
+        streamId: user.streamId
+      },
       questions: {
         some: {
           isPreviousYear: true
@@ -96,6 +124,7 @@ export class PYQController {
 
   @Get('questions')
   async getPYQQuestions(
+    @Req() req: any,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
     @Query('year') year?: string,
@@ -105,13 +134,28 @@ export class PYQController {
     @Query('difficulty') difficulty?: string,
     @Query('search') search?: string
   ) {
+    const userId = req.user.id;
+    
+    // Get user's stream
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { streamId: true }
+    });
+
+    if (!user?.streamId) {
+      throw new ForbiddenException('No stream assigned to user');
+    }
+
     const currentPage = parseInt(page || '1');
     const itemsPerPage = parseInt(limit || '10');
     const skip = (currentPage - 1) * itemsPerPage;
 
     // Build where clause
     const where: any = {
-      isPreviousYear: true
+      isPreviousYear: true,
+      subject: {
+        streamId: user.streamId
+      }
     };
 
     if (year) where.yearAppeared = parseInt(year);
