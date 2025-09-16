@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface DynamicFaviconProps {
   faviconUrl?: string;
@@ -8,30 +8,50 @@ interface DynamicFaviconProps {
 }
 
 export default function DynamicFavicon({ faviconUrl, siteTitle }: DynamicFaviconProps) {
+  const faviconRef = useRef<HTMLLinkElement | null>(null);
+
   useEffect(() => {
     if (faviconUrl) {
-      // Remove existing favicon links
-      const existingFavicons = document.querySelectorAll('link[rel*="icon"]');
-      existingFavicons.forEach(favicon => favicon.remove());
+      // Remove existing dynamic favicon if it exists
+      if (faviconRef.current) {
+        faviconRef.current.remove();
+        faviconRef.current = null;
+      }
 
       // Create new favicon link
       const link = document.createElement('link');
       link.rel = 'icon';
       link.href = faviconUrl;
       link.type = 'image/x-icon';
+      link.setAttribute('data-dynamic-favicon', 'true'); // Mark as dynamic for easy identification
+      
+      // Store reference for cleanup
+      faviconRef.current = link;
+      
+      // Add to head
       document.head.appendChild(link);
+    }
 
-      // Also update the page title if provided
-      if (siteTitle) {
-        document.title = siteTitle;
+    // Cleanup function
+    return () => {
+      if (faviconRef.current) {
+        faviconRef.current.remove();
+        faviconRef.current = null;
       }
+    };
+  }, [faviconUrl]);
 
-      // Cleanup function to remove the favicon when component unmounts
+  // Handle title changes
+  useEffect(() => {
+    if (siteTitle && typeof document !== 'undefined') {
+      const originalTitle = document.title;
+      document.title = siteTitle;
+      
       return () => {
-        link.remove();
+        document.title = originalTitle;
       };
     }
-  }, [faviconUrl, siteTitle]);
+  }, [siteTitle]);
 
   return null; // This component doesn't render anything visible
 }

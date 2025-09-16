@@ -19,6 +19,7 @@ interface HeaderHomeProps {
 export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
 
   return (
@@ -34,22 +35,14 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
                 title={`${systemSettings?.siteTitle || 'JEE App'} - ${systemSettings?.siteKeywords || 'JEE preparation platform'}`}
                 aria-label={`${systemSettings?.siteTitle || 'JEE App'} - Go to homepage`}
               >
-                {systemSettings?.logoUrl ? (
+                {systemSettings?.logoUrl && !logoError ? (
                   <div className="flex items-center space-x-3">
                     <div className="relative">
                       <img 
                         src={systemSettings.logoUrl} 
                         alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
                         className="h-14 w-auto object-contain drop-shadow-lg"
-                        onError={(e) => {
-                          // Fallback to text if image fails to load
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const parent = target.parentElement;
-                          if (parent) {
-                            parent.innerHTML = `<div class="h-14 w-14 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg flex items-center justify-center"><span class="text-white font-bold text-lg">${(systemSettings?.siteTitle || 'JEE App').substring(0, 2).toUpperCase()}</span></div>`;
-                          }
-                        }}
+                        onError={() => setLogoError(true)}
                       />
                     </div>
                     <div className="flex flex-col">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface MathFormulaProps {
   formula: string;
@@ -10,24 +10,17 @@ interface MathFormulaProps {
 
 export default function MathFormula({ formula, inline = false, className = '' }: MathFormulaProps) {
   const mathRef = useRef<HTMLDivElement>(null);
+  const [displayFormula, setDisplayFormula] = useState(formula);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.MathJax && mathRef.current) {
-      // Clear previous content
-      mathRef.current.innerHTML = '';
+      setHasError(false);
       
-      // Create the math element
-      const mathElement = document.createElement(inline ? 'span' : 'div');
-      mathElement.textContent = formula;
-      mathRef.current.appendChild(mathElement);
-
       // Typeset the math
       window.MathJax.typesetPromise([mathRef.current]).catch((err: any) => {
         console.error('MathJax typesetting error:', err);
-        // Fallback: display as plain text
-        if (mathRef.current) {
-          mathRef.current.innerHTML = `<span class="text-gray-600">${formula}</span>`;
-        }
+        setHasError(true);
       });
     }
   }, [formula, inline]);
@@ -37,7 +30,17 @@ export default function MathFormula({ formula, inline = false, className = '' }:
       ref={mathRef} 
       className={`math-formula ${inline ? 'inline' : 'block'} ${className}`}
       style={{ minHeight: inline ? 'auto' : '2rem' }}
-    />
+    >
+      {hasError ? (
+        <span className="text-gray-600">{formula}</span>
+      ) : (
+        inline ? (
+          <span>{formula}</span>
+        ) : (
+          <div>{formula}</div>
+        )
+      )}
+    </div>
   );
 }
 

@@ -189,6 +189,7 @@ const menuSections = [
 export default function StudentLayout({ children }: StudentLayoutProps) {
   const { systemSettings } = useSystemSettings();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('studentSidebarCollapsed') === 'true';
@@ -297,20 +298,12 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 bg-white">
           {!sidebarCollapsed && (
             <div className="flex items-center space-x-2">
-              {systemSettings?.logoUrl ? (
+              {systemSettings?.logoUrl && !logoError ? (
                 <img 
                   src={systemSettings.logoUrl} 
                   alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
                   className="h-8 w-auto object-contain"
-                  onError={(e) => {
-                    // Fallback to text if image fails to load
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const parent = target.parentElement;
-                    if (parent) {
-                      parent.innerHTML = `<h1 class="text-xl font-bold text-gray-900 truncate">${systemSettings?.siteTitle || 'JEE App'}</h1>`;
-                    }
-                  }}
+                  onError={() => setLogoError(true)}
                 />
               ) : null}
               <h1 className="text-xl font-bold text-gray-900 truncate drop-shadow-sm">

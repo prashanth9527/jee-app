@@ -18,6 +18,7 @@ interface ContactForm {
 export default function ContactPage() {
   const { systemSettings, loading } = useSystemSettings();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const [formData, setFormData] = useState<ContactForm>({
     name: '',
     email: '',
@@ -126,20 +127,12 @@ export default function ContactPage() {
                     title={`${systemSettings?.siteTitle || 'JEE App'} - ${systemSettings?.siteKeywords || 'JEE preparation platform'}`}
                     aria-label={`${systemSettings?.siteTitle || 'JEE App'} - Go to homepage`}
                   >
-                    {systemSettings?.logoUrl ? (
+                    {systemSettings?.logoUrl && !logoError ? (
                       <img 
                         src={systemSettings.logoUrl} 
                         alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
                         className="h-12 w-auto object-contain"
-                        onError={(e) => {
-                          // Fallback to text if image fails to load
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const parent = target.parentElement;
-                          if (parent) {
-                            parent.innerHTML = `<span class="text-2xl font-bold">${systemSettings?.siteTitle || 'JEE App'}</span>`;
-                          }
-                        }}
+                        onError={() => setLogoError(true)}
                       />
                     ) : (
                       <span className="text-2xl font-bold">{systemSettings?.siteTitle || 'JEE App'}</span>

@@ -19,6 +19,7 @@ interface HeaderSecondaryProps {
 export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps) {
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
 
   return (
@@ -34,20 +35,12 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
                 title={`${systemSettings?.siteTitle || 'JEE App'} - ${systemSettings?.siteKeywords || 'JEE preparation platform'}`}
                 aria-label={`${systemSettings?.siteTitle || 'JEE App'} - Go to homepage`}
               >
-                {systemSettings?.logoUrl ? (
+                {systemSettings?.logoUrl && !logoError ? (
                   <img 
                     src={systemSettings.logoUrl} 
                     alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
                     className="h-8 w-auto object-contain"
-                    onError={(e) => {
-                      // Fallback to text if image fails to load
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<span>${systemSettings?.siteTitle || 'JEE App'}</span>`;
-                      }
-                    }}
+                    onError={() => setLogoError(true)}
                   />
                 ) : (
                   <span>{systemSettings?.siteTitle || 'JEE App'}</span>
