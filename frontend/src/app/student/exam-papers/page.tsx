@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
@@ -27,6 +28,7 @@ interface Pagination {
 }
 
 export default function ExamPapersPage() {
+  const router = useRouter();
   const [papers, setPapers] = useState<ExamPaper[]>([]);
   const [subjects, setSubjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -100,7 +102,7 @@ export default function ExamPapersPage() {
         const { submissionId } = response.data;
         
         // Redirect to exam page
-        window.location.href = `/student/exam/${submissionId}`;
+        router.push(`/student/exam/${submissionId}`);
       }
     } catch (error: any) {
       console.error('Error starting exam:', error);

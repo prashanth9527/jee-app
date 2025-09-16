@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
@@ -45,6 +46,7 @@ interface Analytics {
 }
 
 export default function PYQPage() {
+  const router = useRouter();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -182,7 +184,7 @@ export default function PYQPage() {
       const startResponse = await api.post(`/exams/papers/${examResponse.data.id}/start`);
       
       // Redirect to test
-      window.location.href = `/student/practice/test/${startResponse.data.submissionId}`;
+      router.push(`/student/practice/test/${startResponse.data.submissionId}`);
     } catch (error) {
       console.error('Failed to start practice:', error);
       Swal.fire('Error', 'Failed to start practice test', 'error');

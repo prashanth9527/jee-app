@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
@@ -55,6 +56,7 @@ interface PracticeTestConfig {
 }
 
 export default function PracticeTestPage() {
+  const router = useRouter();
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
   const [subtopics, setSubtopics] = useState<Subtopic[]>([]);
@@ -193,7 +195,7 @@ export default function PracticeTestPage() {
         const { submissionId } = startResponse.data;
 
         // Redirect to the practice test
-        window.location.href = `/student/practice/test/${submissionId}`;
+        router.push(`/student/practice/test/${submissionId}`);
       } else {
         // Generate manual practice test using existing database questions
         const manualTestData = {
@@ -213,7 +215,7 @@ export default function PracticeTestPage() {
         const { submissionId } = startResponse.data;
 
         // Redirect to the practice test
-        window.location.href = `/student/practice/test/${submissionId}`;
+        router.push(`/student/practice/test/${submissionId}`);
       }
     } catch (error: any) {
       console.error('Error creating practice test:', error);
