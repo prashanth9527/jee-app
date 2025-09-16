@@ -238,7 +238,7 @@ export class UsersService {
 		const uploadUrl = await this.awsService.getPresignedUploadUrl(uniqueFileName, fileType);
 		
 		// Return upload URL and final picture URL
-		const pictureUrl = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${uniqueFileName}`;
+		const pictureUrl = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uniqueFileName}`;
 		
 		return {
 			uploadUrl,

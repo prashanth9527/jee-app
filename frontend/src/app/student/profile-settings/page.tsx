@@ -45,6 +45,7 @@ export default function StudentProfileSettingsPage() {
   
   // Profile Picture Upload
   const [profilePicFile, setProfilePicFile] = useState<File | null>(null);
+  const [profilePicPreview, setProfilePicPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   
   // Success/Error messages
@@ -77,6 +78,15 @@ export default function StudentProfileSettingsPage() {
       setProfilePicture(user.profilePicture || '');
     }
   }, [user]);
+
+  // Cleanup preview URL on unmount
+  useEffect(() => {
+    return () => {
+      if (profilePicPreview) {
+        URL.revokeObjectURL(profilePicPreview);
+      }
+    };
+  }, [profilePicPreview]);
 
   // Redirect if not authenticated or not student
   useEffect(() => {
@@ -221,6 +231,10 @@ export default function StudentProfileSettingsPage() {
         showMessage('error', 'Profile picture must be less than 5MB');
         return;
       }
+      
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setProfilePicPreview(previewUrl);
       setProfilePicFile(file);
     }
   };
@@ -239,6 +253,17 @@ export default function StudentProfileSettingsPage() {
         fileName: profilePicFile.name,
         fileType: profilePicFile.type
       });
+
+      console.log('Upload response:', uploadResponse.data);
+
+      // Check if we have valid URLs
+      if (!uploadResponse.data.uploadUrl) {
+        throw new Error('No upload URL received from server');
+      }
+      
+      if (!uploadResponse.data.pictureUrl || uploadResponse.data.pictureUrl.includes('undefined')) {
+        throw new Error('Invalid picture URL received from server. Please check server configuration.');
+      }
 
       // Upload to S3
       const uploadResult = await fetch(uploadResponse.data.uploadUrl, {
@@ -259,13 +284,21 @@ export default function StudentProfileSettingsPage() {
           login(localStorage.getItem('token') || '', updateResponse.data.user);
           setProfilePicture(uploadResponse.data.pictureUrl);
           setProfilePicFile(null);
+          // Clean up preview URL
+          if (profilePicPreview) {
+            URL.revokeObjectURL(profilePicPreview);
+            setProfilePicPreview(null);
+          }
           showMessage('success', 'Profile picture updated successfully!');
         }
       } else {
-        throw new Error('Failed to upload to S3');
+        const errorText = await uploadResult.text();
+        console.error('S3 upload failed:', errorText);
+        throw new Error(`Failed to upload to S3: ${uploadResult.status} ${uploadResult.statusText}`);
       }
     } catch (err: any) {
-      showMessage('error', err?.response?.data?.message || 'Failed to upload profile picture');
+      console.error('Profile picture upload error:', err);
+      showMessage('error', err?.response?.data?.message || err?.message || 'Failed to upload profile picture');
     } finally {
       setUploading(false);
     }
@@ -631,7 +664,13 @@ export default function StudentProfileSettingsPage() {
                     <div className="flex items-center space-x-6">
                       <div className="flex-shrink-0">
                         <div className="h-24 w-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                          {profilePicture ? (
+                          {profilePicPreview ? (
+                            <img
+                              src={profilePicPreview}
+                              alt="Profile Preview"
+                              className="h-24 w-24 rounded-full object-cover"
+                            />
+                          ) : profilePicture ? (
                             <img
                               src={profilePicture}
                               alt="Profile"
@@ -655,14 +694,30 @@ export default function StudentProfileSettingsPage() {
                           Upload a profile picture. Maximum file size: 5MB. Supported formats: JPG, PNG, GIF
                         </p>
                         {profilePicFile && (
-                          <button
-                            type="button"
-                            onClick={handleUploadProfilePic}
-                            disabled={uploading}
-                            className="mt-4 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50 transition-all duration-200 transform hover:scale-105"
-                          >
-                            {uploading ? 'Uploading...' : 'Upload Picture'}
-                          </button>
+                          <div className="mt-4 flex space-x-3">
+                            <button
+                              type="button"
+                              onClick={handleUploadProfilePic}
+                              disabled={uploading}
+                              className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50 transition-all duration-200 transform hover:scale-105"
+                            >
+                              {uploading ? 'Uploading...' : 'Upload Picture'}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setProfilePicFile(null);
+                                if (profilePicPreview) {
+                                  URL.revokeObjectURL(profilePicPreview);
+                                  setProfilePicPreview(null);
+                                }
+                              }}
+                              disabled={uploading}
+                              className="px-6 py-3 bg-gray-500 text-white font-medium rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 transition-all duration-200"
+                            >
+                              Cancel
+                            </button>
+                          </div>
                         )}
                       </div>
                     </div>
