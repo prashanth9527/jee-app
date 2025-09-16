@@ -86,8 +86,18 @@ export default function SubscriptionsPage() {
         cancelUrl: `${window.location.origin}/student/subscriptions?canceled=true`,
       });
 
-      // Redirect to Stripe checkout
-      window.location.href = response.data.url;
+      // Handle different payment gateways
+      if (response.data.deepLink) {
+        // PhonePe - try deep link first, fallback to redirect URL
+        if (window.location.protocol === 'https:' && response.data.deepLink) {
+          window.location.href = response.data.deepLink;
+        } else {
+          window.location.href = response.data.url;
+        }
+      } else {
+        // Stripe or other gateways
+        window.location.href = response.data.url;
+      }
     } catch (error: any) {
       console.error('Error creating checkout session:', error);
       Swal.fire({

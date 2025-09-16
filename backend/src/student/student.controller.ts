@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Body, Param, Query, Req, UseGuards, ForbiddenException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, Req, UseGuards, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -106,18 +106,27 @@ export class StudentController {
 		const limitNum = parseInt(limit, 10);
 		const skip = (pageNum - 1) * limitNum;
 
-		// Build where clause
-		const where: any = {};
+		// Build where clause - include both public exam papers and user's AI-generated ones
+		const where: any = {
+			OR: [
+				{ createdById: null }, // Public exam papers
+				{ createdById: userId } // User's own AI-generated exam papers
+			]
+		};
 		
 		if (search) {
-			where.OR = [
-				{ title: { contains: search, mode: 'insensitive' } },
-				{ description: { contains: search, mode: 'insensitive' } }
-			];
+			where.AND = where.AND || [];
+			where.AND.push({
+				OR: [
+					{ title: { contains: search, mode: 'insensitive' } },
+					{ description: { contains: search, mode: 'insensitive' } }
+				]
+			});
 		}
 
 		if (subjectId) {
-			where.subjectIds = { has: subjectId };
+			where.AND = where.AND || [];
+			where.AND.push({ subjectIds: { has: subjectId } });
 		}
 
 		// Get exam papers
@@ -185,6 +194,203 @@ export class StudentController {
 	async getAiUsage(@Req() req: any) {
 		const userId = req.user.id;
 		return await this.subscriptionValidation.validateAiUsage(userId);
+	}
+
+	@Get('my-ai-questions')
+	async getMyAIQuestions(
+		@Req() req: any,
+		@Query('page') page = '1',
+		@Query('limit') limit = '10',
+		@Query('search') search?: string,
+		@Query('subjectId') subjectId?: string,
+		@Query('difficulty') difficulty?: string
+	) {
+		const userId = req.user.id;
+		const pageNum = parseInt(page);
+		const limitNum = parseInt(limit);
+		const skip = (pageNum - 1) * limitNum;
+
+		// Build where clause - only user's AI-generated questions
+		const where: any = {
+			isAIGenerated: true,
+			createdById: userId
+		};
+
+		if (search) {
+			where.OR = [
+				{ stem: { contains: search, mode: 'insensitive' } },
+				{ explanation: { contains: search, mode: 'insensitive' } }
+			];
+		}
+
+		if (subjectId) where.subjectId = subjectId;
+		if (difficulty) where.difficulty = difficulty;
+
+		const [questions, total] = await Promise.all([
+			this.prisma.question.findMany({
+				where,
+				include: {
+					options: {
+						orderBy: { order: 'asc' }
+					},
+					subject: {
+						select: {
+							id: true,
+							name: true,
+							stream: {
+								select: {
+									name: true,
+									code: true
+								}
+							}
+						}
+					},
+					topic: {
+						select: {
+							id: true,
+							name: true
+						}
+					},
+					subtopic: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				},
+				orderBy: { createdAt: 'desc' },
+				skip,
+				take: limitNum,
+			}),
+			this.prisma.question.count({ where })
+		]);
+
+		return {
+			questions,
+			pagination: {
+				currentPage: pageNum,
+				totalPages: Math.ceil(total / limitNum),
+				totalItems: total,
+				itemsPerPage: limitNum
+			}
+		};
+	}
+
+	@Get('my-ai-tests')
+	async getMyAITests(
+		@Req() req: any,
+		@Query('page') page = '1',
+		@Query('limit') limit = '10',
+		@Query('search') search?: string,
+		@Query('subjectId') subjectId?: string
+	) {
+		const userId = req.user.id;
+		const pageNum = parseInt(page);
+		const limitNum = parseInt(limit);
+		const skip = (pageNum - 1) * limitNum;
+
+		// Build where clause - only user's AI-generated exam papers
+		const where: any = {
+			createdById: userId
+		};
+
+		if (search) {
+			where.OR = [
+				{ title: { contains: search, mode: 'insensitive' } },
+				{ description: { contains: search, mode: 'insensitive' } }
+			];
+		}
+
+		if (subjectId) {
+			where.subjectIds = { has: subjectId };
+		}
+
+		const [papers, total] = await Promise.all([
+			this.prisma.examPaper.findMany({
+				where,
+				skip,
+				take: limitNum,
+				orderBy: { createdAt: 'desc' },
+				select: {
+					id: true,
+					title: true,
+					description: true,
+					timeLimitMin: true,
+					createdAt: true,
+					subjectIds: true,
+					topicIds: true,
+					subtopicIds: true,
+					questionIds: true,
+					_count: {
+						select: {
+							submissions: {
+								where: { userId }
+							}
+						}
+					}
+				}
+			}),
+			this.prisma.examPaper.count({ where })
+		]);
+
+		return {
+			examPapers: papers,
+			pagination: {
+				currentPage: pageNum,
+				totalPages: Math.ceil(total / limitNum),
+				totalItems: total,
+				itemsPerPage: limitNum
+			}
+		};
+	}
+
+	@Delete('questions/:id')
+	async deleteMyQuestion(@Req() req: any, @Param('id') id: string) {
+		const userId = req.user.id;
+
+		// Check if the question belongs to the user
+		const question = await this.prisma.question.findFirst({
+			where: {
+				id,
+				createdById: userId,
+				isAIGenerated: true
+			}
+		});
+
+		if (!question) {
+			throw new NotFoundException('Question not found or you do not have permission to delete it');
+		}
+
+		// Delete the question (cascade will handle options)
+		await this.prisma.question.delete({
+			where: { id }
+		});
+
+		return { message: 'Question deleted successfully' };
+	}
+
+	@Delete('exam-papers/:id')
+	async deleteMyExamPaper(@Req() req: any, @Param('id') id: string) {
+		const userId = req.user.id;
+
+		// Check if the exam paper belongs to the user
+		const examPaper = await this.prisma.examPaper.findFirst({
+			where: {
+				id,
+				createdById: userId
+			}
+		});
+
+		if (!examPaper) {
+			throw new NotFoundException('Exam paper not found or you do not have permission to delete it');
+		}
+
+		// Delete the exam paper (cascade will handle submissions)
+		await this.prisma.examPaper.delete({
+			where: { id }
+		});
+
+		return { message: 'Exam paper deleted successfully' };
 	}
 
 	@Get('exam-history')

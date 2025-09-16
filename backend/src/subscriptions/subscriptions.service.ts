@@ -1,17 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import Stripe from 'stripe';
+import { PaymentGatewayFactory } from '../payments/services/payment-gateway.factory';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class SubscriptionsService {
-	private stripe: any;
-
-	constructor(private readonly prisma: PrismaService) {
-		// Only create Stripe client if secret key is available
-		if (process.env.STRIPE_SECRET_KEY) {
-			this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-		}
-	}
+	constructor(
+		private readonly prisma: PrismaService,
+		private readonly paymentGatewayFactory: PaymentGatewayFactory
+	) {}
 
 	// Plans CRUD (admin)
 	listPlans() {
@@ -34,29 +31,35 @@ export class SubscriptionsService {
 
 	// Checkout
 	async createCheckoutSession(userId: string, planId: string, successUrl: string, cancelUrl: string) {
-		if (!this.stripe) {
-			throw new Error('Stripe not configured');
-		}
 		const plan = await this.prisma.plan.findUnique({ where: { id: planId } });
 		if (!plan) throw new Error('Plan not found');
 		
-		// Create Stripe product and price directly (no stripePriceId storage)
-		const product = await this.stripe.products.create({ name: plan.name, description: plan.description || undefined });
-		const price = await this.stripe.prices.create({
-			unit_amount: plan.priceCents,
-			currency: plan.currency,
-			recurring: { interval: (plan.interval as string) === 'YEARLY' ? 'year' : 'month' },
-			product: product.id,
-		});
-		const priceId = price.id;
-		const session = await this.stripe.checkout.sessions.create({
-			mode: 'subscription',
-			line_items: [{ price: priceId, quantity: 1 }],
-			success_url: successUrl,
-			cancel_url: cancelUrl,
-			client_reference_id: userId,
-		});
-		return { url: session.url };
+		const gateway = this.paymentGatewayFactory.getPaymentGateway();
+		const merchantOrderId = randomUUID();
+		
+		// Convert price to appropriate currency unit
+		const amount = plan.priceCents;
+		const currency = plan.currency;
+		
+		const result = await gateway.createOrder(
+			userId,
+			planId,
+			amount,
+			currency,
+			successUrl,
+			cancelUrl,
+			merchantOrderId
+		);
+		
+		if (!result.success) {
+			throw new Error(result.error || 'Failed to create payment order');
+		}
+		
+		return { 
+			url: result.redirectUrl,
+			deepLink: result.deepLink,
+			gateway: this.paymentGatewayFactory.getGatewayName()
+		};
 	}
 
 	// Webhook (stub)

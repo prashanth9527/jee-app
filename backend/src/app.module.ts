@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AdminModule } from './admin/admin.module';
 import { StudentModule } from './student/student.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { PaymentsModule } from './payments/payments.module';
 import { ReferralsModule } from './referrals/referrals.module';
 import { AiModule } from './ai/ai.module';
 import { AISuggestionsModule } from './ai/ai-suggestions.module';
@@ -32,6 +33,7 @@ import { PYQController } from './pyq.controller';
     AdminModule,
     StudentModule,
     SubscriptionsModule,
+    PaymentsModule,
     ReferralsModule,
     AiModule,
     AISuggestionsModule,

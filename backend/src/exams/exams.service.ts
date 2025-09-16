@@ -308,6 +308,7 @@ export class ExamsService {
 					subtopicId: request.subtopicId,
 					isAIGenerated: true,
 					aiPrompt: `Generated for ${subject?.name}${topic ? ` - ${topic.name}` : ''}${subtopic ? ` - ${subtopic.name}` : ''} (${request.difficulty})`,
+					createdById: userId, // Associate with the user who generated it
 					options: {
 						create: aiQuestion.options.map((opt: any, index: number) => ({
 							text: opt.text,
@@ -332,7 +333,8 @@ export class ExamsService {
 				topicIds: request.topicId ? [request.topicId] : [],
 				subtopicIds: request.subtopicId ? [request.subtopicId] : [],
 				questionIds: savedQuestions.map(q => q.id),
-				timeLimitMin: request.timeLimitMin
+				timeLimitMin: request.timeLimitMin,
+				createdById: userId // Associate with the user who generated it
 			}
 		});
 

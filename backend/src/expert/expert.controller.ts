@@ -22,26 +22,48 @@ export class ExpertController {
 		@Query('subtopicId') subtopicId?: string,
 		@Query('difficulty') difficulty?: string
 	) {
+		const userId = req.user.id;
 		const pageNum = parseInt(page);
 		const limitNum = parseInt(limit);
 		const skip = (pageNum - 1) * limitNum;
 
-		const where: any = {};
+		// Include both public questions and user's AI-generated questions
+		const where: any = {
+			OR: [
+				{ createdById: null }, // Public questions
+				{ createdById: userId } // User's own AI-generated questions
+			]
+		};
 
 		if (search) {
-			where.OR = [
-				{ stem: { contains: search, mode: 'insensitive' } },
-				{ explanation: { contains: search, mode: 'insensitive' } },
-				{ subject: { name: { contains: search, mode: 'insensitive' } } },
-				{ topic: { name: { contains: search, mode: 'insensitive' } } },
-				{ subtopic: { name: { contains: search, mode: 'insensitive' } } }
-			];
+			where.AND = where.AND || [];
+			where.AND.push({
+				OR: [
+					{ stem: { contains: search, mode: 'insensitive' } },
+					{ explanation: { contains: search, mode: 'insensitive' } },
+					{ subject: { name: { contains: search, mode: 'insensitive' } } },
+					{ topic: { name: { contains: search, mode: 'insensitive' } } },
+					{ subtopic: { name: { contains: search, mode: 'insensitive' } } }
+				]
+			});
 		}
 
-		if (subjectId) where.subjectId = subjectId;
-		if (topicId) where.topicId = topicId;
-		if (subtopicId) where.subtopicId = subtopicId;
-		if (difficulty) where.difficulty = difficulty;
+		if (subjectId) {
+			where.AND = where.AND || [];
+			where.AND.push({ subjectId });
+		}
+		if (topicId) {
+			where.AND = where.AND || [];
+			where.AND.push({ topicId });
+		}
+		if (subtopicId) {
+			where.AND = where.AND || [];
+			where.AND.push({ subtopicId });
+		}
+		if (difficulty) {
+			where.AND = where.AND || [];
+			where.AND.push({ difficulty });
+		}
 
 		const [questions, total] = await Promise.all([
 			this.prisma.question.findMany({

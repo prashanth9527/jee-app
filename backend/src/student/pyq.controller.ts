@@ -150,30 +150,57 @@ export class PYQController {
     const itemsPerPage = parseInt(limit || '10');
     const skip = (currentPage - 1) * itemsPerPage;
 
-    // Build where clause
+    // Build where clause - include both public PYQ and user's AI-generated questions
     const where: any = {
-      isPreviousYear: true,
       subject: {
         streamId: user.streamId
-      }
+      },
+      OR: [
+        { isPreviousYear: true }, // Public previous year questions
+        { 
+          AND: [
+            { isAIGenerated: true },
+            { createdById: userId } // User's own AI-generated questions
+          ]
+        }
+      ]
     };
 
-    if (year) where.yearAppeared = parseInt(year);
-    if (subjectId) where.subjectId = subjectId;
-    if (topicId) where.topicId = topicId;
-    if (subtopicId) where.subtopicId = subtopicId;
-    if (difficulty) where.difficulty = difficulty;
+    // Add additional filters
+    if (year) {
+      where.AND = where.AND || [];
+      where.AND.push({ yearAppeared: parseInt(year) });
+    }
+    if (subjectId) {
+      where.AND = where.AND || [];
+      where.AND.push({ subjectId });
+    }
+    if (topicId) {
+      where.AND = where.AND || [];
+      where.AND.push({ topicId });
+    }
+    if (subtopicId) {
+      where.AND = where.AND || [];
+      where.AND.push({ subtopicId });
+    }
+    if (difficulty) {
+      where.AND = where.AND || [];
+      where.AND.push({ difficulty });
+    }
 
     // Add search functionality
     if (search) {
-      where.OR = [
-        { stem: { contains: search, mode: 'insensitive' } },
-        { explanation: { contains: search, mode: 'insensitive' } },
-        { subject: { name: { contains: search, mode: 'insensitive' } } },
-        { topic: { name: { contains: search, mode: 'insensitive' } } },
-        { subtopic: { name: { contains: search, mode: 'insensitive' } } },
-        { tags: { tag: { name: { contains: search, mode: 'insensitive' } } } }
-      ];
+      where.AND = where.AND || [];
+      where.AND.push({
+        OR: [
+          { stem: { contains: search, mode: 'insensitive' } },
+          { explanation: { contains: search, mode: 'insensitive' } },
+          { subject: { name: { contains: search, mode: 'insensitive' } } },
+          { topic: { name: { contains: search, mode: 'insensitive' } } },
+          { subtopic: { name: { contains: search, mode: 'insensitive' } } },
+          { tags: { tag: { name: { contains: search, mode: 'insensitive' } } } }
+        ]
+      });
     }
 
     // Get total count for pagination

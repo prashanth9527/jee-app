@@ -44,6 +44,7 @@ model User {
   trialStartedAt DateTime?
   trialEndsAt    DateTime?
   subscriptions  Subscription[]
+  paymentOrders  PaymentOrder[]
   
   // AI usage tracking
   aiTestsUsed    Int       @default(0)
@@ -83,6 +84,10 @@ model User {
   blogComments BlogComment[]
   blogLikes    BlogLike[]
   blogBookmarks BlogBookmark[]
+  
+  // AI-generated content relations
+  createdQuestions Question[]   @relation("QuestionCreator")
+  createdExamPapers ExamPaper[] @relation("ExamPaperCreator")
 }
 
 enum UserRole {
@@ -169,6 +174,10 @@ model Question {
   isPreviousYear Boolean    @default(false)
   isAIGenerated  Boolean    @default(false)
   aiPrompt       String?    // Store the prompt used to generate this question
+
+  // AI-generated content ownership
+  createdBy      User?      @relation("QuestionCreator", fields: [createdById], references: [id])
+  createdById    String?
 
   subject    Subject?  @relation(fields: [subjectId], references: [id])
   subjectId  String?
@@ -304,6 +313,10 @@ model ExamPaper {
   questionIds  String[] @default([])
   timeLimitMin Int? // optional time limit
 
+  // AI-generated content ownership
+  createdBy    User?    @relation("ExamPaperCreator", fields: [createdById], references: [id])
+  createdById  String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -357,6 +370,7 @@ model Plan {
   updatedAt DateTime @updatedAt
 
   subscriptions Subscription[]
+  paymentOrders PaymentOrder[]
 }
 
 enum PlanType {
@@ -388,10 +402,116 @@ model Subscription {
   updatedAt DateTime @updatedAt
 }
 
+model PaymentOrder {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  plan   Plan   @relation(fields: [planId], references: [id])
+  planId String
+
+  // Order details
+  merchantOrderId String @unique
+  amount          Int    // Amount in paisa (for PhonePe) or cents (for Stripe)
+  currency        String @default("INR")
+  status          PaymentOrderStatus @default(PENDING)
+
+  // Payment gateway details
+  gateway         PaymentGateway
+  gatewayOrderId  String? // PhonePe order ID or Stripe session ID
+  gatewayStatus   String?
+
+  // Redirect URLs
+  successUrl String
+  cancelUrl  String
+
+  // PhonePe specific fields
+  phonepeRedirectUrl String?
+  phonepeDeepLink    String?
+
+  // Stripe specific fields
+  stripeSessionId String?
+
+  // Payment response logging
+  initialResponse    String? // JSON string of initial payment gateway response
+  webhookPayload     String? // JSON string of webhook payload
+  webhookHeaders     String? // JSON string of webhook headers
+  webhookProcessedAt DateTime?
+  webhookProcessed   Boolean @default(false)
+
+  // Error logging
+  errorMessage   String?
+  errorCode      String?
+  errorDetails   String? // JSON string of detailed error information
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  paymentLogs PaymentLog[]
+
+  @@index([userId])
+  @@index([merchantOrderId])
+  @@index([gateway])
+  @@index([status])
+  @@index([webhookProcessed])
+}
+
 enum SubscriptionStatus {
   ACTIVE
   CANCELED
   EXPIRED
+}
+
+enum PaymentGateway {
+  STRIPE
+  PHONEPE
+}
+
+enum PaymentOrderStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+model PaymentLog {
+  id            String @id @default(cuid())
+  paymentOrder  PaymentOrder @relation(fields: [paymentOrderId], references: [id], onDelete: Cascade)
+  paymentOrderId String
+
+  // Log details
+  logType       PaymentLogType
+  eventType     String? // e.g., "webhook_received", "status_check", "error_occurred"
+  message       String
+  data          String? // JSON string of additional data
+  
+  // Request/Response details
+  requestUrl    String?
+  requestMethod String?
+  requestHeaders String? // JSON string
+  requestBody   String?
+  responseStatus Int?
+  responseHeaders String? // JSON string
+  responseBody  String?
+
+  // Timing
+  processingTimeMs Int? // Processing time in milliseconds
+
+  createdAt DateTime @default(now())
+
+  @@index([paymentOrderId])
+  @@index([logType])
+  @@index([eventType])
+  @@index([createdAt])
+}
+
+enum PaymentLogType {
+  INFO
+  WARNING
+  ERROR
+  WEBHOOK
+  API_CALL
+  STATUS_UPDATE
 }
 
 model Otp {
