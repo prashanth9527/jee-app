@@ -424,9 +424,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900">Billing & Subscriptions</h3>
-                        <p className="text-gray-600 mb-2">
-                          Questions about premium plans and payments
-                        </p>
+                        <p className="text-gray-600 mb-2">Adiyya Tadikamalla</p>
                         <p className="text-sm text-gray-500">
                           Quick resolution guaranteed
                         </p>
