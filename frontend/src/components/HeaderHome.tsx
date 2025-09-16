@@ -109,6 +109,9 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
               </div>
             ) : (
               <div className="flex items-center space-x-4">
+                <Link href="/pyq-bank" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+                  PYQ Bank
+                </Link>
                 <Link href="/login" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                   Login
                 </Link>
@@ -140,6 +143,13 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+              <Link 
+                href="/pyq-bank" 
+                className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                PYQ Bank
+              </Link>
               <a 
                 href="#features" 
                 className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"

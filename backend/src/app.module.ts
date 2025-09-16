@@ -20,6 +20,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { ContactModule } from './contact/contact.module';
 import { LMSModule } from './lms/lms.module';
 import { BlogsModule } from './blogs/blogs.module';
+import { PYQController } from './pyq.controller';
 
 
 
@@ -46,7 +47,7 @@ import { BlogsModule } from './blogs/blogs.module';
     BlogsModule,
     
   ],
-  controllers: [AppController],
+  controllers: [AppController, PYQController],
   providers: [AppService],
 })
 export class AppModule {}
