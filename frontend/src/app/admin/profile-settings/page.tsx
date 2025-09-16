@@ -47,6 +47,7 @@ export default function ProfileSettingsPage() {
   
   // Profile Picture Upload
   const [profilePicFile, setProfilePicFile] = useState<File | null>(null);
+  const [profilePicPreview, setProfilePicPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   
   // Success/Error messages
@@ -79,6 +80,15 @@ export default function ProfileSettingsPage() {
       setProfilePicture(user.profilePicture || '');
     }
   }, [user]);
+
+  // Cleanup preview URL on unmount
+  useEffect(() => {
+    return () => {
+      if (profilePicPreview) {
+        URL.revokeObjectURL(profilePicPreview);
+      }
+    };
+  }, [profilePicPreview]);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -219,6 +229,10 @@ export default function ProfileSettingsPage() {
         showMessage('error', 'Profile picture must be less than 5MB');
         return;
       }
+      
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setProfilePicPreview(previewUrl);
       setProfilePicFile(file);
     }
   };
@@ -257,6 +271,11 @@ export default function ProfileSettingsPage() {
           login(localStorage.getItem('token') || '', updateResponse.data.user);
           setProfilePicture(uploadResponse.data.pictureUrl);
           setProfilePicFile(null);
+          // Clean up preview URL
+          if (profilePicPreview) {
+            URL.revokeObjectURL(profilePicPreview);
+            setProfilePicPreview(null);
+          }
           showMessage('success', 'Profile picture updated successfully!');
         }
       } else {
@@ -643,7 +662,13 @@ export default function ProfileSettingsPage() {
                     <div className="flex items-center space-x-6">
                       <div className="flex-shrink-0">
                         <div className="h-24 w-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                          {profilePicture ? (
+                          {profilePicPreview ? (
+                            <img
+                              src={profilePicPreview}
+                              alt="Profile Preview"
+                              className="h-24 w-24 rounded-full object-cover"
+                            />
+                          ) : profilePicture ? (
                             <img
                               src={profilePicture}
                               alt="Profile"
@@ -667,14 +692,30 @@ export default function ProfileSettingsPage() {
                           Upload a profile picture. Maximum file size: 5MB. Supported formats: JPG, PNG, GIF
                         </p>
                         {profilePicFile && (
-                          <button
-                            type="button"
-                            onClick={handleUploadProfilePic}
-                            disabled={uploading}
-                            className="mt-4 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50 transition-all duration-200 transform hover:scale-105"
-                          >
-                            {uploading ? 'Uploading...' : 'Upload Picture'}
-                          </button>
+                          <div className="mt-4 flex space-x-3">
+                            <button
+                              type="button"
+                              onClick={handleUploadProfilePic}
+                              disabled={uploading}
+                              className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50 transition-all duration-200 transform hover:scale-105"
+                            >
+                              {uploading ? 'Uploading...' : 'Upload Picture'}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setProfilePicFile(null);
+                                if (profilePicPreview) {
+                                  URL.revokeObjectURL(profilePicPreview);
+                                  setProfilePicPreview(null);
+                                }
+                              }}
+                              disabled={uploading}
+                              className="px-6 py-3 bg-gray-500 text-white font-medium rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 transition-all duration-200"
+                            >
+                              Cancel
+                            </button>
+                          </div>
                         )}
                       </div>
                     </div>
