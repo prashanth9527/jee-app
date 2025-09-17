@@ -169,7 +169,8 @@ export class ContentSeedingService {
     const patterns = [
       /Q\.?\s*\d+\./gi,  // Q.1, Q1., Q 1.
       /Question\s*\d+\./gi,  // Question 1.
-      /\d+\.\s*[A-Z]/g,  // 1. A particle...
+      /\d+\.\s*[A-Z]/g,  // 1. A particle... (JEE format)
+      /\d+\.\s*Let/g,    // 1. Let... (JEE format)
     ];
 
     let blocks: string[] = [];
@@ -195,9 +196,29 @@ export class ContentSeedingService {
     const blocks: string[] = [];
     
     for (let i = 1; i < parts.length; i++) {
-      const block = parts[i].trim();
+      let block = parts[i].trim();
       if (block.length > 100) { // Minimum question length
-        blocks.push(block);
+        
+        // Look for the next question number to properly split
+        const nextQuestionMatch = block.match(/(\d+\.\s+[A-Z])/);
+        if (nextQuestionMatch) {
+          const nextQuestionIndex = block.indexOf(nextQuestionMatch[0]);
+          block = block.substring(0, nextQuestionIndex).trim();
+        }
+        
+        // Also look for "Ans." which typically marks the end of a question
+        const answerMatch = block.match(/Ans\.\s*\((\d+)\)/i);
+        if (answerMatch) {
+          const answerIndex = block.indexOf(answerMatch[0]);
+          const solutionStart = block.indexOf('Sol.', answerIndex);
+          if (solutionStart !== -1) {
+            block = block.substring(0, solutionStart).trim();
+          }
+        }
+        
+        if (block.length > 50) {
+          blocks.push(block);
+        }
       }
     }
     
@@ -262,39 +283,92 @@ export class ContentSeedingService {
 
   private extractOptions(block: string): Array<{text: string, isCorrect: boolean}> {
     const options: Array<{text: string, isCorrect: boolean}> = [];
-    const lines = block.split('\n');
     
-    let inOptionsSection = false;
     let correctAnswer = null;
     
-    // Look for answer key
-    const answerMatch = block.match(/answer[:\s]*([a-d])/i);
+    // Look for answer key - JEE format: "Ans. (1)" or "Ans. (2)"
+    const answerMatch = block.match(/Ans\.\s*\((\d+)\)/i);
     if (answerMatch) {
-      correctAnswer = answerMatch[1].toLowerCase();
+      correctAnswer = answerMatch[1];
     }
     
-    for (const line of lines) {
-      const trimmedLine = line.trim();
+    // Also check for old format
+    if (!correctAnswer) {
+      const oldAnswerMatch = block.match(/answer[:\s]*([a-d])/i);
+      if (oldAnswerMatch) {
+        correctAnswer = oldAnswerMatch[1].toLowerCase();
+      }
+    }
+    
+    // Try to find all options using regex pattern matching
+    // Look for patterns like: (1) 5 (2) 4 (3) 3 (4) 8
+    const optionPattern = /\((\d+)\)\s+([^(]+?)(?=\s*\(\d+\)|$)/g;
+    let match;
+    
+    while ((match = optionPattern.exec(block)) !== null) {
+      options.push({
+        text: match[2].trim(),
+        isCorrect: false
+      });
+    }
+    
+    // If we didn't find enough options with the above pattern, try line-by-line parsing
+    if (options.length < 2) {
+      const lines = block.split('\n');
+      let inOptionsSection = false;
       
-      if (this.isOptionLine(trimmedLine)) {
-        inOptionsSection = true;
-        const option = this.parseOptionLine(trimmedLine);
-        if (option) {
-          options.push(option);
-        }
-      } else if (inOptionsSection && trimmedLine && !this.isOptionLine(trimmedLine)) {
-        // Continue option text on next line
-        if (options.length > 0) {
-          options[options.length - 1].text += ' ' + trimmedLine;
+      for (const line of lines) {
+        const trimmedLine = line.trim();
+        
+        if (this.isOptionLine(trimmedLine)) {
+          inOptionsSection = true;
+          
+          // Handle JEE format with multiple options on same line: (1) 5 (2) 4 (3) 3 (4) 8
+          const jeeOptionsMatch = trimmedLine.match(/\((\d+)\)\s+([^(]+?)(?:\s*\((\d+)\)\s+([^(]+?))?(?:\s*\((\d+)\)\s+([^(]+?))?(?:\s*\((\d+)\)\s+([^(]+?))?/g);
+          if (jeeOptionsMatch) {
+            // Extract all options from this line
+            const allOptions = trimmedLine.match(/\((\d+)\)\s+([^(]+?)(?=\s*\(\d+\)|$)/g);
+            if (allOptions) {
+              for (const optionStr of allOptions) {
+                const optionMatch = optionStr.match(/\((\d+)\)\s+(.+)/);
+                if (optionMatch) {
+                  options.push({
+                    text: optionMatch[2].trim(),
+                    isCorrect: false
+                  });
+                }
+              }
+            }
+          } else {
+            // Handle single option or traditional format
+            const option = this.parseOptionLine(trimmedLine);
+            if (option) {
+              options.push(option);
+            }
+          }
+        } else if (inOptionsSection && trimmedLine && !this.isOptionLine(trimmedLine)) {
+          // Continue option text on next line
+          if (options.length > 0) {
+            options[options.length - 1].text += ' ' + trimmedLine;
+          }
         }
       }
     }
     
     // Mark correct answer
     if (correctAnswer && options.length > 0) {
-      const correctIndex = correctAnswer.charCodeAt(0) - 'a'.charCodeAt(0);
-      if (correctIndex >= 0 && correctIndex < options.length) {
-        options[correctIndex].isCorrect = true;
+      // Handle JEE format (1, 2, 3, 4)
+      if (/^\d+$/.test(correctAnswer)) {
+        const correctIndex = parseInt(correctAnswer) - 1;
+        if (correctIndex >= 0 && correctIndex < options.length) {
+          options[correctIndex].isCorrect = true;
+        }
+      } else {
+        // Handle old format (a, b, c, d)
+        const correctIndex = correctAnswer.charCodeAt(0) - 'a'.charCodeAt(0);
+        if (correctIndex >= 0 && correctIndex < options.length) {
+          options[correctIndex].isCorrect = true;
+        }
       }
     }
     
@@ -302,17 +376,51 @@ export class ContentSeedingService {
   }
 
   private isOptionLine(line: string): boolean {
-    return /^[a-d]\)\s+/.test(line) || /^\([a-d]\)\s+/.test(line);
+    // Check for JEE format: (1) 5 (2) 4 (3) 3 (4) 8
+    const jeeFormat = /\(\d+\)\s+\d+/;
+    // Check for traditional format: a) option or (a) option
+    const traditionalFormat = /^[a-d]\)\s+/.test(line) || /^\([a-d]\)\s+/.test(line);
+    
+    return jeeFormat.test(line) || traditionalFormat;
   }
 
   private parseOptionLine(line: string): {text: string, isCorrect: boolean} | null {
-    const match = line.match(/^[a-d]\)\s+(.+)/i) || line.match(/^\([a-d]\)\s+(.+)/i);
-    if (match) {
+    // Handle JEE format: (1) 5 (2) 4 (3) 3 (4) 8
+    const jeeMatch = line.match(/\((\d+)\)\s+([^(]+?)(?:\s*\(\d+\)|$)/g);
+    if (jeeMatch && jeeMatch.length >= 2) {
+      // This line contains multiple options, extract them all
+      const options: Array<{text: string, isCorrect: boolean}> = [];
+      for (const match of jeeMatch) {
+        const optionMatch = match.match(/\((\d+)\)\s+(.+)/);
+        if (optionMatch) {
+          options.push({
+            text: optionMatch[2].trim(),
+            isCorrect: false
+          });
+        }
+      }
+      // Return the first option, others will be handled by subsequent calls
+      return options[0] || null;
+    }
+    
+    // Handle single option in JEE format: (1) 5
+    const singleJeeMatch = line.match(/\((\d+)\)\s+(.+)/);
+    if (singleJeeMatch) {
       return {
-        text: match[1].trim(),
+        text: singleJeeMatch[2].trim(),
         isCorrect: false
       };
     }
+    
+    // Handle traditional format: a) option or (a) option
+    const traditionalMatch = line.match(/^[a-d]\)\s+(.+)/i) || line.match(/^\([a-d]\)\s+(.+)/i);
+    if (traditionalMatch) {
+      return {
+        text: traditionalMatch[1].trim(),
+        isCorrect: false
+      };
+    }
+    
     return null;
   }
 

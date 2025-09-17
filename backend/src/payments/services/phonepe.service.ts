@@ -71,7 +71,7 @@ export class PhonePeService implements PaymentGatewayInterface {
           amount: amountInPaisa, // Store in paisa for PhonePe
           currency: currency.toUpperCase(),
           gateway: 'PHONEPE',
-          gatewayOrderId: merchantOrderId, // Use our merchant order ID
+          gatewayOrderId: (response as any).merchantOrderId || merchantOrderId, // Use PhonePe's order ID if available
           successUrl,
           cancelUrl,
           phonepeRedirectUrl: response.redirectUrl,
@@ -105,7 +105,22 @@ export class PhonePeService implements PaymentGatewayInterface {
 
   async checkOrderStatus(merchantOrderId: string): Promise<PaymentStatusResponse> {
     try {
-      const response = await this.client.getOrderStatus(merchantOrderId);
+      // First, get the payment order to retrieve the correct PhonePe order ID
+      const paymentOrder = await this.prisma.paymentOrder.findUnique({
+        where: { merchantOrderId },
+      });
+
+      if (!paymentOrder) {
+        return {
+          success: false,
+          status: 'PENDING',
+          error: 'Payment order not found',
+        };
+      }
+
+      // Use the gateway order ID (PhonePe's order ID) for status check
+      const phonepeOrderId = paymentOrder.gatewayOrderId || merchantOrderId;
+      const response = await this.client.getOrderStatus(phonepeOrderId);
       
       // Map PhonePe status to our status
       let status: 'PENDING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
