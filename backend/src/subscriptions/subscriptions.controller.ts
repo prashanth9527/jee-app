@@ -15,6 +15,12 @@ export class SubscriptionsController {
 		return this.subs.listPlans();
 	}
 
+	@Get('plans-renewal')
+	listPlansRenewal(@Req() req: any) {
+		console.log('Plans request - User:', req.user);
+		return this.subs.listPlansRenewal();
+	}
+
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles('ADMIN')
 	@Post('plans')

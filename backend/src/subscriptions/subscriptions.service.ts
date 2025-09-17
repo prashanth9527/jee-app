@@ -15,6 +15,10 @@ export class SubscriptionsService {
 		return this.prisma.plan.findMany({ orderBy: { createdAt: 'desc' } });
 	}
 
+	listPlansRenewal() {
+		return this.prisma.plan.findMany({ where: { isActive: true, priceCents: { gt: 0 } }, orderBy: { createdAt: 'desc' } });
+	}
+
 	createPlan(data: { name: string; description?: string; priceCents: number; currency?: string; interval?: any }) {
 		return this.prisma.plan.create({ data: {
 			name: data.name,

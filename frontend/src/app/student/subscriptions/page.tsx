@@ -43,7 +43,7 @@ export default function SubscriptionsPage() {
       console.log('Token exists:', !!localStorage.getItem('token'));
       
       const [plansResponse, statusResponse] = await Promise.all([
-        api.get('/subscriptions/plans'),
+        api.get('/subscriptions/plans-renewal'),
         api.get('/student/subscription-status')
       ]);
       
