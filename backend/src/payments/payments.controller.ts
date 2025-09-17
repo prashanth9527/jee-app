@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Param, Req, UseGuards, Headers, RawBodyRequest } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Req, UseGuards, Headers, RawBodyRequest, Query } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -92,6 +92,13 @@ export class PaymentsController {
       const gateway = this.paymentGatewayFactory.getPaymentGateway();
       const payload = req.rawBody || req.body;
       
+      console.log('Webhook received:', {
+        gateway: this.paymentGatewayFactory.getGatewayName(),
+        headers: Object.keys(headers),
+        payloadType: typeof payload,
+        payloadKeys: payload ? Object.keys(payload) : 'null'
+      });
+      
       const result = await gateway.handleWebhook(payload, headers);
 
       return {
@@ -134,6 +141,67 @@ export class PaymentsController {
       return {
         success: false,
         error: error.message || 'Failed to fetch payment logs',
+      };
+    }
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN')
+  @Get('webhook-logs')
+  async getWebhookLogs(
+    @Query('limit') limit: string = '50',
+    @Query('offset') offset: string = '0',
+    @Query('gateway') gateway?: string
+  ) {
+    try {
+      const limitNum = parseInt(limit) || 50;
+      const offsetNum = parseInt(offset) || 0;
+      
+      const { webhookLogs, total } = await this.loggingService.getWebhookLogs(
+        limitNum,
+        offsetNum,
+        gateway
+      );
+
+      return {
+        success: true,
+        webhookLogs,
+        total,
+        limit: limitNum,
+        offset: offsetNum,
+      };
+    } catch (error) {
+      console.error('Error fetching webhook logs:', error);
+      return {
+        success: false,
+        error: error.message || 'Failed to fetch webhook logs',
+      };
+    }
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN')
+  @Get('webhook-logs/:id')
+  async getWebhookLog(@Param('id') id: string) {
+    try {
+      const webhookLog = await this.loggingService.getWebhookLog(id);
+
+      if (!webhookLog) {
+        return {
+          success: false,
+          error: 'Webhook log not found',
+        };
+      }
+
+      return {
+        success: true,
+        webhookLog,
+      };
+    } catch (error) {
+      console.error('Error fetching webhook log:', error);
+      return {
+        success: false,
+        error: error.message || 'Failed to fetch webhook log',
       };
     }
   }

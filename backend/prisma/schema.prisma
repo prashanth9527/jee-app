@@ -1,217 +1,152 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
 }
 
-// Use PostgreSQL
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  // Use direct URL to avoid connection pooling issues
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DATABASE_URL")
 }
 
-// -------------------------------------------
-// Core Users & Auth
-// -------------------------------------------
 model User {
-  id             String   @id @default(cuid())
-  email          String   @unique
-  phone          String?  @unique
-  pendingPhone   String?  // Temporary phone number for verification during change
-  emailVerified  Boolean  @default(false)
-  phoneVerified  Boolean  @default(false)
-  hashedPassword String?
-  fullName       String
-  role           UserRole @default(STUDENT)
-  stream         Stream?  @relation(fields: [streamId], references: [id])
-  streamId       String?
-  
-  // Google Auth fields
-  googleId       String?  @unique
-  profilePicture String?
-  
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
-  // trial & subscription
-  trialStartedAt DateTime?
-  trialEndsAt    DateTime?
-  subscriptions  Subscription[]
-  paymentOrders  PaymentOrder[]
-  
-  // AI usage tracking
-  aiTestsUsed    Int       @default(0)
-  aiTestsLimit   Int       @default(0)
-  lastAiResetAt  DateTime? // Track when AI usage was last reset
-
-  // exams
-  examSubmissions ExamSubmission[]
-
-  // OTPs
-  otps Otp[]
-
-  // Referral system
-  referralCode   ReferralCode?
-  referralsMade  Referral[]     @relation("Referrer")
-  referralReceived Referral?    @relation("Referee")
-  
-  // Question reports
-  questionReports QuestionReport[]
-  reviewedReports QuestionReport[] @relation("ReportReviewer")
-  
-  // Bookmarks
-  bookmarks Bookmark[]
-  
-  // Sessions
-  sessions UserSession[]
-  
-  // Contact tickets
-  contactTickets ContactTicket[]
-  ticketResponses TicketResponse[]
-  
-  // LMS progress
-  lmsProgress LMSProgress[]
-  
-  // Blog relations
-  blogs        Blog[]
-  blogComments BlogComment[]
-  blogLikes    BlogLike[]
-  blogBookmarks BlogBookmark[]
-  
-  // AI-generated content relations
-  createdQuestions Question[]   @relation("QuestionCreator")
-  createdExamPapers ExamPaper[] @relation("ExamPaperCreator")
+  id                String           @id @default(cuid())
+  email             String           @unique
+  phone             String?          @unique
+  pendingPhone      String?
+  emailVerified     Boolean          @default(false)
+  phoneVerified     Boolean          @default(false)
+  hashedPassword    String?
+  fullName          String
+  role              UserRole         @default(STUDENT)
+  streamId          String?
+  googleId          String?          @unique
+  profilePicture    String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  trialStartedAt    DateTime?
+  trialEndsAt       DateTime?
+  aiTestsUsed       Int              @default(0)
+  aiTestsLimit      Int              @default(0)
+  lastAiResetAt     DateTime?
+  createdExamPapers ExamPaper[]      @relation("ExamPaperCreator")
+  examSubmissions   ExamSubmission[]
+  otps              Otp[]
+  paymentOrders     PaymentOrder[]
+  createdQuestions  Question[]       @relation("QuestionCreator")
+  reviewedReports   QuestionReport[] @relation("ReportReviewer")
+  questionReports   QuestionReport[]
+  referralReceived  Referral?        @relation("Referee")
+  referralsMade     Referral[]       @relation("Referrer")
+  referralCode      ReferralCode?
+  subscriptions     Subscription[]
+  stream            Stream?          @relation(fields: [streamId], references: [id])
+  blogBookmarks     BlogBookmark[]
+  blogComments      BlogComment[]
+  blogLikes         BlogLike[]
+  blogs             Blog[]
+  bookmarks         Bookmark[]
+  contactTickets    ContactTicket[]
+  lmsProgress       LMSProgress[]
+  ticketResponses   TicketResponse[]
+  sessions          UserSession[]
 }
 
-enum UserRole {
-  ADMIN
-  STUDENT
-  EXPERT
-}
-
-// -------------------------------------------
-// Streams & Subjects
-// -------------------------------------------
 model Stream {
-  id          String     @id @default(cuid())
-  name        String     @unique
+  id          String       @id @default(cuid())
+  name        String       @unique
   description String?
-  code        String     @unique // JEE, NEET, CLAT, etc.
-  isActive    Boolean    @default(true)
+  code        String       @unique
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   subjects    Subject[]
   users       User[]
-  lmsContent  LMSContent[]
   blogs       Blog[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  lmsContent  LMSContent[]
 }
 
-// -------------------------------------------
-// Content Hierarchy: Subject -> Topic -> Subtopic
-// -------------------------------------------
 model Subject {
-  id          String     @id @default(cuid())
+  id          String       @id @default(cuid())
   name        String
   description String?
-  stream      Stream     @relation(fields: [streamId], references: [id], onDelete: Cascade)
   streamId    String
-  topics      Topic[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   questions   Question[]
-  lmsContent  LMSContent[]
+  stream      Stream       @relation(fields: [streamId], references: [id], onDelete: Cascade)
+  topics      Topic[]
   blogs       Blog[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  lmsContent  LMSContent[]
 
   @@unique([streamId, name])
 }
 
 model Topic {
-  id          String     @id @default(cuid())
+  id          String       @id @default(cuid())
   name        String
   description String?
-  subject     Subject    @relation(fields: [subjectId], references: [id], onDelete: Cascade)
   subjectId   String
-  subtopics   Subtopic[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   questions   Question[]
+  subtopics   Subtopic[]
+  subject     Subject      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
   lmsContent  LMSContent[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
 
   @@unique([subjectId, name])
 }
 
 model Subtopic {
-  id          String     @id @default(cuid())
+  id          String       @id @default(cuid())
   name        String
   description String?
-  topic       Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
   topicId     String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   questions   Question[]
+  topic       Topic        @relation(fields: [topicId], references: [id], onDelete: Cascade)
   lmsContent  LMSContent[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
 
   @@unique([topicId, name])
 }
 
-// -------------------------------------------
-// Questions & Tags
-// -------------------------------------------
 model Question {
-  id             String     @id @default(cuid())
-  stem           String
-  explanation    String?
-  tip_formula    String?    // Tips and formulas to help solve the question
-  difficulty     Difficulty @default(MEDIUM)
-  yearAppeared   Int?
-  isPreviousYear Boolean    @default(false)
-  isAIGenerated  Boolean    @default(false)
-  aiPrompt       String?    // Store the prompt used to generate this question
-
-  // AI-generated content ownership
-  createdBy      User?      @relation("QuestionCreator", fields: [createdById], references: [id])
-  createdById    String?
-
-  subject    Subject?  @relation(fields: [subjectId], references: [id])
-  subjectId  String?
-  topic      Topic?    @relation(fields: [topicId], references: [id])
-  topicId    String?
-  subtopic   Subtopic? @relation(fields: [subtopicId], references: [id])
-  subtopicId String?
-
-  tags    QuestionTag[]
-  options QuestionOption[]
-  answers ExamAnswer[]
-  reports QuestionReport[]
+  id                      String                           @id @default(cuid())
+  stem                    String
+  explanation             String?
+  tip_formula             String?
+  difficulty              Difficulty                       @default(MEDIUM)
+  yearAppeared            Int?
+  isPreviousYear          Boolean                          @default(false)
+  isAIGenerated           Boolean                          @default(false)
+  aiPrompt                String?
+  subjectId               String?
+  topicId                 String?
+  subtopicId              String?
+  createdAt               DateTime                         @default(now())
+  updatedAt               DateTime                         @updatedAt
+  createdById             String?
+  answers                 ExamAnswer[]
+  createdBy               User?                            @relation("QuestionCreator", fields: [createdById], references: [id])
+  subject                 Subject?                         @relation(fields: [subjectId], references: [id])
+  subtopic                Subtopic?                        @relation(fields: [subtopicId], references: [id])
+  topic                   Topic?                           @relation(fields: [topicId], references: [id])
   alternativeExplanations QuestionAlternativeExplanation[]
-  bookmarks Bookmark[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-enum Difficulty {
-  EASY
-  MEDIUM
-  HARD
+  options                 QuestionOption[]
+  reports                 QuestionReport[]
+  tags                    QuestionTag[]
+  bookmarks               Bookmark[]
 }
 
 model QuestionOption {
   id                String       @id @default(cuid())
-  question          Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId        String
   text              String
   isCorrect         Boolean      @default(false)
   order             Int          @default(0)
-  // back relation for selected answers
   selectedByAnswers ExamAnswer[] @relation("SelectedOption")
+  question          Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }
 
 model Tag {
@@ -221,55 +156,582 @@ model Tag {
 }
 
 model QuestionTag {
-  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String
-  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId      String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@id([questionId, tagId])
 }
 
-// -------------------------------------------
-// Question Reports & Alternative Explanations
-// -------------------------------------------
 model QuestionReport {
-  id          String           @id @default(cuid())
-  question    Question         @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId  String
-  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
-  reportType  QuestionReportType
-  reason      String
-  description String?
-  status      ReportStatus     @default(PENDING)
-  
-  // For alternative explanations
+  id                     String                 @id @default(cuid())
+  questionId             String
+  userId                 String
+  reportType             QuestionReportType
+  reason                 String
+  description            String?
+  status                 ReportStatus           @default(PENDING)
   alternativeExplanation String?
-  
-  // For answer corrections
-  suggestedAnswer String?
-  suggestedOptions QuestionReportOption[]
-  
-  // Admin/Expert review
-  reviewedBy   User?   @relation("ReportReviewer", fields: [reviewedById], references: [id])
-  reviewedById String?
-  reviewedAt   DateTime?
-  reviewNotes  String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  suggestedAnswer        String?
+  reviewedById           String?
+  reviewedAt             DateTime?
+  reviewNotes            String?
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  question               Question               @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  reviewedBy             User?                  @relation("ReportReviewer", fields: [reviewedById], references: [id])
+  user                   User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  suggestedOptions       QuestionReportOption[]
 }
 
 model QuestionReportOption {
-  id                String         @id @default(cuid())
-  report            QuestionReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-  reportId          String
-  text              String
-  isCorrect         Boolean        @default(false)
-  order             Int            @default(0)
-  
+  id        String         @id @default(cuid())
+  reportId  String
+  text      String
+  isCorrect Boolean        @default(false)
+  order     Int            @default(0)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  report    QuestionReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+model QuestionAlternativeExplanation {
+  id          String   @id @default(cuid())
+  questionId  String
+  explanation String
+  source      String
+  reportId    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model ExamPaper {
+  id           String           @id @default(cuid())
+  title        String
+  description  String?
+  subjectIds   String[]         @default([])
+  topicIds     String[]         @default([])
+  subtopicIds  String[]         @default([])
+  questionIds  String[]         @default([])
+  timeLimitMin Int?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  createdById  String?
+  createdBy    User?            @relation("ExamPaperCreator", fields: [createdById], references: [id])
+  submissions  ExamSubmission[]
+}
+
+model ExamSubmission {
+  id             String       @id @default(cuid())
+  userId         String
+  examPaperId    String
+  startedAt      DateTime     @default(now())
+  submittedAt    DateTime?
+  totalQuestions Int
+  correctCount   Int          @default(0)
+  scorePercent   Float?
+  answers        ExamAnswer[]
+  examPaper      ExamPaper    @relation(fields: [examPaperId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ExamAnswer {
+  id               String          @id @default(cuid())
+  submissionId     String
+  questionId       String
+  selectedOptionId String?
+  isCorrect        Boolean         @default(false)
+  question         Question        @relation(fields: [questionId], references: [id])
+  selectedOption   QuestionOption? @relation("SelectedOption", fields: [selectedOptionId], references: [id])
+  submission       ExamSubmission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@unique([submissionId, questionId])
+}
+
+model Plan {
+  id            String         @id @default(cuid())
+  name          String         @unique
+  description   String?
+  priceCents    Int
+  currency      String         @default("usd")
+  interval      PlanInterval   @default(MONTH)
+  planType      PlanType       @default(MANUAL)
+  stripePriceId String?        @unique
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  paymentOrders PaymentOrder[]
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id               String             @id @default(cuid())
+  userId           String
+  planId           String
+  status           SubscriptionStatus @default(ACTIVE)
+  startedAt        DateTime           @default(now())
+  endsAt           DateTime?
+  stripeCustomerId String?
+  stripeSubId      String?
+  stripeStatus     String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  plan             Plan               @relation(fields: [planId], references: [id])
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PaymentOrder {
+  id                 String             @id @default(cuid())
+  userId             String
+  planId             String
+  merchantOrderId    String             @unique
+  amount             Int
+  currency           String             @default("INR")
+  status             PaymentOrderStatus @default(PENDING)
+  gateway            PaymentGateway
+  gatewayOrderId     String?
+  gatewayStatus      String?
+  successUrl         String
+  cancelUrl          String
+  phonepeRedirectUrl String?
+  phonepeDeepLink    String?
+  stripeSessionId    String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  errorCode          String?
+  errorDetails       String?
+  errorMessage       String?
+  initialResponse    String?
+  webhookHeaders     String?
+  webhookPayload     String?
+  webhookProcessed   Boolean            @default(false)
+  webhookProcessedAt DateTime?
+  paymentLogs        PaymentLog[]
+  plan               Plan               @relation(fields: [planId], references: [id])
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([merchantOrderId])
+  @@index([gateway])
+  @@index([status])
+  @@index([webhookProcessed])
+}
+
+model PaymentLog {
+  id               String         @id @default(cuid())
+  paymentOrderId   String
+  logType          PaymentLogType
+  eventType        String?
+  message          String
+  data             String?
+  requestUrl       String?
+  requestMethod    String?
+  requestHeaders   String?
+  requestBody      String?
+  responseStatus   Int?
+  responseHeaders  String?
+  responseBody     String?
+  processingTimeMs Int?
+  createdAt        DateTime       @default(now())
+  paymentOrder     PaymentOrder   @relation(fields: [paymentOrderId], references: [id], onDelete: Cascade)
+
+  @@index([paymentOrderId])
+  @@index([logType])
+  @@index([eventType])
+  @@index([createdAt])
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  userId    String
+  code      String
+  type      OtpType
+  target    String?
+  expiresAt DateTime
+  consumed  Boolean  @default(false)
+  used      Boolean  @default(false)
+  metadata  String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
+}
+
+model ReferralCode {
+  id         String     @id @default(cuid())
+  userId     String     @unique
+  code       String     @unique
+  isActive   Boolean    @default(true)
+  usageCount Int        @default(0)
+  maxUsage   Int?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  referrals  Referral[]
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Referral {
+  id             String           @id @default(cuid())
+  referrerId     String
+  refereeId      String           @unique
+  referralCodeId String
+  status         ReferralStatus   @default(PENDING)
+  completedAt    DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  referee        User             @relation("Referee", fields: [refereeId], references: [id])
+  referralCode   ReferralCode     @relation(fields: [referralCodeId], references: [id])
+  referrer       User             @relation("Referrer", fields: [referrerId], references: [id])
+  rewards        ReferralReward[]
+
+  @@unique([referrerId, refereeId])
+}
+
+model ReferralReward {
+  id          String     @id @default(cuid())
+  referralId  String
+  type        RewardType
+  amount      Int
+  currency    String?
+  description String
+  isClaimed   Boolean    @default(false)
+  claimedAt   DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  referral    Referral   @relation(fields: [referralId], references: [id])
+}
+
+model SystemSettings {
+  id                 String   @id @default(cuid())
+  siteTitle          String   @default("JEE App")
+  siteDescription    String?
+  siteKeywords       String?
+  logoUrl            String?
+  faviconUrl         String?
+  ogImageUrl         String?
+  contactEmail       String?
+  supportEmail       String?
+  privacyEmail       String?
+  legalEmail         String?
+  contactPhone       String?
+  address            String?
+  facebookUrl        String?
+  twitterUrl         String?
+  linkedinUrl        String?
+  instagramUrl       String?
+  youtubeUrl         String?
+  googleAnalyticsId  String?
+  facebookPixelId    String?
+  customCss          String?
+  customJs           String?
+  maintenanceMode    Boolean  @default(false)
+  maintenanceMessage String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  logoFooter         String?
+
+  @@map("system_settings")
+}
+
+model Bookmark {
+  id         String   @id @default(cuid())
+  userId     String
+  questionId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId])
+  @@map("bookmarks")
+}
+
+model Formula {
+  id          String   @id @default(cuid())
+  title       String
+  formula     String
+  description String?
+  subject     String?
+  tags        String[] @default([])
+  topicId     String?
+  subtopicId  String?
+  targetRole  UserRole @default(STUDENT)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("formulas")
+}
+
+model Notification {
+  id         String               @id @default(cuid())
+  title      String
+  message    String?
+  link       String?
+  validFrom  DateTime
+  validUntil DateTime
+  isActive   Boolean              @default(true)
+  priority   NotificationPriority @default(NORMAL)
+  targetRole UserRole             @default(STUDENT)
+  createdAt  DateTime             @default(now())
+  updatedAt  DateTime             @updatedAt
+
+  @@map("notifications")
+}
+
+model OAuthState {
+  id          String   @id @default(cuid())
+  state       String   @unique
+  provider    String
+  redirectUri String?
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  @@map("oauth_states")
+}
+
+model UserSession {
+  id             String   @id @default(cuid())
+  userId         String
+  sessionId      String   @unique
+  deviceInfo     String?
+  ipAddress      String?
+  userAgent      String?
+  isActive       Boolean  @default(true)
+  lastActivityAt DateTime @default(now())
+  expiresAt      DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isActive])
+  @@map("user_sessions")
+}
+
+model ContactTicket {
+  id        String           @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  status    TicketStatus     @default(OPEN)
+  priority  TicketPriority   @default(NORMAL)
+  category  TicketCategory   @default(GENERAL)
+  userId    String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  user      User?            @relation(fields: [userId], references: [id])
+  responses TicketResponse[]
+
+  @@map("contact_tickets")
+}
+
+model TicketResponse {
+  id          String        @id @default(cuid())
+  ticketId    String
+  message     String
+  isInternal  Boolean       @default(false)
+  responderId String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  responder   User          @relation(fields: [responderId], references: [id])
+  ticket      ContactTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  @@map("ticket_responses")
+}
+
+model LMSContent {
+  id               String        @id @default(cuid())
+  title            String
+  description      String?
+  contentType      ContentType
+  status           ContentStatus @default(DRAFT)
+  accessType       AccessType    @default(FREE)
+  contentData      Json?
+  fileUrl          String?
+  fileSize         Int?
+  fileType         String?
+  originalFileName String?
+  externalUrl      String?
+  iframeCode       String?
+  youtubeId        String?
+  youtubeUrl       String?
+  h5pContent       Json?
+  scormData        Json?
+  streamId         String?
+  subjectId        String?
+  topicId          String?
+  subtopicId       String?
+  isDripContent    Boolean       @default(false)
+  dripDelay        Int?
+  dripDate         DateTime?
+  duration         Int?
+  difficulty       Difficulty?
+  tags             String[]
+  order            Int           @default(0)
+  parentId         String?
+  views            Int           @default(0)
+  completions      Int           @default(0)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  parent           LMSContent?   @relation("ContentHierarchy", fields: [parentId], references: [id])
+  children         LMSContent[]  @relation("ContentHierarchy")
+  stream           Stream?       @relation(fields: [streamId], references: [id])
+  subject          Subject?      @relation(fields: [subjectId], references: [id])
+  subtopic         Subtopic?     @relation(fields: [subtopicId], references: [id])
+  topic            Topic?        @relation(fields: [topicId], references: [id])
+  progress         LMSProgress[]
+
+  @@map("lms_content")
+}
+
+model LMSProgress {
+  id             String         @id @default(cuid())
+  userId         String
+  contentId      String
+  status         ProgressStatus @default(NOT_STARTED)
+  progress       Float          @default(0)
+  timeSpent      Int            @default(0)
+  startedAt      DateTime?
+  completedAt    DateTime?
+  lastAccessedAt DateTime?
+  score          Float?
+  attempts       Int            @default(0)
+  data           Json?
+  content        LMSContent     @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, contentId])
+  @@map("lms_progress")
+}
+
+model BlogCategory {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  color       String?
+  icon        String?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  blogs       Blog[]
+
+  @@map("blog_categories")
+}
+
+model Blog {
+  id              String         @id @default(cuid())
+  title           String
+  slug            String         @unique
+  excerpt         String?
+  content         String
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String?
+  status          BlogStatus     @default(DRAFT)
+  publishedAt     DateTime?
+  featuredImage   String?
+  categoryId      String?
+  tags            String[]
+  authorId        String
+  streamId        String?
+  subjectId       String?
+  viewCount       Int            @default(0)
+  likeCount       Int            @default(0)
+  shareCount      Int            @default(0)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  featured        Boolean        @default(false)
+  bookmarks       BlogBookmark[]
+  comments        BlogComment[]
+  likes           BlogLike[]
+  author          User           @relation(fields: [authorId], references: [id])
+  category        BlogCategory?  @relation(fields: [categoryId], references: [id])
+  stream          Stream?        @relation(fields: [streamId], references: [id])
+  subject         Subject?       @relation(fields: [subjectId], references: [id])
+
+  @@map("blogs")
+}
+
+model BlogComment {
+  id          String        @id @default(cuid())
+  content     String
+  authorId    String
+  blogId      String
+  status      CommentStatus @default(PENDING)
+  moderatedAt DateTime?
+  moderatedBy String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  author      User          @relation(fields: [authorId], references: [id])
+  blog        Blog          @relation(fields: [blogId], references: [id])
+
+  @@map("blog_comments")
+}
+
+model BlogLike {
+  id        String   @id @default(cuid())
+  userId    String
+  blogId    String
+  createdAt DateTime @default(now())
+  blog      Blog     @relation(fields: [blogId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, blogId])
+  @@map("blog_likes")
+}
+
+model BlogBookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  blogId    String
+  createdAt DateTime @default(now())
+  blog      Blog     @relation(fields: [blogId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, blogId])
+  @@map("blog_bookmarks")
+}
+
+model WebhookLog {
+  id               String    @id @default(cuid())
+  gateway          String
+  eventType        String?
+  merchantOrderId  String?
+  payload          Json
+  headers          Json?
+  rawBody          String?
+  processed        Boolean   @default(false)
+  processedAt      DateTime?
+  processingTimeMs Int?
+  response         Json?
+  statusCode       Int?
+  error            String?
+  retryCount       Int       @default(0)
+  receivedAt       DateTime  @default(now())
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@map("webhook_logs")
+}
+
+enum UserRole {
+  ADMIN
+  STUDENT
+  EXPERT
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
 }
 
 enum QuestionReportType {
@@ -287,92 +749,6 @@ enum ReportStatus {
   REJECTED
 }
 
-model QuestionAlternativeExplanation {
-  id          String   @id @default(cuid())
-  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId  String
-  explanation String
-  source      String   // "ORIGINAL" or "REPORT_APPROVED"
-  reportId    String?  // Reference to the approved report if from report
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// -------------------------------------------
-// Exams (Practice Papers) & Submissions
-// -------------------------------------------
-model ExamPaper {
-  id           String   @id @default(cuid())
-  title        String
-  description  String?
-  // optional scoping for practice generation
-  subjectIds   String[] @default([])
-  topicIds     String[] @default([])
-  subtopicIds  String[] @default([])
-  questionIds  String[] @default([])
-  timeLimitMin Int? // optional time limit
-
-  // AI-generated content ownership
-  createdBy    User?    @relation("ExamPaperCreator", fields: [createdById], references: [id])
-  createdById  String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  submissions ExamSubmission[]
-}
-
-model ExamSubmission {
-  id          String    @id @default(cuid())
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
-  examPaper   ExamPaper @relation(fields: [examPaperId], references: [id], onDelete: Cascade)
-  examPaperId String
-
-  startedAt      DateTime  @default(now())
-  submittedAt    DateTime?
-  totalQuestions Int
-  correctCount   Int       @default(0)
-  scorePercent   Float? // computed
-
-  answers ExamAnswer[]
-}
-
-model ExamAnswer {
-  id               String          @id @default(cuid())
-  submission       ExamSubmission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
-  submissionId     String
-  question         Question        @relation(fields: [questionId], references: [id])
-  questionId       String
-  selectedOption   QuestionOption? @relation("SelectedOption", fields: [selectedOptionId], references: [id])
-  selectedOptionId String?
-  isCorrect        Boolean         @default(false)
-
-  @@unique([submissionId, questionId])
-}
-
-// -------------------------------------------
-// Subscriptions & Plans
-// -------------------------------------------
-model Plan {
-  id            String       @id @default(cuid())
-  name          String       @unique
-  description   String?
-  priceCents    Int // price in cents
-  currency      String       @default("usd")
-  interval      PlanInterval @default(MONTH)
-  planType      PlanType     @default(MANUAL)
-  stripePriceId String?      @unique
-  isActive      Boolean      @default(true)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  subscriptions Subscription[]
-  paymentOrders PaymentOrder[]
-}
-
 enum PlanType {
   MANUAL
   AI_ENABLED
@@ -381,79 +757,6 @@ enum PlanType {
 enum PlanInterval {
   MONTH
   YEAR
-}
-
-model Subscription {
-  id     String @id @default(cuid())
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-  plan   Plan   @relation(fields: [planId], references: [id])
-  planId String
-
-  status    SubscriptionStatus @default(ACTIVE)
-  startedAt DateTime           @default(now())
-  endsAt    DateTime?
-
-  stripeCustomerId String?
-  stripeSubId      String?
-  stripeStatus     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model PaymentOrder {
-  id     String @id @default(cuid())
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-  plan   Plan   @relation(fields: [planId], references: [id])
-  planId String
-
-  // Order details
-  merchantOrderId String @unique
-  amount          Int    // Amount in paisa (for PhonePe) or cents (for Stripe)
-  currency        String @default("INR")
-  status          PaymentOrderStatus @default(PENDING)
-
-  // Payment gateway details
-  gateway         PaymentGateway
-  gatewayOrderId  String? // PhonePe order ID or Stripe session ID
-  gatewayStatus   String?
-
-  // Redirect URLs
-  successUrl String
-  cancelUrl  String
-
-  // PhonePe specific fields
-  phonepeRedirectUrl String?
-  phonepeDeepLink    String?
-
-  // Stripe specific fields
-  stripeSessionId String?
-
-  // Payment response logging
-  initialResponse    String? // JSON string of initial payment gateway response
-  webhookPayload     String? // JSON string of webhook payload
-  webhookHeaders     String? // JSON string of webhook headers
-  webhookProcessedAt DateTime?
-  webhookProcessed   Boolean @default(false)
-
-  // Error logging
-  errorMessage   String?
-  errorCode      String?
-  errorDetails   String? // JSON string of detailed error information
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  paymentLogs PaymentLog[]
-
-  @@index([userId])
-  @@index([merchantOrderId])
-  @@index([gateway])
-  @@index([status])
-  @@index([webhookProcessed])
 }
 
 enum SubscriptionStatus {
@@ -474,37 +777,6 @@ enum PaymentOrderStatus {
   CANCELLED
 }
 
-model PaymentLog {
-  id            String @id @default(cuid())
-  paymentOrder  PaymentOrder @relation(fields: [paymentOrderId], references: [id], onDelete: Cascade)
-  paymentOrderId String
-
-  // Log details
-  logType       PaymentLogType
-  eventType     String? // e.g., "webhook_received", "status_check", "error_occurred"
-  message       String
-  data          String? // JSON string of additional data
-  
-  // Request/Response details
-  requestUrl    String?
-  requestMethod String?
-  requestHeaders String? // JSON string
-  requestBody   String?
-  responseStatus Int?
-  responseHeaders String? // JSON string
-  responseBody  String?
-
-  // Timing
-  processingTimeMs Int? // Processing time in milliseconds
-
-  createdAt DateTime @default(now())
-
-  @@index([paymentOrderId])
-  @@index([logType])
-  @@index([eventType])
-  @@index([createdAt])
-}
-
 enum PaymentLogType {
   INFO
   WARNING
@@ -514,22 +786,6 @@ enum PaymentLogType {
   STATUS_UPDATE
 }
 
-model Otp {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  code      String
-  type      OtpType
-  target    String? // email or phone value used (optional for change operations)
-  expiresAt DateTime
-  consumed  Boolean  @default(false)
-  used      Boolean  @default(false) // Track if OTP has been used
-  metadata  String? // JSON string for additional data (like newEmail, newPhone)
-  createdAt DateTime @default(now())
-
-  @@index([userId, type])
-}
-
 enum OtpType {
   EMAIL
   PHONE
@@ -537,156 +793,18 @@ enum OtpType {
   PHONE_CHANGE
 }
 
-// -------------------------------------------
-// Referral System
-// -------------------------------------------
-model ReferralCode {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String   @unique
-  code      String   @unique
-  isActive  Boolean  @default(true)
-  usageCount Int     @default(0)
-  maxUsage  Int?     // null means unlimited
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  referrals Referral[]
-}
-
-model Referral {
-  id              String        @id @default(cuid())
-  referrer        User          @relation("Referrer", fields: [referrerId], references: [id])
-  referrerId      String
-  referee         User          @relation("Referee", fields: [refereeId], references: [id])
-  refereeId       String        @unique // One referral per user
-  referralCode    ReferralCode  @relation(fields: [referralCodeId], references: [id])
-  referralCodeId  String
-  status          ReferralStatus @default(PENDING)
-  rewards         ReferralReward[]
-  completedAt     DateTime?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-
-  @@unique([referrerId, refereeId])
-}
-
 enum ReferralStatus {
-  PENDING    // Referral made but not completed
-  COMPLETED  // Referee completed signup/subscription
-  EXPIRED    // Referral expired
-  CANCELLED  // Referral cancelled
-}
-
-model ReferralReward {
-  id          String           @id @default(cuid())
-  referral    Referral         @relation(fields: [referralId], references: [id])
-  referralId  String
-  type        RewardType
-  amount      Int              // Amount in cents or days
-  currency    String?          // For monetary rewards
-  description String
-  isClaimed   Boolean          @default(false)
-  claimedAt   DateTime?
-  expiresAt   DateTime?
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  PENDING
+  COMPLETED
+  EXPIRED
+  CANCELLED
 }
 
 enum RewardType {
-  SUBSCRIPTION_DAYS  // Free subscription days
-  MONETARY_CREDIT    // Money credit
-  FEATURE_ACCESS     // Access to premium features
-  DISCOUNT_PERCENT   // Percentage discount
-}
-
-// -------------------------------------------
-// System Settings
-// -------------------------------------------
-model SystemSettings {
-  id                String   @id @default(cuid())
-  siteTitle         String   @default("JEE App")
-  siteDescription   String?  @db.Text
-  siteKeywords      String?  @db.Text
-  logoUrl           String?
-  logoFooter        String?  // Footer-specific logo
-  faviconUrl        String?
-  ogImageUrl        String?  // Open Graph image for social media
-  contactEmail      String?  // General contact email
-  supportEmail      String?  // Support/help email
-  privacyEmail      String?  // Privacy policy contact email
-  legalEmail        String?  // Legal/terms contact email
-  contactPhone      String?
-  address           String?  @db.Text
-  facebookUrl       String?
-  twitterUrl        String?
-  linkedinUrl       String?
-  instagramUrl      String?
-  youtubeUrl        String?
-  googleAnalyticsId String?
-  facebookPixelId   String?
-  customCss         String?  @db.Text
-  customJs          String?  @db.Text
-  maintenanceMode   Boolean  @default(false)
-  maintenanceMessage String? @db.Text
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
-  @@map("system_settings")
-}
-
-// -------------------------------------------
-// Bookmark System
-// -------------------------------------------
-model Bookmark {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  question  Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([userId, questionId])
-  @@map("bookmarks")
-}
-
-// -------------------------------------------
-// Formula Bank
-// -------------------------------------------
-model Formula {
-  id          String   @id @default(cuid())
-  title       String
-  formula     String
-  description String?
-  subject     String?
-  tags        String[] @default([])
-  topicId     String?
-  subtopicId  String?
-  targetRole  UserRole @default(STUDENT)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@map("formulas")
-}
-
-// -------------------------------------------
-// Notifications
-// -------------------------------------------
-model Notification {
-  id          String   @id @default(cuid())
-  title       String
-  message     String?  @db.Text
-  link        String?  // Optional link for the notification
-  validFrom   DateTime
-  validUntil  DateTime
-  isActive    Boolean  @default(true)
-  priority    NotificationPriority @default(NORMAL)
-  targetRole  UserRole @default(STUDENT) // Which user role this notification is for
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@map("notifications")
+  SUBSCRIPTION_DAYS
+  MONETARY_CREDIT
+  FEATURE_ACCESS
+  DISCOUNT_PERCENT
 }
 
 enum NotificationPriority {
@@ -694,88 +812,6 @@ enum NotificationPriority {
   NORMAL
   HIGH
   URGENT
-}
-
-// -------------------------------------------
-// OAuth State Management
-// -------------------------------------------
-model OAuthState {
-  id        String   @id @default(cuid())
-  state     String   @unique
-  provider  String   // 'google', 'facebook', etc.
-  redirectUri String?
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-
-  @@map("oauth_states")
-}
-
-// -------------------------------------------
-// User Sessions for Single Login Restriction
-// -------------------------------------------
-model UserSession {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  sessionId String   @unique // Unique session identifier
-  deviceInfo String? // Optional device/browser info
-  ipAddress String?  // Optional IP address
-  userAgent String?  // Optional user agent string
-  isActive  Boolean  @default(true)
-  lastActivityAt DateTime @default(now())
-  expiresAt DateTime // Session expiration time
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId, isActive])
-  @@map("user_sessions")
-}
-
-// -------------------------------------------
-// Contact & Support Tickets
-// -------------------------------------------
-model ContactTicket {
-  id          String            @id @default(cuid())
-  name        String
-  email       String
-  phone       String?
-  subject     String
-  message     String            @db.Text
-  status      TicketStatus      @default(OPEN)
-  priority    TicketPriority    @default(NORMAL)
-  category    TicketCategory    @default(GENERAL)
-  
-  // Optional user association (if user is logged in)
-  user        User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
-  userId      String?
-  
-  // Admin responses
-  responses   TicketResponse[]
-  
-  // Metadata
-  ipAddress   String?
-  userAgent   String?
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-
-  @@map("contact_tickets")
-}
-
-model TicketResponse {
-  id          String        @id @default(cuid())
-  ticket      ContactTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
-  ticketId    String
-  message     String        @db.Text
-  isInternal  Boolean       @default(false) // Internal notes vs user-visible responses
-  
-  // Who responded
-  responder   User          @relation(fields: [responderId], references: [id])
-  responderId String
-  
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-
-  @@map("ticket_responses")
 }
 
 enum TicketStatus {
@@ -802,27 +838,21 @@ enum TicketCategory {
   OTHER
 }
 
-// -------------------------------------------
-// Learning Management System (LMS)
-// -------------------------------------------
-
-// LMS Content Types
 enum ContentType {
-  H5P           // H5P interactive content
-  SCORM         // SCORM packages
-  FILE          // PDF, DOC, PPT, etc.
-  URL           // External links
-  IFRAME        // Embedded iframe content
-  YOUTUBE       // YouTube videos
-  TEXT          // Rich text content
-  VIDEO         // Direct video files
-  AUDIO         // Audio files
-  IMAGE         // Image files
-  QUIZ          // Interactive quizzes
-  ASSIGNMENT    // Assignments
+  H5P
+  SCORM
+  FILE
+  URL
+  IFRAME
+  YOUTUBE
+  TEXT
+  VIDEO
+  AUDIO
+  IMAGE
+  QUIZ
+  ASSIGNMENT
 }
 
-// LMS Content Status
 enum ContentStatus {
   DRAFT
   PUBLISHED
@@ -830,84 +860,13 @@ enum ContentStatus {
   SCHEDULED
 }
 
-// LMS Access Control
 enum AccessType {
-  FREE           // Free for all users
-  SUBSCRIPTION   // Requires active subscription
-  PREMIUM        // Premium content only
-  TRIAL          // Available during trial
+  FREE
+  SUBSCRIPTION
+  PREMIUM
+  TRIAL
 }
 
-// LMS Content Model
-model LMSContent {
-  id          String        @id @default(cuid())
-  title       String
-  description String?       @db.Text
-  contentType ContentType
-  status      ContentStatus @default(DRAFT)
-  accessType  AccessType    @default(FREE)
-  
-  // Content-specific fields
-  contentData Json?         // Flexible JSON for content-specific data
-  
-  // File/URL content
-  fileUrl     String?       // AWS S3 URL for files
-  fileSize    Int?          // File size in bytes
-  fileType    String?       // MIME type
-  originalFileName String?  // Original filename
-  
-  // URL/Iframe content
-  externalUrl String?       // External URL
-  iframeCode  String?       // Iframe embed code
-  
-  // YouTube content
-  youtubeId   String?       // YouTube video ID
-  youtubeUrl  String?       // Full YouTube URL
-  
-  // H5P/SCORM content
-  h5pContent  Json?         // H5P content data
-  scormData   Json?         // SCORM package data
-  
-  // Organization
-  stream      Stream?       @relation(fields: [streamId], references: [id])
-  streamId    String?
-  subject     Subject?      @relation(fields: [subjectId], references: [id])
-  subjectId   String?
-  topic       Topic?        @relation(fields: [topicId], references: [id])
-  topicId     String?
-  subtopic    Subtopic?     @relation(fields: [subtopicId], references: [id])
-  subtopicId  String?
-  
-  // Drip content settings
-  isDripContent Boolean     @default(false)
-  dripDelay     Int?        // Delay in days from course start
-  dripDate      DateTime?   // Specific date to release
-  
-  // Content metadata
-  duration     Int?         // Duration in minutes
-  difficulty   Difficulty?  // Content difficulty level
-  tags         String[]     // Content tags
-  
-  // Ordering and structure
-  order        Int          @default(0)
-  parentId     String?      // For nested content
-  parent       LMSContent?  @relation("ContentHierarchy", fields: [parentId], references: [id])
-  children     LMSContent[] @relation("ContentHierarchy")
-  
-  // Progress tracking
-  progress     LMSProgress[]
-  
-  // Analytics
-  views        Int          @default(0)
-  completions  Int          @default(0)
-  
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  
-  @@map("lms_content")
-}
-
-// Progress Status
 enum ProgressStatus {
   NOT_STARTED
   IN_PROGRESS
@@ -915,168 +874,6 @@ enum ProgressStatus {
   FAILED
 }
 
-// Content Progress Tracking
-model LMSProgress {
-  id        String     @id @default(cuid())
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  content   LMSContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  contentId String
-  
-  // Progress details
-  status    ProgressStatus @default(NOT_STARTED)
-  progress  Float          @default(0) // Progress percentage (0-100)
-  timeSpent Int            @default(0) // Time spent in seconds
-  
-  // Completion tracking
-  startedAt   DateTime?
-  completedAt DateTime?
-  lastAccessedAt DateTime?
-  
-  // SCORM/H5P specific data
-  score      Float?     // Score if applicable
-  attempts   Int        @default(0)
-  data       Json?      // Additional progress data
-  
-  @@unique([userId, contentId])
-  @@map("lms_progress")
-}
-
-// -------------------------------------------
-// Blog System
-// -------------------------------------------
-model BlogCategory {
-  id          String   @id @default(cuid())
-  name        String
-  slug        String   @unique
-  description String?
-  color       String?  // Hex color for category
-  icon        String?  // Icon name or URL
-  isActive    Boolean  @default(true)
-  sortOrder   Int      @default(0)
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  // Relations
-  blogs       Blog[]
-  
-  @@map("blog_categories")
-}
-
-model Blog {
-  id          String      @id @default(cuid())
-  title       String
-  slug        String      @unique
-  excerpt     String?     // Short description
-  content     String      // Rich text content
-  
-  // SEO Fields
-  metaTitle       String?
-  metaDescription String?
-  metaKeywords    String?
-  
-  // Publishing
-  status          BlogStatus @default(DRAFT)
-  publishedAt     DateTime?
-  featuredImage   String?    // Image URL
-  featured        Boolean    @default(false)  // Featured blog flag
-  
-  // Categorization
-  category        BlogCategory? @relation(fields: [categoryId], references: [id])
-  categoryId      String?
-  tags            String[]     // Array of tag strings
-  
-  // Author & Ownership
-  author          User     @relation(fields: [authorId], references: [id])
-  authorId        String
-  
-  // Content Organization
-  stream          Stream?  @relation(fields: [streamId], references: [id])
-  streamId        String?  // Optional stream association
-  subject         Subject? @relation(fields: [subjectId], references: [id])
-  subjectId       String?  // Optional subject association
-  
-  // Analytics
-  viewCount       Int      @default(0)
-  likeCount       Int      @default(0)
-  shareCount      Int      @default(0)
-  
-  // Timestamps
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  
-  // Relations
-  comments        BlogComment[]
-  likes           BlogLike[]
-  bookmarks       BlogBookmark[]
-  
-  @@map("blogs")
-}
-
-model BlogComment {
-  id        String   @id @default(cuid())
-  content   String
-  
-  // Author
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
-  
-  // Blog
-  blog      Blog     @relation(fields: [blogId], references: [id])
-  blogId    String
-  
-  // Moderation
-  status    CommentStatus @default(PENDING)
-  moderatedAt DateTime?
-  moderatedBy String?
-  
-  // Timestamps
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
-  @@map("blog_comments")
-}
-
-model BlogLike {
-  id       String @id @default(cuid())
-  
-  // User
-  user     User   @relation(fields: [userId], references: [id])
-  userId   String
-  
-  // Blog
-  blog     Blog   @relation(fields: [blogId], references: [id])
-  blogId   String
-  
-  // Timestamp
-  createdAt DateTime @default(now())
-  
-  @@unique([userId, blogId])
-  @@map("blog_likes")
-}
-
-model BlogBookmark {
-  id       String @id @default(cuid())
-  
-  // User
-  user     User   @relation(fields: [userId], references: [id])
-  userId   String
-  
-  // Blog
-  blog     Blog   @relation(fields: [blogId], references: [id])
-  blogId   String
-  
-  // Timestamp
-  createdAt DateTime @default(now())
-  
-  @@unique([userId, blogId])
-  @@map("blog_bookmarks")
-}
-
-// -------------------------------------------
-// Enums
-// -------------------------------------------
 enum BlogStatus {
   DRAFT
   PUBLISHED

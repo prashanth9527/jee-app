@@ -6,7 +6,6 @@ import DynamicHead from '@/components/DynamicHead';
 import DynamicFooter from '@/components/DynamicFooter';
 import DynamicFavicon from '@/components/DynamicFavicon';
 import { useSystemSettings } from '@/contexts/SystemSettingsContext';
-import api from '@/lib/api';
 
 interface ContactForm {
   name: string;
@@ -70,18 +69,10 @@ export default function ContactPage() {
     setSubmitStatus('idle');
 
     try {
-      // Submit the form data to the backend
-      const response = await api.post('/contact/tickets', {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        subject: formData.subject,
-        message: formData.message,
-        category: 'GENERAL', // Default category
-        priority: 'NORMAL'   // Default priority
-      });
+      // Here you would typically send the form data to your backend
+      // For now, we'll just simulate a successful submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      console.log('Contact form submitted successfully:', response.data);
       setSubmitStatus('success');
       setFormData({
         name: '',
@@ -91,7 +82,7 @@ export default function ContactPage() {
         message: ''
       });
     } catch (error) {
-      console.error('Error submitting contact form:', error);
+      console.error('Error submitting form:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

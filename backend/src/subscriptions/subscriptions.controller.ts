@@ -43,6 +43,8 @@ export class SubscriptionsController {
 
 	@Post('webhook')
 	webhook(@Body() event: any) {
+		// This endpoint is kept for backward compatibility
+		// PhonePe webhooks should use /payments/webhook
 		return this.subs.handleWebhook(event);
 	}
 } 

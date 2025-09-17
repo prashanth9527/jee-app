@@ -82,8 +82,8 @@ export default function SubscriptionsPage() {
       
       const response = await api.post('/subscriptions/checkout', {
         planId,
-        successUrl: `${window.location.origin}/student/subscriptions?success=true`,
-        cancelUrl: `${window.location.origin}/student/subscriptions?canceled=true`,
+        successUrl: `${window.location.origin}/student/payment-status?orderId={ORDER_ID}`,
+        cancelUrl: `${window.location.origin}/student/payment-status?orderId={ORDER_ID}`,
       });
 
       // Handle different payment gateways
@@ -122,6 +122,34 @@ export default function SubscriptionsPage() {
     return interval === 'MONTH' ? 'month' : 'year';
   };
 
+  const getPricePerDay = (priceCents: number, interval: string) => {
+    const amount = priceCents / 100;
+    const days = interval === 'MONTH' ? 30 : 365;
+    const pricePerDay = amount / days;
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1,
+    }).format(pricePerDay);
+  };
+
+  const getEncouragingMessage = (priceCents: number, interval: string) => {
+    const amount = priceCents / 100;
+    const days = interval === 'MONTH' ? 30 : 365;
+    const pricePerDay = amount / days;
+    
+    if (pricePerDay <= 1.5) {
+      return "Less than a cup of coffee! ☕";
+    } else if (pricePerDay <= 3) {
+      return "Less than a samosa! 🥟";
+    } else if (pricePerDay <= 5) {
+      return "Less than a chai! 🍵";
+    } else {
+      return "Great value for your success! 🎯";
+    }
+  };
+
   // Filter out trial plans for users who already have a subscription or are renewing
   const getAvailablePlans = () => {
     if (subscriptionStatus?.hasValidSubscription || subscriptionStatus?.isOnTrial) {
@@ -156,9 +184,17 @@ export default function SubscriptionsPage() {
       <StudentLayout>
         <div className="space-y-6">
           {/* Header */}
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Subscription Plans</h1>
-            <p className="text-gray-600">Choose a plan to unlock unlimited access to JEE practice tests</p>
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">🚀 Unlock Your JEE Success</h1>
+            <p className="text-lg text-gray-600 mb-4">Choose a plan to unlock unlimited access to JEE practice tests</p>
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 border border-blue-200">
+              <p className="text-blue-800 font-semibold text-lg">
+                💡 "Success is the sum of small efforts repeated day in and day out" - Robert Collier
+              </p>
+              <p className="text-blue-600 mt-2">
+                Your journey to IIT starts with consistent practice. Let's make it happen! 🎯
+              </p>
+            </div>
           </div>
 
           {/* Current Status */}
@@ -217,7 +253,7 @@ export default function SubscriptionsPage() {
           )}
 
           {/* Plans Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12 max-w-6xl mx-auto">
             {getAvailablePlans().map((plan, index) => {
               // Debug: Log plan details
               console.log('Plan:', plan.name, 'Type:', plan.planType, 'Index:', index);
@@ -229,22 +265,27 @@ export default function SubscriptionsPage() {
                                   (index === 0); // Fallback: always make first plan recommended
               
               return (
-                <div key={plan.id} className={`bg-white rounded-lg shadow-lg overflow-hidden relative transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer ${
+                <div key={plan.id} className={`rounded-lg shadow-lg overflow-hidden relative transition-all duration-300 hover:shadow-xl cursor-pointer mb-8 ${
                   isRecommended 
-                    ? 'ring-2 ring-orange-500 transform scale-105' 
-                    : 'hover:ring-2 hover:ring-blue-500 hover:border-blue-300 hover:bg-blue-50'
+                    ? 'bg-gradient-to-br from-orange-50 to-red-50 ring-4 ring-orange-500 shadow-2xl border-2 border-orange-300' 
+                    : 'bg-white hover:ring-2 hover:ring-blue-500 hover:border-blue-300 hover:bg-blue-50'
                 }`}>
                   {isRecommended && (
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                      <span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                        Recommended
-                      </span>
+                    <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 z-30">
+                      <div className="relative">
+                        <div className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white px-10 py-5 rounded-full text-lg font-black shadow-2xl border-4 border-white animate-bounce">
+                          MOST POPULAR
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-full blur-sm opacity-75 -z-10"></div>
+                      </div>
                     </div>
                   )}
-                  <div className={`p-8 ${isRecommended ? 'pt-12' : ''}`}>
+                  <div className={`p-8 ${isRecommended ? 'pt-20' : ''}`}>
                   <div className="text-center">
                     <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                      {isRecommended && <span className="text-orange-500 mr-2">🔥</span>}
                       {plan.planType === 'AI_ENABLED' ? 'AI Enabled Plan' : 'Manual Plan'}
+                      {isRecommended && <span className="text-orange-500 ml-2">🔥</span>}
                     </h3>
                     <div className="mb-4">
                       <span className="text-4xl font-bold text-gray-900">
@@ -252,6 +293,21 @@ export default function SubscriptionsPage() {
                       </span>
                       <span className="text-gray-600 text-lg">/{getIntervalText(plan.interval)}</span>
                     </div>
+                    
+                    {/* Price per day */}
+                    <div className="mb-3">
+                      <span className="text-lg font-semibold text-green-600">
+                        Just {getPricePerDay(plan.priceCents, plan.interval)}/day
+                      </span>
+                    </div>
+                    
+                    {/* Encouraging message */}
+                    <div className="mb-4">
+                      <p className="text-sm font-medium text-orange-600 bg-orange-50 px-3 py-2 rounded-full inline-block">
+                        {getEncouragingMessage(plan.priceCents, plan.interval)}
+                      </p>
+                    </div>
+                    
                     <p className="text-gray-600 mb-6">
                       {plan.planType === 'AI_ENABLED' 
                         ? 'Access to AI-generated questions and explanations'
@@ -293,6 +349,21 @@ export default function SubscriptionsPage() {
                         Save 17% with yearly plan
                       </div>
                     )}
+                    
+                    {/* Additional encouraging features */}
+                    <div className="flex items-center text-sm text-purple-600 font-medium">
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      Instant access after payment
+                    </div>
+                    
+                    <div className="flex items-center text-sm text-green-600 font-medium">
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Cancel anytime
+                    </div>
                   </div>
 
                   <button
@@ -314,7 +385,7 @@ export default function SubscriptionsPage() {
                     ) : subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription ? (
                       'Current Plan'
                     ) : (
-                      `Subscribe - ${formatPrice(plan.priceCents, plan.currency)}/${getIntervalText(plan.interval)}`
+                      `🚀 Start Your Success - ${formatPrice(plan.priceCents, plan.currency)}/${getIntervalText(plan.interval)}`
                     )}
                   </button>
                 </div>

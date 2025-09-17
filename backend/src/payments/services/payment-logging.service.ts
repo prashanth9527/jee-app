@@ -150,6 +150,32 @@ export class PaymentLoggingService {
       },
     });
   }
+
+  // Webhook log methods
+  async getWebhookLogs(limit: number = 50, offset: number = 0, gateway?: string) {
+    const whereClause = gateway ? { gateway: gateway.toUpperCase() } : {};
+    
+    const [webhookLogs, total] = await Promise.all([
+      this.prisma.webhookLog.findMany({
+        where: whereClause,
+        orderBy: { receivedAt: 'desc' },
+        take: limit,
+        skip: offset,
+      }),
+      this.prisma.webhookLog.count({
+        where: whereClause,
+      }),
+    ]);
+
+    return { webhookLogs, total };
+  }
+
+  async getWebhookLog(id: string) {
+    return this.prisma.webhookLog.findUnique({
+      where: { id },
+    });
+  }
 }
+
 
 

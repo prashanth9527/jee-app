@@ -41,6 +41,10 @@ export class SubscriptionsService {
 		const gateway = this.paymentGatewayFactory.getPaymentGateway();
 		const merchantOrderId = randomUUID();
 		
+		// Replace {ORDER_ID} placeholder with actual order ID
+		const processedSuccessUrl = successUrl.replace('{ORDER_ID}', merchantOrderId);
+		const processedCancelUrl = cancelUrl.replace('{ORDER_ID}', merchantOrderId);
+		
 		// Convert price to appropriate currency unit
 		const amount = plan.priceCents;
 		const currency = plan.currency;
@@ -50,8 +54,8 @@ export class SubscriptionsService {
 			planId,
 			amount,
 			currency,
-			successUrl,
-			cancelUrl,
+			processedSuccessUrl,
+			processedCancelUrl,
 			merchantOrderId
 		);
 		
@@ -60,38 +64,17 @@ export class SubscriptionsService {
 		}
 		
 		return { 
+			orderId: merchantOrderId,
 			url: result.redirectUrl,
 			deepLink: result.deepLink,
 			gateway: this.paymentGatewayFactory.getGatewayName()
 		};
 	}
 
-	// Webhook (stub)
+	// Webhook handler - delegates to payment gateway
 	async handleWebhook(event: any) {
-		switch (event.type) {
-			case 'checkout.session.completed': {
-				const session = event.data.object as any;
-				const userId = (session.client_reference_id || '').toString();
-				const subId = (session.subscription as string) || undefined;
-				if (userId && subId) {
-					// For now, create subscription with first available plan
-					const plans = await this.prisma.plan.findMany({ where: { isActive: true } });
-					if (plans.length > 0) {
-						await this.prisma.subscription.create({ 
-							data: { 
-								userId, 
-								planId: plans[0].id, 
-								status: 'ACTIVE',
-								startedAt: new Date(),
-								endsAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days
-							} 
-						});
-					}
-				}
-				break;
-			}
-		}
-		return { received: true };
+		const gateway = this.paymentGatewayFactory.getPaymentGateway();
+		return await gateway.handleWebhook(event, {});
 	}
 
 	// Access helper
