@@ -51,11 +51,16 @@ export class PhonePeService implements PaymentGatewayInterface {
         .udf3('subscription')
         .build();
 
+
+    // Replace {ORDER_ID} placeholder with actual order ID
+		const processedSuccessUrl = successUrl.replace('{ORDER_ID}', merchantOrderId);
+		const processedCancelUrl = cancelUrl.replace('{ORDER_ID}', merchantOrderId);
+
       // Create payment request
       const request = StandardCheckoutPayRequest.builder()
         .merchantOrderId(merchantOrderId)
         .amount(amountInPaisa)
-        .redirectUrl(successUrl)
+        .redirectUrl(processedSuccessUrl)
         .metaInfo(metaInfo)
         .build();
 
@@ -72,8 +77,8 @@ export class PhonePeService implements PaymentGatewayInterface {
           currency: currency.toUpperCase(),
           gateway: 'PHONEPE',
           gatewayOrderId: (response as any).merchantOrderId || merchantOrderId, // Use PhonePe's order ID if available
-          successUrl,
-          cancelUrl,
+          successUrl:processedSuccessUrl,
+          cancelUrl:processedCancelUrl,
           phonepeRedirectUrl: response.redirectUrl,
           phonepeDeepLink: (response as any).deepLink || null,
           status: 'PENDING',
