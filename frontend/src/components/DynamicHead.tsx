@@ -8,7 +8,8 @@ interface SEOData {
   siteTitle: string;
   siteDescription: string;
   siteKeywords: string;
-  siteFavicon?: string;
+  faviconUrl?: string;
+  ogImageUrl?: string;
   title?: string;
   description?: string;
   keywords?: string;
@@ -67,7 +68,7 @@ export default function DynamicHead({
   const finalTitle = title ? `${title} | ${seoData.siteTitle}` : seoData.siteTitle;
   const finalDescription = description || seoData.siteDescription;
   const finalKeywords = keywords || seoData.siteKeywords;
-  const finalImage = ogImage || image || '/og-image.jpg';
+  const finalImage = ogImage || image || seoData.ogImageUrl || '/og-image.jpg';
   const finalUrl = canonicalUrl || url || (typeof window !== 'undefined' ? window.location.href : '');
 
   const finalStructuredData = structuredData || {
@@ -135,10 +136,10 @@ export default function DynamicHead({
       <link rel="canonical" href={finalUrl} />
 
       {/* Favicons - Dynamic from SystemSettings */}
-      <link rel="icon" type="image/x-icon" href={seoData.siteFavicon || '/favicon.ico'} />
-      <link rel="icon" type="image/png" sizes="32x32" href={seoData.siteFavicon || '/favicon-32x32.png'} />
-      <link rel="icon" type="image/png" sizes="16x16" href={seoData.siteFavicon || '/favicon-16x16.png'} />
-      <link rel="apple-touch-icon" sizes="180x180" href={seoData.siteFavicon || '/apple-touch-icon.png'} />
+      <link rel="icon" type="image/x-icon" href={seoData.faviconUrl || '/favicon.ico'} />
+      <link rel="icon" type="image/png" sizes="32x32" href={seoData.faviconUrl || '/favicon-32x32.png'} />
+      <link rel="icon" type="image/png" sizes="16x16" href={seoData.faviconUrl || '/favicon-16x16.png'} />
+      <link rel="apple-touch-icon" sizes="180x180" href={seoData.faviconUrl || '/apple-touch-icon.png'} />
 
       {/* Structured Data */}
       <script

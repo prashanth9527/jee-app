@@ -40,13 +40,14 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
                     <img 
                       src={systemSettings.logoUrl} 
                       alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
-                      className="h-14 w-auto object-contain drop-shadow-lg"
+                      className="h-16 w-auto object-contain drop-shadow-lg hover:scale-105 transition-transform duration-200"
                       onError={() => setLogoError(true)}
+                      style={{ maxHeight: '64px', minHeight: '48px' }}
                     />
                   </div>
                 ) : (
-                  <div className="h-14 w-14 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg flex items-center justify-center shadow-lg">
-                    <span className="text-white font-bold text-lg">
+                  <div className="h-16 w-16 bg-gradient-to-r from-orange-600 to-red-600 rounded-xl flex items-center justify-center shadow-lg hover:scale-105 transition-transform duration-200">
+                    <span className="text-white font-bold text-xl">
                       {(systemSettings?.siteTitle || 'JEE App').split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase()}
                     </span>
                   </div>
@@ -141,11 +142,12 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
                       <img 
                         src={systemSettings.logoUrl} 
                         alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
-                        className="h-8 w-auto object-contain"
+                        className="h-10 w-auto object-contain"
                         onError={() => setLogoError(true)}
+                        style={{ maxHeight: '40px', minHeight: '32px' }}
                       />
                     ) : (
-                      <div className="h-8 w-8 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg flex items-center justify-center">
+                      <div className="h-10 w-10 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg flex items-center justify-center">
                         <span className="text-white font-bold text-sm">
                           {(systemSettings?.siteTitle || 'JEE App').split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase()}
                         </span>

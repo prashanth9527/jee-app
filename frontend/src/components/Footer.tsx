@@ -48,7 +48,7 @@ export default function Footer({ systemSettings }: FooterProps) {
                 </Link>
               </li>
               <li>
-                <Link href="/previous-year-questions" className="text-white hover:text-orange-400 transition-colors text-sm">
+                <Link href="/pyq-bank" className="text-white hover:text-orange-400 transition-colors text-sm">
                   Previous Year Questions
                 </Link>
               </li>

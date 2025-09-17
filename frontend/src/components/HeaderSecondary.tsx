@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { getDashboardUrl } from '@/utils/dashboardUtils';
 
@@ -20,6 +21,7 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [logoError, setLogoError] = useState(false);
+  const pathname = usePathname();
 
 
   return (
@@ -39,11 +41,16 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
                   <img 
                     src={systemSettings.logoUrl} 
                     alt={`${systemSettings.siteTitle || 'JEE App'} Logo`}
-                    className="h-8 w-auto object-contain"
+                    className="h-14 w-auto object-contain drop-shadow-lg hover:scale-105 transition-transform duration-200"
                     onError={() => setLogoError(true)}
+                    style={{ maxHeight: '56px', minHeight: '48px' }}
                   />
                 ) : (
-                  <span>{systemSettings?.siteTitle || 'JEE App'}</span>
+                  <div className="h-14 w-14 bg-gradient-to-r from-orange-600 to-red-600 rounded-xl flex items-center justify-center shadow-lg hover:scale-105 transition-transform duration-200">
+                    <span className="text-white font-bold text-xl">
+                      {(systemSettings?.siteTitle || 'JEE App').split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase()}
+                    </span>
+                  </div>
                 )}
               </Link>
             </div>
@@ -52,20 +59,54 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <Link href="/" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              <Link 
+                href="/" 
+                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  pathname === '/' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
+              >
                 Home
               </Link>
-              <Link href="/blogs" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              <Link 
+                href="/blogs" 
+                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  pathname === '/blogs' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
+              >
                 Blogs
               </Link>
-              
-              {/* <Link href="/previous-year-questions" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              <Link 
+                href="/pyq-bank" 
+                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  pathname === '/pyq-bank' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
+              >
                 PYQ Bank
-              </Link> */}
-              <Link href="/help" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              </Link>
+              <Link 
+                href="/help" 
+                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  pathname === '/help' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
+              >
                 Help
               </Link>
-              <Link href="/contact" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              <Link 
+                href="/contact" 
+                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  pathname === '/contact' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
+              >
                 Contact
               </Link>              
             </div>
@@ -123,42 +164,66 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
               <Link 
                 href="/" 
-                className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                className={`block px-3 py-2 text-base font-medium transition-colors ${
+                  pathname === '/' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
               <Link 
                 href="/blogs" 
-                className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                className={`block px-3 py-2 text-base font-medium transition-colors ${
+                  pathname === '/blogs' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Blogs
               </Link>
               <Link 
                 href="/practice-tests" 
-                className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                className={`block px-3 py-2 text-base font-medium transition-colors ${
+                  pathname === '/practice-tests' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Practice Tests
               </Link>
               <Link 
-                href="/previous-year-questions" 
-                className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                href="/pyq-bank" 
+                className={`block px-3 py-2 text-base font-medium transition-colors ${
+                  pathname === '/pyq-bank' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 PYQ Bank
               </Link>
               <Link 
                 href="/analytics" 
-                className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                className={`block px-3 py-2 text-base font-medium transition-colors ${
+                  pathname === '/analytics' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Analytics
               </Link>
               <Link 
                 href="/leaderboard" 
-                className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                className={`block px-3 py-2 text-base font-medium transition-colors ${
+                  pathname === '/leaderboard' 
+                    ? 'text-orange-600 bg-orange-50 rounded-md' 
+                    : 'text-gray-600 hover:text-orange-600'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Leaderboard
@@ -167,7 +232,11 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
                 <>
                   <Link 
                     href={getDashboardUrl(user.role)} 
-                    className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                    className={`block px-3 py-2 text-base font-medium transition-colors ${
+                      pathname.startsWith('/student') || pathname.startsWith('/admin') || pathname.startsWith('/expert')
+                        ? 'text-orange-600 bg-orange-50 rounded-md' 
+                        : 'text-gray-600 hover:text-orange-600'
+                    }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Dashboard

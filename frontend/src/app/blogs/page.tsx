@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 import BlogFilters from '@/components/BlogFilters';
 import BlogContentArea from '@/components/BlogContentArea';
-import HeaderSecondary from '@/components/HeaderSecondary';
 import Footer from '@/components/Footer';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { Suspense } from 'react';
+import BlogsPageClient from './BlogsPageClient';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -203,7 +203,7 @@ export default async function BlogsPage({
         />
         
         <div className="min-h-screen bg-white">
-          <HeaderSecondary />
+          <BlogsPageClient />
           
           <div className="pt-16">
             {/* Hero Section */}

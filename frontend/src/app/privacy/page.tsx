@@ -88,7 +88,7 @@ export default function PrivacyPage() {
                   <Link href="/blogs" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                     Blogs
                   </Link>
-                  <Link href="/previous-year-questions" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+                  <Link href="/pyq-bank" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                     PYQ Bank
                   </Link>
                   <Link href="/help" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
@@ -140,7 +140,7 @@ export default function PrivacyPage() {
                   <Link href="/blogs" className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors" onClick={() => setMobileMenuOpen(false)}>
                     Blogs
                   </Link>
-                  <Link href="/previous-year-questions" className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                  <Link href="/pyq-bank" className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors" onClick={() => setMobileMenuOpen(false)}>
                     PYQ Bank
                   </Link>
                   <Link href="/help" className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors" onClick={() => setMobileMenuOpen(false)}>

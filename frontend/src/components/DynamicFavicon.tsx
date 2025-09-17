@@ -8,36 +8,69 @@ interface DynamicFaviconProps {
 }
 
 export default function DynamicFavicon({ faviconUrl, siteTitle }: DynamicFaviconProps) {
-  const faviconRef = useRef<HTMLLinkElement | null>(null);
+  const faviconRefs = useRef<HTMLLinkElement[]>([]);
 
   useEffect(() => {
     if (faviconUrl) {
-      // Remove existing dynamic favicon if it exists
-      if (faviconRef.current) {
-        faviconRef.current.remove();
-        faviconRef.current = null;
-      }
+      // Remove existing dynamic favicons
+      faviconRefs.current.forEach(link => {
+        if (link && link.parentNode) {
+          link.parentNode.removeChild(link);
+        }
+      });
+      faviconRefs.current = [];
 
-      // Create new favicon link
-      const link = document.createElement('link');
-      link.rel = 'icon';
-      link.href = faviconUrl;
-      link.type = 'image/x-icon';
-      link.setAttribute('data-dynamic-favicon', 'true'); // Mark as dynamic for easy identification
-      
-      // Store reference for cleanup
-      faviconRef.current = link;
-      
-      // Add to head
-      document.head.appendChild(link);
+      // Create multiple favicon formats for better browser support
+      const faviconFormats = [
+        { rel: 'icon', type: 'image/x-icon', sizes: 'any' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32' },
+        { rel: 'icon', type: 'image/png', sizes: '16x16' },
+        { rel: 'apple-touch-icon', type: 'image/png', sizes: '180x180' },
+        { rel: 'icon', type: 'image/png', sizes: '192x192' },
+        { rel: 'icon', type: 'image/png', sizes: '512x512' }
+      ];
+
+      faviconFormats.forEach(format => {
+        const link = document.createElement('link');
+        link.rel = format.rel;
+        link.href = faviconUrl;
+        link.type = format.type;
+        if (format.sizes) {
+          link.sizes = format.sizes;
+        }
+        link.setAttribute('data-dynamic-favicon', 'true');
+        
+        faviconRefs.current.push(link);
+        document.head.appendChild(link);
+      });
+
+      // Also update manifest.json if it exists
+      const manifestLink = document.querySelector('link[rel="manifest"]') as HTMLLinkElement;
+      if (manifestLink) {
+        // Update manifest with dynamic favicon
+        fetch(manifestLink.href)
+          .then(response => response.json())
+          .then(manifest => {
+            manifest.icons = manifest.icons.map((icon: any) => ({
+              ...icon,
+              src: faviconUrl
+            }));
+            // Note: We can't directly update the manifest file, but this shows the structure
+          })
+          .catch(() => {
+            // Ignore manifest update errors
+          });
+      }
     }
 
     // Cleanup function
     return () => {
-      if (faviconRef.current) {
-        faviconRef.current.remove();
-        faviconRef.current = null;
-      }
+      faviconRefs.current.forEach(link => {
+        if (link && link.parentNode) {
+          link.parentNode.removeChild(link);
+        }
+      });
+      faviconRefs.current = [];
     };
   }, [faviconUrl]);
 

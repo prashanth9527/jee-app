@@ -6,7 +6,7 @@ import { useSystemSettings } from '@/contexts/SystemSettingsContext';
 import DynamicHead from '@/components/DynamicHead';
 import DynamicFavicon from '@/components/DynamicFavicon';
 import DynamicFooter from '@/components/DynamicFooter';
-import HeaderHome from '@/components/HeaderHome';
+import HeaderSecondary from '@/components/HeaderSecondary';
 import { QuestionStem } from '@/components/QuestionDisplay';
 import MathRenderer from '@/components/MathRenderer';
 import { ChevronLeft, ChevronRight, Lock, UserPlus, BookOpen } from 'lucide-react';
@@ -179,7 +179,7 @@ export default function PYQBankPage() {
         <MathRenderer />
         
         {/* Navigation */}
-        <HeaderHome systemSettings={systemSettings || undefined} />
+        <HeaderSecondary systemSettings={systemSettings || undefined} />
         {/* Hero Section */}
         <section className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
