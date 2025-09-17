@@ -259,7 +259,7 @@ export default async function BlogsPage({
     // Return a fallback page instead of crashing
     return (
       <div className="min-h-screen bg-white">
-        <HeaderSecondary />
+        <BlogsPageClient />
         
         <div className="pt-16">
           {/* Hero Section */}
