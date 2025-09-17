@@ -5,6 +5,7 @@ import "../styles/math.css";
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { SystemSettingsProvider } from '@/contexts/SystemSettingsContext';
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -139,6 +140,7 @@ export default function RootLayout({
               <div id="root" className="min-h-screen flex flex-col">
                 <main className="flex-1">
                   {children}
+                  <Analytics />
                 </main>
               </div>
             </AuthProvider>
