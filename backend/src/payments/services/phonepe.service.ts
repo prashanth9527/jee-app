@@ -40,6 +40,12 @@ export class PhonePeService implements PaymentGatewayInterface {
     merchantOrderId: string
   ): Promise<PaymentOrderResponse> {
     try {
+      // Get user details for UDF
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { email: true, phone: true }
+      });
+
       // Convert amount from cents to paisa (PhonePe uses paisa)
       // amount is already in cents (9900 cents = ₹99), so we use it directly as paisa
       const amountInPaisa = amount;
@@ -49,6 +55,8 @@ export class PhonePeService implements PaymentGatewayInterface {
         .udf1(userId)
         .udf2(planId)
         .udf3('subscription')
+        .udf4(user?.email || '')
+        .udf5(user?.phone || '')
         .build();
 
       // Create payment request
@@ -305,6 +313,11 @@ export class PhonePeService implements PaymentGatewayInterface {
         );
       }
 
+      // Get current order status before updating
+      const currentOrder = await this.prisma.paymentOrder.findUnique({
+        where: { merchantOrderId },
+      });
+
       // Update order in database
       await this.prisma.paymentOrder.update({
         where: { merchantOrderId },
@@ -318,8 +331,8 @@ export class PhonePeService implements PaymentGatewayInterface {
         },
       });
 
-      // If payment is completed, create subscription
-      if (status === 'COMPLETED') {
+      // If payment is completed and wasn't already completed, create subscription
+      if (status === 'COMPLETED' && currentOrder?.status !== 'COMPLETED') {
         await this.createSubscriptionFromOrder(merchantOrderId);
       }
 
