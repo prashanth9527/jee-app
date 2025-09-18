@@ -133,7 +133,7 @@ export class PhonePeService implements PaymentGatewayInterface {
       // Map PhonePe status to our status
       let status: 'PENDING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
       switch (response.state) {
-        case 'PAYMENT_SUCCESS':
+        case 'COMPLETED':
           status = 'COMPLETED';
           break;
         case 'PAYMENT_ERROR':
