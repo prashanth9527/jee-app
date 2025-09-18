@@ -344,7 +344,7 @@ export class PhonePeService implements PaymentGatewayInterface {
       // Update order status based on callback type
       let status: 'PENDING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
       switch (type.toString()) {
-        case 'CHECKOUT_ORDER_COMPLETED':
+        case 'COMPLETED':
           status = 'COMPLETED';
           break;
         case 'CHECKOUT_ORDER_FAILED':
