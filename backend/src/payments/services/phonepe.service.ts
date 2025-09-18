@@ -153,13 +153,32 @@ export class PhonePeService implements PaymentGatewayInterface {
       });
 
       // Update order status in database
-      await this.prisma.paymentOrder.update({
+      const updatedOrder = await this.prisma.paymentOrder.update({
         where: { merchantOrderId },
         data: {
           status,
           gatewayStatus: response.state,
           statusResponse: JSON.stringify(response), // Store status check response
         } as any, // Temporary type assertion until TypeScript picks up new schema
+      });
+
+      // Insert response into PaymentLogs
+      await this.prisma.paymentLog.create({
+        data: {
+          paymentOrderId: updatedOrder.id,
+          logType: 'INFO',
+          eventType: 'status_check_response',
+          message: `PhonePe status check completed for order ${merchantOrderId}`,
+          data: JSON.stringify({
+            merchantOrderId,
+            status,
+            gatewayStatus: response.state,
+            response: response,
+            previousStatus: currentOrder?.status
+          }),
+          responseBody: JSON.stringify(response),
+          createdAt: new Date()
+        }
       });
 
       // If payment is completed and wasn't already completed, create subscription
@@ -175,6 +194,34 @@ export class PhonePeService implements PaymentGatewayInterface {
       };
     } catch (error) {
       console.error('PhonePe status check error:', error);
+      
+      // Log error in PaymentLogs if we can find the payment order
+      try {
+        const paymentOrder = await this.prisma.paymentOrder.findUnique({
+          where: { merchantOrderId },
+        });
+        
+        if (paymentOrder) {
+          await this.prisma.paymentLog.create({
+            data: {
+              paymentOrderId: paymentOrder.id,
+              logType: 'ERROR',
+              eventType: 'status_check_error',
+              message: `PhonePe status check failed for order ${merchantOrderId}`,
+              data: JSON.stringify({
+                merchantOrderId,
+                error: error.message,
+                stack: error.stack,
+                name: error.name
+              }),
+              createdAt: new Date()
+            }
+          });
+        }
+      } catch (logError) {
+        console.error('Error logging status check error:', logError);
+      }
+      
       return {
         success: false,
         status: 'PENDING',
