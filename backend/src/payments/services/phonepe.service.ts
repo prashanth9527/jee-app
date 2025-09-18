@@ -40,11 +40,6 @@ export class PhonePeService implements PaymentGatewayInterface {
     merchantOrderId: string
   ): Promise<PaymentOrderResponse> {
     try {
-      // Debug logging to see what URLs we're receiving
-      console.log('PhonePe createOrder - Received URLs:');
-      console.log('successUrl:', successUrl);
-      console.log('cancelUrl:', cancelUrl);
-      console.log('merchantOrderId:', merchantOrderId);
       // Convert amount from cents to paisa (PhonePe uses paisa)
       // amount is already in cents (9900 cents = ₹99), so we use it directly as paisa
       const amountInPaisa = amount;
@@ -144,14 +139,25 @@ export class PhonePeService implements PaymentGatewayInterface {
           status = 'PENDING';
       }
 
+      // Get current order status before updating
+      const currentOrder = await this.prisma.paymentOrder.findUnique({
+        where: { merchantOrderId },
+      });
+
       // Update order status in database
       await this.prisma.paymentOrder.update({
         where: { merchantOrderId },
         data: {
           status,
           gatewayStatus: response.state,
-        },
+          statusResponse: JSON.stringify(response), // Store status check response
+        } as any, // Temporary type assertion until TypeScript picks up new schema
       });
+
+      // If payment is completed and wasn't already completed, create subscription
+      if (status === 'COMPLETED' && currentOrder?.status !== 'COMPLETED') {
+        await this.createSubscriptionFromOrder(merchantOrderId);
+      }
 
       return {
         success: true,

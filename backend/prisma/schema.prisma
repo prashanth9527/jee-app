@@ -304,6 +304,7 @@ model PaymentOrder {
   errorDetails       String?
   errorMessage       String?
   initialResponse    String?
+  statusResponse     String?            // Store last status check response
   webhookHeaders     String?
   webhookPayload     String?
   webhookProcessed   Boolean            @default(false)

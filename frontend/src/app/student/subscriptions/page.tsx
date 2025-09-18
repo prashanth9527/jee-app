@@ -265,7 +265,7 @@ export default function SubscriptionsPage() {
                                   (index === 0); // Fallback: always make first plan recommended
               
               return (
-                <div key={plan.id} className={`rounded-lg shadow-lg overflow-hidden relative transition-all duration-300 hover:shadow-xl cursor-pointer mb-8 ${
+                <div key={plan.id} className={`rounded-lg shadow-lg overflow-hidden relative transition-all duration-300 hover:shadow-xl cursor-pointer mb-8 flex flex-col ${
                   isRecommended 
                     ? 'bg-gradient-to-br from-orange-50 to-red-50 ring-4 ring-orange-500 shadow-2xl border-2 border-orange-300' 
                     : 'bg-white hover:ring-2 hover:ring-blue-500 hover:border-blue-300 hover:bg-blue-50'
@@ -280,8 +280,8 @@ export default function SubscriptionsPage() {
                       </div>
                     </div>
                   )}
-                  <div className={`p-8 ${isRecommended ? 'pt-20' : ''}`}>
-                  <div className="text-center">
+                  <div className={`p-8 flex flex-col flex-grow ${isRecommended ? 'pt-20' : ''}`}>
+                  <div className="text-center flex-grow">
                     <h3 className="text-2xl font-bold text-gray-900 mb-3">
                       {isRecommended && <span className="text-orange-500 mr-2">🔥</span>}
                       {plan.planType === 'AI_ENABLED' ? 'AI Enabled Plan' : 'Manual Plan'}
@@ -303,7 +303,7 @@ export default function SubscriptionsPage() {
                     
                     {/* Encouraging message */}
                     <div className="mb-4">
-                      <p className="text-sm font-medium text-orange-600 bg-orange-50 px-3 py-2 rounded-full inline-block">
+                      <p className="text-sm font-medium text-green-600 bg-red-100 border-2 border-red-300 px-4 py-2 rounded-lg inline-block shadow-md font-bold">
                         {getEncouragingMessage(plan.priceCents, plan.interval)}
                       </p>
                     </div>
@@ -316,7 +316,7 @@ export default function SubscriptionsPage() {
                     </p>
                   </div>
 
-                  <div className="space-y-3 mb-6">
+                  <div className="space-y-3 mb-6 flex-grow">
                     <div className="flex items-center text-sm text-gray-600">
                       <svg className="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -366,28 +366,30 @@ export default function SubscriptionsPage() {
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => handleSubscribe(plan.id, plan.name)}
-                    disabled={processingPayment || (subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription)}
-                    className={`w-full py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-200 ${
-                      subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription
-                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                        : isRecommendedPlan(plan)
-                        ? 'bg-orange-600 text-white hover:bg-orange-700 hover:shadow-lg transform hover:scale-105'
-                        : 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg transform hover:scale-105'
-                    }`}
-                  >
-                    {processingPayment ? (
-                      <div className="flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                        Processing...
-                      </div>
-                    ) : subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription ? (
-                      'Current Plan'
-                    ) : (
-                      `🚀 Start Your Success - ${formatPrice(plan.priceCents, plan.currency)}/${getIntervalText(plan.interval)}`
-                    )}
-                  </button>
+                  <div className="mt-auto">
+                    <button
+                      onClick={() => handleSubscribe(plan.id, plan.name)}
+                      disabled={processingPayment || (subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription)}
+                      className={`w-full py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-200 border-2 border-red-300 shadow-md ${
+                        subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription
+                          ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                          : isRecommendedPlan(plan)
+                          ? 'bg-orange-600 text-white hover:bg-orange-700 hover:shadow-lg transform hover:scale-105'
+                          : 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg transform hover:scale-105'
+                      }`}
+                    >
+                      {processingPayment ? (
+                        <div className="flex items-center justify-center">
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                          Processing...
+                        </div>
+                      ) : subscriptionStatus?.hasValidSubscription && !subscriptionStatus?.needsSubscription ? (
+                        'Current Plan'
+                      ) : (
+                        `🚀 Start Your Success - ${formatPrice(plan.priceCents, plan.currency)}/${getIntervalText(plan.interval)}`
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
               );
