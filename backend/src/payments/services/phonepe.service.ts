@@ -378,9 +378,12 @@ export class PhonePeService implements PaymentGatewayInterface {
         },
       });
 
+      console.log('PhonePe webhook status outside:', status);
       // If payment is completed and wasn't already completed, create subscription
       if (status === 'COMPLETED' && currentOrder?.status !== 'COMPLETED') {
+        console.log('PhonePe webhook status inside:', status);
         await this.createSubscriptionFromOrder(merchantOrderId);
+        
       }
 
       const processingTime = Date.now() - startTime;
