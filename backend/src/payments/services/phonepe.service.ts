@@ -182,7 +182,11 @@ export class PhonePeService implements PaymentGatewayInterface {
       });
 
       // If payment is completed and wasn't already completed, create subscription
+      console.log('PhonePe status check status outside:', status);
+      console.log('PhonePe status check currentOrder:', currentOrder);
+      console.log('PhonePe Response:', JSON.stringify(response));
       if (status === 'COMPLETED' && currentOrder?.status !== 'COMPLETED') {
+        console.log('PhonePe status check status inside:', status);
         await this.createSubscriptionFromOrder(merchantOrderId);
       }
 
