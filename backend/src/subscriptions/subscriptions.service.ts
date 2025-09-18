@@ -45,6 +45,14 @@ export class SubscriptionsService {
 		const processedSuccessUrl = successUrl.replace('{ORDER_ID}', merchantOrderId);
 		const processedCancelUrl = cancelUrl.replace('{ORDER_ID}', merchantOrderId);
 		
+		// Debug logging
+		console.log('Subscriptions Service - URL Processing:');
+		console.log('Original successUrl:', successUrl);
+		console.log('Processed successUrl:', processedSuccessUrl);
+		console.log('Original cancelUrl:', cancelUrl);
+		console.log('Processed cancelUrl:', processedCancelUrl);
+		console.log('merchantOrderId:', merchantOrderId);
+		
 		// Convert price to appropriate currency unit
 		const amount = plan.priceCents;
 		const currency = plan.currency;

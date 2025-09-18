@@ -40,6 +40,11 @@ export class PhonePeService implements PaymentGatewayInterface {
     merchantOrderId: string
   ): Promise<PaymentOrderResponse> {
     try {
+      // Debug logging to see what URLs we're receiving
+      console.log('PhonePe createOrder - Received URLs:');
+      console.log('successUrl:', successUrl);
+      console.log('cancelUrl:', cancelUrl);
+      console.log('merchantOrderId:', merchantOrderId);
       // Convert amount from cents to paisa (PhonePe uses paisa)
       // amount is already in cents (9900 cents = ₹99), so we use it directly as paisa
       const amountInPaisa = amount;
@@ -51,16 +56,11 @@ export class PhonePeService implements PaymentGatewayInterface {
         .udf3('subscription')
         .build();
 
-
-    // Replace {ORDER_ID} placeholder with actual order ID
-		const processedSuccessUrl = successUrl.replace('{ORDER_ID}', merchantOrderId);
-		const processedCancelUrl = cancelUrl.replace('{ORDER_ID}', merchantOrderId);
-
       // Create payment request
       const request = StandardCheckoutPayRequest.builder()
         .merchantOrderId(merchantOrderId)
         .amount(amountInPaisa)
-        .redirectUrl(processedSuccessUrl)
+        .redirectUrl(successUrl)
         .metaInfo(metaInfo)
         .build();
 
@@ -77,8 +77,8 @@ export class PhonePeService implements PaymentGatewayInterface {
           currency: currency.toUpperCase(),
           gateway: 'PHONEPE',
           gatewayOrderId: (response as any).merchantOrderId || merchantOrderId, // Use PhonePe's order ID if available
-          successUrl:processedSuccessUrl,
-          cancelUrl:processedCancelUrl,
+          successUrl,
+          cancelUrl,
           phonepeRedirectUrl: response.redirectUrl,
           phonepeDeepLink: (response as any).deepLink || null,
           status: 'PENDING',
