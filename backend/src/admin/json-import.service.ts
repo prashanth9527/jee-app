@@ -32,6 +32,7 @@ export interface JSONQuestion {
   isPreviousYear?: boolean;
   isAIGenerated?: boolean;
   aiPrompt?: string;
+  stream?: string;
   subject?: string;
   lesson?: string;
   topic?: string;
@@ -140,20 +141,24 @@ export class JsonImportService {
       const questions = await this.readJsonFile(filePath);
       result.details.questionsProcessed = questions.length;
 
-      // Get or create default stream for JEE
-      let defaultStream = await this.prisma.stream.findFirst({
-        where: { name: { contains: 'JEE', mode: 'insensitive' } },
-      });
-
-      if (!defaultStream) {
-        defaultStream = await this.prisma.stream.create({
-          data: {
-            name: 'JEE',
-            code: 'JEE',
-            description: 'Joint Entrance Examination',
-          },
+      // Get or create default stream (will be determined per question)
+      const getOrCreateStream = async (streamName: string) => {
+        let stream = await this.prisma.stream.findFirst({
+          where: { name: { equals: streamName, mode: 'insensitive' } },
         });
-      }
+
+        if (!stream) {
+          stream = await this.prisma.stream.create({
+            data: {
+              name: streamName,
+              code: streamName.toUpperCase(),
+              description: `Auto-created stream: ${streamName}`,
+            },
+          });
+        }
+
+        return stream;
+      };
 
       for (const questionData of questions) {
         try {
@@ -181,10 +186,14 @@ export class JsonImportService {
           // Handle subject
           let subjectId: string | null = null;
           if (questionData.subject) {
+            // Determine stream for this question
+            const streamName = questionData.stream || 'JEE'; // Default to JEE if no stream specified
+            const stream = await getOrCreateStream(streamName);
+
             let subject = await this.prisma.subject.findFirst({
               where: {
                 name: { equals: questionData.subject, mode: 'insensitive' },
-                streamId: defaultStream.id,
+                streamId: stream.id,
               },
             });
 
@@ -192,7 +201,7 @@ export class JsonImportService {
               subject = await this.prisma.subject.create({
                 data: {
                   name: questionData.subject,
-                  streamId: defaultStream.id,
+                  streamId: stream.id,
                   description: `Auto-created from JSON import`,
                 },
               });

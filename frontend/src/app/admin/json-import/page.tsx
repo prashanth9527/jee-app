@@ -24,6 +24,7 @@ interface QuestionPreview {
   tip_formula?: string;
   difficulty?: string;
   yearAppeared?: number;
+  stream?: string;
   subject?: string;
   topic?: string;
   subtopic?: string;
@@ -411,6 +412,11 @@ export default function JsonImportPage() {
                           )}
 
                           <div className="flex flex-wrap gap-2">
+                            {question.stream && (
+                              <span className="px-2 py-1 text-xs bg-purple-100 text-purple-800 rounded">
+                                Stream: {question.stream}
+                              </span>
+                            )}
                             {question.subject && (
                               <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
                                 Subject: {question.subject}
