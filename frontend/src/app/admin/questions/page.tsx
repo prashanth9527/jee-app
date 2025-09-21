@@ -86,9 +86,36 @@ interface Subject {
 	};
 }
 
+interface Lesson {
+	id: string;
+	name: string;
+	subject: {
+		id: string;
+		name: string;
+		stream?: {
+			id: string;
+			name: string;
+			code: string;
+		};
+	};
+}
+
 interface Topic {
 	id: string;
 	name: string;
+	lesson?: {
+		id: string;
+		name: string;
+		subject: {
+			id: string;
+			name: string;
+			stream?: {
+				id: string;
+				name: string;
+				code: string;
+			};
+		};
+	};
 	subject: {
 		id: string;
 		name: string;
@@ -124,6 +151,7 @@ export default function QuestionsPage() {
 	// Data states
 	const [questions, setQuestions] = useState<Question[]>([]);
 	const [subjects, setSubjects] = useState<Subject[]>([]);
+	const [lessons, setLessons] = useState<Lesson[]>([]);
 	const [topics, setTopics] = useState<Topic[]>([]);
 	const [subtopics, setSubtopics] = useState<Subtopic[]>([]);
 	
@@ -139,6 +167,7 @@ export default function QuestionsPage() {
 	// Filter states
 	const [searchText, setSearchText] = useState('');
 	const [selectedSubject, setSelectedSubject] = useState('');
+	const [selectedLesson, setSelectedLesson] = useState('');
 	const [selectedTopic, setSelectedTopic] = useState('');
 	const [selectedSubtopic, setSelectedSubtopic] = useState('');
 	const [selectedDifficulty, setSelectedDifficulty] = useState('');
@@ -155,25 +184,28 @@ export default function QuestionsPage() {
 
 	const refresh = async (page = 1) => {
 		try {
-			const params = new URLSearchParams({
-				page: page.toString(),
-				limit: itemsPerPage.toString(),
-				...(searchText && { search: searchText }),
-				...(selectedSubject && { subjectId: selectedSubject }),
-				...(selectedTopic && { topicId: selectedTopic }),
-				...(selectedSubtopic && { subtopicId: selectedSubtopic }),
-				...(selectedDifficulty && { difficulty: selectedDifficulty })
-			});
+		const params = new URLSearchParams({
+			page: page.toString(),
+			limit: itemsPerPage.toString(),
+			...(searchText && { search: searchText }),
+			...(selectedSubject && { subjectId: selectedSubject }),
+			...(selectedLesson && { lessonId: selectedLesson }),
+			...(selectedTopic && { topicId: selectedTopic }),
+			...(selectedSubtopic && { subtopicId: selectedSubtopic }),
+			...(selectedDifficulty && { difficulty: selectedDifficulty })
+		});
 
-			const [questionsResponse, subjectsResponse, topicsResponse, subtopicsResponse] = await Promise.all([
+			const [questionsResponse, subjectsResponse, lessonsResponse, topicsResponse, subtopicsResponse] = await Promise.all([
 				api.get(`/admin/questions?${params}`),
 				api.get('/admin/subjects'),
+				api.get('/admin/lessons?limit=1000'), // Get all lessons
 				api.get('/admin/topics?limit=1000'), // Get all topics
 				api.get('/admin/subtopics?limit=1000') // Get all subtopics
 			]);
 			
 			setQuestions(questionsResponse.data.questions || questionsResponse.data);
 			setSubjects(subjectsResponse.data);
+			setLessons(lessonsResponse.data.lessons || lessonsResponse.data);
 			setTopics(topicsResponse.data.topics || topicsResponse.data);
 			setSubtopics(subtopicsResponse.data.subtopics || subtopicsResponse.data);
 			
@@ -222,6 +254,18 @@ export default function QuestionsPage() {
 	// Handle subject filter change
 	const handleSubjectChange = (subjectId: string) => {
 		setSelectedSubject(subjectId);
+		setSelectedLesson('');
+		setSelectedTopic('');
+		setSelectedSubtopic('');
+		setCurrentPage(1);
+		setSelectedQuestions([]);
+		setSelectAll(false);
+		refresh(1);
+	};
+
+	// Handle lesson filter change
+	const handleLessonChange = (lessonId: string) => {
+		setSelectedLesson(lessonId);
 		setSelectedTopic('');
 		setSelectedSubtopic('');
 		setCurrentPage(1);
@@ -253,6 +297,7 @@ export default function QuestionsPage() {
 	const clearFilters = () => {
 		setSearchText('');
 		setSelectedSubject('');
+		setSelectedLesson('');
 		setSelectedTopic('');
 		setSelectedSubtopic('');
 		setSelectedDifficulty('');
@@ -262,9 +307,14 @@ export default function QuestionsPage() {
 		refresh(1);
 	};
 
-	// Filter topics based on selected subject
-	const filteredTopics = selectedSubject && Array.isArray(topics)
-		? topics.filter(topic => topic.subject.id === selectedSubject)
+	// Filter lessons based on selected subject
+	const filteredLessons = selectedSubject && Array.isArray(lessons)
+		? lessons.filter(lesson => lesson.subject.id === selectedSubject)
+		: Array.isArray(lessons) ? lessons : [];
+
+	// Filter topics based on selected lesson
+	const filteredTopics = selectedLesson && Array.isArray(topics)
+		? topics.filter(topic => topic.lesson?.id === selectedLesson)
 		: Array.isArray(topics) ? topics : [];
 
 	// Filter subtopics based on selected topic
@@ -552,7 +602,7 @@ export default function QuestionsPage() {
 					{/* Filters Section */}
 					<div className="bg-white rounded-lg shadow p-6">
 						<h2 className="text-lg font-semibold text-gray-900 mb-4">Filters</h2>
-						<div className="grid grid-cols-1 md:grid-cols-6 gap-3">
+						<div className="grid grid-cols-1 md:grid-cols-7 gap-3">
 							<input 
 								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium placeholder-gray-500" 
 								placeholder="Search questions..." 
@@ -574,13 +624,27 @@ export default function QuestionsPage() {
 							</select>
 							<select 
 								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+								value={selectedLesson}
+								onChange={e => handleLessonChange(e.target.value)}
+								disabled={!selectedSubject}
+							>
+								<option value="">All Lessons</option>
+								{Array.isArray(filteredLessons) && filteredLessons.map(lesson => (
+									<option key={lesson.id} value={lesson.id}>
+										{lesson.name} ({lesson.subject?.stream?.code || 'N/A'})
+									</option>
+								))}
+							</select>
+							<select 
+								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
 								value={selectedTopic}
 								onChange={e => handleTopicChange(e.target.value)}
+								disabled={!selectedLesson}
 							>
 								<option value="">All Topics</option>
 								{Array.isArray(filteredTopics) && filteredTopics.map(topic => (
 									<option key={topic.id} value={topic.id}>
-										{topic.name} ({topic.subject?.stream?.code || 'N/A'})
+										{topic.name} ({topic.lesson?.subject?.stream?.code || 'N/A'})
 									</option>
 								))}
 							</select>
@@ -588,6 +652,7 @@ export default function QuestionsPage() {
 								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
 								value={selectedSubtopic}
 								onChange={e => handleSubtopicChange(e.target.value)}
+								disabled={!selectedTopic}
 							>
 								<option value="">All Subtopics</option>
 								{Array.isArray(filteredSubtopics) && filteredSubtopics.map(subtopic => (

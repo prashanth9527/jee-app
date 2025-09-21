@@ -22,7 +22,7 @@ function PaymentStatusContent() {
   const [isPolling, setIsPolling] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  const orderId = searchParams.get('orderId');
+  const orderId = searchParams?.get('orderId');
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 

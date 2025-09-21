@@ -71,8 +71,8 @@ export class PYQController {
     return subjects;
   }
 
-  @Get('topics')
-  async getTopicsWithPYQ(@Req() req: any, @Query('subjectId') subjectId?: string) {
+  @Get('lessons')
+  async getLessonsWithPYQ(@Req() req: any, @Query('subjectId') subjectId?: string) {
     const userId = req.user.id;
     
     // Get user's stream
@@ -100,10 +100,142 @@ export class PYQController {
       where.subjectId = subjectId;
     }
 
+    const lessons = await this.prisma.lesson.findMany({
+      where,
+      include: {
+        subject: true,
+        _count: {
+          select: {
+            questions: {
+              where: {
+                isPreviousYear: true
+              }
+            }
+          }
+        }
+      },
+      orderBy: {
+        name: 'asc'
+      }
+    });
+
+    return lessons;
+  }
+
+  @Get('subtopics')
+  async getSubtopicsWithPYQ(@Req() req: any, @Query('subjectId') subjectId?: string, @Query('topicId') topicId?: string) {
+    const userId = req.user.id;
+    
+    // Get user's stream
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { streamId: true }
+    });
+
+    if (!user?.streamId) {
+      throw new ForbiddenException('No stream assigned to user');
+    }
+
+    const where: any = {
+      topic: {
+        subject: {
+          streamId: user.streamId
+        }
+      },
+      questions: {
+        some: {
+          isPreviousYear: true
+        }
+      }
+    };
+
+    if (subjectId) {
+      where.topic = {
+        ...where.topic,
+        subjectId: subjectId
+      };
+    }
+
+    if (topicId) {
+      where.topicId = topicId;
+    }
+
+    const subtopics = await this.prisma.subtopic.findMany({
+      where,
+      include: {
+        topic: {
+          select: {
+            id: true,
+            name: true,
+            subject: {
+              select: {
+                id: true,
+                name: true
+              }
+            }
+          }
+        },
+        _count: {
+          select: {
+            questions: {
+              where: {
+                isPreviousYear: true
+              }
+            }
+          }
+        }
+      },
+      orderBy: {
+        name: 'asc'
+      }
+    });
+
+    return subtopics;
+  }
+
+  @Get('topics')
+  async getTopicsWithPYQ(@Req() req: any, @Query('subjectId') subjectId?: string, @Query('lessonId') lessonId?: string) {
+    const userId = req.user.id;
+    
+    // Get user's stream
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { streamId: true }
+    });
+
+    if (!user?.streamId) {
+      throw new ForbiddenException('No stream assigned to user');
+    }
+
+    const where: any = {
+      subject: {
+        streamId: user.streamId
+      },
+      questions: {
+        some: {
+          isPreviousYear: true
+        }
+      }
+    };
+
+    if (subjectId) {
+      where.subjectId = subjectId;
+    }
+
+    if (lessonId) {
+      where.lessonId = lessonId;
+    }
+
     const topics = await this.prisma.topic.findMany({
       where,
       include: {
         subject: true,
+        lesson: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
         _count: {
           select: {
             questions: {
@@ -129,6 +261,7 @@ export class PYQController {
     @Query('limit') limit?: string,
     @Query('year') year?: string,
     @Query('subjectId') subjectId?: string,
+    @Query('lessonId') lessonId?: string,
     @Query('topicId') topicId?: string,
     @Query('subtopicId') subtopicId?: string,
     @Query('difficulty') difficulty?: string,
@@ -174,6 +307,10 @@ export class PYQController {
     if (subjectId) {
       where.AND = where.AND || [];
       where.AND.push({ subjectId });
+    }
+    if (lessonId) {
+      where.AND = where.AND || [];
+      where.AND.push({ lessonId });
     }
     if (topicId) {
       where.AND = where.AND || [];
@@ -328,7 +465,9 @@ export class PYQController {
   async generatePYQPracticeTest(
     @Query('year') year?: string,
     @Query('subjectId') subjectId?: string,
+    @Query('lessonId') lessonId?: string,
     @Query('topicId') topicId?: string,
+    @Query('subtopicId') subtopicId?: string,
     @Query('questionCount') questionCount?: string,
     @Query('difficulty') difficulty?: string
   ) {
@@ -341,7 +480,9 @@ export class PYQController {
 
     if (year) where.yearAppeared = parseInt(year);
     if (subjectId) where.subjectId = subjectId;
+    if (lessonId) where.lessonId = lessonId;
     if (topicId) where.topicId = topicId;
+    if (subtopicId) where.subtopicId = subtopicId;
     if (difficulty && difficulty !== 'MIXED') where.difficulty = difficulty;
 
     // Get available questions

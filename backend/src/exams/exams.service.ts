@@ -11,7 +11,7 @@ export class ExamsService {
 		private readonly subscriptionValidation: SubscriptionValidationService
 	) {}
 
-	async createPaper(data: { title: string; description?: string; subjectIds?: string[]; topicIds?: string[]; subtopicIds?: string[]; questionIds?: string[]; timeLimitMin?: number }) {
+	async createPaper(data: { title: string; description?: string; subjectIds?: string[]; lessonIds?: string[]; topicIds?: string[]; subtopicIds?: string[]; questionIds?: string[]; timeLimitMin?: number }) {
 		return this.prisma.examPaper.create({ data: {
 			title: data.title,
 			description: data.description || null,
@@ -30,7 +30,7 @@ export class ExamsService {
 		if (paper.subjectIds?.length) where.subjectId = { in: paper.subjectIds };
 		if (paper.topicIds?.length) where.topicId = { in: paper.topicIds };
 		if (paper.subtopicIds?.length) where.subtopicId = { in: paper.subtopicIds };
-		const questions = await this.prisma.question.findMany({ where, include: { options: true }, take: limit });
+		const questions = await this.prisma.question.findMany({ where, include: { options: true, lesson: true }, take: limit });
 		return questions.map((q: any) => q.id);
 	}
 

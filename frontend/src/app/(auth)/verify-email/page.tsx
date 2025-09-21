@@ -18,8 +18,8 @@ function VerifyEmailContent() {
   const [resendSuccess, setResendSuccess] = useState(false);
   
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const email = searchParams.get('email');
-  const userId = searchParams.get('userId');
+  const email = searchParams?.get('email');
+  const userId = searchParams?.get('userId');
 
   // Timer countdown
   useEffect(() => {

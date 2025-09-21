@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
 import api from '@/lib/api';
 
 interface User {
@@ -34,6 +34,7 @@ interface AuthContextType {
   logout: () => void;
   checkAuth: () => Promise<void>;
   handleTokenExpiration: () => void;
+  refreshSubscriptionStatus: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -42,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [authCheckInProgress, setAuthCheckInProgress] = useState(false);
+  const [lastAuthCheck, setLastAuthCheck] = useState<number>(0);
 
   const login = (token: string, userData: User) => {
     console.log('AuthContext login called with:', { token: token.substring(0, 20) + '...', userData }); // Debug log
@@ -65,8 +67,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const currentPath = window.location.pathname;
       if (currentPath.startsWith('/admin') || currentPath.startsWith('/student')) {
         // Use SweetAlert if available, otherwise use alert
-        if (typeof window !== 'undefined' && (window as unknown as { Swal: any }).Swal) {
-          (window as unknown as { Swal: any }).Swal.fire({
+        if (typeof window !== 'undefined' && (window as unknown as { Swal: unknown }).Swal) {
+          (window as unknown as { Swal: { fire: (options: unknown) => Promise<unknown> } }).Swal.fire({
             title: 'Session Expired',
             text: 'Your session has expired. Please log in again to continue.',
             icon: 'warning',
@@ -83,13 +85,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
     // Prevent multiple simultaneous auth checks
     if (authCheckInProgress) {
       return;
     }
     
+    // Prevent auth checks more frequently than every 5 seconds
+    const now = Date.now();
+    if (now - lastAuthCheck < 5000) {
+      return;
+    }
+    
     setAuthCheckInProgress(true);
+    setLastAuthCheck(now);
     
     const token = localStorage.getItem('token');
     if (!token) {
@@ -169,7 +178,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
       setAuthCheckInProgress(false);
     }
-  };
+  }, []);
+
+  const refreshSubscriptionStatus = useCallback(async () => {
+    if (user?.role !== 'STUDENT' || user.needsProfileCompletion) {
+      return;
+    }
+
+    try {
+      const subscriptionResponse = await api.get('/student/subscription-status');
+      const subscriptionData = subscriptionResponse.data;
+      
+      // Update user with subscription status
+      setUser(prev => prev ? { ...prev, subscriptionStatus: subscriptionData.subscriptionStatus } : null);
+    } catch (error) {
+      console.error('Failed to refresh subscription status:', error);
+    }
+  }, [user]);
 
   useEffect(() => {
     checkAuth();
@@ -178,7 +203,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, checkAuth, handleTokenExpiration }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, checkAuth, handleTokenExpiration, refreshSubscriptionStatus }}>
       {children}
     </AuthContext.Provider>
   );

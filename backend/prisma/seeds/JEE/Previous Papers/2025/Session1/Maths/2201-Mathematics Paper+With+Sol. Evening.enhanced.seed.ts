@@ -57,6 +57,21 @@ export async function seedMathematics2201Enhanced() {
     throw new Error('Mathematics subject not found. Please run main seed first.');
   }
 
+  // Find mathematics lessons
+  const mathLesson1 = await prisma.lesson.findFirst({
+    where: { 
+      name: 'Fundamentals of Mathematics',
+      subjectId: mathematics.id 
+    }
+  });
+
+  const mathLesson2 = await prisma.lesson.findFirst({
+    where: { 
+      name: 'Advanced Mathematics',
+      subjectId: mathematics.id 
+    }
+  });
+
   // Find or create basic topics (should exist from main seed)
   const algebraTopic = await prisma.topic.findFirst({
     where: { 
@@ -67,7 +82,8 @@ export async function seedMathematics2201Enhanced() {
     data: {
       name: 'Algebra',
       description: 'Algebraic expressions, equations, and inequalities',
-      subjectId: mathematics.id
+      subjectId: mathematics.id,
+      lessonId: mathLesson1?.id || ''
     }
   });
 
@@ -80,15 +96,16 @@ export async function seedMathematics2201Enhanced() {
     data: {
       name: 'Calculus',
       description: 'Differential and integral calculus',
-      subjectId: mathematics.id
+      subjectId: mathematics.id,
+      lessonId: mathLesson2?.id || ''
     }
   });
 
   // Find or create advanced topics
   const threeDGeometryTopic = await prisma.topic.upsert({
     where: { 
-      subjectId_name: {
-        subjectId: mathematics.id,
+      lessonId_name: {
+        lessonId: mathLesson1?.id || '',
         name: '3D Geometry'
       }
     },
@@ -96,14 +113,15 @@ export async function seedMathematics2201Enhanced() {
     create: {
       name: '3D Geometry',
       description: 'Three-dimensional coordinate geometry',
-      subjectId: mathematics.id
+      subjectId: mathematics.id,
+      lessonId: mathLesson1?.id || ''
     }
   });
 
   const probabilityTopic = await prisma.topic.upsert({
     where: { 
-      subjectId_name: {
-        subjectId: mathematics.id,
+      lessonId_name: {
+        lessonId: mathLesson2?.id || '',
         name: 'Probability'
       }
     },
@@ -111,14 +129,15 @@ export async function seedMathematics2201Enhanced() {
     create: {
       name: 'Probability',
       description: 'Probability theory and distributions',
-      subjectId: mathematics.id
+      subjectId: mathematics.id,
+      lessonId: mathLesson2?.id || ''
     }
   });
 
   const sequencesSeriesTopic = await prisma.topic.upsert({
     where: { 
-      subjectId_name: {
-        subjectId: mathematics.id,
+      lessonId_name: {
+        lessonId: mathLesson2?.id || '',
         name: 'Sequences and Series'
       }
     },
@@ -126,7 +145,8 @@ export async function seedMathematics2201Enhanced() {
     create: {
       name: 'Sequences and Series',
       description: 'Arithmetic and geometric progressions',
-      subjectId: mathematics.id
+      subjectId: mathematics.id,
+      lessonId: mathLesson2?.id || ''
     }
   });
 

@@ -51,7 +51,7 @@ interface QuestionAnswer {
 export default function ExamPage() {
   const params = useParams();
   const router = useRouter();
-  const submissionId = params.submissionId as string;
+  const submissionId = params?.submissionId as string;
   
   const [submission, setSubmission] = useState<ExamSubmission | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -494,6 +494,29 @@ export default function ExamPage() {
 
   const currentQuestion = questions[currentQuestionIndex];
   const currentAnswer = answers[currentQuestionIndex];
+
+  if (!submissionId) {
+    return (
+      <ProtectedRoute requiredRole="STUDENT">
+        <SubscriptionGuard>
+          <StudentLayout>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h2 className="text-xl font-semibold text-gray-900">Invalid Exam ID</h2>
+                <p className="mt-2 text-gray-600">The exam ID is missing or invalid.</p>
+                <button 
+                  onClick={() => router.push('/student/exam-papers')}
+                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Back to Exams
+                </button>
+              </div>
+            </div>
+          </StudentLayout>
+        </SubscriptionGuard>
+      </ProtectedRoute>
+    );
+  }
 
   return (
     <ProtectedRoute requiredRole="STUDENT">

@@ -36,7 +36,7 @@ interface Submission {
 export default function PracticeTestPage() {
   const params = useParams();
   const router = useRouter();
-  const submissionId = params.submissionId as string;
+  const submissionId = params?.submissionId as string;
 
   const [submission, setSubmission] = useState<Submission | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);

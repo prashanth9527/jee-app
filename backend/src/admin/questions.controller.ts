@@ -20,6 +20,7 @@ export class AdminQuestionsController {
 		@Query('limit') limit?: string,
 		@Query('search') search?: string,
 		@Query('subjectId') subjectId?: string,
+		@Query('lessonId') lessonId?: string,
 		@Query('topicId') topicId?: string,
 		@Query('subtopicId') subtopicId?: string,
 		@Query('difficulty') difficulty?: string
@@ -32,6 +33,7 @@ export class AdminQuestionsController {
 		const where: any = {};
 		
 		if (subjectId) where.subjectId = subjectId;
+		if (lessonId) where.lessonId = lessonId;
 		if (topicId) where.topicId = topicId;
 		if (subtopicId) where.subtopicId = subtopicId;
 		if (difficulty) where.difficulty = difficulty;
@@ -44,12 +46,15 @@ export class AdminQuestionsController {
 				{ subject: { name: { contains: search, mode: 'insensitive' } } },
 				{ subject: { stream: { name: { contains: search, mode: 'insensitive' } } } },
 				{ subject: { stream: { code: { contains: search, mode: 'insensitive' } } } },
+				{ lesson: { name: { contains: search, mode: 'insensitive' } } },
 				{ topic: { name: { contains: search, mode: 'insensitive' } } },
+				{ topic: { lesson: { name: { contains: search, mode: 'insensitive' } } } },
 				{ topic: { subject: { name: { contains: search, mode: 'insensitive' } } } },
 				{ topic: { subject: { stream: { name: { contains: search, mode: 'insensitive' } } } } },
 				{ topic: { subject: { stream: { code: { contains: search, mode: 'insensitive' } } } } },
 				{ subtopic: { name: { contains: search, mode: 'insensitive' } } },
 				{ subtopic: { topic: { name: { contains: search, mode: 'insensitive' } } } },
+				{ subtopic: { topic: { lesson: { name: { contains: search, mode: 'insensitive' } } } } },
 				{ subtopic: { topic: { subject: { name: { contains: search, mode: 'insensitive' } } } } },
 				{ subtopic: { topic: { subject: { stream: { name: { contains: search, mode: 'insensitive' } } } } } },
 				{ subtopic: { topic: { subject: { stream: { code: { contains: search, mode: 'insensitive' } } } } } },
@@ -80,10 +85,48 @@ export class AdminQuestionsController {
 						}
 					}
 				},
+				lesson: {
+					select: {
+						id: true,
+						name: true,
+						subject: {
+							select: {
+								id: true,
+								name: true,
+								stream: {
+									select: {
+										id: true,
+										name: true,
+										code: true
+									}
+								}
+							}
+						}
+					}
+				},
 				topic: {
 					select: {
 						id: true,
 						name: true,
+						lesson: {
+							select: {
+								id: true,
+								name: true,
+								subject: {
+									select: {
+										id: true,
+										name: true,
+										stream: {
+											select: {
+												id: true,
+												name: true,
+												code: true
+											}
+										}
+									}
+								}
+							}
+						},
 						subject: {
 							select: {
 								id: true,
@@ -107,6 +150,25 @@ export class AdminQuestionsController {
 							select: {
 								id: true,
 								name: true,
+								lesson: {
+									select: {
+										id: true,
+										name: true,
+										subject: {
+											select: {
+												id: true,
+												name: true,
+												stream: {
+													select: {
+														id: true,
+														name: true,
+														code: true
+													}
+												}
+											}
+										}
+									}
+								},
 								subject: {
 									select: {
 										id: true,
@@ -212,7 +274,7 @@ export class AdminQuestionsController {
 	}
 
 	@Post()
-	async create(@Body() body: { stem: string; explanation?: string; tip_formula?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; topicId?: string; subtopicId?: string; options: { text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
+	async create(@Body() body: { stem: string; explanation?: string; tip_formula?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; lessonId?: string; topicId?: string; subtopicId?: string; options: { text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
 		const question = await this.prisma.question.create({ data: {
 			stem: body.stem,
 			explanation: body.explanation || null,
@@ -221,6 +283,7 @@ export class AdminQuestionsController {
 			yearAppeared: body.yearAppeared || null,
 			isPreviousYear: !!body.isPreviousYear,
 			subjectId: body.subjectId || null,
+			lessonId: body.lessonId || null,
 			topicId: body.topicId || null,
 			subtopicId: body.subtopicId || null,
 			options: { create: (body.options || []).map((o: any) => ({ text: o.text, isCorrect: !!o.isCorrect, order: o.order ?? 0 })) },
@@ -235,7 +298,7 @@ export class AdminQuestionsController {
 	}
 
 	@Put(':id')
-	async update(@Param('id') id: string, @Body() body: { stem?: string; explanation?: string; tip_formula?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; topicId?: string; subtopicId?: string; options?: { id?: string; text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
+	async update(@Param('id') id: string, @Body() body: { stem?: string; explanation?: string; tip_formula?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; lessonId?: string; topicId?: string; subtopicId?: string; options?: { id?: string; text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
 		await this.prisma.question.update({ where: { id }, data: {
 			stem: body.stem,
 			explanation: body.explanation,
@@ -244,6 +307,7 @@ export class AdminQuestionsController {
 			yearAppeared: body.yearAppeared,
 			isPreviousYear: body.isPreviousYear,
 			subjectId: body.subjectId,
+			lessonId: body.lessonId,
 			topicId: body.topicId,
 			subtopicId: body.subtopicId,
 		}});

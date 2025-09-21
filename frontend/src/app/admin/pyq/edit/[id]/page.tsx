@@ -56,7 +56,7 @@ interface Tag {
 export default function EditPYQQuestionPage() {
   const router = useRouter();
   const params = useParams();
-  const questionId = params.id as string;
+  const questionId = params?.id as string;
   
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);

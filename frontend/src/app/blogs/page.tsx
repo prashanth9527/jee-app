@@ -1,293 +1,298 @@
-import { Metadata } from 'next';
-import BlogFilters from '@/components/BlogFilters';
-import BlogContentArea from '@/components/BlogContentArea';
-import Footer from '@/components/Footer';
-import ErrorBoundary from '@/components/ErrorBoundary';
-import { Suspense } from 'react';
-import BlogsPageClient from './BlogsPageClient';
+'use client';
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Calendar, User, ArrowRight, BookOpen, TrendingUp, Clock } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Educational Blogs & Articles | JEE NEET Study Resources',
-  description: 'Discover expert educational content, study tips, exam strategies, and career guidance for JEE, NEET, and other competitive exams. Stay updated with the latest insights.',
-  keywords: 'educational blogs, JEE preparation, NEET study tips, exam strategies, career guidance, study resources',
-  openGraph: {
-    title: 'Educational Blogs & Articles | JEE NEET Study Resources',
-    description: 'Discover expert educational content, study tips, exam strategies, and career guidance for JEE, NEET, and other competitive exams.',
-    type: 'website',
-    url: '/blogs',
-    images: [
-      {
-        url: '/images/blog-og.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Educational Blogs & Articles',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Educational Blogs & Articles | JEE NEET Study Resources',
-    description: 'Discover expert educational content, study tips, exam strategies, and career guidance.',
-  },
-  alternates: {
-    canonical: '/blogs',
-  },
-};
-
-interface Blog {
+interface BlogPost {
   id: string;
   title: string;
   excerpt: string;
-  slug: string;
-  featuredImage?: string;
+  author: string;
   publishedAt: string;
-  viewCount: number;
-  likeCount: number;
-  category?: {
-    id: string;
-    name: string;
-    slug: string;
-  };
-  stream?: {
-    id: string;
-    name: string;
-    code: string;
-  };
-  author: {
-    id: string;
-    name: string;
-  };
-  tags: string[];
+  readTime: string;
+  category: string;
+  image: string;
+  views: number;
 }
 
-interface BlogsResponse {
-  blogs: Blog[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-}
+export default function BlogsPage() {
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
-async function getBlogs(searchParams: { [key: string]: string | string[] | undefined }): Promise<BlogsResponse> {
-  try {
-    const params = new URLSearchParams();
-    
-    if (searchParams.page) params.append('page', searchParams.page.toString());
-    if (searchParams.category) params.append('category', searchParams.category.toString());
-    if (searchParams.stream) params.append('stream', searchParams.stream.toString());
-    if (searchParams.search) params.append('search', searchParams.search.toString());
-    if (searchParams.featured) params.append('featured', searchParams.featured.toString());
-
-    const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
-    
-    const response = await fetch(`${baseUrl}/api/blogs?${params}`, {
-      cache: 'no-store', // Ensure fresh data for SEO
-      headers: {
-        'Content-Type': 'application/json',
+  useEffect(() => {
+    // Mock data - in real app, fetch from API
+    const mockBlogs: BlogPost[] = [
+      {
+        id: '1',
+        title: 'JEE Main 2024: Complete Preparation Strategy',
+        excerpt: 'Learn the most effective strategies to crack JEE Main 2024 with our comprehensive guide covering all subjects and time management tips.',
+        author: 'Dr. Rajesh Kumar',
+        publishedAt: '2024-01-15',
+        readTime: '8 min read',
+        category: 'Preparation',
+        image: '/api/placeholder/400/200',
+        views: 1250
       },
+      {
+        id: '2',
+        title: 'Physics: Mastering Mechanics for JEE',
+        excerpt: 'Essential concepts and problem-solving techniques for mechanics that every JEE aspirant must know.',
+        author: 'Prof. Sunita Sharma',
+        publishedAt: '2024-01-12',
+        readTime: '6 min read',
+        category: 'Physics',
+        image: '/api/placeholder/400/200',
+        views: 980
+      },
+      {
+        id: '3',
+        title: 'Chemistry: Organic Reactions Made Easy',
+        excerpt: 'Simplify complex organic chemistry reactions with our step-by-step approach and memory techniques.',
+        author: 'Dr. Amit Patel',
+        publishedAt: '2024-01-10',
+        readTime: '10 min read',
+        category: 'Chemistry',
+        image: '/api/placeholder/400/200',
+        views: 1100
+      },
+      {
+        id: '4',
+        title: 'Mathematics: Calculus Shortcuts for JEE',
+        excerpt: 'Time-saving techniques and shortcuts for calculus problems that frequently appear in JEE exams.',
+        author: 'Prof. Vikram Singh',
+        publishedAt: '2024-01-08',
+        readTime: '7 min read',
+        category: 'Mathematics',
+        image: '/api/placeholder/400/200',
+        views: 1350
+      },
+      {
+        id: '5',
+        title: 'Time Management During JEE Preparation',
+        excerpt: 'Learn how to effectively manage your time and create a balanced study schedule for JEE preparation.',
+        author: 'Dr. Priya Agarwal',
+        publishedAt: '2024-01-05',
+        readTime: '5 min read',
+        category: 'Study Tips',
+        image: '/api/placeholder/400/200',
+        views: 890
+      },
+      {
+        id: '6',
+        title: 'JEE Advanced vs JEE Main: Key Differences',
+        excerpt: 'Understanding the fundamental differences between JEE Main and JEE Advanced to plan your preparation accordingly.',
+        author: 'Dr. Ravi Verma',
+        publishedAt: '2024-01-03',
+        readTime: '9 min read',
+        category: 'Exam Info',
+        image: '/api/placeholder/400/200',
+        views: 1500
+      }
+    ];
+
+    setTimeout(() => {
+      setBlogs(mockBlogs);
+      setLoading(false);
+    }, 1000);
+  }, []);
+
+  const categories = ['All', 'Preparation', 'Physics', 'Chemistry', 'Mathematics', 'Study Tips', 'Exam Info'];
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const filteredBlogs = selectedCategory === 'All' 
+    ? blogs 
+    : blogs.filter(blog => blog.category === selectedCategory);
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
+  };
 
-    if (!response.ok) {
-      console.error('Failed to fetch blogs:', response.status, response.statusText);
-      // Return empty data instead of throwing
-      return {
-        blogs: [],
-        pagination: {
-          page: 1,
-          limit: 10,
-          total: 0,
-          totalPages: 0,
-        },
-      };
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error('Error fetching blogs:', error);
-    // Return empty data instead of throwing
-    return {
-      blogs: [],
-      pagination: {
-        page: 1,
-        limit: 10,
-        total: 0,
-        totalPages: 0,
-      },
-    };
-  }
-}
-
-async function getCategories() {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
-    
-    const response = await fetch(`${baseUrl}/api/blogs/categories`, {
-      cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      console.error('Failed to fetch categories:', response.status, response.statusText);
-      return [];
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    return [];
-  }
-}
-
-export default async function BlogsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
-  try {
-    const resolvedSearchParams = await searchParams;
-    const [data, categories] = await Promise.all([
-      getBlogs(resolvedSearchParams),
-      getCategories()
-    ]);
-
-    // Generate structured data for SEO
-    const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
-    
-    const structuredData = {
-      "@context": "https://schema.org",
-      "@type": "Blog",
-      "name": "Educational Blogs & Articles",
-      "description": "Expert educational content, study tips, exam strategies, and career guidance for JEE, NEET, and other competitive exams.",
-      "url": "/blogs",
-      "publisher": {
-        "@type": "Organization",
-        "name": "JEE App",
-        "url": baseUrl
-      },
-      "blogPost": (data.blogs || []).map(blog => ({
-        "@type": "BlogPosting",
-        "headline": blog.title,
-        "description": blog.excerpt,
-        "url": `/blogs/${blog.slug}`,
-        "datePublished": blog.publishedAt,
-        "author": {
-          "@type": "Person",
-          "name": blog.author?.name || 'Unknown Author'
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "JEE App"
-        },
-        "image": blog.featuredImage,
-        "keywords": (blog.tags || []).join(', '),
-        "articleSection": blog.category?.name,
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `/blogs/${blog.slug}`
-        }
-      }))
-    };
-
+  if (loading) {
     return (
-      <ErrorBoundary>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-        
-        <div className="min-h-screen bg-white">
-          <BlogsPageClient />
-          
-          <div className="pt-16">
-            {/* Hero Section */}
-            <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="max-w-4xl mx-auto text-center">
-                  <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                    Educational Blogs & Articles
-                  </h1>
-                  <p className="text-xl md:text-2xl mb-8 text-orange-100">
-                    Discover expert insights, study tips, and career guidance for your academic success
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-4">
-                    <span className="bg-orange-500 bg-opacity-50 px-4 py-2 rounded-full">
-                      📚 Study Tips
-                    </span>
-                    <span className="bg-orange-500 bg-opacity-50 px-4 py-2 rounded-full">
-                      🎯 Exam Strategies
-                    </span>
-                    <span className="bg-orange-500 bg-opacity-50 px-4 py-2 rounded-full">
-                      🚀 Career Guidance
-                    </span>
-                    <span className="bg-orange-500 bg-opacity-50 px-4 py-2 rounded-full">
-                      💡 Latest Insights
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-              <div className="flex flex-col lg:flex-row gap-8">
-                {/* Sidebar */}
-                <div className="lg:w-1/4">
-                  <Suspense fallback={<div className="animate-pulse bg-gray-200 h-64 rounded-lg"></div>}>
-                    <BlogFilters categories={categories} />
-                  </Suspense>
-                </div>
-
-                {/* Main Content */}
-                <BlogContentArea initialData={data} />
-              </div>
-            </div>
-          </div>
-          
-          <Footer />
-        </div>
-      </ErrorBoundary>
-    );
-  } catch (error) {
-    console.error('Error rendering blogs page:', error);
-    
-    // Return a fallback page instead of crashing
-    return (
-      <div className="min-h-screen bg-white">
-        <BlogsPageClient />
-        
-        <div className="pt-16">
-          {/* Hero Section */}
-          <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-              <div className="max-w-4xl mx-auto text-center">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                  Educational Blogs & Articles
-                </h1>
-                <p className="text-xl md:text-2xl mb-8 text-orange-100">
-                  Discover expert insights, study tips, and career guidance for your academic success
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="text-center py-16">
-              <div className="text-gray-500 text-lg">
-                <p>Unable to load blogs at the moment. Please try again later.</p>
-                <p className="text-sm mt-2">If this problem persists, please contact support.</p>
-              </div>
-            </div>
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading blogs...</p>
           </div>
         </div>
-        
-        <Footer />
       </div>
     );
   }
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">JEE Preparation Blog</h1>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Expert insights, study tips, and strategies to help you excel in your JEE preparation journey.
+          </p>
+        </div>
+
+        {/* Login Prompt */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-blue-900 mb-2">Want to Read Full Articles?</h3>
+              <p className="text-blue-800">
+                Sign in to access complete articles, save your favorites, and get personalized recommendations.
+              </p>
+            </div>
+            <Link
+              href="/auth/login"
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+            >
+              <span>Sign In</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Categories */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  selectedCategory === category
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Featured Blog */}
+        {filteredBlogs.length > 0 && (
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Article</h2>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="md:flex">
+                <div className="md:w-1/2">
+                  <div className="h-64 md:h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <BookOpen className="w-16 h-16 text-white" />
+                  </div>
+                </div>
+                <div className="md:w-1/2 p-6">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                      {filteredBlogs[0].category}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {filteredBlogs[0].title}
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    {filteredBlogs[0].excerpt}
+                  </p>
+                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-1">
+                        <User className="w-4 h-4" />
+                        <span>{filteredBlogs[0].author}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Calendar className="w-4 h-4" />
+                        <span>{formatDate(filteredBlogs[0].publishedAt)}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Clock className="w-4 h-4" />
+                      <span>{filteredBlogs[0].readTime}</span>
+                    </div>
+                  </div>
+                  <Link
+                    href="/auth/login"
+                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+                  >
+                    Read More
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Blog Grid */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Latest Articles</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredBlogs.slice(1).map((blog) => (
+              <div key={blog.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                  <BookOpen className="w-12 h-12 text-gray-500" />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                      {blog.category}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                    {blog.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {blog.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+                    <div className="flex items-center space-x-1">
+                      <User className="w-3 h-3" />
+                      <span>{blog.author}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <TrendingUp className="w-3 h-3" />
+                      <span>{blog.views} views</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-1 text-xs text-gray-500">
+                      <Calendar className="w-3 h-3" />
+                      <span>{formatDate(blog.publishedAt)}</span>
+                    </div>
+                    <Link
+                      href="/auth/login"
+                      className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    >
+                      Read More →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Newsletter Signup */}
+        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Stay Updated</h2>
+          <p className="text-gray-600 mb-6">
+            Get the latest JEE preparation tips and strategies delivered to your inbox.
+          </p>
+          <div className="max-w-md mx-auto flex space-x-2">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              Subscribe
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

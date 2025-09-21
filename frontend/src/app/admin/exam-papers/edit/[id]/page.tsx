@@ -53,7 +53,7 @@ interface Subtopic {
 export default function EditExamPaperPage() {
 	const router = useRouter();
 	const params = useParams();
-	const examPaperId = params.id as string;
+  const examPaperId = params?.id as string;
 	
 	// Form states
 	const [title, setTitle] = useState('');

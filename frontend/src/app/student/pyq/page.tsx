@@ -35,6 +35,25 @@ interface Topic {
   id: string;
   name: string;
   subject: { name: string };
+  lesson?: { id: string; name: string };
+  _count: { questions: number };
+}
+
+interface Lesson {
+  id: string;
+  name: string;
+  subject: { name: string };
+  _count: { questions: number };
+}
+
+interface Subtopic {
+  id: string;
+  name: string;
+  topic: { 
+    id: string; 
+    name: string;
+    subject: { id: string; name: string };
+  };
   _count: { questions: number };
 }
 
@@ -49,7 +68,9 @@ export default function PYQPage() {
   const router = useRouter();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [lessons, setLessons] = useState<Lesson[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
+  const [subtopics, setSubtopics] = useState<Subtopic[]>([]);
   const [years, setYears] = useState<number[]>([]);
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(true);
@@ -66,6 +87,7 @@ export default function PYQPage() {
   const [filters, setFilters] = useState({
     year: '',
     subjectId: '',
+    lessonId: '',
     topicId: '',
     subtopicId: '',
     difficulty: '',
@@ -82,16 +104,20 @@ export default function PYQPage() {
 
   const loadInitialData = async () => {
     try {
-      const [yearsRes, subjectsRes, topicsRes, analyticsRes] = await Promise.all([
+      const [yearsRes, subjectsRes, lessonsRes, topicsRes, subtopicsRes, analyticsRes] = await Promise.all([
         api.get('/student/pyq/years'),
         api.get('/student/pyq/subjects'),
+        api.get('/student/pyq/lessons'),
         api.get('/student/pyq/topics'),
+        api.get('/student/pyq/subtopics'),
         api.get('/student/pyq/analytics')
       ]);
 
       setYears(yearsRes.data);
       setSubjects(subjectsRes.data);
+      setLessons(lessonsRes.data);
       setTopics(topicsRes.data);
+      setSubtopics(subtopicsRes.data);
       setAnalytics(analyticsRes.data);
     } catch (error) {
       console.error('Failed to load initial data:', error);
@@ -293,7 +319,7 @@ export default function PYQPage() {
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Filters</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-4">
                 {/* Year Filter */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-800 mb-2">Year</label>
@@ -326,6 +352,25 @@ export default function PYQPage() {
                   </select>
                 </div>
 
+                {/* Lesson Filter */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Lesson</label>
+                  <select
+                    value={filters.lessonId}
+                    onChange={(e) => handleFilterChange('lessonId', e.target.value)}
+                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  >
+                    <option value="" className="text-gray-600">All Lessons</option>
+                    {lessons
+                      .filter(lesson => !filters.subjectId || lesson.subject.name === subjects.find(s => s.id === filters.subjectId)?.name)
+                      .map(lesson => (
+                        <option key={lesson.id} value={lesson.id} className="text-gray-900">
+                          {lesson.name} ({lesson._count.questions})
+                        </option>
+                      ))}
+                  </select>
+                </div>
+
                 {/* Topic Filter */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-800 mb-2">Topic</label>
@@ -336,10 +381,37 @@ export default function PYQPage() {
                   >
                     <option value="" className="text-gray-600">All Topics</option>
                     {topics
-                      .filter(topic => !filters.subjectId || topic.subject.name === subjects.find(s => s.id === filters.subjectId)?.name)
+                      .filter(topic => {
+                        const subjectMatch = !filters.subjectId || topic.subject.name === subjects.find(s => s.id === filters.subjectId)?.name;
+                        const lessonMatch = !filters.lessonId || topic.lesson?.id === filters.lessonId;
+                        return subjectMatch && lessonMatch;
+                      })
                       .map(topic => (
                         <option key={topic.id} value={topic.id} className="text-gray-900">
                           {topic.name} ({topic._count.questions})
+                        </option>
+                      ))}
+                  </select>
+                </div>
+
+                {/* Subtopic Filter */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Subtopic</label>
+                  <select
+                    value={filters.subtopicId}
+                    onChange={(e) => handleFilterChange('subtopicId', e.target.value)}
+                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  >
+                    <option value="" className="text-gray-600">All Subtopics</option>
+                    {subtopics
+                      .filter(subtopic => {
+                        const subjectMatch = !filters.subjectId || subtopic.topic.subject.name === subjects.find(s => s.id === filters.subjectId)?.name;
+                        const topicMatch = !filters.topicId || subtopic.topic.id === filters.topicId;
+                        return subjectMatch && topicMatch;
+                      })
+                      .map(subtopic => (
+                        <option key={subtopic.id} value={subtopic.id} className="text-gray-900">
+                          {subtopic.name} ({subtopic._count.questions})
                         </option>
                       ))}
                   </select>

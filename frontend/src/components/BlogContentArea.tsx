@@ -70,11 +70,11 @@ export default function BlogContentArea({ initialData }: BlogContentAreaProps) {
         setError(null);
         const params = new URLSearchParams();
         
-        if (searchParams.get('page')) params.append('page', searchParams.get('page')!);
-        if (searchParams.get('category')) params.append('category', searchParams.get('category')!);
-        if (searchParams.get('stream')) params.append('stream', searchParams.get('stream')!);
-        if (searchParams.get('search')) params.append('search', searchParams.get('search')!);
-        if (searchParams.get('featured')) params.append('featured', searchParams.get('featured')!);
+        if (searchParams?.get('page')) params.append('page', searchParams.get('page')!);
+        if (searchParams?.get('category')) params.append('category', searchParams.get('category')!);
+        if (searchParams?.get('stream')) params.append('stream', searchParams.get('stream')!);
+        if (searchParams?.get('search')) params.append('search', searchParams.get('search')!);
+        if (searchParams?.get('featured')) params.append('featured', searchParams.get('featured')!);
 
         const response = await fetch(`/api/blogs?${params}`);
         if (response.ok) {
@@ -177,7 +177,7 @@ export default function BlogContentArea({ initialData }: BlogContentAreaProps) {
             {data.pagination.page > 1 && (
               <a
                 href={`/blogs?${new URLSearchParams({
-                  ...Object.fromEntries(searchParams),
+                  ...Object.fromEntries(searchParams || []),
                   page: (data.pagination.page - 1).toString()
                 }).toString()}`}
                 className="px-3 py-2 rounded-md text-sm font-medium bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"
@@ -217,7 +217,7 @@ export default function BlogContentArea({ initialData }: BlogContentAreaProps) {
                 <a
                   key={page}
                   href={`/blogs?${new URLSearchParams({
-                    ...Object.fromEntries(searchParams),
+                    ...Object.fromEntries(searchParams || []),
                     page: page.toString()
                   }).toString()}`}
                   className={`px-3 py-2 rounded-md text-sm font-medium ${
@@ -235,7 +235,7 @@ export default function BlogContentArea({ initialData }: BlogContentAreaProps) {
             {data.pagination.page < data.pagination.totalPages && (
               <a
                 href={`/blogs?${new URLSearchParams({
-                  ...Object.fromEntries(searchParams),
+                  ...Object.fromEntries(searchParams || []),
                   page: (data.pagination.page + 1).toString()
                 }).toString()}`}
                 className="px-3 py-2 rounded-md text-sm font-medium bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"

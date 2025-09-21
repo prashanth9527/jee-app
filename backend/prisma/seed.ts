@@ -16,6 +16,7 @@ async function main() {
   await prisma.tag.deleteMany();
   await prisma.subtopic.deleteMany();
   await prisma.topic.deleteMany();
+  await prisma.lesson.deleteMany();
   await prisma.subject.deleteMany();
   await prisma.referralReward.deleteMany();
   await prisma.referral.deleteMany();
@@ -326,12 +327,52 @@ async function main() {
 
   console.log('📚 Created subjects for all streams');
 
+  // Create lessons for Physics
+  const physicsLesson1 = await prisma.lesson.create({
+    data: {
+      name: 'Classical Physics',
+      description: 'Fundamental physics concepts and mechanics',
+      subjectId: physics.id,
+      order: 1,
+    },
+  });
+
+  const physicsLesson2 = await prisma.lesson.create({
+    data: {
+      name: 'Modern Physics',
+      description: 'Electricity, magnetism, waves and optics',
+      subjectId: physics.id,
+      order: 2,
+    },
+  });
+
+  // Create lessons for Chemistry
+  const chemLesson1 = await prisma.lesson.create({
+    data: {
+      name: 'Physical and Inorganic Chemistry',
+      description: 'Physical principles and inorganic compounds',
+      subjectId: chemistry.id,
+      order: 1,
+    },
+  });
+
+  const chemLesson2 = await prisma.lesson.create({
+    data: {
+      name: 'Organic Chemistry',
+      description: 'Carbon compounds and organic reactions',
+      subjectId: chemistry.id,
+      order: 2,
+    },
+  });
+
   // Create topics for Physics
   const mechanics = await prisma.topic.create({
     data: {
       name: 'Mechanics',
       description: 'Classical mechanics and dynamics',
       subjectId: physics.id,
+      lessonId: physicsLesson1.id,
+      order: 1,
     },
   });
 
@@ -340,6 +381,8 @@ async function main() {
       name: 'Electricity & Magnetism',
       description: 'Electric and magnetic phenomena',
       subjectId: physics.id,
+      lessonId: physicsLesson2.id,
+      order: 1,
     },
   });
 
@@ -348,6 +391,8 @@ async function main() {
       name: 'Waves & Optics',
       description: 'Wave phenomena and optical systems',
       subjectId: physics.id,
+      lessonId: physicsLesson2.id,
+      order: 2,
     },
   });
 
@@ -357,6 +402,8 @@ async function main() {
       name: 'Physical Chemistry',
       description: 'Physical principles in chemistry',
       subjectId: chemistry.id,
+      lessonId: chemLesson1.id,
+      order: 1,
     },
   });
 
@@ -365,6 +412,8 @@ async function main() {
       name: 'Organic Chemistry',
       description: 'Carbon compounds and reactions',
       subjectId: chemistry.id,
+      lessonId: chemLesson2.id,
+      order: 1,
     },
   });
 
@@ -373,6 +422,37 @@ async function main() {
       name: 'Inorganic Chemistry',
       description: 'Non-carbon compounds and elements',
       subjectId: chemistry.id,
+      lessonId: chemLesson1.id,
+      order: 2,
+    },
+  });
+
+  // Create lessons for Mathematics
+  const mathLesson1 = await prisma.lesson.create({
+    data: {
+      name: 'Fundamentals of Mathematics',
+      description: 'Basic mathematical concepts and operations',
+      subjectId: mathematics.id,
+      order: 1,
+    },
+  });
+
+  const mathLesson2 = await prisma.lesson.create({
+    data: {
+      name: 'Advanced Mathematics',
+      description: 'Advanced mathematical concepts and applications',
+      subjectId: mathematics.id,
+      order: 2,
+    },
+  });
+
+  // Create lessons for Biology
+  const bioLesson1 = await prisma.lesson.create({
+    data: {
+      name: 'Cell Biology and Genetics',
+      description: 'Fundamental concepts of cell biology and genetics',
+      subjectId: biology.id,
+      order: 1,
     },
   });
 
@@ -382,6 +462,8 @@ async function main() {
       name: 'Algebra',
       description: 'Algebraic expressions and equations',
       subjectId: mathematics.id,
+      lessonId: mathLesson1.id,
+      order: 1,
     },
   });
 
@@ -390,6 +472,8 @@ async function main() {
       name: 'Calculus',
       description: 'Differential and integral calculus',
       subjectId: mathematics.id,
+      lessonId: mathLesson2.id,
+      order: 1,
     },
   });
 
@@ -398,6 +482,8 @@ async function main() {
       name: 'Geometry',
       description: 'Geometric shapes and properties',
       subjectId: mathematics.id,
+      lessonId: mathLesson1.id,
+      order: 2,
     },
   });
 
@@ -407,6 +493,8 @@ async function main() {
       name: 'Cell Biology',
       description: 'Cell structure and function',
       subjectId: biology.id,
+      lessonId: bioLesson1.id,
+      order: 1,
     },
   });
 

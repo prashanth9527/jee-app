@@ -11,11 +11,29 @@ import RichTextEditor from '@/components/RichTextEditor';
 interface Subject {
 	id: string;
 	name: string;
+	stream?: {
+		id: string;
+		name: string;
+		code: string;
+	};
+}
+
+interface Lesson {
+	id: string;
+	name: string;
+	subject: {
+		id: string;
+		name: string;
+	};
 }
 
 interface Topic {
 	id: string;
 	name: string;
+	lesson: {
+		id: string;
+		name: string;
+	};
 	subject: {
 		id: string;
 		name: string;
@@ -28,6 +46,10 @@ interface Subtopic {
 	topic: {
 		id: string;
 		name: string;
+		lesson: {
+			id: string;
+			name: string;
+		};
 		subject: {
 			id: string;
 			name: string;
@@ -45,6 +67,7 @@ export default function AddQuestionPage() {
 	
 	// Data states
 	const [subjects, setSubjects] = useState<Subject[]>([]);
+	const [lessons, setLessons] = useState<Lesson[]>([]);
 	const [topics, setTopics] = useState<Topic[]>([]);
 	const [subtopics, setSubtopics] = useState<Subtopic[]>([]);
 	const [allTags, setAllTags] = useState<Tag[]>([]);
@@ -61,6 +84,7 @@ export default function AddQuestionPage() {
 	const [yearAppeared, setYearAppeared] = useState('');
 	const [isPreviousYear, setIsPreviousYear] = useState(false);
 	const [subjectId, setSubjectId] = useState('');
+	const [lessonId, setLessonId] = useState('');
 	const [topicId, setTopicId] = useState('');
 	const [subtopicId, setSubtopicId] = useState('');
 	const [options, setOptions] = useState<{ text: string; isCorrect: boolean }[]>([
@@ -83,16 +107,12 @@ export default function AddQuestionPage() {
 
 	const loadData = async () => {
 		try {
-			const [subjectsResponse, topicsResponse, subtopicsResponse, tagsResponse] = await Promise.all([
+			const [subjectsResponse, tagsResponse] = await Promise.all([
 				api.get('/admin/subjects'),
-				api.get('/admin/topics?limit=1000'),
-				api.get('/admin/subtopics?limit=1000'),
 				api.get('/admin/tags?limit=1000')
 			]);
 			
 			setSubjects(subjectsResponse.data);
-			setTopics(topicsResponse.data.topics || topicsResponse.data);
-			setSubtopics(subtopicsResponse.data.subtopics || subtopicsResponse.data);
 			setAllTags(tagsResponse.data.tags || tagsResponse.data);
 		} catch (error) {
 			console.error('Error fetching data:', error);
@@ -104,6 +124,57 @@ export default function AddQuestionPage() {
 			});
 		} finally {
 			setLoading(false);
+		}
+	};
+
+	// Load lessons when subject changes
+	const loadLessons = async (subjectId: string) => {
+		if (!subjectId) {
+			setLessons([]);
+			setTopics([]);
+			setSubtopics([]);
+			return;
+		}
+		
+		try {
+			const response = await api.get(`/admin/lessons?subjectId=${subjectId}&limit=1000`);
+			setLessons(response.data.lessons || response.data);
+		} catch (error) {
+			console.error('Error fetching lessons:', error);
+			setLessons([]);
+		}
+	};
+
+	// Load topics when lesson changes
+	const loadTopics = async (lessonId: string) => {
+		if (!lessonId) {
+			setTopics([]);
+			setSubtopics([]);
+			return;
+		}
+		
+		try {
+			const response = await api.get(`/admin/topics?lessonId=${lessonId}&limit=1000`);
+			setTopics(response.data.topics || response.data);
+		} catch (error) {
+			console.error('Error fetching topics:', error);
+			setTopics([]);
+		}
+	};
+
+	// Load subtopics when topic changes
+	const loadSubtopics = async (topicId: string) => {
+		if (!topicId) {
+			setSubtopics([]);
+			return;
+		}
+		
+		try {
+			const response = await api.get(`/admin/subtopics?topicId=${topicId}&limit=1000`);
+			setSubtopics(response.data.subtopics || response.data);
+		} catch (error) {
+			console.error('Error fetching subtopics:', error);
+			setSubtopics([]);
 		}
 	};
 
@@ -120,7 +191,7 @@ export default function AddQuestionPage() {
 
 			return () => clearTimeout(timer);
 		}
-	}, [stem, explanation, tipFormula, difficulty, yearAppeared, isPreviousYear, subjectId, topicId, subtopicId, options, tagNames, hasUnsavedChanges, loading]);
+	}, [stem, explanation, tipFormula, difficulty, yearAppeared, isPreviousYear, subjectId, lessonId, topicId, subtopicId, options, tagNames, hasUnsavedChanges, loading]);
 
 	// Calculate form progress
 	useEffect(() => {
@@ -237,6 +308,7 @@ export default function AddQuestionPage() {
 			yearAppeared,
 			isPreviousYear,
 			subjectId,
+			lessonId,
 			topicId,
 			subtopicId,
 			options,
@@ -261,6 +333,7 @@ export default function AddQuestionPage() {
 				setYearAppeared(parsed.yearAppeared || '');
 				setIsPreviousYear(parsed.isPreviousYear || false);
 				setSubjectId(parsed.subjectId || '');
+				setLessonId(parsed.lessonId || '');
 				setTopicId(parsed.topicId || '');
 				setSubtopicId(parsed.subtopicId || '');
 				setOptions(parsed.options || [
@@ -308,6 +381,7 @@ export default function AddQuestionPage() {
 				yearAppeared: yearAppeared ? parseInt(yearAppeared) : undefined,
 				isPreviousYear,
 				subjectId,
+				lessonId: lessonId || undefined,
 				topicId: topicId || undefined,
 				subtopicId: subtopicId || undefined,
 				options,
@@ -358,6 +432,7 @@ export default function AddQuestionPage() {
 				setYearAppeared('');
 				setIsPreviousYear(false);
 				setSubjectId('');
+				setLessonId('');
 				setTopicId('');
 				setSubtopicId('');
 				setOptions([
@@ -525,7 +600,7 @@ export default function AddQuestionPage() {
 							</div>
 
 							{/* Question Metadata */}
-							<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+							<div className="grid grid-cols-1 md:grid-cols-5 gap-4">
 								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
 									<select 
@@ -534,19 +609,23 @@ export default function AddQuestionPage() {
 										}`}
 										value={subjectId}
 										onChange={e => {
-											setSubjectId(e.target.value);
+											const newSubjectId = e.target.value;
+											setSubjectId(newSubjectId);
+											setLessonId('');
 											setTopicId('');
 											setSubtopicId('');
 											setHasUnsavedChanges(true);
 											if (errors.subject) {
 												setErrors(prev => ({ ...prev, subject: '' }));
 											}
+											// Load lessons for the selected subject
+											loadLessons(newSubjectId);
 										}}
 									>
 										<option value="">Select Subject</option>
 										{Array.isArray(subjects) && subjects.map(subject => (
 											<option key={subject.id} value={subject.id}>
-												{subject.name}
+												{subject.name} {subject.stream ? `(${subject.stream.name})` : ''}
 											</option>
 										))}
 									</select>
@@ -555,23 +634,53 @@ export default function AddQuestionPage() {
 									)}
 								</div>
 								<div>
+									<label className="block text-sm font-medium text-gray-700 mb-2">Lesson</label>
+									<select 
+										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+										value={lessonId}
+										onChange={e => {
+											const newLessonId = e.target.value;
+											setLessonId(newLessonId);
+											setTopicId('');
+											setSubtopicId('');
+											setHasUnsavedChanges(true);
+											// Load topics for the selected lesson
+											loadTopics(newLessonId);
+										}}
+										disabled={!subjectId}
+									>
+										<option value="">Select Lesson</option>
+										{Array.isArray(lessons) && lessons
+											.filter(lesson => lesson.subject?.id === subjectId)
+											.map(lesson => (
+												<option key={lesson.id} value={lesson.id}>
+													{lesson.name}
+												</option>
+											))
+										}
+									</select>
+								</div>
+								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-2">Topic</label>
 									<select 
 										className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
 										value={topicId}
 										onChange={e => {
-											setTopicId(e.target.value);
+											const newTopicId = e.target.value;
+											setTopicId(newTopicId);
 											setSubtopicId('');
 											setHasUnsavedChanges(true);
+											// Load subtopics for the selected topic
+											loadSubtopics(newTopicId);
 										}}
-										disabled={!subjectId}
+										disabled={!lessonId}
 									>
 										<option value="">Select Topic</option>
 										{Array.isArray(topics) && topics
-											.filter(topic => topic.subject?.id === subjectId)
+											.filter(topic => topic.lesson?.id === lessonId)
 											.map(topic => (
 												<option key={topic.id} value={topic.id}>
-													{topic.name}
+													{topic.name} {topic.lesson ? `(${topic.lesson.name})` : ''}
 												</option>
 											))
 										}
@@ -593,7 +702,7 @@ export default function AddQuestionPage() {
 											.filter(subtopic => subtopic.topic?.id === topicId)
 											.map(subtopic => (
 												<option key={subtopic.id} value={subtopic.id}>
-													{subtopic.name}
+													{subtopic.name} {subtopic.topic ? `(${subtopic.topic.name})` : ''}
 												</option>
 											))
 										}

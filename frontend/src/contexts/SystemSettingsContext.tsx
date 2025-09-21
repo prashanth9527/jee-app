@@ -57,9 +57,9 @@ export function SystemSettingsProvider({ children }: SystemSettingsProviderProps
       setError(null);
       const response = await api.get('/system-settings');
       setSystemSettings(response.data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error fetching system settings:', err);
-      setError(err.message || 'Failed to fetch system settings');
+      setError((err as Error).message || 'Failed to fetch system settings');
       
       // Set default settings if fetch fails
       setSystemSettings({

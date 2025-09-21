@@ -23,8 +23,75 @@ interface Question {
       code: string;
     };
   };
-  topic?: { id: string; name: string };
-  subtopic?: { id: string; name: string };
+  lesson?: {
+    id: string;
+    name: string;
+    subject: {
+      id: string;
+      name: string;
+      stream?: {
+        id: string;
+        name: string;
+        code: string;
+      };
+    };
+  };
+  topic?: { 
+    id: string; 
+    name: string;
+    lesson?: {
+      id: string;
+      name: string;
+      subject: {
+        id: string;
+        name: string;
+        stream?: {
+          id: string;
+          name: string;
+          code: string;
+        };
+      };
+    };
+    subject: {
+      id: string;
+      name: string;
+      stream?: {
+        id: string;
+        name: string;
+        code: string;
+      };
+    };
+  };
+  subtopic?: { 
+    id: string; 
+    name: string;
+    topic?: {
+      id: string;
+      name: string;
+      lesson?: {
+        id: string;
+        name: string;
+        subject: {
+          id: string;
+          name: string;
+          stream?: {
+            id: string;
+            name: string;
+            code: string;
+          };
+        };
+      };
+      subject: {
+        id: string;
+        name: string;
+        stream?: {
+          id: string;
+          name: string;
+          code: string;
+        };
+      };
+    };
+  };
   options: { id: string; text: string; isCorrect: boolean; order: number }[];
   tags: { tag: { name: string } }[];
 }
@@ -36,6 +103,78 @@ interface Subject {
   stream?: { code: string };
 }
 
+interface Lesson {
+  id: string;
+  name: string;
+  subject: {
+    id: string;
+    name: string;
+    stream?: {
+      id: string;
+      name: string;
+      code: string;
+    };
+  };
+}
+
+interface Topic {
+  id: string;
+  name: string;
+  lesson?: {
+    id: string;
+    name: string;
+    subject: {
+      id: string;
+      name: string;
+      stream?: {
+        id: string;
+        name: string;
+        code: string;
+      };
+    };
+  };
+  subject: {
+    id: string;
+    name: string;
+    stream?: {
+      id: string;
+      name: string;
+      code: string;
+    };
+  };
+}
+
+interface Subtopic {
+  id: string;
+  name: string;
+  topic?: {
+    id: string;
+    name: string;
+    lesson?: {
+      id: string;
+      name: string;
+      subject: {
+        id: string;
+        name: string;
+        stream?: {
+          id: string;
+          name: string;
+          code: string;
+        };
+      };
+    };
+    subject: {
+      id: string;
+      name: string;
+      stream?: {
+        id: string;
+        name: string;
+        code: string;
+      };
+    };
+  };
+}
+
 interface Stats {
   totalPYQ: number;
   byYear: { year: number; count: number }[];
@@ -45,6 +184,9 @@ interface Stats {
 export default function AdminPYQPage() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [topics, setTopics] = useState<Topic[]>([]);
+  const [subtopics, setSubtopics] = useState<Subtopic[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedQuestions, setSelectedQuestions] = useState<string[]>([]);
@@ -61,7 +203,9 @@ export default function AdminPYQPage() {
   const [filters, setFilters] = useState({
     year: '',
     subjectId: '',
+    lessonId: '',
     topicId: '',
+    subtopicId: '',
     search: ''
   });
 
@@ -78,13 +222,19 @@ export default function AdminPYQPage() {
 
   const loadInitialData = async () => {
     try {
-      const [statsRes, subjectsRes] = await Promise.all([
+      const [statsRes, subjectsRes, lessonsRes, topicsRes, subtopicsRes] = await Promise.all([
         api.get('/admin/pyq/stats'),
-        api.get('/admin/subjects')
+        api.get('/admin/subjects'),
+        api.get('/admin/lessons?limit=1000'),
+        api.get('/admin/topics?limit=1000'),
+        api.get('/admin/subtopics?limit=1000')
       ]);
 
       setStats(statsRes.data);
       setSubjects(subjectsRes.data);
+      setLessons(lessonsRes.data.lessons || lessonsRes.data);
+      setTopics(topicsRes.data.topics || topicsRes.data);
+      setSubtopics(subtopicsRes.data.subtopics || subtopicsRes.data);
     } catch (error) {
       console.error('Failed to load initial data:', error);
       Swal.fire('Error', 'Failed to load data', 'error');
@@ -111,7 +261,23 @@ export default function AdminPYQPage() {
   };
 
   const handleFilterChange = (key: string, value: string) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
+    setFilters(prev => {
+      const newFilters = { ...prev, [key]: value };
+      
+      // Reset child filters when parent changes
+      if (key === 'subjectId') {
+        newFilters.lessonId = '';
+        newFilters.topicId = '';
+        newFilters.subtopicId = '';
+      } else if (key === 'lessonId') {
+        newFilters.topicId = '';
+        newFilters.subtopicId = '';
+      } else if (key === 'topicId') {
+        newFilters.subtopicId = '';
+      }
+      
+      return newFilters;
+    });
     setPagination(prev => ({ ...prev, currentPage: 1 }));
   };
 
@@ -250,6 +416,21 @@ export default function AdminPYQPage() {
     }
   };
 
+  // Filter data based on selections
+  const filteredLessons = filters.subjectId && Array.isArray(lessons)
+    ? lessons.filter(lesson => lesson.subject.id === filters.subjectId)
+    : Array.isArray(lessons) ? lessons : [];
+
+  const filteredTopics = filters.lessonId && Array.isArray(topics)
+    ? topics.filter(topic => topic.lesson?.id === filters.lessonId)
+    : filters.subjectId && Array.isArray(topics)
+    ? topics.filter(topic => topic.subject.id === filters.subjectId)
+    : Array.isArray(topics) ? topics : [];
+
+  const filteredSubtopics = filters.topicId && Array.isArray(subtopics)
+    ? subtopics.filter(subtopic => subtopic.topic?.id === filters.topicId)
+    : Array.isArray(subtopics) ? subtopics : [];
+
   return (
     <ProtectedRoute requiredRole="ADMIN">
       <AdminLayout>
@@ -324,7 +505,7 @@ export default function AdminPYQPage() {
               {/* Filters */}
               <div className="bg-white rounded-lg shadow p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Filters</h2>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
                     <select
@@ -355,6 +536,57 @@ export default function AdminPYQPage() {
                       {subjects.map(subject => (
                         <option key={subject.id} value={subject.id} className="text-gray-900">
                           {subject.name} ({subject.stream?.code || 'N/A'}) - {subject._count?.questions || 0} questions
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Lesson</label>
+                    <select
+                      value={filters.lessonId}
+                      onChange={(e) => handleFilterChange('lessonId', e.target.value)}
+                      disabled={!filters.subjectId}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    >
+                      <option value="" className="text-gray-600">All Lessons</option>
+                      {Array.isArray(filteredLessons) && filteredLessons.map(lesson => (
+                        <option key={lesson.id} value={lesson.id} className="text-gray-900">
+                          {lesson.name} ({lesson.subject?.stream?.code || 'N/A'})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Topic</label>
+                    <select
+                      value={filters.topicId}
+                      onChange={(e) => handleFilterChange('topicId', e.target.value)}
+                      disabled={!filters.lessonId}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    >
+                      <option value="" className="text-gray-600">All Topics</option>
+                      {Array.isArray(filteredTopics) && filteredTopics.map(topic => (
+                        <option key={topic.id} value={topic.id} className="text-gray-900">
+                          {topic.name} ({topic.subject?.stream?.code || 'N/A'})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Subtopic</label>
+                    <select
+                      value={filters.subtopicId}
+                      onChange={(e) => handleFilterChange('subtopicId', e.target.value)}
+                      disabled={!filters.topicId}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    >
+                      <option value="" className="text-gray-600">All Subtopics</option>
+                      {Array.isArray(filteredSubtopics) && filteredSubtopics.map(subtopic => (
+                        <option key={subtopic.id} value={subtopic.id} className="text-gray-900">
+                          {subtopic.name} ({subtopic.topic?.subject?.stream?.code || 'N/A'})
                         </option>
                       ))}
                     </select>

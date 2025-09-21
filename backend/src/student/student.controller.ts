@@ -692,7 +692,7 @@ export class StudentController {
 	}
 
 	@Get('topics')
-	async getTopics(@Req() req: any, @Query('subjectId') subjectId?: string) {
+	async getTopics(@Req() req: any, @Query('subjectId') subjectId?: string, @Query('lessonId') lessonId?: string) {
 		const userId = req.user.id;
 		
 		// Get user's stream
@@ -714,12 +714,19 @@ export class StudentController {
 		if (subjectId) {
 			where.subjectId = subjectId;
 		}
+
+		if (lessonId) {
+			where.lessonId = lessonId;
+		}
 		
 		return this.prisma.topic.findMany({
 			where,
 			orderBy: { name: 'asc' },
 			include: {
 				subject: {
+					select: { name: true }
+				},
+				lesson: {
 					select: { name: true }
 				},
 				_count: {

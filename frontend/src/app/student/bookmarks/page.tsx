@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { bookmarkApi } from '@/lib/api';
+import api from '@/lib/api';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import StudentLayout from '@/components/StudentLayout';
 import Swal from 'sweetalert2';
@@ -26,6 +27,10 @@ interface Bookmark {
         name: string;
         code: string;
       };
+    };
+    lesson?: {
+      id: string;
+      name: string;
     };
     topic?: {
       id: string;
@@ -62,17 +67,90 @@ interface BookmarksResponse {
 
 export default function BookmarksPage() {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+  const [subjects, setSubjects] = useState<any[]>([]);
+  const [lessons, setLessons] = useState<any[]>([]);
+  const [topics, setTopics] = useState<any[]>([]);
+  const [subtopics, setSubtopics] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalBookmarks, setTotalBookmarks] = useState(0);
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedLesson, setSelectedLesson] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState('');
+  const [selectedSubtopic, setSelectedSubtopic] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
+    fetchSubjects();
+  }, []);
+
+  useEffect(() => {
+    if (selectedSubject) {
+      fetchLessons(selectedSubject);
+      fetchTopics(selectedSubject);
+    } else {
+      setLessons([]);
+      setTopics([]);
+      setSubtopics([]);
+    }
+  }, [selectedSubject]);
+
+  useEffect(() => {
+    if (selectedTopic) {
+      fetchSubtopics(selectedTopic);
+    } else {
+      setSubtopics([]);
+    }
+  }, [selectedTopic]);
+
+  useEffect(() => {
     fetchBookmarks();
-  }, [currentPage, selectedSubject, selectedDifficulty, searchTerm]);
+  }, [currentPage, selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, selectedDifficulty, searchTerm]);
+
+  const fetchSubjects = async () => {
+    try {
+      const response = await api.get('/student/subjects');
+      setSubjects(response.data);
+    } catch (error) {
+      console.error('Error fetching subjects:', error);
+    }
+  };
+
+  const fetchLessons = async (subjectId: string) => {
+    try {
+      const response = await api.get(`/student/lms/lessons?subjectId=${subjectId}`);
+      setLessons(response.data);
+    } catch (error) {
+      console.error('Error fetching lessons:', error);
+      setLessons([]);
+    }
+  };
+
+  const fetchTopics = async (subjectId: string, lessonId?: string) => {
+    try {
+      let url = `/student/topics?subjectId=${subjectId}`;
+      if (lessonId) {
+        url = `/student/topics?subjectId=${subjectId}&lessonId=${lessonId}`;
+      }
+      const response = await api.get(url);
+      setTopics(response.data);
+    } catch (error) {
+      console.error('Error fetching topics:', error);
+      setTopics([]);
+    }
+  };
+
+  const fetchSubtopics = async (topicId: string) => {
+    try {
+      const response = await api.get(`/student/subtopics?topicId=${topicId}`);
+      setSubtopics(response.data);
+    } catch (error) {
+      console.error('Error fetching subtopics:', error);
+      setSubtopics([]);
+    }
+  };
 
   const fetchBookmarks = async () => {
     try {
@@ -89,6 +167,24 @@ export default function BookmarksPage() {
         );
       }
       
+      if (selectedLesson) {
+        filteredBookmarks = filteredBookmarks.filter(
+          bookmark => bookmark.question.lesson?.id === selectedLesson
+        );
+      }
+      
+      if (selectedTopic) {
+        filteredBookmarks = filteredBookmarks.filter(
+          bookmark => bookmark.question.topic?.id === selectedTopic
+        );
+      }
+      
+      if (selectedSubtopic) {
+        filteredBookmarks = filteredBookmarks.filter(
+          bookmark => bookmark.question.subtopic?.id === selectedSubtopic
+        );
+      }
+      
       if (selectedDifficulty) {
         filteredBookmarks = filteredBookmarks.filter(
           bookmark => bookmark.question.difficulty === selectedDifficulty
@@ -100,7 +196,9 @@ export default function BookmarksPage() {
           bookmark => 
             bookmark.question.stem.toLowerCase().includes(searchTerm.toLowerCase()) ||
             bookmark.question.subject?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            bookmark.question.topic?.name.toLowerCase().includes(searchTerm.toLowerCase())
+            bookmark.question.lesson?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            bookmark.question.topic?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            bookmark.question.subtopic?.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }
       
@@ -152,13 +250,19 @@ export default function BookmarksPage() {
   };
 
   const getSubjects = () => {
-    const subjects = new Map();
-    bookmarks.forEach(bookmark => {
-      if (bookmark.question.subject) {
-        subjects.set(bookmark.question.subject.id, bookmark.question.subject);
-      }
-    });
-    return Array.from(subjects.values());
+    return subjects;
+  };
+
+  const getLessons = () => {
+    return lessons;
+  };
+
+  const getTopics = () => {
+    return topics;
+  };
+
+  const getSubtopics = () => {
+    return subtopics;
   };
 
   if (loading) {
@@ -182,7 +286,7 @@ export default function BookmarksPage() {
     <ProtectedRoute allowedRoles={['STUDENT']}>
       <StudentLayout>
         <div className="min-h-screen bg-gray-50 py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full px-4 sm:px-6 lg:px-8">
             {/* Header */}
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900">Bookmarked Questions</h1>
@@ -193,7 +297,7 @@ export default function BookmarksPage() {
 
             {/* Filters */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Search
@@ -213,13 +317,85 @@ export default function BookmarksPage() {
                   </label>
                   <select
                     value={selectedSubject}
-                    onChange={(e) => setSelectedSubject(e.target.value)}
+                    onChange={(e) => {
+                      setSelectedSubject(e.target.value);
+                      setSelectedLesson('');
+                      setSelectedTopic('');
+                      setSelectedSubtopic('');
+                    }}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="">All Subjects</option>
                     {getSubjects().map((subject) => (
                       <option key={subject.id} value={subject.id}>
                         {subject.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Lesson
+                  </label>
+                  <select
+                    value={selectedLesson}
+                    onChange={(e) => {
+                      setSelectedLesson(e.target.value);
+                      setSelectedTopic('');
+                      setSelectedSubtopic('');
+                      if (e.target.value && selectedSubject) {
+                        fetchTopics(selectedSubject, e.target.value);
+                      }
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled={!selectedSubject}
+                  >
+                    <option value="">All Lessons</option>
+                    {getLessons().map((lesson) => (
+                      <option key={lesson.id} value={lesson.id}>
+                        {lesson.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Topic
+                  </label>
+                  <select
+                    value={selectedTopic}
+                    onChange={(e) => {
+                      setSelectedTopic(e.target.value);
+                      setSelectedSubtopic('');
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled={!selectedSubject}
+                  >
+                    <option value="">All Topics</option>
+                    {getTopics().map((topic) => (
+                      <option key={topic.id} value={topic.id}>
+                        {topic.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Subtopic
+                  </label>
+                  <select
+                    value={selectedSubtopic}
+                    onChange={(e) => setSelectedSubtopic(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled={!selectedSubject || !selectedTopic}
+                  >
+                    <option value="">All Subtopics</option>
+                    {getSubtopics().map((subtopic) => (
+                      <option key={subtopic.id} value={subtopic.id}>
+                        {subtopic.name}
                       </option>
                     ))}
                   </select>
@@ -245,6 +421,9 @@ export default function BookmarksPage() {
                   <button
                     onClick={() => {
                       setSelectedSubject('');
+                      setSelectedLesson('');
+                      setSelectedTopic('');
+                      setSelectedSubtopic('');
                       setSelectedDifficulty('');
                       setSearchTerm('');
                       setCurrentPage(1);
@@ -265,7 +444,7 @@ export default function BookmarksPage() {
                 </svg>
                 <h3 className="mt-4 text-lg font-medium text-gray-900">No bookmarks found</h3>
                 <p className="mt-2 text-gray-600">
-                  {searchTerm || selectedSubject || selectedDifficulty
+                  {searchTerm || selectedSubject || selectedLesson || selectedTopic || selectedSubtopic || selectedDifficulty
                     ? 'Try adjusting your filters to see more results.'
                     : 'Start bookmarking questions from practice tests to see them here.'}
                 </p>
@@ -290,9 +469,19 @@ export default function BookmarksPage() {
                               {bookmark.question.subject.name}
                             </span>
                           )}
+                          {bookmark.question.lesson && (
+                            <span className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                              {bookmark.question.lesson.name}
+                            </span>
+                          )}
                           {bookmark.question.topic && (
                             <span className="text-sm bg-purple-100 text-purple-800 px-2 py-1 rounded">
                               {bookmark.question.topic.name}
+                            </span>
+                          )}
+                          {bookmark.question.subtopic && (
+                            <span className="text-sm bg-indigo-100 text-indigo-800 px-2 py-1 rounded">
+                              {bookmark.question.subtopic.name}
                             </span>
                           )}
                           {bookmark.question.isAIGenerated && (

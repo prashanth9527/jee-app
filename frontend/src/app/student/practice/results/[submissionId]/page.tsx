@@ -63,7 +63,7 @@ interface ExamResults {
 export default function PracticeTestResultsPage() {
   const params = useParams();
   const router = useRouter();
-  const submissionId = params.submissionId as string;
+  const submissionId = params?.submissionId as string;
 
   const [results, setResults] = useState<ExamResults | null>(null);
   const [loading, setLoading] = useState(true);

@@ -16,6 +16,20 @@ interface Subject {
   };
 }
 
+interface Lesson {
+  id: string;
+  name: string;
+  subject: {
+    id: string;
+    name: string;
+    stream?: {
+      id: string;
+      name: string;
+      code: string;
+    };
+  };
+}
+
 interface Topic {
   id: string;
   name: string;
@@ -36,6 +50,7 @@ interface Topic {
 export default function AdminTopicsPage() {
 	const [topics, setTopics] = useState<Topic[]>([]);
 	const [subjects, setSubjects] = useState<Subject[]>([]);
+	const [lessons, setLessons] = useState<Lesson[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [adding, setAdding] = useState(false);
 	const [editing, setEditing] = useState<string | null>(null);
@@ -49,6 +64,7 @@ export default function AdminTopicsPage() {
 	// Filter states
 	const [searchText, setSearchText] = useState('');
 	const [selectedSubject, setSelectedSubject] = useState('');
+	const [selectedLesson, setSelectedLesson] = useState('');
 	
 	// Form states
 	const [name, setName] = useState('');
@@ -61,20 +77,23 @@ export default function AdminTopicsPage() {
 
 	const refresh = async (page = 1) => {
 		try {
-			const params = new URLSearchParams({
-				page: page.toString(),
-				limit: itemsPerPage.toString(),
-				...(searchText && { search: searchText }),
-				...(selectedSubject && { subjectId: selectedSubject })
-			});
+		const params = new URLSearchParams({
+			page: page.toString(),
+			limit: itemsPerPage.toString(),
+			...(searchText && { search: searchText }),
+			...(selectedSubject && { subjectId: selectedSubject }),
+			...(selectedLesson && { lessonId: selectedLesson })
+		});
 
-			const [topicsResponse, subjectsResponse] = await Promise.all([
+			const [topicsResponse, subjectsResponse, lessonsResponse] = await Promise.all([
 				api.get(`/admin/topics?${params}`),
-				api.get('/admin/subjects')
+				api.get('/admin/subjects'),
+				api.get('/admin/lessons?limit=1000')
 			]);
 			
 			setTopics(topicsResponse.data.topics || topicsResponse.data);
 			setSubjects(subjectsResponse.data);
+			setLessons(lessonsResponse.data.lessons || lessonsResponse.data);
 			
 			// Handle pagination data
 			if (topicsResponse.data.pagination) {
@@ -117,6 +136,14 @@ export default function AdminTopicsPage() {
 	// Handle subject filter change
 	const handleSubjectChange = (subjectId: string) => {
 		setSelectedSubject(subjectId);
+		setSelectedLesson('');
+		setCurrentPage(1);
+		refresh(1);
+	};
+
+	// Handle lesson filter change
+	const handleLessonChange = (lessonId: string) => {
+		setSelectedLesson(lessonId);
 		setCurrentPage(1);
 		refresh(1);
 	};
@@ -125,9 +152,15 @@ export default function AdminTopicsPage() {
 	const clearFilters = () => {
 		setSearchText('');
 		setSelectedSubject('');
+		setSelectedLesson('');
 		setCurrentPage(1);
 		refresh(1);
 	};
+
+	// Filter lessons based on selected subject
+	const filteredLessons = selectedSubject && Array.isArray(lessons)
+		? lessons.filter(lesson => lesson.subject.id === selectedSubject)
+		: Array.isArray(lessons) ? lessons : [];
 
 	const add = async () => {
 		if (!name.trim() || !subjectId) {
@@ -397,7 +430,7 @@ export default function AdminTopicsPage() {
 					{/* Filters Section */}
 					<div className="bg-white rounded-lg shadow p-6">
 						<h2 className="text-lg font-semibold text-gray-900 mb-4">Filters</h2>
-						<div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+						<div className="grid grid-cols-1 md:grid-cols-5 gap-3">
 							<input 
 								className="border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
 								placeholder="Search topics or subjects..." 
@@ -414,6 +447,19 @@ export default function AdminTopicsPage() {
 								{subjects.map(subject => (
 									<option key={subject.id} value={subject.id} className="text-gray-900">
 										{subject.name} ({subject.stream?.code || 'N/A'})
+									</option>
+								))}
+							</select>
+							<select 
+								className="border-2 border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+								value={selectedLesson}
+								onChange={e => handleLessonChange(e.target.value)}
+								disabled={!selectedSubject}
+							>
+								<option value="" className="text-gray-600">All Lessons</option>
+								{Array.isArray(filteredLessons) && filteredLessons.map(lesson => (
+									<option key={lesson.id} value={lesson.id} className="text-gray-900">
+										{lesson.name} ({lesson.subject?.stream?.code || 'N/A'})
 									</option>
 								))}
 							</select>

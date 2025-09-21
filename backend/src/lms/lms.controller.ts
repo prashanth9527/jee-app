@@ -116,6 +116,46 @@ export class LMSController {
       orderBy: { name: 'asc' }
     });
   }
+
+  // Lesson management endpoints
+  @Post('lessons')
+  async createLesson(@Body() data: { name: string; description?: string; subjectId: string; order?: number }) {
+    return this.lmsService.createLesson(data);
+  }
+
+  @Get('lessons/:lessonId')
+  async getLesson(@Param('lessonId') lessonId: string) {
+    return this.lmsService.getLessonWithContent(lessonId);
+  }
+
+  @Put('lessons/:lessonId')
+  async updateLesson(@Param('lessonId') lessonId: string, @Body() data: { name?: string; description?: string; order?: number; isActive?: boolean }) {
+    return this.lmsService.updateLesson(lessonId, data);
+  }
+
+  @Delete('lessons/:lessonId')
+  async deleteLesson(@Param('lessonId') lessonId: string) {
+    return this.lmsService.deleteLesson(lessonId);
+  }
+
+  @Get('subjects/:subjectId/lessons')
+  async getLessons(@Param('subjectId') subjectId: string) {
+    return this.lmsService.getLessonsBySubject(subjectId);
+  }
+
+  @Get('lessons/:lessonId/topics')
+  async getLessonTopics(@Param('lessonId') lessonId: string) {
+    return this.lmsService['prisma'].topic.findMany({
+      where: { lessonId },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        order: true
+      },
+      orderBy: { order: 'asc' }
+    });
+  }
 }
 
 @Controller('student/lms')

@@ -1,299 +1,343 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import Link from 'next/link';
+import api from '@/lib/api';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import StudentLayout from '@/components/StudentLayout';
-import SubscriptionGuard from '@/components/SubscriptionGuard';
-import api from '@/lib/api';
 
 interface LeaderboardEntry {
+  id: string;
   userId: string;
+  lessonId: string;
+  status: string;
+  progress: number;
+  timeSpent: number;
+  averageScore?: number;
+  user: {
+    id: string;
   fullName: string;
-  email: string;
-  averageScore: number;
-  totalTests: number;
-  totalScore: number;
-  totalCorrect?: number;
-  totalQuestions?: number;
-  examSubmissions?: number;
-  lastTestDate?: string;
-}
-
-interface LeaderboardData {
-  stream: {
-    name: string;
-    code: string;
+    profilePicture?: string;
   };
-  type: string;
-  leaderboard: LeaderboardEntry[];
-  userPosition: number | null;
-  totalStudents: number;
+  lesson: {
+    id: string;
+    name: string;
+    subject: {
+      id: string;
+      name: string;
+      stream: {
+        id: string;
+        name: string;
+      };
+    };
+  };
+  badges: Array<{
+    id: string;
+    badgeType: string;
+    title: string;
+  }>;
 }
 
 export default function LeaderboardPage() {
-  const { user } = useAuth();
-  const [leaderboardData, setLeaderboardData] = useState<LeaderboardData | null>(null);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedType, setSelectedType] = useState('overall');
-
-  const leaderboardTypes = [
-    { value: 'overall', label: 'Overall Performance', icon: '🏆' },
-    { value: 'practice-tests', label: 'Practice Tests', icon: '📝' },
-    { value: 'exam-papers', label: 'Exam Papers', icon: '📄' },
-    { value: 'pyq', label: 'Previous Year Qs', icon: '📚' }
-  ];
+  const [filter, setFilter] = useState<string>('all');
+  const [timeFilter, setTimeFilter] = useState<string>('all');
 
   useEffect(() => {
     loadLeaderboard();
-  }, [selectedType]);
+  }, [filter, timeFilter]);
 
   const loadLeaderboard = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/student/leaderboard?type=${selectedType}`);
-      setLeaderboardData(response.data);
+      const params = new URLSearchParams();
+      if (filter !== 'all') params.append('subjectId', filter);
+      params.append('limit', '50');
+      
+      const response = await api.get(`/student/lesson-progress/leaderboard?${params.toString()}`);
+      setLeaderboard(response.data);
     } catch (error) {
-      console.error('Failed to load leaderboard:', error);
+      console.error('Error loading leaderboard:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const getRankIcon = (position: number) => {
-    if (position === 1) return '🥇';
-    if (position === 2) return '🥈';
-    if (position === 3) return '🥉';
-    return `#${position}`;
+  const getRankIcon = (index: number) => {
+    switch (index) {
+      case 0:
+        return '🥇';
+      case 1:
+        return '🥈';
+      case 2:
+        return '🥉';
+      default:
+        return `#${index + 1}`;
+    }
   };
 
-  const getScoreColor = (score: number) => {
-    if (score >= 90) return 'text-green-600';
-    if (score >= 80) return 'text-blue-600';
-    if (score >= 70) return 'text-yellow-600';
-    if (score >= 60) return 'text-orange-600';
-    return 'text-red-600';
+  const getRankColor = (index: number) => {
+    switch (index) {
+      case 0:
+        return 'bg-yellow-100 border-yellow-300';
+      case 1:
+        return 'bg-gray-100 border-gray-300';
+      case 2:
+        return 'bg-orange-100 border-orange-300';
+      default:
+        return 'bg-white border-gray-200';
+    }
   };
 
-  const getScoreBgColor = (score: number) => {
-    if (score >= 90) return 'bg-green-100';
-    if (score >= 80) return 'bg-blue-100';
-    if (score >= 70) return 'bg-yellow-100';
-    if (score >= 60) return 'bg-orange-100';
-    return 'bg-red-100';
+  const getBadgeIcon = (badgeType: string) => {
+    const icons: Record<string, string> = {
+      COMPLETION: '🏆',
+      SPEED_DEMON: '⚡',
+      PERFECT_SCORE: '💯',
+      PERSEVERANCE: '💪',
+      EARLY_BIRD: '🐦',
+      NIGHT_OWL: '🦉',
+      STREAK_MASTER: '🔥',
+      TOP_PERFORMER: '⭐',
+      CONTENT_EXPLORER: '🗺️',
+      QUIZ_MASTER: '🧠'
+    };
+    return icons[badgeType] || '🏆';
+  };
+
+  const formatTime = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    
+    if (hours > 0) {
+      return `${hours}h ${minutes}m`;
+    } else {
+      return `${minutes}m`;
+    }
+  };
+
+  // Get unique subjects for filter
+  const subjects = [...new Set(leaderboard.map(entry => entry.lesson.subject.name))];
+
+  // Calculate stats
+  const stats = {
+    totalStudents: leaderboard.length,
+    averageScore: leaderboard.reduce((sum, entry) => sum + (entry.averageScore || 0), 0) / Math.max(1, leaderboard.length),
+    totalBadges: leaderboard.reduce((sum, entry) => sum + entry.badges.length, 0)
   };
 
   if (loading) {
     return (
-      <ProtectedRoute requiredRole="STUDENT">
-        <SubscriptionGuard>
+      <ProtectedRoute allowedRoles={['STUDENT']}>
           <StudentLayout>
             <div className="flex justify-center items-center h-64">
-              <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                <p className="text-gray-600">Loading leaderboard...</p>
-              </div>
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
             </div>
           </StudentLayout>
-        </SubscriptionGuard>
-      </ProtectedRoute>
-    );
-  }
-
-  if (!leaderboardData) {
-    return (
-      <ProtectedRoute requiredRole="STUDENT">
-        <SubscriptionGuard>
-          <StudentLayout>
-            <div className="text-center py-12">
-              <div className="mx-auto h-16 w-16 text-gray-400 mb-4">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No Leaderboard Data</h3>
-              <p className="text-gray-600">Start taking tests to appear on the leaderboard!</p>
-            </div>
-          </StudentLayout>
-        </SubscriptionGuard>
       </ProtectedRoute>
     );
   }
 
   return (
-    <ProtectedRoute requiredRole="STUDENT">
-      <SubscriptionGuard>
+    <ProtectedRoute allowedRoles={['STUDENT']}>
         <StudentLayout>
           <div className="space-y-6">
             {/* Header */}
-            <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg p-6 text-white">
-              <h1 className="text-3xl font-bold mb-2">Leaderboard</h1>
-              <p className="text-purple-100">
-                {leaderboardData.stream.name} - Top performers in your stream
-              </p>
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">🏆 Leaderboard</h1>
+                <p className="text-gray-600 mt-1">See how you rank among your peers</p>
+              </div>
+              <div className="text-right">
+                <div className="text-3xl font-bold text-blue-600">{stats.totalStudents}</div>
+                <div className="text-sm text-gray-500">Students</div>
+              </div>
             </div>
 
-            {/* User Position Card */}
-            {leaderboardData.userPosition && (
-              <div className="bg-white rounded-lg shadow p-6 border-l-4 border-purple-500">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-lg font-semibold text-gray-900">Your Position</h2>
-                    <p className="text-gray-600">You're ranked #{leaderboardData.userPosition} out of {leaderboardData.totalStudents} students</p>
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center p-4 bg-blue-50 rounded-lg">
+                <div className="text-2xl font-bold text-blue-600">{stats.totalStudents}</div>
+                <div className="text-sm text-gray-500">Total Students</div>
+              </div>
+              <div className="text-center p-4 bg-green-50 rounded-lg">
+                <div className="text-2xl font-bold text-green-600">{Math.round(stats.averageScore)}%</div>
+                <div className="text-sm text-gray-500">Average Score</div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold text-purple-600">#{leaderboardData.userPosition}</div>
-                    <div className="text-sm text-gray-500">out of {leaderboardData.totalStudents}</div>
+              <div className="text-center p-4 bg-yellow-50 rounded-lg">
+                <div className="text-2xl font-bold text-yellow-600">{stats.totalBadges}</div>
+                <div className="text-sm text-gray-500">Badges Earned</div>
                   </div>
                 </div>
               </div>
-            )}
 
-            {/* Leaderboard Type Selector */}
+          {/* Filters */}
             <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Leaderboard Type</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {leaderboardTypes.map((type) => (
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Filter Results</h2>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setFilter('all')}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  filter === 'all'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                All Subjects
+              </button>
+              {subjects.map((subject) => (
                   <button
-                    key={type.value}
-                    onClick={() => setSelectedType(type.value)}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      selectedType === type.value
-                        ? 'border-purple-500 bg-purple-50 text-purple-700'
-                        : 'border-gray-200 hover:border-gray-300 text-gray-700'
-                    }`}
-                  >
-                    <div className="text-2xl mb-2">{type.icon}</div>
-                    <div className="text-sm font-medium">{type.label}</div>
+                  key={subject}
+                  onClick={() => setFilter(subject)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    filter === subject
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {subject}
                   </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Top 3 Podium */}
+          {leaderboard.length >= 3 && (
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-6 text-center">🏆 Top Performers</h2>
+              <div className="grid grid-cols-3 gap-4">
+                {leaderboard.slice(0, 3).map((entry, index) => (
+                  <div key={entry.id} className={`p-6 rounded-lg border-2 ${getRankColor(index)}`}>
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">{getRankIcon(index)}</div>
+                      <div className="w-16 h-16 mx-auto mb-3 bg-gray-200 rounded-full flex items-center justify-center">
+                        {entry.user.profilePicture ? (
+                          <img 
+                            src={entry.user.profilePicture} 
+                            alt={entry.user.fullName}
+                            className="w-16 h-16 rounded-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-2xl font-bold text-gray-600">
+                            {entry.user.fullName.charAt(0).toUpperCase()}
+                          </span>
+                        )}
+                      </div>
+                      <div className="font-semibold text-gray-900">{entry.user.fullName}</div>
+                      <div className="text-sm text-gray-600 mb-2">{entry.lesson.name}</div>
+                      <div className="text-lg font-bold text-blue-600">{Math.round(entry.averageScore || 0)}%</div>
+                      <div className="text-xs text-gray-500">{formatTime(entry.timeSpent)}</div>
+                      <div className="flex justify-center space-x-1 mt-2">
+                        {entry.badges.slice(0, 3).map((badge) => (
+                          <span key={badge.id} title={badge.title} className="text-sm">
+                            {getBadgeIcon(badge.badgeType)}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
+          )}
 
-            {/* Leaderboard Table */}
-            <div className="bg-white rounded-lg shadow">
-              <div className="p-6 border-b border-gray-200">
-                <h2 className="text-lg font-semibold text-gray-900">
-                  {leaderboardTypes.find(t => t.value === selectedType)?.label} Leaderboard
-                </h2>
-                <p className="text-sm text-gray-600 mt-1">
-                  Showing top {leaderboardData.leaderboard.length} students
-                </p>
+          {/* Full Leaderboard */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Complete Rankings</h2>
+            
+            {leaderboard.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">📊</div>
+                <p className="text-gray-500 mb-4">No data available for the selected filter.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {leaderboard.map((entry, index) => (
+                  <div key={entry.id} className={`flex items-center space-x-4 p-4 rounded-lg border ${getRankColor(index)}`}>
+                    <div className="flex-shrink-0 w-8 text-center font-bold text-gray-600">
+                      {getRankIcon(index)}
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Rank
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Student
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Average Score
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Tests Taken
-                      </th>
-                      {selectedType === 'overall' && (
-                        <>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Total Correct
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Total Questions
-                          </th>
-                        </>
-                      )}
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Last Test
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {leaderboardData.leaderboard.map((entry, index) => (
-                      <tr 
-                        key={entry.userId} 
-                        className={`hover:bg-gray-50 ${
-                          entry.userId === user?.id ? 'bg-purple-50 border-l-4 border-purple-500' : ''
-                        }`}
-                      >
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <span className="text-lg font-bold text-gray-900 mr-2">
-                              {getRankIcon(index + 1)}
-                            </span>
-                            {entry.userId === user?.id && (
-                              <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">
-                                You
-                              </span>
+                    <div className="flex-shrink-0 w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                      {entry.user.profilePicture ? (
+                        <img 
+                          src={entry.user.profilePicture} 
+                          alt={entry.user.fullName}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-lg font-bold text-gray-600">
+                          {entry.user.fullName.charAt(0).toUpperCase()}
+                        </span>
                             )}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 h-10 w-10">
-                              <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
-                                <span className="text-sm font-medium text-purple-700">
-                                  {entry.fullName.split(' ').map(n => n[0]).join('').toUpperCase()}
-                                </span>
+                    
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-gray-900 truncate">{entry.user.fullName}</div>
+                      <div className="text-sm text-gray-600 truncate">{entry.lesson.name}</div>
+                      <div className="text-xs text-gray-500">{entry.lesson.subject.name}</div>
                               </div>
+                    
+                    <div className="flex-shrink-0 text-center">
+                      <div className="text-lg font-bold text-blue-600">{Math.round(entry.averageScore || 0)}%</div>
+                      <div className="text-xs text-gray-500">Score</div>
                             </div>
-                            <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">{entry.fullName}</div>
-                              <div className="text-sm text-gray-500">{entry.email}</div>
+                    
+                    <div className="flex-shrink-0 text-center">
+                      <div className="text-lg font-bold text-green-600">{Math.round(entry.progress)}%</div>
+                      <div className="text-xs text-gray-500">Progress</div>
                             </div>
+                    
+                    <div className="flex-shrink-0 text-center">
+                      <div className="text-lg font-bold text-purple-600">{formatTime(entry.timeSpent)}</div>
+                      <div className="text-xs text-gray-500">Time</div>
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getScoreBgColor(entry.averageScore)} ${getScoreColor(entry.averageScore)}`}>
-                            {entry.averageScore.toFixed(1)}%
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {entry.totalTests}
-                        </td>
-                        {selectedType === 'overall' && (
-                          <>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                              {entry.totalCorrect || 0}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                              {entry.totalQuestions || 0}
-                            </td>
-                          </>
+                    
+                    <div className="flex-shrink-0">
+                      <div className="flex space-x-1">
+                        {entry.badges.slice(0, 3).map((badge) => (
+                          <span key={badge.id} title={badge.title} className="text-sm">
+                            {getBadgeIcon(badge.badgeType)}
+                          </span>
+                        ))}
+                        {entry.badges.length > 3 && (
+                          <span className="text-xs text-gray-500">+{entry.badges.length - 3}</span>
                         )}
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {entry.lastTestDate 
-                            ? new Date(entry.lastTestDate).toLocaleDateString()
-                            : 'Never'
-                          }
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                      </div>
               </div>
-
-              {leaderboardData.leaderboard.length === 0 && (
-                <div className="p-12 text-center">
-                  <div className="mx-auto h-16 w-16 text-gray-400 mb-4">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
                   </div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No Data Available</h3>
-                  <p className="text-gray-600">
-                    No students have taken tests in this category yet. Be the first!
-                  </p>
+                ))}
                 </div>
               )}
             </div>
+
+          {/* Motivation Section */}
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow p-6 text-white">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold mb-2">Keep Learning! 🚀</h2>
+              <p className="mb-4 opacity-90">
+                Every lesson completed brings you closer to your goals. Stay consistent and watch yourself climb the leaderboard!
+              </p>
+              <div className="flex justify-center space-x-4">
+                <Link
+                  href="/student/lms"
+                  className="inline-flex items-center px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-100 transition-all duration-300 font-medium"
+                >
+                  Continue Learning
+                </Link>
+                <Link
+                  href="/student/badges"
+                  className="inline-flex items-center px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-100 transition-all duration-300 font-medium"
+                >
+                  View My Badges
+                </Link>
+              </div>
+            </div>
+          </div>
           </div>
         </StudentLayout>
-      </SubscriptionGuard>
     </ProtectedRoute>
   );
 } 

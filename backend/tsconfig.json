@@ -17,5 +17,10 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
-  }
+  },
+  "exclude": [
+    "prisma/seeds/**/*.seed.ts",
+    "prisma/seeds/JEE/**/*.ts",
+    "prisma/seeds/mathematics-*.ts"
+  ]
 }

@@ -31,6 +31,19 @@ interface Subtopic {
 interface Topic {
 	id: string;
 	name: string;
+	lesson?: {
+		id: string;
+		name: string;
+		subject: {
+			id: string;
+			name: string;
+			stream?: {
+				id: string;
+				name: string;
+				code: string;
+			};
+		};
+	};
 	subject: {
 		id: string;
 		name: string;
@@ -52,6 +65,20 @@ interface Subject {
 	};
 }
 
+interface Lesson {
+	id: string;
+	name: string;
+	subject: {
+		id: string;
+		name: string;
+		stream?: {
+			id: string;
+			name: string;
+			code: string;
+		};
+	};
+}
+
 export default function SubtopicsPage() {
 	const router = useRouter();
 	
@@ -59,6 +86,7 @@ export default function SubtopicsPage() {
 	const [subtopics, setSubtopics] = useState<Subtopic[]>([]);
 	const [topics, setTopics] = useState<Topic[]>([]);
 	const [subjects, setSubjects] = useState<Subject[]>([]);
+	const [lessons, setLessons] = useState<Lesson[]>([]);
 	
 	// Loading states
 	const [loading, setLoading] = useState(true);
@@ -74,6 +102,7 @@ export default function SubtopicsPage() {
 	// Filter states
 	const [searchText, setSearchText] = useState('');
 	const [selectedSubject, setSelectedSubject] = useState('');
+	const [selectedLesson, setSelectedLesson] = useState('');
 	const [selectedTopic, setSelectedTopic] = useState('');
 	
 	// Form states
@@ -93,23 +122,26 @@ export default function SubtopicsPage() {
 
 	const refresh = async (page = 1) => {
 		try {
-			const params = new URLSearchParams({
-				page: page.toString(),
-				limit: itemsPerPage.toString(),
-				...(searchText && { search: searchText }),
-				...(selectedSubject && { subjectId: selectedSubject }),
-				...(selectedTopic && { topicId: selectedTopic })
-			});
+		const params = new URLSearchParams({
+			page: page.toString(),
+			limit: itemsPerPage.toString(),
+			...(searchText && { search: searchText }),
+			...(selectedSubject && { subjectId: selectedSubject }),
+			...(selectedLesson && { lessonId: selectedLesson }),
+			...(selectedTopic && { topicId: selectedTopic })
+		});
 
-			const [subtopicsResponse, topicsResponse, subjectsResponse] = await Promise.all([
+			const [subtopicsResponse, topicsResponse, subjectsResponse, lessonsResponse] = await Promise.all([
 				api.get(`/admin/subtopics?${params}`),
 				api.get('/admin/topics'),
-				api.get('/admin/subjects')
+				api.get('/admin/subjects'),
+				api.get('/admin/lessons?limit=1000')
 			]);
 			
 			setSubtopics(subtopicsResponse.data.subtopics || subtopicsResponse.data);
 			setTopics(topicsResponse.data);
 			setSubjects(subjectsResponse.data);
+			setLessons(lessonsResponse.data.lessons || lessonsResponse.data);
 			
 			// Handle pagination data
 			if (subtopicsResponse.data.pagination) {
@@ -161,7 +193,16 @@ export default function SubtopicsPage() {
 	// Handle subject filter change
 	const handleSubjectChange = (subjectId: string) => {
 		setSelectedSubject(subjectId);
+		setSelectedLesson('');
 		setSelectedTopic(''); // Reset topic when subject changes
+		setCurrentPage(1);
+		refresh(1);
+	};
+
+	// Handle lesson filter change
+	const handleLessonChange = (lessonId: string) => {
+		setSelectedLesson(lessonId);
+		setSelectedTopic('');
 		setCurrentPage(1);
 		refresh(1);
 	};
@@ -177,6 +218,7 @@ export default function SubtopicsPage() {
 	const clearFilters = () => {
 		setSearchText('');
 		setSelectedSubject('');
+		setSelectedLesson('');
 		setSelectedTopic('');
 		setCurrentPage(1);
 		refresh(1);
@@ -349,8 +391,15 @@ export default function SubtopicsPage() {
 		return pages;
 	};
 
-	// Filter topics based on selected subject
-	const filteredTopics = selectedSubject && Array.isArray(topics)
+	// Filter lessons based on selected subject
+	const filteredLessons = selectedSubject && Array.isArray(lessons)
+		? lessons.filter(lesson => lesson.subject.id === selectedSubject)
+		: Array.isArray(lessons) ? lessons : [];
+
+	// Filter topics based on selected lesson
+	const filteredTopics = selectedLesson && Array.isArray(topics)
+		? topics.filter(topic => topic.lesson?.id === selectedLesson)
+		: selectedSubject && Array.isArray(topics)
 		? topics.filter(topic => topic.subject.id === selectedSubject)
 		: Array.isArray(topics) ? topics : [];
 
@@ -498,7 +547,7 @@ export default function SubtopicsPage() {
 					{/* Filters Section */}
 					<div className="bg-white rounded-lg shadow p-6">
 						<h2 className="text-lg font-semibold text-gray-900 mb-4">Filters</h2>
-						<div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+						<div className="grid grid-cols-1 md:grid-cols-6 gap-3">
 							<input 
 								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium placeholder-gray-500" 
 								placeholder="Search subtopics, topics or subjects..." 
@@ -520,8 +569,22 @@ export default function SubtopicsPage() {
 							</select>
 							<select 
 								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+								value={selectedLesson}
+								onChange={e => handleLessonChange(e.target.value)}
+								disabled={!selectedSubject}
+							>
+								<option value="">All Lessons</option>
+								{Array.isArray(filteredLessons) && filteredLessons.map(lesson => (
+									<option key={lesson.id} value={lesson.id}>
+										{lesson.name} ({lesson.subject?.stream?.code || 'N/A'})
+									</option>
+								))}
+							</select>
+							<select 
+								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
 								value={selectedTopic}
 								onChange={e => handleTopicChange(e.target.value)}
+								disabled={!selectedLesson}
 							>
 								<option value="">All Topics</option>
 								{Array.isArray(filteredTopics) && filteredTopics.map(topic => (

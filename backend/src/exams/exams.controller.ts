@@ -8,7 +8,7 @@ export class ExamsController {
 	constructor(private readonly exams: ExamsService) {}
 
 	@Post('papers')
-	createPaper(@Body() body: { title: string; description?: string; subjectIds?: string[]; topicIds?: string[]; subtopicIds?: string[]; questionIds?: string[]; timeLimitMin?: number }) {
+	createPaper(@Body() body: { title: string; description?: string; subjectIds?: string[]; lessonIds?: string[]; topicIds?: string[]; subtopicIds?: string[]; questionIds?: string[]; timeLimitMin?: number }) {
 		return this.exams.createPaper(body);
 	}
 

@@ -7,6 +7,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import RichTextEditor from '@/components/RichTextEditor';
 import MathFormula from '@/components/MathFormula';
 import Swal from 'sweetalert2';
+import api from '@/lib/api';
 
 interface Formula {
   id: string;
@@ -15,6 +16,7 @@ interface Formula {
   description?: string;
   subject?: string;
   tags: string[];
+  lessonId?: string;
   topicId?: string;
   subtopicId?: string;
   targetRole?: string;
@@ -22,16 +24,86 @@ interface Formula {
   updatedAt: string;
 }
 
+interface Subject {
+  id: string;
+  name: string;
+  stream?: {
+    id: string;
+    name: string;
+    code: string;
+  };
+}
+
+interface Lesson {
+  id: string;
+  name: string;
+  subject: {
+    id: string;
+    name: string;
+    stream?: {
+      id: string;
+      name: string;
+      code: string;
+    };
+  };
+}
+
 interface Topic {
   id: string;
   name: string;
-  subjectId: string;
+  lesson?: {
+    id: string;
+    name: string;
+    subject: {
+      id: string;
+      name: string;
+      stream?: {
+        id: string;
+        name: string;
+        code: string;
+      };
+    };
+  };
+  subject: {
+    id: string;
+    name: string;
+    stream?: {
+      id: string;
+      name: string;
+      code: string;
+    };
+  };
 }
 
 interface Subtopic {
   id: string;
   name: string;
-  topicId: string;
+  topic?: {
+    id: string;
+    name: string;
+    lesson?: {
+      id: string;
+      name: string;
+      subject: {
+        id: string;
+        name: string;
+        stream?: {
+          id: string;
+          name: string;
+          code: string;
+        };
+      };
+    };
+    subject: {
+      id: string;
+      name: string;
+      stream?: {
+        id: string;
+        name: string;
+        code: string;
+      };
+    };
+  };
 }
 
 export default function AdminFormulasPage() {
@@ -39,11 +111,15 @@ export default function AdminFormulasPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedLesson, setSelectedLesson] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('');
+  const [selectedSubtopic, setSelectedSubtopic] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingFormula, setEditingFormula] = useState<Formula | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [lessons, setLessons] = useState<Lesson[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
   const [subtopics, setSubtopics] = useState<Subtopic[]>([]);
 
@@ -54,6 +130,7 @@ export default function AdminFormulasPage() {
     description: '',
     subject: '',
     tags: [] as string[],
+    lessonId: '',
     topicId: '',
     subtopicId: '',
     targetRole: 'STUDENT' as string,
@@ -61,15 +138,12 @@ export default function AdminFormulasPage() {
 
   const [tagInput, setTagInput] = useState('');
 
-  const subjects = [
-    { value: 'Physics', label: 'Physics' },
-    { value: 'Chemistry', label: 'Chemistry' },
-    { value: 'Mathematics', label: 'Mathematics' },
-  ];
-
   useEffect(() => {
     fetchFormulas();
+    fetchSubjects();
+    fetchLessons();
     fetchTopics();
+    fetchSubtopics();
   }, []);
 
   useEffect(() => {
@@ -83,34 +157,15 @@ export default function AdminFormulasPage() {
   const fetchFormulas = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
-      if (!token) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Authentication Required',
-          text: 'Please log in to access formulas'
-        });
-        return;
-      }
-
       const params = new URLSearchParams();
       if (searchTerm) params.append('search', searchTerm);
       if (selectedSubject) params.append('subject', selectedSubject);
+      if (selectedLesson) params.append('lessonId', selectedLesson);
       if (selectedTopic) params.append('topicId', selectedTopic);
+      if (selectedSubtopic) params.append('subtopicId', selectedSubtopic);
 
-      const response = await fetch(`/api/formulas/admin?${params}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      setFormulas(data.formulas || []);
+      const response = await api.get(`/formulas/admin?${params}`);
+      setFormulas(response.data.formulas || []);
     } catch (error) {
       console.error('Error fetching formulas:', error);
       Swal.fire({
@@ -123,23 +178,28 @@ export default function AdminFormulasPage() {
     }
   };
 
+  const fetchSubjects = async () => {
+    try {
+      const response = await api.get('/admin/subjects');
+      setSubjects(response.data);
+    } catch (error) {
+      console.error('Error fetching subjects:', error);
+    }
+  };
+
+  const fetchLessons = async () => {
+    try {
+      const response = await api.get('/admin/lessons?limit=1000');
+      setLessons(response.data.lessons || response.data);
+    } catch (error) {
+      console.error('Error fetching lessons:', error);
+    }
+  };
+
   const fetchTopics = async () => {
     try {
-      const response = await fetch('/api/admin/subjects');
-      const data = await response.json();
-      const allTopics: Topic[] = [];
-      data.forEach((subject: any) => {
-        if (subject.topics) {
-          subject.topics.forEach((topic: any) => {
-            allTopics.push({
-              id: topic.id,
-              name: topic.name,
-              subjectId: subject.id
-            });
-          });
-        }
-      });
-      setTopics(allTopics);
+      const response = await api.get('/admin/topics?limit=1000');
+      setTopics(response.data.topics || response.data);
     } catch (error) {
       console.error('Error fetching topics:', error);
     }
@@ -147,21 +207,8 @@ export default function AdminFormulasPage() {
 
   const fetchSubtopics = async () => {
     try {
-      const response = await fetch(`/api/admin/topics?subjectId=${formData.subject}`);
-      const data = await response.json();
-      const allSubtopics: Subtopic[] = [];
-      data.forEach((topic: any) => {
-        if (topic.subtopics) {
-          topic.subtopics.forEach((subtopic: any) => {
-            allSubtopics.push({
-              id: subtopic.id,
-              name: subtopic.name,
-              topicId: topic.id
-            });
-          });
-        }
-      });
-      setSubtopics(allSubtopics);
+      const response = await api.get('/admin/subtopics?limit=1000');
+      setSubtopics(response.data.subtopics || response.data);
     } catch (error) {
       console.error('Error fetching subtopics:', error);
     }
@@ -174,6 +221,7 @@ export default function AdminFormulasPage() {
       description: '',
       subject: '',
       tags: [],
+      lessonId: '',
       topicId: '',
       subtopicId: '',
       targetRole: 'STUDENT',
@@ -189,6 +237,7 @@ export default function AdminFormulasPage() {
       description: formula.description || '',
       subject: formula.subject || '',
       tags: formula.tags || [],
+      lessonId: formula.lessonId || '',
       topicId: formula.topicId || '',
       subtopicId: formula.subtopicId || '',
       targetRole: formula.targetRole || 'STUDENT',
@@ -211,23 +260,7 @@ export default function AdminFormulasPage() {
 
     if (result.isConfirmed) {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Authentication Required',
-            text: 'Please log in to delete formulas'
-          });
-          return;
-        }
-
-        await fetch(`/api/formulas/${id}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+        await api.delete(`/formulas/${id}`);
         await fetchFormulas();
         Swal.fire({
           icon: 'success',
@@ -271,33 +304,10 @@ export default function AdminFormulasPage() {
     try {
       setSubmitting(true);
       
-      const token = localStorage.getItem('token');
-      if (!token) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Authentication Required',
-          text: 'Please log in to save formulas'
-        });
-        return;
-      }
-      
-      const url = editingFormula 
-        ? `/api/formulas/${editingFormula.id}`
-        : '/api/formulas/admin';
-      
-      const method = editingFormula ? 'PUT' : 'POST';
-      
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to save formula');
+      if (editingFormula) {
+        await api.put(`/formulas/${editingFormula.id}`, formData);
+      } else {
+        await api.post('/formulas/admin', formData);
       }
 
       await fetchFormulas();
@@ -329,6 +339,7 @@ export default function AdminFormulasPage() {
         description: '',
         subject: '',
         tags: [],
+        lessonId: '',
         topicId: '',
         subtopicId: '',
         targetRole: 'STUDENT',
@@ -370,12 +381,30 @@ export default function AdminFormulasPage() {
     }
   };
 
+  // Filter data based on selections
+  const filteredLessons = selectedSubject && Array.isArray(lessons)
+    ? lessons.filter(lesson => lesson.subject.name === selectedSubject)
+    : Array.isArray(lessons) ? lessons : [];
+
+  const filteredTopics = selectedLesson && Array.isArray(topics)
+    ? topics.filter(topic => topic.lesson?.id === selectedLesson)
+    : selectedSubject && Array.isArray(topics)
+    ? topics.filter(topic => topic.subject.name === selectedSubject)
+    : Array.isArray(topics) ? topics : [];
+
+  const filteredSubtopics = selectedTopic && Array.isArray(subtopics)
+    ? subtopics.filter(subtopic => subtopic.topic?.id === selectedTopic)
+    : Array.isArray(subtopics) ? subtopics : [];
+
   const filteredFormulas = formulas.filter(formula => {
     const matchesSearch = formula.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          formula.formula.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          formula.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesSubject = !selectedSubject || formula.subject === selectedSubject;
-    return matchesSearch && matchesSubject;
+    const matchesLesson = !selectedLesson || formula.lessonId === selectedLesson;
+    const matchesTopic = !selectedTopic || formula.topicId === selectedTopic;
+    const matchesSubtopic = !selectedSubtopic || formula.subtopicId === selectedSubtopic;
+    return matchesSearch && matchesSubject && matchesLesson && matchesTopic && matchesSubtopic;
   });
 
   if (loading) {
@@ -411,7 +440,7 @@ export default function AdminFormulasPage() {
 
           {/* Search and Filter */}
           <div className="bg-white p-6 rounded-lg shadow mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
               <div className="md:col-span-2">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -426,13 +455,64 @@ export default function AdminFormulasPage() {
               </div>
               <select
                 value={selectedSubject}
-                onChange={(e) => setSelectedSubject(e.target.value)}
+                onChange={(e) => {
+                  setSelectedSubject(e.target.value);
+                  setSelectedLesson('');
+                  setSelectedTopic('');
+                  setSelectedSubtopic('');
+                }}
                 className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">All Subjects</option>
-                {subjects.map(subject => (
-                  <option key={subject.value} value={subject.value}>
-                    {subject.label}
+                {Array.isArray(subjects) && subjects.map(subject => (
+                  <option key={subject.id} value={subject.name}>
+                    {subject.name} ({subject.stream?.code || 'N/A'})
+                  </option>
+                ))}
+              </select>
+              <select
+                value={selectedLesson}
+                onChange={(e) => {
+                  setSelectedLesson(e.target.value);
+                  setSelectedTopic('');
+                  setSelectedSubtopic('');
+                }}
+                disabled={!selectedSubject}
+                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+              >
+                <option value="">All Lessons</option>
+                {Array.isArray(filteredLessons) && filteredLessons.map(lesson => (
+                  <option key={lesson.id} value={lesson.id}>
+                    {lesson.name} ({lesson.subject?.stream?.code || 'N/A'})
+                  </option>
+                ))}
+              </select>
+              <select
+                value={selectedTopic}
+                onChange={(e) => {
+                  setSelectedTopic(e.target.value);
+                  setSelectedSubtopic('');
+                }}
+                disabled={!selectedLesson}
+                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+              >
+                <option value="">All Topics</option>
+                {Array.isArray(filteredTopics) && filteredTopics.map(topic => (
+                  <option key={topic.id} value={topic.id}>
+                    {topic.name} ({topic.subject?.stream?.code || 'N/A'})
+                  </option>
+                ))}
+              </select>
+              <select
+                value={selectedSubtopic}
+                onChange={(e) => setSelectedSubtopic(e.target.value)}
+                disabled={!selectedTopic}
+                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+              >
+                <option value="">All Subtopics</option>
+                {Array.isArray(filteredSubtopics) && filteredSubtopics.map(subtopic => (
+                  <option key={subtopic.id} value={subtopic.id}>
+                    {subtopic.name} ({subtopic.topic?.subject?.stream?.code || 'N/A'})
                   </option>
                 ))}
               </select>
@@ -600,14 +680,14 @@ export default function AdminFormulasPage() {
                       </label>
                       <select
                         value={formData.subject}
-                        onChange={(e) => setFormData({ ...formData, subject: e.target.value, topicId: '', subtopicId: '' })}
+                        onChange={(e) => setFormData({ ...formData, subject: e.target.value, lessonId: '', topicId: '', subtopicId: '' })}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         required
                       >
                         <option value="">Select Subject</option>
-                        {subjects.map(subject => (
-                          <option key={subject.value} value={subject.value}>
-                            {subject.label}
+                        {Array.isArray(subjects) && subjects.map(subject => (
+                          <option key={subject.id} value={subject.name}>
+                            {subject.name} ({subject.stream?.code || 'N/A'})
                           </option>
                         ))}
                       </select>
@@ -650,7 +730,28 @@ export default function AdminFormulasPage() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Lesson
+                      </label>
+                      <select
+                        value={formData.lessonId}
+                        onChange={(e) => setFormData({ ...formData, lessonId: e.target.value, topicId: '', subtopicId: '' })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        disabled={!formData.subject}
+                      >
+                        <option value="">Select Lesson</option>
+                        {Array.isArray(lessons) && lessons
+                          .filter(lesson => lesson.subject.name === formData.subject)
+                          .map(lesson => (
+                            <option key={lesson.id} value={lesson.id}>
+                              {lesson.name} ({lesson.subject?.stream?.code || 'N/A'})
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Topic
@@ -659,14 +760,14 @@ export default function AdminFormulasPage() {
                         value={formData.topicId}
                         onChange={(e) => setFormData({ ...formData, topicId: e.target.value, subtopicId: '' })}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        disabled={!formData.subject}
+                        disabled={!formData.lessonId}
                       >
                         <option value="">Select Topic</option>
-                        {topics
-                          .filter(topic => topic.subjectId === formData.subject)
+                        {Array.isArray(topics) && topics
+                          .filter(topic => topic.lesson?.id === formData.lessonId)
                           .map(topic => (
                             <option key={topic.id} value={topic.id}>
-                              {topic.name}
+                              {topic.name} ({topic.subject?.stream?.code || 'N/A'})
                             </option>
                           ))}
                       </select>
@@ -683,11 +784,11 @@ export default function AdminFormulasPage() {
                         disabled={!formData.topicId}
                       >
                         <option value="">Select Subtopic</option>
-                        {subtopics
-                          .filter(subtopic => subtopic.topicId === formData.topicId)
+                        {Array.isArray(subtopics) && subtopics
+                          .filter(subtopic => subtopic.topic?.id === formData.topicId)
                           .map(subtopic => (
                             <option key={subtopic.id} value={subtopic.id}>
-                              {subtopic.name}
+                              {subtopic.name} ({subtopic.topic?.subject?.stream?.code || 'N/A'})
                             </option>
                           ))}
                       </select>

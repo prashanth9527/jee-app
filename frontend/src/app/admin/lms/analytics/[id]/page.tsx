@@ -47,7 +47,7 @@ interface ContentAnalytics {
 export default function LMSContentAnalyticsPage() {
   const router = useRouter();
   const params = useParams();
-  const contentId = params.id as string;
+  const contentId = params?.id as string;
   
   const [loading, setLoading] = useState(true);
   const [analytics, setAnalytics] = useState<ContentAnalytics | null>(null);

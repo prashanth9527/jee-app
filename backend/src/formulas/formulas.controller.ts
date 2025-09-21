@@ -39,12 +39,13 @@ export class FormulasController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number,
     @Query('subject') subject?: string,
+    @Query('lessonId') lessonId?: string,
     @Query('topicId') topicId?: string,
     @Query('subtopicId') subtopicId?: string,
     @Query('tags') tags?: string,
   ) {
     const tagsArray = tags ? tags.split(',') : undefined;
-    return this.formulasService.findAll(page, limit, subject, topicId, subtopicId, tagsArray);
+    return this.formulasService.findAll(page, limit, subject, lessonId, topicId, subtopicId, tagsArray);
   }
 
   @Get('admin/:id')
@@ -81,7 +82,7 @@ export class FormulasController {
     @Query('tags') tags?: string,
   ) {
     const tagsArray = tags ? tags.split(',') : undefined;
-    return this.formulasService.findAll(page, limit, subject, topicId, subtopicId, tagsArray);
+    return this.formulasService.findAll(page, limit, subject, undefined, topicId, subtopicId, tagsArray);
   }
 
   @Get(':id')

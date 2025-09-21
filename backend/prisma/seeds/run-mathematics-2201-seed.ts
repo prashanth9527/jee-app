@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import seedMathematics2201Evening from './mathematics-2201-evening-seed';
+// import seedMathematics2201Evening from './mathematics-2201-evening-seed';
 
 const prisma = new PrismaClient();
 
@@ -30,7 +30,7 @@ async function main() {
     }
 
     // Run the mathematics paper seed
-    await seedMathematics2201Evening();
+    // await seedMathematics2201Evening();
     
     console.log('✅ Mathematics 2201 Evening Paper seeding completed successfully!');
     

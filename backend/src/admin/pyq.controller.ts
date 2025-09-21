@@ -65,7 +65,9 @@ export class AdminPYQController {
     @Query('limit') limit?: string,
     @Query('year') year?: string,
     @Query('subjectId') subjectId?: string,
+    @Query('lessonId') lessonId?: string,
     @Query('topicId') topicId?: string,
+    @Query('subtopicId') subtopicId?: string,
     @Query('search') search?: string
   ) {
     const currentPage = parseInt(page || '1');
@@ -79,7 +81,9 @@ export class AdminPYQController {
 
     if (year) where.yearAppeared = parseInt(year);
     if (subjectId) where.subjectId = subjectId;
+    if (lessonId) where.lessonId = lessonId;
     if (topicId) where.topicId = topicId;
+    if (subtopicId) where.subtopicId = subtopicId;
 
     // Add search functionality
     if (search) {
@@ -89,7 +93,9 @@ export class AdminPYQController {
         { subject: { name: { contains: search, mode: 'insensitive' } } },
         { subject: { stream: { name: { contains: search, mode: 'insensitive' } } } },
         { subject: { stream: { code: { contains: search, mode: 'insensitive' } } } },
-        { topic: { name: { contains: search, mode: 'insensitive' } } }
+        { lesson: { name: { contains: search, mode: 'insensitive' } } },
+        { topic: { name: { contains: search, mode: 'insensitive' } } },
+        { subtopic: { name: { contains: search, mode: 'insensitive' } } }
       ];
     }
 
@@ -120,8 +126,107 @@ export class AdminPYQController {
             }
           }
         },
-        topic: true,
-        subtopic: true
+        lesson: {
+          select: {
+            id: true,
+            name: true,
+            subject: {
+              select: {
+                id: true,
+                name: true,
+                stream: {
+                  select: {
+                    id: true,
+                    name: true,
+                    code: true
+                  }
+                }
+              }
+            }
+          }
+        },
+        topic: {
+          select: {
+            id: true,
+            name: true,
+            lesson: {
+              select: {
+                id: true,
+                name: true,
+                subject: {
+                  select: {
+                    id: true,
+                    name: true,
+                    stream: {
+                      select: {
+                        id: true,
+                        name: true,
+                        code: true
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            subject: {
+              select: {
+                id: true,
+                name: true,
+                stream: {
+                  select: {
+                    id: true,
+                    name: true,
+                    code: true
+                  }
+                }
+              }
+            }
+          }
+        },
+        subtopic: {
+          select: {
+            id: true,
+            name: true,
+            topic: {
+              select: {
+                id: true,
+                name: true,
+                lesson: {
+                  select: {
+                    id: true,
+                    name: true,
+                    subject: {
+                      select: {
+                        id: true,
+                        name: true,
+                        stream: {
+                          select: {
+                            id: true,
+                            name: true,
+                            code: true
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                subject: {
+                  select: {
+                    id: true,
+                    name: true,
+                    stream: {
+                      select: {
+                        id: true,
+                        name: true,
+                        code: true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       orderBy: [
         { yearAppeared: 'desc' },

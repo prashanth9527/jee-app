@@ -62,7 +62,7 @@ interface ContentFormData {
 export default function LMSEditPage() {
   const router = useRouter();
   const params = useParams();
-  const contentId = params.id as string;
+  const contentId = params?.id as string;
   
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);

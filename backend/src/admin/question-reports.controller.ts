@@ -104,7 +104,7 @@ export class AdminQuestionReportsController {
       pending,
       approved,
       rejected,
-	typeStats: typeStats.map((stat: any) => ({
+      typeStats: typeStats.map((stat: any) => ({
         type: stat.reportType,
         count: stat._count.reportType
       }))

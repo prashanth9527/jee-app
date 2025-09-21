@@ -47,6 +47,7 @@ interface Subtopic {
 
 interface PracticeTestConfig {
   subjectId?: string;
+  lessonId?: string;
   topicId?: string;
   subtopicId?: string;
   questionCount: number;
@@ -58,10 +59,12 @@ interface PracticeTestConfig {
 export default function PracticeTestPage() {
   const router = useRouter();
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [lessons, setLessons] = useState<any[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
   const [subtopics, setSubtopics] = useState<Subtopic[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedSubject, setSelectedSubject] = useState<string>('');
+  const [selectedLesson, setSelectedLesson] = useState<string>('');
   const [selectedTopic, setSelectedTopic] = useState<string>('');
   const [selectedSubtopic, setSelectedSubtopic] = useState<string>('');
   const [subscriptionStatus, setSubscriptionStatus] = useState<any>(null);
@@ -79,8 +82,10 @@ export default function PracticeTestPage() {
 
   useEffect(() => {
     if (selectedSubject) {
+      fetchLessons(selectedSubject);
       fetchTopics(selectedSubject);
     } else {
+      setLessons([]);
       setTopics([]);
       setSubtopics([]);
     }
@@ -114,14 +119,30 @@ export default function PracticeTestPage() {
     }
   };
 
-  const fetchTopics = async (subjectId: string) => {
+  const fetchLessons = async (subjectId: string) => {
     try {
-      const response = await api.get(`/student/topics?subjectId=${subjectId}`);
+      const response = await api.get(`/lms/subjects/${subjectId}/lessons`);
+      setLessons(response.data);
+    } catch (error) {
+      console.error('Error fetching lessons:', error);
+      setLessons([]);
+    }
+  };
+
+  const fetchTopics = async (subjectId: string, lessonId?: string) => {
+    try {
+      let url = `/student/topics?subjectId=${subjectId}`;
+      if (lessonId) {
+        url = `/student/topics?subjectId=${subjectId}&lessonId=${lessonId}`;
+      }
+      const response = await api.get(url);
       setTopics(response.data);
     } catch (error) {
       console.error('Error fetching topics:', error);
+      setTopics([]);
     }
   };
+
 
   const fetchSubtopics = async (topicId: string) => {
     try {
@@ -129,20 +150,38 @@ export default function PracticeTestPage() {
       setSubtopics(response.data);
     } catch (error) {
       console.error('Error fetching subtopics:', error);
+      setSubtopics([]);
     }
   };
 
   const handleSubjectChange = (subjectId: string) => {
     setSelectedSubject(subjectId);
+    setSelectedLesson('');
     setSelectedTopic('');
     setSelectedSubtopic('');
-    setConfig(prev => ({ ...prev, subjectId }));
+    setConfig(prev => ({ ...prev, subjectId, lessonId: undefined, topicId: undefined, subtopicId: undefined }));
   };
 
   const handleTopicChange = (topicId: string) => {
     setSelectedTopic(topicId);
     setSelectedSubtopic('');
-    setConfig(prev => ({ ...prev, topicId }));
+    setConfig(prev => ({ ...prev, topicId, subtopicId: undefined }));
+  };
+
+  const handleLessonChange = (lessonId: string) => {
+    setSelectedLesson(lessonId);
+    setSelectedTopic('');
+    setSelectedSubtopic('');
+    setSubtopics([]);
+    setConfig(prev => ({ ...prev, lessonId, topicId: undefined, subtopicId: undefined }));
+    
+    // Load topics for the selected lesson
+    if (lessonId) {
+      fetchTopics(selectedSubject, lessonId);
+    } else {
+      // If no lesson selected, fetch topics for the subject
+      fetchTopics(selectedSubject);
+    }
   };
 
   const handleSubtopicChange = (subtopicId: string) => {
@@ -180,6 +219,7 @@ export default function PracticeTestPage() {
         // Generate AI practice test
         const aiTestData = {
           subjectId: selectedSubject,
+          lessonId: selectedLesson || undefined,
           topicId: selectedTopic || undefined,
           subtopicId: selectedSubtopic || undefined,
           questionCount: config.questionCount,
@@ -200,6 +240,7 @@ export default function PracticeTestPage() {
         // Generate manual practice test using existing database questions
         const manualTestData = {
           subjectId: selectedSubject,
+          lessonId: selectedLesson || undefined,
           topicId: selectedTopic || undefined,
           subtopicId: selectedSubtopic || undefined,
           questionCount: config.questionCount,
@@ -237,6 +278,7 @@ export default function PracticeTestPage() {
     try {
       const params = new URLSearchParams({
         subjectId: selectedSubject,
+        ...(selectedLesson && { lessonId: selectedLesson }),
         ...(selectedTopic && { topicId: selectedTopic }),
         ...(selectedSubtopic && { subtopicId: selectedSubtopic }),
         ...(config.difficulty !== 'MIXED' && { difficulty: config.difficulty })
@@ -255,7 +297,7 @@ export default function PracticeTestPage() {
     if (selectedSubject) {
       getAvailableQuestions();
     }
-  }, [selectedSubject, selectedTopic, selectedSubtopic, config.difficulty]);
+  }, [selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, config.difficulty]);
 
   const availableQuestions = questionAvailability?.totalQuestions || 0;
 
@@ -312,41 +354,71 @@ export default function PracticeTestPage() {
                     </select>
                   </div>
 
-                  {/* Topic */}
-                  {selectedSubject && topics.length > 0 && (
-                    <div className="mb-6">
-                      <label className="block text-sm font-semibold text-gray-700 mb-3">Topic (Optional)</label>
-                      <select
-                        value={selectedTopic}
-                        onChange={(e) => handleTopicChange(e.target.value)}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
-                      >
-                        <option value="">All topics</option>
-                        {topics.map((topic) => (
-                          <option key={topic.id} value={topic.id}>
-                            {topic.name} ({topic._count.questions} questions)
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
+                  {/* Additional Filters Row */}
+                  {selectedSubject && (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                      {/* Lesson */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">Lesson (Optional)</label>
+                        <select
+                          value={selectedLesson}
+                          onChange={(e) => handleLessonChange(e.target.value)}
+                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                        >
+                          <option value="">All lessons</option>
+                          {lessons.map((lesson) => (
+                            <option key={lesson.id} value={lesson.id}>
+                              {lesson.name} ({lesson._count?.questions || 0})
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                  {/* Subtopic */}
-                  {selectedTopic && subtopics.length > 0 && (
-                    <div className="mb-6">
-                      <label className="block text-sm font-semibold text-gray-700 mb-3">Subtopic (Optional)</label>
-                      <select
-                        value={selectedSubtopic}
-                        onChange={(e) => handleSubtopicChange(e.target.value)}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
-                      >
-                        <option value="">All subtopics</option>
-                        {subtopics.map((subtopic) => (
-                          <option key={subtopic.id} value={subtopic.id}>
-                            {subtopic.name} ({subtopic._count.questions} questions)
-                          </option>
-                        ))}
-                      </select>
+                      {/* Topic */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">Topic (Optional)</label>
+                        <select
+                          value={selectedTopic}
+                          onChange={(e) => handleTopicChange(e.target.value)}
+                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                          disabled={!topics.length}
+                        >
+                          <option value="">All topics</option>
+                          {topics.map((topic) => (
+                            <option key={topic.id} value={topic.id}>
+                              {topic.name} ({topic._count?.questions || 0})
+                            </option>
+                          ))}
+                        </select>
+                        {!topics.length && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            {selectedLesson ? 'No topics' : 'Loading...'}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Subtopic */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">Subtopic (Optional)</label>
+                        <select
+                          value={selectedSubtopic}
+                          onChange={(e) => handleSubtopicChange(e.target.value)}
+                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                          disabled={!selectedTopic || !subtopics.length}
+                        >
+                          <option value="">All subtopics</option>
+                          {subtopics.map((subtopic) => (
+                            <option key={subtopic.id} value={subtopic.id}>
+                              {subtopic.name} ({subtopic._count?.questions || 0})
+                            </option>
+                          ))}
+                        </select>
+                        {selectedTopic && !subtopics.length && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            No subtopics
+                          </p>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>

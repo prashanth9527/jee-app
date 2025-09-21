@@ -233,7 +233,7 @@ export default function HeaderSecondary({ systemSettings }: HeaderSecondaryProps
                   <Link 
                     href={getDashboardUrl(user.role)} 
                     className={`block px-3 py-2 text-base font-medium transition-colors ${
-                      pathname.startsWith('/student') || pathname.startsWith('/admin') || pathname.startsWith('/expert')
+                      pathname?.startsWith('/student') || pathname?.startsWith('/admin') || pathname?.startsWith('/expert')
                         ? 'text-orange-600 bg-orange-50 rounded-md' 
                         : 'text-gray-600 hover:text-orange-600'
                     }`}

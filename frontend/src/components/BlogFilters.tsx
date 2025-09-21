@@ -28,10 +28,10 @@ export default function BlogFilters({ categories = [], streams = [] }: BlogFilte
   const router = useRouter();
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState({
-    search: searchParams.get('search') || '',
-    category: searchParams.get('category') || '',
-    stream: searchParams.get('stream') || '',
-    featured: searchParams.get('featured') === 'true',
+    search: searchParams?.get('search') || '',
+    category: searchParams?.get('category') || '',
+    stream: searchParams?.get('stream') || '',
+    featured: searchParams?.get('featured') === 'true',
   });
 
   const updateFilters = (newFilters: Partial<typeof filters>) => {

@@ -5,6 +5,7 @@ import { Search, BookOpen, Calculator, Tag, Filter, Star, Eye, Download } from '
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import MathFormula from '@/components/MathFormula';
+import api from '@/lib/api';
 
 interface Formula {
   id: string;
@@ -12,9 +13,11 @@ interface Formula {
   formula: string;
   description?: string;
   subject?: string;
-  tags: string[];
+  subjectId?: string;
+  lessonId?: string;
   topicId?: string;
   subtopicId?: string;
+  tags: string[];
   targetRole?: string;
   createdAt: string;
   updatedAt: string;
@@ -32,26 +35,47 @@ interface Question {
 
 export default function StudentFormulasPage() {
   const [formulas, setFormulas] = useState<Formula[]>([]);
+  const [subjects, setSubjects] = useState<any[]>([]);
+  const [lessons, setLessons] = useState<any[]>([]);
+  const [topics, setTopics] = useState<any[]>([]);
+  const [subtopics, setSubtopics] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedLesson, setSelectedLesson] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState('');
+  const [selectedSubtopic, setSelectedSubtopic] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedFormula, setSelectedFormula] = useState<Formula | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [bookmarkedFormulas, setBookmarkedFormulas] = useState<Set<string>>(new Set());
 
-  const subjects = [
-    { value: '', label: 'All Subjects' },
-    { value: 'Physics', label: 'Physics' },
-    { value: 'Chemistry', label: 'Chemistry' },
-    { value: 'Mathematics', label: 'Mathematics' },
-  ];
 
   useEffect(() => {
+    fetchSubjects();
     fetchFormulas();
     loadBookmarks();
   }, []);
+
+  useEffect(() => {
+    if (selectedSubject) {
+      fetchLessons(selectedSubject);
+      fetchTopics(selectedSubject);
+    } else {
+      setLessons([]);
+      setTopics([]);
+      setSubtopics([]);
+    }
+  }, [selectedSubject]);
+
+  useEffect(() => {
+    if (selectedTopic) {
+      fetchSubtopics(selectedTopic);
+    } else {
+      setSubtopics([]);
+    }
+  }, [selectedTopic]);
 
   useEffect(() => {
     // Extract all unique tags
@@ -61,6 +85,49 @@ export default function StudentFormulasPage() {
     });
     setAllTags(Array.from(tags).sort());
   }, [formulas]);
+
+  const fetchSubjects = async () => {
+    try {
+      const response = await api.get('/student/subjects');
+      setSubjects(response.data);
+    } catch (error) {
+      console.error('Error fetching subjects:', error);
+    }
+  };
+
+  const fetchLessons = async (subjectId: string) => {
+    try {
+      const response = await api.get(`/student/lms/lessons?subjectId=${subjectId}`);
+      setLessons(response.data);
+    } catch (error) {
+      console.error('Error fetching lessons:', error);
+      setLessons([]);
+    }
+  };
+
+  const fetchTopics = async (subjectId: string, lessonId?: string) => {
+    try {
+      let url = `/student/topics?subjectId=${subjectId}`;
+      if (lessonId) {
+        url = `/student/topics?subjectId=${subjectId}&lessonId=${lessonId}`;
+      }
+      const response = await api.get(url);
+      setTopics(response.data);
+    } catch (error) {
+      console.error('Error fetching topics:', error);
+      setTopics([]);
+    }
+  };
+
+  const fetchSubtopics = async (topicId: string) => {
+    try {
+      const response = await api.get(`/student/subtopics?topicId=${topicId}`);
+      setSubtopics(response.data);
+    } catch (error) {
+      console.error('Error fetching subtopics:', error);
+      setSubtopics([]);
+    }
+  };
 
   const fetchFormulas = async () => {
     try {
@@ -74,6 +141,9 @@ export default function StudentFormulasPage() {
       const params = new URLSearchParams();
       if (searchTerm) params.append('search', searchTerm);
       if (selectedSubject) params.append('subject', selectedSubject);
+      if (selectedLesson) params.append('lessonId', selectedLesson);
+      if (selectedTopic) params.append('topicId', selectedTopic);
+      if (selectedSubtopic) params.append('subtopicId', selectedSubtopic);
       if (selectedTag) params.append('tags', selectedTag);
 
       const response = await fetch(`/api/formulas?${params}`, {
@@ -145,9 +215,12 @@ export default function StudentFormulasPage() {
                          formula.formula.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          formula.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          formula.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesSubject = !selectedSubject || formula.subject === selectedSubject;
+    const matchesSubject = !selectedSubject || formula.subjectId === selectedSubject;
+    const matchesLesson = !selectedLesson || formula.lessonId === selectedLesson;
+    const matchesTopic = !selectedTopic || formula.topicId === selectedTopic;
+    const matchesSubtopic = !selectedSubtopic || formula.subtopicId === selectedSubtopic;
     const matchesTag = !selectedTag || formula.tags.includes(selectedTag);
-    return matchesSearch && matchesSubject && matchesTag;
+    return matchesSearch && matchesSubject && matchesLesson && matchesTopic && matchesSubtopic && matchesTag;
   });
 
   const getSubjectColor = (subject: string) => {
@@ -196,7 +269,7 @@ export default function StudentFormulasPage() {
 
           {/* Search and Filter Section */}
           <div className="bg-white p-6 rounded-lg shadow mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
               <div className="md:col-span-2">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -212,12 +285,70 @@ export default function StudentFormulasPage() {
               
               <select
                 value={selectedSubject}
-                onChange={(e) => setSelectedSubject(e.target.value)}
+                onChange={(e) => {
+                  setSelectedSubject(e.target.value);
+                  setSelectedLesson('');
+                  setSelectedTopic('');
+                  setSelectedSubtopic('');
+                }}
                 className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
+                <option value="">All Subjects</option>
                 {subjects.map(subject => (
-                  <option key={subject.value} value={subject.value}>
-                    {subject.label}
+                  <option key={subject.id} value={subject.id}>
+                    {subject.name}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={selectedLesson}
+                onChange={(e) => {
+                  setSelectedLesson(e.target.value);
+                  setSelectedTopic('');
+                  setSelectedSubtopic('');
+                  if (e.target.value && selectedSubject) {
+                    fetchTopics(selectedSubject, e.target.value);
+                  }
+                }}
+                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                disabled={!selectedSubject}
+              >
+                <option value="">All Lessons</option>
+                {lessons.map(lesson => (
+                  <option key={lesson.id} value={lesson.id}>
+                    {lesson.name}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={selectedTopic}
+                onChange={(e) => {
+                  setSelectedTopic(e.target.value);
+                  setSelectedSubtopic('');
+                }}
+                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                disabled={!selectedSubject}
+              >
+                <option value="">All Topics</option>
+                {topics.map(topic => (
+                  <option key={topic.id} value={topic.id}>
+                    {topic.name}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={selectedSubtopic}
+                onChange={(e) => setSelectedSubtopic(e.target.value)}
+                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                disabled={!selectedSubject || !selectedTopic}
+              >
+                <option value="">All Subtopics</option>
+                {subtopics.map(subtopic => (
+                  <option key={subtopic.id} value={subtopic.id}>
+                    {subtopic.name}
                   </option>
                 ))}
               </select>
@@ -245,11 +376,14 @@ export default function StudentFormulasPage() {
                 Apply Filters
               </button>
               
-              {(searchTerm || selectedSubject || selectedTag) && (
+              {(searchTerm || selectedSubject || selectedLesson || selectedTopic || selectedSubtopic || selectedTag) && (
                 <button
                   onClick={() => {
                     setSearchTerm('');
                     setSelectedSubject('');
+                    setSelectedLesson('');
+                    setSelectedTopic('');
+                    setSelectedSubtopic('');
                     setSelectedTag('');
                     fetchFormulas();
                   }}
@@ -398,7 +532,7 @@ export default function StudentFormulasPage() {
               <Calculator className="mx-auto h-12 w-12 text-gray-400" />
               <h3 className="mt-2 text-sm font-medium text-gray-900">No formulas found</h3>
               <p className="mt-1 text-sm text-gray-500">
-                {searchTerm || selectedSubject || selectedTag ? 'Try adjusting your search criteria.' : 'No formulas available at the moment.'}
+                {searchTerm || selectedSubject || selectedLesson || selectedTopic || selectedSubtopic || selectedTag ? 'Try adjusting your search criteria.' : 'No formulas available at the moment.'}
               </p>
             </div>
           )}

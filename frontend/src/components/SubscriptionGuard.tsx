@@ -21,9 +21,8 @@ interface SubscriptionGuardProps {
 }
 
 export default function SubscriptionGuard({ children, fallback }: SubscriptionGuardProps) {
-  const { user } = useAuth();
+  const { user, refreshSubscriptionStatus } = useAuth();
   const router = useRouter();
-  const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,21 +38,25 @@ export default function SubscriptionGuard({ children, fallback }: SubscriptionGu
         return;
       }
 
-      try {
-        const response = await api.get('/student/subscription-status');
-        const data = response.data;
-        setSubscriptionStatus(data.subscriptionStatus);
-
+      // If we already have subscription status, use it
+      if (user.subscriptionStatus) {
         // If user needs subscription and is not on subscription page, redirect
-        if (data.subscriptionStatus.needsSubscription) {
+        if (user.subscriptionStatus.needsSubscription) {
           const currentPath = window.location.pathname;
           if (currentPath !== '/student/subscriptions' && currentPath !== '/profile/complete') {
             router.push('/student/subscriptions');
             return;
           }
         }
+        setLoading(false);
+        return;
+      }
+
+      // If no subscription status, refresh it
+      try {
+        await refreshSubscriptionStatus();
       } catch (error) {
-        console.error('Failed to check subscription status:', error);
+        console.error('Failed to refresh subscription status:', error);
         // Don't block access if subscription check fails
       } finally {
         setLoading(false);
@@ -61,7 +64,7 @@ export default function SubscriptionGuard({ children, fallback }: SubscriptionGu
     };
 
     checkSubscription();
-  }, [user, router]);
+  }, [user, router, refreshSubscriptionStatus]);
 
   if (loading) {
     return (
@@ -75,7 +78,7 @@ export default function SubscriptionGuard({ children, fallback }: SubscriptionGu
   }
 
   // If user needs subscription, show fallback or redirect
-  if (subscriptionStatus?.needsSubscription) {
+  if (user?.subscriptionStatus?.needsSubscription) {
     if (fallback) {
       return <>{fallback}</>;
     }

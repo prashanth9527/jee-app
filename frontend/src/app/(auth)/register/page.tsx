@@ -75,10 +75,12 @@ function RegisterForm() {
 
 	// Check for referral code in URL
 	useEffect(() => {
-		const ref = searchParams.get('ref');
-		if (ref) {
-			setReferralCode(ref);
-			validateReferralCode(ref);
+		if (searchParams) {
+			const ref = searchParams.get('ref');
+			if (ref) {
+				setReferralCode(ref);
+				validateReferralCode(ref);
+			}
 		}
 	}, [searchParams]);
 

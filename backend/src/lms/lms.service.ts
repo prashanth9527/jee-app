@@ -880,6 +880,186 @@ export class LMSService {
       orderBy: { name: 'asc' }
     });
   }
+
+  // Lesson management methods
+  async createLesson(data: { name: string; description?: string; subjectId: string; order?: number }) {
+    // Validate subject exists
+    const subject = await this.prisma.subject.findUnique({
+      where: { id: data.subjectId }
+    });
+    if (!subject) {
+      throw new BadRequestException('Subject not found');
+    }
+
+    const lesson = await this.prisma.lesson.create({
+      data: {
+        name: data.name,
+        description: data.description,
+        subjectId: data.subjectId,
+        order: data.order || 0,
+        isActive: true,
+      },
+      include: {
+        subject: true,
+        topics: {
+          orderBy: { order: 'asc' }
+        },
+        _count: {
+          select: {
+            topics: true,
+            lmsContent: true,
+          }
+        }
+      }
+    });
+
+    return lesson;
+  }
+
+  async getLessonWithContent(lessonId: string) {
+    const lesson = await this.prisma.lesson.findUnique({
+      where: { id: lessonId },
+      include: {
+        subject: true,
+        topics: {
+          orderBy: { order: 'asc' },
+          include: {
+            subtopics: true,
+            _count: {
+              select: {
+                subtopics: true,
+                lmsContent: true,
+              }
+            }
+          }
+        },
+        lmsContent: {
+          orderBy: { order: 'asc' },
+          include: {
+            subject: true,
+            topic: true,
+            subtopic: true,
+            _count: {
+              select: {
+                progress: true,
+              }
+            }
+          }
+        },
+        _count: {
+          select: {
+            topics: true,
+            lmsContent: true,
+          }
+        }
+      }
+    });
+
+    if (!lesson) {
+      throw new NotFoundException('Lesson not found');
+    }
+
+    return lesson;
+  }
+
+  async updateLesson(lessonId: string, data: { name?: string; description?: string; order?: number; isActive?: boolean }) {
+    const existingLesson = await this.prisma.lesson.findUnique({
+      where: { id: lessonId }
+    });
+
+    if (!existingLesson) {
+      throw new NotFoundException('Lesson not found');
+    }
+
+    const lesson = await this.prisma.lesson.update({
+      where: { id: lessonId },
+      data: {
+        ...data,
+      },
+      include: {
+        subject: true,
+        topics: {
+          orderBy: { order: 'asc' }
+        },
+        _count: {
+          select: {
+            topics: true,
+            lmsContent: true,
+          }
+        }
+      }
+    });
+
+    return lesson;
+  }
+
+  async deleteLesson(lessonId: string) {
+    const lesson = await this.prisma.lesson.findUnique({
+      where: { id: lessonId },
+      include: {
+        topics: {
+          include: {
+            subtopics: true,
+            lmsContent: true,
+          }
+        },
+        lmsContent: true,
+        _count: {
+          select: {
+            topics: true,
+            lmsContent: true,
+          }
+        }
+      }
+    });
+
+    if (!lesson) {
+      throw new NotFoundException('Lesson not found');
+    }
+
+    // Check if lesson has topics or content
+    if (lesson.topics.length > 0 || lesson.lmsContent.length > 0) {
+      throw new BadRequestException('Cannot delete lesson with topics or content. Delete them first.');
+    }
+
+    await this.prisma.lesson.delete({
+      where: { id: lessonId }
+    });
+
+    return { message: 'Lesson deleted successfully' };
+  }
+
+  async getLessonsBySubject(subjectId: string) {
+    // Validate subject exists
+    const subject = await this.prisma.subject.findUnique({
+      where: { id: subjectId }
+    });
+    if (!subject) {
+      throw new NotFoundException('Subject not found');
+    }
+
+    const lessons = await this.prisma.lesson.findMany({
+      where: { 
+        subjectId: subjectId,
+        isActive: true 
+      },
+      include: {
+        subject: true,
+        topics: {
+          orderBy: { order: 'asc' }
+        },
+        _count: {
+          select: {
+            topics: true,
+            lmsContent: true,
+          }
+        }
+      },
+      orderBy: { order: 'asc' }
+    });
+
+    return lessons;
+  }
 }
 
 

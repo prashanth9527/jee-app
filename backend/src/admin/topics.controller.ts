@@ -15,7 +15,8 @@ export class AdminTopicsController {
 		@Query('page') page = '1',
 		@Query('limit') limit = '10',
 		@Query('search') search?: string,
-		@Query('subjectId') subjectId?: string
+		@Query('subjectId') subjectId?: string,
+		@Query('lessonId') lessonId?: string
 	) {
 		const pageNum = parseInt(page, 10);
 		const limitNum = parseInt(limit, 10);
@@ -27,11 +28,16 @@ export class AdminTopicsController {
 		if (subjectId) {
 			where.subjectId = subjectId;
 		}
+
+		if (lessonId) {
+			where.lessonId = lessonId;
+		}
 		
 		if (search) {
 			where.OR = [
 				{ name: { contains: search, mode: 'insensitive' } },
 				{ subject: { name: { contains: search, mode: 'insensitive' } } },
+				{ lesson: { name: { contains: search, mode: 'insensitive' } } },
 				{ subject: { stream: { name: { contains: search, mode: 'insensitive' } } } },
 				{ subject: { stream: { code: { contains: search, mode: 'insensitive' } } } }
 			];
@@ -57,9 +63,21 @@ export class AdminTopicsController {
 							}
 						}
 					}
+				},
+				lesson: {
+					select: {
+						id: true,
+						name: true,
+						order: true
+					}
+				},
+				_count: {
+					select: {
+						subtopics: true
+					}
 				}
 			},
-			orderBy: { name: 'asc' },
+			orderBy: { order: 'asc' },
 			skip,
 			take: limitNum
 		});
@@ -78,9 +96,9 @@ export class AdminTopicsController {
 	}
 
 	@Post()
-	create(@Body() body: { subjectId: string; name: string; description?: string }) {
+	create(@Body() body: { subjectId: string; lessonId: string; name: string; description?: string }) {
 		return this.prisma.topic.create({ 
-			data: { subjectId: body.subjectId, name: body.name, description: body.description || null },
+			data: { subjectId: body.subjectId, lessonId: body.lessonId, name: body.name, description: body.description || null },
 			include: {
 				subject: {
 					select: {

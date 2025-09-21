@@ -48,6 +48,8 @@ model User {
   bookmarks         Bookmark[]
   contactTickets    ContactTicket[]
   lmsProgress       LMSProgress[]
+  lessonProgress    LessonProgress[]
+  lessonBadges      LessonBadge[]
   ticketResponses   TicketResponse[]
   sessions          UserSession[]
 }
@@ -75,6 +77,7 @@ model Subject {
   updatedAt   DateTime     @updatedAt
   questions   Question[]
   stream      Stream       @relation(fields: [streamId], references: [id], onDelete: Cascade)
+  lessons     Lesson[]
   topics      Topic[]
   blogs       Blog[]
   lmsContent  LMSContent[]
@@ -82,19 +85,44 @@ model Subject {
   @@unique([streamId, name])
 }
 
-model Topic {
+model Lesson {
   id          String       @id @default(cuid())
   name        String
   description String?
   subjectId   String
+  order       Int          @default(0)
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  
+  // Relationships
+  subject     Subject      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  topics      Topic[]
+  lmsContent  LMSContent[]
+  questions   Question[]
+  progress    LessonProgress[]
+  
+  @@unique([subjectId, name])
+  @@unique([subjectId, order])
+}
+
+model Topic {
+  id          String       @id @default(cuid())
+  name        String
+  description String?
+  lessonId    String
+  subjectId   String
+  order       Int          @default(0)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   questions   Question[]
   subtopics   Subtopic[]
+  lesson      Lesson       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   subject     Subject      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
   lmsContent  LMSContent[]
 
-  @@unique([subjectId, name])
+  @@unique([lessonId, name])
+  @@unique([lessonId, order])
 }
 
 model Subtopic {
@@ -122,6 +150,7 @@ model Question {
   isAIGenerated           Boolean                          @default(false)
   aiPrompt                String?
   subjectId               String?
+  lessonId                String?
   topicId                 String?
   subtopicId              String?
   createdAt               DateTime                         @default(now())
@@ -130,6 +159,7 @@ model Question {
   answers                 ExamAnswer[]
   createdBy               User?                            @relation("QuestionCreator", fields: [createdById], references: [id])
   subject                 Subject?                         @relation(fields: [subjectId], references: [id])
+  lesson                  Lesson?                          @relation(fields: [lessonId], references: [id])
   subtopic                Subtopic?                        @relation(fields: [subtopicId], references: [id])
   topic                   Topic?                           @relation(fields: [topicId], references: [id])
   alternativeExplanations QuestionAlternativeExplanation[]
@@ -566,6 +596,7 @@ model LMSContent {
   scormData        Json?
   streamId         String?
   subjectId        String?
+  lessonId         String?
   topicId          String?
   subtopicId       String?
   isDripContent    Boolean       @default(false)
@@ -584,6 +615,7 @@ model LMSContent {
   children         LMSContent[]  @relation("ContentHierarchy")
   stream           Stream?       @relation(fields: [streamId], references: [id])
   subject          Subject?      @relation(fields: [subjectId], references: [id])
+  lesson           Lesson?       @relation(fields: [lessonId], references: [id])
   subtopic         Subtopic?     @relation(fields: [subtopicId], references: [id])
   topic            Topic?        @relation(fields: [topicId], references: [id])
   progress         LMSProgress[]
@@ -609,6 +641,54 @@ model LMSProgress {
 
   @@unique([userId, contentId])
   @@map("lms_progress")
+}
+
+model LessonProgress {
+  id             String         @id @default(cuid())
+  userId         String
+  lessonId       String
+  status         ProgressStatus @default(NOT_STARTED)
+  progress       Float          @default(0) // Overall lesson progress (0-100)
+  timeSpent      Int            @default(0) // Total time spent in seconds
+  startedAt      DateTime?
+  completedAt    DateTime?
+  lastAccessedAt DateTime?
+  
+  // Lesson-specific metrics
+  contentCompleted Int          @default(0) // Number of content items completed
+  totalContent     Int          @default(0) // Total content items in lesson
+  topicsCompleted  Int          @default(0) // Number of topics completed
+  totalTopics      Int          @default(0) // Total topics in lesson
+  averageScore     Float?       // Average score across all assessments
+  attempts         Int          @default(0) // Total attempts across all content
+  
+  // Additional data
+  data           Json?          // Store additional progress metadata
+  badges         LessonBadge[]  // Badges earned for this lesson
+  
+  lesson         Lesson         @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@map("lesson_progress")
+}
+
+model LessonBadge {
+  id             String         @id @default(cuid())
+  userId         String
+  lessonId       String
+  badgeType      BadgeType
+  title          String
+  description    String?
+  iconUrl        String?
+  earnedAt       DateTime       @default(now())
+  metadata       Json?          // Store badge-specific data
+  
+  lessonProgress LessonProgress @relation(fields: [userId, lessonId], references: [userId, lessonId], onDelete: Cascade)
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId, badgeType])
+  @@map("lesson_badges")
 }
 
 model BlogCategory {
@@ -868,6 +948,7 @@ enum AccessType {
   TRIAL
 }
 
+
 enum ProgressStatus {
   NOT_STARTED
   IN_PROGRESS
@@ -887,4 +968,17 @@ enum CommentStatus {
   APPROVED
   REJECTED
   SPAM
+}
+
+enum BadgeType {
+  COMPLETION
+  SPEED_DEMON
+  PERFECT_SCORE
+  PERSEVERANCE
+  EARLY_BIRD
+  NIGHT_OWL
+  STREAK_MASTER
+  TOP_PERFORMER
+  CONTENT_EXPLORER
+  QUIZ_MASTER
 }

@@ -23,6 +23,7 @@ export class FormulasService {
     page: number = 1,
     limit: number = 20,
     subject?: string,
+    lessonId?: string,
     topicId?: string,
     subtopicId?: string,
     tags?: string[],
@@ -33,6 +34,10 @@ export class FormulasService {
     
     if (subject) {
       where.subject = subject;
+    }
+    
+    if (lessonId) {
+      where.lessonId = lessonId;
     }
     
     if (topicId) {

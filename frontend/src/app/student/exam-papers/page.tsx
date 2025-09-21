@@ -31,9 +31,15 @@ export default function ExamPapersPage() {
   const router = useRouter();
   const [papers, setPapers] = useState<ExamPaper[]>([]);
   const [subjects, setSubjects] = useState<any[]>([]);
+  const [lessons, setLessons] = useState<any[]>([]);
+  const [topics, setTopics] = useState<any[]>([]);
+  const [subtopics, setSubtopics] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedLesson, setSelectedLesson] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState('');
+  const [selectedSubtopic, setSelectedSubtopic] = useState('');
   const [pagination, setPagination] = useState<Pagination | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -44,7 +50,7 @@ export default function ExamPapersPage() {
 
   useEffect(() => {
     fetchPapers();
-  }, [currentPage, itemsPerPage, searchText, selectedSubject]);
+  }, [currentPage, itemsPerPage, searchText, selectedSubject, selectedLesson, selectedTopic, selectedSubtopic]);
 
   const fetchSubjects = async () => {
     try {
@@ -52,6 +58,40 @@ export default function ExamPapersPage() {
       setSubjects(response.data);
     } catch (error) {
       console.error('Error fetching subjects:', error);
+    }
+  };
+
+  const fetchLessons = async (subjectId: string) => {
+    try {
+      const response = await api.get(`/lms/subjects/${subjectId}/lessons`);
+      setLessons(response.data);
+    } catch (error) {
+      console.error('Error fetching lessons:', error);
+      setLessons([]);
+    }
+  };
+
+  const fetchTopics = async (subjectId: string, lessonId?: string) => {
+    try {
+      let url = `/student/topics?subjectId=${subjectId}`;
+      if (lessonId) {
+        url = `/student/topics?subjectId=${subjectId}&lessonId=${lessonId}`;
+      }
+      const response = await api.get(url);
+      setTopics(response.data);
+    } catch (error) {
+      console.error('Error fetching topics:', error);
+      setTopics([]);
+    }
+  };
+
+  const fetchSubtopics = async (topicId: string) => {
+    try {
+      const response = await api.get(`/student/subtopics?topicId=${topicId}`);
+      setSubtopics(response.data);
+    } catch (error) {
+      console.error('Error fetching subtopics:', error);
+      setSubtopics([]);
     }
   };
 
@@ -69,6 +109,18 @@ export default function ExamPapersPage() {
 
       if (selectedSubject) {
         params.append('subjectId', selectedSubject);
+      }
+
+      if (selectedLesson) {
+        params.append('lessonId', selectedLesson);
+      }
+
+      if (selectedTopic) {
+        params.append('topicId', selectedTopic);
+      }
+
+      if (selectedSubtopic) {
+        params.append('subtopicId', selectedSubtopic);
       }
 
       const response = await api.get(`/student/exam-papers?${params}`);
@@ -125,6 +177,48 @@ export default function ExamPapersPage() {
 
   const handleSubjectChange = (subjectId: string) => {
     setSelectedSubject(subjectId);
+    setSelectedLesson('');
+    setSelectedTopic('');
+    setSelectedSubtopic('');
+    setLessons([]);
+    setTopics([]);
+    setSubtopics([]);
+    setCurrentPage(1);
+    
+    if (subjectId) {
+      fetchLessons(subjectId);
+      fetchTopics(subjectId);
+    }
+  };
+
+  const handleLessonChange = (lessonId: string) => {
+    setSelectedLesson(lessonId);
+    setSelectedTopic('');
+    setSelectedSubtopic('');
+    setTopics([]);
+    setSubtopics([]);
+    setCurrentPage(1);
+    
+    if (lessonId && selectedSubject) {
+      fetchTopics(selectedSubject, lessonId);
+    } else if (selectedSubject) {
+      fetchTopics(selectedSubject);
+    }
+  };
+
+  const handleTopicChange = (topicId: string) => {
+    setSelectedTopic(topicId);
+    setSelectedSubtopic('');
+    setSubtopics([]);
+    setCurrentPage(1);
+    
+    if (topicId) {
+      fetchSubtopics(topicId);
+    }
+  };
+
+  const handleSubtopicChange = (subtopicId: string) => {
+    setSelectedSubtopic(subtopicId);
     setCurrentPage(1);
   };
 
@@ -169,43 +263,109 @@ export default function ExamPapersPage() {
 
           {/* Filters */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
               {/* Search */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-3">Search</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Search</label>
                 <input
                   type="text"
                   placeholder="Search exam papers..."
                   value={searchText}
                   onChange={(e) => handleSearch(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 placeholder-gray-500"
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 placeholder-gray-500 text-sm"
                 />
               </div>
 
               {/* Subject Filter */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-3">Subject</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Subject</label>
                 <select
                   value={selectedSubject}
                   onChange={(e) => handleSubjectChange(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
                 >
                   <option value="">All Subjects</option>
                   {subjects.map((subject) => (
                     <option key={subject.id} value={subject.id}>
-                      {subject.name} ({subject._count.questions} questions)
+                      {subject.name}
                     </option>
                   ))}
                 </select>
               </div>
 
+              {/* Lesson Filter */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Lesson</label>
+                <select
+                  value={selectedLesson}
+                  onChange={(e) => handleLessonChange(e.target.value)}
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                  disabled={!selectedSubject || !lessons.length}
+                >
+                  <option value="">All Lessons</option>
+                  {lessons.map((lesson) => (
+                    <option key={lesson.id} value={lesson.id}>
+                      {lesson.name}
+                    </option>
+                  ))}
+                </select>
+                {!selectedSubject && (
+                  <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
+                )}
+              </div>
+
+              {/* Topic Filter */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Topic</label>
+                <select
+                  value={selectedTopic}
+                  onChange={(e) => handleTopicChange(e.target.value)}
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                  disabled={!selectedSubject || !topics.length}
+                >
+                  <option value="">All Topics</option>
+                  {topics.map((topic) => (
+                    <option key={topic.id} value={topic.id}>
+                      {topic.name}
+                    </option>
+                  ))}
+                </select>
+                {!selectedSubject && (
+                  <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
+                )}
+              </div>
+
+              {/* Subtopic Filter */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Subtopic</label>
+                <select
+                  value={selectedSubtopic}
+                  onChange={(e) => handleSubtopicChange(e.target.value)}
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                  disabled={!selectedSubject || !selectedTopic || !subtopics.length}
+                >
+                  <option value="">All Subtopics</option>
+                  {subtopics.map((subtopic) => (
+                    <option key={subtopic.id} value={subtopic.id}>
+                      {subtopic.name}
+                    </option>
+                  ))}
+                </select>
+                {!selectedSubject && (
+                  <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
+                )}
+                {selectedSubject && !selectedTopic && (
+                  <p className="text-xs text-gray-500 mt-1">Select a topic first</p>
+                )}
+              </div>
+
               {/* Items per page */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-3">Items per page</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Items per page</label>
                 <select
                   value={itemsPerPage}
                   onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
                 >
                   <option value={5}>5</option>
                   <option value={10}>10</option>
