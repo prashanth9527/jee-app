@@ -20,6 +20,15 @@ CREATE TYPE "public"."PlanInterval" AS ENUM ('MONTH', 'YEAR');
 CREATE TYPE "public"."SubscriptionStatus" AS ENUM ('ACTIVE', 'CANCELED', 'EXPIRED');
 
 -- CreateEnum
+CREATE TYPE "public"."PaymentGateway" AS ENUM ('STRIPE', 'PHONEPE');
+
+-- CreateEnum
+CREATE TYPE "public"."PaymentOrderStatus" AS ENUM ('PENDING', 'COMPLETED', 'FAILED', 'CANCELLED');
+
+-- CreateEnum
+CREATE TYPE "public"."PaymentLogType" AS ENUM ('INFO', 'WARNING', 'ERROR', 'WEBHOOK', 'API_CALL', 'STATUS_UPDATE');
+
+-- CreateEnum
 CREATE TYPE "public"."OtpType" AS ENUM ('EMAIL', 'PHONE', 'EMAIL_CHANGE', 'PHONE_CHANGE');
 
 -- CreateEnum
@@ -51,6 +60,15 @@ CREATE TYPE "public"."AccessType" AS ENUM ('FREE', 'SUBSCRIPTION', 'PREMIUM', 'T
 
 -- CreateEnum
 CREATE TYPE "public"."ProgressStatus" AS ENUM ('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED', 'FAILED');
+
+-- CreateEnum
+CREATE TYPE "public"."BlogStatus" AS ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED', 'SCHEDULED');
+
+-- CreateEnum
+CREATE TYPE "public"."CommentStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'SPAM');
+
+-- CreateEnum
+CREATE TYPE "public"."BadgeType" AS ENUM ('COMPLETION', 'SPEED_DEMON', 'PERFECT_SCORE', 'PERSEVERANCE', 'EARLY_BIRD', 'NIGHT_OWL', 'STREAK_MASTER', 'TOP_PERFORMER', 'CONTENT_EXPLORER', 'QUIZ_MASTER');
 
 -- CreateTable
 CREATE TABLE "public"."User" (
@@ -103,11 +121,27 @@ CREATE TABLE "public"."Subject" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."Topic" (
+CREATE TABLE "public"."Lesson" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
     "subjectId" TEXT NOT NULL,
+    "order" INTEGER NOT NULL DEFAULT 0,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Lesson_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."Topic" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "lessonId" TEXT NOT NULL,
+    "subjectId" TEXT NOT NULL,
+    "order" INTEGER NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -138,10 +172,12 @@ CREATE TABLE "public"."Question" (
     "isAIGenerated" BOOLEAN NOT NULL DEFAULT false,
     "aiPrompt" TEXT,
     "subjectId" TEXT,
+    "lessonId" TEXT,
     "topicId" TEXT,
     "subtopicId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdById" TEXT,
 
     CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
 );
@@ -231,6 +267,7 @@ CREATE TABLE "public"."ExamPaper" (
     "timeLimitMin" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdById" TEXT,
 
     CONSTRAINT "ExamPaper_pkey" PRIMARY KEY ("id")
 );
@@ -292,6 +329,59 @@ CREATE TABLE "public"."Subscription" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Subscription_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."PaymentOrder" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "planId" TEXT NOT NULL,
+    "merchantOrderId" TEXT NOT NULL,
+    "amount" INTEGER NOT NULL,
+    "currency" TEXT NOT NULL DEFAULT 'INR',
+    "status" "public"."PaymentOrderStatus" NOT NULL DEFAULT 'PENDING',
+    "gateway" "public"."PaymentGateway" NOT NULL,
+    "gatewayOrderId" TEXT,
+    "gatewayStatus" TEXT,
+    "successUrl" TEXT NOT NULL,
+    "cancelUrl" TEXT NOT NULL,
+    "phonepeRedirectUrl" TEXT,
+    "phonepeDeepLink" TEXT,
+    "stripeSessionId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "errorCode" TEXT,
+    "errorDetails" TEXT,
+    "errorMessage" TEXT,
+    "initialResponse" TEXT,
+    "statusResponse" TEXT,
+    "webhookHeaders" TEXT,
+    "webhookPayload" TEXT,
+    "webhookProcessed" BOOLEAN NOT NULL DEFAULT false,
+    "webhookProcessedAt" TIMESTAMP(3),
+
+    CONSTRAINT "PaymentOrder_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."PaymentLog" (
+    "id" TEXT NOT NULL,
+    "paymentOrderId" TEXT NOT NULL,
+    "logType" "public"."PaymentLogType" NOT NULL,
+    "eventType" TEXT,
+    "message" TEXT NOT NULL,
+    "data" TEXT,
+    "requestUrl" TEXT,
+    "requestMethod" TEXT,
+    "requestHeaders" TEXT,
+    "requestBody" TEXT,
+    "responseStatus" INTEGER,
+    "responseHeaders" TEXT,
+    "responseBody" TEXT,
+    "processingTimeMs" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "PaymentLog_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -383,6 +473,7 @@ CREATE TABLE "public"."system_settings" (
     "maintenanceMessage" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "logoFooter" TEXT,
 
     CONSTRAINT "system_settings_pkey" PRIMARY KEY ("id")
 );
@@ -515,6 +606,7 @@ CREATE TABLE "public"."lms_content" (
     "scormData" JSONB,
     "streamId" TEXT,
     "subjectId" TEXT,
+    "lessonId" TEXT,
     "topicId" TEXT,
     "subtopicId" TEXT,
     "isDripContent" BOOLEAN NOT NULL DEFAULT false,
@@ -551,6 +643,145 @@ CREATE TABLE "public"."lms_progress" (
     CONSTRAINT "lms_progress_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "public"."lesson_progress" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "lessonId" TEXT NOT NULL,
+    "status" "public"."ProgressStatus" NOT NULL DEFAULT 'NOT_STARTED',
+    "progress" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "timeSpent" INTEGER NOT NULL DEFAULT 0,
+    "startedAt" TIMESTAMP(3),
+    "completedAt" TIMESTAMP(3),
+    "lastAccessedAt" TIMESTAMP(3),
+    "contentCompleted" INTEGER NOT NULL DEFAULT 0,
+    "totalContent" INTEGER NOT NULL DEFAULT 0,
+    "topicsCompleted" INTEGER NOT NULL DEFAULT 0,
+    "totalTopics" INTEGER NOT NULL DEFAULT 0,
+    "averageScore" DOUBLE PRECISION,
+    "attempts" INTEGER NOT NULL DEFAULT 0,
+    "data" JSONB,
+
+    CONSTRAINT "lesson_progress_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."lesson_badges" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "lessonId" TEXT NOT NULL,
+    "badgeType" "public"."BadgeType" NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "iconUrl" TEXT,
+    "earnedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "metadata" JSONB,
+
+    CONSTRAINT "lesson_badges_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."blog_categories" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "description" TEXT,
+    "color" TEXT,
+    "icon" TEXT,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "sortOrder" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "blog_categories_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."blogs" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "excerpt" TEXT,
+    "content" TEXT NOT NULL,
+    "metaTitle" TEXT,
+    "metaDescription" TEXT,
+    "metaKeywords" TEXT,
+    "status" "public"."BlogStatus" NOT NULL DEFAULT 'DRAFT',
+    "publishedAt" TIMESTAMP(3),
+    "featuredImage" TEXT,
+    "categoryId" TEXT,
+    "tags" TEXT[],
+    "authorId" TEXT NOT NULL,
+    "streamId" TEXT,
+    "subjectId" TEXT,
+    "viewCount" INTEGER NOT NULL DEFAULT 0,
+    "likeCount" INTEGER NOT NULL DEFAULT 0,
+    "shareCount" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "featured" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "blogs_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."blog_comments" (
+    "id" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "authorId" TEXT NOT NULL,
+    "blogId" TEXT NOT NULL,
+    "status" "public"."CommentStatus" NOT NULL DEFAULT 'PENDING',
+    "moderatedAt" TIMESTAMP(3),
+    "moderatedBy" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "blog_comments_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."blog_likes" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "blogId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "blog_likes_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."blog_bookmarks" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "blogId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "blog_bookmarks_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."webhook_logs" (
+    "id" TEXT NOT NULL,
+    "gateway" TEXT NOT NULL,
+    "eventType" TEXT,
+    "merchantOrderId" TEXT,
+    "payload" JSONB NOT NULL,
+    "headers" JSONB,
+    "rawBody" TEXT,
+    "processed" BOOLEAN NOT NULL DEFAULT false,
+    "processedAt" TIMESTAMP(3),
+    "processingTimeMs" INTEGER,
+    "response" JSONB,
+    "statusCode" INTEGER,
+    "error" TEXT,
+    "retryCount" INTEGER NOT NULL DEFAULT 0,
+    "receivedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "webhook_logs_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "public"."User"("email");
 
@@ -570,7 +801,16 @@ CREATE UNIQUE INDEX "Stream_code_key" ON "public"."Stream"("code");
 CREATE UNIQUE INDEX "Subject_streamId_name_key" ON "public"."Subject"("streamId", "name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Topic_subjectId_name_key" ON "public"."Topic"("subjectId", "name");
+CREATE UNIQUE INDEX "Lesson_subjectId_name_key" ON "public"."Lesson"("subjectId", "name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Lesson_subjectId_order_key" ON "public"."Lesson"("subjectId", "order");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Topic_lessonId_name_key" ON "public"."Topic"("lessonId", "name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Topic_lessonId_order_key" ON "public"."Topic"("lessonId", "order");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Subtopic_topicId_name_key" ON "public"."Subtopic"("topicId", "name");
@@ -586,6 +826,36 @@ CREATE UNIQUE INDEX "Plan_name_key" ON "public"."Plan"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Plan_stripePriceId_key" ON "public"."Plan"("stripePriceId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PaymentOrder_merchantOrderId_key" ON "public"."PaymentOrder"("merchantOrderId");
+
+-- CreateIndex
+CREATE INDEX "PaymentOrder_userId_idx" ON "public"."PaymentOrder"("userId");
+
+-- CreateIndex
+CREATE INDEX "PaymentOrder_merchantOrderId_idx" ON "public"."PaymentOrder"("merchantOrderId");
+
+-- CreateIndex
+CREATE INDEX "PaymentOrder_gateway_idx" ON "public"."PaymentOrder"("gateway");
+
+-- CreateIndex
+CREATE INDEX "PaymentOrder_status_idx" ON "public"."PaymentOrder"("status");
+
+-- CreateIndex
+CREATE INDEX "PaymentOrder_webhookProcessed_idx" ON "public"."PaymentOrder"("webhookProcessed");
+
+-- CreateIndex
+CREATE INDEX "PaymentLog_paymentOrderId_idx" ON "public"."PaymentLog"("paymentOrderId");
+
+-- CreateIndex
+CREATE INDEX "PaymentLog_logType_idx" ON "public"."PaymentLog"("logType");
+
+-- CreateIndex
+CREATE INDEX "PaymentLog_eventType_idx" ON "public"."PaymentLog"("eventType");
+
+-- CreateIndex
+CREATE INDEX "PaymentLog_createdAt_idx" ON "public"."PaymentLog"("createdAt");
 
 -- CreateIndex
 CREATE INDEX "Otp_userId_type_idx" ON "public"."Otp"("userId", "type");
@@ -617,11 +887,35 @@ CREATE INDEX "user_sessions_userId_isActive_idx" ON "public"."user_sessions"("us
 -- CreateIndex
 CREATE UNIQUE INDEX "lms_progress_userId_contentId_key" ON "public"."lms_progress"("userId", "contentId");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "lesson_progress_userId_lessonId_key" ON "public"."lesson_progress"("userId", "lessonId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "lesson_badges_userId_lessonId_badgeType_key" ON "public"."lesson_badges"("userId", "lessonId", "badgeType");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "blog_categories_slug_key" ON "public"."blog_categories"("slug");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "blogs_slug_key" ON "public"."blogs"("slug");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "blog_likes_userId_blogId_key" ON "public"."blog_likes"("userId", "blogId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "blog_bookmarks_userId_blogId_key" ON "public"."blog_bookmarks"("userId", "blogId");
+
 -- AddForeignKey
 ALTER TABLE "public"."User" ADD CONSTRAINT "User_streamId_fkey" FOREIGN KEY ("streamId") REFERENCES "public"."Stream"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Subject" ADD CONSTRAINT "Subject_streamId_fkey" FOREIGN KEY ("streamId") REFERENCES "public"."Stream"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Lesson" ADD CONSTRAINT "Lesson_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "public"."Subject"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Topic" ADD CONSTRAINT "Topic_lessonId_fkey" FOREIGN KEY ("lessonId") REFERENCES "public"."Lesson"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Topic" ADD CONSTRAINT "Topic_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "public"."Subject"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -630,13 +924,19 @@ ALTER TABLE "public"."Topic" ADD CONSTRAINT "Topic_subjectId_fkey" FOREIGN KEY (
 ALTER TABLE "public"."Subtopic" ADD CONSTRAINT "Subtopic_topicId_fkey" FOREIGN KEY ("topicId") REFERENCES "public"."Topic"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "public"."Question" ADD CONSTRAINT "Question_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "public"."Question" ADD CONSTRAINT "Question_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "public"."Subject"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."Question" ADD CONSTRAINT "Question_topicId_fkey" FOREIGN KEY ("topicId") REFERENCES "public"."Topic"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "public"."Question" ADD CONSTRAINT "Question_lessonId_fkey" FOREIGN KEY ("lessonId") REFERENCES "public"."Lesson"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Question" ADD CONSTRAINT "Question_subtopicId_fkey" FOREIGN KEY ("subtopicId") REFERENCES "public"."Subtopic"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Question" ADD CONSTRAINT "Question_topicId_fkey" FOREIGN KEY ("topicId") REFERENCES "public"."Topic"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."QuestionOption" ADD CONSTRAINT "QuestionOption_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "public"."Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -651,10 +951,10 @@ ALTER TABLE "public"."QuestionTag" ADD CONSTRAINT "QuestionTag_tagId_fkey" FOREI
 ALTER TABLE "public"."QuestionReport" ADD CONSTRAINT "QuestionReport_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "public"."Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."QuestionReport" ADD CONSTRAINT "QuestionReport_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."QuestionReport" ADD CONSTRAINT "QuestionReport_reviewedById_fkey" FOREIGN KEY ("reviewedById") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."QuestionReport" ADD CONSTRAINT "QuestionReport_reviewedById_fkey" FOREIGN KEY ("reviewedById") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "public"."QuestionReport" ADD CONSTRAINT "QuestionReport_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."QuestionReportOption" ADD CONSTRAINT "QuestionReportOption_reportId_fkey" FOREIGN KEY ("reportId") REFERENCES "public"."QuestionReport"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -663,13 +963,13 @@ ALTER TABLE "public"."QuestionReportOption" ADD CONSTRAINT "QuestionReportOption
 ALTER TABLE "public"."QuestionAlternativeExplanation" ADD CONSTRAINT "QuestionAlternativeExplanation_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "public"."Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."ExamSubmission" ADD CONSTRAINT "ExamSubmission_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."ExamPaper" ADD CONSTRAINT "ExamPaper_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."ExamSubmission" ADD CONSTRAINT "ExamSubmission_examPaperId_fkey" FOREIGN KEY ("examPaperId") REFERENCES "public"."ExamPaper"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."ExamAnswer" ADD CONSTRAINT "ExamAnswer_submissionId_fkey" FOREIGN KEY ("submissionId") REFERENCES "public"."ExamSubmission"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."ExamSubmission" ADD CONSTRAINT "ExamSubmission_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."ExamAnswer" ADD CONSTRAINT "ExamAnswer_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "public"."Question"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -678,10 +978,22 @@ ALTER TABLE "public"."ExamAnswer" ADD CONSTRAINT "ExamAnswer_questionId_fkey" FO
 ALTER TABLE "public"."ExamAnswer" ADD CONSTRAINT "ExamAnswer_selectedOptionId_fkey" FOREIGN KEY ("selectedOptionId") REFERENCES "public"."QuestionOption"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."Subscription" ADD CONSTRAINT "Subscription_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."ExamAnswer" ADD CONSTRAINT "ExamAnswer_submissionId_fkey" FOREIGN KEY ("submissionId") REFERENCES "public"."ExamSubmission"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Subscription" ADD CONSTRAINT "Subscription_planId_fkey" FOREIGN KEY ("planId") REFERENCES "public"."Plan"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Subscription" ADD CONSTRAINT "Subscription_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."PaymentOrder" ADD CONSTRAINT "PaymentOrder_planId_fkey" FOREIGN KEY ("planId") REFERENCES "public"."Plan"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."PaymentOrder" ADD CONSTRAINT "PaymentOrder_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."PaymentLog" ADD CONSTRAINT "PaymentLog_paymentOrderId_fkey" FOREIGN KEY ("paymentOrderId") REFERENCES "public"."PaymentOrder"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Otp" ADD CONSTRAINT "Otp_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -690,22 +1002,22 @@ ALTER TABLE "public"."Otp" ADD CONSTRAINT "Otp_userId_fkey" FOREIGN KEY ("userId
 ALTER TABLE "public"."ReferralCode" ADD CONSTRAINT "ReferralCode_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."Referral" ADD CONSTRAINT "Referral_referrerId_fkey" FOREIGN KEY ("referrerId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "public"."Referral" ADD CONSTRAINT "Referral_refereeId_fkey" FOREIGN KEY ("refereeId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Referral" ADD CONSTRAINT "Referral_referralCodeId_fkey" FOREIGN KEY ("referralCodeId") REFERENCES "public"."ReferralCode"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "public"."Referral" ADD CONSTRAINT "Referral_referrerId_fkey" FOREIGN KEY ("referrerId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "public"."ReferralReward" ADD CONSTRAINT "ReferralReward_referralId_fkey" FOREIGN KEY ("referralId") REFERENCES "public"."Referral"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."bookmarks" ADD CONSTRAINT "bookmarks_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."bookmarks" ADD CONSTRAINT "bookmarks_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "public"."Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."bookmarks" ADD CONSTRAINT "bookmarks_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "public"."Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."bookmarks" ADD CONSTRAINT "bookmarks_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."user_sessions" ADD CONSTRAINT "user_sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -714,10 +1026,13 @@ ALTER TABLE "public"."user_sessions" ADD CONSTRAINT "user_sessions_userId_fkey" 
 ALTER TABLE "public"."contact_tickets" ADD CONSTRAINT "contact_tickets_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "public"."ticket_responses" ADD CONSTRAINT "ticket_responses_responderId_fkey" FOREIGN KEY ("responderId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "public"."ticket_responses" ADD CONSTRAINT "ticket_responses_ticketId_fkey" FOREIGN KEY ("ticketId") REFERENCES "public"."contact_tickets"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."ticket_responses" ADD CONSTRAINT "ticket_responses_responderId_fkey" FOREIGN KEY ("responderId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "public"."lms_content"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_streamId_fkey" FOREIGN KEY ("streamId") REFERENCES "public"."Stream"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -726,16 +1041,58 @@ ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_streamId_fkey" FO
 ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "public"."Subject"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_topicId_fkey" FOREIGN KEY ("topicId") REFERENCES "public"."Topic"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_lessonId_fkey" FOREIGN KEY ("lessonId") REFERENCES "public"."Lesson"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_subtopicId_fkey" FOREIGN KEY ("subtopicId") REFERENCES "public"."Subtopic"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "public"."lms_content"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "public"."lms_content" ADD CONSTRAINT "lms_content_topicId_fkey" FOREIGN KEY ("topicId") REFERENCES "public"."Topic"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lms_progress" ADD CONSTRAINT "lms_progress_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES "public"."lms_content"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."lms_progress" ADD CONSTRAINT "lms_progress_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."lms_progress" ADD CONSTRAINT "lms_progress_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES "public"."lms_content"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."lesson_progress" ADD CONSTRAINT "lesson_progress_lessonId_fkey" FOREIGN KEY ("lessonId") REFERENCES "public"."Lesson"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lesson_progress" ADD CONSTRAINT "lesson_progress_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lesson_badges" ADD CONSTRAINT "lesson_badges_userId_lessonId_fkey" FOREIGN KEY ("userId", "lessonId") REFERENCES "public"."lesson_progress"("userId", "lessonId") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."lesson_badges" ADD CONSTRAINT "lesson_badges_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."blogs" ADD CONSTRAINT "blogs_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."blogs" ADD CONSTRAINT "blogs_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "public"."blog_categories"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."blogs" ADD CONSTRAINT "blogs_streamId_fkey" FOREIGN KEY ("streamId") REFERENCES "public"."Stream"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."blogs" ADD CONSTRAINT "blogs_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "public"."Subject"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."blog_comments" ADD CONSTRAINT "blog_comments_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."blog_comments" ADD CONSTRAINT "blog_comments_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "public"."blogs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."blog_likes" ADD CONSTRAINT "blog_likes_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "public"."blogs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."blog_likes" ADD CONSTRAINT "blog_likes_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."blog_bookmarks" ADD CONSTRAINT "blog_bookmarks_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "public"."blogs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."blog_bookmarks" ADD CONSTRAINT "blog_bookmarks_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

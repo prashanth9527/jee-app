@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:seed": "ts-node prisma/seed.ts",
     "db:seed:math-2025-s1": "ts-node \"prisma/seeds/JEE/Previous Papers/2025/Session1/Maths/seed-runner.ts\"",
-    "db:seed:2201-evening": "ts-node \"prisma/seeds/JEE/Previous Papers/2025/Session1/Maths/2201-Mathematics Paper+With+Sol. Evening.seed.ts\"",
+    "db:seed:2201-evening": "ts-node \"prisma/seeds/JEE/Previous Papers/2025/Session1/Maths/2201-Mathematics Paper+With+Sol. Evening.enhanced.seed.ts\"",
     "process:pdf-images": "node scripts/process-pdf-images.js",
     "generate:seed-templates": "node scripts/generate-seed-templates.js",
     "db:reset": "npx prisma db push --force-reset && npm run db:seed"
