@@ -59,7 +59,7 @@ export class SyllabusImportService {
           if (item.isDirectory()) {
             // Recursively scan subdirectories
             scanDirectory(fullPath, itemRelativePath);
-          } else if (item.isFile() && item.name.toLowerCase().includes('syllabus') && item.name.endsWith('.json')) {
+          } else if (item.isFile() && item.name.toLowerCase().includes('syllabus') && item.name.toLowerCase().endsWith('.json')) {
             const stats = fs.statSync(fullPath);
             files.push({
               path: itemRelativePath,
