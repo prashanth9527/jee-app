@@ -1,0 +1,981 @@
+[
+  {
+    "stem": "<span>Let \\( \\alpha, \\beta, \\gamma, \\delta \\) be the coefficients of \\( x^7, x^5, x^3, x \\) respectively in the expansion of \\((x^5 - x^3 - x + 1)(x^5 - x^3 - x + 1)\\), for \\(x > 1\\). If \\(u\\) and \\(v\\) satisfy the equations \\( \\alpha u + \\beta v = 18, \\gamma u + \\delta v = 20 \\), then \\(u+v\\) equals:</span>",
+    "options": [
+      {
+        "text": "<span>5</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>4</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>3</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>8</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol. </span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "\n\n\n\n5\n5\n3\n3\nx\nx\n1\nx\nx\n1\n\n\n\n\n\n  \n \n= 2{\n5C0.x\n5 + \n5C2.x\n3(x\n3 – 1) + \n5C4.x(x\n3 – 1)\n2} \n \n= 2{5x\n7 + 10x\n6 + x\n5 – 10x\n4 – 10x\n3 + 5x} \n \n = 10,  = 2,  = –20,  = 10 \n \nNow, 10u + 2v = 18  \n \n–20u + 10v = 20 \n \n u = 1, v = 4 \n \nu + v = 5",
+    "tip_formula": "<span>Binomial Theorem: \\((x+y)^n = \\sum {n\\choose r} x^{n-r} y^r\\)</span>",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>In a group of 3 girls and 4 boys, there are two boys \nB1 and B2. The number of ways, in which these \ngirls and boys can stand in a queue such that all the \ngirls stand together, all the boys stand together, but \nB1 and B2 are not adjacent to each other, is : \n \n(1) 144 \n(2) 72 \n \n(3) 96 \n \n(4) 120</span>",
+    "options": [
+      {
+        "text": "<span>144</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>72</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>96</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>120</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol.  Total – when B1 and B2 are together</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "Total – when B1 and B2 are together \n \n= 2!(3! 4!) – 2! (3!(3! 2!)) = 144",
+    "tip_formula": "",
+    "difficulty": "Easy",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Algebra",
+    "topic": "Algebra",
+    "subtopic": "Permutations & Combinations",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let P\n\n4,4 3 be a point on the parabola y\n2 = 4ax \nand PQ be a focal chord of the parabola. If M and \nN are the foot of perpendiculars drawn from P and \nQ respectively on the directrix of the parabola, \nthen the area of the quadrilateral PQMN is equal \nto: \n \n(1) 263 3\n8\n \n(2) 17 3  \n \n(3) 343 3\n8\n  \n(4) 34 3\n3</span>",
+    "options": [
+      {
+        "text": "<span>263 3</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>17 3</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>343 3</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>34 3</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol.</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>2</span>",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S \nO \nN \nQ \nM \n \n \n(4, 4\n3 )lies on y\n2 = 4ax \n \n 48 = 4a.4 \n \n \n4a = 12 \n \n y\n2 = 12x is equation of parabola  \n \nNow, parameter of P is t1 = 2\n3\n Parameters of Q \nis t2 = \n3\n2\n\n  Q 9 , 3 3\n4\n\n\n\n\n\n\n\n \n \nArea of trapezium PQNM  \n \n= 1\n2 MN.(PM + QN)  \n \n= 1\n2 MN.(PS + QS)  \n \n= \nMN. PQ \n  \n= 1\n49\n3\n7 3.\n(343)\n2\n4\n8\n\n = 3 \n1\n2\nALLEN\n \n2 \n \n",
+    "tip_formula": "<span>Equation: \\(y^2=4ax\\), parametric form: (at^2,2at)</span>",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Coordinate Geometry",
+    "topic": "Coordinate Geometry",
+    "subtopic": "Conic Sections",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>For a 3 × 3 matrix M, let trace (M) denote the sum \nof all the diagonal elements of M. Let A be a 3 × 3 \nmatrix such that |A| = 1\n2  and trace (A) = 3. If  \nB = adj(adj(2A)), then the value of |B| + trace (B) \nequals: \n \n(1) 56 \n(2) 132 \n \n(3) 174 \n \n(4) 280</span>",
+    "options": [
+      {
+        "text": "<span>56</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>132</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>174</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>280</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>Sol. |A|= 1</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "|A|= 1\n2 , trace(A) = 3, B = adj(adj(2A))=|2A|\nn–2(2A) \n \nn = 3, B = |2A|(2A) = 2\n3.|A|(2A) = 8A \n \n|B| = |8A| = 8\n3.|A| = 2\n8 = 256 \n \ntrace(B) = 8 trace(A) = 24 \n \n|B| + trace(B) = 280",
+    "tip_formula": "<span>adj(A), det(A), trace(A) properties</span>",
+    "difficulty": "Hard",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Algebra",
+    "topic": "Algebra",
+    "subtopic": "Matrices & Determinants",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Suppose that the number of terms in an A.P. is 2k, \nkN. If the sum of all odd terms of the A.P. is 40, \nthe sum of all even terms is 55 and the last term of \nthe A.P. exceeds the first term by 27, then k is \nequal to  \n \n(1) 5 \n(2) 8 \n \n(3) 6 \n \n(4) 4</span>",
+    "options": [
+      {
+        "text": "<span>5</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>8</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>6</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>4</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol. a1, a2, a3,……, a2k</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "a1, a2, a3,……, a2k \n A.P. \n \n \nk\n2r 1\nr 1\na\n40\n\n\n\n\n, \nk\n2r\nr 1\na\n55\n\n\n\n, a2k – a1 = 27   \n \nk\n2 [2a1 + (k – 1)2d] = 40, k\n2 [2a2 + (k – 1)2d] = 55, \nd = \n27\n2k\n1\n  \n \na1 = 40\nk  – (k – 1)d = 55\nk – kd \n \nd = 15\nk   \n27\n2k\n1\n  =15\nk    9k = 10k – 5   \n \n k = 5",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let a line pass through two distinct points  \nP(–2, –1, 3) and Q, and be parallel to the vector \n3i\n2j\n2k\n\n\n. If the distance of the point Q from the \npoint R(1, 3, 3) is 5, then the square of the area of \nPQR is equal to: \n \n(1) 136 \n(2) 140 \n \n(3) 144 \n \n(4) 148</span>",
+    "options": [
+      {
+        "text": "<span>136</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>140</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>144</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>148</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol.</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "PQ  parallel to ˆ\nˆ\nˆ\n3i\n2j\n2k\n\n\n, R(1, 3, 3) \n \n Q(3 – 2, 2  – 1, 2 + 3),   R – {0} \n \nQR  = 5 = \n2\n2\n2\n(3\n3)\n(2\n4)\n(2 )\n \n\n \n\n\n \n \n 17\n2 – 34 + 25 = 25 \n\n\nQ(4, 3, 7), P(–2, –1, 3), R(1, 3, 3) \n \nArea of PQR = [PQR] = 1 PQ\nPR\n2\n\n \n \n[PQR] = \nˆ\nˆ\nˆ\nˆ\nˆ\nˆ\ni\nj\nk\ni\nj\nk\n1 6\n4\n4\n3\n2\n2\n2 3\n4\n0\n3\n4\n0\n\n \n \n[PQR] = \nˆ\nˆ\nˆ\n| 8i\n6j\n6k |\n136\n\n\n\n\n \n \n [PQR]\n2 = 136",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Coordinate Geometry",
+    "topic": "Coordinate Geometry",
+    "subtopic": "Conic Sections",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>If \nx\nx\ne\n1\nx\nlim\n1\ne\ne\n1\nx\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n= , then the value of \ne\ne\nlog\n1\nlog\n\n\n equals :  \n \n(1) e \n(2) e\n–2 \n \n(3) e\n2 \n \n(4) e\n–1</span>",
+    "options": [
+      {
+        "text": "<span>e</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>e</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>e</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>e</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol.  =</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": " = \nx\nx\ne\n1\nx\nlim\n1\ne\ne\n1\nx\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  (1 form) \n \n = e\nL  \n \nWhere L = \nx\ne\n1\nx\nlim x\n1\n1\ne\ne\n1\nx\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n \n L = \nx\ne\n1\nx\n1\ne\nlim\nx\n1\ne\ne\n1\nx\ne\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n \n L = \nx\ne\nx\nlim x 1\n1\ne\n1\nx\n\n\n\n\n\n\n\n\n\n\n \n \n L = \nx\ne\nx\nlim\n1\ne\nx\n1\n\n\n   \n \n L = \ne\n.1\n1\ne\n\n \n \n L = \ne\n1\ne\n\n \n\n = \ne\n1 e\ne    log = \ne\n1\ne\n\n \n \n Required value = \ne\n1\ne\ne\n1\n1\ne\n\n\n\n = e    \nALLEN\n \n3 \n \n",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let f(x) = \n2\nx\n2\nt\n0\nt\n8t\n15\ne\n\n\n\ndt, x  R. Then the \nnumbers of local maximum and local minimum \npoints of f, respectively, are : \n \n(1) 2 and 3 \n(2) 3 and 2 \n \n(3) 1 and 3  \n(4) 2 and 2</span>",
+    "options": [
+      {
+        "text": "<span>2 and 3</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>3 and 2</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>1 and 3</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>2 and 2</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol. f (x) =</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "f (x) = \n2\n4\n2\nx\nx\n8x\n15 (2x)\ne\n\n\n\n\n\n\n\n\n \n \n= \n2\n2\n2\nx\n(x\n3)(x\n5)(2x)\ne\n\n\n \n \n= \n2\nx\n(x\n3)(x\n3)(x\n5)(x\n5)2x\ne\n\n\n\n\n \n \n \n– \n \n \n \n0 \n \n+ \n+ \n+ \n– \n– \n \n \nMaxima at x  {\n3,\n3\n\n} \n \nMinima at x  {\n5, 0,\n5\n\n} \n \n2 points of maxima and 3 points of minima.",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>The \nperpendicular \ndistance, \nof \nthe \nline \nx\n1\ny\n2\nz\n3\n2\n1\n2\n\n\n\n\n\n\n from the point P(2, –10,1), is: \n \n(1) 6 \n(2) 5 2  \n \n(3) 3 5  \n \n(4) 4 3</span>",
+    "options": [
+      {
+        "text": "<span>6</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>5 2</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>3 5</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>4 3</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol.</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "P(2,–10, 1) \nA \n \n \n \nx\n1\ny\n2\nz\n3\n(let)\n2\n1\n2\n\n\n\n\n\n \n\n \n \n(2 + 1, – – 2, 2 – 3) \n \nPA.n\n0\n\n \n \n (2 – 1)2 + (– + 8)(–1) + (2 – 4)2 = 0 \n \n 4 – 2 +  – 8 + 4 – 8 = 0 \n \n 9 – 18 = 0     = 2 \n \n A(5, –4, 1) \n \n AP = \n2\n2\n2\n3\n6\n0\n\n\n = \n45  = 3 5",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Coordinate Geometry",
+    "topic": "Coordinate Geometry",
+    "subtopic": "Conic Sections",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>If x = f(y) is the solution of the differential \nequation  \n \n(1 + y\n2) + \n\n–1\ntan\ny dy\nx – 2e\ndx = 0, y  \n,\n2 2\n \n\n\n\n\n\n\n\n \n \nwith f(0) = 1, then f\n1\n3\n\n\n\n\n\n\n is equal to : \n \n(1) e/4 \n(2) e/12 \n \n(3) e/3 \n \n(4) e/6</span>",
+    "options": [
+      {
+        "text": "<span>= 1, then f</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>e/4</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>e/12</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>e/3</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>e/6</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>Sol.</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "1\ntan\ny\n2\n2\ndx\nx\n2e\ndy\n1\ny\n1\ny\n\n\n\n\n\n \n \nI.F. = \n1\ntan\ny\ne\n\n \n \n1\n1\ntan\ny\n2\ntan\ny\n2\n2(e\n) dy\nxe\n1\ny\n\n\n\n\n\n  \n \nPut tan\n–1y = t,  \n2\ndy\ndt\n1\ny \n\n \n \n1\ntan\ny\n2t\nxe\n2e dt\n\n \n \n \n1\n1\ntan\ny\n2tan\ny\nxe\ne\nc\n\n\n\n\n \n \n1\n1\ntan\ny\ntan\ny\nx\ne\nce\n\n\n\n\n\n \n \n y = 0,  x = 1 \n \n1 = 1 + c  c = 0  \n \ny = 1\n3\n,  x = e/6",
+    "tip_formula": "<span>\\(\\frac{dy}{dx}\\) methods of solving DE</span>",
+    "difficulty": "Hard",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Calculus",
+    "topic": "Calculus",
+    "subtopic": "Integration / Differential Equations",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>If \n\n\n–1\n–1\nx\n3/2\n2\n2\n2\nxsin\nx\nsin\nx\nx\ne\n1\nx\n1\nx\n1\nx\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndx = g(x) + C, \nwhere C is the constant of integration, then \n1\ng 2\n\n\n\n\n\n\n \nequals : \n \n(1) \ne\n6\n2\n\n \n(2) \ne\n4\n2\n\n \n \n(3) \ne\n6\n3\n\n \n \n(4) \ne\n4\n3\n</span>",
+    "options": [
+      {
+        "text": "<span>e</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>e</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>e</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>e</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol.</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "1\n1\n2 3/2\n2\n2\nd\nxsin\nx\nsin\nx\nx\ndx\n(1\nx )\n1\nx\n1\nx\n\n\n\n \n\n\n\n\n\n\n\n\n \n \n \n1\n1\nx\n2\n3/2\n2\n2\nxsin\nx\nsin\nx\nx\ne\ndx\n(1\nx )\n1\nx\n1\nx\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n \n= \n1\nx\n2\nxsin\nx\ne .\nc\n1\nx\n\n\n\n = g(x) + C \nALLEN\n \n4 \n \n \n \nNote : assuming g(x) = \nx\n1\n2\nxe sin\nx\n1\nx\n\n\n \n \ng(1/2) = \n1/2\n2\ne\n6\n.\n2\n3\n \n = \ne\n6\n3\n\n \n \nComment : In this question we will not get a \nunique function g(x), but in order to match the \nanswer we will have to assume g(x) = \nx\n1\n2\nxe sin\nx\n1\nx\n\n\n.",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let  and  be the distinct roots of  \n2x\n2 + (cos)x –1 = 0,   (0, 2). If m and M are \nthe minimum and the maximum values of \n4\n4\n\n\n  , \nthen 16(M + m) equals :  \n \n(1) 24 \n(2) 25 \n \n(3) 27 \n \n(4) 17</span>",
+    "options": [
+      {
+        "text": "<span>24</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>25</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>27</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>17</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol. (</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "(\n2 + \n2)\n2 – 2\n2\n2 \n \n[( + )\n2 – 2]\n2 – 2()\n2  \n \n2\n2\ncos\n1\n1",
+    "tip_formula": "",
+    "difficulty": "Easy",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>4\n4\n\n\n \n\n\n\n\n\n \n \n2\n2\ncos\n1\n1\n4\n2\n\n\n \n\n\n\n\n\n \n \n25\n1\n17\nM\n16\n2\n16\n\n\n\n \n \n1\nm\n2\n\n, 16(M + m) = 25</span>",
+    "options": [],
+    "explanation": "",
+    "tip_formula": "",
+    "difficulty": "Easy",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let A = {1, 2, 3, 4} and B = {1, 4, 9, 16}. Then the \nnumber of many-one functions f : A  B such that \n1  f(A) is equal to : \n \n(1) 127 \n(2) 151 \n \n(3) 163 \n \n(4) 139</span>",
+    "options": [
+      {
+        "text": "<span>127</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>151</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>163</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>139</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol. Total = 4</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "Total = 4\n4  \n \nOne-one = 4! \n \nMany-one = 256 – 24 = 232 \n \nMany-one which 1 f(A) \n \n= 3.3.3.3 = 81 \n \n232 – 81 = 151",
+    "tip_formula": "",
+    "difficulty": "Easy",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Algebra",
+    "topic": "Algebra",
+    "subtopic": "Functions",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>If the system of linear equations : \n \nx + y + 2z = 6, \n \n2x + 3y + az = a + 1, \n \n–x – 3y + bz = 2b, \n \nwhere a, b  R, has infinitely many solutions, then \n7a + 3b is equal to :  \n \n(1) 9 \n(2) 12 \n \n(3) 16 \n \n(4) 22</span>",
+    "options": [
+      {
+        "text": "<span>9</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>12</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>16</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>22</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol.  =</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span> =</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Solving (1) + (2)</span>",
+        "isCorrect": false
+      }
+    ],
+    "explanation": " = \n1\n1\n2\n2\n3\na\n1\n3\nb\n\n\n = 0 \n \n 2a + b – 6 = 0 \n…….(1)  \n \n = \n1\n1\n6\n2\n3\na\n1\n1\n3\n2b\n\n\n\n = 0 \n \n a + b – 8 = 0 \n…….(2)  \n \nSolving (1) + (2) \n \na = –2, b = 10 \n \n 7a + 3b = 16",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Coordinate Geometry",
+    "topic": "Coordinate Geometry",
+    "subtopic": "Conic Sections",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let a  and b  be two unit vectors such that the \nangle between them is 3\n . If a\n2b\n \n and 3a – b\n  \nare perpendicular to each other, then the number of \nvalues of  in [–1, 3] is :  \n \n(1) 3 \n(2) 2 \n \n(3) 1 \n \n(4) 0 \n\nALLEN\n \n5 \n \n</span>",
+    "options": [
+      {
+        "text": "<span>3</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>2</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>1</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>0</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>ALLEN</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "1\nˆ\nˆa.b\n2\n\n \n \nNow \n \n\nˆ\nˆ\nˆ\nˆ\na\n2b . 3a\nb\n0\n \n \n\n \n \n2 ˆ\nˆ\nˆ ˆ\nˆ ˆ\nˆ\nˆ\n3 a.a\na.b\n6a.b\n2 b.b\n0\n\n\n\n \n\n \n \n2\n3\n3\n2\n0\n2\n\n \n\n  \n \n \n\n2 – 2 – 6 = 0 \n \n = 1\n7\n\n \n \n number of values = 0",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let E : \n2\n2\n2\n2\nx\ny\na\nb\n\n= 1, a > b and H : \n2\n2\n2\n2\nx\ny\n–\nA\nB\n = 1. \nLet the distance between the foci of E and the foci \nof H be 2 3 . If a – A = 2, and the ratio of the \neccentricities of E and H is 1\n3 , then the sum of the \nlengths of their latus rectums is equal to : \n \n(1) 10 \n(2) 7 \n \n(3) 8 \n \n(4) 9</span>",
+    "options": [
+      {
+        "text": "<span>10</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>7</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>8</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>9</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol.</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span> B2 = 2</span>",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "2\n2\n2\n2\nx\ny\n1\na\nb\n\n  foci are (ae, 0) and (–ae, 0) \n \n2\n2\n2\n2\nx\ny\n1\nA\nB\n\n  foci are (Ae, 0) and (–Ae, 0) \n \n 2ae = 2 3    ae = \n3  \n \nand 2Ae = 2 3    Ae = \n3  \n \n ae = Ae e\nA\ne'\na\n\n\n \n 1\nA\n3\na\n\n    a = 3A \n \nNow a – A = 2   a – a\n3  – 2   a = 3 and A = 1 \n \nAe = \n3   e = 1\n3\n and e = \n3  \n \nb\n2 = a\n2(1 – e\n2)   \n \nb\n2 = 6 \n \nand B\n2 = A\n2((e\n2 – 1) = (2)  B2 = 2  \n \nsum of LR = \n2\n2\n2b\n2B\na\nA\n\n = 8",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>If A and B are two events such that \n\nP A\nB = 0.1, \nand \n\n\nP A B and \n\n\nP B A are the roots of the \nequation 12x\n2 – 7x + 1 = 0, then the value of \n\n\n\n\nP A\nB\nP A\nB\nis:  \n \n(1) 5\n3  \n(2) 4\n3  \n \n(3) 9\n4  \n \n(4) 7\n4</span>",
+    "options": [
+      {
+        "text": "<span>5</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>4</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>9</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>7</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol. 12x</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "12x\n2 – 7x + 1 = 0 \n \nx = 1 1\n,\n3 4  \n \nLet \nA\n1\nP B\n3\n\n \n\n\n\n\n & \nB\n1\nP A\n4\n\n \n\n\n\n\n \n \nP(A\nB)\n1\nP(B)\n3\n\n\n & P(A\nB)\n1\nP(A)\n4\n\n\n \n \n P(B) = 0.3 \n \n& P(A) = 0.4    \n \nP(A  B) = P(A) + P(B) – P(A  B) \n \n= 0.3 + 0.4 – 0.1 = 0.6 \n \nNow P(A\nB)\nP(A\nB)\n\n\n = P(A\nB)\nP(A\nB)\n\n\n \n \n= 1\nP(A\nB)\n1\nP(A\nB)\n\n\n\n\n = 1\n0.1\n1\n0.6\n\n\n = 9\n4",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Probability",
+    "topic": "Probability",
+    "subtopic": "Events & Bayes Theorem",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>The sum of all values of   [0, 2] satisfying \n2sin\n2 =  cos2 and 2cos\n2 = 3sin is  \n \n(1) 2\n  \n(2) 4 \n \n(3) 5\n6\n  \n \n(4) </span>",
+    "options": [
+      {
+        "text": "<span>2</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>4</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>5</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span></span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>Sol. 2sin</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "2sin\n2 = cos2\n\n2sin\n2 = 1 – 2sin\n2\n\n4sin\n2 = 1 \n\nsin\n2 = 1\n4  \nALLEN\n \n6 \n \n \n\nsin = ± 1\n2  \n\n2cos\n2 = 3sin \n \n2 – 2sin\n2 + 3sin– 2 = 0 \n \n(2sin – 1)(2sin – 2) = 0 \n \nsin = 1\n2  \n \nso common equation which satisfy both equations \nis sin = 1\n2  \n \n5\n,\n6\n6\n\n\n \n  ([0, 2])  \n \nSum = ",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let the curve z(1 + i) + \n\nz 1– i = 4, z  C, divide \nthe region |z – 3|  1 into two parts of areas  and \n. Then | – | equals : \n \n(1) 1\n2\n\n\n \n(2) 1\n3\n\n\n \n \n(3) 1\n4\n\n\n \n \n(4) 1\n6\n\n</span>",
+    "options": [
+      {
+        "text": "<span>1</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>1</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>1</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>1</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol.</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "(3,0) \n(2,0) \n(3,1) \nx–y=2 \n \n \nLet z = x + iy \n \n(x + iy)(1 + i) + (x – iy)(1 – i) = 4 \n \nx + ix + iy – y + x – ix – iy – y = 4 \n \n2x – 2y = 4 \n \nx – y = 2 \n \n|z – 3|  1 \n \n(x – 3)\n2 + y\n2   1 \n \nArea of shaded region = \n2\n.1\n1.1.1\n4\n2\n\n\n = \n1\n4\n2\n \n \n \nArea of unshaded region inside the circle  \n \n= 3\n1\n.1\n.1.1\n4\n2\n\n\n\n = 3\n1\n4\n2\n \n \n \n difference of area = 3\n1\n1\n4\n2\n4\n2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n \n \n= \n1\n2\n ",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>The area of the region enclosed by the curves  \ny = x\n2 – 4x + 4 and y\n2 = 16 – 8x is : \n \n(1) 8\n3  \n(2) 4\n3  \n \n(3) 5 \n \n(4) 8</span>",
+    "options": [
+      {
+        "text": "<span>8</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>4</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>5</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>8</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol.</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "y = (x –2)\n2, y\n2 = 8(x – 2) \n \n y = x\n2 , y\n2 = – 8x \n \n1\n16\n2\n16ab\n4\n3\n3\n\n\n\n\n = 8\n3   \n \nSECTION-B",
+    "tip_formula": "",
+    "difficulty": "Easy",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let y = f(x) be the solution of the differential \nequation \n6\n2\n2\ndy\nxy\nx\n4x\ndx\nx –1\n1\nx\n\n\n\n\n, –1 < x < 1 such \nthat f(0) = 0. If 6 \n \n\n \n\n\n12\n12\nf x dx\n2 –\nthen \n2 is \nequal to __________.</span>",
+    "options": [
+      {
+        "text": "<span>= 0. If 6</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Sol. I.F.</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>= 0  c = 0</span>",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "I.F. \n2\n2\n1\n2x\n1\ndx\nn(1 x )\n2\n2 1 x\n2\ne\ne\n1\nx\n\n\n\n\n\n\n\n\n \n \n7\n2\n6\n2\nx\ny\n1\nx\n(x\n4x)dx\n2x\nc\n7\n\n\n\n\n\n\n\n\n \n \nGiven y(0) = 0  c = 0 \n \n7\n2\n2\nx\n2x\n7\ny\n1\nx\n\n\n\n \n \nNow, \n7\n1\n1\n2\n2\n2\n2\n2\n2\n1\n1\n2\n2\nx\n2x\n2x\n7\n6\ndx\n6\ndx\n1\nx\n1\nx\n\n\n\n\n\n\n\n\n \n \n1\n2\n2\n2\n0\nx\n24\ndx\n1\nx\n\n\n\n \n \nPut x = sin  \nALLEN\n \n7 \n \n \n \ndx = cos d    \n \n2\n6\n0\nsin\n24\ncos d\ncos\n\n\n\n \n\n\n \n \n6\n6\n0\n0\n1\ncos2\nsin2\n24\nd\n12\n2\n2\n\n\n\n\n\n\n\n\n\n\n \n \n\n\n\n\n\n\n\n\n\n \n \n= \n3\n12 6\n4\n\n\n \n\n\n\n\n\n\n \n \n= 2\n3 3\n \n \n \n2\n2\n(3 3)\n27\n \n",
+    "tip_formula": "<span>\\(\\frac{dy}{dx}\\) methods of solving DE</span>",
+    "difficulty": "Hard",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Calculus",
+    "topic": "Calculus",
+    "subtopic": "Integration / Differential Equations",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let A(6, 8), B(10 cos, –10 sin) and  \nC (–10 sin, 10 cos), be the vertices of a triangle. \nIf L(a, 9) and G(h, k) be its orthocenter and \ncentroid respectively, then (5a – 3h + 6k + 100 sin2) \nis equal to___________</span>",
+    "options": [
+      {
+        "text": "<span>Sol. All the three points A, B, C lie on the circle</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "All the three points A, B, C lie on the circle  \nx\n2 + y\n2 = 100 so circumcentre is (0, 0) \n \n \n1 \nL(a,9) \n2 \nO(0,0) \nG(h,k) \n \n \na\n0\nh\n3\n\n\n  a = 3h  \n \nand 9\n0\nk\n3\n\n\n k = 3 \n \nalso centroid 6\n10cos\n10sin\nh\n3\n\n \n \n \n \n 10(cos – sin) = 3h – 6 \n….(i) \n \nand 8 10cos\n10sin\nk\n3\n\n \n \n \n \n 10(cos – sin) = 3k – 8 = 9 – 8 = 1 ….(ii) \n \non squaring 100(1 – sin2) = 1 \n \n 100sin2 = 99 \n \nfrom equ. (i) and (ii) we get h = 7\n3\n \n \nNow 5a – 3h + 6k + 100 sin2  \n \n= 15h – 3h + 6k + 100 sin2  \n \n= 12 × 7\n3\n + 18 + 99  \n \n= 145",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let the distance between two parallel lines be  \n5 units and a point P lie between the lines at a unit \ndistance from one of them. An equilateral triangle \nPQR is formed such that Q lies on one of the \nparallel lines, while R lies on the other. Then (QR)\n2 \nis equal to ________.</span>",
+    "options": [
+      {
+        "text": "<span>Sol.</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "P \n60° \nQ \nR \n60° \n90°– \n \n30°+ \nd \n \n \nPR = cosec, PQ = 4sec(30 + ) \n \nFor equilateral \n \nd = PR = PQ  \n \n cos( + 30°) = 4sin  \n \n \n3\n1\ncos\nsin\n4sin\n2\n2\n\n \n  \n \n \n1\ntan\n3 3\n \n \n \nQR\n2 = d\n2 = cosec\n2 = 28",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "Coordinate Geometry",
+    "topic": "Coordinate Geometry",
+    "subtopic": "Conic Sections",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>If \n\n\n2\n2\n30\n30\nr\n30\nr 1\nr 1\nr\nC\nC\n\n\n\n=  × 2\n29, then  is equal to \n______. \n\nALLEN\n \n8 \n \n</span>",
+    "options": [
+      {
+        "text": "<span>ALLEN</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "2 30\n2\n30\nr\n30\nr 1\nr 1\nr ( C )\nC\n\n\n\n \n \n= \n30\n2\nr 1\n31\nr\n30!\nr\n.\nr\nr!(30\nr)!\n\n\n\n\n\n\n\n\n\n\n \n \n30\nr\n30\nr 1\nC\n30\nr\n1\n31\nr\nC\nr\nr\n\n\n\n \n\n\n\n\n\n\n\n \n \n= \n30\nr 1\n(31\nr)30!\n(r\n1)!(30\nr)!\n\n\n\n\n\n \n \n= \n30\nr 1\n(31\nr)29!\n30\n(r\n1)!(30\nr)!\n\n\n\n\n\n \n \n= \n30\n29\n30 r\nr 1\n30\n(30\nr\n1) C\n\n\n \n\n \n \n= \n30\n30\n29\n29\n30 r\n30 r\nr 1\nr 1\n30\n(31\nr) C\nC\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n \n= 30(29 × 2\n28 + 2\n29) = 30(29 + 2)2\n28 \n \n= 15 × 31 × 2\n29 \n \n= 465(2\n29) \n \n = 465",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  },
+  {
+    "stem": "<span>Let A = {1, 2, 3}. The number of relations on A, \ncontaining (1, 2) and (2, 3), which are reflexive \nand transitive but not symmetric, is ______.</span>",
+    "options": [
+      {
+        "text": "<span>Sol. Transitivity</span>",
+        "isCorrect": true
+      },
+      {
+        "text": "<span>(2, 1) taken and (3, 2) not taken</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>(3, 2) taken and (2, 1) not taken</span>",
+        "isCorrect": false
+      },
+      {
+        "text": "<span>Both not taken</span>",
+        "isCorrect": true
+      }
+    ],
+    "explanation": "Transitivity  \n \n(1, 2)  R, (2, 3)  R  (1, 3)  R \n \nFor reflexive (1, 1), (2, 2) (3, 3)  R \n \nNow (2, 1), (3, 2), (3, 1) \n \n(3, 1) cannot be taken \n \n(1) (2, 1) taken and (3, 2) not taken \n \n(2) (3, 2) taken and (2, 1) not taken \n \n(3) Both not taken \n \ntherefore 3 relations are possible. \nALLEN",
+    "tip_formula": "",
+    "difficulty": "Medium",
+    "yearAppeared": 2025,
+    "isPreviousYear": true,
+    "isAIGenerated": false,
+    "aiPrompt": null,
+    "subject": "Mathematics",
+    "lesson": "General",
+    "topic": "General",
+    "subtopic": "General",
+    "tags": [
+      "JEE",
+      "PYQ"
+    ]
+  }
+]

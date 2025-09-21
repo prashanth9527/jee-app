@@ -129,7 +129,10 @@ export class GoogleAuthController {
         });
 
         // Set up trial period for new Google users
-        // await this.usersService.updateTrial(user.id, started, ends);
+        console.log('🔧 Setting up trial period for new Google user:', user.id);
+        console.log('📅 Trial period:', { days, started, ends });
+        await this.usersService.updateTrial(user.id, started, ends);
+        console.log('✅ Trial period set successfully for user:', user.id);
       }
 
       // Generate JWT token

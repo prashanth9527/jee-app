@@ -47,7 +47,10 @@ export class UsersService {
 	}
 
 	async updateTrial(userId: string, startedAt: Date, endsAt: Date) {
-		return this.prisma.user.update({ where: { id: userId }, data: { trialStartedAt: startedAt, trialEndsAt: endsAt } });
+		console.log('🔄 updateTrial called for user:', userId, 'with dates:', { startedAt, endsAt });
+		const result = await this.prisma.user.update({ where: { id: userId }, data: { trialStartedAt: startedAt, trialEndsAt: endsAt } });
+		console.log('✅ updateTrial completed for user:', userId, 'result:', { trialStartedAt: result.trialStartedAt, trialEndsAt: result.trialEndsAt });
+		return result;
 	}
 
 	// Profile Settings Methods
