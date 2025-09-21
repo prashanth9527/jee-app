@@ -132,7 +132,7 @@ async function main() {
     data: {
       name: 'Manual Plan',
       description: 'Access to practice tests with database questions',
-      priceCents: 49, // 999 INR in cents
+      priceCents: 4900, // 999 INR in cents
       currency: 'INR',
       interval: 'MONTH',
       planType: 'MANUAL',
@@ -144,7 +144,7 @@ async function main() {
     data: {
       name: 'AI Enabled Plan',
       description: 'Access to AI-generated questions and explanations',
-      priceCents: 99, // 1999 INR in cents
+      priceCents: 9900, // 1999 INR in cents
       currency: 'INR',
       interval: 'MONTH',
       planType: 'AI_ENABLED',
@@ -152,17 +152,6 @@ async function main() {
     },
   });
 
-  const yearlyPlan = await prisma.plan.create({
-    data: {
-      name: 'Yearly AI Plan',
-      description: 'Best value - AI features with 2 months free',
-      priceCents: 1999900, // 19999 INR in cents
-      currency: 'INR',
-      interval: 'YEAR',
-      planType: 'AI_ENABLED',
-      stripePriceId: 'price_ai_yearly',
-    },
-  });
 
   console.log('💳 Created subscription plans');
 

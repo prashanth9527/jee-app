@@ -120,6 +120,12 @@ export class GoogleAuthController {
             }
           }
         });
+
+        // Set up trial period for new Google users
+        const days = Number(process.env.FREE_TRIAL_DAYS || 2);
+        const started = new Date();
+        const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);
+        await this.usersService.updateTrial(user.id, started, ends);
       }
 
       // Generate JWT token
