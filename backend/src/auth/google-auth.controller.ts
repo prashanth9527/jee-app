@@ -100,6 +100,11 @@ export class GoogleAuthController {
           });
         }
       } else {
+
+        // Set up trial period for new Google users
+        const days = Number(process.env.FREE_TRIAL_DAYS || 2);
+        const started = new Date();
+        const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);
         // Create new user without stream (needs profile completion)
         user = await this.prisma.user.create({
           data: {
@@ -109,7 +114,9 @@ export class GoogleAuthController {
             profilePicture: picture,
             emailVerified: true, // Google emails are pre-verified
             role: 'STUDENT', // Default role for Google sign-ups
-            streamId: null // User needs to select stream
+            streamId: null, // User needs to select stream
+            trialStartedAt: started,
+            trialEndsAt: ends
           },
           include: {
             stream: true,
@@ -122,10 +129,7 @@ export class GoogleAuthController {
         });
 
         // Set up trial period for new Google users
-        const days = Number(process.env.FREE_TRIAL_DAYS || 2);
-        const started = new Date();
-        const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);
-        await this.usersService.updateTrial(user.id, started, ends);
+        // await this.usersService.updateTrial(user.id, started, ends);
       }
 
       // Generate JWT token
@@ -222,6 +226,11 @@ export class GoogleAuthController {
         userData.streamId = streamId;
       }
 
+      const days = Number(process.env.FREE_TRIAL_DAYS || 2);
+      const started = new Date();
+      const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);
+      userData.trialStartedAt = started;
+      userData.trialEndsAt = ends;
       const user = await this.prisma.user.create({
         data: userData,
         include: {
@@ -235,10 +244,8 @@ export class GoogleAuthController {
       });
 
       // Set up trial period for new Google users
-      const days = Number(process.env.FREE_TRIAL_DAYS || 2);
-      const started = new Date();
-      const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);
-      await this.usersService.updateTrial(user.id, started, ends);
+      
+      // await this.usersService.updateTrial(user.id, started, ends);
 
       // Generate JWT token
       const token = await this.authService.generateJwtToken(user);
