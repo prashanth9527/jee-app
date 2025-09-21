@@ -140,7 +140,7 @@ export default function HomeTemplate2() {
       />
       <DynamicFavicon faviconUrl={systemSettings?.faviconUrl} />
       
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50">
+      <main className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50">
         <HeaderHome />
         
         {/* Hero Section with Slider */}
@@ -173,7 +173,7 @@ export default function HomeTemplate2() {
               <div className="relative">
                 <img 
                   src={heroSlides[currentSlide].image} 
-                  alt={heroSlides[currentSlide].title}
+                  alt={`${heroSlides[currentSlide].title} - ${heroSlides[currentSlide].subtitle}`}
                   className="w-full h-80 object-cover rounded-2xl shadow-2xl"
                 />
                 <div className="absolute bottom-4 left-4 right-4 flex space-x-2">
@@ -181,6 +181,7 @@ export default function HomeTemplate2() {
                     <button
                       key={index}
                       onClick={() => setCurrentSlide(index)}
+                      aria-label={`Go to slide ${index + 1}: ${heroSlides[index].title}`}
                       className={`flex-1 h-1 rounded-full ${
                         index === currentSlide ? 'bg-white' : 'bg-white/30'
                       }`}
@@ -394,9 +395,9 @@ export default function HomeTemplate2() {
           </div>
         </section>
 
-        <DynamicFooter />
-        <MobileNavigation />
-      </div>
+      <DynamicFooter />
+      <MobileNavigation />
+      </main>
     </>
   );
 }

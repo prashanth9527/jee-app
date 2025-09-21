@@ -2,6 +2,7 @@ import { Controller, Post, Body, HttpException, HttpStatus, BadRequestException 
 import { AuthService } from './auth.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { OAuthStateService } from './oauth-state.service';
+import { UsersService } from '../users/users.service';
 import { normalizeIndianPhone, isValidIndianMobile } from './utils/phone.utils';
 import axios from 'axios';
 
@@ -29,7 +30,8 @@ export class GoogleAuthController {
   constructor(
     private authService: AuthService,
     private prisma: PrismaService,
-    private oauthStateService: OAuthStateService
+    private oauthStateService: OAuthStateService,
+    private usersService: UsersService
   ) {}
 
   @Post('state')
@@ -225,6 +227,12 @@ export class GoogleAuthController {
           }
         }
       });
+
+      // Set up trial period for new Google users
+      const days = Number(process.env.FREE_TRIAL_DAYS || 2);
+      const started = new Date();
+      const ends = new Date(started.getTime() + days * 24 * 60 * 60 * 1000);
+      await this.usersService.updateTrial(user.id, started, ends);
 
       // Generate JWT token
       const token = await this.authService.generateJwtToken(user);

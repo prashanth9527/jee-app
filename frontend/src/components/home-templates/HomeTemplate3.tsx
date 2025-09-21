@@ -138,7 +138,7 @@ export default function HomeTemplate3() {
       />
       <DynamicFavicon faviconUrl={systemSettings?.faviconUrl} />
       
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
         <HeaderHome />
         
         {/* Hero Section */}
@@ -423,9 +423,9 @@ export default function HomeTemplate3() {
           </div>
         </section>
 
-        <DynamicFooter />
-        <MobileNavigation />
-      </div>
+      <DynamicFooter />
+      <MobileNavigation />
+      </main>
     </>
   );
 }

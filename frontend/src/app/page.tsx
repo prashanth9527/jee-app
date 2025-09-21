@@ -209,7 +209,7 @@ function DefaultHomePage() {
         title="Home"
         description={systemSettings?.siteDescription}
       />
-      <div className="min-h-screen bg-white">
+      <main className="min-h-screen bg-white">
       {/* Navigation */}
       <HeaderHome systemSettings={systemSettings || undefined} />
 
@@ -641,7 +641,7 @@ function DefaultHomePage() {
       {/* Footer */}
       <DynamicFooter />
       <MobileNavigation />
-    </div>
-    </>
-  );
+      </main>
+      </>
+      );
 }
