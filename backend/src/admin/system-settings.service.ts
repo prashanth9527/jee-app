@@ -23,6 +23,7 @@ export interface UpdateSystemSettingsDto {
   customJs?: string;
   maintenanceMode?: boolean;
   maintenanceMessage?: string;
+  homeTemplate?: string;
 }
 
 @Injectable()
@@ -41,6 +42,7 @@ export class SystemSettingsService {
           siteTitle: 'JEE App',
           siteDescription: 'Comprehensive JEE preparation platform',
           siteKeywords: 'JEE, IIT, engineering, entrance exam, preparation',
+          homeTemplate: 'default',
         },
       });
     }

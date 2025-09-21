@@ -7,7 +7,10 @@ import DynamicHead from '@/components/DynamicHead';
 import HeaderHome from '@/components/HeaderHome';
 import DynamicFavicon from '@/components/DynamicFavicon';
 import DynamicFooter from '@/components/DynamicFooter';
+import MobileNavigation from '@/components/MobileNavigation';
 import { useSystemSettings } from '@/contexts/SystemSettingsContext';
+import HomeTemplate2 from '@/components/home-templates/HomeTemplate2';
+import HomeTemplate3 from '@/components/home-templates/HomeTemplate3';
 
 interface SystemSettings {
   siteTitle: string;
@@ -33,6 +36,7 @@ interface SystemSettings {
   customJs?: string;
   maintenanceMode?: boolean;
   maintenanceMessage?: string;
+  homeTemplate?: string;
 }
 
 interface Subject {
@@ -59,6 +63,34 @@ interface Plan {
 }
 
 export default function HomePage() {
+  const { systemSettings, loading: settingsLoading } = useSystemSettings();
+
+  // Template switching logic
+  if (settingsLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-orange-50">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-500"></div>
+      </div>
+    );
+  }
+
+  // Get the home template setting, default to 'default' (existing home page)
+  const homeTemplate = systemSettings?.homeTemplate || 'default';
+
+  // Render the appropriate template based on the setting
+  switch (homeTemplate) {
+    case 'template2':
+      return <HomeTemplate2 />;
+    case 'template3':
+      return <HomeTemplate3 />;
+    default:
+      // Render the existing home page (default template)
+      return <DefaultHomePage />;
+  }
+}
+
+// Default Home Page Component (existing implementation)
+function DefaultHomePage() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentFeature, setCurrentFeature] = useState(0);
   const { systemSettings, loading: settingsLoading } = useSystemSettings();
@@ -268,72 +300,78 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="subjects" className="py-20 bg-gray-50">
+      {/* AI Features Section */}
+      <section id="ai-features" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-              Master All JEE Subjects
+              AI-Powered Learning Experience
             </h2>
             <p className="mt-4 text-lg text-gray-600">
-              Comprehensive coverage with thousands of practice questions
+              Revolutionary artificial intelligence that transforms how you learn and prepare for JEE
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {subjects.length > 0 ? (
-              subjects.map((subject) => {
-                // Function to get icon based on subject name
-                const getSubjectIcon = (name: string) => {
-                  const nameLower = name.toLowerCase();
-                  if (nameLower.includes('physics')) return '⚡';
-                  if (nameLower.includes('chemistry')) return '🧪';
-                  if (nameLower.includes('mathematics') || nameLower.includes('maths')) return '📐';
-                  if (nameLower.includes('biology')) return '🧬';
-                  if (nameLower.includes('english')) return '📚';
-                  if (nameLower.includes('computer')) return '💻';
-                  return '📖'; // Default icon
-                };
+            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="text-4xl mb-4">🤖</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Smart AI Tutor</h3>
+              <p className="text-gray-600 mb-4">
+                Personal AI tutor that adapts to your learning style and provides 24/7 guidance with personalized explanations.
+              </p>
+              <div className="text-sm text-orange-600 font-medium">Always Available</div>
+            </div>
 
-                return (
-                  <div key={subject.id} className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="text-4xl mb-4">
-                      {getSubjectIcon(subject.name)}
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{subject.name}</h3>
-                    <p className="text-gray-600 mb-4 line-clamp-3">{subject.description || `Master ${subject.name} with comprehensive practice questions and detailed explanations.`}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm text-gray-500">
-                        <span className="font-medium">{subject._count.questions.toLocaleString()}</span> Questions
-                      </div>
-                      {subject.stream && (
-                        <div className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
-                          {subject.stream.name}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              // Fallback when no subjects are loaded
-              [
-                { id: '1', name: 'Physics', description: 'Master Physics with comprehensive practice questions covering mechanics, thermodynamics, waves, and more.', icon: '⚡', questions: 15000 },
-                { id: '2', name: 'Chemistry', description: 'Explore Chemistry concepts through detailed practice questions covering organic, inorganic, and physical chemistry.', icon: '🧪', questions: 12000 },
-                { id: '3', name: 'Mathematics', description: 'Strengthen your Mathematics foundation with practice questions covering calculus, algebra, trigonometry, and more.', icon: '📐', questions: 18000 }
-              ].map((subject) => (
-                <div key={subject.id} className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="text-4xl mb-4">
-                    {subject.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{subject.name}</h3>
-                  <p className="text-gray-600 mb-4">{subject.description}</p>
-                  <div className="text-sm text-gray-500">
-                    <span className="font-medium">{subject.questions.toLocaleString()}</span> Questions
-                  </div>
-                </div>
-              ))
-            )}
+            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="text-4xl mb-4">📊</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Intelligent Analytics</h3>
+              <p className="text-gray-600 mb-4">
+                Advanced performance tracking with detailed insights on your strengths, weaknesses, and learning progress.
+              </p>
+              <div className="text-sm text-orange-600 font-medium">Real-time Insights</div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="text-4xl mb-4">🎯</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Adaptive Practice</h3>
+              <p className="text-gray-600 mb-4">
+                AI generates personalized practice questions that adapt to your skill level and focus on improvement areas.
+              </p>
+              <div className="text-sm text-orange-600 font-medium">Personalized Content</div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="text-4xl mb-4">⚡</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Instant AI Feedback</h3>
+              <p className="text-gray-600 mb-4">
+                Get immediate, detailed explanations for every question with AI-powered solution analysis and tips.
+              </p>
+              <div className="text-sm text-orange-600 font-medium">Instant Results</div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="text-4xl mb-4">🧠</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Smart Recommendations</h3>
+              <p className="text-gray-600 mb-4">
+                AI analyzes your performance and suggests the optimal study path and resources for maximum success.
+              </p>
+              <div className="text-sm text-orange-600 font-medium">Optimized Learning</div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="text-4xl mb-4">📈</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Success Prediction</h3>
+              <p className="text-gray-600 mb-4">
+                Advanced AI models predict your exam performance and suggest targeted improvements for better results.
+              </p>
+              <div className="text-sm text-orange-600 font-medium">Future Ready</div>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/student/ai/analytics" className="bg-orange-600 text-white px-8 py-4 rounded-lg hover:bg-orange-700 transition-colors font-semibold text-lg shadow-lg">
+              Explore AI Features
+            </Link>
           </div>
         </div>
       </section>
@@ -602,6 +640,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <DynamicFooter />
+      <MobileNavigation />
     </div>
     </>
   );

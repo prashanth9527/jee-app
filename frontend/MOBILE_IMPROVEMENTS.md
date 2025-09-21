@@ -125,3 +125,4 @@ This document outlines the mobile-friendly improvements made to the JEE App to p
 - Validate responsive design
 - Test navigation on different screen sizes
 
+

@@ -28,6 +28,7 @@ interface SystemSettings {
   customJs?: string;
   maintenanceMode: boolean;
   maintenanceMessage?: string;
+  homeTemplate?: string;
 }
 
 export default function SystemSettingsPage() {
@@ -56,6 +57,7 @@ export default function SystemSettingsPage() {
     customJs: '',
     maintenanceMode: false,
     maintenanceMessage: '',
+    homeTemplate: 'default',
   });
 
   useEffect(() => {
@@ -84,6 +86,7 @@ export default function SystemSettingsPage() {
         customJs: response.data.customJs || '',
         maintenanceMode: response.data.maintenanceMode || false,
         maintenanceMessage: response.data.maintenanceMessage || '',
+        homeTemplate: response.data.homeTemplate || 'default',
       });
     } catch (error) {
       console.error('Error fetching settings:', error);
@@ -231,6 +234,24 @@ export default function SystemSettingsPage() {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
                       placeholder="Enter keywords separated by commas"
                     />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 mb-2">
+                      Home Page Template
+                    </label>
+                    <select
+                      value={formData.homeTemplate}
+                      onChange={(e) => setFormData(prev => ({ ...prev, homeTemplate: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
+                    >
+                      <option value="default">Default Template (Orange/Red Theme)</option>
+                      <option value="template2">Template 2 (Green/Teal Theme)</option>
+                      <option value="template3">Template 3 (Blue/Purple Theme)</option>
+                    </select>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Choose the design template for your home page. Changes will be visible immediately.
+                    </p>
                   </div>
                 </div>
               </div>

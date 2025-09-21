@@ -29,6 +29,7 @@ interface SystemSettings {
   customJs?: string;
   maintenanceMode?: boolean;
   maintenanceMessage?: string;
+  homeTemplate?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -66,6 +67,7 @@ export function SystemSettingsProvider({ children }: SystemSettingsProviderProps
         siteTitle: 'JEE App',
         siteDescription: 'Comprehensive JEE preparation platform',
         siteKeywords: 'JEE, IIT, engineering, entrance exam, preparation',
+        homeTemplate: 'default',
       });
     } finally {
       setLoading(false);

@@ -47,9 +47,9 @@ model User {
   blogs             Blog[]
   bookmarks         Bookmark[]
   contactTickets    ContactTicket[]
-  lmsProgress       LMSProgress[]
-  lessonProgress    LessonProgress[]
   lessonBadges      LessonBadge[]
+  lessonProgress    LessonProgress[]
+  lmsProgress       LMSProgress[]
   ticketResponses   TicketResponse[]
   sessions          UserSession[]
 }
@@ -75,9 +75,9 @@ model Subject {
   streamId    String
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  lessons     Lesson[]
   questions   Question[]
   stream      Stream       @relation(fields: [streamId], references: [id], onDelete: Cascade)
-  lessons     Lesson[]
   topics      Topic[]
   blogs       Blog[]
   lmsContent  LMSContent[]
@@ -86,22 +86,20 @@ model Subject {
 }
 
 model Lesson {
-  id          String       @id @default(cuid())
+  id          String           @id @default(cuid())
   name        String
   description String?
   subjectId   String
-  order       Int          @default(0)
-  isActive    Boolean      @default(true)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  
-  // Relationships
-  subject     Subject      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-  topics      Topic[]
-  lmsContent  LMSContent[]
+  order       Int              @default(0)
+  isActive    Boolean          @default(true)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  subject     Subject          @relation(fields: [subjectId], references: [id], onDelete: Cascade)
   questions   Question[]
+  topics      Topic[]
   progress    LessonProgress[]
-  
+  lmsContent  LMSContent[]
+
   @@unique([subjectId, name])
   @@unique([subjectId, order])
 }
@@ -158,8 +156,8 @@ model Question {
   createdById             String?
   answers                 ExamAnswer[]
   createdBy               User?                            @relation("QuestionCreator", fields: [createdById], references: [id])
-  subject                 Subject?                         @relation(fields: [subjectId], references: [id])
   lesson                  Lesson?                          @relation(fields: [lessonId], references: [id])
+  subject                 Subject?                         @relation(fields: [subjectId], references: [id])
   subtopic                Subtopic?                        @relation(fields: [subtopicId], references: [id])
   topic                   Topic?                           @relation(fields: [topicId], references: [id])
   alternativeExplanations QuestionAlternativeExplanation[]
@@ -334,7 +332,7 @@ model PaymentOrder {
   errorDetails       String?
   errorMessage       String?
   initialResponse    String?
-  statusResponse     String?            // Store last status check response
+  statusResponse     String?
   webhookHeaders     String?
   webhookPayload     String?
   webhookProcessed   Boolean            @default(false)
@@ -463,6 +461,7 @@ model SystemSettings {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
   logoFooter         String?
+  homeTemplate       String?  @default("default") @map("hometemplate") @db.VarChar(255)
 
   @@map("system_settings")
 }
@@ -611,11 +610,11 @@ model LMSContent {
   completions      Int           @default(0)
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
+  lesson           Lesson?       @relation(fields: [lessonId], references: [id])
   parent           LMSContent?   @relation("ContentHierarchy", fields: [parentId], references: [id])
   children         LMSContent[]  @relation("ContentHierarchy")
   stream           Stream?       @relation(fields: [streamId], references: [id])
   subject          Subject?      @relation(fields: [subjectId], references: [id])
-  lesson           Lesson?       @relation(fields: [lessonId], references: [id])
   subtopic         Subtopic?     @relation(fields: [subtopicId], references: [id])
   topic            Topic?        @relation(fields: [topicId], references: [id])
   progress         LMSProgress[]
@@ -644,30 +643,25 @@ model LMSProgress {
 }
 
 model LessonProgress {
-  id             String         @id @default(cuid())
-  userId         String
-  lessonId       String
-  status         ProgressStatus @default(NOT_STARTED)
-  progress       Float          @default(0) // Overall lesson progress (0-100)
-  timeSpent      Int            @default(0) // Total time spent in seconds
-  startedAt      DateTime?
-  completedAt    DateTime?
-  lastAccessedAt DateTime?
-  
-  // Lesson-specific metrics
-  contentCompleted Int          @default(0) // Number of content items completed
-  totalContent     Int          @default(0) // Total content items in lesson
-  topicsCompleted  Int          @default(0) // Number of topics completed
-  totalTopics      Int          @default(0) // Total topics in lesson
-  averageScore     Float?       // Average score across all assessments
-  attempts         Int          @default(0) // Total attempts across all content
-  
-  // Additional data
-  data           Json?          // Store additional progress metadata
-  badges         LessonBadge[]  // Badges earned for this lesson
-  
-  lesson         Lesson         @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id               String         @id @default(cuid())
+  userId           String
+  lessonId         String
+  status           ProgressStatus @default(NOT_STARTED)
+  progress         Float          @default(0)
+  timeSpent        Int            @default(0)
+  startedAt        DateTime?
+  completedAt      DateTime?
+  lastAccessedAt   DateTime?
+  contentCompleted Int            @default(0)
+  totalContent     Int            @default(0)
+  topicsCompleted  Int            @default(0)
+  totalTopics      Int            @default(0)
+  averageScore     Float?
+  attempts         Int            @default(0)
+  data             Json?
+  badges           LessonBadge[]
+  lesson           Lesson         @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, lessonId])
   @@map("lesson_progress")
@@ -682,10 +676,9 @@ model LessonBadge {
   description    String?
   iconUrl        String?
   earnedAt       DateTime       @default(now())
-  metadata       Json?          // Store badge-specific data
-  
-  lessonProgress LessonProgress @relation(fields: [userId, lessonId], references: [userId, lessonId], onDelete: Cascade)
+  metadata       Json?
   user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonProgress LessonProgress @relation(fields: [userId, lessonId], references: [userId, lessonId], onDelete: Cascade)
 
   @@unique([userId, lessonId, badgeType])
   @@map("lesson_badges")
@@ -947,7 +940,6 @@ enum AccessType {
   PREMIUM
   TRIAL
 }
-
 
 enum ProgressStatus {
   NOT_STARTED
