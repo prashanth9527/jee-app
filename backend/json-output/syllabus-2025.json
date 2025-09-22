@@ -1,0 +1,1786 @@
+{
+  "stream": "JEE",
+  "subjects": [
+    {
+      "subject": "PHYSICS",
+      "lessons": [
+        {
+          "lesson": "Unitsofmeasurements,Systemofunits,SIUnits,fundamentalandderivedunits,",
+          "topics": []
+        },
+        {
+          "lesson": "leastcount,significantfigures,Errorsinmeasurements.DimensionsofPhysics",
+          "topics": []
+        },
+        {
+          "lesson": "quantities,dimensionalanalysisanditsapplications.",
+          "topics": [
+            "UNIT2:Kinematics"
+          ]
+        },
+        {
+          "lesson": "Theframeofreference,motioninastraightline,speedandvelocity,uniform",
+          "topics": []
+        },
+        {
+          "lesson": "andnon-uniformmotion,averagespeedandinstantaneousvelocity,uniformly",
+          "topics": []
+        },
+        {
+          "lesson": "acceleratedmotion,velocity-time,position-timegraph,relationsforuniformly",
+          "topics": []
+        },
+        {
+          "lesson": "acceleratedmotion,relativevelocity.",
+          "topics": []
+        },
+        {
+          "lesson": "Motioninaplane,projectilemotion,uniformcircularmotion.",
+          "topics": [
+            "UNIT3:LawsofMotion"
+          ]
+        },
+        {
+          "lesson": "Forceandinertia,Newton’sfirstlawofmotion,momentum,Newton’ssecond",
+          "topics": []
+        },
+        {
+          "lesson": "Lawofmotion,impulse,Newton’sthirdLawofmotion.Lawofconservationof",
+          "topics": []
+        },
+        {
+          "lesson": "linearmomentumanditsapplications,equilibriumofconcurrentforces.",
+          "topics": []
+        },
+        {
+          "lesson": "StaticandKineticfriction,lawsoffriction,rollingfriction.",
+          "topics": []
+        },
+        {
+          "lesson": "Dynamicsofuniformcircularmotion,centripetalforceanditsapplications:",
+          "topics": []
+        },
+        {
+          "lesson": "vehicleonalevelcircularroad,vehicleonabankedroad.",
+          "topics": [
+            "UNIT4:Work,EnergyandPower"
+          ]
+        },
+        {
+          "lesson": "Workdonebyaconstantforceandavariableforce,kineticandpotentialenergies,",
+          "topics": []
+        },
+        {
+          "lesson": "work-energytheorem,power.",
+          "topics": []
+        },
+        {
+          "lesson": "Thepotentialenergyofaspring,conservationofmechanicalenergy,",
+          "topics": []
+        },
+        {
+          "lesson": "conservativeandnon-conservativeforces,motioninaverticalcircle.Elastic",
+          "topics": []
+        },
+        {
+          "lesson": "andinelasticcollisionsinoneandtwodimensions.",
+          "topics": [
+            "UNIT5:RotationalMotion"
+          ]
+        },
+        {
+          "lesson": "Centreofmassofatwo-particlesystem,centreofmassofarigidbody.Basic",
+          "topics": []
+        },
+        {
+          "lesson": "conceptsofrotationalmotion,momentofaforce,torque,angularmomentum,",
+          "topics": []
+        },
+        {
+          "lesson": "conservationofangularmomentumanditsapplications.",
+          "topics": []
+        },
+        {
+          "lesson": "Themomentofinertia,theradiusofgyration,valuesofmomentsofinertiafor",
+          "topics": []
+        },
+        {
+          "lesson": "simplegeometricalobjects,parallelandperpendicularaxestheoremsandtheir",
+          "topics": []
+        },
+        {
+          "lesson": "applications.Equilibriumofrigidbodies,rigidbodyrotationandequationsof",
+          "topics": []
+        },
+        {
+          "lesson": "rotationalmotion,comparisonoflinearandrotationalmotions.",
+          "topics": [
+            "UNIT6:Gravitation"
+          ]
+        },
+        {
+          "lesson": "Theuniversallawofgravitation.Accelerationduetogravityanditsvariation",
+          "topics": []
+        },
+        {
+          "lesson": "withaltitudeanddepth.Kepler’slawofplanetarymotion.Gravitationalpotential",
+          "topics": []
+        },
+        {
+          "lesson": "energy,gravitationalpotential.Escapevelocity,motionofasatellite,orbital",
+          "topics": []
+        },
+        {
+          "lesson": "velocity,timeperiodandenergyofsatellite.",
+          "topics": [
+            "UNIT7:PropertiesofSolidsandLiquids"
+          ]
+        },
+        {
+          "lesson": "Elasticbehaviour,stress-strainrelationship,Hooke'sLaw,Young'smodulus,",
+          "topics": []
+        },
+        {
+          "lesson": "bulkmodulusandmodulusofrigidity.",
+          "topics": []
+        },
+        {
+          "lesson": "Pressureduetoafluidcolumn,Pascal'slawanditsapplications,effectofgravity",
+          "topics": []
+        },
+        {
+          "lesson": "onfluidpressure,viscosity,Stoke’slaw,terminalvelocity,streamlineand",
+          "topics": []
+        },
+        {
+          "lesson": "turbulentflow,criticalvelocity,Bernoulli'sprincipleanditsapplications.",
+          "topics": []
+        },
+        {
+          "lesson": "Surfaceenergyandsurfacetension,angleofcontact,excessofpressureacrossa",
+          "topics": []
+        },
+        {
+          "lesson": "curvedsurface,applicationofsurfacetension:drops,bubblesandcapillaryrise.",
+          "topics": []
+        },
+        {
+          "lesson": "Heat,temperature,thermalexpansion,specificheatcapacity,calorimetry,",
+          "topics": []
+        },
+        {
+          "lesson": "changeofstate,latentheat.Heattransfer:conduction,convectionandradiation.",
+          "topics": [
+            "UNIT8:Thermodynamics"
+          ]
+        },
+        {
+          "lesson": "Thermalequilibriumandtheconceptoftemperature,zerothlawof",
+          "topics": []
+        },
+        {
+          "lesson": "thermodynamics,heat,workandinternalenergy.Thefirstlawof",
+          "topics": []
+        },
+        {
+          "lesson": "thermodynamics,isothermalandadiabaticprocesses.Thesecondlawof",
+          "topics": []
+        },
+        {
+          "lesson": "thermodynamics:reversibleandirreversibleprocesses.",
+          "topics": [
+            "UNIT9:KineticTheoryofGases"
+          ]
+        },
+        {
+          "lesson": "Equationofstateofaperfectgas,workdoneoncompressingagas,kinetic",
+          "topics": []
+        },
+        {
+          "lesson": "theoryofgases:assumptions,theconceptofpressure,kineticinterpretationof",
+          "topics": []
+        },
+        {
+          "lesson": "temperature,RMSspeedofgasmolecules,degreesoffreedom,lawof",
+          "topics": []
+        },
+        {
+          "lesson": "equipartitionofenergyandapplicationstospecificheatcapacitiesofgases,",
+          "topics": []
+        },
+        {
+          "lesson": "meanfreepath,Avogadro'snumber.",
+          "topics": [
+            "UNIT10:OscillationsandWaves"
+          ]
+        },
+        {
+          "lesson": "Oscillationsandperiodicmotion:timeperiod,frequency,displacementasa",
+          "topics": []
+        },
+        {
+          "lesson": "functionoftime,periodicfunctions.Simpleharmonicmotion(S.H.M.)andits",
+          "topics": []
+        },
+        {
+          "lesson": "equation,phase,oscillationsofaspring:restoringforceandforceconstant,",
+          "topics": []
+        },
+        {
+          "lesson": "energyinS.H.M.:kineticandpotentialenergies,simplependulum:derivation",
+          "topics": []
+        },
+        {
+          "lesson": "ofexpressionforitstimeperiod.",
+          "topics": []
+        },
+        {
+          "lesson": "Wavemotion,longitudinalandtransversewaves,speedofthetravellingwave,",
+          "topics": []
+        },
+        {
+          "lesson": "displacementrelationforaprogressivewave,principleofsuperpositionof",
+          "topics": []
+        },
+        {
+          "lesson": "waves,reflectionofwaves,standingwavesinstringsandorganpipes,",
+          "topics": []
+        },
+        {
+          "lesson": "fundamentalmodeandharmonics,beats.",
+          "topics": [
+            "UNIT11:Electrostatics"
+          ]
+        },
+        {
+          "lesson": "Electriccharges:conservationofcharge,Coulomb'slawforcesbetweentwo",
+          "topics": []
+        },
+        {
+          "lesson": "pointcharges,forcesbetweenmultiplecharges,superpositionprincipleand",
+          "topics": []
+        },
+        {
+          "lesson": "continuouschargedistribution.",
+          "topics": []
+        },
+        {
+          "lesson": "Electricfield:electricfieldduetoapointcharge,electricfieldlines,electric",
+          "topics": []
+        },
+        {
+          "lesson": "dipole,electricfieldduetoadipole,torqueonadipoleinauniformelectric",
+          "topics": [
+            "field."
+          ]
+        },
+        {
+          "lesson": "Electricflux,Gauss'slawanditsapplicationstofindfieldduetoinfinitelylong",
+          "topics": []
+        },
+        {
+          "lesson": "uniformlychargedstraightwire,uniformlychargedinfiniteplanesheetand",
+          "topics": []
+        },
+        {
+          "lesson": "uniformlychargedthinsphericalshell.",
+          "topics": []
+        },
+        {
+          "lesson": "Electricpotentialanditscalculationforapointcharge,electricdipoleand",
+          "topics": []
+        },
+        {
+          "lesson": "systemofcharges,potentialdifference,equipotentialsurfaces,electrical",
+          "topics": []
+        },
+        {
+          "lesson": "potentialenergyofasystemoftwopointchargesandofelectricdipoleinan",
+          "topics": [
+            "electrostaticfield."
+          ]
+        },
+        {
+          "lesson": "Conductorsandinsulators,dielectricsandelectricpolarization,capacitorsand",
+          "topics": []
+        },
+        {
+          "lesson": "capacitance,thecombinationofcapacitorsinseriesandparallelandcapacitance",
+          "topics": []
+        },
+        {
+          "lesson": "ofaparallelplatecapacitorwithandwithoutdielectricmediumbetweenthe",
+          "topics": []
+        },
+        {
+          "lesson": "plates,energystoredinacapacitor.",
+          "topics": [
+            "UNIT12:CurrentElectricity"
+          ]
+        },
+        {
+          "lesson": "Electriccurrent:driftvelocity,mobilityandtheirrelationwithelectriccurrent,",
+          "topics": []
+        },
+        {
+          "lesson": "Ohm'slaw,electricalresistance,I-VcharacteristicsofOhmicandnon-ohmic",
+          "topics": []
+        },
+        {
+          "lesson": "conductors,electricalenergyandpower,electricalresistivityandconductivity,",
+          "topics": []
+        },
+        {
+          "lesson": "seriesandparallelcombinationsofresistors,temperaturedependenceof",
+          "topics": [
+            "resistance."
+          ]
+        },
+        {
+          "lesson": "Internalresistance,potentialdifferenceandemfofacell,acombinationofcells",
+          "topics": [
+            "inseriesandparallel."
+          ]
+        },
+        {
+          "lesson": "Kirchhoff’slawsandtheirapplications,Wheatstonebridge,MetreBridge.",
+          "topics": [
+            "UNIT13:MagneticEffectsofCurrentandMagnetism"
+          ]
+        },
+        {
+          "lesson": "Biot-Savartlawanditsapplicationtothecurrentcarryingcircularloop,",
+          "topics": []
+        },
+        {
+          "lesson": "Ampere'slawanditsapplicationstoinfinitelylongcurrentcarryingstraight",
+          "topics": [
+            "wireandsolenoid."
+          ]
+        },
+        {
+          "lesson": "Forceonamovingchargeinuniformmagneticandelectricfields,forceona",
+          "topics": []
+        },
+        {
+          "lesson": "current-carryingconductorinauniformmagneticfield,theforcebetweentwo",
+          "topics": []
+        },
+        {
+          "lesson": "parallelcurrentscarryingconductors-definitionofampere,torqueexperienced",
+          "topics": []
+        },
+        {
+          "lesson": "byacurrentloopinauniformmagneticfield:Movingcoilgalvanometer,its",
+          "topics": []
+        },
+        {
+          "lesson": "sensitivityandconversiontoammeterandvoltmeter.",
+          "topics": []
+        },
+        {
+          "lesson": "Currentloopasamagneticdipoleanditsmagneticdipolemoment,barmagnetas",
+          "topics": []
+        },
+        {
+          "lesson": "anequivalentsolenoid,magneticfieldlines,magneticfieldduetoamagnetic",
+          "topics": []
+        },
+        {
+          "lesson": "dipole(barmagnet)alongitsaxisandperpendiculartoitsaxis,torqueona",
+          "topics": []
+        },
+        {
+          "lesson": "magneticdipoleinauniformmagneticfield,para-,dia-andferromagnetic",
+          "topics": []
+        },
+        {
+          "lesson": "substanceswithexamples,theeffectoftemperatureonmagneticproperties.",
+          "topics": [
+            "UNIT14:ElectromagneticInductionandAlternatingCurrents"
+          ]
+        },
+        {
+          "lesson": "Electromagneticinduction:Faraday'slaw,inducedemfandcurrent,Lenz’slaw,",
+          "topics": []
+        },
+        {
+          "lesson": "eddycurrents,selfandmutualinductance.",
+          "topics": []
+        },
+        {
+          "lesson": "Alternatingcurrents,peakandRMSvalueofalternatingcurrent/voltage,",
+          "topics": []
+        },
+        {
+          "lesson": "reactanceandimpedance,LCRseriescircuit,resonance,powerinACcircuits,",
+          "topics": []
+        },
+        {
+          "lesson": "wattlesscurrent,ACgeneratorandtransformer.",
+          "topics": [
+            "UNIT15:ElectromagneticWaves"
+          ]
+        },
+        {
+          "lesson": "Displacementcurrent,electromagneticwavesandtheircharacteristics,",
+          "topics": []
+        },
+        {
+          "lesson": "transversenatureofelectromagneticwaves,electromagneticspectrum(radio",
+          "topics": []
+        },
+        {
+          "lesson": "waves,microwaves,infrared,visible,ultraviolet,X-rays,Gammarays),",
+          "topics": []
+        },
+        {
+          "lesson": "applicationsofelectromagneticwaves.",
+          "topics": [
+            "UNIT16:Optics"
+          ]
+        },
+        {
+          "lesson": "Reflectionoflight,sphericalmirrors,mirrorformula.Refractionoflightat",
+          "topics": []
+        },
+        {
+          "lesson": "planeandsphericalsurfaces,thinlensformulaandlensmakerformula,total",
+          "topics": []
+        },
+        {
+          "lesson": "internalreflectionanditsapplications,magnification,powerofalens,",
+          "topics": []
+        },
+        {
+          "lesson": "combinationofthinlensesincontact,refractionoflightthroughaprism,",
+          "topics": []
+        },
+        {
+          "lesson": "microscopeandastronomicaltelescope(reflectingandrefracting)andtheir",
+          "topics": [
+            "magnifyingpowers."
+          ]
+        },
+        {
+          "lesson": "Waveoptics:wavefrontandHuygens‘Principle,lawsofreflectionand",
+          "topics": []
+        },
+        {
+          "lesson": "refractionusingHuygensprinciple.Interference:Young'sdouble-slit",
+          "topics": []
+        },
+        {
+          "lesson": "experimentandexpressionforfringewidth,coherentsourcesandsustained",
+          "topics": []
+        },
+        {
+          "lesson": "interferenceoflight.Diffractionduetoasingleslit,widthofcentralmaximum.",
+          "topics": []
+        },
+        {
+          "lesson": "Polarization:plane-polarizedlight,Brewster'slaw,usesofplane-polarized",
+          "topics": [
+            "lightandPolaroid.",
+            "UNIT17:DualNatureofMatterandRadiation"
+          ]
+        },
+        {
+          "lesson": "Dualnatureofradiation,Photoelectriceffect,HertzandLenard'sobservations,",
+          "topics": []
+        },
+        {
+          "lesson": "Einstein'sphotoelectricequation,particlenatureoflight.Matterwaves:wave",
+          "topics": []
+        },
+        {
+          "lesson": "natureofparticle,de-Broglierelation.",
+          "topics": [
+            "UNIT18:AtomsandNuclei"
+          ]
+        },
+        {
+          "lesson": "Alpha-particlescatteringexperiment,Rutherford'smodelofatom,Bohrmodel,",
+          "topics": []
+        },
+        {
+          "lesson": "energylevels,hydrogenspectrum.Compositionandsizeofnucleus,atomic",
+          "topics": []
+        },
+        {
+          "lesson": "masses,mass-energyrelation,massdefect,bindingenergypernucleonandits",
+          "topics": []
+        },
+        {
+          "lesson": "variationwithmassnumber,nuclearfissionandfusion.",
+          "topics": [
+            "UNIT19:ElectronicDevices"
+          ]
+        },
+        {
+          "lesson": "Semiconductors,semiconductordiode:I-Vcharacteristicsinforwardand",
+          "topics": []
+        },
+        {
+          "lesson": "reversebias,diodeasarectifier;I-VcharacteristicsofLED,thephotodiode,",
+          "topics": []
+        },
+        {
+          "lesson": "solarcell,Zenerdiode,Zenerdiodeasavoltageregulator.",
+          "topics": []
+        },
+        {
+          "lesson": "Logicgates(OR.AND.NOT.NANDandNOR).",
+          "topics": [
+            "UNIT20:ExperimentalSkills"
+          ]
+        },
+        {
+          "lesson": "Familiaritywiththebasicapproachandobservationsoftheexperimentsand",
+          "topics": [
+            "activities:",
+            "1.Verniercalipers-itsusetomeasuretheinternalandexternaldiameterand",
+            "depthofavessel.",
+            "2.Screwgauge-itsusetodeterminethethickness/diameterofthinsheet/wire.",
+            "3.Simplependulum-dissipationofenergybyplottingagraphbetweenthe"
+          ]
+        },
+        {
+          "lesson": "squareofamplitudeandtime.",
+          "topics": [
+            "4.Metrescale-themassofagivenobjectbytheprincipleofmoments.",
+            "5.Young'smodulusofelasticityofthematerialofametallicwire.",
+            "6.Surfacetensionofwaterbycapillaryriseandeffectofdetergents,",
+            "7.Co-efficientofviscosityofagivenviscousliquidbymeasuringthe"
+          ]
+        },
+        {
+          "lesson": "terminalvelocityofagivensphericalbody.",
+          "topics": [
+            "8.Speedofsoundinairatroomtemperatureusingaresonancetube,",
+            "9.Specificheatcapacityofagiven(i)solidand(ii)liquidbymethodof",
+            "mixtures.",
+            "10.Theresistivityofthematerialofagivenwireusingametrebridge.",
+            "11.TheresistanceofagivenwireusingOhm'slaw.",
+            "12.Resistanceandfigureofmeritofagalvanometerbyhalfdeflectionmethod.",
+            "13.Thefocallengthof"
+          ]
+        },
+        {
+          "lesson": "(iii)Convexlens,usingtheparallaxmethod.",
+          "topics": [
+            "14.Theplotoftheangleofdeviationvsangleofincidenceforatriangular",
+            "prism.",
+            "15.Therefractiveindexofaglassslabusingatravellingmicroscope.",
+            "16.Characteristiccurvesofap-njunctiondiodeinforwardandreversebias.",
+            "17.CharacteristiccurvesofaZenerdiodeandfindingreversebreakdown",
+            "voltage.",
+            "18.Identificationofdiode,LED,resistor,acapacitorfromamixedcollection",
+            "ofsuchitems"
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "PHYSICALCHEMISTRY",
+      "lessons": [
+        {
+          "lesson": "Matteranditsnature,Dalton'satomictheory,Conceptofatom,molecule,elementandcompound,Lawsof",
+          "topics": []
+        },
+        {
+          "lesson": "chemicalcombination,Atomicandmolecularmasses,moleconcept,molarmass,percentagecomposition,",
+          "topics": []
+        },
+        {
+          "lesson": "empiricalandmolecularformulae,Chemicalequationsandstoichiometry.",
+          "topics": [
+            "UNIT2:ATOMICSTRUCTURE"
+          ]
+        },
+        {
+          "lesson": "Natureofelectromagneticradiation,photoelectriceffect,spectrumofthehydrogenatom,Bohrmodelofa",
+          "topics": []
+        },
+        {
+          "lesson": "hydrogenatom-itspostulates,derivationoftherelationsfortheenergyoftheelectronandradiiofthe",
+          "topics": []
+        },
+        {
+          "lesson": "differentorbits,limitationsofBohr'smodel,dualnatureofmatter,deBroglie'srelationship,Heisenberg",
+          "topics": []
+        },
+        {
+          "lesson": "uncertaintyprinciple,elementaryideasofquantummechanics,thequantummechanicalmodeloftheatom",
+          "topics": []
+        },
+        {
+          "lesson": "anditsimportantfeatures,conceptofatomicorbitalsasone-electronwavefunctions,variationof",
+          "topics": []
+        },
+        {
+          "lesson": "withrfor1sand2sorbitals,variousquantumnumbers(principal,angularmomentumandmagnetic",
+          "topics": []
+        },
+        {
+          "lesson": "quantumnumbers)andtheirsignificance,shapesofs,pandd-orbitals,electronspinandspinquantum",
+          "topics": []
+        },
+        {
+          "lesson": "number,rulesforfillingelectronsinorbitals–Aufbauprinciple,Pauli'sexclusionprincipleandHund's",
+          "topics": []
+        },
+        {
+          "lesson": "rule,electronicconfigurationofelementsandextrastabilityofhalf-filledandcompletelyfilledorbitals.",
+          "topics": [
+            "UNIT3:CHEMICALBONDINGANDMOLECULARSTRUCTURE"
+          ]
+        },
+        {
+          "lesson": "Kossel-Lewisapproachtochemicalbondformation,theconceptofionicandcovalentbonds.",
+          "topics": []
+        },
+        {
+          "lesson": "IonicBonding:Formationofionicbonds,factorsaffectingtheformationofionicbonds;calculationof",
+          "topics": [
+            "latticeenthalpy."
+          ]
+        },
+        {
+          "lesson": "CovalentBonding:Conceptofelectronegativity,Fajan’srule,dipolemoment,ValenceShellElectronPair",
+          "topics": []
+        },
+        {
+          "lesson": "Repulsion(VSEPR)theoryandshapesofsimplemolecules.",
+          "topics": []
+        },
+        {
+          "lesson": "Quantummechanicalapproachtocovalentbonding:Valencebondtheory-itsimportantfeatures,the",
+          "topics": []
+        },
+        {
+          "lesson": "conceptofhybridizationinvolvings,panddorbitals,resonance.",
+          "topics": []
+        },
+        {
+          "lesson": "MolecularOrbitalTheory-Itsimportantfeatures,LCAOs,typesofmolecularorbitals(bonding,",
+          "topics": []
+        },
+        {
+          "lesson": "antibonding),sigmaandpi-bonds,molecularorbitalelectronicconfigurationsofhomonucleardiatomic",
+          "topics": []
+        },
+        {
+          "lesson": "molecules,theconceptofbondorder,bondlengthandbondenergy.",
+          "topics": []
+        },
+        {
+          "lesson": "Elementaryideaofmetallicbonding,hydrogenbondinganditsapplications.",
+          "topics": [
+            "UNIT4:CHEMICALTHERMODYNAMICS"
+          ]
+        },
+        {
+          "lesson": "Fundamentalsofthermodynamics:Systemandsurroundings,extensiveandintensiveproperties,state",
+          "topics": []
+        },
+        {
+          "lesson": "functions,entropy,typesofprocesses.",
+          "topics": []
+        },
+        {
+          "lesson": "Thefirstlawofthermodynamics-Conceptofwork,heat,internalenergyandenthalpy,heatcapacity,",
+          "topics": []
+        },
+        {
+          "lesson": "molarheatcapacity,Hess’slawofconstantheatsummation,Enthalpiesofbonddissociation,",
+          "topics": []
+        },
+        {
+          "lesson": "combustion,formation,atomization,sublimation,phasetransition,hydration,ionizationandsolution.",
+          "topics": []
+        },
+        {
+          "lesson": "Thesecondlawofthermodynamics-Spontaneityofprocesses,ΔSoftheuniverseandΔGofthe",
+          "topics": []
+        },
+        {
+          "lesson": "systemascriteriaforspontaneity.",
+          "topics": []
+        },
+        {
+          "lesson": "(StandardGibbsenergychange)andequilibriumconstant.",
+          "topics": [
+            "UNIT5:SOLUTIONS"
+          ]
+        },
+        {
+          "lesson": "Differentmethodsforexpressingtheconcentrationofsolution-molality,molarity,molefraction,",
+          "topics": []
+        },
+        {
+          "lesson": "percentage(byvolumeandmassboth),thevapourpressureofsolutionsandRaoult'sLaw-Idealandnon-",
+          "topics": []
+        },
+        {
+          "lesson": "idealsolutions,vapourpressure-composition,plotsforidealandnon-idealsolutions,Colligative",
+          "topics": []
+        },
+        {
+          "lesson": "propertiesofdilutesolutions-arelativeloweringofvapourpressure,depressionoffreezingpoint,the",
+          "topics": []
+        },
+        {
+          "lesson": "elevationofboilingpointandosmoticpressure,determinationofmolecularmassusingcolligative",
+          "topics": []
+        },
+        {
+          "lesson": "properties,abnormalvalueofmolarmass,van’tHofffactoranditssignificance.",
+          "topics": [
+            "UNIT6:EQUILIBRIUM"
+          ]
+        },
+        {
+          "lesson": "Meaningofequilibriumistheconceptofdynamicequilibrium.",
+          "topics": []
+        },
+        {
+          "lesson": "Equilibriainvolvingphysicalprocesses:Solid-liquid,liquid-gas,gas-gasandsolid-gasequilibria,",
+          "topics": []
+        },
+        {
+          "lesson": "Henry'slaw.Generalcharacteristicsofequilibriuminvolvingphysicalprocesses.",
+          "topics": []
+        },
+        {
+          "lesson": "Equilibriuminvolvingchemicalprocesses:Lawofchemicalequilibrium,equilibrium",
+          "topics": [
+            "constants(K"
+          ]
+        },
+        {
+          "lesson": ")andtheirsignificance,thesignificanceof",
+          "topics": [
+            "inchemical"
+          ]
+        },
+        {
+          "lesson": "equilibrium,factorsaffecting",
+          "topics": []
+        },
+        {
+          "lesson": "equilibriumconcentration,pressure,temperature,theeffectofcatalyst,LeChatelier’sprinciple.",
+          "topics": []
+        },
+        {
+          "lesson": "Ionicequilibrium:Weakandstrongelectrolytes,ionizationofelectrolytes,variousconceptsofacidsand",
+          "topics": []
+        },
+        {
+          "lesson": "bases(Arrhenius,Bronsted-LowryandLewis)andtheirionization,acid-baseequilibria(including",
+          "topics": []
+        },
+        {
+          "lesson": "multistageionization)andionizationconstants,ionizationofwater,pHscale,commonioneffect,",
+          "topics": []
+        },
+        {
+          "lesson": "hydrolysisofsaltsandpHoftheirsolutions,thesolubilityofsparinglysolublesalts,solubilityproducts",
+          "topics": [
+            "andbuffersolutions.",
+            "UNIT7:REDOXREACTIONSANDELECTROCHEMISTRY"
+          ]
+        },
+        {
+          "lesson": "Electronicconceptsofoxidationandreduction,redoxreactions,oxidationnumber,rulesforassigning",
+          "topics": []
+        },
+        {
+          "lesson": "oxidationnumberandbalancingofredoxreactions.",
+          "topics": []
+        },
+        {
+          "lesson": "Electrolyticandmetallicconduction,conductanceinelectrolyticsolutions,molarconductivitiesandtheir",
+          "topics": []
+        },
+        {
+          "lesson": "variationwithconcentration,Kohlrausch’slawanditsapplications.",
+          "topics": []
+        },
+        {
+          "lesson": "Electrochemicalcells-ElectrolyticandGalvaniccells,differenttypesofelectrodes,electrodepotentials",
+          "topics": []
+        },
+        {
+          "lesson": "includingstandardelectrodepotential,half-cellandcellreactions,emfofaGalvaniccellandits",
+          "topics": []
+        },
+        {
+          "lesson": "measurement,Nernstequationanditsapplications,relationshipbetweencellpotentialandGibbs'energy",
+          "topics": []
+        },
+        {
+          "lesson": "change,drycellandleadaccumulator,fuelcells.",
+          "topics": [
+            "UNIT8:CHEMICALKINETICS"
+          ]
+        },
+        {
+          "lesson": "Rateofachemicalreaction,factorsaffectingtherateofreactions:concentration,temperature,pressure",
+          "topics": []
+        },
+        {
+          "lesson": "andcatalyst,elementaryandcomplexreactions,orderandmolecularityofreactions,ratelaw,rate",
+          "topics": []
+        },
+        {
+          "lesson": "constantanditsunits,differentialandintegralformsofzeroandfirst-orderreactions,their",
+          "topics": []
+        },
+        {
+          "lesson": "characteristicsandhalf-lives,theeffectoftemperatureontherateofreactions,Arrheniustheory,",
+          "topics": []
+        },
+        {
+          "lesson": "activationenergyanditscalculation,collisiontheoryofbi-moleculargaseousreactions(noderivation).",
+          "topics": []
+        }
+      ]
+    },
+    {
+      "subject": "INORGANICCHEMISTRY",
+      "lessons": [
+        {
+          "lesson": "Modernperiodiclawandpresentformoftheperiodictable,s,p.dandfblockelements,periodictrendsin",
+          "topics": []
+        },
+        {
+          "lesson": "propertiesofelementsatomicandionicradii,ionizationenthalpy,electrongainenthalpy,valence,",
+          "topics": []
+        },
+        {
+          "lesson": "oxidationstatesandchemicalreactivity.",
+          "topics": [
+            "UNIT10:p-BLOCKELEMENTS"
+          ]
+        },
+        {
+          "lesson": "Group-13toGroup18Elements",
+          "topics": []
+        },
+        {
+          "lesson": "GeneralIntroduction:Electronicconfigurationandgeneraltrendsinphysicalandchemicalpropertiesof",
+          "topics": []
+        },
+        {
+          "lesson": "elementsacrosstheperiodsanddownthegroups,uniquebehaviourofthefirstelementineachgroup.",
+          "topics": [
+            "UNIT11:d-andf-BLOCKELEMENTS"
+          ]
+        },
+        {
+          "lesson": "TransitionElements-Generalintroduction,electronicconfiguration,occurrenceandcharacteristics,",
+          "topics": []
+        },
+        {
+          "lesson": "generaltrendsinpropertiesofthefirst-rowtransitionelements-physicalproperties,ionizationenthalpy,",
+          "topics": []
+        },
+        {
+          "lesson": "oxidationstates,atomicradii,colour,catalyticbehaviour,magneticproperties,complexformation,",
+          "topics": []
+        },
+        {
+          "lesson": "interstitialcompounds,alloyformation,preparation,propertiesandusesof",
+          "topics": [
+            "andKMnO"
+          ]
+        },
+        {
+          "lesson": "InnerTransitionElements",
+          "topics": []
+        },
+        {
+          "lesson": "Lanthanoids-Electronicconfiguration,oxidationstatesandLanthanoidcontraction.",
+          "topics": []
+        },
+        {
+          "lesson": "Actinoids-Electronicconfigurationandoxidationstates.",
+          "topics": [
+            "UNIT12:COORDINATIONCOMPOUNDS"
+          ]
+        },
+        {
+          "lesson": "Introductiontocoordinationcompounds.Werner'stheory,ligands,coordinationnumber,denticity,",
+          "topics": []
+        },
+        {
+          "lesson": "chelation,IUPACnomenclatureofmononuclearco-ordinationcompounds,isomerism,Bonding:Valence",
+          "topics": []
+        },
+        {
+          "lesson": "bondapproachandbasicideasofCrystalfieldtheory,colourandmagneticproperties,importanceof",
+          "topics": []
+        },
+        {
+          "lesson": "coordinationcompounds(inqualitativeanalysis,extractionofmetalsandinbiologicalsystems).",
+          "topics": []
+        }
+      ]
+    },
+    {
+      "subject": "ORGANICCHEMISTRY",
+      "lessons": [
+        {
+          "lesson": "Purification-Crystallization,sublimation,distillation,differentialextractionandchromatography-",
+          "topics": []
+        },
+        {
+          "lesson": "principlesandtheirapplications.",
+          "topics": []
+        },
+        {
+          "lesson": "Qualitativeanalysis-Detectionofnitrogen,sulphur,phosphorusandhalogens.",
+          "topics": []
+        },
+        {
+          "lesson": "Quantitativeanalysis(basicprinciplesonly)-Estimationofcarbon,hydrogen,nitrogen,halogens,",
+          "topics": []
+        },
+        {
+          "lesson": "sulphurandphosphorus.",
+          "topics": []
+        },
+        {
+          "lesson": "Calculationsofempiricalformulaeandmolecularformulae,numericalproblemsinorganicquantitative",
+          "topics": [
+            "analysis,",
+            "UNIT14:SOMEBASICPRINCIPLESOFORGANICCHEMISTRY"
+          ]
+        },
+        {
+          "lesson": "Tetravalencyofcarbon,shapesofsimplemolecules-hybridization(sandp):classificationoforganic",
+          "topics": []
+        },
+        {
+          "lesson": "compoundsbasedonfunctionalgroupsandthosecontaininghalogens,oxygen,nitrogenandsulphur,",
+          "topics": []
+        },
+        {
+          "lesson": "homologousseries:Isomerism-structuralandstereoisomerism.",
+          "topics": []
+        },
+        {
+          "lesson": "Nomenclature(TrivialandIUPAC)",
+          "topics": []
+        },
+        {
+          "lesson": "Covalentbondfission-Homolyticandheterolytic,freeradicals,carbocationsandcarbanions,stabilityof",
+          "topics": []
+        },
+        {
+          "lesson": "carbocationsandfreeradicals,electrophilesandnucleophiles.",
+          "topics": []
+        },
+        {
+          "lesson": "Electronicdisplacementinacovalentbond",
+          "topics": []
+        },
+        {
+          "lesson": "-Inductiveeffect,electromericeffect,resonanceandhyperconjugation.",
+          "topics": []
+        },
+        {
+          "lesson": "Commontypesoforganicreactions-Substitution,addition,eliminationandrearrangement.",
+          "topics": [
+            "UNITS15:HYDROCARBONS"
+          ]
+        },
+        {
+          "lesson": "Classification,isomerism,IUPACnomenclature,generalmethodsofpreparation,propertiesandreactions.",
+          "topics": []
+        },
+        {
+          "lesson": "Alkanes-Conformations:SawhorseandNewmanprojections(ofethane),mechanismofhalogenationof",
+          "topics": [
+            "alkanes."
+          ]
+        },
+        {
+          "lesson": "Alkenes-Geometricalisomerism,mechanismofelectrophilicaddition,additionofhydrogen,halogens,",
+          "topics": []
+        },
+        {
+          "lesson": "water,hydrogenhalides(Markownikoffsandperoxideeffect),Ozonolysisandpolymerization.",
+          "topics": []
+        },
+        {
+          "lesson": "Alkynes-Acidiccharacter,additionofhydrogen,halogens,waterandhydrogenhalides,polymerization.",
+          "topics": []
+        },
+        {
+          "lesson": "Aromatichydrocarbons-Nomenclature,benzene-structureandaromaticity,mechanismofelectrophilic",
+          "topics": []
+        },
+        {
+          "lesson": "substitution,halogenation,nitration.",
+          "topics": []
+        },
+        {
+          "lesson": "Friedel-Craft'salkylationandacylation,directiveinfluenceofthefunctionalgroupinmono-substituted",
+          "topics": [
+            "benzene.",
+            "UNIT16:ORGANICCOMPOUNDSCONTAININGHALOGENS"
+          ]
+        },
+        {
+          "lesson": "Generalmethodsofpreparation,propertiesandreactions,natureofC-Xbond,mechanismsof",
+          "topics": []
+        },
+        {
+          "lesson": "substitutionreactions.",
+          "topics": []
+        },
+        {
+          "lesson": "Uses,environmentaleffectsofchloroform,iodoform,freonsandDDT.",
+          "topics": [
+            "UNIT17:ORGANICCOMPOUNDSCONTAININGOXYGEN"
+          ]
+        },
+        {
+          "lesson": "Generalmethodsofpreparation,properties,reactionsanduses.",
+          "topics": []
+        },
+        {
+          "lesson": "ALCOHOLS,PHENOLSANDETHERS",
+          "topics": []
+        },
+        {
+          "lesson": "Alcohols:Identificationofprimary,secondaryandtertiaryalcohols,mechanismofdehydration.",
+          "topics": []
+        },
+        {
+          "lesson": "Phenols:Acidicnature,electrophilicsubstitutionreactions,halogenation,nitrationandsulphonation,",
+          "topics": []
+        },
+        {
+          "lesson": "Reimer-Tiemannreaction.",
+          "topics": [
+            "Ethers:Structure."
+          ]
+        },
+        {
+          "lesson": "AldehydeandKetones:Natureofcarbonylgroup,nucleophilicadditionto>C=Ogroup,relative",
+          "topics": []
+        },
+        {
+          "lesson": "reactivitiesofaldehydesandketones,importantreactionssuchas-Nucleophilic",
+          "topics": [
+            "additionreactions"
+          ]
+        },
+        {
+          "lesson": "anditsderivatives),Grignardreagent,oxidation,",
+          "topics": []
+        },
+        {
+          "lesson": "reduction(WolfKishnerand",
+          "topics": []
+        },
+        {
+          "lesson": "Clemmensen),theacidityof",
+          "topics": []
+        },
+        {
+          "lesson": "-hydrogen.Aldolcondensation,Cannizzaroreaction,Haloformreaction,",
+          "topics": []
+        },
+        {
+          "lesson": "chemicalteststodistinguishbetweenaldehydesandketones.",
+          "topics": []
+        },
+        {
+          "lesson": "CarboxylicAcids:Acidicstrengthandfactorsaffectingit.",
+          "topics": [
+            "UNIT18:ORGANICCOMPOUNDSCONTAININGNITROGEN"
+          ]
+        },
+        {
+          "lesson": "Generalmethodsofpreparation,properties,reactionsanduses.",
+          "topics": []
+        },
+        {
+          "lesson": "Amines:Nomenclature,classification,structure,basiccharacterandidentificationofprimary,secondary",
+          "topics": []
+        },
+        {
+          "lesson": "andtertiaryaminesandtheirbasiccharacter.",
+          "topics": []
+        },
+        {
+          "lesson": "DiazoniumSalts:Importanceinsyntheticorganicchemistry.",
+          "topics": [
+            "UNIT19:BIOMOLECULES"
+          ]
+        },
+        {
+          "lesson": "Generalintroductionandimportanceofbiomolecules.",
+          "topics": []
+        },
+        {
+          "lesson": "CARBOHYDRATES–Classification,aldosesandketoses,monosaccharides(glucoseandfructose)and",
+          "topics": []
+        },
+        {
+          "lesson": "constituentmonosaccharidesofoligosaccharides(sucrose,lactoseandmaltose).",
+          "topics": []
+        },
+        {
+          "lesson": "PROTEINS-Elementaryideaof",
+          "topics": []
+        },
+        {
+          "lesson": "-aminoacids,peptidebond,polypeptides,proteins:primary,",
+          "topics": []
+        },
+        {
+          "lesson": "secondary,tertiaryandquaternarystructure(qualitativeideaonly),denaturationofproteins,enzymes.",
+          "topics": []
+        },
+        {
+          "lesson": "VITAMINS–Classificationandfunctions.",
+          "topics": []
+        },
+        {
+          "lesson": "NUCLEICACIDS–ChemicalconstitutionofDNAandRNA,biologicalfunctionsofnucleicacids.",
+          "topics": []
+        },
+        {
+          "lesson": "Hormones(Generalintroduction)",
+          "topics": [
+            "UNIT20:PRINCIPLESRELATEDTOPRACTICALCHEMISTRY"
+          ]
+        },
+        {
+          "lesson": "Detectionofextraelements(Nitrogen,sulphur,halogens)inorganiccompounds,detectionofthe",
+          "topics": []
+        },
+        {
+          "lesson": "followingfunctionalgroups,hydroxyl(alcoholicandphenolic),carbonyl(aldehydeandketones)carboxyl",
+          "topics": []
+        },
+        {
+          "lesson": "andaminogroupsinorganiccompounds.",
+          "topics": []
+        },
+        {
+          "lesson": "Thechemistryinvolvedinthepreparationofthefollowing:",
+          "topics": []
+        },
+        {
+          "lesson": "Inorganiccompounds,Mohr’ssalt,potashalum.",
+          "topics": []
+        },
+        {
+          "lesson": "Organiccompounds:Acetanilide,p-nitroacetanilide,anilineyellow,iodoform.",
+          "topics": []
+        },
+        {
+          "lesson": "Thechemistryinvolvedinthetitrimetricexercises–acids,basesandtheuseofindicators,",
+          "topics": [
+            "oxalic-acidvsKMnO"
+          ]
+        },
+        {
+          "lesson": "Chemicalprinciplesinvolvedinthequalitativesaltanalysis:",
+          "topics": []
+        },
+        {
+          "lesson": "(Insolublesaltsexcluded).",
+          "topics": []
+        },
+        {
+          "lesson": "Chemicalprinciplesinvolvedinthefollowingexperiments:",
+          "topics": [
+            "1.EnthalpyofsolutionofCuSO",
+            "2.Enthalpyofneutralizationofstrongacidandstrongbase.",
+            "3.Preparationoflyophilicandlyophobicsols.",
+            "4.Kineticstudyofthereactionofiodideionswithhydrogenperoxideatroomtemperature."
+          ]
+        },
+        {
+          "lesson": "SyllabusforJEE(Main)Paper2A(B.Arch.)-Mathematics,AptitudeTestandDrawingTest",
+          "topics": []
+        }
+      ]
+    },
+    {
+      "subject": "PART-IMATHEMATICS",
+      "lessons": [
+        {
+          "lesson": "Setsandtheirrepresentation;Union,intersectionandcomplementofsetsandtheiralgebraicproperties;",
+          "topics": []
+        },
+        {
+          "lesson": "Powerset;Relations,typeofrelations,equivalencerelations,functions;one-one,intoandontofunctions,",
+          "topics": []
+        },
+        {
+          "lesson": "thecompositionoffunctions.",
+          "topics": [
+            "UNIT2:COMPLEXNUMBERSANDQUADRATICEQUATIONS:"
+          ]
+        },
+        {
+          "lesson": "Complexnumbersasorderedpairsofreals,Representationofcomplexnumbersintheforma+iband",
+          "topics": []
+        },
+        {
+          "lesson": "theirrepresentationinaplane,Arganddiagram,algebraofcomplexnumbers,modulusandargument(or",
+          "topics": []
+        },
+        {
+          "lesson": "amplitude)ofacomplexnumber,Quadraticequationsinrealandcomplexnumbersystemsandtheir",
+          "topics": []
+        },
+        {
+          "lesson": "solutions;Relationsbetweenrootsandcoefficients,natureofroots,theformationofquadraticequations",
+          "topics": [
+            "withgivenroots.",
+            "UNIT3:MATRICESANDDETERMINANTS:"
+          ]
+        },
+        {
+          "lesson": "Matrices,algebraofmatrices,typeofmatrices,determinantsandmatricesofordertwoandthree,",
+          "topics": []
+        },
+        {
+          "lesson": "evaluationofdeterminants,areaoftrianglesusingdeterminants;Adjointandinverseofasquarematrix;",
+          "topics": []
+        },
+        {
+          "lesson": "Testofconsistencyandsolutionofsimultaneouslinearequationsintwoorthreevariablesusingmatrices.",
+          "topics": [
+            "UNIT4:PERMUTATIONSANDCOMBINATIONS:"
+          ]
+        },
+        {
+          "lesson": "Thefundamentalprincipleofcounting,permutationsandcombinations;MeaningofP(n,r)andC(n,r).",
+          "topics": [
+            "UNIT5:BINOMIALTHEOREMANDITSSIMPLEAPPLICATIONS:"
+          ]
+        },
+        {
+          "lesson": "Binomialtheoremforapositiveintegralindex,generaltermandmiddletermandsimpleapplications.",
+          "topics": [
+            "UNIT6:SEQUENCEANDSERIES:"
+          ]
+        },
+        {
+          "lesson": "ArithmeticandGeometricprogressions,insertionofarithmetic,geometricmeansbetweentwogiven",
+          "topics": []
+        },
+        {
+          "lesson": "numbers,RelationbetweenA.MandG.M.",
+          "topics": [
+            "UNIT7:LIMIT,CONTINUITYANDDIFFERENTIABILITY:"
+          ]
+        },
+        {
+          "lesson": "Real–valuedfunctions,algebraoffunctions;polynomial,rational,trigonometric,logarithmicand",
+          "topics": []
+        },
+        {
+          "lesson": "exponentialfunctions;inversefunctions.Graphsofsimplefunctions.Limits,continuityand",
+          "topics": []
+        },
+        {
+          "lesson": "differentiability.Differentiationofthesum,difference,productandquotientoftwofunctions.",
+          "topics": []
+        },
+        {
+          "lesson": "Differentiationoftrigonometric,inversetrigonometric,logarithmic,exponential,compositeandimplicit",
+          "topics": []
+        },
+        {
+          "lesson": "functions;derivativesoforderuptotwo,Applicationsofderivatives:Rateofchangeofquantities,",
+          "topics": []
+        },
+        {
+          "lesson": "monotonic-Increasinganddecreasingfunctions,Maximaandminimaoffunctionsofonevariable.",
+          "topics": [
+            "UNIT8:INTEGRALCALCULAS:"
+          ]
+        },
+        {
+          "lesson": "Integralasananti-derivative,Fundamentalintegralsinvolvingalgebraic,trigonometric,exponentialand",
+          "topics": []
+        },
+        {
+          "lesson": "logarithmicfunctions.Integrationbysubstitution,bypartsandbypartialfractions.Integrationusing",
+          "topics": []
+        },
+        {
+          "lesson": "trigonometricidentities.",
+          "topics": []
+        },
+        {
+          "lesson": "Evaluationofsimpleintegralsofthetype",
+          "topics": []
+        },
+        {
+          "lesson": "Thefundamentaltheoremofcalculus,propertiesofdefiniteintegrals.Evaluationofdefiniteintegrals,",
+          "topics": []
+        },
+        {
+          "lesson": "determiningareasoftheregionsboundedbysimplecurvesinstandardforms.",
+          "topics": [
+            "UNIT9:DIFFRENTIALEQUATIONS:"
+          ]
+        },
+        {
+          "lesson": "Ordinarydifferentialequations,theirorderanddegree,thesolutionofdifferentialequationbythemethod",
+          "topics": []
+        },
+        {
+          "lesson": "ofseparationofvariables,solutionofahomogeneousandlineardifferentialequationofthetype",
+          "topics": [
+            "UNIT10:CO-ORDINATEGEOMETRY:"
+          ]
+        },
+        {
+          "lesson": "Cartesiansystemofrectangularcoordinatesinaplane,distanceformula,sectionsformula,locusandits",
+          "topics": []
+        },
+        {
+          "lesson": "equation,theslopeofaline,parallelandperpendicularlines,interceptsofalineontheco-ordinateaxis.",
+          "topics": []
+        },
+        {
+          "lesson": "Straightline:Variousformsofequationsofaline,intersectionoflines,anglesbetweentwolines,",
+          "topics": []
+        },
+        {
+          "lesson": "conditionsforconcurrenceofthreelines,thedistanceofapointformaline,co-ordinateofthecentroid,",
+          "topics": []
+        },
+        {
+          "lesson": "orthocentreandcircumcentreofatriangle.",
+          "topics": []
+        },
+        {
+          "lesson": "Circle,conicsections:Astandardformofequationsofacircle,thegeneralformoftheequationofacircle,",
+          "topics": []
+        },
+        {
+          "lesson": "itsradiusandcentre,equationofacirclewhentheendpointsofadiameteraregiven,pointsofintersection",
+          "topics": []
+        },
+        {
+          "lesson": "ofalineandacirclewiththecentreattheoriginandsectionsofconics,equationsofconicsections",
+          "topics": []
+        },
+        {
+          "lesson": "(parabola,ellipseandhyperbola)instandardforms.",
+          "topics": [
+            "UNIT11:THREEDIMENSIONALGEOMETRY:"
+          ]
+        },
+        {
+          "lesson": "Coordinatesofapointinspace,thedistancebetweentwopoints,sectionformula,directionratiosand",
+          "topics": []
+        },
+        {
+          "lesson": "directioncosinesandtheanglebetweentwointersectinglines.Equationofaline;Skewlines,theshortest",
+          "topics": []
+        },
+        {
+          "lesson": "distancebetweenthemanditsequation.",
+          "topics": [
+            "UNIT12:VECTORALGEBRA:"
+          ]
+        },
+        {
+          "lesson": "Vectorsandscalars,theadditionofvectors,componentsofavectorintwodimensionsandthree-",
+          "topics": []
+        },
+        {
+          "lesson": "dimensionalspaces,scalarandvectorproducts.",
+          "topics": [
+            "UNIT13:STATISTICSANDPROBABILITY:"
+          ]
+        },
+        {
+          "lesson": "Measuresofdispersion;calculationofmean,median,modeofgroupedandungroupeddata,calculationof",
+          "topics": []
+        },
+        {
+          "lesson": "standarddeviation,varianceandmeandeviationforgroupedandungroupeddata.Probability:Probability",
+          "topics": []
+        },
+        {
+          "lesson": "ofanevent,additionandmultiplicationtheoremsofprobability,Baye'stheorem,probabilitydistributionofa",
+          "topics": [
+            "randomvariable.",
+            "UNIT14:TRIGONOMETRY:"
+          ]
+        },
+        {
+          "lesson": "Trigonometricalidentitiesandtrigonometricalfunctions,inversetrigonometricalfunctionsandtheir",
+          "topics": [
+            "properties.",
+            "UNIT-1Awarenessofpersons:Buildings,Materials."
+          ]
+        },
+        {
+          "lesson": "Objects,TexturerelatedtoArchitectureandBuild-environment,Visualizingthree-dimensionalobjects",
+          "topics": []
+        },
+        {
+          "lesson": "fromtwo-dimensionaldrawings.Visualizing.Differentsidesofthree-dimensionalobjects.Analytical",
+          "topics": []
+        },
+        {
+          "lesson": "ReasoningMentalAbility(Visual,NumericalandVerbal)",
+          "topics": [
+            "UNIT–2Threedimensional-perception:Understandingandappreciationofscaleandproportionsof"
+          ]
+        },
+        {
+          "lesson": "objects,buildingformsandelements,colourtextureharmonyandcontrastDesignanddrawingof",
+          "topics": []
+        },
+        {
+          "lesson": "geometricalorabstractshapesandpatternsinpencil.Transformationofformsboth2Dand3Dunion,",
+          "topics": []
+        },
+        {
+          "lesson": "subtractionrotation,developmentofsurfacesandvolumes,Generationofplans,elevationsand3Dviews",
+          "topics": []
+        },
+        {
+          "lesson": "ofobjects,creatingtwo-dimensionalandthree-dimensionalcompositionsusinggivenshapesandforms.",
+          "topics": []
+        },
+        {
+          "lesson": "Sketchingofscenesandactivitiesfrommemoryofurbanscape(publicspace,market,festivals,street",
+          "topics": []
+        },
+        {
+          "lesson": "scenes,monuments,recreationalspaces,etc.).landscape(riverfronts.Jungle.Gardens,trees.Plants,etc.)",
+          "topics": [
+            "andrurallife."
+          ]
+        },
+        {
+          "lesson": "TobeconductedinaDrawingsheet.",
+          "topics": []
+        },
+        {
+          "lesson": "Note:Candidatesareadvisedtobringpencils,owngeometryboxset,crasetsandcolourpencilsand",
+          "topics": []
+        },
+        {
+          "lesson": "crayonsfortheDrawingTest.",
+          "topics": []
+        },
+        {
+          "lesson": "SyllabusforJEE(Main)Paper2B(B.Planning)-Mathematics,AptitudeTestandPlanning",
+          "topics": []
+        }
+      ]
+    },
+    {
+      "subject": "PART-IMATHEMATICS",
+      "lessons": [
+        {
+          "lesson": "Setsandtheirrepresentation;Union,intersectionandcomplementofsetsandtheiralgebraicproperties;",
+          "topics": []
+        },
+        {
+          "lesson": "Powerset;Relations,typeofrelations,equivalencerelations,functions;one-one,intoandontofunctions,",
+          "topics": []
+        },
+        {
+          "lesson": "thecompositionoffunctions.",
+          "topics": [
+            "UNIT2:COMPLEXNUMBERSANDQUADRATICEQUATIONS:"
+          ]
+        },
+        {
+          "lesson": "Complexnumbersasorderedpairsofreals,Representationofcomplexnumbersintheforma+iband",
+          "topics": []
+        },
+        {
+          "lesson": "theirrepresentationinaplane,Arganddiagram,algebraofcomplexnumbers,modulusandargument(or",
+          "topics": []
+        },
+        {
+          "lesson": "amplitude)ofacomplexnumber,Quadraticequationsinrealandcomplexnumbersystemsandtheir",
+          "topics": []
+        },
+        {
+          "lesson": "solutions;Relationsbetweenrootsandcoefficients,natureofroots,theformationofquadraticequations",
+          "topics": [
+            "withgivenroots.",
+            "UNIT3:MATRICESANDDETERMINANTS:"
+          ]
+        },
+        {
+          "lesson": "Matrices,algebraofmatrices,typeofmatrices,determinantsandmatricesofordertwoandthree,",
+          "topics": []
+        },
+        {
+          "lesson": "evaluationofdeterminants,areaoftrianglesusingdeterminants;Adjointandinverseofasquarematrix;",
+          "topics": []
+        },
+        {
+          "lesson": "Testofconsistencyandsolutionofsimultaneouslinearequationsintwoorthreevariablesusingmatrices.",
+          "topics": [
+            "UNIT4:PERMUTATIONSANDCOMBINATIONS:"
+          ]
+        },
+        {
+          "lesson": "Thefundamentalprincipleofcounting,permutationsandcombinations;MeaningofP(n,r)andC(n,r),",
+          "topics": [
+            "UNIT5:BINOMIALTHEOREMANDITSSIMPLEAPPLICATIONS:"
+          ]
+        },
+        {
+          "lesson": "Binomialtheoremforapositiveintegralindex,generaltermandmiddletermandsimpleapplications.",
+          "topics": [
+            "UNIT6:SEQUENCEANDSERIES:"
+          ]
+        },
+        {
+          "lesson": "ArithmeticandGeometricprogressions,insertionofarithmetic,geometricmeansbetweentwogiven",
+          "topics": []
+        },
+        {
+          "lesson": "numbers,RelationbetweenA.MandG.M.",
+          "topics": [
+            "UNIT7:LIMIT,CONTINUITYANDDIFFERENTIABILITY:"
+          ]
+        },
+        {
+          "lesson": "Real–valuedfunctions,algebraoffunctions;polynomial,rational,trigonometric,logarithmicand",
+          "topics": []
+        },
+        {
+          "lesson": "exponentialfunctions;inversefunctions.Graphsofsimplefunctions.Limits,continuityand",
+          "topics": []
+        },
+        {
+          "lesson": "differentiability.Differentiationofthesum,difference,productandquotientoftwofunctions.",
+          "topics": []
+        },
+        {
+          "lesson": "Differentiationoftrigonometric,inversetrigonometric,logarithmic,exponential,compositeandimplicit",
+          "topics": []
+        },
+        {
+          "lesson": "functions;derivativesoforderuptotwo,Applicationsofderivatives:Rateofchangeofquantities,",
+          "topics": []
+        },
+        {
+          "lesson": "monotonic-Increasinganddecreasingfunctions,Maximaandminimaoffunctionsofonevariable.",
+          "topics": [
+            "UNIT8:INTEGRALCALCULAS:"
+          ]
+        },
+        {
+          "lesson": "Integralasananti-derivative,Fundamentalintegralsinvolvingalgebraic,trigonometric,exponentialand",
+          "topics": []
+        },
+        {
+          "lesson": "logarithmicfunctions.Integrationbysubstitution,bypartsandbypartialfractions.Integrationusing",
+          "topics": []
+        },
+        {
+          "lesson": "trigonometricidentities.",
+          "topics": []
+        },
+        {
+          "lesson": "Evaluationofsimpleintegralsofthetype",
+          "topics": []
+        },
+        {
+          "lesson": "Thefundamentaltheoremofcalculus,propertiesofdefiniteintegrals.Evaluationofdefiniteintegrals,",
+          "topics": []
+        },
+        {
+          "lesson": "determiningareasoftheregionsboundedbysimplecurves.",
+          "topics": [
+            "UNIT9:DIFFRENTIALEQUATIONS:"
+          ]
+        },
+        {
+          "lesson": "Ordinarydifferentialequations,theirorderanddegree,thesolutionofdifferentialequationbythemethodof",
+          "topics": []
+        },
+        {
+          "lesson": "separationofvariables,solutionofahomogeneousandlineardifferentialequationofthetype",
+          "topics": [
+            "UNIT10:CO-ORDINATEGEOMETRY:"
+          ]
+        },
+        {
+          "lesson": "Cartesiansystemofrectangularcoordinatesinaplane,distanceformula,sectionsformula,locusandits",
+          "topics": []
+        },
+        {
+          "lesson": "equation,theslopeofaline,parallelandperpendicularlines,interceptsofalineontheco-ordinateaxis.",
+          "topics": []
+        },
+        {
+          "lesson": "Straightline:Variousformsofequationsofaline,intersectionoflines,anglesbetweentwolines,conditionsfor",
+          "topics": []
+        },
+        {
+          "lesson": "concurrenceofthreelines,thedistanceofapointformaline,co-ordinateofthecentroid,orthocentreand",
+          "topics": []
+        },
+        {
+          "lesson": "circumcentreofatriangle.",
+          "topics": []
+        },
+        {
+          "lesson": "Circle,conicsections:Astandardformofequationsofacircle,thegeneralformoftheequationofacircle,its",
+          "topics": []
+        },
+        {
+          "lesson": "radiusandcentre,equationofacirclewhentheendpointsofadiameteraregiven,pointsofintersectionofa",
+          "topics": []
+        },
+        {
+          "lesson": "lineandacirclewiththecentreattheoriginandsectionsofconics,equationsofconicsections(parabola,",
+          "topics": []
+        },
+        {
+          "lesson": "ellipseandhyperbola)instandardforms.",
+          "topics": [
+            "UNIT11:THREEDIMENSIONALGEOMETRY:"
+          ]
+        },
+        {
+          "lesson": "Coordinatesofapointinspace,thedistancebetweentwopoints,sectionformula,directionratiosand",
+          "topics": []
+        },
+        {
+          "lesson": "directioncosinesandtheanglebetweentwointersectinglines.Equationofaline;Skewlines,theshortest",
+          "topics": []
+        },
+        {
+          "lesson": "distancebetweenthemanditsequation.",
+          "topics": [
+            "UNIT12:VECTORALGEBRA:"
+          ]
+        },
+        {
+          "lesson": "Vectorsandscalars,theadditionofvectors,componentsofavectorintwodimensionsandthree-dimensional",
+          "topics": []
+        },
+        {
+          "lesson": "spaces,scalarandvectorproducts.",
+          "topics": [
+            "UNIT13:STATISTICSANDPROBABILITY:"
+          ]
+        },
+        {
+          "lesson": "Measuresofdispersion;calculationofmean,median,modeofgroupedandungroupeddata,calculationof",
+          "topics": []
+        },
+        {
+          "lesson": "standarddeviation,varianceandmeandeviationforgroupedandungroupeddata.Probability:Probabilityofan",
+          "topics": []
+        },
+        {
+          "lesson": "event,additionandmultiplicationtheoremsofprobability,Baye'stheorem,probabilitydistributionofarandom",
+          "topics": [
+            "variable.",
+            "UNIT14:TRIGONOMETRY:"
+          ]
+        },
+        {
+          "lesson": "Trigonometricalidentitiesandtrigonometricalfunctions,inversetrigonometricalfunctionsandtheirproperties.",
+          "topics": [
+            "UNIT-1Awarenessofpersons,Buildings,Materials,ObjectsandTexturesrelatedtoArchitectureandBuild-"
+          ]
+        },
+        {
+          "lesson": "environment,Visualizingthree-dimensionalobjectsfromtwo-dimensionaldrawings.Visualizingdifferentsides",
+          "topics": []
+        },
+        {
+          "lesson": "ofthree-dimensionalobjects,AnalyticalReasoningMentalAbility(Visual,NumericalandVerbal)",
+          "topics": [
+            "UNIT–2Threedimensional-perception:Understandingandappreciationofscaleandproportionsofobjects,"
+          ]
+        },
+        {
+          "lesson": "buildingformsandelements,colourtextureharmonyandcontrastDesignanddrawingofgeometricalor",
+          "topics": []
+        },
+        {
+          "lesson": "abstractshapesandpatternsinpencil.Transformationofformsboth2Dand3Dunion,subtractionrotation,",
+          "topics": []
+        },
+        {
+          "lesson": "developmentofsurfacesandvolumes,Generationofplans,elevationsand3Dviewsofobjects,creatingtwo-",
+          "topics": []
+        },
+        {
+          "lesson": "dimensionalandthree-dimensionalcompositionsusinggivenshapesandforms.",
+          "topics": [
+            "UNIT-1GENERALAWARENESS."
+          ]
+        },
+        {
+          "lesson": "Generalknowledgequestionsandknowledgeaboutprominentcities,developmentissues,government",
+          "topics": [
+            "programsetc.",
+            "UNIT-2SOCIALSCIENCES"
+          ]
+        },
+        {
+          "lesson": "Theideaofnationalism,nationalisminIndia,pre-modernworld,19",
+          "topics": []
+        },
+        {
+          "lesson": "-centuryglobaleconomy,colonialismand",
+          "topics": []
+        },
+        {
+          "lesson": "colonialcities,industrialization,resourcesanddevelopment,typesofresources,agriculture,water,mineral",
+          "topics": []
+        },
+        {
+          "lesson": "resources,industries,nationaleconomy;HumanSettlements.",
+          "topics": []
+        },
+        {
+          "lesson": "Power-sharing,federalism,politicalparties,democracy,theconstitutionofIndia.",
+          "topics": []
+        },
+        {
+          "lesson": "Economicdevelopment-economicsectors,globalization,theconceptofdevelopment,poverty;Population",
+          "topics": []
+        },
+        {
+          "lesson": "structure,socialexclusionandinequality,urbanization,ruraldevelopment,colonialcities.",
+          "topics": [
+            "UNIT-3THINKINGSKILLS"
+          ]
+        },
+        {
+          "lesson": "Comprehension(unseenpassage);mapreadingskills,scale,distance,direction,areaetc.;criticalreasoning;",
+          "topics": []
+        },
+        {
+          "lesson": "understandingofcharts,graphsandtables;basicconceptsofstatisticsandquantitativereasoning.",
+          "topics": []
+        }
+      ]
+    }
+  ]
+}

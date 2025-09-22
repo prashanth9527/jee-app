@@ -144,17 +144,33 @@ export class JsonImportService {
       // Get or create default stream (will be determined per question)
       const getOrCreateStream = async (streamName: string) => {
         let stream = await this.prisma.stream.findFirst({
-          where: { name: { equals: streamName, mode: 'insensitive' } },
+          where: { 
+            OR: [
+              { name: { equals: streamName, mode: 'insensitive' } },
+              { code: { equals: streamName.toUpperCase(), mode: 'insensitive' } }
+            ]
+          },
         });
 
         if (!stream) {
-          stream = await this.prisma.stream.create({
-            data: {
-              name: streamName,
-              code: streamName.toUpperCase(),
-              description: `Auto-created stream: ${streamName}`,
-            },
+          // Check if a stream with the same code already exists
+          const existingStreamWithCode = await this.prisma.stream.findFirst({
+            where: { code: { equals: streamName.toUpperCase(), mode: 'insensitive' } },
           });
+
+          if (existingStreamWithCode) {
+            // Use the existing stream if it has the same code
+            stream = existingStreamWithCode;
+          } else {
+            // Create new stream only if no stream with same code exists
+            stream = await this.prisma.stream.create({
+              data: {
+                name: streamName,
+                code: streamName.toUpperCase(),
+                description: `Auto-created stream: ${streamName}`,
+              },
+            });
+          }
         }
 
         return stream;

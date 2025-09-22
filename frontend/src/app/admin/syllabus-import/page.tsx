@@ -19,7 +19,7 @@ interface SyllabusSubject {
   subject: string;
   lessons: Array<{
     lesson: string;
-    topics: string[];
+    topics: (string | any)[];
   }>;
 }
 
@@ -98,6 +98,7 @@ export default function SyllabusImportPage() {
       setLoading(true);
       const response = await api.get(`/admin/syllabus-import/preview?file=${encodeURIComponent(filePath)}`);
       setPreview(response.data);
+      setSelectedFile(filePath); // Set the selected file for import
       setActiveTab('preview');
     } catch (error: any) {
       console.error('Preview failed:', error);
@@ -115,10 +116,12 @@ export default function SyllabusImportPage() {
 
     try {
       setImporting(true);
+      console.log('Starting import for file:', selectedFile);
       const response = await api.post('/admin/syllabus-import/import', {
         filePath: selectedFile,
         options: importOptions,
       });
+      console.log('Import response:', response.data);
       setImportResult(response.data.result);
       setActiveTab('import');
       loadStats(); // Refresh stats after import
@@ -321,7 +324,7 @@ export default function SyllabusImportPage() {
                                   <div className="mt-1 flex flex-wrap gap-1">
                                     {lesson.topics.slice(0, 5).map((topic, topicIndex) => (
                                       <span key={topicIndex} className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
-                                        {topic}
+                                        {typeof topic === 'string' ? topic : JSON.stringify(topic)}
                                       </span>
                                     ))}
                                     {lesson.topics.length > 5 && (

@@ -25,7 +25,7 @@ export interface SyllabusSubject {
   subject: string;
   lessons: Array<{
     lesson: string;
-    topics: string[];
+    topics: (string | { topic: string })[];
   }>;
 }
 
@@ -82,7 +82,7 @@ export class SyllabusImportService {
   /**
    * Read and parse a syllabus JSON file
    */
-  async readSyllabusFile(filePath: string): Promise<SyllabusSubject[]> {
+  async readSyllabusFile(filePath: string): Promise<{ subjects: SyllabusSubject[]; stream?: string }> {
     try {
       const fullPath = path.join(process.cwd(), 'prisma', 'seeds', filePath);
       
@@ -93,11 +93,39 @@ export class SyllabusImportService {
       const fileContent = fs.readFileSync(fullPath, 'utf-8');
       const syllabusData = JSON.parse(fileContent);
 
-      if (!Array.isArray(syllabusData)) {
-        throw new BadRequestException('Syllabus file must contain an array of subjects');
+      // Handle different JSON structures
+      let subjects: SyllabusSubject[];
+      let stream: string | undefined;
+      
+      if (Array.isArray(syllabusData)) {
+        // Direct array of subjects
+        subjects = syllabusData;
+      } else if (syllabusData && Array.isArray(syllabusData.subjects)) {
+        // Object with subjects array
+        subjects = syllabusData.subjects;
+        stream = syllabusData.stream;
+      } else {
+        throw new BadRequestException('Syllabus file must contain an array of subjects or an object with a subjects array');
       }
 
-      return syllabusData;
+      // Normalize topic format - convert all topics to strings
+      const normalizedSubjects = subjects.map(subject => ({
+        ...subject,
+        lessons: subject.lessons.map(lesson => ({
+          ...lesson,
+          topics: lesson.topics.map(topic => {
+            if (typeof topic === 'string') {
+              return topic;
+            } else if (typeof topic === 'object' && topic !== null && 'topic' in topic) {
+              return (topic as { topic: string }).topic;
+            } else {
+              return String(topic);
+            }
+          })
+        }))
+      }));
+
+      return { subjects: normalizedSubjects, stream };
     } catch (error) {
       if (error instanceof SyntaxError) {
         throw new BadRequestException(`Invalid JSON format: ${error.message}`);
@@ -148,7 +176,18 @@ export class SyllabusImportService {
 
         for (let k = 0; k < lesson.topics.length; k++) {
           const topic = lesson.topics[k];
-          if (!topic || typeof topic !== 'string') {
+          
+          // Handle different topic formats
+          let topicName: string | null = null;
+          
+          if (typeof topic === 'string') {
+            topicName = topic.trim();
+          } else if (typeof topic === 'object' && topic !== null && 'topic' in topic) {
+            const topicObj = topic as { topic: string };
+            topicName = typeof topicObj.topic === 'string' ? topicObj.topic.trim() : null;
+          }
+          
+          if (!topicName || topicName === '') {
             errors.push(`Subject ${i + 1}, Lesson ${j + 1}, Topic ${k + 1}: Missing or invalid topic name`);
           }
         }
@@ -162,7 +201,14 @@ export class SyllabusImportService {
    * Import syllabus data into the database
    */
   async importSyllabus(
-    syllabusData: SyllabusSubject[],
+    syllabusData: Array<{
+      subject: string;
+      lessons: Array<{
+        lesson: string;
+        topics: string[];
+      }>;
+    }>,
+    streamName: string = 'JEE',
     options: {
       createMissingSubjects?: boolean;
       createMissingLessons?: boolean;
@@ -196,13 +242,35 @@ export class SyllabusImportService {
     };
 
     try {
-      // Get JEE stream
-      const jeeStream = await this.prisma.stream.findFirst({
-        where: { name: { equals: 'JEE', mode: 'insensitive' } },
+      // Get or create the specified stream
+      let stream = await this.prisma.stream.findFirst({
+        where: { 
+          OR: [
+            { name: { equals: streamName, mode: 'insensitive' } },
+            { code: { equals: streamName.toUpperCase(), mode: 'insensitive' } }
+          ]
+        },
       });
 
-      if (!jeeStream) {
-        throw new BadRequestException('JEE stream not found. Please create the JEE stream first.');
+      if (!stream) {
+        // Check if a stream with the same code already exists
+        const existingStreamWithCode = await this.prisma.stream.findFirst({
+          where: { code: { equals: streamName.toUpperCase(), mode: 'insensitive' } },
+        });
+
+        if (existingStreamWithCode) {
+          // Use the existing stream if it has the same code
+          stream = existingStreamWithCode;
+        } else {
+          // Create new stream only if no stream with same code exists
+          stream = await this.prisma.stream.create({
+            data: {
+              name: streamName,
+              code: streamName.toUpperCase(),
+              description: `Auto-created stream: ${streamName}`,
+            },
+          });
+        }
       }
 
       for (const subjectData of syllabusData) {
@@ -213,7 +281,7 @@ export class SyllabusImportService {
           let subject = await this.prisma.subject.findFirst({
             where: {
               name: { equals: subjectData.subject, mode: 'insensitive' },
-              streamId: jeeStream.id,
+              streamId: stream.id,
             },
           });
 
@@ -221,7 +289,7 @@ export class SyllabusImportService {
             subject = await this.prisma.subject.create({
               data: {
                 name: subjectData.subject,
-                streamId: jeeStream.id,
+                streamId: stream.id,
                 description: `Auto-created from syllabus import`,
               },
             });
@@ -335,11 +403,23 @@ export class SyllabusImportService {
   /**
    * Get preview of syllabus data (first few items)
    */
-  async getSyllabusPreview(syllabusData: SyllabusSubject[], limit: number = 5): Promise<{
+  async getSyllabusPreview(syllabusData: Array<{
+    subject: string;
+    lessons: Array<{
+      lesson: string;
+      topics: string[];
+    }>;
+  }>, limit: number = 5): Promise<{
     subjects: number;
     totalLessons: number;
     totalTopics: number;
-    sampleData: SyllabusSubject[];
+    sampleData: Array<{
+      subject: string;
+      lessons: Array<{
+        lesson: string;
+        topics: string[];
+      }>;
+    }>;
   }> {
     const totalLessons = syllabusData.reduce((sum, subject) => sum + subject.lessons.length, 0);
     const totalTopics = syllabusData.reduce((sum, subject) => 

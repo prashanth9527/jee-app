@@ -14,6 +14,15 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { SyllabusImportService, ImportResult, SyllabusSubject } from './syllabus-import.service';
 
+// Normalized syllabus data type (after processing)
+type NormalizedSyllabusSubject = {
+  subject: string;
+  lessons: Array<{
+    lesson: string;
+    topics: string[];
+  }>;
+};
+
 @Controller('admin/syllabus-import')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('ADMIN')
@@ -53,13 +62,15 @@ export class SyllabusImportController {
     }
 
     try {
-      const syllabusData = await this.syllabusImportService.readSyllabusFile(filePath);
-      const validation = this.syllabusImportService.validateSyllabusData(syllabusData);
-      const preview = await this.syllabusImportService.getSyllabusPreview(syllabusData);
+      const { subjects, stream } = await this.syllabusImportService.readSyllabusFile(filePath);
+      const normalizedSubjects = subjects as NormalizedSyllabusSubject[];
+      const validation = this.syllabusImportService.validateSyllabusData(normalizedSubjects);
+      const preview = await this.syllabusImportService.getSyllabusPreview(normalizedSubjects);
 
       return {
         success: true,
         filePath,
+        stream,
         validation,
         preview,
         sampleData: preview.sampleData,
@@ -98,15 +109,16 @@ export class SyllabusImportController {
 
     try {
       // Read and validate the file
-      const syllabusData = await this.syllabusImportService.readSyllabusFile(filePath);
-      const validation = this.syllabusImportService.validateSyllabusData(syllabusData);
+      const { subjects, stream } = await this.syllabusImportService.readSyllabusFile(filePath);
+      const normalizedSubjects = subjects as NormalizedSyllabusSubject[];
+      const validation = this.syllabusImportService.validateSyllabusData(normalizedSubjects);
 
       if (!validation.isValid) {
         throw new BadRequestException(`Validation failed: ${validation.errors.join(', ')}`);
       }
 
       // Import the data
-      const result = await this.syllabusImportService.importSyllabus(syllabusData, options);
+      const result = await this.syllabusImportService.importSyllabus(normalizedSubjects, stream || 'JEE', options);
 
       return {
         success: result.success,
@@ -196,8 +208,9 @@ export class SyllabusImportController {
     }
 
     try {
-      const validation = this.syllabusImportService.validateSyllabusData(syllabusData);
-      const preview = await this.syllabusImportService.getSyllabusPreview(syllabusData);
+      const normalizedSubjects = syllabusData as NormalizedSyllabusSubject[];
+      const validation = this.syllabusImportService.validateSyllabusData(normalizedSubjects);
+      const preview = await this.syllabusImportService.getSyllabusPreview(normalizedSubjects);
 
       return {
         success: true,
