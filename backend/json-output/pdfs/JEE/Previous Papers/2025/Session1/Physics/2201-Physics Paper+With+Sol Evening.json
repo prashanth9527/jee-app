@@ -1,0 +1,1017 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2025\\Session1\\Physics\\2201-Physics Paper+With+Sol Evening.pdf",
+  "relativePath": "JEE\\Previous Papers\\2025\\Session1\\Physics\\2201-Physics Paper+With+Sol Evening.pdf",
+  "metadata": {
+    "originalFileName": "2201-Physics Paper+With+Sol Evening.pdf",
+    "subject": "Physics",
+    "year": 2025,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 8,
+    "fileSize": 6499365,
+    "processedAt": "2025-09-23T00:14:45.647Z"
+  },
+  "content": {
+    "originalText": "1 JEE–MAIN EXAMINATION – JANUARY 2025 PHYSICS TEST PAPER WITH SOLUTION  (HELD ON WEDNESDAY 22\nnd JANUARY 2025) TIME : 3 : 00 PM TO 6 : 00 PM SECTION-A 26. A symmetric thin biconvex lens is cut into four equal parts by two planes AB and CD as shown in figure. If the power of original lens is 4D then the power of a part of the divided lens is A B C D (1) 8D (2) 4D (3) D (4) 2D Ans. (4) Sol.  \n1\n12\n1P 4D\nfR\n    =  \n2\n11P\n12D\nfR2\n    27. A small rigid spherical ball of mass M is dropped in a long vertical tube containing glycerine. The velocity of the ball becomes constant after some time. If the density of glycerine is half of the density of the ball, then the viscous force acting on the ball will be (consider g as acceleration due to gravity) (1) 3\nMg\n2 (2) Mg\n2 (3) Mg (4) 2 Mg Ans. (2) Sol. mg F\nf a = 0 mg – F\nB – f = 0  mg – mg\n2 – f = 0  f = mg\n2 28. The maximum percentage error in the measurment of density of a wire is [Given, mass of wire = (0.60 ± 0.003)g radius of wire = (0.50 ± 0.01)cm length of wire (10.00 ± 0.05)cm] (1) 4 (2) 5 (3) 8 (4) 7 Ans. (2) Sol. 2\nmm\nd\nvol.R\n\n  ddm2dRd\nmR\n\n  \n  d0.003 2 0.01 0.05\n100 5%\n0.60.510\n\n\n\n\n\n 29. A series LCR circuit is connected to an alternating source of emf E. The current amplitude at resonant frequency is I\n0\n. If the value of resistance R becomes twice of its initial value then amplitude of current at resonance will be (1) I\n0 (2) 0\nI\n2 (3)\n0\nI\n2 (4) 2I\n0 Ans. (2) Sol. Initially, m\n0\nI\nR\n\n Finally, 1\n0\nm\n0\nI\nI\n2R2\n\n ALLEN 2  30. For a short dipole placed at origin O, the dipole moment P is along x-axis, as shown in the figure. If the electric potential and electric field at A are V\n0 and E\n0\n, respectively, then the correct combination of the electric potential and electric field, respectively, at point B on the y-axis is given by O r y B x A P 2r (1) 0\nV\n2 and 0\nE\n16 (2) zero and 0\nE\n8 (3) zero and 0\nE\n16 (4) V\n0 and 0\nE\n4 Ans. (3) Sol. A0\n3\n2kP\nEE\nr\n & V\nA = 0\n2\nkP\nv\nr\n E\nB =  \n0\n3\nE\nkP\n16\n2r\n\n& B\n2\nˆ\nkP.r\nV0\nr\n 31. Which one of the following is the correct dimensional formula for the capacitance in F ? M, L, T and C stand for unit of mass, length, time and charge, (1) [F] = [C\n2\nM\n–\n2 L\n2 T\n2\n] (2) [F] = [CM\n–2 L\n–2 T\n–2\n] (3) [F] = [CM\n–1 L\n–2 T\n2\n] (4) [F] = [C\n2\nM\n–1 L\n–2 T\n2\n] Ans. (4) Sol. 22\n22\nqq.qqC\nC\nVV.qWDML T\n\n  \n= 2122\nC M L T\n 32. An electron projected perpendicular to a uniform magnetic field B moves in a circle. If Bohr's quantization is applicable, then the radius of the electronic orbit in the first excited state is : (1)\n\n2h\neB (2) \n4h\neB (3)\n\nh\n2 eB (4) \nh\neB Ans. (4) Sol. r = mv\neB & mvr = nh\n2  (eBr)r = nh\n2  nh\nr\n2 eB\n\n first excited state : n = 2  r = h\neB 33. For a diatomic gas, if \n\n\n\n1\nCp\nCv for rigid molecules and \n\n\n\n2\nCp\nCv for another diatomic molecules, but also having vibrational modes. Then, which one of the following options is correct ? (Cp and Cv are specific heats of the gas at constant pressure and volume) (1) \n2 > \n1 (2) \n2 = \n1 (3) 2\n2 = \n1 (4) \n2 < \n1 Ans. (4) Sol. 2\n1\nf\n   without vibration : f = 5 : \n1 = 1. 4 without vibration : f = 7 : \n2 = 1.14  \n2 < \n1 34. A rectangular metallic loop is moving out of a uniform magnetic field region to a field free region with a constant speed. When the loop is partially inside the magnate field, the plot of magnitude of induced emf () with time (t) is given by (1) t  (2) t  (3) t  (4) t  ALLEN 3  Ans. (4) Sol. × × × × × × × × B = constant v= constant Motional emf :  = Bv = constant 35. A light source of wavelength  illuminates a metal surface and electrons are ejected with maximum kinetic energy of 2 eV. If the same surface is illuminated by a light source of wavelength \n2\n, then the maximum kinetic energy of ejected electrons will be (The work function of metal is 1 eV) (1) 2 eV (2) 6 eV (3) 5 eV (4) 3 eV Ans. (3) Sol. hc\neV \n  hc\n1 2 3eV  \n\n......(1) max\nhc\n6 1 k\n/2\n  \n  k\nmax = 5eV 36. Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : A simple pendulum is taken to a planet of mass and radius, 4 times and 2 times, respectively, than the Earth. The time period of the pendulum remains same on earth and the planet. Reason (R) : The mass of the pendulum remains unchanged at Earth and the other planet. In the light of the above statements, choose the correct answer from the options given below : (1) Both (A) and (R) are true but (R) is NOT the correct explanation of (A) (2) (A) is true but (R) is false (3) (A) is false but (R) is true (4) Both (A) and (R) are true and (R) is the correct explanation of (A) Ans. (1) Sol. 2\nGM\ng\nR\n  \n \n2\nG 4M\ng 'g\n2R\n A is correct, R is correct ; but since T = 2\ng\n doesn't depend on mass ; R doesn't explain A. 37. The torque due to the force \nˆ ˆ ˆ\n2i + j + 2k\nabout the origin, acting on a particle whose position vector is \nˆ ˆ ˆ\ni + j + k\n, would be (1) ˆ ˆ ˆ\ni – j+ k (2) ˆˆ\ni + k (3) ˆˆ\ni – k (4) ˆˆ\nj– k Ans. (3) Sol. ˆ ˆ ˆ\nij k\nˆ ˆ ˆ\nr F1 1 1i 0 j k\n2 1 2\n      38. 1 A B Y G 1 A B Y 0 0 1 0 1 0 1 0 0 1 1 1 To obtain the given truth table, following logic gate should be placed at G : (1) NOR Gate (2) AND Gate (3) NAND Gate (4) OR Gate Allen Ans. (Bonus) NTA Ans. (1) ALLEN 4  Sol. 1 A B Y G A B AB B A AB For NOR gate : AB A B  Truth table A B Y\n001\n011\n100\n111  Bonus 39. A force   \nˆˆ\nˆ\nF 2i bj k is applied on a particle and it undergoes a displacement \nˆˆ\nˆ\ni 2j – k\n. What will be the value of b, if work done on the particle is zero. (1) 0 (2) 1\n2 (3) 1\n3 (4) 2 Ans. (2) Sol. WD = F.S 2 2b 1 0     b = 1\n2 40. Given below are two statements. On is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : In Young’s double slit experiment, the fringes produced by red light are closer as compared to those produced by blue light. Reason (R) : The fringe width is directly proportional to the wavelength of light. In the light of above statements, choose the correct answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct explanation of (A) (2) (A) is false but (R) is true. (3) Both (A) and (R) are true but (R) is NOT the correct explanation of (A). (4) (A) is true but (R) is false. Ans. (2) Sol. D\nd\n\n & Rb\n    Rb\n   41. A ball of mass 100 g is projected with velocity 20 m/s at 60° with horizontal. The decrease in kinetic energy of the ball during the motion from point of projection to highest point is : (1) 20 J (2) 15 J (3) zero (4) 5 J Ans. (2) Sol. 20 m/s m 60° 2\ni\n1\nkmv\n2\n \n2\n2\nf\n11\nkm v cos 60mv\n28\n  2\nif\n3\nkkkmv\n8\n   \n3\n0.1 400 15J\n8\n    42. A transparent film of refractive index, 2.0 is coated on a glass slab of refractive index, 1.45. What is the minimum thickness of transparent film to be coated for the maximum transmission of Green light of wavelength 550 nm. [Assume that the light is incident nearly perpendicular to the glass surface.] (1) 94.8 nm (2) 68.7 nm (3) 137.5 nm (4) 275 nm Ans. (3) ALLEN 5  Sol. μ\n0 = 2 t μ = 1.45 For transmitted green light to be maxima, reflected green should be minima. 0\nP 2 tn      0\nn\nt\n2\n\n\n\n min\n0\n550\nt137.5\n22 2\n\n \n 43. 1 1 2 The tube of length L is shown in the figure. The radius of cross section at the point (1) is 2 cm and at the point (2) is 1 cm, respectively. If the velocity of water entering at point (1) is 2 m/s, then velocity of water leaving the point (2) will be : (1) 2 m/s (2) 4 m/s (3) 6 m/s (4) 8 m/s Ans. (4) Sol. 1 2R R v\n1 = 2 v\n2 = ? 1 122\nA vA V   \n2\n2\n2\n22RV R   V\n2 = 8 m/s 44. Given are statements for certain thermodynamic variables, (A) Internal energy, volume (V) and mass (M) are extensive variables. (B) Pressure (P), temperature (T) and density () are intensive variables. (C) Volume (V), temperature (T) and density () are intensive variables. (D) Mass (M), temperature (T) and internal energy are extensive variables. Choose the correct answer from the points given below : (1) (C) and (D) only (2) (D) and (A) only (3) (A) and (B) only (4) (B) and (C) only Ans. (3) Sol. Extensive variables depends on size or mass of system ex : internal energy, volume, mass 45. A body of mass 100 g is moving in circular path of radius 2 m on vertical plane as shown in figure. The velocity of the body at point A is 10 m/s. The ratio of its kinetic energies at point B and C is : 1 D C B A 30° 90° O (Take acceleration due to gravity as 10 m/s\n2\n) (1) 23\n3 (2) 22\n3 (3) 33\n2 (4) 3 – 2\n2 Ans. (3) ALLEN 6  Sol. 1 D C B A 30° 30° O 10m/s V\nB V\nC   \n2\nB\n11\nm 100 0mV\n22 + mg \n\n\n\nR3\nR–\n2 100 = \n\n\n\n\n\n2\nB\n3\nV 2gR 1–\n2 \n2\nB\nV 100 – 20(2 – 3) \n2\nB\nV60 20 3) K.E\nB = \n2\nB\n1m\nmV(60 20 3)\n22 \n\n\n\n2\nC\n113R\nm(100)mVmg\n222 100 = V\nC\n2 = 60 V\nC\n2 = 40 K.E\nC = \n2\nC\n11\nmVm(40)\n22 K.E\nB = \n\n60 20 333\n4022 = 33\n2 SECTION-B 46. A proton is moving undeflected in a region of crossed electric and magnetic fields at a constant speed of 2 × 10\n5 ms\n–1\n. When the electric field is switched off, the proton moves along a circular path of radius 2 cm. The magnitude of electric field is x × 10\n4 N/C. the value of x is _____. Take the mass of the proton = 1.6 × 10\n–27 kg. Ans. (2) Sol. For uniform speed V = E\nB R = mV\neB = 2\nmV\neE  E = 2\nmV\neR =  \n \n–2710\n–19–2\n1.6 104 10\n1.6 102 10 = 2 × 10\n4 N/C. 47. Two long parallel wires X and Y, separated by a distance of 6 cm, carry currents of 5A and 4A, respectively, in opposite directions as shown in the figure. Magnitude of the resultant magnetic field at point P at a distance of 4 cm from wire Y is x × 10\n–5 T. The value of x is ________. Take permeability of free space as \n0 = 4 × 10\n–7 SI units. 5 A 6 cm X Y 4cm P 4A Ans. (1) Sol. 5 A 6 cm X Y 4cm P 4A B = \n\n00\n(5)4\n–\n2.01 20.04 = – \n\n0\n100\n4 = – 100 × 10\n–7 = –1 × 10\n–\n5 T ALLEN 7  48. A parallel plate capacitor of area A = 16 cm\n2 and separation between the plates 10 cm, is charged by a DC current. Consider a hypothetical plane surface of area A\n0 = 3.2 cm\n2 inside the capacitor and parallel to the plates. At an instant, the current through the circuit is 6A. At the same instant the displacement current through A\n0 is ________ mA. Ans. (1200) Sol. J\nd = \nI6\nA16  I through small area = J\nd × A’ = 6\n16 × 3.2 = 1.2A =1200 mA 49. A tube of length 1m is filled completely with an ideal liquid of mass 2M, and closed at both ends. The tube is rotated uniformly in horizontal plane about one of its ends. If the force exerted by the liquid at the other end is F then angular velocity of the tube is \nF\nM in SI unit. The value of  is ______. Ans. (1) Sol. 1 F F = 2M\n2 2\n= Mw\n2\n  = F\nM 50. The net current flowing in the given circuit is _______ A. 2 V 1F 1 4 5\n\n8\n\n6 3 4   Ans. (1) Sol. 2 V 6 3 4  R\neq = 2 I = 2\n2 = 1A ALLEN",
+    "questions": [
+      {
+        "number": "26",
+        "text": "A symmetric thin biconvex lens is cut into four equal parts by two planes AB and CD as shown in figure. If the power of original lens is 4D then the power of a part of the divided lens is A B C D (1) 8D (2) 4D (3) D (4) 2D",
+        "formattedText": "A symmetric thin biconvex lens is cut into four equal parts by two planes AB and CD as shown in figure. If the power of original lens is 4D then the power of a part of the divided lens is A B C D (1) 8D (2) 4D (3) D (4) 2D",
+        "latexText": "A symmetric thin biconvex lens is cut into four equal parts by two planes AB and CD as shown in figure. If the power of original lens is 4D then the power of a part of the divided lens is A B C D (1) 8D (2) 4D (3) D (4) 2D",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "AB",
+            "latex": "AB",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "CD",
+            "latex": "CD",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "27",
+        "text": "A small rigid spherical ball of mass M is dropped in a long vertical tube containing glycerine. The velocity of the ball becomes constant after some time. If the density of glycerine is half of the density of the ball, then the viscous force acting on the ball will be (consider g as acceleration due to gravity) (1) 3\nMg\n2 (2) Mg\n2 (3) Mg (4) 2 Mg",
+        "formattedText": "A small rigid spherical ball of mass M is dropped in a long vertical tube containing glycerine. The velocity of the ball becomes constant after some time. If the density of glycerine is half of the density of the ball, then the viscous force acting on the ball will be (consider g as acceleration due to gravity) (1) 3\nMg\n2 (2) Mg\n2 (3) Mg (4) 2 Mg",
+        "latexText": "\\(A small rigid spherical ball of mass M is dropped in a long vertical tube containing glycerine. The velocity of the ball becomes constant after some time. If the density of glycerine is half of the density of the ball, then the viscous force acting on the ball will be (consider g as acceleration due to gravity) (1) 3 Mg^{2} (2) Mg^{2} (3) Mg (4) 2 Mg\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "3 Mg 2"
+          },
+          {
+            "letter": "2",
+            "text": "Mg 2"
+          },
+          {
+            "letter": "4",
+            "text": "2 Mg"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "3 Mg 2",
+            "formattedText": "3 Mg 2",
+            "latexText": "3 Mg 2"
+          },
+          {
+            "letter": "2",
+            "text": "Mg 2",
+            "formattedText": "Mg 2",
+            "latexText": "Mg 2"
+          },
+          {
+            "letter": "4",
+            "text": "2 Mg",
+            "formattedText": "2 Mg",
+            "latexText": "2 Mg"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "30",
+        "text": "For a short dipole placed at origin O, the dipole moment P is along x-axis, as shown in the figure. If the electric potential and electric field at A are V\n0 and E\n0\n, respectively, then the correct combination of the electric potential and electric field, respectively, at point B on the y-axis is given by O r y B x A P 2r (1) 0\nV\n2 and 0\nE\n16 (2) zero and 0\nE\n8 (3) zero and 0\nE\n16 (4) V\n0 and 0\nE\n4",
+        "formattedText": "For a short dipole placed at origin O, the dipole moment P is along x-axis, as shown in the figure. If the electric potential and electric field at A are V\n0 and E\n0\n, respectively, then the correct combination of the electric potential and electric field, respectively, at point B on the y-axis is given by O r y B x A P 2r (1) 0\nV\n2 and 0\nE\n16 (2) zero and 0\nE\n8 (3) zero and 0\nE\n16 (4) V\n0 and 0\nE\n4",
+        "latexText": "\\(For a short dipole placed at origin O, the dipole moment P is along x-axis, as shown in the figure. If the electric potential and electric field at A are V^{0} and E^{0} , respectively, then the correct combination of the electric potential and electric field, respectively, at point B on the y-axis is given by O r y B x A P 2r (1) 0 V^{2} and 0 E^{16} (2) zero and 0 E^{8} (3) zero and 0 E^{16} (4) V^{0} and 0 E^{4}\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "0 V 2 and 0 E 16"
+          },
+          {
+            "letter": "2",
+            "text": "zero and 0 E 8"
+          },
+          {
+            "letter": "3",
+            "text": "zero and 0 E 16"
+          },
+          {
+            "letter": "4",
+            "text": "V 0 and 0 E 4"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "0 V 2 and 0 E 16",
+            "formattedText": "0 V 2 and 0 E 16",
+            "latexText": "0 V 2 and 0 E 16"
+          },
+          {
+            "letter": "2",
+            "text": "zero and 0 E 8",
+            "formattedText": "zero and 0 E 8",
+            "latexText": "zero and 0 E 8"
+          },
+          {
+            "letter": "3",
+            "text": "zero and 0 E 16",
+            "formattedText": "zero and 0 E 16",
+            "latexText": "zero and 0 E 16"
+          },
+          {
+            "letter": "4",
+            "text": "V 0 and 0 E 4",
+            "formattedText": "V 0 and 0 E 4",
+            "latexText": "V 0 and 0 E 4"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "31",
+        "text": "Which one of the following is the correct dimensional formula for the capacitance in F ? M, L, T and C stand for unit of mass, length, time and charge, (1) [F] = [C\n2\nM\n–\n2 L\n2 T\n2\n] (2) [F] = [CM\n–2 L\n–2 T\n–2\n] (3) [F] = [CM\n–1 L\n–2 T\n2\n] (4) [F] = [C\n2\nM\n–1 L\n–2 T\n2\n]",
+        "formattedText": "Which one of the following is the correct dimensional formula for the capacitance in F ? M, L, T and C stand for unit of mass, length, time and charge, (1) [F] = [C\n2\nM\n–\n2 L\n2 T\n2\n] (2) [F] = [CM\n–2 L\n–2 T\n–2\n] (3) [F] = [CM\n–1 L\n–2 T\n2\n] (4) [F] = [C\n2\nM\n–1 L\n–2 T\n2\n]",
+        "latexText": "\\(Which one of the following is the correct dimensional formula for the capacitance in F ? M, L, T and C stand for unit of mass, length, time and charge, (1) [F] = [C^{2} M – 2 L^{2} T^{2} ] (2) [F] = [CM –2 L –2 T –2 ] (3) [F] = [CM –1 L –2 T^{2} ] (4) [F] = [C^{2} M –1 L –2 T^{2} ]\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "[F] = [C 2 M – 2 L 2 T 2 ]"
+          },
+          {
+            "letter": "2",
+            "text": "[F] = [CM –2 L –2 T –2 ]"
+          },
+          {
+            "letter": "3",
+            "text": "[F] = [CM –1 L –2 T 2 ]"
+          },
+          {
+            "letter": "4",
+            "text": "[F] = [C 2 M –1 L –2 T 2 ]"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "[F] = [C 2 M – 2 L 2 T 2 ]",
+            "formattedText": "[F] = [C 2 M – 2 L 2 T 2 ]",
+            "latexText": "\\([F] = [C 2 M – 2 L 2 T 2 ]\\)"
+          },
+          {
+            "letter": "2",
+            "text": "[F] = [CM –2 L –2 T –2 ]",
+            "formattedText": "[F] = [CM –2 L –2 T –2 ]",
+            "latexText": "\\([F] = [CM –2 L –2 T –2 ]\\)"
+          },
+          {
+            "letter": "3",
+            "text": "[F] = [CM –1 L –2 T 2 ]",
+            "formattedText": "[F] = [CM –1 L –2 T 2 ]",
+            "latexText": "\\([F] = [CM –1 L –2 T 2 ]\\)"
+          },
+          {
+            "letter": "4",
+            "text": "[F] = [C 2 M –1 L –2 T 2 ]",
+            "formattedText": "[F] = [C 2 M –1 L –2 T 2 ]",
+            "latexText": "\\([F] = [C 2 M –1 L –2 T 2 ]\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "CM",
+            "latex": "CM",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "CM",
+            "latex": "CM",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "32",
+        "text": "An electron projected perpendicular to a uniform magnetic field B moves in a circle. If Bohr's quantization is applicable, then the radius of the electronic orbit in the first excited state is : (1)\n\n2h\neB (2) \n4h\neB (3)\n\nh\n2 eB (4) \nh\neB",
+        "formattedText": "An electron projected perpendicular to a uniform magnetic field B moves in a circle. If Bohr's quantization is applicable, then the radius of the electronic orbit in the first excited state is : (1)\n\n2h\neB (2) \n4h\neB (3)\n\nh\n2 eB (4) \nh\neB",
+        "latexText": "\\(An electron projected perpendicular to a uniform magnetic field B moves in a circle. If Bohr's quantization is applicable, then the radius of the electronic orbit in the first excited state is : (1)  2h eB (2)  4h eB (3)  h^{2} eB (4)  h eB\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": " 2h eB"
+          },
+          {
+            "letter": "2",
+            "text": " 4h eB"
+          },
+          {
+            "letter": "3",
+            "text": " h 2 eB"
+          },
+          {
+            "letter": "4",
+            "text": " h eB"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": " 2h eB",
+            "formattedText": " 2h eB",
+            "latexText": " 2h eB"
+          },
+          {
+            "letter": "2",
+            "text": " 4h eB",
+            "formattedText": " 4h eB",
+            "latexText": " 4h eB"
+          },
+          {
+            "letter": "3",
+            "text": " h 2 eB",
+            "formattedText": " h 2 eB",
+            "latexText": " h 2 eB"
+          },
+          {
+            "letter": "4",
+            "text": " h eB",
+            "formattedText": " h eB",
+            "latexText": " h eB"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "33",
+        "text": "For a diatomic gas, if \n\n\n\n1\nCp\nCv for rigid molecules and \n\n\n\n2\nCp\nCv for another diatomic molecules, but also having vibrational modes. Then, which one of the following options is correct ? (Cp and Cv are specific heats of the gas at constant pressure and volume) (1) \n2 > \n1 (2) \n2 = \n1 (3) 2\n2 = \n1 (4) \n2 < \n1",
+        "formattedText": "For a diatomic gas, if \n\n\n\n1\nCp\nCv for rigid molecules and \n\n\n\n2\nCp\nCv for another diatomic molecules, but also having vibrational modes. Then, which one of the following options is correct ? (Cp and Cv are specific heats of the gas at constant pressure and volume) (1) \n2 > \n1 (2) \n2 = \n1 (3) 2\n2 = \n1 (4) \n2 < \n1",
+        "latexText": "\\(For a diatomic gas, if    ^{1}Cp Cv for rigid molecules and    ^{2}Cp Cv for another diatomic molecules, but also having vibrational modes. Then, which one of the following options is correct ? (Cp and Cv are specific heats of the gas at constant pressure and volume) (1)  2 >  1 (2)  2 =  1 (3) 2 2 =  1 (4)  2 <  1\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": " 2 >  1"
+          },
+          {
+            "letter": "2",
+            "text": " 2 =  1"
+          },
+          {
+            "letter": "3",
+            "text": "2 2 =  1"
+          },
+          {
+            "letter": "4",
+            "text": " 2 <  1"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": " 2 >  1",
+            "formattedText": " 2 >  1",
+            "latexText": "\\( 2 >  1\\)"
+          },
+          {
+            "letter": "2",
+            "text": " 2 =  1",
+            "formattedText": " 2 =  1",
+            "latexText": "\\( 2 =  1\\)"
+          },
+          {
+            "letter": "3",
+            "text": "2 2 =  1",
+            "formattedText": "2 2 =  1",
+            "latexText": "\\(2 2 =  1\\)"
+          },
+          {
+            "letter": "4",
+            "text": " 2 <  1",
+            "formattedText": " 2 <  1",
+            "latexText": "\\( 2 <  1\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "36",
+        "text": "Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : A simple pendulum is taken to a planet of mass and radius, 4 times and 2 times, respectively, than the Earth. The time period of the pendulum remains same on earth and the planet. Reason (R) : The mass of the pendulum remains unchanged at Earth and the other planet. In the light of the above statements, choose the correct answer from the options given below : (1) Both (A) and (R) are true but (R) is NOT the correct",
+        "formattedText": "Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : A simple pendulum is taken to a planet of mass and radius, 4 times and 2 times, respectively, than the Earth. The time period of the pendulum remains same on earth and the planet. Reason (R) : The mass of the pendulum remains unchanged at Earth and the other planet. In the light of the above statements, choose the correct answer from the options given below : (1) Both (A) and (R) are true but (R) is NOT the correct",
+        "latexText": "Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : A simple pendulum is taken to a planet of mass and radius, 4 times and 2 times, respectively, than the Earth. The time period of the pendulum remains same on earth and the planet. Reason (R) : The mass of the pendulum remains unchanged at Earth and the other planet. In the light of the above statements, choose the correct answer from the options given below : (1) Both (A) and (R) are true but (R) is NOT the correct",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Both"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Both",
+            "formattedText": "Both",
+            "latexText": "Both"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "NO",
+            "latex": "NO",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "39",
+        "text": "A force   \nˆˆ\nˆ\nF 2i bj k is applied on a particle and it undergoes a displacement \nˆˆ\nˆ\ni 2j – k\n. What will be the value of b, if work done on the particle is zero. (1) 0 (2) 1\n2 (3) 1\n3 (4) 2",
+        "formattedText": "A force   \nˆˆ\nˆ\nF 2i bj k is applied on a particle and it undergoes a displacement \nˆˆ\nˆ\ni 2j – k\n. What will be the value of b, if work done on the particle is zero. (1) 0 (2) 1\n2 (3) 1\n3 (4) 2",
+        "latexText": "\\(A force    ˆˆ ˆ F 2i bj k is applied on a particle and it undergoes a displacement  ˆˆ ˆ i 2j – k . What will be the value of b, if work done on the particle is zero. (1) 0 (2) 1^{2} (3) 1^{3} (4) 2\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "40",
+        "text": "Given below are two statements. On is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : In Young’s double slit experiment, the fringes produced by red light are closer as compared to those produced by blue light. Reason (R) : The fringe width is directly proportional to the wavelength of light. In the light of above statements, choose the correct answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct",
+        "formattedText": "Given below are two statements. On is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : In Young’s double slit experiment, the fringes produced by red light are closer as compared to those produced by blue light. Reason (R) : The fringe width is directly proportional to the wavelength of light. In the light of above statements, choose the correct answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct",
+        "latexText": "Given below are two statements. On is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : In Young’s double slit experiment, the fringes produced by red light are closer as compared to those produced by blue light. Reason (R) : The fringe width is directly proportional to the wavelength of light. In the light of above statements, choose the correct answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Both"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Both",
+            "formattedText": "Both",
+            "latexText": "Both"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "44",
+        "text": "Given are statements for certain thermodynamic variables, (A) Internal energy, volume (V) and mass (M) are extensive variables. (B) Pressure (P), temperature (T) and density () are intensive variables. (C) Volume (V), temperature (T) and density () are intensive variables. (D) Mass (M), temperature (T) and internal energy are extensive variables. Choose the correct answer from the points given below : (1) (C) and (D) only (2) (D) and (A) only (3) (A) and (B) only (4) (B) and (C) only",
+        "formattedText": "Given are statements for certain thermodynamic variables, (A) Internal energy, volume (V) and mass (M) are extensive variables. (B) Pressure (P), temperature (T) and density () are intensive variables. (C) Volume (V), temperature (T) and density () are intensive variables. (D) Mass (M), temperature (T) and internal energy are extensive variables. Choose the correct answer from the points given below : (1) (C) and (D) only (2) (D) and (A) only (3) (A) and (B) only (4) (B) and (C) only",
+        "latexText": "Given are statements for certain thermodynamic variables, (A) Internal energy, volume (V) and mass (M) are extensive variables. (B) Pressure (P), temperature (T) and density () are intensive variables. (C) Volume (V), temperature (T) and density () are intensive variables. (D) Mass (M), temperature (T) and internal energy are extensive variables. Choose the correct answer from the points given below : (1) (C) and (D) only (2) (D) and (A) only (3) (A) and (B) only (4) (B) and (C) only",
+        "options": [
+          {
+            "letter": "A",
+            "text": "only"
+          },
+          {
+            "letter": "B",
+            "text": "only"
+          },
+          {
+            "letter": "C",
+            "text": "only"
+          },
+          {
+            "letter": "D",
+            "text": "only"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "A",
+            "text": "only",
+            "formattedText": "only",
+            "latexText": "only"
+          },
+          {
+            "letter": "B",
+            "text": "only",
+            "formattedText": "only",
+            "latexText": "only"
+          },
+          {
+            "letter": "C",
+            "text": "only",
+            "formattedText": "only",
+            "latexText": "only"
+          },
+          {
+            "letter": "D",
+            "text": "only",
+            "formattedText": "only",
+            "latexText": "only"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "46",
+        "text": "A proton is moving undeflected in a region of crossed electric and magnetic fields at a constant speed of 2 × 10\n5 ms\n–1\n. When the electric field is switched off, the proton moves along a circular path of radius 2 cm. The magnitude of electric field is x × 10\n4 N/C. the value of x is _____. Take the mass of the proton = 1.6 × 10\n–27 kg.",
+        "formattedText": "A proton is moving undeflected in a region of crossed electric and magnetic fields at a constant speed of 2 × 10\n5 ms\n–1\n. When the electric field is switched off, the proton moves along a circular path of radius 2 cm. The magnitude of electric field is x × 10\n4 N/C. the value of x is _____. Take the mass of the proton = 1.6 × 10\n–27 kg.",
+        "latexText": "\\(A proton is moving undeflected in a region of crossed electric and magnetic fields at a constant speed of 2 \\times 10^{5} ms –1 . When the electric field is switched off, the proton moves along a circular path of radius 2 cm. The magnitude of electric field is x \\times 10^{4} \\frac{N}{C}. the value of x is _____. Take the mass of the proton = 1.6 \\times 10 –27 kg.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "N/C",
+            "latex": "\\(\\frac{N}{C}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "49",
+        "text": "A tube of length 1m is filled completely with an ideal liquid of mass 2M, and closed at both ends. The tube is rotated uniformly in horizontal plane about one of its ends. If the force exerted by the liquid at the other end is F then angular velocity of the tube is \nF\nM in SI unit. The value of  is ______.",
+        "formattedText": "A tube of length 1m is filled completely with an ideal liquid of mass 2M, and closed at both ends. The tube is rotated uniformly in horizontal plane about one of its ends. If the force exerted by the liquid at the other end is F then angular velocity of the tube is \nF\nM in SI unit. The value of  is ______.",
+        "latexText": "\\(A tube of length 1m is filled completely with an ideal liquid of mass 2M, and closed at both ends. The tube is rotated uniformly in horizontal plane about one of its ends. If the force exerted by the liquid at the other end is F then angular velocity of the tube is  F M in SI unit. The value of  is ______.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "SI",
+            "latex": "SI",
+            "type": "chemical_formula"
+          }
+        ]
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 26",
+        "type": "mathematical",
+        "position": 152
+      },
+      {
+        "equation": "a = 0 mg ",
+        "type": "mathematical",
+        "position": 827
+      },
+      {
+        "equation": "f = 0 ",
+        "type": "mathematical",
+        "position": 844
+      },
+      {
+        "equation": "f = 0 ",
+        "type": "mathematical",
+        "position": 864
+      },
+      {
+        "equation": "f = mg\n2 28",
+        "type": "mathematical",
+        "position": 872
+      },
+      {
+        "equation": "e = (0",
+        "type": "mathematical",
+        "position": 975
+      },
+      {
+        "equation": "e = (0",
+        "type": "mathematical",
+        "position": 1008
+      },
+      {
+        "equation": "x-axis",
+        "type": "mathematical",
+        "position": 1623
+      },
+      {
+        "equation": "y-axis is given by O r y B x A P 2r (1) 0\nV\n2 and 0\nE\n16 (2) zero and 0\nE\n8 (3) zero and 0\nE\n16 (4) V\n0 and 0\nE\n4 Ans",
+        "type": "mathematical",
+        "position": 1844
+      },
+      {
+        "equation": "A = 0\n2\nkP\nv\nr\n",
+        "type": "mathematical",
+        "position": 1993
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 2012
+      },
+      {
+        "equation": "r = mv\neB ",
+        "type": "mathematical",
+        "position": 2661
+      },
+      {
+        "equation": "r = nh\n2",
+        "type": "mathematical",
+        "position": 2675
+      },
+      {
+        "equation": "r = nh\n2",
+        "type": "mathematical",
+        "position": 2692
+      },
+      {
+        "equation": "n = 2 ",
+        "type": "mathematical",
+        "position": 2740
+      },
+      {
+        "equation": "r = h\neB",
+        "type": "mathematical",
+        "position": 2748
+      },
+      {
+        "equation": "f = 5 ",
+        "type": "mathematical",
+        "position": 3147
+      },
+      {
+        "equation": "f = 7 ",
+        "type": "mathematical",
+        "position": 3186
+      },
+      {
+        "equation": "B = constant v= constant Motional emf ",
+        "type": "mathematical",
+        "position": 3540
+      },
+      {
+        "equation": "v = constant 35",
+        "type": "mathematical",
+        "position": 3586
+      },
+      {
+        "equation": "k\n/2\n",
+        "type": "mathematical",
+        "position": 3999
+      },
+      {
+        "equation": "x = 5eV 36",
+        "type": "mathematical",
+        "position": 4018
+      },
+      {
+        "equation": "T = 2\ng\n",
+        "type": "mathematical",
+        "position": 4818
+      },
+      {
+        "equation": "i + j + 2k\nabout the origin",
+        "type": "mathematical",
+        "position": 4916
+      },
+      {
+        "equation": "i + j + k\n",
+        "type": "mathematical",
+        "position": 5000
+      },
+      {
+        "equation": "j+ k (2) ",
+        "type": "mathematical",
+        "position": 5035
+      },
+      {
+        "equation": "i + k (3) ",
+        "type": "mathematical",
+        "position": 5047
+      },
+      {
+        "equation": "D = F",
+        "type": "mathematical",
+        "position": 5681
+      },
+      {
+        "equation": "b = 1\n2 40",
+        "type": "mathematical",
+        "position": 5707
+      },
+      {
+        "equation": "m/s at 60",
+        "type": "mathematical",
+        "position": 6456
+      },
+      {
+        "equation": "m/s m 60",
+        "type": "mathematical",
+        "position": 6644
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 7501
+      },
+      {
+        "equation": "m/s (2) 4 m/s (3) 6 m/s (4) 8 m/s Ans",
+        "type": "mathematical",
+        "position": 7567
+      },
+      {
+        "equation": "m/s 44",
+        "type": "mathematical",
+        "position": 7685
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 8433
+      },
+      {
+        "equation": "m/s\n2\n) (1) ",
+        "type": "mathematical",
+        "position": 8554
+      },
+      {
+        "equation": "m/s V\nB V\nC ",
+        "type": "mathematical",
+        "position": 8654
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 8799
+      },
+      {
+        "equation": "C = ",
+        "type": "mathematical",
+        "position": 8896
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 8924
+      },
+      {
+        "equation": "N-B 46",
+        "type": "mathematical",
+        "position": 8962
+      },
+      {
+        "equation": "N/C",
+        "type": "mathematical",
+        "position": 9233
+      },
+      {
+        "equation": "n = 1",
+        "type": "mathematical",
+        "position": 9289
+      },
+      {
+        "equation": "V = E\nB R = mV\neB = 2\nmV\neE ",
+        "type": "mathematical",
+        "position": 9342
+      },
+      {
+        "equation": "E = 2\nmV\neR = ",
+        "type": "mathematical",
+        "position": 9372
+      },
+      {
+        "equation": "N/C",
+        "type": "mathematical",
+        "position": 9441
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 9857
+      },
+      {
+        "equation": "A = 16 cm\n2 and separation between the plates 10 cm",
+        "type": "mathematical",
+        "position": 9991
+      },
+      {
+        "equation": "d = ",
+        "type": "mathematical",
+        "position": 10328
+      },
+      {
+        "equation": "a = J\nd ",
+        "type": "mathematical",
+        "position": 10362
+      },
+      {
+        "equation": "A =1200 mA 49",
+        "type": "mathematical",
+        "position": 10393
+      },
+      {
+        "equation": "F = 2M",
+        "type": "mathematical",
+        "position": 10736
+      },
+      {
+        "equation": "q = 2",
+        "type": "mathematical",
+        "position": 10900
+      },
+      {
+        "equation": "I = 2\n2 = 1A ALLEN",
+        "type": "mathematical",
+        "position": 10907
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 590
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1343
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2138
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2166
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3018
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3226
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3332
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3548
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3560
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3594
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 4571
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 4709
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4812
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 4863
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 5233
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 5863
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 6192
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 6302
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 6685
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9062
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9501
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9628
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9667
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10191
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10251
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.2857142857142857,
+        "matchedKeywords": [
+          "circle",
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "acceleration",
+          "velocity"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "force"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "charge",
+          "electric field",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      }
+    ],
+    "tags": [
+      "JEE Mains",
+      "Formula Based"
+    ],
+    "wordCount": 2635,
+    "characterCount": 10925
+  },
+  "images": []
+}

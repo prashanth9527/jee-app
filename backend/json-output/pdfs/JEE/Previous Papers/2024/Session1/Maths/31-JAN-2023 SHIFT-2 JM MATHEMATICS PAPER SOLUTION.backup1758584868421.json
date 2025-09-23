@@ -1,0 +1,733 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2024\\Session1\\Maths\\31-JAN-2023 SHIFT-2 JM MATHEMATICS PAPER SOLUTION.pdf",
+  "relativePath": "JEE\\Previous Papers\\2024\\Session1\\Maths\\31-JAN-2023 SHIFT-2 JM MATHEMATICS PAPER SOLUTION.pdf",
+  "metadata": {
+    "originalFileName": "31-JAN-2023 SHIFT-2 JM MATHEMATICS PAPER SOLUTION.pdf",
+    "subject": "Mathematics",
+    "year": 2023,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 12,
+    "fileSize": 565916,
+    "processedAt": "2025-09-22T23:33:10.859Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – JANUARY, 2023 (Held On Tuesday 31\nst January, 2023) TIME : 3 : 00 PM to 6 : 00 PM MATHEMATICS TEST PAPER WITH SOLUTION SECTION-A 61. If (\n)\n(\n)\n(\n)\n =\n− \n\n\nx\n1\nx\n4 2sint 3 ' t dt,\nx\n4 x > 0, then \n\n\n\n\n'\n4 is equal to : (1) 8\n (2) 4\n6+ (3) +\n8\n6 (4) 4\n6\n− Official Ans. by NTA (3) Allen Ans. (3) Sol. ()()\n()\n3/2\n11\n' x4 2sinx 3 ' x .1 0 x\n2\nx\n−\n\n =− − −\n (\n)\n(\n)\nx\n4\n4 2sint 3 ' t dt,\n\n−\n 2\n'4 3 '0\n44\n\n\n  \n=− +\n\n  \n\n  \n 68\n1'\n4\n\n\n\n+\n\n=\n\n\n\n\n 8\n'\n4\n6\n\n\n=\n\n+\n 62. If a point (\n)\nP , ,\n   satisfying (\n)\n(\n)\n2 10 8\n9 3 8 0 0 0\n8 4 8\n\n\n  \n=\n\n\n lies on the plane + + =\n2x 4y 3z 5, then 6 9 7\n+ +  is equal to: (1) – 1 (2) 11\n5 (3) 5\n4 (4) 11 Official Ans. by NTA (4) Allen Ans. (4) Sol. 2 4 3 5\n+ +  = ........(1) 2 9 8 0\n + +  = ........ (2) 10 3 4 0\n + +  = ....... (3) 8 8 8 0\n + +  = ........(4) Subtract (4) from (2) 60\n−  + = 6\n =  ...... (5) From equation (4) 8 48 8 0\n+ +  = 7\n = −  ........ (6) From equation (1) 2 24 21 5 +  −  = 55= 1= 6,\n7\n = +  = − 6 9 7  + +  6 54 49= + − = 11 2 63. Let 1 2 3\na ,a ,a ,..... be an A.P. If =\n7\na 3,\nthe product 14\naa is minimum and the sum of its first n terms is zero, then (\n)\nn n 2\nn! 4a\n+\n− is equal to : (1) 24 (2) 33\n4 (3) 381\n4 (4) 9 Official Ans. by NTA (1) Allen Ans. (1) Sol. a+6d=3, ...........(1) Z= a (a+3d) = (3-6d) (3-3d) =18d\n2\n-27d+9 Differentiating with respect to d \n36d-27=0 \nd=\n3\n4\n, from (1) 3\n2\n−\n=\na, (Z = minimum) Now, S\nn\n=\nn3\n3 (n 1)\n0\n24\n\n− + −\n=\n\n \nn=5 Now, n(n 2)35\nn! 4a120 4(a )\n+\n−= − ()\n()\n120435 1\n33\n120434\n24\n6 102\n1204\n4\n1209624\n= − + −\n\n−\n\n= −+\n\n\n\n\n−+\n\n=−\n\n\n= − =\nad\n. 64. Let (a, b) (\n)\n0, 2\n be the largest interval for which (\n)\n(\n)\n(\n)\n−−\n −\n   \n11\nsin sin cos sin 0, 0, 2 , holds. If (\n)\n(\n)\n2\n1 2\n1\n2\nx x sin x 6x 10 cos\nx 6x 10 0\n−−\n +  +\n− + +\n− + = and ba\n − = −\n, then \nis equal to : (1) 48\n (2) 16\n (3) 8\n (4) 12\n Official Ans. by NTA (4) Allen Ans. (4) Sol. 11\nsin sin\nsin sin 0\n2\n−−\n\n\n − −\n \n\n \n1\nsin sin\n4\n−\n\n \n1\n2\n\nsin So, 3\n44\n\n\n\n\n\n, 3\n,(a,b)\n44\n\n\n=\n\n ba\n2\n\n− = =  − 2\n\n  =  − ()()\n22\n211\nx x sin x 3 1 cos x 3 1 0\n−−\n\n  + +− + +− + =\n x 3, 9 30 0\n2\n\n=  +  + + = 3 93\n22\n\n\n  +  − +\n\n\n= 0 12\n0\n  −  = \n=\n12\n 65. Let (\n)\ny y x\n= be the solution of the differential equation ()()\n2222\n3y 5x y dx 2x x y dy 0−+−= such that (\n)\n=\ny 1 1. then (\n)\n(\n)\n(\n)\n3\ny 2 12y 2\n−\nis equal to: (1) 32 2 (2) 64 (3) 16 2 (4) 32 Official Ans. by NTA (1) Allen Ans. (1) Sol. (\n)\n(\n)\n2\n2\n2\n2\n3y 5x y. dx 2x x y dy 0\n−\n+\n−\n= (\n)\n(\n)\n22\n22\ny 5x 3y\ndy\ndx\n2x x y\n−\n=\n− Put y mx\n=  (\n)\n(\n)\n2\n2\nm 5 3m\ndm\nm x.\ndx\n2 1 m\n−\n+=\n− (\n)\n(\n)\n(\n)\n22\n2\n5 3m m 2m 1 m\ndm\nx.\ndx\n2 1 m\n−\n−\n−\n=\n− (\n)\n(\n)\n2\n2\n2 m 1\ndx\ndm\nx\nm m 3\n−\n=\n− 2\n4 4m\ndx 2\n33\ndm\nx m m m 3\n\n\n = − +\n\n−\n\n 2\n2\ndx\n2 2m\n3\ndm\nx\nm 3 m 3\n\n\n\n\n\n=\n+\n\n−\n\n    ln\n2\nx\n3\n= ln 2\nm\n3\n+ ln 2\nm 3 C\n−+ Or, ln 2\n2 y 2 y\nx ln\nln\n3 C\n3 x 3 x\n\n=\n+\n− +\n\n Put (\n)\n(\n)\n2\nx 1,y 1 : we get c\nln 2\n3\n= =\n= − 2\n2 y 2 y2\nln|x| lnln3 ln(2)\n3 x 3 x3\n\n=+− −\n\n 2\n3/2\nyy\n3 2.(x )\nxx\n\n   \n\n− =\n\n   \n   \n\n Put x = 2 to get y (2) (\n)\n2\ny y 12 4 2 2 2 2\n\n− =    3\ny 12y 32 2 − = 3\ny (2) 12y(2) 32 2\n\n−\n= 66. The set of all values of 2\na for which the line x y 0\n+=\nbisects two distinct chords drawn from a point 1 a 1 a\nP,\n22\n+−\n\n\n on the circle (\n)\n(\n)\n22\n2x 2y 1 a x 1 a y 0\n+ − + − − = is equal to: (1) (\n)\n8,\n (2) (\n)\n4,\n (3) (0,4] (4) (2,12] Official Ans. by NTA (1) Allen Ans. (1) 4 Sol. (\n)\n(\n)\n22\n1 a x 1 a y\nx y\n0\n22\n+−\n+ −\n−\n= Centre (\n)\n1 a 1 a\n,\nh,k\n44\n+−\n\n\n\n (\n)\n1 a 1 a\nP\n,\n2h,2k\n22\n+−\n\n\n\n P\n(2h,2k)\nA B y+x = 0 (\n)\n\n−\n\n, 1\nEquation of chord T S\n= (\n)\n(\n)\n(\n)\n(\n)\n2h x\n2k y\nxy\n22\n+ \n− \n −  −\n− = (\n)\n2\n2 2h\n2k\n −  +  Now, (\n)\n2h,2k\n satisfies the chord  (\n)\n(\n)\n(\n)\n2h 2k h x\nk y\n−  − +  − −  2\n2 4k 4h h k hx ky 0\n  +  −  +  −  + + = (\n)\n2\n2\n3k 3h ky hx 0\n  +  − + + = D0 (\n)\n(\n)\n2\n9 k h 8 ky hx 0\n − −\n+  (\n)\n(\n)\n2\n22\n9 k h 8 2k 2h 0\n − −\n+\n 22\n7k 7h 18kh 0 − − − 22\n7k 7h 18kh 0 + + 22\n2\n1 a1 a1 a\n77180\n4416\n\n−+−\n \n++\n\n \n \n (\n)\n(\n)\n22\n2\n2 1 a\n18 1 a\n7\n0, a t\n16\n16\n\n+−\n\n\n+\n\n=\n\n (\n)\n(\n)\n18 1 t\n7\n1 t\n0\n8\n16\n−\n + +\n 14 14t 18 18t\n0\n16\n+ + −\n 4t 32\n t8\n 2\na8\n 67. Among the relations 0 2\n0\n\n=\n −\n+ \n\n\na\nS\n(a, b) : a, b\n{ },\nb And 22\n=\n − \nT {(a, b) : a, b\n, a\nb\nZ}, (1) S is transitive but T is not (2) T is symmetric but S is not (3) Neither S nor T is transitive (4) Both S and T are symmetric Official Ans. by NTA (2) Allen Ans. (2) Sol. For relation T =a\n2\n-b\n2\n= – I Then, (b, a) on relation R \n22\n− = −\nb\na\nI  T is symmetric 0 2\n0\n\n=\n −\n+ \n\n\na\nS\n(a, b) : a, b\nR\n{ },\nb aa\n2\n0\n2\nbb\n+    − , b1\na2\n−\n If (b, a) S\n then b\n2\na\n+ not necessarily positive  S is not symmetric 68. The equation + +\n− + = \n4x\n3x\n2x\nx\ne 8e 13e 8e 1 0,x R has: (1) two solutions and both are negative (2) no solution (3) four solutions two of which are negative (4) two solutions and only one of them is negative Official Ans. by NTA (1) Allen Ans. (1) 5 Sol. 4x\n3x\n2x\nx\ne 8e 13e 8e 1 0\n+ +\n− + = Let x\net\n= Now, 4\n3\n2\nt 8t 13t 8t 1 0\n+ + − + = Dividing equation by 2\nt\n, 2\n2\n81\nt 8t 13\n0\ntt\n+ + − + = 2\n2\n11\nt\n8 t\n13 0\ntt\n\n+ + − + =\n\n 2\n11\nt\n2 8 t\n13 0\ntt\n \n \n− + + − + =\n \n \n \n  Let 1\ntz\nt\n−= 2\nz 8z 15 0\n+ + = (\n)\n(\n)\nz 3 z 5 0\n+\n+ = z3\n=− or z5\n=− So, 1\nt3\nt\n− = − or 1\nt5\nt\n− = − 2\nt 3t 1 0\n+ − = or 2\nt 5t 1 0\n+ − = 3 13\nt\n2\n−\n= or 5 29\nt\n2\n−\n= as x\nte\n= so t must be positive, 13 3\nt\n2\n−\n= or 29 5\n2\n− So, x = ln 13 3\n2\n\n−\n\n\n or x = ln 29 5\n2\n\n−\n\n\n Hence two solution and both are negative. 69. The number of values of \nr p, q,~ p, ~ q for which ()()\n()\n()\n()\np q r qp r q      is a tautology, is: (1) 3 (2) 2 (3) 1 (4) 4 Official Ans. by NTA (2) Allen Ans. (2) Sol. (\n)\n(\n)\n(\n)\n(\n)\n(\n)\np q r q\np r q\n      We know, pq\n is equivalent to pq\n (\n)\n(\n)\n(\n)\n(\n)\n(\n)\np q v r q\np r q))\n\n \n  (\n)\n(\n)\np q r q\np r q\n       (\n)\n(\n)\n(\n)\n(\n)\np r t\np r q\nt\np r q\n     \n    For this to be tautology, (\n)\np r q\n\nmust be always true which follows for rp\n= or rq\n=\n. 70. Let 26\n−→\nf :\n{ , } be real valued function defined as 2\n2\n21\n8\n12\n++\n=\n−+\nxx\nf(x)\n.\nxx Then range of f is (1) )\n21\n,\n0,\n4\n\n− −  \n\n\n\n\n (2) 21\n0\n4\n\n− −  \n\n\n,\n( , ) (3) 21\n21\n44\n\n \n\n− − \n\n\n\n\n \n\n,, (4) \n)\n21\n1\n4\n\n− −  \n\n\n\n,, Official Ans. by NTA (1) Allen Ans. (1) Sol. Let y 2\n2\n21\n8\n12\n++\n=\n−+\nxx\nxx By cross multiplying 22\nyx 8xy 12y x 2x 1 0\n− + − − − = 2\nx (y 1) x(8y 2) (12y 1) 0− −+ + − = Case 1, y \n1 2\nD0\n(8y 2) 4(y 1)(12y 1) 0\n\n\n+ − −\n−   y(4y 21) 0+ +\n+\n21\n4\n−\n0\n- )\n21\ny,0,\n4\n−\n\n − \n\n\n\n\n\n-\n\n\n1 Case 2, y1= 22\nx 2x 1 x 8x 12+ + = − + 10x 11= 6 11\nx\n10\n= So, y can be 1 Hence )\n21\ny\n,\n0,\n4\n−\n\n −\n \n\n\n\n\n 71. (\n)\n(\n)\n(\n)\n(\n)\n66\n3\n66\nx\n22\n3x 1 3x 1\n3x 1 3x 1\nlim\nx\nx x 1 x x 1\n→\n+ + − +\n+ − −\n+ − + − − (1) is equal to 9 (2) is equal to 27 (3) does not exist (4) is equal to 27\n2 Official Ans. by NTA (2) Allen Ans. (2) Sol. (\n)\n(\n)\n(\n)\n(\n)\n66\n3\n66\nx\n22\n3x 1 3x 1\n3x 1 3x 1\nlim\nx\nx x 1 x x 1\n→\n+ + − +\n+ − −\n+ − + − − 66\n3\n3\n66\nx\n6\n22\n1\n1\n1\n1\nx 3\n3\n3\n3\nx\nx\nx\nx\nlim x\n11\nx 1 1\n1 1\nxx\n→\n\n\n\n \n\n\n\n+ + − + + − −\n\n \n\n\n\n \n\n\n\n \n \n\n\n\n\n\n\n \n\n\n\n+ −\n+ − −\n\n \n\n\n\n\n \n\n\n \n \n\n\n (\n)\n(\n)\n6\n3\n6\n2 3 0\n3 27\n20\n+\n=\n= =\n+ 72. Let P be the plane, passing through the point (\n)\n1, 1, 5\n−− and perpendicular to the line joining the points (\n)\n4,1, 3\n−\nand\n(\n)\n2, 4,3\n. Then the distance of P from the point ()\n3, 2, 2−\nis (1) 6 (2) 4 (3) 5 (4) 7 Official Ans. by NTA (3) Allen Ans. (3) Sol. Equation of Plane : ()()()\n2 x 1 3 y 1 6 z 5 0− − + − + = Or 2x 3y 6z 35\n−−= Required distance\n= (\n)\n(\n)\n(\n)\n2 3 3 2 6 2 35\n4 9 36\n− − −\n−\n++ = 5 73. The absolute minimum value, of the function 22\nf(x) |x x 1| x x 1 ,\n\n= − + + − +\n where [t] denotes the greatest integer function, in the interval [-1, 2], is : (1) 3\n4 (2) 3\n2 (3) 1\n4 (4) 5\n4 Official Ans. by NTA (1) Allen Ans. (1) Sol. (\n)\n22\nf x x x 1 x x 1\n\n= − + + − +\n\n; x 1, 2−\n\n Let (\n)\n2\ng x x x 1\n= − + 2\n13\nx\n24\n\n= − +\n\n 22\nx x 1 and x x 2\n\n− +− +\n Both have minimum value at x 1 / 2\n=  Minimum (\n)\n3\nf x\n0\n4\n=+ 3\n4\n= 7 74. Let the plane 12\nP:8x y z 12 0\n+ + + = be parallel to the line x 2 y 3 z 4\nL:\n2\n3\n5\n+\n−\n+\n==\n. If the intercept of P on the y-axis is 1, then the distance between P and L is : (1) 14 (2) 6\n14 (3) 2\n7 (4) 7\n2 Official Ans. by NTA (1) Allen Ans. (1) Sol. P: 12\n8x y z 12 0\n+ + + = L: x 2 y 3 z 4\n2\n3\n5\n+\n−\n+\n== P is parallel to L (\n)\n(\n)\n(\n)\n(\n)\n12\n12\n8 2\n3 5\n0\n3 5\n16\n\n+  +  =\n  +  = − Also y-intercept of plane P is 1 1\n12  = − And 2\n4\n=  Equation of plane P is 2x 3y z 3 0\n− + + =  Distance of line L from Plane P is (\n)\n0 3 6 1 3\n4 9 1\n−\n+ +\n=\n++ 14\n= 75. The foot of perpendicular from the origin O to a plane P which meets the co-ordinate axes at the points A, B, C is (2, a, 4), a N. If the volume of the tetrahedron OABC is 144 unit\n3\n, then which of the following points is NOT on P? (1) (2, 2, 4) (2) (0, 4, 4) (3) (3, 0, 4) (4) (0, 6, 3) Official Ans. by NTA (3) Allen Ans. (3) Sol. Equation of Plane: (\n)\n(\n)\n(\n)\n(\n)\nˆˆ\nˆ\nˆ\nˆ\nˆ\n2i aj 4k . x 2 i y a j z 4 k 0\n\n+ +\n− + − + −\n=\n 2\n2x ay 4z 20 a\n + + = + 2\n20 a\nA, 0, 0\n2\n\n+\n\n\n 2\n20 a\nB 0,, 0\na\n\n+\n\n\n 2\n20 a\nC 0,0,\n4\n\n+\n\n\n  Volume of tetrahedron 1\na b c\n6\n\n=\n (\n)\n1\na. b c\n6\n= 222\n1 20 a 20 a 20 a\n.\n.\n144\n6 2\na\n4\n\n \n \n\n+++\n=\n\n \n \n\n\n \n \n (\n)\n3\n2\n20 a 144 48 a\n + =   a2\n=  Equation of plane is 2x 2y 4z 24\n++= Or x y 2z 12\n+ + = ()\n3, 0, 4 Not lies on the Plane x y 2z 12+ + = 76. Let the mean and standard deviation of marks of class A of 100 students be respectively 40 and\n0\n()\n\n, and the mean and standard deviation of marks of class B of n students be respectively 55 and 30 -\n\n. If the mean and variance of the marks of the combined class of 100 + n students are respectively 50 and 350, then the sum of variances of classes A and B is: (1) 500 (2) 650 (3) 450 (4) 900 Official Ans. by NTA (1) Allen Ans. (1) 8 Sol. A B A+B 1\nx 40\n= 2\nx 55\n= x 50= 1\n =  2\n30\n = − 2\n350\n= 1\nn 100\n= 2\nnn\n= 100 n\n+ 100 40 55n\nx\n100 n\n+\n=\n+ 5000 50n 4000 55n\n+ =\n+ 1000 5n\n= n 200\n= 2\ni\n22\n1\nx\n40\n100\n =\n−\n 2\nj\n22\n2\nx\n55\n100\n =\n−\n 350 = (\n)\n22\nij\n2\n2\nxx\nx\n300\n+\n =\n−\n (\n)\n(\n)\n(\n)\n2\n2\n2\n1600\n100 30\n3025 200\n350\n50\n300\n\n+   +\n−  +\n\n\n=− (\n)\n2\n2\n2850 3\n2 30\n1600 6050\n =  +\n−  +\n+ (\n)\n2\n2\n8550\n2 30\n7650\n=  +\n−  + ()\n2\n2\n2 30900 +−  = 2\n40 300 0\n −  + = 10,30\n= 2\n2\n2\n2\n12\n10 20 500\n +  = + = 77. Let : \n\n\n \n\n= + +\n= − +\na i 2 j 3k, b i j 2k and \n= − +c 5i 3 j 3k be there vectors. If r is a vector such that,  = \nr b c b and =r.a 0. Then 2\n25 r is equal to (1) 449 (2) 336 (3) 339 (4) 560 Official Ans. by NTA (3) Allen Ans. (3) Sol. a i 2 j 3k\n\n \n= + + b i j 2k\n  \n= − + c 5i 3 j 3k\n\n\n\n= − + (\n)\nr c b 0, r.a 0\n−  =\n= r c b\n − =  Also, (\n)\nc b .a 0\n+  = ()\na.c a.b 0+ = a.c 8\n5\na.b\n−\n = = 5 5i 3i 3k 8 i j 2k\nr\n5\n\n\n\n \n\n\n \n\n− + − − +\n\n \n\n\n \n\n= 17i 7 j k\nr\n5\n\n \n−+\n= 2\n1\nr\n(289 50)\n25\n=+ 2\n25 r 339= 78. Let H be the hyperbola, whose foci are 1\n2 0\n(\n, )\n and eccentricity is 2 . Then the length of its lat us rectum is ______________. (1) 2 (2) 3 (3) 5\n2 (4) 3\n2 Official Ans. by NTA (1) Allen Ans. (1) Sol. 2ae (1 2) (1 2) 2 2= + − + = ae 2= a1= b 1 e 2 ==  Hyperbola is rectangular 2\n2b\nL.R2\na\n = = 9 79. Let  > 0. If\n\n+\n=\n+  −\n\n0\nx\n16 20 2\ndx\n,\n15\nxx\nthen  is equal to : (1) 2 (2) 4 (3) 2 (4) 22 Official Ans. by NTA (1) Allen Ans. (1) Sol. After rationalising ()\n0\nx\nxx\n\n+  +\n\n 3/2\n1/2\n3/2\n0\n1\n(x )\n(x ) x\n\n\n+  −  +  +\n\n\n 5/2\n3/2\n5/2\n0\n1 2\n2\n2\n(x )\n(x )\nx\n5\n3\n5\n\n\n+  −  +  +\n\n\n 5/2\n3/2\n5/2\n5/2\n5/2\n1 5\n2\n2\n2\n2\n(2 )\n(2 )\n2\n3\n5\n5\n3\n\n\n=\n −\n +  −  + \n\n\n 7/2 5/2 5/2 5/2\n5/2\n1 2\n2\n2\n5\n3\n3\n\n\n=\n+ \n\n\n 7/2\n5/2\n3/2\n2 2 2\n5 3 3\n\n= \n− +\n\n (\n)\n(\n)\n3/2\n3/2\n24 2 20 2 10\n4 2 10\n15\n15\n\n=\n−\n+ =\n+ Now, ()\n3/2\n4 2 10\n15\n\n+\n16 20 2\n15\n+\n= 2\n  = 80. The complex number 1\n33\ni\nz\ncos\ni sin\n−\n=\n\n+ is equal to: (1) 55\n2\n12\n12\ncos\ni sin\n\n\n+\n\n (2) 12\n12\ncos\ni sin\n\n− (3) 2\n1212\ncosi sin\n\n\n+\n\n (4) 55\n2\n12\n12\ni cos\ni sin\n\n\n−\n\n Official Ans. by NTA (1) Allen Ans. (1) Sol. i 1\ni 1\nZ\n13\ncos i sin\ni\n33\n22\n−−\n==\n\n+\n+ =\n13\ni\ni 13 1 3 1\n22\ni\n1\n22\n13\n3 / 2i\ni\n2\n22\n−\n−−+\n=+\n−\n+ Apply polar form, 31\nrcos\n2\n−\n= 31\nrsin\n2\n+\n= Now, 31\ntan\n31\n+\n=\n− So, 5\n12\n\n= 81. The Coefficient of 6\nx\n−\n, in the expansion of \n+\n\n\n9\n2\n4x 5\n,\n5 2x is ___________ Official Ans. by NTA (5040) Allen Ans. (5040) 10 Sol: \n+\n\n\n9\n2\n4x 5\n,\n5 2x Now, T\nr+1\n= 9 rr\n9\nr\n2\n4x5\nC.\n52x\n−\n   \n   \n    = 9 r\nr\n9\n9 3r\nr\n45\nC .\n.x\n52\n−\n−\n   \n   \n    Coefficient of 6\nx\n− i.e. 9-3r = -6 r5\n= So, Coefficient of 6\nx\n−\n= 45\n9\n5\n45\nC\n.\n5040\n52\n   \n=\n   \n    82. Let the area of the region \n\n2\n2\n1\n0\n1\n(x, y) : x\ny | x\nx |,\nx\n−   −  \nbe A. Then (6A+11)\n2 is equal to _______. Official Ans. by NTA (125) Allen Ans. (125) Sol: 2\ny 2x 1 , y x x − − 3 – 5 2 Both curve are symmetric about 1\nx\n2\n= Hence ()\n()\n()\n1\n2\n2\n35\n2\nA 2x x 1 2x dx\n−\n=− − −\n (\n)\n1\n1\n3\n2\n2\n22\n35\n35\n2\n2\nx3\nA 2\nx 3x 1 dx 2\nx x\n32\n−\n−\n\n−\n=\n− + −\n=\n+ −\n\n\n On solving 6A 11 5 5+= ()\n2\n6A 11 125+= 83. If 2\n1\n2\n1\n1\n11 21\nnn\nnn\nP\n:\nP\n:\n,\n+−\n−\n= then 2\n15\nnn\n++ is equal to: Official Ans. by NTA (45) Allen Ans. (45) Sol: (2n 1)!(n 1)! 11\n(n 2)!(2n 1)! 21\n+−\n=\n+− (2n 1)(2n) 11\n(n 2)(n 1)n 21\n+\n=\n++ +\n=\n++\n2n 1\n11\n(n 1)(n 2) 42 n5\n= 2\nn n 15 25 5 15 45\n + + = + + = 84. If the constant term in the binomial expansion of 9\n5\n2\n4\n2\n\n\n−\n\n\n\nx\nx\nis – 84 and the Coefficient of 3\n−\nx is 2,\n\n where 0\n is an odd number, Then  − is equal to ___________ Official Ans. by NTA (98) Allen Ans. (98) Sol. In, 9\n5\n2\n4\n2\n\n\n−\n\n\n\nx\nx 1\n+\nr\nT\n=\n9\nr\nC\n(\n)\n9\n52\n9\n4\n2\n−\n−\n−\n\n\n\nr\n/\nr\nr\nx\nx =\n(\n)\n45 5\n9\n22\n9\n14\n2\n−−\n−\n−\nr\nlr\nr\nr\nr\nr\nC\nx = 45 5\n2\n0\n− − =\nr\nlr 45\n52\n=\n+\nr\nl ------ (1) Now, according to the question, ()\n9\n9\n1484\n2\n−\n−= −\nr\nr\nr\nr\nC = ()\n939\n1221 4\n−\n−= \nr\nr\nr\nC Only natural value of r possible if 390−=r 3=r and 9\n3\n84=C 11 5\n=\nl from equation (1) Now, coefficient of 3\n−\nl\nx = 45 5\n22\n−−\nr\nlr\nx\nat l = 5, gives 5\n=\nr  (\n)\n5\n9\n5\n4\n4\n12\n2\n\n−\n=  \nc 7\n63 2= −   7\n63\n =  = −\n,  value of 98 − = 85. Let a, b, c\nbe three vectors such that 31 4\n2\na\n,\nb\nc\n=\n= = and (\n)\n(\n)\n23\na b\nc a .\n =  If the angle between b and c is 2\n3\n,\n then 2\nac\na.b\n\n\n\n\n\nis equal to ______________. Official Ans. by NTA (3) Allen Ans. (3) Sol. (\n)\n(\n)\n2 a b 3 c a\n =  ()\na 2b 3c 0 + = ()\na 2b 3c=  + 22\n2\na\n2b 3c\n=  + 2\n2\n2\n2\na\n4 b 9 c 12b.c\n\n= \n+\n+\n\n 2\n31 311=    =  (\n)\na 2b 3c\n=  + a c2 b c\n2b.b 3c.b\na.b\n\n=\n+ ()\n2\n22 2\n3\nb c b c b.c\n4\n =−= \n\n=\n= −\n−\n3\n2\nac\n2\n3\n13\na.b\n2.\n42 2\nac\n3\na.b\n\n\n=\n\n\n 86. Let S be the set of all aN\n such that the area of the triangle formed by the tangent at the point P (b, c), b,\nc N,\n on the parabola y\n2 = 2ax and the lines x = b, y = 0 is 16 unit\n2\n, then aS\na\n\n is equal to _____. Official Ans. by NTA (146) Allen Ans. (146) Sol. o (0,0) y P(b,c) y =2ax\n2\nx\nA(b,0)\nB(-b,0) As ()\nP b, c lies on parabola so 2\n2\n=\nc\nab ---- (1) Now equation of tangent to parabola 2\n2\n=\ny\nax in point form is (\n)\n1\n1\n2\n2\n+\n=\nxx\nyy\na\n, (\n)\n(\n)\n11\n=\nx , y\nb, c (\n)\n =\n+\nyc\na x\nb For point B, put y = 0, now x= -b So, area of \nP BA\n, 1\n16\n2\n  =AB AP 1\n2\n16\n2\n   =\nbc 16\n=\nbc As b and c are natural number so possible values of (b, c) are (1, 16), (2, 8), (4,4), (8, 2) and (16,1) Now from equation (1) 2\n2\n=\nc\na\nb and aN\n, so values of ()\nb, c are (\n)\n(\n)\n(\n)\n1 16\n2 8\n4 4\n,\n, ,\nan d , now values of are 128, 16 and 2. Hence sum of values of a is 146. 87. The sum − + − + −+\n222222\n1 2.3 3.5 4.7 5.9 ........ 15.29\nis___________. Official Ans. by NTA (6952 ) Allen Ans. (6952) Separating odd placed and even placed terms we get 12 2\n2\n2\n2\n2\n2\nS (1.1 3.5 ....15.(29) ) (2.3 4.7\n.... 14.(27)\n=\n+ +\n−\n+\n++ 87\n22\nn 1\nn 1\nS (2n 1)(4n 3)\n(2n)(4n 1)\n==\n=\n−\n− −\n−\n Applying summation formula we get = 29856 – 22904 = 6952 88. Let A be the event that the absolute difference between two randomly choosen real numbers in the sample space 0 60\n[ ,\n] is less than or equal to a . If P (A)= 11\n36\n, then a is equal to__________. Official Ans. by NTA (10) Allen Ans. (10) Sol: x y a a x y a\n−   −  −  x y a andx y a\n − \n−  − ( 60 - a, 60)\n( 60, 60- a)\n( 60, 0)\n( 0, 80)\n( 0, a)\n( a, 0)\nF\nE\nD\nG\nO\nC\nA\nB (0,60) ar(OACDEG)\nP(A)\n(OBDF)\n= ar(OBDF) ar(ABC) ar(EFG)\nar(OBDF)\n−−\n= ()()\n11\n22\n2\n(60)60 a60 a\n11\n22\n363600\n−− −−\n= 2\n1100 3600 (60 a)=− − 2\n(60 a) 2500 60 a 50\n\n− =\n − = a 10= 89. Let 0 4 1\n2\nij\nij\nA [a ], a\nZ [ , ],\ni, j\n.\n=\n\n  The number of matrices A such that the sum of all entries is a prime number 2 13p ( , ) is ______________. Official Ans. by NTA ( 196) Allen Ans. (204 ) As given a + b + c + d = 3 or 5 or 7 or 11 if sum = 3 2\n4 4\n3\n(1 x x ..... x ) x\n+ + + + → 5 4\n4\n3\n(1 x ) (1 x) x\n−\n−\n− → 4 3 1\n6\n33\nC C 20\n+−\n\n= = If sum = 5 5\n4\n5\n(1 4x )(1 x) x\n−\n−\n− → + −\n+ −\n\n−\n= − =\n4 5 1\n4.4 0 1\n8\n5\n0\n5\nC 4x\nC C 4 52 If sum = 7 5\n4\n7\n(1 4x )(1 x) x\n−\n−\n− → 4 5 1\n4.4 0 1\n8\n4\n0\n5\nC\nC C 4 52\n+ −\n+ −\n\n−\n= − = If sum = 11 5\n10\n4\n11\n(1 4x 6x )(1 x) x\n−\n− +\n− → 4 11 1\n4 6 4\n4 1 1\n11\n6\n1\nC 4. C 6. C\n+ −\n+ −\n+ −\n\n−\n+ 14\n9\n11\n6\nC 4. C 6.4 364 336 24 52\n=\n−\n+ = − + =  Total matrices = 20 + 52 + 80 + 52 = 204 90. Let A be a nn\n matrix such that |A|=2. If the determinant of the matrix Adj (2. Adj(2A\n-1\n)). is 2\n84\n, then n is equal to _______________. Official Ans. by NTA (5) Allen Ans. (5) Sol. (\n)\n1\nAdj 2Adj(2A )\n− (\n)\n−\n−\n=\nn1\n1\n2Adj Adj(2A ) n1\nn(n 1)1\n2 Adj(2A )\n−\n−−\n= (\n)\n(\n)\nn 1 n 1\nn(n 1)\n1\n2 (2A )\n−−\n−−\n= (\n)\n(\n)\n(n 1)(n 1)\nn n 1 n 1\nn(n 1)\n1\n2 2\nA\n−−\n−−\n−−\n= ()()\n2\nn n 1 n 1\nn(n 1)\n(n 1)\n1\n2\nA\n+ − −\n−\n−\n= ()()\n2\nn n 1 n 1\nn(n 1)\n(n 1)\n2\n2\n+ − −\n−\n−\n= = 22\nn(n 1) n(n 1) (n 1)\n2\n− + + − − 2\n(n 1)(n n 1)\n2\n−\n− +\n= Now, 2\n(n 1)(n n 1)\n2\n−\n− + 2\n(n 1)(n n 1)84\n22\n−− +\n= So, n = 5",
+    "questions": [],
+    "mathEquations": [
+      {
+        "equation": "N-A 61",
+        "type": "mathematical",
+        "position": 156
+      },
+      {
+        "equation": "e + + =\n2x 4y 3z 5",
+        "type": "mathematical",
+        "position": 676
+      },
+      {
+        "equation": "f =\n7\na 3",
+        "type": "mathematical",
+        "position": 1185
+      },
+      {
+        "equation": "a\n+\n",
+        "type": "mathematical",
+        "position": 1286
+      },
+      {
+        "equation": "a+6d=3",
+        "type": "mathematical",
+        "position": 1383
+      },
+      {
+        "equation": "Z= a (a+3d) = (3-6d) (3-3d) =18d\n2\n-27d+9 Differentiating with respect to d ",
+        "type": "mathematical",
+        "position": 1406
+      },
+      {
+        "equation": "d-27=0 ",
+        "type": "mathematical",
+        "position": 1486
+      },
+      {
+        "equation": "d=\n3\n4\n",
+        "type": "mathematical",
+        "position": 1495
+      },
+      {
+        "equation": "Z = minimum) Now",
+        "type": "mathematical",
+        "position": 1525
+      },
+      {
+        "equation": "n\n=\nn3\n3 (n 1)\n0\n24\n",
+        "type": "mathematical",
+        "position": 1545
+      },
+      {
+        "equation": "n=5 Now",
+        "type": "mathematical",
+        "position": 1584
+      },
+      {
+        "equation": "x\n= be the solution of the differential equation ()()\n2222\n3y 5x y dx 2x x y dy 0",
+        "type": "mathematical",
+        "position": 2393
+      },
+      {
+        "equation": "x\n= ",
+        "type": "mathematical",
+        "position": 2720
+      },
+      {
+        "equation": "x = 2 to get y (2) (\n)\n2\ny y 12 4 2 2 2 2\n",
+        "type": "mathematical",
+        "position": 3237
+      },
+      {
+        "equation": "y+x = 0 (\n)\n",
+        "type": "mathematical",
+        "position": 3771
+      },
+      {
+        "equation": "T =a\n2\n-b\n2\n= ",
+        "type": "mathematical",
+        "position": 4704
+      },
+      {
+        "equation": "b\n+ ",
+        "type": "mathematical",
+        "position": 4845
+      },
+      {
+        "equation": "a\n+ not necessarily positive ",
+        "type": "mathematical",
+        "position": 4893
+      },
+      {
+        "equation": "n + +\n",
+        "type": "mathematical",
+        "position": 4958
+      },
+      {
+        "equation": "t\n= Now",
+        "type": "mathematical",
+        "position": 5251
+      },
+      {
+        "equation": "t\n+ + ",
+        "type": "mathematical",
+        "position": 5337
+      },
+      {
+        "equation": "e\n= so t must be positive",
+        "type": "mathematical",
+        "position": 5624
+      },
+      {
+        "equation": "x = ln 13 3\n2\n",
+        "type": "mathematical",
+        "position": 5680
+      },
+      {
+        "equation": "x = ln 29 5\n2\n",
+        "type": "mathematical",
+        "position": 5711
+      },
+      {
+        "equation": "p\n= or rq\n=\n",
+        "type": "mathematical",
+        "position": 6266
+      },
+      {
+        "equation": "y-axis is 1",
+        "type": "mathematical",
+        "position": 8540
+      },
+      {
+        "equation": "y-intercept of plane P is 1 1\n12",
+        "type": "mathematical",
+        "position": 8814
+      },
+      {
+        "equation": "o-ordinate axes at the points A",
+        "type": "mathematical",
+        "position": 9061
+      },
+      {
+        "equation": "A+B 1\nx 40\n= 2\nx 55\n= x 50= 1\n",
+        "type": "mathematical",
+        "position": 10274
+      },
+      {
+        "equation": "n\n= 100 n\n+ 100 40 55n\nx\n100 n\n",
+        "type": "mathematical",
+        "position": 10344
+      },
+      {
+        "equation": "n\n+ =\n+ 1000 5n\n= n 200\n= 2\ni\n22\n1\nx\n40\n100\n",
+        "type": "mathematical",
+        "position": 10398
+      },
+      {
+        "equation": "d =r",
+        "type": "mathematical",
+        "position": 10900
+      },
+      {
+        "equation": "r+1\n= 9 rr\n9\nr\n2\n4x5\nC",
+        "type": "mathematical",
+        "position": 12831
+      },
+      {
+        "equation": "r = -6 r5\n",
+        "type": "mathematical",
+        "position": 12972
+      },
+      {
+        "equation": "A+11)\n2 is equal to ",
+        "type": "mathematical",
+        "position": 13154
+      },
+      {
+        "equation": "n\n++ is equal to",
+        "type": "mathematical",
+        "position": 13536
+      },
+      {
+        "equation": "T\n=\n9\nr\nC\n(\n)\n9\n52\n9\n4\n2\n",
+        "type": "mathematical",
+        "position": 14033
+      },
+      {
+        "equation": "r\n/\nr\nr\nx\nx =\n(\n)\n45 5\n9\n22\n9\n14\n2\n",
+        "type": "mathematical",
+        "position": 14073
+      },
+      {
+        "equation": "x = 45 5\n2\n0\n",
+        "type": "mathematical",
+        "position": 14130
+      },
+      {
+        "equation": "l ------ (1) Now",
+        "type": "mathematical",
+        "position": 14166
+      },
+      {
+        "equation": "C = ()\n939\n1221 4\n",
+        "type": "mathematical",
+        "position": 14240
+      },
+      {
+        "equation": "x = 45 5\n22\n",
+        "type": "mathematical",
+        "position": 14387
+      },
+      {
+        "equation": "l = 5",
+        "type": "mathematical",
+        "position": 14412
+      },
+      {
+        "equation": "c\n=\n= = and (\n)\n(\n)\n23\na b\nc a ",
+        "type": "mathematical",
+        "position": 14571
+      },
+      {
+        "equation": "c= ",
+        "type": "mathematical",
+        "position": 14804
+      },
+      {
+        "equation": "c\n= ",
+        "type": "mathematical",
+        "position": 14822
+      },
+      {
+        "equation": "c\n= ",
+        "type": "mathematical",
+        "position": 14901
+      },
+      {
+        "equation": "x = b",
+        "type": "mathematical",
+        "position": 15197
+      },
+      {
+        "equation": "y = 0 is 16 unit\n2\n",
+        "type": "mathematical",
+        "position": 15204
+      },
+      {
+        "equation": "y =2ax\n2\nx\nA(b",
+        "type": "mathematical",
+        "position": 15324
+      },
+      {
+        "equation": "b ---- (1) Now equation of tangent to parabola 2\n2\n=\ny\nax in point form is (\n)\n1\n1\n2\n2\n+\n=\nxx\nyy\na\n",
+        "type": "mathematical",
+        "position": 15392
+      },
+      {
+        "equation": "y = 0",
+        "type": "mathematical",
+        "position": 15553
+      },
+      {
+        "equation": "x= -b So",
+        "type": "mathematical",
+        "position": 15564
+      },
+      {
+        "equation": "t = 29856 ",
+        "type": "mathematical",
+        "position": 16255
+      },
+      {
+        "equation": "a + b + c + d = 3 or 5 or 7 or 11 if sum = 3 2\n4 4\n3\n(1 x x ",
+        "type": "mathematical",
+        "position": 17064
+      },
+      {
+        "equation": "x\n+ + + + ",
+        "type": "mathematical",
+        "position": 17134
+      },
+      {
+        "equation": "m = 5 5\n4\n5\n(1 4x )(1 x) x\n",
+        "type": "mathematical",
+        "position": 17209
+      },
+      {
+        "equation": "m = 7 5\n4\n7\n(1 4x )(1 x) x\n",
+        "type": "mathematical",
+        "position": 17303
+      },
+      {
+        "equation": "m = 11 5\n10\n4\n11\n(1 4x 6x )(1 x) x\n",
+        "type": "mathematical",
+        "position": 17394
+      },
+      {
+        "equation": "C\n+ ",
+        "type": "mathematical",
+        "position": 17475
+      },
+      {
+        "equation": "s = 20 + 52 + 80 + 52 = 204 90",
+        "type": "mathematical",
+        "position": 17559
+      },
+      {
+        "equation": "A\n-1\n))",
+        "type": "mathematical",
+        "position": 17677
+      },
+      {
+        "equation": "A\n+ ",
+        "type": "mathematical",
+        "position": 17987
+      },
+      {
+        "equation": "n = 5",
+        "type": "mathematical",
+        "position": 18168
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 200
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 368
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 423
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1824
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1828
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1832
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1836
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1882
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1894
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2053
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2057
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2061
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2065
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2101
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2105
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2127
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2233
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 2243
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 2978
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 2989
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3000
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3018
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3033
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3036
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3101
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3127
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3133
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3135
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3139
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 5684
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 5715
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 5887
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 6208
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7565
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7694
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7893
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8565
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8915
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9844
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9949
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11593
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11783
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12247
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12253
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12294
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12300
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12328
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12334
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12354
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12359
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12394
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12400
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12476
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12482
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12588
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12603
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12622
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 12688
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13765
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 13791
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 15116
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 15419
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Algebra",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "matrix",
+          "determinant"
+        ],
+        "possibleSubtopics": [
+          "Quadratic Equations",
+          "Matrices",
+          "Complex Numbers",
+          "Sequences and Series"
+        ]
+      },
+      {
+        "name": "Geometry",
+        "confidence": 0.42857142857142855,
+        "matchedKeywords": [
+          "triangle",
+          "circle",
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Quadratic Equations",
+        "parentTopic": "Algebra",
+        "confidence": 0.25,
+        "matchedKeywords": [
+          "equation"
+        ]
+      },
+      {
+        "name": "Matrices",
+        "parentTopic": "Algebra",
+        "confidence": 1,
+        "matchedKeywords": [
+          "matrices"
+        ]
+      },
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      }
+    ],
+    "tags": [
+      "Formula Based"
+    ],
+    "wordCount": 6007,
+    "characterCount": 18173
+  },
+  "images": []
+}

@@ -1,0 +1,993 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2025\\Session1\\Physics\\2201-Physics Paper+With+Sol. Morning.pdf",
+  "relativePath": "JEE\\Previous Papers\\2025\\Session1\\Physics\\2201-Physics Paper+With+Sol. Morning.pdf",
+  "metadata": {
+    "originalFileName": "2201-Physics Paper+With+Sol. Morning.pdf",
+    "subject": "Physics",
+    "year": 2025,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 10,
+    "fileSize": 6602315,
+    "processedAt": "2025-09-23T00:14:45.960Z"
+  },
+  "content": {
+    "originalText": "1 JEE–MAIN EXAMINATION – JANUARY 2025 PHYSICS TEST PAPER WITH SOLUTION  (HELD ON WEDNESDAY 22\nnd JANUARY 2025) TIME : 9:00 AM TO 12:00 NOON SECTION-A 26. Given below are two statements : Statement I : In a vernier callipers, one vernier scale division is always smaller than one main scale division. Statement II : The vernier constant is given by one main scale division multiplied by the number of vernier scale division. In the light of the above statements, choose the correct answer from the options given below. (1) Both Statement I and Statement II are false. (2) Statement I is true but Statement II is false. (3) Both Statement I and Statement II are true. (4) Statement I is false but Statement II is true. NTA Ans. (2) Allen Ans. (1) Sol. In general one vernier scale division is smaller than one main scale division but in some modified cases it may be not correct. Also least count is given by one main scale division / number of vernier scale division for normal vernier calliper. Note: In JA, there are questions with modified V.C.. 27. A line charge of length ' a '\n2\nis kept at the center of an edge BC of a cube ABCDEFGH having edge length ‘a’ as shown in the figure. If the density of line is C per unit length, then the total electric flux through all the faces of the cube will be ____. (Take, 0\n as the free space permittivity) F E H C B G D A (1) 0\na\n8\n\n (2) 0\na\n16\n\n (3) 0\na\n2\n\n (4) 0\na\n4\n\n Ans. (1) Sol. Total charge inside the cube a\na\n2\n48\n\n\n in\n00\nqa\n8\n\n   \n 28. R\np = 1 0.9 V R\ne = 2 Sliding contact of a potentiometer is in the middle of the potentiometer wire having resistance R\nP = 1 as shown in the figure. An external resistance of R\ne = 2 is connected via the sliding contact. (1) 0.3 A (2) 1.35 A (3) 1.0 A (4) 0.9 A Ans. (3) ALLEN 2  Sol. The circuit can be considered as 2 0.9V 0.5 0.5 eq\n0.5 2\n5\n10\nR\n0.5\n2 0.5\n10\n25\n\n\n  \n  \n\n\n 459\n0.9\n5010\n   0.9\ni\n1A\n0.9\n   29. Given below are two statements : one is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : If Young’s double slit experiment is performed in an optically denser medium than air, then the consecutive fringes come closer. Reason (R) : The speed of light reduces in an optically denser medium than air while its frequency does not change. In the light of the above statements, choose the most appropriate answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct explanation of (A) (2) (A) is false but (R) is true. (3) Both (A) and (R) are true but (R) is not the correct explanation of (A) (4) (A) is true but (R) is false. Ans. (1) Sol. (fringe width) D\nd\n\n In denser medium,    fringe come closer Also, cc\nμV\nVμ\n   Frequency remains same, vac.\nvac.\nmed\nmed\nf\nμ\nfμ\n\n \n  \n 30. Two spherical bodies of same materials having radii 0.2 m and 0.8 m are placed in same atmosphere. The temperature of the smaller body is 800 K and temperature of bigger body is 400 K. If the energy radiate from the smaller body is E, the energy radiated from the bigger body is (assume, effect of the surrounding to be negligible) (1) 256 E (2) E (3) 64 E (4) 16 E Ans. (2) Sol. 44\nd\neATPAT\ndt\n\n   24\nsmaller\n24\nl arg er\nP(0.2)800\nP(0.8)400\n\n\n 1\n16 1\n16\n  P\nlarger = P\nsmaller 31. An amount of ice of mass 10\n–\n3 kg and temperature –10°C is transformed to vapour of temperature 110° by applying heat. The total amount of work required for this conversion is, (Take, specific heat of ice = 2100 Jkg\n–1\nK\n–1\n, specific heat of water = 4180 Jkg\n–1\nK\n–1\n, specific heat of steam = 1920 Jkg\n–1\nK\n–1\n, Latent heat of ice = 3.35 × 10\n5 Jkg\n–1 and Latent heat of steam = 2.25 × 10\n6 Jkg\n–1\n) (1) 3022 J (2) 3043 J (3) 3003 J (4) 3024 J Ans. (2) ALLEN 3  Sol. –10° 0° 0° 100° 100° 1 2 3 4 5 110° Q\n1 = m × S\nI × T = 10\n–3 × 2100 × 10 = 21 J Q\n2 = m × L\nf = 10\n–\n3 × 3.35 × 10\n5 = 335 J Q\n3 = m × S\nW × T = 10\n–3 × 4180 × 100 = 418 J Q\n4 = m × L\nV = 10\n–3 × 2.25 × 10\n6 = 2250 J Q\n5 = m × S\nV × T = 10\n–3 × 1920 × 10 = 19.2 J Q\nnet = 3043.2 J 32. An electron in the ground state of the hydrogen atom has the orbital radius of 5.3 × 10\n–11 m while that for the electron in third excited state is 8.48 × 10\n–\n10 m. The ratio of the de Broglie wavelengths of electron in the ground state to that in excited state is (1) 4 (2) 9 (3) 3 (4) 16 Ans. (1) Sol. h\nmv\n nh\nmvr\n2\n\n nh\nmv\n2r\n\n 2 rh\nnh\n\n r\nn\n 11\n11 4\n11\n41 4\nr n5.3 104\nn r1 84.8 10\n\n\n \n\n  1\n4\n1\n4\n\n\n Note : Most appropriate answer will be option (1). 33. In the diagram given below, there are three lenses formed. Considering negligible thickness of each of them as compared to [R\n1\n] and [R\n2\n], i.e., the radii of curvature for upper and lower surfaces of the glass lens, the power of the combination is container water glass water (1) 12\n1\n1\n1\n6 | R | | R |\n\n\n\n (2) 12\n1\n1\n1\n6 | R | | R |\n\n\n\n (3) 12\n1\n1\n1\n6 | R | | R |\n\n\n\n (4) 12\n111\n6 | R | | R |\n\n\n\n Ans. (2) Sol.  R\n1  p\n1 R\n2  p\n2 R\n1  p\n3 R\n2   p\neq = p\n1 + p\n2 + p\n3 1\n1\n411\np1\n3| R |\n\n\n  \n\n\n\n\n 1\n1\n1\np\n3 | R |\n\n\n\n ALLEN 4  2\n12\n1\n1\n1\np\n2\n| R |\n| R |\n\n\n \n\n\n\n\n\n 2\n21\n1\n1\n1\np\n2 | R | | R |\n\n \n\n\n 3\n22\n1111\np\n3| R |3 | R |\n\n\n   \n\n\n\n\n eq\n1212\n111111\np\n3 | R | | R |2 | R | | R |\n \n \n \n  12\n1\n1\n1\n6 | R | | R |\n\n \n\n\n 34. An electron is made to enters symmetrically between two parallel and equally but oppositely charged metal plates, each of 10 cm length. The electron emerges out of the field region with a horizontal component of velocity 10\n6 m/s. If the magnitude of the electric between the plates is 9.1 V/cm, then the vertical component of velocity of electron is (mass of electron = 9.1 × 10\n–31 kg and charge of electron = 1.6 × 10\n–19 C) (1) 1 × 10\n6 m/s (2) 0 (3) 16 × 10\n6 m/s (4) 16 × 10\n4 m/s Ans. (3) Sol. 10cm V\nx V\ny V\nx 2\n7\n6\nx\n10 10\nt10\nV10\n\n\n\n   yyy\nVua t   7\ny\neE\nV\n0\n10\nm\n\n    19\n27\ny\n31\n1.6 10\nV\n9.1 10\n10\n9.1 10\n\n\n\n\n \n  \n 6\ny\nV\n16 10\n   35. Which of the following resistivity () v/s temperature (T) curves is most suitable to be used in wire bound standard resistors? (1) 0 T(K)  (\n cm) (2) 0 T(K)  (\n cm) (3) 0 T(K)  (\n cm) (4) 0 T(K)  (\n cm) Ans. (1) Sol. Resistivity is independent of temperature for wire bound resistors 36. A closed organ and an open organ tube filled by two different gases having same bulk modulus but different densities \n1 and \n2 respectively. The frequency of 9\nth harmonic of closed tube is identical with 4\nth harmonic of open tube. If the length of the closed tube is 10 cm and the density ratio of the gases is \n1 : \n2 = 1 : 16, then the length of the open tube is : (1) 20\ncm\n7 (2) 15\ncm\n7 (3) 20\ncm\n9 (4) 15\ncm\n9 Ans. (3) ALLEN 5  Sol. 9\nth harmonic of closed pipe 1\n1\n9V\n4\n 4\nth harmonic of open pipe 2\n2\n2V\n 12\n12\n9V\n2V\n4\n 1\n1\n2\n2\n9\nB\n2\nB\n4\n\n  21\n12\n8\n9\n\n\n 21\n8 1\n20\ncm\n9 4\n9\n    37. A uniform circular disc of radius ‘R’ and mass ‘M’ is rotating about an axis perpendicular to its plane and passing through its centre. A small circular part of radius R/2 is removed from the original disc as shown in the figure. Find the moment of inertia of the remaining part of the original disc about the axis as given above. R R (1) 2\n7\nMR\n32 (2) 2\n9\nMR\n32 (3) 2\n17\nMR\n32 (4) 2\n13\nMR\n32 Ans. (4) Sol. 2\n2\n2\nMR\nMRM R\n42\nI\n2242\n\n\n\n\n\n\n\n\n\n\n\n\n 2\n13\nIMR\n32\n 38. A small point of mass m is placed at a distance 2R from the centre ‘O’ of a big uniform solid sphere of mass M and radius R. The gravitational force on ‘m’ due to M is F\n1\n. A spherical part of radius R/3 is removed from the big sphere as shown in the figure and the gravitational force on m due to remaining part of M is found to be F\n2\n. The value of ratio F\n1 : F\n2 is P 2\nR m O M (1) 16 : 9 (2) 11 : 10 (3) 12 : 11 (4) 12 : 9 Ans. (3) Sol. 1\n2\nGMm\nF\n(2R)\n ...(1) 2\n2\n2\nM\nGm\nGMm\n27\nF\n(2R )\n4R\n3\n\n\n\n\n\n\n\n\n\n\n\n\n 2\n2\n11 GMm\nF\n48 R\n ...(2) F\n1 : F\n2 = 12 : 11 39. The work functions of cesium (Cs) and lithium (Li) metals are 1.9 eV and 2.5 eV, respectively. If we incident a light of wavelength 550 nm on these two metal surface, then photo-electric effect is possible for the case of (1) Li only (2) Cs only (3) Neither Cs nor Li (4) Both Cs and Li Ans. (2) Sol. 12401240\nE2.25\n550\n\n ALLEN 6  40. If B is magnetic field and \n0 is permeability of free space, then the dimensions of (B/\n0\n) is (1) MT\n–2\nA\n–1 (2) L\n–1 A (3) LT\n–\n2\nA\n–1 (4) ML\n2\nT\n–2\nA\n–1 Ans. (2) Sol. B = μ\n0\nni 11\n0\nB\n[ni] L A\nμ\n\n\n\n\n 41. A bob of mass m is suspended at a point O by a light string of length l and left to perform vertical motion (circular) as shown in figure. Initially, by applying horizontal velocity \n0 at the point ‘A’. the string becomes slack when, the bob reaches at the point ‘D’. The ratio of the kinetic energy of the bob at the points B and C is ______. D C B A O 60° 60° \n0 (1) 2 (2) 1 (3) 4 (4) 3 Ans. (1) Sol. 22\nAB\n11\nmvmvmgh\n22\n 2\nB\n11\nm(5g )mvmg\n222\n B\n5mgmg\nKE\n22\n B\nKE2mg 22\nCD\n11\nmvmvmg\n222\n C\n1\nKEmgmgmg\n22\n B\nC\nKE\n2\nKE\n 42. Given below are two statements : Statement-I : The equivalent emf of two nonideal batteries connected in parallel is smaller than either of the two emfs. Statement-II : The equivalent internal resistance of two nonideal batteries connected in parallel is smaller than the internal resistance of either of the two batteries. In the light of the above statements, choose the correct answer from the options given below. (1) Statement-I is true but Statement-II is false (2) Both Statement-I and Statement-II are false (3) Both Statement-I and Statement-II are true (4) Statement-I is false but Statement-II is true Ans. (4) Sol. 12\n12\n12\nrr\n11\nrr\n\n\n\n \n 43. Which of the following circuits represents a forward biased diode ? (A) 0V –10V (B) –10V –15V (C) 4V 2V (D) –5V –10V (E) 2V ALLEN 7  Choose the correct answer from the options given below : (1) (B), (D) and (E) only (2) (A) and (D) only (3) (B), (C) and (E) only (4) (C) and (E) only Ans. (3) 44. A parallel-plate capacitor of capacitance 40F is connected to a 100 V power supply. Now the intermediate space between the plates is filled with a dielectric material of dielectric constant K = 2. Due to the introduction of dielectric material, the extra charge and the change in the electrostatic energy in the capacitor, respectively, are - (1) 2 mC and 0.2 J (2) 8 mC and 2.0 J (3) 4 mC and 0.2 J (4) 2 mC and 0.4 J Ans. (3) Sol. q = (KC – C)V = 40 × 10\n–\n6 × 100 = 4000 × 10\n–\n3 = 4 mC U = 22\n11\nC ' VCV\n22\n = \n2\n1\nK 1 CV\n2\n 2\n1\nCV (2 1)\n2\n 26\n11\nCV40 1010000\n22\n\n    = 0.2 J 45. Given is a thin convex lens of glass (refractive index ) and each side having radius of curvature R. One side is polished for complete reflection. At what distance from the lens, an object be placed on the optic axis so that the image gets formed on the object itself. (1) R/ (2) R/(2–3) (3) R (4) R/(2–1) Ans. (4) Sol. eq\nm\nP\n2P\nP\n Qm\n1\n2\n1\nf\nf\nf\n   4(μ 1)21\n(4μ 4 2)\nRRR\n\n  \n eq\n11\n(4μ 2)\nfR\n \n eq\n11\n(4μ 2)\nfR\n\n \n eq\nR\nf\n2\n eq\nRR\nR\n2f\n2\n4μ 2\n(2μ 1)\n\n\n  \n\n\n\n SECTION-B 46. Two soap bubbles of radius 2 cm and 4 cm, respectively, are in contact with each other. The radius of curvature of the common surface, in cm, is ______ . Ans. (4) Sol. 12\n12\nr r2 4\nr4cm\nrr4 2\n\n\n 47. The driver sitting inside a parked car is watching vehicles approaching from behind with the help of his side view mirror, which is a convex mirror with radius of curvature R = 2 m. Another car approaches him from behind with a uniform speed of 90 km/hr. When the car is at a distance of 24 m from him, the magnitude of the acceleration of the image of the side view mirror is ‘a’. The value of 100a is ______ m/s\n2\n. Ans. (8) ALLEN 8  Sol. uf\n24 ·1\n24\nv\nu f\n24 1\n25\n\n\n\n\n   v\n24\n1\nm\nu\n25( 24)\n25\n\n  \n\n 111\nvuf\n 2\nI0\n2\n11\nv\nm v\n25\n(25)\n25\n\n   \n  Diff. 22\n1 dv\n1 du\n0\nv\ndt\nu\ndt\n\n   \n\n   \n    I0\ndv\ndu\nv ;\nv\ndt\ndt\n\n\n\n 22\nII00\n3232\n2121\n(v )a(v )a0\nvvuu\n\n      22\nI\nI0\n2\n3\n3\na\n2\n2\nvv\nv\nv\nu\n    2\n22\nI\nI\n0\n3\n2\n2v\na\nv\nv\nvu\n    3\n2 25 11224 24\n25 25\n2425 25 (24)25 25\n\n      I\n22\na\n24.2524\n I\n2242\na\n24 2525\n\n   I\n2\n100a100 8\n25\n   48. Three conductions of same length having thermal conductivity k\n1\n, k\n2 and k\n3 are connected as shown in figure. 1. k\n1 2. k\n2 3. k\n3 100°C °C 0°C Area of cross sections of 1\nst and 2\nnd conductor are same and for 3\nrd conductor it is double of the 1\nst conductor. The temperatures are given in the figure. In steady state condition, the value of  is __________ °C. (Given : k\n1 = 60 Js\n–1\nm\n–1\nK\n–1\n, k\n2 = 120 Js\n–1\nm\n–1\nK\n–1\n, k\n3 = 135 Js\n–1\nm\n–1\nK\n–1\n) Ans. (40) Sol. 100°C R\n1 R\n2 R\n3 \n°C \n°C 1\n1\n2L\nR\nKA\n 2\n2\n2L\nR\nKA\n 3\n3\nL\nR\nKA\n 12\n3\n12\n100\n0\n0\nRR\nR\nRR\n\n\n\n  = 40 49. The position vectors of two 1 kg particles, (A) and (B), are given by \n2\nA123\nˆˆˆ\nrt itjtk    m and \n2\nB123\nˆˆˆ\nrtit jtk   \nm, respectively ; (\n1 = 1 m/s\n2\n, \n2 = 3n m/s, \n3 = 2 m/s, \n1 = 2 m/s, \n2 = –\n1 m/s\n2\n, \n3 = 4p m/s), where t is time, n and p are constants, At t = 1s, AB\n| V | | V | and velocities A\nV and B\nV of the particles are orthogonal to each other. At t = 1 s, the magnitude of angular momentum of particle (A) with respect to the position of particle (B) is L kgm\n2\ns\n–1\n. The value of L is _____. Ans. (90) ALLEN 9  Sol. A\nˆ\nˆ\nˆ\nV\n(2ti 3nj 2k)\n   B\nˆ\nˆ\nˆ\nV\n(2i 2tj 4pk)\n   AB\nV V\n0\n 4 – 6n + 8p = 0 2 – 3n + 4p = 0 3n = 2 + 4p AB\nVV 4 + 9n\n2 + 4 = 4 + 4 + 16p\n2 1\np\n4\n\n 1\nn\n3\n \n\nA\nA/ B\nA\nL\nm\nr\nV\n A/ B112233\nˆˆ\nr()i () j ()         ˆ\nˆ\nˆ\n(1 2)i (1 1) j 3k\n     ˆˆ ˆ\nij k\nˆˆˆ\n1 2 3i 8 j 5k\n21 2\n    1 64 25  \n90 50. A particle is projected at an angle of 30° from horizontal at a speed of 60 m/s. The height traversed by the particle in the first second is h\n0 and height traversed in the last second, before it reaches the maximum height, is h\n1\n. The ratio h\n0 : h\n1 is ______. [Take, g = 10 m/s\n2\n] Ans. (5) Sol. \n° 60sin\n30=30 60 1\n1\nS\n30 1\n10 1 25\n2\n      3\n10\nS30(2 3 1) 5\n2\n\n\n    \n\n 1\n3\nS25\n5\nS5\n ALLEN",
+    "questions": [
+      {
+        "number": "27",
+        "text": "A line charge of length ' a '\n2\nis kept at the center of an edge BC of a cube ABCDEFGH having edge length ‘a’ as shown in the figure. If the density of line is C per unit length, then the total electric flux through all the faces of the cube will be ____. (Take, 0\n as the free space permittivity) F E H C B G D A (1) 0\na\n8\n\n (2) 0\na\n16\n\n (3) 0\na\n2\n\n (4) 0\na\n4\n\n",
+        "formattedText": "A line charge of length ' a '\n2\nis kept at the center of an edge BC of a cube ABCDEFGH having edge length ‘a’ as shown in the figure. If the density of line is C per unit length, then the total electric flux through all the faces of the cube will be ____. (Take, 0\n as the free space permittivity) F E H C B G D A (1) 0\na\n8\n\n (2) 0\na\n16\n\n (3) 0\na\n2\n\n (4) 0\na\n4\n\n",
+        "latexText": "\\(A line charge of length ' a '^{2}is kept at the center of an edge BC of a cube ABCDEFGH having edge length ‘a’ as shown in the figure. If the density of line is C per unit length, then the total electric flux through all the faces of the cube will be ____. (Take, 0  as the free space permittivity) F E H C B G D A (1) 0 a^{8}   (2) 0 a^{16}   (3) 0 a^{2}   (4) 0 a^{4}  \\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "0 a 8  "
+          },
+          {
+            "letter": "2",
+            "text": "0 a 16  "
+          },
+          {
+            "letter": "3",
+            "text": "0 a 2  "
+          },
+          {
+            "letter": "4",
+            "text": "0 a 4  "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "0 a 8  ",
+            "formattedText": "0 a 8  ",
+            "latexText": "0 a 8  "
+          },
+          {
+            "letter": "2",
+            "text": "0 a 16  ",
+            "formattedText": "0 a 16  ",
+            "latexText": "0 a 16  "
+          },
+          {
+            "letter": "3",
+            "text": "0 a 2  ",
+            "formattedText": "0 a 2  ",
+            "latexText": "0 a 2  "
+          },
+          {
+            "letter": "4",
+            "text": "0 a 4  ",
+            "formattedText": "0 a 4  ",
+            "latexText": "0 a 4  "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "BC",
+            "latex": "BC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AB",
+            "latex": "AB",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "CD",
+            "latex": "CD",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "EF",
+            "latex": "EF",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "GH",
+            "latex": "GH",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "29",
+        "text": "Given below are two statements : one is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : If Young’s double slit experiment is performed in an optically denser medium than air, then the consecutive fringes come closer. Reason (R) : The speed of light reduces in an optically denser medium than air while its frequency does not change. In the light of the above statements, choose the most appropriate answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct",
+        "formattedText": "Given below are two statements : one is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : If Young’s double slit experiment is performed in an optically denser medium than air, then the consecutive fringes come closer. Reason (R) : The speed of light reduces in an optically denser medium than air while its frequency does not change. In the light of the above statements, choose the most appropriate answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct",
+        "latexText": "Given below are two statements : one is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : If Young’s double slit experiment is performed in an optically denser medium than air, then the consecutive fringes come closer. Reason (R) : The speed of light reduces in an optically denser medium than air while its frequency does not change. In the light of the above statements, choose the most appropriate answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Both"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Both",
+            "formattedText": "Both",
+            "latexText": "Both"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "34",
+        "text": "An electron is made to enters symmetrically between two parallel and equally but oppositely charged metal plates, each of 10 cm length. The electron emerges out of the field region with a horizontal component of velocity 10\n6 m/s. If the magnitude of the electric between the plates is 9.1 V/cm, then the vertical component of velocity of electron is (mass of electron = 9.1 × 10\n–31 kg and charge of electron = 1.6 × 10\n–19 C) (1) 1 × 10\n6 m/s (2) 0 (3) 16 × 10\n6 m/s (4) 16 × 10\n4 m/s",
+        "formattedText": "An electron is made to enters symmetrically between two parallel and equally but oppositely charged metal plates, each of 10 cm length. The electron emerges out of the field region with a horizontal component of velocity 10\n6 m/s. If the magnitude of the electric between the plates is 9.1 V/cm, then the vertical component of velocity of electron is (mass of electron = 9.1 × 10\n–31 kg and charge of electron = 1.6 × 10\n–19 C) (1) 1 × 10\n6 m/s (2) 0 (3) 16 × 10\n6 m/s (4) 16 × 10\n4 m/s",
+        "latexText": "\\(An electron is made to enters symmetrically between two parallel and equally but oppositely charged metal plates, each of 10 cm length. The electron emerges out of the field region with a horizontal component of velocity 10^{6} \\frac{m}{s}. If the magnitude of the electric between the plates is 9.1 \\frac{V}{cm}, then the vertical component of velocity of electron is (mass of electron = 9.1 \\times 10 –31 kg and charge of electron = 1.6 \\times 10 –19 C) (1) 1 \\times 10^{6} \\frac{m}{s} (2) 0 (3) 16 \\times 10^{6} \\frac{m}{s} (4) 16 \\times 10^{4} \\frac{m}{s}\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "1 × 10 6 m/s"
+          },
+          {
+            "letter": "3",
+            "text": "16 × 10 6 m/s"
+          },
+          {
+            "letter": "4",
+            "text": "16 × 10 4 m/s"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "1 × 10 6 m/s",
+            "formattedText": "1 × 10 6 m/s",
+            "latexText": "\\(1 \\times 10 6 \\frac{m}{s}\\)"
+          },
+          {
+            "letter": "3",
+            "text": "16 × 10 6 m/s",
+            "formattedText": "16 × 10 6 m/s",
+            "latexText": "\\(16 \\times 10 6 \\frac{m}{s}\\)"
+          },
+          {
+            "letter": "4",
+            "text": "16 × 10 4 m/s",
+            "formattedText": "16 × 10 4 m/s",
+            "latexText": "\\(16 \\times 10 4 \\frac{m}{s}\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "V/cm",
+            "latex": "\\(\\frac{V}{cm}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "35",
+        "text": "Which of the following resistivity () v/s temperature (T) curves is most suitable to be used in wire bound standard resistors? (1) 0 T(K)  (\n cm) (2) 0 T(K)  (\n cm) (3) 0 T(K)  (\n cm) (4) 0 T(K)  (\n cm)",
+        "formattedText": "Which of the following resistivity () v/s temperature (T) curves is most suitable to be used in wire bound standard resistors? (1) 0 T(K)  (\n cm) (2) 0 T(K)  (\n cm) (3) 0 T(K)  (\n cm) (4) 0 T(K)  (\n cm)",
+        "latexText": "\\(Which of the following resistivity () \\frac{v}{s} temperature (T) curves is most suitable to be used in wire bound standard resistors? (1) 0 T(K)  (  cm) (2) 0 T(K)  (  cm) (3) 0 T(K)  (  cm) (4) 0 T(K)  (  cm)\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "v/s",
+            "latex": "\\(\\frac{v}{s}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "37",
+        "text": "A uniform circular disc of radius ‘R’ and mass ‘M’ is rotating about an axis perpendicular to its plane and passing through its centre. A small circular part of radius R/2 is removed from the original disc as shown in the figure. Find the moment of inertia of the remaining part of the original disc about the axis as given above. R R (1) 2\n7\nMR\n32 (2) 2\n9\nMR\n32 (3) 2\n17\nMR\n32 (4) 2\n13\nMR\n32",
+        "formattedText": "A uniform circular disc of radius ‘R’ and mass ‘M’ is rotating about an axis perpendicular to its plane and passing through its centre. A small circular part of radius R/2 is removed from the original disc as shown in the figure. Find the moment of inertia of the remaining part of the original disc about the axis as given above. R R (1) 2\n7\nMR\n32 (2) 2\n9\nMR\n32 (3) 2\n17\nMR\n32 (4) 2\n13\nMR\n32",
+        "latexText": "\\(A uniform circular disc of radius ‘R’ and mass ‘M’ is rotating about an axis perpendicular to its plane and passing through its centre. A small circular part of radius \\frac{R}{2} is removed from the original disc as shown in the figure. Find the moment of inertia of the remaining part of the original disc about the axis as given above. R R (1) 2^{7} MR^{32} (2) 2^{9} MR^{32} (3) 2^{17} MR^{32} (4) 2^{13} MR^{32}\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "2 7 MR 32"
+          },
+          {
+            "letter": "2",
+            "text": "2 9 MR 32"
+          },
+          {
+            "letter": "3",
+            "text": "2 17 MR 32"
+          },
+          {
+            "letter": "4",
+            "text": "2 13 MR 32"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "2 7 MR 32",
+            "formattedText": "2 7 MR 32",
+            "latexText": "2 7 MR 32"
+          },
+          {
+            "letter": "2",
+            "text": "2 9 MR 32",
+            "formattedText": "2 9 MR 32",
+            "latexText": "2 9 MR 32"
+          },
+          {
+            "letter": "3",
+            "text": "2 17 MR 32",
+            "formattedText": "2 17 MR 32",
+            "latexText": "2 17 MR 32"
+          },
+          {
+            "letter": "4",
+            "text": "2 13 MR 32",
+            "formattedText": "2 13 MR 32",
+            "latexText": "2 13 MR 32"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "R/2",
+            "latex": "\\(\\frac{R}{2}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "MR",
+            "latex": "MR",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "MR",
+            "latex": "MR",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "MR",
+            "latex": "MR",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "MR",
+            "latex": "MR",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "38",
+        "text": "A small point of mass m is placed at a distance 2R from the centre ‘O’ of a big uniform solid sphere of mass M and radius R. The gravitational force on ‘m’ due to M is F\n1\n. A spherical part of radius R/3 is removed from the big sphere as shown in the figure and the gravitational force on m due to remaining part of M is found to be F\n2\n. The value of ratio F\n1 : F\n2 is P 2\nR m O M (1) 16 : 9 (2) 11 : 10 (3) 12 : 11 (4) 12 : 9",
+        "formattedText": "A small point of mass m is placed at a distance 2R from the centre ‘O’ of a big uniform solid sphere of mass M and radius R. The gravitational force on ‘m’ due to M is F\n1\n. A spherical part of radius R/3 is removed from the big sphere as shown in the figure and the gravitational force on m due to remaining part of M is found to be F\n2\n. The value of ratio F\n1 : F\n2 is P 2\nR m O M (1) 16 : 9 (2) 11 : 10 (3) 12 : 11 (4) 12 : 9",
+        "latexText": "\\(A small point of mass m is placed at a distance 2R from the centre ‘O’ of a big uniform solid sphere of mass M and radius R. The gravitational force on ‘m’ due to M is F^{1} . A spherical part of radius \\frac{R}{3} is removed from the big sphere as shown in the figure and the gravitational force on m due to remaining part of M is found to be F^{2} . The value of ratio F^{1} : F^{2} is P 2 R m O M (1) 16 : 9 (2) 11 : 10 (3) 12 : 11 (4) 12 : 9\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "16 : 9"
+          },
+          {
+            "letter": "2",
+            "text": "11 : 10"
+          },
+          {
+            "letter": "3",
+            "text": "12 : 11"
+          },
+          {
+            "letter": "4",
+            "text": "12 : 9"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "16 : 9",
+            "formattedText": "16 : 9",
+            "latexText": "16 : 9"
+          },
+          {
+            "letter": "2",
+            "text": "11 : 10",
+            "formattedText": "11 : 10",
+            "latexText": "11 : 10"
+          },
+          {
+            "letter": "3",
+            "text": "12 : 11",
+            "formattedText": "12 : 11",
+            "latexText": "12 : 11"
+          },
+          {
+            "letter": "4",
+            "text": "12 : 9",
+            "formattedText": "12 : 9",
+            "latexText": "12 : 9"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "R/3",
+            "latex": "\\(\\frac{R}{3}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "41",
+        "text": "A bob of mass m is suspended at a point O by a light string of length l and left to perform vertical motion (circular) as shown in figure. Initially, by applying horizontal velocity \n0 at the point ‘A’. the string becomes slack when, the bob reaches at the point ‘D’. The ratio of the kinetic energy of the bob at the points B and C is ______. D C B A O 60° 60° \n0 (1) 2 (2) 1 (3) 4 (4) 3",
+        "formattedText": "A bob of mass m is suspended at a point O by a light string of length l and left to perform vertical motion (circular) as shown in figure. Initially, by applying horizontal velocity \n0 at the point ‘A’. the string becomes slack when, the bob reaches at the point ‘D’. The ratio of the kinetic energy of the bob at the points B and C is ______. D C B A O 60° 60° \n0 (1) 2 (2) 1 (3) 4 (4) 3",
+        "latexText": "\\(A bob of mass m is suspended at a point O by a light string of length l and left to perform vertical motion (circular) as shown in figure. Initially, by applying horizontal velocity  0 at the point ‘A’. the string becomes slack when, the bob reaches at the point ‘D’. The ratio of the kinetic energy of the bob at the points B and C is ______. D C B A O 60^\\circ 60^\\circ  0 (1) 2 (2) 1 (3) 4 (4) 3\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "42",
+        "text": "Given below are two statements : Statement-I : The equivalent emf of two nonideal batteries connected in parallel is smaller than either of the two emfs. Statement-II : The equivalent internal resistance of two nonideal batteries connected in parallel is smaller than the internal resistance of either of the two batteries. In the light of the above statements, choose the correct answer from the options given below. (1) Statement-I is true but Statement-II is false (2) Both Statement-I and Statement-II are false (3) Both Statement-I and Statement-II are true (4) Statement-I is false but Statement-II is true",
+        "formattedText": "Given below are two statements : Statement-I : The equivalent emf of two nonideal batteries connected in parallel is smaller than either of the two emfs. Statement-II : The equivalent internal resistance of two nonideal batteries connected in parallel is smaller than the internal resistance of either of the two batteries. In the light of the above statements, choose the correct answer from the options given below. (1) Statement-I is true but Statement-II is false (2) Both Statement-I and Statement-II are false (3) Both Statement-I and Statement-II are true (4) Statement-I is false but Statement-II is true",
+        "latexText": "\\(Given below are two statements : Statement-I : The equivalent emf of two nonideal batteries connected in parallel is smaller than either of the two emfs. Statement-II : The equivalent internal resistance of two nonideal batteries connected in parallel is smaller than the internal resistance of either of the two batteries. In the light of the above statements, choose the correct answer from the options given below. (1) Statement-I is true but Statement-II is false (2) Both Statement-I and Statement-II are false (3) Both Statement-I and Statement-II are true (4) Statement-I is false but Statement-II is true\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Statement-I is true but Statement-II is false"
+          },
+          {
+            "letter": "2",
+            "text": "Both Statement-I and Statement-II are false"
+          },
+          {
+            "letter": "3",
+            "text": "Both Statement-I and Statement-II are true"
+          },
+          {
+            "letter": "4",
+            "text": "Statement-I is false but Statement-II is true"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Statement-I is true but Statement-II is false",
+            "formattedText": "Statement-I is true but Statement-II is false",
+            "latexText": "\\(Statement-I is true but Statement-II is false\\)"
+          },
+          {
+            "letter": "2",
+            "text": "Both Statement-I and Statement-II are false",
+            "formattedText": "Both Statement-I and Statement-II are false",
+            "latexText": "\\(Both Statement-I and Statement-II are false\\)"
+          },
+          {
+            "letter": "3",
+            "text": "Both Statement-I and Statement-II are true",
+            "formattedText": "Both Statement-I and Statement-II are true",
+            "latexText": "\\(Both Statement-I and Statement-II are true\\)"
+          },
+          {
+            "letter": "4",
+            "text": "Statement-I is false but Statement-II is true",
+            "formattedText": "Statement-I is false but Statement-II is true",
+            "latexText": "\\(Statement-I is false but Statement-II is true\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "48",
+        "text": "Three conductions of same length having thermal conductivity k\n1\n, k\n2 and k\n3 are connected as shown in figure.",
+        "formattedText": "Three conductions of same length having thermal conductivity k\n1\n, k\n2 and k\n3 are connected as shown in figure.",
+        "latexText": "\\(Three conductions of same length having thermal conductivity k^{1} , k^{2} and k^{3} are connected as shown in figure.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": false,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 26",
+        "type": "mathematical",
+        "position": 151
+      },
+      {
+        "equation": "n / number of vernier scale division for normal vernier calliper",
+        "type": "mathematical",
+        "position": 934
+      },
+      {
+        "equation": "p = 1",
+        "type": "mathematical",
+        "position": 1519
+      },
+      {
+        "equation": "e = 2",
+        "type": "mathematical",
+        "position": 1534
+      },
+      {
+        "equation": "P = 1",
+        "type": "mathematical",
+        "position": 1639
+      },
+      {
+        "equation": "e = 2",
+        "type": "mathematical",
+        "position": 1698
+      },
+      {
+        "equation": "r = P\nsmaller 31",
+        "type": "mathematical",
+        "position": 3298
+      },
+      {
+        "equation": "e = 2100 Jkg\n",
+        "type": "mathematical",
+        "position": 3520
+      },
+      {
+        "equation": "r = 4180 Jkg\n",
+        "type": "mathematical",
+        "position": 3564
+      },
+      {
+        "equation": "m = 1920 Jkg\n",
+        "type": "mathematical",
+        "position": 3608
+      },
+      {
+        "equation": "e = 3",
+        "type": "mathematical",
+        "position": 3648
+      },
+      {
+        "equation": "m = 2",
+        "type": "mathematical",
+        "position": 3694
+      },
+      {
+        "equation": "T = 10\n",
+        "type": "mathematical",
+        "position": 3845
+      },
+      {
+        "equation": "f = 10\n",
+        "type": "mathematical",
+        "position": 3887
+      },
+      {
+        "equation": "T = 10\n",
+        "type": "mathematical",
+        "position": 3938
+      },
+      {
+        "equation": "V = 10\n",
+        "type": "mathematical",
+        "position": 3982
+      },
+      {
+        "equation": "T = 10\n",
+        "type": "mathematical",
+        "position": 4033
+      },
+      {
+        "equation": "t = 3043",
+        "type": "mathematical",
+        "position": 4069
+      },
+      {
+        "equation": "q = p\n1 + p\n2 + p\n3 1\n1\n411\np1\n3",
+        "type": "mathematical",
+        "position": 5059
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 5656
+      },
+      {
+        "equation": "V/cm",
+        "type": "mathematical",
+        "position": 5720
+      },
+      {
+        "equation": "n = 9",
+        "type": "mathematical",
+        "position": 5797
+      },
+      {
+        "equation": "n = 1",
+        "type": "mathematical",
+        "position": 5838
+      },
+      {
+        "equation": "m/s (2) 0 (3) 16 ",
+        "type": "mathematical",
+        "position": 5871
+      },
+      {
+        "equation": "m/s (4) 16 ",
+        "type": "mathematical",
+        "position": 5895
+      },
+      {
+        "equation": "m/s Ans",
+        "type": "mathematical",
+        "position": 5913
+      },
+      {
+        "equation": "v/s temperature (T) curves is most suitable to be used in wire bound standard resistors",
+        "type": "mathematical",
+        "position": 6143
+      },
+      {
+        "equation": "R/2 is removed from the original disc as shown in the figure",
+        "type": "mathematical",
+        "position": 7184
+      },
+      {
+        "equation": "R/3 is removed from the big sphere as shown in the figure and the gravitational force on m due to remaining part of M is found to be F\n2\n",
+        "type": "mathematical",
+        "position": 7707
+      },
+      {
+        "equation": "o-electric effect is possible for the case of (1) Li only (2) Cs only (3) Neither Cs nor Li (4) Both Cs and Li Ans",
+        "type": "mathematical",
+        "position": 8271
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 8610
+      },
+      {
+        "equation": "t-I ",
+        "type": "mathematical",
+        "position": 9243
+      },
+      {
+        "equation": "t-II ",
+        "type": "mathematical",
+        "position": 9364
+      },
+      {
+        "equation": "t-I is true but Statement-II is false (2) Both Statement-I and Statement-II are false (3) Both Statement-I and Statement-II are true (4) Statement-I is false but Statement-II is true Ans",
+        "type": "mathematical",
+        "position": 9632
+      },
+      {
+        "equation": "l-plate capacitor of capacitance 40",
+        "type": "mathematical",
+        "position": 10175
+      },
+      {
+        "equation": "K = 2",
+        "type": "mathematical",
+        "position": 10357
+      },
+      {
+        "equation": "e - (1) 2 mC and 0",
+        "type": "mathematical",
+        "position": 10506
+      },
+      {
+        "equation": "q = (KC ",
+        "type": "mathematical",
+        "position": 10601
+      },
+      {
+        "equation": "V = 40 ",
+        "type": "mathematical",
+        "position": 10613
+      },
+      {
+        "equation": "U = 22\n11\nC ",
+        "type": "mathematical",
+        "position": 10659
+      },
+      {
+        "equation": "R/(2",
+        "type": "mathematical",
+        "position": 11047
+      },
+      {
+        "equation": "R/(2",
+        "type": "mathematical",
+        "position": 11067
+      },
+      {
+        "equation": "N-B 46",
+        "type": "mathematical",
+        "position": 11270
+      },
+      {
+        "equation": "R = 2 m",
+        "type": "mathematical",
+        "position": 11657
+      },
+      {
+        "equation": "m/hr",
+        "type": "mathematical",
+        "position": 11733
+      },
+      {
+        "equation": "m/s\n2\n",
+        "type": "mathematical",
+        "position": 11894
+      },
+      {
+        "equation": "m/s\n2\n",
+        "type": "mathematical",
+        "position": 13157
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 13174
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 13187
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 13200
+      },
+      {
+        "equation": "m/s\n2\n",
+        "type": "mathematical",
+        "position": 13215
+      },
+      {
+        "equation": "m/s)",
+        "type": "mathematical",
+        "position": 13232
+      },
+      {
+        "equation": "t = 1s",
+        "type": "mathematical",
+        "position": 13281
+      },
+      {
+        "equation": "t = 1 s",
+        "type": "mathematical",
+        "position": 13382
+      },
+      {
+        "equation": "n + 8p = 0 2 ",
+        "type": "mathematical",
+        "position": 13633
+      },
+      {
+        "equation": "n + 4p = 0 3n = 2 + 4p AB\nVV",
+        "type": "mathematical",
+        "position": 13649
+      },
+      {
+        "equation": "A/ B\nA\nL\nm\nr\nV\n",
+        "type": "mathematical",
+        "position": 13733
+      },
+      {
+        "equation": "A/ B112233\n",
+        "type": "mathematical",
+        "position": 13751
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 13971
+      },
+      {
+        "equation": "g = 10 m/s\n2\n",
+        "type": "mathematical",
+        "position": 14166
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 336
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1631
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1687
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 2108
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 2487
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 2597
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6213
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7127
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7548
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9400
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9488
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10202
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10352
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10924
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11763
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13271
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 14202
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.14285714285714285,
+        "matchedKeywords": [
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "sin",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.8333333333333334,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "acceleration",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "electric",
+          "magnetic"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "light",
+          "reflection"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Inorganic Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "metals"
+        ],
+        "possibleSubtopics": [
+          "Periodic Properties",
+          "Chemical Bonding",
+          "Coordination Compounds",
+          "s-Block Elements"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "force",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "charge",
+          "electrostatic"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      }
+    ],
+    "tags": [
+      "JEE Mains"
+    ],
+    "wordCount": 3571,
+    "characterCount": 14311
+  },
+  "images": []
+}

@@ -1,0 +1,1507 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2024\\Session2\\Physics\\0404-Physics-Paper-With-Solution-Evening.pdf",
+  "relativePath": "JEE\\Previous Papers\\2024\\Session2\\Physics\\0404-Physics-Paper-With-Solution-Evening.pdf",
+  "metadata": {
+    "originalFileName": "0404-Physics-Paper-With-Solution-Evening.pdf",
+    "subject": "Physics",
+    "year": 2024,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 9,
+    "fileSize": 3890181,
+    "processedAt": "2025-09-22T23:33:22.643Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2024 (Held On Thursday 04\nth April, 2024) TIME : 3 : 00 PM to 6 : 00 PM PHYSICS TEST PAPER WITH SOLUTION SECTION-A 31. The translational degrees of freedom (f\nt\n) and rotational degrees of freedom (f\nr\n) of CH\n4 molecule are : (1) f\nt = 2 and f\nr = 2 (2) f\nt = 3 and f\nr = 3 (3) f\nt = 3 and f\nr = 2 (4) f\nt = 2 and f\nr = 3 Ans. (2) Sol. Since CH\n4 is polyatomic Non-Linear D.O.F of CH\n4 T. DOF = 3 R DOF = 3 32. A cyclist starts from the point P of a circular ground of radius 2 km and travels along its circumference to the point S. The displacement of a cyclist is : P Q S 0 R (1) 6 km (2) 8 km (3) 4 km (4) 8 km Ans. (2) Sol. P Q S R R Displacement  Displacement = R2\n= 2 28 km 33. The magnetic moment of a bar magnet is 0.5 Am\n2\n. It is suspended in a uniform magnetic field of 8 × 10\n–2 T. The work done in rotating it from its most stable to most unstable position is : (1) 16 × 10\n–\n2 J (2) 8 × 10\n–2 J (3) 4 × 10\n–2 J (4) Zero Ans. (2) Sol. At stable equilibrium U = –mB cos 0° = –mB At unstable equilibrium U = –mB cos 180° = + mB W = U W.D. = 2 mB = 2 (0.5) 8 × 10\n–\n2 = 8 × 10\n–\n2 J 34. Which of the diode circuit shows correct biasing used for the measurement of dynamic resistance of p-n junction diode : (1) D\n4 R (2) D\n2 R 5V (3) D\n3 R (4) D\n1 R 5V Ans. (2) $//(1\n® 2 Sol. Diode should be in forward biased to calculate dynamic resistance Hence correct answer would be 2. 35. Arrange the following in the ascending order of wavelength : (A) Gamma rays (\n1\n) (B) x-ray (\n2\n) (C) Infrared waves (\n3\n) (D) Microwaves (\n4\n) Choose the most appropriate answer from the options given below : (1) \n4 < \n3 < \n1 < \n2 (2) \n4 < \n3 < \n2 < \n1 (3) \n < \n2 < \n < \n4 (4) \n2 < \n1 < \n4 < \n3 Ans. (3) Sol. \n < \n2 < \n < \n4 36. Identify the logic gate given in the circuit : A B Y (1) NAND - gate (2) OR - gate (3) AND gate (4) NOR gate Ans. (2) Sol. Y A.B By De-Morgan Law Y A B Y = A + B Hence OR gate 37. The width of one of the two slits in a Young's double slit experiment is 4 times that of the other slit. The ratio of the maximum of the minimum intensity in the interference pattern is : (1) 9 :1 (2) 16 : 1 (3) 1 : 1 (4) 4 : 1 Ans. (1) Sol. Since, Intensity  width of slit () so, I\n1 = I, I\n2 = 4I I\nmin = \n2\n12\nIII \n2\nmax12\nIII9I max\nmin\nI\n9I9\nII1\n 38. Correct formula for height of a satellite from earths surface is : (1) 1/ 2\n22\nT R g\nR\n4\n\n\n\n\n (2) 1/3\n22\n2\nT R g\nR\n4\n\n\n\n\n (3) 1/3\n22\n2\nTR\nR\n4g\n\n\n\n\n (4) 1/3\n22\n2\nTR\nR\n4\n\n\n\n\n\n Ans. (2) Sol. M m R h  \n\n2\n2\nGMmmv\nRh\nRh\n\n\n \n\n2\nGM\nv\nRh\n\n\n....(1)  v = (R + h)\nv = \n2\nRh\nT\n\n\n.......(2)  2\nGM\ng\nR\n  GM = gR\n2 ........(3) Put value from (2) & (3) in eq. (1)  \n\n2\n2\n2\ngR2\nRh\nR hT\n\n\n\n\n\n   \n\n22\n3\n2\nT R g\nRh\n2\n\n   \n1/3\n22\n2\nT R g\nRh\n2\n\n  \n\n\n $//(1\n® 3 39. Match List I with List II List–I List–II A. Purely capacitive circuit I. V I 90° B. Purely inductive circuit II. V I C. LCR series at resonance III. I V  D. LCR series circuit IV. V I 90° Choose the correct answer from the options given below : (1) A-I, B-IV, C-III, D-II (2) A-IV, B-I, C-III, D-II (3) A-IV, B-I, C-II, D-III (4) A-I, B-IV, C-II, D-III Ans. (4) Sol. A – V lags by 90° from I hence option (I) is correct. B – V lead by 90° from I hence option (IV) is correct C – In LCR resonance X\nL = X\nC\n. Hence circuit is purely resistive so option (II) is correct D – In LCR series V is at some angle from I hence (III) is correct Hence option (4) is correct. 40. Given below are two statements : Statement I : The contact angle between a solid and a liquid is a property of the material of the solid and liquid as well. Statement II : The rise of a liquid in a capillary tube does not depend on the inner radius of the tube. In the light of the above statements, choose the correct answer from the options given below : (1) Both Statement I and Statement II are false (2) Statement I is false but Statement II is true. (3) Statement I is true but Statement II is false. (4) Both Statement I and Statement II are true. Ans. (3) Sol. Statement I is correct as we know contact angle depends on cohesine and adhesive forces. Statement II is incorrect because height of liquid is given by h = C\n2T cos\ngr\n\n\n where r is radius of Tube (assuming length of capillary is sufficient) Hence option (3) is correct. 41. A body of m kg slides from rest along the curve of vertical circle from point A to B in friction less path. The velocity of the body at B is : A (Vertical Circle) B 45° (given, R = 14 m, g = 10 m/s\n2 and 2 = 1.4) (1) 19.8 m/s (2) 21.9 m/s (3) 16.7 m/s (4) 10.6 m/s Ans. (2) $//(1\n® 4 Sol. R Apply W.E.T. from A to B  W\nmg = K\nB – K\nA  mg × R\nR\n2\n\n\n\n\n= 2\nB\n1\nmv0\n2\n \nA\nv0 rest  \n2\nB\n21\n1\nmgRmv\n2\n2\n\n  \nB\n22 1\ngRv\n2\n\n   \nB\n10 14 2 2.4\nv\n1.4\n\n  21.9 = v\nB Hence option (2) is correct 42. An electric bulb rated 50 W – 200 V is connected across a 100 V supply. The power dissipation of the bulb is : (1) 12.5 W (2) 25 W (3) 50 W (4) 100 W Ans. (1) Sol. Rated power & voltage gives resistance  \n2\n2\n200\nV40000\nR\nP5050\n  R = 800 \n \n2\n2\napplied\nV\n100\nP\nR800\n P = 12.5 watt Hence option 1 is correct. 43. A 2 kg brick begins to slide over a surface which is inclined at an angle of 45° with respect to horizontal axis. The co-efficient of static friction between their surfaces is : (1) 1 (2) 1\n3 (3) 0.5 (4) 1.7 Ans. (1) Sol. 45° f\nL N mgsin45 mgcos45 mg sin 45 = f\nL mg cos 45 = N f\nL = μ\ns\nN μ\ns = tan 45 = 1 or tan  = μ\ns ( is angle of repose) tan 45 = μ\ns = 1 correct option (1) 44. In simple harmonic motion, the total mechanical energy of given system is E. If mass of oscillating particle P is doubled then the new energy of the system for same amplitude is : K m P (1) E\n2 (2) E (3) E2 (4) 2E Ans. (2) Sol. T.E. = 2\n1\nkA\n2 since A is same T.E. will be same correct option (2) $//(1\n® 5 45. Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R. Assertion A : Number of photons increases with increase in frequency of light. Reason R : Maximum kinetic energy of emitted electrons increases with the frequency of incident radiation. In the light of the above statements, choose the most appropriate answer from the options given below : (1) Both A and R are correct and R is NOT the correct explanation of A. (2) A is correct but R is not correct. (3) Both A and R are correct and R is the correct explanation of A. (4) A is not correct but R is correct. Ans. (4) Sol. Intensity of light I = nh\nA\n Here n is no. of photons per unit time. IA\nn\nh\n\n so on increasing frequency , n decreases taking intensity constant. k\nmax = h –  So on increasing , kinetic energy increases. 46. According to Bohr's theory, the moment of momentum of an electron revolving in 4\nth orbit of hydrogen atom is : (1) h\n8\n (2) h\n (3) h\n2\n (4) h\n2 Ans. (3) Sol. Moment of momentum is rP Lr mv L = mvr = nh4h2h\n22\n\n   47. A sample of gas at temperature T is adiabatically expanded to double its volume. Adiabatic constant for the gas is  = 3/2. The work done by the gas in the process is : (μ = 1 mole) (1) RT2 2\n\n\n (2) RT 1 2 2\n\n\n (3) RT 2 2 1\n\n\n (4) RT 22\n\n\n Ans. (4) Sol. nR T\nW\n1\n\n\n  \n1\n1\nf\nTVcons tan tT 2V\n\n\n T\nf = 1/ 2\n1T\nT\n2\n2\n\n\n\n \nT\nRT\n21\n2\nW2RT\n3\n2\n1\n2\n\n\n\n\n\n\n \nRT 22 48. A charge q is placed at the center of one of the surface of a cube. The flux linked with the cube is :- (1) 0\nq\n4 (2) 0\nq\n2 (3) 0\nq\n8 (4) Zero Ans. (2) Sol. From q   0\nq\n2\n 0\nq\n2\n\n $//(1\n® 6 49. Applying the principle of homogeneity of dimensions, determine which one is correct. where T is time period, G is gravitational constant, M is mass, r is radius of orbit. (1) 2\n2\n2\n4r\nT\nGM\n\n (2) 22 3\nT4 r (3) 23\n2\n4r\nT\nGM\n\n (4) 22\n2\n4r\nT\nGM\n\n Ans. (3) Sol. According to principle of homogeneity dimension of LHS should be equal to dimensions of RHS so option (3) is correct. 23\n2\n4r\nT\nGM\n\n  \n3\n2\n1 32\nL\nT\nM L TM\n\n\n\n\n\n\n\n (Dimension of G is 1 32\nM L T\n\n\n\n) 3\n22\n32\nL\nTT\nLT\n\n\n\n  \n\n  \n\n 50. A 90 kg body placed at 2R distance from surface of earth experiences gravitational pull of : (R = Radius of earth, g = 10 ms\n–\n2\n) (1) 300 N (2) 225 N (3) 120 N (4) 100 N Ans. (4) Sol. Value of g = 2\ns\nh\ng1\nR\n\n\n\n\n =  \n2\ns\ns\ng\ng 1 2\n9\n\n Here g\ns = gravitational acceleration at surface Force = mg = 90 × s\ng\n9 = 100 N SECTION-B 51. The displacement of a particle executing SHM is given by x = 10 sin tm\n3\n\n\n\n\n\n. The time period of motion is 3.14 s. The velocity of the particle at t = 0 is ______ m/s. Ans. (10) Sol. Given, T = 3.14 = 2\n  = 2 rad/s x 10 sint\n3\n\n\n \n\n dx\nv10 cost\ndt3\n\n\n    \n\n at t = 0 v 10 cos\n3\n\n\n\n\n = 1\n10 2\n2\n [using  = 2 rad/s] v = 10 m/s 52. A bus moving along a straight highway with speed of 72 km/h is brought to halt within 4s after applying the brakes. The distance travelled by the bus during this time (Assume the retardation is uniform) is _______m. Ans. (40) Sol. Initial velocity = u = 72 km/h = 20 m/s v = u + at  0 = 20 + a × 4 a = –\n5 m/s\n2 v\n2 – u\n2 = 2as  0\n2 – 20\n2 = 2(–5).s s = 40 m 53. A parallel plate capacitor of capacitance 12.5 pF is charged by a battery connected between its plates to potential difference of 12.0 V. The battery is now disconnected and a dielectric slab (\nr = 6) is inserted between the plates. The change in its potential energy after inserting the dielectric slab is _______× 10\n–12 J. Ans. (750) $//(1\n® 7 Sol. Before inserting dielectric capacitance is given C\n0 = 12.5 pF and charge on the capacitor Q = C\n0\nV After inserting dielectric capacitance will become \nr\nC\n0\n. Change in potential energy of the capacitor = E\ni – E\nf = 22\nif\nQQ\n2C2C\n = 2\n0r\nQ1\n1\n2C\n\n\n\n\n  \n2\n0\n0r\nCV\n1\n1\n2C\n\n\n\n\n 2\n0\nr\n11\nC V 1\n2\n\n\n\n\n Using C\n0 = 12.5 pF, V = 12 V, \nr = 6  \n2\n11\n12.512 1\n26\n\n\n\n\n \n2\n15\n12.5 12\n26\n  = 750 pJ = 750 × 10\n–\n12\nJ 54. In a system two particles of masses m\n1 = 3kg and m\n2 = 2kg are placed at certain distance from each other. The particle of mass m\n1 is moved towards the center of mass of the system through a distance 2cm. In order to keep the center of mass of the system at the original position, the particle of mass m\n2 should move towards the center of mass by the distance ____ cm. Ans. (3) Sol. m\n1\n=3kg m\n2\n=2kg 2cm x 1122\nC.O.M.\n12\nm xm x\nX\nmm\n  \n\n   \n3 2 2x\n0\n32\n  \n\n  x = 3 cm 55. The disintegration energy Q for the nuclear fission of 23514094\nUCeZr n  is ____MeV. Given atomic masses of 235140\nU : 235.0439u; Ce;139.9054u\n, 94\nZr : 93.9063u; n :1.0086u\n, Value of c\n2 = 931 MeV/u. Ans. (208) Sol. 23514094\nUCeZr n  Disintegration energy Q = (m\nR – m\nP\n).c\n2 m\nR = 235.0439 u m\nP = 139.9054u + 93.9063u + 1.0086 u = 234.8203u Q = (235.0439u – 234.8203u)c\n2 = 0.2236 c\n2 = 0.2236 × 931 Q = 208.1716 56. A light ray is incident on a glass slab of thickness 43 cm and refractive index 2\n. The angle of incidence is equal to the critical angle for the glass slab with air. The lateral displacement of ray after passing through glass slab is ____cm. (Given sin 15° = 0.25) Ans. (2) Sol. t\nμ\n\nr\ni i = \nC  i = sin\n–1\n1\n\n\n\n  i = 45º and according to snell's law 1 sin 45° = 2 sin r  r = 30° Lateral displacement  \nt sin i r\ncos r\n\n \n4 3 sin15\ncos 30\n\n\n  = 2cm \n$//(1\n® 8 57. A rod of length 60 cm rotates with a uniform angular velocity 20 rad s\n–1 about its perpendicular bisector, in a uniform magnetic field 0.5 T. The direction of magnetic field is parallel to the axis of rotation. The potential difference between the two ends of the rod is ____V. Ans. (0) Sol. B \nO B\nA 2\n0A\nB\nVV\n2\n\n\n 2\n0B\nB\nVV\n2\n\n  AB\nVV\n AB\nVV0 58. Two wires A and B are made up of the same material and have the same mass. Wire A has radius of 2.0 mm and wire B has radius of 4.0 mm. The resistance of wire B is 2. The resistance of wire A is _____. Ans. (32) Sol. 2\nV\nR\nAA\n\n 24\nABB\n24\nBAA\nRAr\nRAr\n   4\n3\nA\n3\nR\n4 10\n22 10\n\n\n\n\n\n\n\n  R\nA = 32 . 59. Two parallel long current carrying wire separated by a distance 2r are shown in the figure. The ratio of magnetic field at A to the magnetic field produced at C is x\n7\n. The value of x is ___. 2I A I r r r O 2r C r Ans. (5) Sol.  \n \n0\n00\nA\n2i\ni5 i\nB\n2 r23r6 r\n\n\n \n   \n \n0\n00\nC\n2i\ni7 i\nB\n2 r23r6 r\n\n\n\n A\nC\nB\n5\nB7\n  x = 5 60. Mercury is filled in a tube of radius 2 cm up to a height of 30 cm. The force exerted by mercury on the bottom of the tube is ___N. (Given, atmospheric pressure = 10\n5 Nm\n–2\n, density of mercury = 1.36 × 10\n4 kg m\n–3\n, g = 10 ms\n–2\n,  = 22\n7\n) Ans. (177) Sol. 0m\nF P AghA  = 10\n5 × \n2\n2\n22\n2 10\n7\n\n \n2\n422\n22\n1.36 101030 102 10\n7\n\n\n     \n\n F = 51.29 + 125.71 = 177 N $//(1\n®",
+    "questions": [
+      {
+        "number": "34",
+        "text": "Which of the diode circuit shows correct biasing used for the measurement of dynamic resistance of p-n junction diode : (1) D\n4 R (2) D\n2 R 5V (3) D\n3 R (4) D\n1 R 5V",
+        "formattedText": "Which of the diode circuit shows correct biasing used for the measurement of dynamic resistance of p-n junction diode : (1) D\n4 R (2) D\n2 R 5V (3) D\n3 R (4) D\n1 R 5V",
+        "latexText": "\\(Which of the diode circuit shows correct biasing used for the measurement of dynamic resistance of p-n junction diode : (1) D^{4} R (2) D^{2} R 5V (3) D^{3} R (4) D^{1} R 5V\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "D 4 R"
+          },
+          {
+            "letter": "2",
+            "text": "D 2 R 5V"
+          },
+          {
+            "letter": "3",
+            "text": "D 3 R"
+          },
+          {
+            "letter": "4",
+            "text": "D 1 R 5V"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "D 4 R",
+            "formattedText": "D 4 R",
+            "latexText": "D 4 R"
+          },
+          {
+            "letter": "2",
+            "text": "D 2 R 5V",
+            "formattedText": "D 2 R 5V",
+            "latexText": "D 2 R 5V"
+          },
+          {
+            "letter": "3",
+            "text": "D 3 R",
+            "formattedText": "D 3 R",
+            "latexText": "D 3 R"
+          },
+          {
+            "letter": "4",
+            "text": "D 1 R 5V",
+            "formattedText": "D 1 R 5V",
+            "latexText": "D 1 R 5V"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "35",
+        "text": "Arrange the following in the ascending order of wavelength : (A) Gamma rays (\n1\n) (B) x-ray (\n2\n) (C) Infrared waves (\n3\n) (D) Microwaves (\n4\n) Choose the most appropriate answer from the options given below : (1) \n4 < \n3 < \n1 < \n2 (2) \n4 < \n3 < \n2 < \n1 (3) \n < \n2 < \n < \n4 (4) \n2 < \n1 < \n4 < \n3",
+        "formattedText": "Arrange the following in the ascending order of wavelength : (A) Gamma rays (\n1\n) (B) x-ray (\n2\n) (C) Infrared waves (\n3\n) (D) Microwaves (\n4\n) Choose the most appropriate answer from the options given below : (1) \n4 < \n3 < \n1 < \n2 (2) \n4 < \n3 < \n2 < \n1 (3) \n < \n2 < \n < \n4 (4) \n2 < \n1 < \n4 < \n3",
+        "latexText": "\\(Arrange the following in the ascending order of wavelength : (A) \\Gamma rays (^{1}) (B) x-ray (^{2}) (C) Infrared waves (^{3}) (D) Microwaves (^{4}) Choose the most appropriate answer from the options given below : (1)  4 <  3 <  1 <  2 (2)  4 <  3 <  2 <  1 (3)   <  2 <   <  4 (4)  2 <  1 <  4 <  3\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": " 4 <  3 <  1 <  2"
+          },
+          {
+            "letter": "2",
+            "text": " 4 <  3 <  2 <  1"
+          },
+          {
+            "letter": "3",
+            "text": "  <  2 <   <  4"
+          },
+          {
+            "letter": "4",
+            "text": " 2 <  1 <  4 <  3"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": " 4 <  3 <  1 <  2",
+            "formattedText": " 4 <  3 <  1 <  2",
+            "latexText": "\\( 4 <  3 <  1 <  2\\)"
+          },
+          {
+            "letter": "2",
+            "text": " 4 <  3 <  2 <  1",
+            "formattedText": " 4 <  3 <  2 <  1",
+            "latexText": "\\( 4 <  3 <  2 <  1\\)"
+          },
+          {
+            "letter": "3",
+            "text": "  <  2 <   <  4",
+            "formattedText": "  <  2 <   <  4",
+            "latexText": "\\(  <  2 <   <  4\\)"
+          },
+          {
+            "letter": "4",
+            "text": " 2 <  1 <  4 <  3",
+            "formattedText": " 2 <  1 <  4 <  3",
+            "latexText": "\\( 2 <  1 <  4 <  3\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "36",
+        "text": "Identify the logic gate given in the circuit : A B Y (1) NAND - gate (2) OR - gate (3) AND gate (4) NOR gate",
+        "formattedText": "Identify the logic gate given in the circuit : A B Y (1) NAND - gate (2) OR - gate (3) AND gate (4) NOR gate",
+        "latexText": "\\(Identify the logic gate given in the circuit : A B Y (1) NAND - gate (2) OR - gate (3) AND gate (4) NOR gate\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "NAND - gate"
+          },
+          {
+            "letter": "2",
+            "text": "OR - gate"
+          },
+          {
+            "letter": "3",
+            "text": "AND gate"
+          },
+          {
+            "letter": "4",
+            "text": "NOR gate"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "NAND - gate",
+            "formattedText": "NAND - gate",
+            "latexText": "\\(NAND - gate\\)"
+          },
+          {
+            "letter": "2",
+            "text": "OR - gate",
+            "formattedText": "OR - gate",
+            "latexText": "\\(OR - gate\\)"
+          },
+          {
+            "letter": "3",
+            "text": "AND gate",
+            "formattedText": "AND gate",
+            "latexText": "AND gate"
+          },
+          {
+            "letter": "4",
+            "text": "NOR gate",
+            "formattedText": "NOR gate",
+            "latexText": "NOR gate"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "NA",
+            "latex": "NA",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "ND",
+            "latex": "ND",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "OR",
+            "latex": "OR",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AN",
+            "latex": "AN",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "NO",
+            "latex": "NO",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "39",
+        "text": "Match List I with List II List–I List–II A. Purely capacitive circuit I. V I 90° B. Purely inductive circuit II. V I C. LCR series at resonance III. I V  D. LCR series circuit IV. V I 90° Choose the correct answer from the options given below : (1) A-I, B-IV, C-III, D-II (2) A-IV, B-I, C-III, D-II (3) A-IV, B-I, C-II, D-III (4) A-I, B-IV, C-II, D-III",
+        "formattedText": "Match List I with List II List–I List–II A. Purely capacitive circuit I. V I 90° B. Purely inductive circuit II. V I C. LCR series at resonance III. I V  D. LCR series circuit IV. V I 90° Choose the correct answer from the options given below : (1) A-I, B-IV, C-III, D-II (2) A-IV, B-I, C-III, D-II (3) A-IV, B-I, C-II, D-III (4) A-I, B-IV, C-II, D-III",
+        "latexText": "\\(Match List I with List II List–I List–II A. Purely capacitive circuit I. V I 90^\\circ B. Purely inductive circuit II. V I C. LCR series at resonance III. I V  D. LCR series circuit IV. V I 90^\\circ Choose the correct answer from the options given below : (1) A-I, B-IV, C-III, D-II (2) A-IV, B-I, C-III, D-II (3) A-IV, B-I, C-II, D-III (4) A-I, B-IV, C-II, D-III\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "A-I, B-IV, C-III, D-II"
+          },
+          {
+            "letter": "2",
+            "text": "A-IV, B-I, C-III, D-II"
+          },
+          {
+            "letter": "3",
+            "text": "A-IV, B-I, C-II, D-III"
+          },
+          {
+            "letter": "4",
+            "text": "A-I, B-IV, C-II, D-III"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "A-I, B-IV, C-III, D-II",
+            "formattedText": "A-I, B-IV, C-III, D-II",
+            "latexText": "\\(A-I, B-IV, C-III, D-II\\)"
+          },
+          {
+            "letter": "2",
+            "text": "A-IV, B-I, C-III, D-II",
+            "formattedText": "A-IV, B-I, C-III, D-II",
+            "latexText": "\\(A-IV, B-I, C-III, D-II\\)"
+          },
+          {
+            "letter": "3",
+            "text": "A-IV, B-I, C-II, D-III",
+            "formattedText": "A-IV, B-I, C-II, D-III",
+            "latexText": "\\(A-IV, B-I, C-II, D-III\\)"
+          },
+          {
+            "letter": "4",
+            "text": "A-I, B-IV, C-II, D-III",
+            "formattedText": "A-I, B-IV, C-II, D-III",
+            "latexText": "\\(A-I, B-IV, C-II, D-III\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "LC",
+            "latex": "LC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "LC",
+            "latex": "LC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "40",
+        "text": "Given below are two statements : Statement I : The contact angle between a solid and a liquid is a property of the material of the solid and liquid as well. Statement II : The rise of a liquid in a capillary tube does not depend on the inner radius of the tube. In the light of the above statements, choose the correct answer from the options given below : (1) Both Statement I and Statement II are false (2) Statement I is false but Statement II is true. (3) Statement I is true but Statement II is false. (4) Both Statement I and Statement II are true.",
+        "formattedText": "Given below are two statements : Statement I : The contact angle between a solid and a liquid is a property of the material of the solid and liquid as well. Statement II : The rise of a liquid in a capillary tube does not depend on the inner radius of the tube. In the light of the above statements, choose the correct answer from the options given below : (1) Both Statement I and Statement II are false (2) Statement I is false but Statement II is true. (3) Statement I is true but Statement II is false. (4) Both Statement I and Statement II are true.",
+        "latexText": "Given below are two statements : Statement I : The contact angle between a solid and a liquid is a property of the material of the solid and liquid as well. Statement II : The rise of a liquid in a capillary tube does not depend on the inner radius of the tube. In the light of the above statements, choose the correct answer from the options given below : (1) Both Statement I and Statement II are false (2) Statement I is false but Statement II is true. (3) Statement I is true but Statement II is false. (4) Both Statement I and Statement II are true.",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Both Statement I and Statement II are false"
+          },
+          {
+            "letter": "2",
+            "text": "Statement I is false but Statement II is true."
+          },
+          {
+            "letter": "3",
+            "text": "Statement I is true but Statement II is false."
+          },
+          {
+            "letter": "4",
+            "text": "Both Statement I and Statement II are true."
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Both Statement I and Statement II are false",
+            "formattedText": "Both Statement I and Statement II are false",
+            "latexText": "Both Statement I and Statement II are false"
+          },
+          {
+            "letter": "2",
+            "text": "Statement I is false but Statement II is true.",
+            "formattedText": "Statement I is false but Statement II is true.",
+            "latexText": "Statement I is false but Statement II is true."
+          },
+          {
+            "letter": "3",
+            "text": "Statement I is true but Statement II is false.",
+            "formattedText": "Statement I is true but Statement II is false.",
+            "latexText": "Statement I is true but Statement II is false."
+          },
+          {
+            "letter": "4",
+            "text": "Both Statement I and Statement II are true.",
+            "formattedText": "Both Statement I and Statement II are true.",
+            "latexText": "Both Statement I and Statement II are true."
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "43",
+        "text": "A 2 kg brick begins to slide over a surface which is inclined at an angle of 45° with respect to horizontal axis. The co-efficient of static friction between their surfaces is : (1) 1 (2) 1\n3 (3) 0.5 (4) 1.7",
+        "formattedText": "A 2 kg brick begins to slide over a surface which is inclined at an angle of 45° with respect to horizontal axis. The co-efficient of static friction between their surfaces is : (1) 1 (2) 1\n3 (3) 0.5 (4) 1.7",
+        "latexText": "\\(A 2 kg brick begins to slide over a surface which is inclined at an angle of 45^\\circ with respect to horizontal axis. The co-efficient of static friction between their surfaces is : (1) 1 (2) 1^{3} (3) 0.5 (4) 1.7\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "44",
+        "text": "In simple harmonic motion, the total mechanical energy of given system is E. If mass of oscillating particle P is doubled then the new energy of the system for same amplitude is : K m P (1) E\n2 (2) E (3) E2 (4) 2E",
+        "formattedText": "In simple harmonic motion, the total mechanical energy of given system is E. If mass of oscillating particle P is doubled then the new energy of the system for same amplitude is : K m P (1) E\n2 (2) E (3) E2 (4) 2E",
+        "latexText": "\\(In simple harmonic motion, the total mechanical energy of given system is E. If mass of oscillating particle P is doubled then the new energy of the system for same amplitude is : K m P (1) E^{2} (2) E (3) E_{2} (4) 2E\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "45",
+        "text": "Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R. Assertion A : Number of photons increases with increase in frequency of light. Reason R : Maximum kinetic energy of emitted electrons increases with the frequency of incident radiation. In the light of the above statements, choose the most appropriate answer from the options given below : (1) Both A and R are correct and R is NOT the correct",
+        "formattedText": "Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R. Assertion A : Number of photons increases with increase in frequency of light. Reason R : Maximum kinetic energy of emitted electrons increases with the frequency of incident radiation. In the light of the above statements, choose the most appropriate answer from the options given below : (1) Both A and R are correct and R is NOT the correct",
+        "latexText": "Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R. Assertion A : Number of photons increases with increase in frequency of light. Reason R : Maximum kinetic energy of emitted electrons increases with the frequency of incident radiation. In the light of the above statements, choose the most appropriate answer from the options given below : (1) Both A and R are correct and R is NOT the correct",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Both A and R are correct and R is NOT the correct"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Both A and R are correct and R is NOT the correct",
+            "formattedText": "Both A and R are correct and R is NOT the correct",
+            "latexText": "Both A and R are correct and R is NOT the correct"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "NO",
+            "latex": "NO",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "49",
+        "text": "Applying the principle of homogeneity of dimensions, determine which one is correct. where T is time period, G is gravitational constant, M is mass, r is radius of orbit. (1) 2\n2\n2\n4r\nT\nGM\n\n (2) 22 3\nT4 r (3) 23\n2\n4r\nT\nGM\n\n (4) 22\n2\n4r\nT\nGM\n\n",
+        "formattedText": "Applying the principle of homogeneity of dimensions, determine which one is correct. where T is time period, G is gravitational constant, M is mass, r is radius of orbit. (1) 2\n2\n2\n4r\nT\nGM\n\n (2) 22 3\nT4 r (3) 23\n2\n4r\nT\nGM\n\n (4) 22\n2\n4r\nT\nGM\n\n",
+        "latexText": "\\(Applying the principle of homogeneity of dimensions, determine which one is correct. where T is time period, G is gravitational constant, M is mass, r is radius of orbit. (1) 2^{2} 2^{4}\\frac{r}{T}GM   (2) 22 3 T_{4} r (3) 23^{2} \\frac{4r}{T}GM   (4) 22^{2} \\frac{4r}{T}GM  \\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "2 2 2 4r T GM  "
+          },
+          {
+            "letter": "2",
+            "text": "22 3 T4 r"
+          },
+          {
+            "letter": "3",
+            "text": "23 2 4r T GM  "
+          },
+          {
+            "letter": "4",
+            "text": "22 2 4r T GM  "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "2 2 2 4r T GM  ",
+            "formattedText": "2 2 2 4r T GM  ",
+            "latexText": "2 2 2 4r T GM  "
+          },
+          {
+            "letter": "2",
+            "text": "22 3 T4 r",
+            "formattedText": "22 3 T4 r",
+            "latexText": "\\(22 3 T_{4} r\\)"
+          },
+          {
+            "letter": "3",
+            "text": "23 2 4r T GM  ",
+            "formattedText": "23 2 4r T GM  ",
+            "latexText": "23 2 4r T GM  "
+          },
+          {
+            "letter": "4",
+            "text": "22 2 4r T GM  ",
+            "formattedText": "22 2 4r T GM  ",
+            "latexText": "22 2 4r T GM  "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "GM",
+            "latex": "GM",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "GM",
+            "latex": "GM",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "GM",
+            "latex": "GM",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "59",
+        "text": "Two parallel long current carrying wire separated by a distance 2r are shown in the figure. The ratio of magnetic field at A to the magnetic field produced at C is x\n7\n. The value of x is ___. 2I A I r r r O 2r C r",
+        "formattedText": "Two parallel long current carrying wire separated by a distance 2r are shown in the figure. The ratio of magnetic field at A to the magnetic field produced at C is x\n7\n. The value of x is ___. 2I A I r r r O 2r C r",
+        "latexText": "\\(Two parallel long current carrying wire separated by a distance 2r are shown in the figure. The ratio of magnetic field at A to the magnetic field produced at C is x^{7} . The value of x is ___. 2I A I r r r O 2r C r\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 31",
+        "type": "mathematical",
+        "position": 149
+      },
+      {
+        "equation": "t = 2 and f\nr = 2 (2) f\nt = 3 and f\nr = 3 (3) f\nt = 3 and f\nr = 2 (4) f\nt = 2 and f\nr = 3 Ans",
+        "type": "mathematical",
+        "position": 271
+      },
+      {
+        "equation": "n-Linear D",
+        "type": "mathematical",
+        "position": 402
+      },
+      {
+        "equation": "F = 3 R DOF = 3 32",
+        "type": "mathematical",
+        "position": 430
+      },
+      {
+        "equation": "t = R2\n= 2 28",
+        "type": "mathematical",
+        "position": 703
+      },
+      {
+        "equation": "U = ",
+        "type": "mathematical",
+        "position": 1011
+      },
+      {
+        "equation": "U = ",
+        "type": "mathematical",
+        "position": 1056
+      },
+      {
+        "equation": "W = ",
+        "type": "mathematical",
+        "position": 1080
+      },
+      {
+        "equation": "B = 2 (0",
+        "type": "mathematical",
+        "position": 1097
+      },
+      {
+        "equation": "p-n junction diode ",
+        "type": "mathematical",
+        "position": 1238
+      },
+      {
+        "equation": "x-ray (",
+        "type": "mathematical",
+        "position": 1519
+      },
+      {
+        "equation": "D - gate (2) OR - gate (3) AND gate (4) NOR gate Ans",
+        "type": "mathematical",
+        "position": 1850
+      },
+      {
+        "equation": "e-Morgan Law Y A B",
+        "type": "mathematical",
+        "position": 1924
+      },
+      {
+        "equation": "Y = A + B Hence OR gate 37",
+        "type": "mathematical",
+        "position": 1945
+      },
+      {
+        "equation": "n = ",
+        "type": "mathematical",
+        "position": 2278
+      },
+      {
+        "equation": "v = (R + h)",
+        "type": "mathematical",
+        "position": 2630
+      },
+      {
+        "equation": "v = ",
+        "type": "mathematical",
+        "position": 2647
+      },
+      {
+        "equation": "M = gR\n2 ",
+        "type": "mathematical",
+        "position": 2692
+      },
+      {
+        "equation": "A-I",
+        "type": "mathematical",
+        "position": 3131
+      },
+      {
+        "equation": "B-IV",
+        "type": "mathematical",
+        "position": 3136
+      },
+      {
+        "equation": "C-III",
+        "type": "mathematical",
+        "position": 3142
+      },
+      {
+        "equation": "D-II (2) A-IV",
+        "type": "mathematical",
+        "position": 3149
+      },
+      {
+        "equation": "B-I",
+        "type": "mathematical",
+        "position": 3164
+      },
+      {
+        "equation": "C-III",
+        "type": "mathematical",
+        "position": 3169
+      },
+      {
+        "equation": "D-II (3) A-IV",
+        "type": "mathematical",
+        "position": 3176
+      },
+      {
+        "equation": "B-I",
+        "type": "mathematical",
+        "position": 3191
+      },
+      {
+        "equation": "C-II",
+        "type": "mathematical",
+        "position": 3196
+      },
+      {
+        "equation": "D-III (4) A-I",
+        "type": "mathematical",
+        "position": 3202
+      },
+      {
+        "equation": "B-IV",
+        "type": "mathematical",
+        "position": 3217
+      },
+      {
+        "equation": "C-II",
+        "type": "mathematical",
+        "position": 3223
+      },
+      {
+        "equation": "D-III Ans",
+        "type": "mathematical",
+        "position": 3229
+      },
+      {
+        "equation": "L = X\nC\n",
+        "type": "mathematical",
+        "position": 3380
+      },
+      {
+        "equation": "h = C\n2T cos\ngr\n",
+        "type": "mathematical",
+        "position": 4271
+      },
+      {
+        "equation": "R = 14 m",
+        "type": "mathematical",
+        "position": 4574
+      },
+      {
+        "equation": "g = 10 m/s\n2 and 2 = 1",
+        "type": "mathematical",
+        "position": 4584
+      },
+      {
+        "equation": "m/s (2) 21",
+        "type": "mathematical",
+        "position": 4619
+      },
+      {
+        "equation": "m/s (3) 16",
+        "type": "mathematical",
+        "position": 4632
+      },
+      {
+        "equation": "m/s (4) 10",
+        "type": "mathematical",
+        "position": 4645
+      },
+      {
+        "equation": "m/s Ans",
+        "type": "mathematical",
+        "position": 4658
+      },
+      {
+        "equation": "g = K\nB ",
+        "type": "mathematical",
+        "position": 4718
+      },
+      {
+        "equation": "R = 800 ",
+        "type": "mathematical",
+        "position": 5147
+      },
+      {
+        "equation": "P = 12",
+        "type": "mathematical",
+        "position": 5190
+      },
+      {
+        "equation": "o-efficient of static friction between their surfaces is ",
+        "type": "mathematical",
+        "position": 5354
+      },
+      {
+        "equation": "L = ",
+        "type": "mathematical",
+        "position": 5515
+      },
+      {
+        "equation": "s = tan 45 = 1 or tan ",
+        "type": "mathematical",
+        "position": 5527
+      },
+      {
+        "equation": "s = 1 correct option (1) 44",
+        "type": "mathematical",
+        "position": 5591
+      },
+      {
+        "equation": "I = nh\nA\n",
+        "type": "mathematical",
+        "position": 6575
+      },
+      {
+        "equation": "x = h",
+        "type": "mathematical",
+        "position": 6710
+      },
+      {
+        "equation": "L = mvr = nh4h2h\n22\n",
+        "type": "mathematical",
+        "position": 6968
+      },
+      {
+        "equation": "f = 1/ 2\n1T\nT\n2\n2\n",
+        "type": "mathematical",
+        "position": 7329
+      },
+      {
+        "equation": "R = Radius of earth",
+        "type": "mathematical",
+        "position": 8256
+      },
+      {
+        "equation": "g = 10 ms\n",
+        "type": "mathematical",
+        "position": 8277
+      },
+      {
+        "equation": "g = 2\ns\nh\ng1\nR\n",
+        "type": "mathematical",
+        "position": 8356
+      },
+      {
+        "equation": "s = gravitational acceleration at surface Force = mg = 90 ",
+        "type": "mathematical",
+        "position": 8418
+      },
+      {
+        "equation": "N-B 51",
+        "type": "mathematical",
+        "position": 8498
+      },
+      {
+        "equation": "x = 10 sin tm\n3\n",
+        "type": "mathematical",
+        "position": 8563
+      },
+      {
+        "equation": "t = 0 is ",
+        "type": "mathematical",
+        "position": 8664
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 8680
+      },
+      {
+        "equation": "T = 3",
+        "type": "mathematical",
+        "position": 8707
+      },
+      {
+        "equation": "d/s x 10 sint\n3\n",
+        "type": "mathematical",
+        "position": 8731
+      },
+      {
+        "equation": "t = 0 v 10 cos\n3\n",
+        "type": "mathematical",
+        "position": 8803
+      },
+      {
+        "equation": "d/s",
+        "type": "mathematical",
+        "position": 8863
+      },
+      {
+        "equation": "v = 10 m/s 52",
+        "type": "mathematical",
+        "position": 8868
+      },
+      {
+        "equation": "m/h is brought to halt within 4s after applying the brakes",
+        "type": "mathematical",
+        "position": 8939
+      },
+      {
+        "equation": "y = u = 72 km/h = 20 m/s v = u + at ",
+        "type": "mathematical",
+        "position": 9129
+      },
+      {
+        "equation": "a = ",
+        "type": "mathematical",
+        "position": 9182
+      },
+      {
+        "equation": "m/s\n2 v\n2 ",
+        "type": "mathematical",
+        "position": 9190
+      },
+      {
+        "equation": "s = 40 m 53",
+        "type": "mathematical",
+        "position": 9235
+      },
+      {
+        "equation": "r = 6) is inserted between the plates",
+        "type": "mathematical",
+        "position": 9443
+      },
+      {
+        "equation": "Q = C\n0\nV After inserting dielectric capacitance will become ",
+        "type": "mathematical",
+        "position": 9692
+      },
+      {
+        "equation": "r = E\ni ",
+        "type": "mathematical",
+        "position": 9805
+      },
+      {
+        "equation": "f = 22\nif\nQQ\n2C2C\n",
+        "type": "mathematical",
+        "position": 9817
+      },
+      {
+        "equation": "V = 12 V",
+        "type": "mathematical",
+        "position": 9952
+      },
+      {
+        "equation": "r = 6 ",
+        "type": "mathematical",
+        "position": 9964
+      },
+      {
+        "equation": "J = 750 ",
+        "type": "mathematical",
+        "position": 10036
+      },
+      {
+        "equation": "x = 3 cm 55",
+        "type": "mathematical",
+        "position": 10538
+      },
+      {
+        "equation": "V/u",
+        "type": "mathematical",
+        "position": 10751
+      },
+      {
+        "equation": "Q = (m\nR ",
+        "type": "mathematical",
+        "position": 10815
+      },
+      {
+        "equation": "R = 235",
+        "type": "mathematical",
+        "position": 10838
+      },
+      {
+        "equation": "P = 139",
+        "type": "mathematical",
+        "position": 10855
+      },
+      {
+        "equation": "u + 93",
+        "type": "mathematical",
+        "position": 10867
+      },
+      {
+        "equation": "u + 1",
+        "type": "mathematical",
+        "position": 10878
+      },
+      {
+        "equation": "u = 234",
+        "type": "mathematical",
+        "position": 10889
+      },
+      {
+        "equation": "Q = (235",
+        "type": "mathematical",
+        "position": 10903
+      },
+      {
+        "equation": "Q = 208",
+        "type": "mathematical",
+        "position": 10962
+      },
+      {
+        "equation": "i = ",
+        "type": "mathematical",
+        "position": 11274
+      },
+      {
+        "equation": "i = sin\n",
+        "type": "mathematical",
+        "position": 11284
+      },
+      {
+        "equation": "i = 45",
+        "type": "mathematical",
+        "position": 11310
+      },
+      {
+        "equation": "r = 30",
+        "type": "mathematical",
+        "position": 11369
+      },
+      {
+        "equation": "A = 32 ",
+        "type": "mathematical",
+        "position": 12149
+      },
+      {
+        "equation": "x = 5 60",
+        "type": "mathematical",
+        "position": 12506
+      },
+      {
+        "equation": "e = 10\n5 Nm\n",
+        "type": "mathematical",
+        "position": 12675
+      },
+      {
+        "equation": "y = 1",
+        "type": "mathematical",
+        "position": 12709
+      },
+      {
+        "equation": "g = 10 ms\n",
+        "type": "mathematical",
+        "position": 12735
+      },
+      {
+        "equation": "F = 51",
+        "type": "mathematical",
+        "position": 12884
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1019
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1064
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1183
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1229
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1389
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 1803
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 2032
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4182
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4280
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5109
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5469
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5477
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5486
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5502
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5531
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5545
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5580
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5864
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 6378
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 6485
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 6649
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6700
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 6733
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 7051
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7096
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7308
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7755
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8191
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 8219
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8570
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8740
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8770
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8814
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8850
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9006
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9284
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9635
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9735
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9932
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10145
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10256
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10417
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10557
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10795
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11187
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11229
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11288
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11349
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11361
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11404
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 11412
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11429
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 11435
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11987
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12019
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12221
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Calculus",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "integration"
+        ],
+        "possibleSubtopics": [
+          "Differentiation",
+          "Integration",
+          "Limits",
+          "Applications of Derivatives"
+        ]
+      },
+      {
+        "name": "Geometry",
+        "confidence": 0.14285714285714285,
+        "matchedKeywords": [
+          "circle"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.8333333333333334,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "acceleration",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current",
+          "voltage"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "waves",
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "equilibrium",
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Integration",
+        "parentTopic": "Calculus",
+        "confidence": 0.25,
+        "matchedKeywords": [
+          "integration"
+        ]
+      },
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "force",
+          "friction",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "charge",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      }
+    ],
+    "tags": [
+      "Formula Based"
+    ],
+    "wordCount": 3219,
+    "characterCount": 12918
+  },
+  "images": []
+}

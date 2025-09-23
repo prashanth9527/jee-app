@@ -1,0 +1,1005 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2025\\Session1\\Physics\\2401-Physics Paper+With+Sol Evening.pdf",
+  "relativePath": "JEE\\Previous Papers\\2025\\Session1\\Physics\\2401-Physics Paper+With+Sol Evening.pdf",
+  "metadata": {
+    "originalFileName": "2401-Physics Paper+With+Sol Evening.pdf",
+    "subject": "Physics",
+    "year": 2025,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 10,
+    "fileSize": 6549112,
+    "processedAt": "2025-09-22T23:33:33.262Z"
+  },
+  "content": {
+    "originalText": "1 JEE–MAIN EXAMINATION – JANUARY 2025 PHYSICS TEST PAPER WITH SOLUTION  (HELD ON FRIDAY 24\nth JANUARY 2025) TIME : 3 : 00 PM TO 6 : 00 PM SECTION-A 26. Young's double slit interference apparatus is immersed in a liquid of refractive index 1.44. It has slit separation of 1.5mm. The slits are illuminated by a parallel beam of light whose wavelength in air is 690 nm. The fringe-width on a screen placed behind the plane of slits at a distance of 0.72m, will be : (1) 0.23 mm (2) 0.33 mm (3) 0.63 mm (4) 0.46 mm Ans. (1) Sol. \n\n\n\n\n \n \n\n\n\n\n9\n0\n3\nD\n690 10\n0.72\nd\n1.44 1.5 10 = 0.23 mm 27. Arrange the following in the ascending order of wavelength () : (A) Microwaves (\n1\n) (B) Ultraviolet rays (\n2\n) (C) Infrared rays (\n3\n) (D) X-rays (\n4\n) Choose the most appropriate answer from the options given below :- (1) 4321\n       (2) 3421\n       (3) 4231\n       (4) 4312\n       Ans. ( 3) Sol. -rays X-rays U.V rays Visible rays IR rays Micro waves Radio waves  28. Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason(R). Assertion (A) : A electron in a certain region of uniform magnetic field is moving with constant velocity in a straight line path. Reason (A) : The magnetic field in that region is along the direction of velocity of the electron. In the light of the above statements, choose the correct answer from the options given below : (1) (A) is false but (R) is true (2) Both (A) and (R) are true and (R) is the correct explanation of (A) (3) Both (A) and (R) are true but (R) is NOT the correct explanation of (A) (4) (A) is true but (R) is false Ans. (2) Sol. \nFq v B F0 V || B  = 0 or 180 29. A solid sphere is rolling without slipping on a horizontal plane. The ratio of the linear kinetic energy of the centre of mass of the sphere and rotational kinetic energy is : (1) 2\n5 (2) 5\n2 (3) 3\n4 (4) 4\n3 Ans. (2) Sol. \n\n2\ncm\n2\n1\nmv\nLinear KE\n2\n1\nRotational K.E\nI\n2 \n\n2\ncm\n22\nmv\n5\n2\n2\nmR\n5 (V =  R) ALLEN 2  30. A long straight wire of a circular cross-section with radius 'a' carries a steady current I. The current I is a uniformly distributed across this cross-section. The plot of magnitude of magnetic field B with distance r from the centre of the wire is given by (1) r B a (2) r B a (3) r B a B\n0 (4) r B a Ans. (1) Sol. a I  \n\n\n0\nin\nJr\nB\n2 \nin\nBr B\nout = \n\n0\nI\n2r \nnet\n1\nB\nr 31. Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason(R). Assertion (A) : In an insulated container, a gas is adiabatically shrunk to half of its initial volume. The temperature of the gas decreases. Reason (R) : Free expansion of an ideal gas is an irreversible and an adiabatic process. In the light of the above statement, choose the correct answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct explanation of (A) (2) (A) is true but (R) is false (3) (A) is false but (R) is true (4) Both (A) and (R) are true but (R) is NOT the correct explanation of (A) Ans. (3) Sol. (A) \n\n\n11\n1\n1\n2\n2\nT V\nT V Temp increases R) Free expansion is assumed fast, so Adiabatic 32. O A B D C E F +q\n0 +q\n0 +q\n0 +q\n0 H G O A B D C E F +q\n0 +q\n0 +q\n0 +q\n0 H G Configuration(1) Configuration(2) In the first configuration (1) as shown in the figure, four identical charges (q\n0\n) are kept at the corners A,B,C and D of square of side length 'a'. In the second configuration (2), the same charges are shifted to mid points G,E,H and F, of the square, If 0\n1\nK\n4\n\n\n, the difference between the potential energies of configuration (2) and (1) is given by : (1) \n2\n0\nKq\n4 2 2\na\n (2) \n2\n0\nKq\n32\na\n (3) \n2\n0\nKq\n4 2 2\na\n (4) \n2\n0\nKq\n3 2 2\na\n Ans. (4) ALLEN 3  Sol. \n\n\n\n\n\n2\n2\n2\n0\n0\n0\n1\n4Kq\n2Kq\nKq\nU\n4\n2\naa\n2a \n\n\n\n\n \n\n\n\n\n22\n00\n2\nKq\nKq\nU\n4\n2\n4 2 2\na\na\n2 \n\n \n\n2\n0\n21\nKq\nU\nU\n3 2 2\na 33. The position vector of a moving body at any instant of time is given as \n\n2\nˆ\nˆ\nr\n5t i 5tj m\n\n. The magnitude and direction of velocity at t = 2s is, (1) 5 15\nm/s, making an angle of tan\n–1 4 with –ve Y axis (2) 5 15\nm/s, making an angle of tan\n–1 4 with +ve X axis (3) 5 17 m/s, making an angle of tan\n–1 4 with –ve Y axis (4) 5 17 m/s, making an angle of tan\n–1 4 with +ve X axis Ans. (3) Sol. \n2\nˆˆ\nr 5t i 5tj \nˆˆ\nv 10ti 5 j \nˆˆ\nv 20i 5j at t = 2sec v\ny = –5  v\nx\n= 20   \n20\ntan4\n5  = tan\n–1 4 From –veY-axis 34. A solid sphere and a hollow sphere of the same mass and of same radius are rolled on an inclined plane. Let the time taken to reach the bottom by the solid sphere and the hollow sphere be t\n1 and t\n2\n, respectively, then (1) t\n1 < t\n2 (2) t\n1 = t\n2 (3) t\n1 = 2t\n2 (4) t\n1 > t\n2 Ans. (1) Sol.  a\ncm \ncm\n2\nt\na \n\n\ncm\ncm\n2\ng sin\na\nI\n1\nMR \n\n1\n1\ncm\n5g sin\naa\n7 ..... Solid \n\n2\n2cm\n3g sin\naa\n5 ..... Hollow a\n1 > a\n2 t\n1 < t\n2 35. Which of the following figure represents the relation between Celsius and Fahrenheit temperatures? (1) F C (0,0) (2) F C (0,0) (3) F C (0,0) (4) F C (0,0) Ans. (2) ALLEN 4  Sol. \n\nC\nF 32\n59  \n5F\n160\nC\n99 F C (0, 0) 36. A R B  N equally spaced charges each of value q, are placed on a circle of radius R. The circle rotates about its axis with an angular velocity  as shown in the figure. A bigger Amperian loop B encloses the whole circle where as a smaller Amperian loop A encloses a small segment. The difference between enclosed currents, I\nA\n– I\nB , for the given Amperian loops is (1) \n\n2\nN\nq\n2 (2) 2\nq\nN\n\n (3) N\nq\n2\n\n (4) N\nq\n Ans. (3) Sol. A B q R  \n\n\nA\nNq\nI\n2 \n\n\nA\nNq\nI\n2\n, I\nB = 0 \n\n\nAB\nNq\nII\n2 37. In photoelectric effect, the stopping potential (V\n0\n) v/s frequency (v) curve is plotted. (h is the Planck's constant and \n0 is work function of metal) (A) V\n0 v/s  is linear (B) The slope of V\n0 v/s  curve = 0\nh\n (C) h constant is related to the slope of V\n0 v/s  line (D) The value of electric charge of electron is not required to determine h using the V\n0 v/s  curve. (E) The work function can be estimated without knowing the value of h. Choose the correct answer from the options given below : (1) (A),(B) and (C) only (2) (C) and (D) only (3) (A),(C) and (E) only (4) (D) and (E) only Ans. (3) Sol. hv =  + KE\nmax KE\nmax = eV\n0 \n\n0\nhv\nV\ne (A) V\n0 v/s V is linear correct (B) Slope \n\n\n\n\n0\nh\nvv\nee Wrong Slope h\ne (C) Correct (D) Incorrect (E) Correct ALLEN 5  38. The magnitude of heat exchanged by a system for the given cyclic process ABCA (as shown in figure) is (in SI unit) 400 200 400 200 V(in cc) P(in k Pa) B A C D (1) 10 (2) 5 (3) zero (4) 40 Ans. (2) Sol. V A 400 200 C B P 200 400 \n2\n1\nWR\n2 \n\n   \n\n\n36\n1200200\n1010\n222 \n  \n10\n5J\n2 39. A photograph of a landscape is captured by a drone camera at a height of 18 km. The size of the camera film is 2 cm × 2 cm and the area of the landscape photographed is 400 km\n2\n. The focal length of the lens in the drone camera is : (1) 1.8 cm (2) 2.8 cm (3) 2.5 cm (4) 0.9 cm Ans. (1) Sol. 18cm x y (\n2 × 2) × 10\n–\n4\nm\n2 400 × 10\n6\nm\n2   Lens H = 18 km Size of camera film = 2cm × 2cm A\nimage = 400 km\n2 x = 20 × 10\n3 m = 2 × 10\n4 m y = 2 × 10\n–2 m \n6\nx\n18Km\n10\nyf f = 18 × 10\n–\n3 m = 18 mm f = 1.8 cm 40. The output of the circuit is low (zero) for : X Y (A) X = 0, Y= 0 (B) X = 0, Y= 1 (C) X = 1, Y= 0 (D) X = 1, Y= 1 Choose the correct answer from the options given below : (1) (A), (C) and (D) only (2) (A), (B) and (C) only (3) (B), (C) and (D) only (4) (A), (B) and (D) only Ans. (3) Sol. x y xy\n0 0 1\n0 1 0\n1 0 0\n1 1 0 ALLEN 6  41. The temperature of a body in air falls from 40°C to 24°C in 4 minutes. The temperature of the air is 16°C. The temperature of the body in the next 4 minutes will be : (1) 14\nC\n3\n (2) 28\nC\n3\n (3) 56\nC\n3\n (4) 42\nC\n3\n Ans. (3) Sol. \n\n\n\n21\navg\ns\nTT\nK T\nT\nt T\n1 = 24°C; T\n2 = 40°C, t = 4, T\nS = 16°C \n\n\n\n40 24\nK 32 16\n4  \n41\nK\n16\n4 Now \n\n\n\n\n24 T\nT 24\nK\n16\n42 24 – T = \n\nT 16\n16\n2 \n3T\n28\n2 \n56\nTC\n3 42. The energy E and momentum p of a moving body of mass m are related by some equation. Given that c represents the speed of light, identify the correct equation. (1) E\n2 = pc\n2 + m\n2\nc\n4 (2) E\n2 = pc\n2 + m\n2\nc\n2 (3) E\n2 = p\n2\nc\n2 + m\n2\nc\n2 (4) E\n2 = p\n2\nc\n2 + m\n2\nc\n4 Ans. (4) Sol. [E] = M\n1\nL\n2\nT\n–\n2 [Pc] = M\n1\nL\n1\nT\n–1 . L\n1\nT\n–1 = M\n1\nL\n2\nT\n–2 [mc\n2\n] = M\n1\nL\n2\nT\n–2 E\n2 = M\n1\nL\n2\nT\n–2 E\n2 = P\n2\nc\n2 + m\n2\nc\n4 43. A small uncharged conducting sphere is placed in contact with an identical sphere but having 4 × 10\n–\n8 C charge and then removed to a distance such that the force of repulsion between them is 9 × 10\n–3 N. The distance between them is (Take 0\n1\n4\n as 9 × 10\n9 in SI units) (1) 2 cm (2) 3 cm (3) 4 cm (4) 1 cm Ans. (1) Sol. Q = 4 × 10\n–\n8 C Q\n/2 Q\n/2 Q\n/2 Q/2 \n  \n  \n  \n\n2\nk\n22\nF\nr \n\n    \n\n\n988\n3\n2\n9 10(4 10 ) 4 10\n9 10\n4r \n\n\n  \n \n\n916\n24\n3\n9 1016 10\nr4 10\n4 9 10 r = 2 × 10\n–2 m  2 cm 44. A particle oscillates along the x-axis according to the law, x(t) = x\n0 sin\n2\nt\n2\n\n\n\nwhere x\n0 = 1 m. The kinetic energy (K) of the particle as a function of x is correctly represented by the graph. (1) 0 1/2 1 x K (2) 0 1/2 1 x K (3) 0 1/2 1 x K (4) 0 1/2 1 x K Ans. (1) ALLEN 7  Sol. \n\n\n\n\n2\n00\nt\n1 cos t\nx\nx sin\nx\n22 \n\n0\nx\ncos t\nx\n22 where x\n0 = 1 \n\n1cos t\nx\n22 Particle is oscillating between x = 0 to x = 1 45. In a Young's double slit experiment, three polarizers are kept as shown in the figure. The transmission axes of P\n1 and P\n2 are orthogonal to each other. The polarizer P\n3 covers both the slits with its transmission axis at 45° to those of P\n1 and P\n2\n. An unpolarized light of wavelength  and intensity I\n0 is incident on P\n1 and P\n2 . The intensity at a point after P\n3 where the path difference between the light waves from s\n1 and s\n2 is\n3\n\n, is P\n1 P\n2 P\n3 \n1 I\n0 s\n1 s\n2 (1) 0\nI\n2 (2) 0\nI\n4 (3) I\n0 (4) 0\nI\n3 Ans. (3 ) Sol. cos\n2\n45 cos\n2\n45 (Unpolerised light) (Polerised light) after passing through third poleriser, Intensity of both the waves must be 0\nI\n4 now, at a point where path diff is \n3\n, phase difference  = \n\n\n\n\n\nx2\n2K\n3 \n     \n \n     \n     \n222\n000\nres\nIII\n2\nI2cos\n4443 = 0\nI\n4 46. A tightly wound long solenoid carries a current of 1.5 A. An electron is executing uniform circular motion inside the solenoid with a time period of 75ns. The number of turns per metre in the solenoid is_______. [Take mass of electron m\ne = 9 × 10\n–\n31 kg, charge of electron |q\ne\n| = 1.6 × 10\n–19 C, \n0 = 4 × 10\n–\n7 2\nN\nA\n,1 ns = 10\n–\n9 s ] Ans. (250 ) Sol. Since time period of a revolving charge is 2m\nqB\n Where B = magnetic field due to a solenoid = μ\n0\nnI 0\n2m\nT\nq(μ nI)\n\n 31\n9\n197\n(2 )(9 10 )\n75 10\n1.6 10410n 1.5\n\n\n\n\n\n     N = 250 ALLEN 8  47. R T L  A string of length L is fixed at one end and carries a mass of M at the other end. The mass makes 3\n\n\n\n rotations per second about the vertical axis passing through end of the string as shown. The tension in the string is _____ ML. Ans. (36) Sol.  m  T T  T cos  = mg ...(1) T sin  = M\n2\nR ...(2) Using equation (2) T sin  = M\n\n(L sin ) T = M\n2\nL 2\n3\nM2L\n\n \n\n\n T = 36 ML 48. The ratio of the power of a light source S\n1 to that the light source S\n2 is 2. S\n1 is emitting 2 × 10\n15 photons per second at 600 nm. If the wavelength of the source S\n2 is 300 nm, then the number of photons per second emitted by S\n2 is_____×10\n14\n. Ans. (5) Sol. Since power emitting by a source is given as Total energy emitted\ntime\n 1\n(E photon) Number of photons(N)\nt\n\n P\n1 = (E\n1\n)n 1\n1\n1\n1\n1\n2\n2\n2\n2\n2\nhC\nn\nP\n(E )n\nP\n(E )n\nhC\nn\n\n\n\n\n\n\n\n\n 121\n212\nPn\nPn\n\n\n\n\n\n Substituting the given values 15\n2\n3002 10\n2\n600n\n\n\n\n\n 15\n2\n1\nn10\n2\n\n= 5 × 10\n14 Photon/sec 49. The increase in pressure required to decrease the volume of a water sample by 0.2% is P × 10\n5\nNm\n–\n2\n. Bulk modulus of water is 2.15 × 10\n9 Nm\n–\n2 . The value of P is _______. Ans. (43) Sol. Since bulk modulus is given as P\nB\nV\nV\n\n\n\n\n\n 9\nP\n2.15 10\n0.2\n100\n\n\n\n\n\n P = 2.15 × 10\n9 × 2 × 10\n–\n3 = 4.3 × 10\n6 = 43 × 10\n5 N/m\n2 ALLEN 9  50. Acceleration due to gravity on the surface of earth is 'g'. If the diameter of earth is reduced to one third of its original value and mass remains unchanged, then the acceleration due to gravity on the surface of the earth is ____g. Ans. (9) Sol. acceleration due to gravity on surface is given by 2\ne\nGM\ng\nR\n Now since diameter is reduced to 1/3\nrd\n, radius also reduces to 1/3\nrd\n, keeping mass constant New value of acceleration due to gravity on Earth’s surface is 2\n2\ne\ne\nGMGMe\ng '99g\nR\nR\n3\n\n\n\n ALLEN",
+    "questions": [
+      {
+        "number": "27",
+        "text": "Arrange the following in the ascending order of wavelength () : (A) Microwaves (\n1\n) (B) Ultraviolet rays (\n2\n) (C) Infrared rays (\n3\n) (D) X-rays (\n4\n) Choose the most appropriate answer from the options given below :- (1) 4321\n       (2) 3421\n       (3) 4231\n       (4) 4312\n      ",
+        "formattedText": "Arrange the following in the ascending order of wavelength () : (A) Microwaves (\n1\n) (B) Ultraviolet rays (\n2\n) (C) Infrared rays (\n3\n) (D) X-rays (\n4\n) Choose the most appropriate answer from the options given below :- (1) 4321\n       (2) 3421\n       (3) 4231\n       (4) 4312\n      ",
+        "latexText": "\\(Arrange the following in the ascending order of wavelength () : (A) Microwaves (^{1}) (B) Ultraviolet rays (^{2}) (C) Infrared rays (^{3}) (D) X-rays (^{4}) Choose the most appropriate answer from the options given below :- (1) 4321        (2) 3421        (3) 4231        (4) 4312       \\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "4321       "
+          },
+          {
+            "letter": "2",
+            "text": "3421       "
+          },
+          {
+            "letter": "3",
+            "text": "4231       "
+          },
+          {
+            "letter": "4",
+            "text": "4312       "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "4321       ",
+            "formattedText": "4321       ",
+            "latexText": "4321       "
+          },
+          {
+            "letter": "2",
+            "text": "3421       ",
+            "formattedText": "3421       ",
+            "latexText": "3421       "
+          },
+          {
+            "letter": "3",
+            "text": "4231       ",
+            "formattedText": "4231       ",
+            "latexText": "4231       "
+          },
+          {
+            "letter": "4",
+            "text": "4312       ",
+            "formattedText": "4312       ",
+            "latexText": "4312       "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "28",
+        "text": "Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason(R). Assertion (A) : A electron in a certain region of uniform magnetic field is moving with constant velocity in a straight line path. Reason (A) : The magnetic field in that region is along the direction of velocity of the electron. In the light of the above statements, choose the correct answer from the options given below : (1) (A) is false but (R) is true (2) Both (A) and (R) are true and (R) is the correct",
+        "formattedText": "Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason(R). Assertion (A) : A electron in a certain region of uniform magnetic field is moving with constant velocity in a straight line path. Reason (A) : The magnetic field in that region is along the direction of velocity of the electron. In the light of the above statements, choose the correct answer from the options given below : (1) (A) is false but (R) is true (2) Both (A) and (R) are true and (R) is the correct",
+        "latexText": "Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason(R). Assertion (A) : A electron in a certain region of uniform magnetic field is moving with constant velocity in a straight line path. Reason (A) : The magnetic field in that region is along the direction of velocity of the electron. In the light of the above statements, choose the correct answer from the options given below : (1) (A) is false but (R) is true (2) Both (A) and (R) are true and (R) is the correct",
+        "options": [
+          {
+            "letter": "2",
+            "text": "Both"
+          },
+          {
+            "letter": "A",
+            "text": ": A electron in a certain region of uniform magnetic field is moving with constant velocity in a straight line path. Reason"
+          },
+          {
+            "letter": "A",
+            "text": ": The magnetic field in that region is along the direction of velocity of the electron. In the light of the above statements, choose the correct answer from the options given below :"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "2",
+            "text": "Both",
+            "formattedText": "Both",
+            "latexText": "Both"
+          },
+          {
+            "letter": "A",
+            "text": ": A electron in a certain region of uniform magnetic field is moving with constant velocity in a straight line path. Reason",
+            "formattedText": ": A electron in a certain region of uniform magnetic field is moving with constant velocity in a straight line path. Reason",
+            "latexText": ": A electron in a certain region of uniform magnetic field is moving with constant velocity in a straight line path. Reason"
+          },
+          {
+            "letter": "A",
+            "text": ": The magnetic field in that region is along the direction of velocity of the electron. In the light of the above statements, choose the correct answer from the options given below :",
+            "formattedText": ": The magnetic field in that region is along the direction of velocity of the electron. In the light of the above statements, choose the correct answer from the options given below :",
+            "latexText": ": The magnetic field in that region is along the direction of velocity of the electron. In the light of the above statements, choose the correct answer from the options given below :"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "31",
+        "text": "Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason(R). Assertion (A) : In an insulated container, a gas is adiabatically shrunk to half of its initial volume. The temperature of the gas decreases. Reason (R) : Free expansion of an ideal gas is an irreversible and an adiabatic process. In the light of the above statement, choose the correct answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct",
+        "formattedText": "Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason(R). Assertion (A) : In an insulated container, a gas is adiabatically shrunk to half of its initial volume. The temperature of the gas decreases. Reason (R) : Free expansion of an ideal gas is an irreversible and an adiabatic process. In the light of the above statement, choose the correct answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct",
+        "latexText": "Given below are two statements. One is labelled as Assertion (A) and the other is labelled as Reason(R). Assertion (A) : In an insulated container, a gas is adiabatically shrunk to half of its initial volume. The temperature of the gas decreases. Reason (R) : Free expansion of an ideal gas is an irreversible and an adiabatic process. In the light of the above statement, choose the correct answer from the options given below : (1) Both (A) and (R) are true and (R) is the correct",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Both"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Both",
+            "formattedText": "Both",
+            "latexText": "Both"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "36",
+        "text": "A R B  N equally spaced charges each of value q, are placed on a circle of radius R. The circle rotates about its axis with an angular velocity  as shown in the figure. A bigger Amperian loop B encloses the whole circle where as a smaller Amperian loop A encloses a small segment. The difference between enclosed currents, I\nA\n– I\nB , for the given Amperian loops is (1) \n\n2\nN\nq\n2 (2) 2\nq\nN\n\n (3) N\nq\n2\n\n (4) N\nq\n",
+        "formattedText": "A R B  N equally spaced charges each of value q, are placed on a circle of radius R. The circle rotates about its axis with an angular velocity  as shown in the figure. A bigger Amperian loop B encloses the whole circle where as a smaller Amperian loop A encloses a small segment. The difference between enclosed currents, I\nA\n– I\nB , for the given Amperian loops is (1) \n\n2\nN\nq\n2 (2) 2\nq\nN\n\n (3) N\nq\n2\n\n (4) N\nq\n",
+        "latexText": "\\(A R B  N equally spaced charges each of value q, are placed on a circle of radius R. The circle rotates about its axis with an angular velocity  as shown in the figure. A bigger Amperian loop B encloses the whole circle where as a smaller Amperian loop A encloses a small segment. The difference between enclosed currents, \\frac{I}{A}– I B , for the given Amperian loops is (1)  ^{2}N q^{2} (2) \\frac{2}{q}N   (3) N q^{2}   (4) N q \\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "  2 N q 2"
+          },
+          {
+            "letter": "2",
+            "text": "2 q N  "
+          },
+          {
+            "letter": "3",
+            "text": "N q 2  "
+          },
+          {
+            "letter": "4",
+            "text": "N q "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "  2 N q 2",
+            "formattedText": "  2 N q 2",
+            "latexText": "  2 N q 2"
+          },
+          {
+            "letter": "2",
+            "text": "2 q N  ",
+            "formattedText": "2 q N  ",
+            "latexText": "2 q N  "
+          },
+          {
+            "letter": "3",
+            "text": "N q 2  ",
+            "formattedText": "N q 2  ",
+            "latexText": "N q 2  "
+          },
+          {
+            "letter": "4",
+            "text": "N q ",
+            "formattedText": "N q ",
+            "latexText": "N q "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "38",
+        "text": "The magnitude of heat exchanged by a system for the given cyclic process ABCA (as shown in figure) is (in SI unit) 400 200 400 200 V(in cc) P(in k Pa) B A C D (1) 10 (2) 5 (3) zero (4) 40",
+        "formattedText": "The magnitude of heat exchanged by a system for the given cyclic process ABCA (as shown in figure) is (in SI unit) 400 200 400 200 V(in cc) P(in k Pa) B A C D (1) 10 (2) 5 (3) zero (4) 40",
+        "latexText": "The magnitude of heat exchanged by a system for the given cyclic process ABCA (as shown in figure) is (in SI unit) 400 200 400 200 V(in cc) P(in k Pa) B A C D (1) 10 (2) 5 (3) zero (4) 40",
+        "options": [
+          {
+            "letter": "3",
+            "text": "zero"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "3",
+            "text": "zero",
+            "formattedText": "zero",
+            "latexText": "zero"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "AB",
+            "latex": "AB",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "CA",
+            "latex": "CA",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "SI",
+            "latex": "SI",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "42",
+        "text": "The energy E and momentum p of a moving body of mass m are related by some equation. Given that c represents the speed of light, identify the correct equation. (1) E\n2 = pc\n2 + m\n2\nc\n4 (2) E\n2 = pc\n2 + m\n2\nc\n2 (3) E\n2 = p\n2\nc\n2 + m\n2\nc\n2 (4) E\n2 = p\n2\nc\n2 + m\n2\nc\n4",
+        "formattedText": "The energy E and momentum p of a moving body of mass m are related by some equation. Given that c represents the speed of light, identify the correct equation. (1) E\n2 = pc\n2 + m\n2\nc\n4 (2) E\n2 = pc\n2 + m\n2\nc\n2 (3) E\n2 = p\n2\nc\n2 + m\n2\nc\n2 (4) E\n2 = p\n2\nc\n2 + m\n2\nc\n4",
+        "latexText": "\\(The energy E and momentum p of a moving body of mass m are related by some equation. Given that c represents the speed of light, identify the correct equation. (1) E^{2} = pc^{2} + m^{2} c^{4} (2) E^{2} = pc^{2} + m^{2} c^{2} (3) E^{2} = p^{2} c^{2} + m^{2} c^{2} (4) E^{2} = p^{2} c^{2} + m^{2} c^{4}\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "E 2 = pc 2 + m 2 c 4"
+          },
+          {
+            "letter": "2",
+            "text": "E 2 = pc 2 + m 2 c 2"
+          },
+          {
+            "letter": "3",
+            "text": "E 2 = p 2 c 2 + m 2 c 2"
+          },
+          {
+            "letter": "4",
+            "text": "E 2 = p 2 c 2 + m 2 c 4"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "E 2 = pc 2 + m 2 c 4",
+            "formattedText": "E 2 = pc 2 + m 2 c 4",
+            "latexText": "\\(E 2 = pc 2 + m 2 c 4\\)"
+          },
+          {
+            "letter": "2",
+            "text": "E 2 = pc 2 + m 2 c 2",
+            "formattedText": "E 2 = pc 2 + m 2 c 2",
+            "latexText": "\\(E 2 = pc 2 + m 2 c 2\\)"
+          },
+          {
+            "letter": "3",
+            "text": "E 2 = p 2 c 2 + m 2 c 2",
+            "formattedText": "E 2 = p 2 c 2 + m 2 c 2",
+            "latexText": "\\(E 2 = p 2 c 2 + m 2 c 2\\)"
+          },
+          {
+            "letter": "4",
+            "text": "E 2 = p 2 c 2 + m 2 c 4",
+            "formattedText": "E 2 = p 2 c 2 + m 2 c 4",
+            "latexText": "\\(E 2 = p 2 c 2 + m 2 c 4\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "45",
+        "text": "In a Young's double slit experiment, three polarizers are kept as shown in the figure. The transmission axes of P\n1 and P\n2 are orthogonal to each other. The polarizer P\n3 covers both the slits with its transmission axis at 45° to those of P\n1 and P\n2\n. An unpolarized light of wavelength  and intensity I\n0 is incident on P\n1 and P\n2 . The intensity at a point after P\n3 where the path difference between the light waves from s\n1 and s\n2 is\n3\n\n, is P\n1 P\n2 P\n3 \n1 I\n0 s\n1 s\n2 (1) 0\nI\n2 (2) 0\nI\n4 (3) I\n0 (4) 0\nI\n3",
+        "formattedText": "In a Young's double slit experiment, three polarizers are kept as shown in the figure. The transmission axes of P\n1 and P\n2 are orthogonal to each other. The polarizer P\n3 covers both the slits with its transmission axis at 45° to those of P\n1 and P\n2\n. An unpolarized light of wavelength  and intensity I\n0 is incident on P\n1 and P\n2 . The intensity at a point after P\n3 where the path difference between the light waves from s\n1 and s\n2 is\n3\n\n, is P\n1 P\n2 P\n3 \n1 I\n0 s\n1 s\n2 (1) 0\nI\n2 (2) 0\nI\n4 (3) I\n0 (4) 0\nI\n3",
+        "latexText": "\\(In a Young's double slit experiment, three polarizers are kept as shown in the figure. The transmission axes of P^{1} and P^{2} are orthogonal to each other. The polarizer P^{3} covers both the slits with its transmission axis at 45^\\circ to those of P^{1} and P^{2} . An unpolarized light of wavelength  and intensity I^{0} is incident on P^{1} and P^{2} . The intensity at a point after P^{3} where the path difference between the light waves from s^{1} and s^{2} is^{3}  , is P {}^{1}P_{2} P^{3}  1 I^{0} s^{1} s^{2} (1) 0 I^{2} (2) 0 I^{4} (3) I^{0} (4) 0 I^{3}\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "0 I 2"
+          },
+          {
+            "letter": "2",
+            "text": "0 I 4"
+          },
+          {
+            "letter": "4",
+            "text": "0 I 3"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "0 I 2",
+            "formattedText": "0 I 2",
+            "latexText": "0 I 2"
+          },
+          {
+            "letter": "2",
+            "text": "0 I 4",
+            "formattedText": "0 I 4",
+            "latexText": "0 I 4"
+          },
+          {
+            "letter": "4",
+            "text": "0 I 3",
+            "formattedText": "0 I 3",
+            "latexText": "0 I 3"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "47",
+        "text": "R T L  A string of length L is fixed at one end and carries a mass of M at the other end. The mass makes 3\n\n\n\n rotations per second about the vertical axis passing through end of the string as shown. The tension in the string is _____ ML.",
+        "formattedText": "R T L  A string of length L is fixed at one end and carries a mass of M at the other end. The mass makes 3\n\n\n\n rotations per second about the vertical axis passing through end of the string as shown. The tension in the string is _____ ML.",
+        "latexText": "\\(R T L  A string of length L is fixed at one end and carries a mass of M at the other end. The mass makes 3     rotations per second about the vertical axis passing through end of the string as shown. The tension in the string is _____ ML.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "ML",
+            "latex": "ML",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "2",
+        "text": "S\n1 is emitting 2 × 10\n15 photons per second at 600 nm. If the wavelength of the source S\n2 is 300 nm, then the number of photons per second emitted by S\n2 is_____×10\n14\n.",
+        "formattedText": "S\n1 is emitting 2 × 10\n15 photons per second at 600 nm. If the wavelength of the source S\n2 is 300 nm, then the number of photons per second emitted by S\n2 is_____×10\n14\n.",
+        "latexText": "\\(S^{1} is emitting 2 \\times 10^{15} photons per second at 600 nm. If the wavelength of the source S^{2} is 300 nm, then the number of photons per second emitted by S^{2} is_____\\times10^{14} .\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 26",
+        "type": "mathematical",
+        "position": 149
+      },
+      {
+        "equation": "e-width on a screen placed behind the plane of slits at a distance of 0",
+        "type": "mathematical",
+        "position": 381
+      },
+      {
+        "equation": "X-rays (",
+        "type": "mathematical",
+        "position": 753
+      },
+      {
+        "equation": "X-rays U",
+        "type": "mathematical",
+        "position": 948
+      },
+      {
+        "equation": "V = ",
+        "type": "mathematical",
+        "position": 2011
+      },
+      {
+        "equation": "s-section with radius ",
+        "type": "mathematical",
+        "position": 2077
+      },
+      {
+        "equation": "s-section",
+        "type": "mathematical",
+        "position": 2188
+      },
+      {
+        "equation": "t = ",
+        "type": "mathematical",
+        "position": 2392
+      },
+      {
+        "equation": "F +q\n0 +q\n0 +q\n0 +q\n0 H G O A B D C E F +q\n0 +q\n0 +q\n0 +q\n0 H G Configuration(1) Configuration(2) In the first configuration (1) as shown in the figure",
+        "type": "mathematical",
+        "position": 3191
+      },
+      {
+        "equation": "t = 2s is",
+        "type": "mathematical",
+        "position": 4057
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 4077
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 4135
+      },
+      {
+        "equation": "h +ve X axis (3) 5 17 m/s",
+        "type": "mathematical",
+        "position": 4171
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 4251
+      },
+      {
+        "equation": "h +ve X axis Ans",
+        "type": "mathematical",
+        "position": 4287
+      },
+      {
+        "equation": "t = 2sec v\ny = ",
+        "type": "mathematical",
+        "position": 4368
+      },
+      {
+        "equation": "x\n= 20 ",
+        "type": "mathematical",
+        "position": 4390
+      },
+      {
+        "equation": "Y-axis 34",
+        "type": "mathematical",
+        "position": 4434
+      },
+      {
+        "equation": "B = 0 ",
+        "type": "mathematical",
+        "position": 5591
+      },
+      {
+        "equation": "v/s frequency (v) curve is plotted",
+        "type": "mathematical",
+        "position": 5674
+      },
+      {
+        "equation": "v/s ",
+        "type": "mathematical",
+        "position": 5781
+      },
+      {
+        "equation": "v/s ",
+        "type": "mathematical",
+        "position": 5818
+      },
+      {
+        "equation": "e = 0\nh\n",
+        "type": "mathematical",
+        "position": 5828
+      },
+      {
+        "equation": "v/s ",
+        "type": "mathematical",
+        "position": 5884
+      },
+      {
+        "equation": "v/s ",
+        "type": "mathematical",
+        "position": 5985
+      },
+      {
+        "equation": "v = ",
+        "type": "mathematical",
+        "position": 6233
+      },
+      {
+        "equation": "x = eV\n0 ",
+        "type": "mathematical",
+        "position": 6253
+      },
+      {
+        "equation": "v/s V is linear correct (B) Slope ",
+        "type": "mathematical",
+        "position": 6284
+      },
+      {
+        "equation": "H = 18 km Size of camera film = 2cm ",
+        "type": "mathematical",
+        "position": 7066
+      },
+      {
+        "equation": "e = 400 km\n2 x = 20 ",
+        "type": "mathematical",
+        "position": 7114
+      },
+      {
+        "equation": "m = 2 ",
+        "type": "mathematical",
+        "position": 7141
+      },
+      {
+        "equation": "y = 2 ",
+        "type": "mathematical",
+        "position": 7156
+      },
+      {
+        "equation": "f = 18 ",
+        "type": "mathematical",
+        "position": 7190
+      },
+      {
+        "equation": "m = 18 mm f = 1",
+        "type": "mathematical",
+        "position": 7206
+      },
+      {
+        "equation": "X = 0",
+        "type": "mathematical",
+        "position": 7285
+      },
+      {
+        "equation": "Y= 0 (B) X = 0",
+        "type": "mathematical",
+        "position": 7292
+      },
+      {
+        "equation": "Y= 1 (C) X = 1",
+        "type": "mathematical",
+        "position": 7308
+      },
+      {
+        "equation": "Y= 0 (D) X = 1",
+        "type": "mathematical",
+        "position": 7324
+      },
+      {
+        "equation": "Y= 1 Choose the correct answer from the options given below ",
+        "type": "mathematical",
+        "position": 7340
+      },
+      {
+        "equation": "t = 4",
+        "type": "mathematical",
+        "position": 7857
+      },
+      {
+        "equation": "S = 16",
+        "type": "mathematical",
+        "position": 7866
+      },
+      {
+        "equation": "T = ",
+        "type": "mathematical",
+        "position": 7957
+      },
+      {
+        "equation": "Q = 4 ",
+        "type": "mathematical",
+        "position": 8740
+      },
+      {
+        "equation": "Q\n/2 Q\n/2 Q\n/2 Q/2 ",
+        "type": "mathematical",
+        "position": 8757
+      },
+      {
+        "equation": "r = 2 ",
+        "type": "mathematical",
+        "position": 8918
+      },
+      {
+        "equation": "x-axis according to the law",
+        "type": "mathematical",
+        "position": 8977
+      },
+      {
+        "equation": "x = 0 to x = 1 45",
+        "type": "mathematical",
+        "position": 9367
+      },
+      {
+        "equation": "e = 9 ",
+        "type": "mathematical",
+        "position": 10465
+      },
+      {
+        "equation": "s = 10\n",
+        "type": "mathematical",
+        "position": 10557
+      },
+      {
+        "equation": "B = magnetic field due to a solenoid = ",
+        "type": "mathematical",
+        "position": 10646
+      },
+      {
+        "equation": "N = 250 ALLEN 8 ",
+        "type": "mathematical",
+        "position": 10778
+      },
+      {
+        "equation": "T = M",
+        "type": "mathematical",
+        "position": 11166
+      },
+      {
+        "equation": "T = 36 ML 48",
+        "type": "mathematical",
+        "position": 11201
+      },
+      {
+        "equation": "n/sec 49",
+        "type": "mathematical",
+        "position": 11805
+      },
+      {
+        "equation": "P = 2",
+        "type": "mathematical",
+        "position": 12100
+      },
+      {
+        "equation": "N/m\n2 ALLEN 9 ",
+        "type": "mathematical",
+        "position": 12154
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 442
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1212
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 1531
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 1607
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2249
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 2688
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 2906
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 3048
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 3135
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3961
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4101
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4159
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4217
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4275
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4406
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4417
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4771
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4799
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4834
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5733
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5848
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5972
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8553
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8628
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9017
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9265
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9275
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9293
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9324
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 9411
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9919
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9928
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9984
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10207
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10971
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 11080
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11100
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11123
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11143
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11159
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12494
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12581
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.2857142857142857,
+        "matchedKeywords": [
+          "circle",
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.8333333333333334,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "acceleration",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "waves",
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "distance",
+          "slope"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "force",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "charge",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "current",
+          "circuit",
+          "power"
+        ]
+      },
+      {
+        "name": "Light Waves",
+        "parentTopic": "Waves & Optics",
+        "confidence": 1,
+        "matchedKeywords": [
+          "light waves"
+        ]
+      }
+    ],
+    "tags": [
+      "JEE Mains"
+    ],
+    "wordCount": 3251,
+    "characterCount": 12694
+  },
+  "images": []
+}

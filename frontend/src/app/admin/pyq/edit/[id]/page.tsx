@@ -120,7 +120,7 @@ export default function EditPYQQuestionPage() {
       const questionData = questionRes.data;
       setQuestion(questionData);
       setSubjects(subjectsRes.data);
-      setTags(tagsRes.data);
+      setTags(tagsRes.data.tags || []);
 
       // Populate form data
       setFormData({
@@ -163,7 +163,7 @@ export default function EditPYQQuestionPage() {
   const loadTopics = async (subjectId: string) => {
     try {
       const response = await api.get(`/admin/topics?subjectId=${subjectId}`);
-      setTopics(response.data);
+      setTopics(response.data.topics || []);
     } catch (error) {
       console.error('Error loading topics:', error);
     }
@@ -172,7 +172,7 @@ export default function EditPYQQuestionPage() {
   const loadSubtopics = async (topicId: string) => {
     try {
       const response = await api.get(`/admin/subtopics?topicId=${topicId}`);
-      setSubtopics(response.data);
+      setSubtopics(response.data.subtopics || []);
     } catch (error) {
       console.error('Error loading subtopics:', error);
     }

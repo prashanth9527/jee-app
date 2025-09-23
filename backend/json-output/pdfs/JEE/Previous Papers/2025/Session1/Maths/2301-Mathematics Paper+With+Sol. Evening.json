@@ -1,0 +1,1168 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2025\\Session1\\Maths\\2301-Mathematics Paper+With+Sol. Evening.pdf",
+  "relativePath": "JEE\\Previous Papers\\2025\\Session1\\Maths\\2301-Mathematics Paper+With+Sol. Evening.pdf",
+  "metadata": {
+    "originalFileName": "2301-Mathematics Paper+With+Sol. Evening.pdf",
+    "subject": "Mathematics",
+    "year": 2025,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 8,
+    "fileSize": 6405611,
+    "processedAt": "2025-09-23T00:14:42.613Z"
+  },
+  "content": {
+    "originalText": "1 JEE–MAIN EXAMINATION – JANUARY 2025 MATHEMATICS TEST PAPER WITH SOLUTION  (HELD ON THURSDAY 23\nrd JANUARY 2025) TIME : 3:00 PM TO 6:00 PM SECTION-A 1\n. If in the expansion of (1 + x )\np (1 – x)\nq , the coefficients of x and x\n2 are 1 and –\n2, respectively, then p\n2 + q\n2 is equal to : (1) 8 (2) 18 (3) 13 (4) 20 Ans. (3) Sol.    \n\n \npq\nppp2qqq2\n012012\n1 x1 xCC xC x...CC xC x... coff of x  \np\nq\np\nq\n0\n1\n1\n0\nC\nC\nC C\n1 p – q = 1 coff of x\n2  \n\n \np\nq\np\nq\np\nq\n0\n2\n1\n1\n2\n0\nC\nC\nC\nC\nC\nC\n2  \n \n\n \n \nq q 1\np p 1\npq\n2\n22      \n22\nq\nq 2pq p\np\n4 1– (p + q) = – 4 p + q = 5 p = 3 q = 2 so p\n2 + q\n2 = 13 2. Let A = {(x, y)  R × R : |x + y| } and B = {(x, y)  R × R : |x| + |y|  3}. If C = {(x, y)  A  B : x = 0 or y = 0}, then ( , )\n||\nxyC\nxy\n\n\n\nis : (1) 15 (2) 18 (3) 24 (4) 12 Ans. (4) Sol. C = {(3,0), (–3,0), (0,3), (0,–3)} |x + y| = 12 3. The system of equations x + y + z = 6, x + 2y + 5z = 9, x + 5y + z = μ, has no solution if (1)  = 17, μ  18 (2)   17, μ  18 (3)  = 15, μ  17 (4)  = 17, μ  18 Ans. (1) Sol. \n\n1 1 1\nD\n1 2 5\n0\n15  = 17 \n\nz\n1 1 6\nD\n1 2 9\n0\n15 18 4. Let  \n3\nx sin xdx g xC\n\n, where C is the constant of integration. If 32\n8 gg '\n22\n\n\n   \n  \n\n   \n   \n\n+ , , ,   Z, Then  +  –  equals : (1) 55 (2) 47 (3) 48 (4) 62 Ans. (1) Sol.  \n\n332\nx sin xdxx cos x3x cos xdx  \n\n32\nx cos x 3x sin x6x sin xdx  \n32\nx cos x 3x sin x 6x cos x 6sin x c So  \n \n32\ng xx cos x 3x sin x 6x cos x 6sin x \n\n\n\n\n2\n3\ng6\n24  \n \n23\ng ' x3x cos x x sin x\n6 cos x 6 cos x \n\n\n\n\n3\ng'\n28 \n\n   \n    \n\n   \n   \n\n32\n8 gg '648\n22 So  +  –  = 55 ALLEN 2  5. A rod of length eight units moves such that its ends A and B always lie on the lines x – y + 2 = 0 and y + 2 = 0, respectively. If the locus of the point P, that divides the rod AB internally in the ratio 2 : 1 is 9(x\n2 + y\n2 + xy + x + 28 y) – 76 = 0, then  –  –  is equal to : (1) 24 (2) 23 (3) 21 (4) 22 Ans. (2) Sol. A (\n\n,\n +2) y = x + 2 B(\n\n,\n–\n2) y=\n–\n2  \n\n3\nh\n3    \n\n42\nk\n3  = 3k + 2 2 = 3h – a = 3h – 3k – 2 so AB = 8    \n   \n22\n464 \n\n\n\n    \n\n\n\n\n2\n2\n3h 3k 2\n3k 23k 2 464\n2 \n\n\n  \n2\n2\n9k 3h 6\n3k 664\n4   \n\n     \n\n\n22\n9 3k h 24 k 264 4 9(x\n2 + 13y\n2 – 6xy – 4x + 28y) = 76       13 6 4 23 6\n. The distance of the line x 2y 6z 3\n234\n\n from the point (1, 4, 0) along the line xy 2z 3\n123\n\n is : (1) 17 (2) 14 (3) 15 (4) 13 Ans. (2) Sol. Let the parallel line is \n\n\n\nx 1\ny 4\nz 0\n1\n2\n3 so their point of intersection is ( + 1, 2 + 4 3) = (2t + 2, 3t + 6, 4t + 3)  = 2t + 1 2 + 4 = 3t + 6  t = 0 so POI is (2,6,3) so distance      \n     \n222\n2 16 43 0 = 14 7. Let the point A divide the line segment joining the points P(–1, –1, 2) and Q(5, 5,10) internally in the ratio r : 1 (r > 0). If O is the origin and \n\n2\n1\nOQ.OA\nOP OA\n10\n5\n\n\n\n, then the value of r is : (1) 14 (2) 3 (3) 7 (4) 7 Ans. (4) Sol.  \n\n\n\n \n\n5r 1 5r 1 10r 2\nA,,\nr 1 r 1r 1 \n\n\n2\nOP OA\nOQ.OA10\n5 ....(1) \n\n\n5\nOQ.OA30r 2\nr1  \n \n\n\n2\n2\n2\nr\nOP OA800\nr1 so by equation (1) \n \n \n \n\n\n2\n2\nr 800\n101\n15r 110\nr 15\nr1 2r\n2 – 14r = 0 r = 7, r  0 8. If the area of the region {(x, y) : –1  x  1, 0  y a + e\n|x| –e\n–x\n, a > 0} is 2\ne8e 1\ne\n\n, then the value of a is : (1) 7 (2) 6 (3) 8 (4) 5 Ans. (4) ALLEN 3  Sol. (\n0,a\n) x = –\n1 x = 1 O required area is \n\n  \n\n1\nxx\n0\naa eedx \n\n  \n\n1\nxx\n0\na\na e\ne 2a + e – 1 + e\n–\n1 – 1 = e + 8 + 1\ne 2a = 10  a = 5 9. A spherical chocolate ball has a layer of ice-cream of uniform thickness around it. When the thickness of the ice-cream layer is 1 cm, the ice-cream melts at the rate of 81 cm\n3\n/min and the thickness of the ice-cream layer decreases at the rate of 1\n4 cm/min. The surface area (in cm\n2\n) of the chocolate ball (without the ice-cream layer) is : (1) 225  (2) 128  (3) 196  (4) 256  Ans. (4) Sol 1cm r \n3\n4\nvr\n3 \n2\ndvdr\n4r\ndtdt   \n\n2\n1\n81 4 r\n4 r\n2 = 81 r = 9 surface area of chocolate = 4(r – 1)\n2 = 256\n10. A board has 16 squares as shown in the figure : Out of these 16 squares, two squares are chosen at random. The probability that they have no side in common is : (1) 4\n5 (2) 7\n10 (3) 3\n5 (4) 23\n30 Ans. (1) Sol. Total ways for selecting any two squares = 16\nC\n2 = 120 Total ways for selecting common side squares    \nHorizontal sidevertical side\n3 43 4 = 24 so required probability = \n24\n1\n120 = 4\n5 11. Let x = x(y) be the solution of the differential equation dxx\nyx ysin\ndyy\n  \n\n  \n  \n, y > 0 and x(1) = 2\n\n. Then cos(x(2)) is equal to : (1) 1 – 2(log\ne\n2)\n2 (2) 2(log\ne\n2)\n2 – 1 (3) 2(log\ne\n2) – 1 (4) 1 – 2(log\ne\n2) Ans. (2) Sol. ydy = (xdy – ydx) sin\nx\ny\n\n\n 2\ndyxdy ydxx\nsin\nyy\ny\n\n\n\n\n\n\n\n ALLEN 4  dy\nx\nx\nsin\nd\ny\ny\ny\n   \n\n   \n    ny = cos\nx\ny + C x(1) = 2\n  0 = cos\n2\n + C  C=0 ny = cos\nx\ny but y = 2  cos\nx\n2\n= n2 cosx = 2cos\n2\nx\n2 – 1 = 2(n2)\n2 – 1 12. Let the range of the function f(x) = 6 + 16 cosx . cos\nx\n3\n\n\n\n\n\n. cos x\n3\n\n\n\n\n\n. sin3x . cos6x, x  R be [, ]. Then the distance of the point (, ) from the line 3x + 4y + 12 = 0 is : (1) 11 (2) 8 (3) 10 (4) 9 Ans. (1) Sol. f(x) = 6 + 16\n1\ncos 3x\n4\n\n\n\nsin3x.cos6x = 6 + 4 cos3x sin3x cos6x = 6 + sin12x Range of f(x) is [5, 7] ()  (5, 7) distance = 15 28 12\n5\n = 11 13. Let the shortest distance from (a, 0), a > 0, to the parabola y\n2 = 4x be 4. Then the equation of the circle passing through the point (a, 0) and the focus of the parabola, and having its centre on the axis of the parabola is: (1) 22\nxy6x 5 0    (2) 22\nxy4x 3 0    (3) 22\nxy10x 9 0    (4) 22\nxy8x 7 0    Ans. (1) Sol. Normal at P y + tx = 2t + t\n3  (a, 0) at = 2t + t\n3 a = 2 + t\n2 (2 + t\n2\n,0) P = 4  4 + 4t\n2 = 16 4t\n2 = 12  t\n2 = 3 a = 5 (5, 0) Focus (1, 0) (1, 0) & (5, 0) will be tha end pts. of diameter  Eg\nn of circle is (x –\n1) (x – 5) + y\n2 = 0 x\n2 + y\n2 – 6x + 5 = 0 14. Let X = R × R. Define a relation R on X as: (a\n1\n, b\n1\n) R (a\n2\n, b\n2\n)  b\n1 = b\n2\n. Statement-I: R is an equivalence relation. Statement-II: For some (a, b) X, the set S = {(x, y)  X : (x, y) R (a, b)} represents a line parallel to y = x. In the light of the above statements, choose the correct answer from the options given below: (1) Both Statement-I and Statement-II are false. (2) Statement-I is true but Statement-II is false. (3) Both Statement-I and Statement-II are true. (4) Statement-I is false but Statement-II is true. Ans. (2) Sol. Statement – I : Reflexive : (a\n1\n,b) R(a\n1\n, b\n1\n)  b\n1 = b\n1 True Symmetric : (a\n1\n,b\n1\n) R (a\n2\n, b\n2\n)  b\n1 = b\n2 (a\n2\n,b\n2\n) R (a\n1\n, b\n1\n)  b\n2 = b\n1 Transitive : (a\n1\n, b\n1\n) R (a\n2\n, b\n2\n)  b\n1 = b\n2 & (a\n2\n, b\n2\n) R (a\n3\n, b\n3\n) b\n2 = b\n3  (a\n1\n, b\n1\n) R (a\n3\n. b\n3\n)  True Hence Relation R is an equivence relation Statement-I is true. For statement – II  y = b so False 4 \n(a,0) P(t\n2\n,2t) \nTrue\n\n13\nbb\nALLEN 5  15. The length of the chord of the ellipse 22\nxy\n1\n42\n\n, whose mid-point is 1\n1,\n2\n\n\n\n, is: (1) 2\n15\n3 (2) 5\n15\n3 (3) 1\n15\n3 (4) 15 Ans. (1) Sol. T = S\n1 1\n2\nx.1\ny.\n1\n1\n4\n2\n4\n8\n   x +y = 3\n2 solve with ellipse P\n = \n \n\n22\n2\n1\n2\n1\nx – x\ny – y\n = 21\n2 x – x \n(\nx\n2\n,y\n2\n) P(\nx\n1\n,\ny\n1\n) y\n2 = 3\n2\n–x\n2 y\n1 = 3\n2\n– x\n1 y\n2 – y\n1 = x\n2 – x\n1 x\n2 + 2y\n2 = 4 x\n2 + 2 2\n3\n–x\n2\n\n\n = 4 6x\n2 – 12x + 1 = 0 x\n1 + x\n2 = 2 x\n1\nx\n2 = 1/6 \n2\n21211 2\nx – xx x – 4x x = 4 – 4 6 PR = 52\n2.2.15\n3\n23\n = 5\n2\n6 16. Let A = [a\nij\n] be a 3 × 3 matrix such that A 00\n1\n0 ,\n01\n   \n   \n\n   \n   \n   \n40\nA 1\n1\n30\n   \n   \n\n   \n   \n    and 21\nA 1\n0\n20\n   \n   \n\n   \n   \n   \n, then a\n23 equals: (1) –1 (2) 0 (3) 2 (4) 1 Ans. (1) Sol. Let A = 11\n12\n13\n21\n22\n23\n31\n32\n33\na\na\na\na\na\na\na\na\na\n\n\n\n A\n0\n1\n0\n\n\n\n\n=\n0\n0\n1\n\n\n\n\n\n12\n22\n32\na\na\na\n\n\n\n\n= 0\n1\n0\n\n\n\n\n 22\n12\n32\na\n0; a\n0\na1\n\n A\n40\n11\n30\n   \n   \n\n   \n   \n\n11\n12\n13\n21\n22\n23\n21\n23\n31\n32\n33\n4a\na\n3a\n0\n4a\na\n3a\n1\n4a\n3a\n1\n4a\na\n3a\n0\n  \n     \n  \n A\n21\n10\n20\n   \n   \n\n   \n   \n\n111213\n2122232123\n313233\n2aa2a1\n2aa2a0aa0\n2aa2a0\n  \n     \n   –4a\n23 + 3a\n23 = 1  a\n23 = –1 17. The number of complex numbers z, satisfying |z| = 1 and zz\n1\nzz\n\n, is : (1) 6 (2) 4 (3) 10 (4) 8 Ans. (4) Sol. \n\ni\nze \n\ni2\nz\ne\nz   \n     \ni212\nzz1\n1ee1cos 2\nzz2 8 solution ALLEN 6  18. If the square of the shortest distance between the lines x 2\ny 1\nz 3\n1\n2\n3\n\n\n\n\n and x 1\ny 3\nz 5\n2\n4\n5\n\n\n\n\n is m\nn\n, where m, n are coprime numbers, then m + n is equal to: (1) 6 (2) 9 (3) 21 (4) 14 Ans. (2) Sol. \n\n\na\n2,1, 3 \n\n   \nb\n1, 3, 5  \n\n\nˆ ˆ ˆ\ni\nj\nk\np q\n1 2\n3\n2 4\n5 \nˆˆ\n2i j     \nˆ ˆ ˆ\nb a3i 4 j 2k  \n \n\n\n\nd\nb a . p q\nS\npq\n- \n2\n5  \n\n2\nd\n4\nS\n5 m = 4, n = 5  m + n = 9 19. If I = 3\n2\n2\n33\n0\n22\nsin x\ndx\nsin x cos x\n\n\n\n, then 2l\n44\n0\nx sin x cos x\ndx\nsin x cos x\n equals: (1) 2\n16\n (2) 2\n4\n (3) 2\n8\n (4) 2\n12\n Ans. (1) Sol. For I Apply king (P– 5) and add \n\n  \n\n/2\n0\n2IdxI\n24 \n\n\n\n/2\n2\n44\n0\nx sin x cos x\nI\ndx\nsin x cos x Apply king and add \n\n\n\n\n/2\n2\n2\n4\n0\ntan x sec xdx\nI\n4\ntan x 1 put tan\n2\nx = t \n\n\n\n2\n0\ndt\n8\nt1   \n\n2\n.\n8 2\n16 20. \n\n\n\n\n\n\n\nx\n2\n2\nx\nx\n2\n2x\n3x 5 3x 1\nlim\n3x\n5x 4\n3x 2\n\n \n\n \n is equal to: (1) 2\n3e (2) 2e\n3 (3) 2e\n3 (4) 2\n3e Ans. (4) Sol. \n\n \n\n\n\n \n\n\nx /2\n2\nx /2\nx\n2\n351\n21\nx3x\nx\nlim\n542\n31\nx3x\nx \n\n\n\n\n\n\n\n\n\nx1\n11\n23x\nx2\nx\n11\n23x\n2e\nlim .\n3\ne \n\n\n1\n1\n6\n2\n1/3\n2 e2\n.e\n33\ne ALLEN 7  SECTION-B 21. The number of ways, 5 boys and 4 girls can sit in a row so that either all the boys sit together or no two boys sit together, is ________. Ans. (17280) Sol. A : number of ways that all boys sit together = 5! × 5! B : number of ways if no 2 boys sit together = 4! × 5! A  B =  Required no. of ways = 5! × 5! + 4! × 5! = 17280 22. Let ,  be the roots of the equation x\n2 – ax –b = 0 with Im() < Im(). Let P\nn = \nn – \nn\n. If 3\nP\n5 7 i\n\n, 4\nP\n3 7 i\n\n, 5\nP\n11 7 i\n and 6\nP\n45 7 i\n\n, then 44\n  is equal to ________. Ans. (31) Sol.  +  = a  = –b P\n6 = aP\n5 + bP\n4 \n  45 7i a 11 7i b 3 7 i 45 = 11a – 3b ...(1) and P\n5 = aP\n4 + bP\n3 \n  11 7i a3 7ib 5 7i 11 = –3a – 5b ...(2) a = 3, b = –4 \n       \n2\n44444 4\n4   \n4\n63 4.4   63 1024961 31 23. The focus of the parabola y\n2 = 4x + 16 is the centre of the circle C of radius 5. If the values of , for which C passes through the point of intersection of the lines 3x – y = 0 and x + y = 4, are \n1 and \n2\n, \n1 < \n2\n, then 12\n1 + 29\n2 is equal to _______. Ans. (15) Sol. y\n2 = 4(x + 4) Equation of circle (x + 3)\n2 + y\n2 = 25 Passes through the point of intersection of two lines 3x – y = 0 and x + y = 4 \n\n   \n\n4\n12\n,\n3\n1 3\n1\n, we get   \n7\n,1\n6 ;   \n12\n12\n29 ; –14 + 29 = 15 24. The variance of the numbers 8, 21, 34, 47, ..., 320, is ________. Ans. (8788) Sol. 8 + (n –1)13 = 320 13n = 325 n = 25 no. of terms = 25 mean = \n\n\n\n  \n\ni\n25\n8 320\nx\n8 21 ... 320\n2\nn\n25\n25 variance \n\n\n  \n2\n2\n2\ni\nx\nmean\nn  \n  \n\n2\n2\n2\n2\n8\n21\n.... 320\n164\n13 = 8788 25. The roots of the quadratic equation 3x\n2 – px + q = 0 are 10\nth and 11\nth terms of an arithmetic progression with common difference 3\n2\n. If the sum of the first 11 terms of this arithmetic progression is 88, then q – 2q is equal to _________. Ans. (474) Sol. \n\n11\n11\nS2a 10d88\n2 a + 5d = 8    \n31\na 8 5\n22 Roots are      \n10\n13\nTa 9d914\n22      \n11\n1331\nTa 10d10\n222     \n1011\np3159\nTT14\n322 \n177\np\n2     \n1011\nq\nTT7 31 217\n3 q = 651 q – 2p = 651 – 177 = 474 ALLEN",
+    "questions": [
+      {
+        "number": "2",
+        "text": "Let A = {(x, y)  R × R : |x + y| } and B = {(x, y)  R × R : |x| + |y|  3}. If C = {(x, y)  A  B : x = 0 or y = 0}, then ( , )\n||\nxyC\nxy\n\n\n\nis : (1) 15 (2) 18 (3) 24 (4) 12",
+        "formattedText": "Let A = {(x, y)  R × R : |x + y| } and B = {(x, y)  R × R : |x| + |y|  3}. If C = {(x, y)  A  B : x = 0 or y = 0}, then ( , )\n||\nxyC\nxy\n\n\n\nis : (1) 15 (2) 18 (3) 24 (4) 12",
+        "latexText": "\\(Let A = {(x, y)  R \\times R : \\left|x + y\\right| } and B = {(x, y)  R \\times R : \\left|x\\right| + \\left|y\\right|  3}. If C = {(x, y)  A  B : x = 0 or y = 0}, then ( , ) || \\frac{xyC}{xy}   is : (1) 15 (2) 18 (3) 24 (4) 12\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "7",
+        "text": "Let the point A divide the line segment joining the points P(–1, –1, 2) and Q(5, 5,10) internally in the ratio r : 1 (r > 0). If O is the origin and \n\n2\n1\nOQ.OA\nOP OA\n10\n5\n\n\n\n, then the value of r is : (1) 14 (2) 3 (3) 7 (4) 7",
+        "formattedText": "Let the point A divide the line segment joining the points P(–1, –1, 2) and Q(5, 5,10) internally in the ratio r : 1 (r > 0). If O is the origin and \n\n2\n1\nOQ.OA\nOP OA\n10\n5\n\n\n\n, then the value of r is : (1) 14 (2) 3 (3) 7 (4) 7",
+        "latexText": "\\(Let the point A divide the line segment joining the points P(–1, –1, 2) and Q(5, 5,10) internally in the ratio r : 1 (r > 0). If O is the origin and   2^{1} OQ.OA OP OA^{10}^{5}   , then the value of r is : (1) 14 (2) 3 (3) 7 (4) 7\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "OQ",
+            "latex": "OQ",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "OA",
+            "latex": "OA",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "OP",
+            "latex": "OP",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "OA",
+            "latex": "OA",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "9",
+        "text": "A spherical chocolate ball has a layer of ice-cream of uniform thickness around it. When the thickness of the ice-cream layer is 1 cm, the ice-cream melts at the rate of 81 cm\n3\n/min and the thickness of the ice-cream layer decreases at the rate of 1\n4 cm/min. The surface area (in cm\n2\n) of the chocolate ball (without the ice-cream layer) is : (1) 225  (2) 128  (3) 196  (4) 256 ",
+        "formattedText": "A spherical chocolate ball has a layer of ice-cream of uniform thickness around it. When the thickness of the ice-cream layer is 1 cm, the ice-cream melts at the rate of 81 cm\n3\n/min and the thickness of the ice-cream layer decreases at the rate of 1\n4 cm/min. The surface area (in cm\n2\n) of the chocolate ball (without the ice-cream layer) is : (1) 225  (2) 128  (3) 196  (4) 256 ",
+        "latexText": "\\(A spherical chocolate ball has a layer of ice-cream of uniform thickness around it. When the thickness of the ice-cream layer is 1 cm, the ice-cream melts at the rate of 81 cm^{3} /\\min and the thickness of the ice-cream layer decreases at the rate of 1^{4} \\frac{cm}{\\min}. The surface area (in cm^{2} ) of the chocolate ball (without the ice-cream layer) is : (1) 225  (2) 128  (3) 196  (4) 256 \\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "225 "
+          },
+          {
+            "letter": "2",
+            "text": "128 "
+          },
+          {
+            "letter": "3",
+            "text": "196 "
+          },
+          {
+            "letter": "4",
+            "text": "256 "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "225 ",
+            "formattedText": "225 ",
+            "latexText": "225 "
+          },
+          {
+            "letter": "2",
+            "text": "128 ",
+            "formattedText": "128 ",
+            "latexText": "128 "
+          },
+          {
+            "letter": "3",
+            "text": "196 ",
+            "formattedText": "196 ",
+            "latexText": "196 "
+          },
+          {
+            "letter": "4",
+            "text": "256 ",
+            "formattedText": "256 ",
+            "latexText": "256 "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "cm/min",
+            "latex": "\\(\\frac{cm}{\\min}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "10",
+        "text": "A board has 16 squares as shown in the figure : Out of these 16 squares, two squares are chosen at random. The probability that they have no side in common is : (1) 4\n5 (2) 7\n10 (3) 3\n5 (4) 23\n30",
+        "formattedText": "A board has 16 squares as shown in the figure : Out of these 16 squares, two squares are chosen at random. The probability that they have no side in common is : (1) 4\n5 (2) 7\n10 (3) 3\n5 (4) 23\n30",
+        "latexText": "\\(A board has 16 squares as shown in the figure : Out of these 16 squares, two squares are chosen at random. The probability that they have no side in common is : (1) 4^{5} (2) 7^{10} (3) 3^{5} (4) 23^{30}\\)",
+        "options": [
+          {
+            "letter": "2",
+            "text": "7 10"
+          },
+          {
+            "letter": "4",
+            "text": "23 30"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "2",
+            "text": "7 10",
+            "formattedText": "7 10",
+            "latexText": "7 10"
+          },
+          {
+            "letter": "4",
+            "text": "23 30",
+            "formattedText": "23 30",
+            "latexText": "23 30"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "18",
+        "text": "If the square of the shortest distance between the lines x 2\ny 1\nz 3\n1\n2\n3\n\n\n\n\n and x 1\ny 3\nz 5\n2\n4\n5\n\n\n\n\n is m\nn\n, where m, n are coprime numbers, then m + n is equal to: (1) 6 (2) 9 (3) 21 (4) 14",
+        "formattedText": "If the square of the shortest distance between the lines x 2\ny 1\nz 3\n1\n2\n3\n\n\n\n\n and x 1\ny 3\nz 5\n2\n4\n5\n\n\n\n\n is m\nn\n, where m, n are coprime numbers, then m + n is equal to: (1) 6 (2) 9 (3) 21 (4) 14",
+        "latexText": "\\(If the square of the shortest distance between the lines x 2 y 1 z 3^{1} 2^{3}      and x 1 y 3 z 5^{2} 4^{5}      is \\frac{m}{n}, where m, n are coprime numbers, then m + n is equal to: (1) 6 (2) 9 (3) 21 (4) 14\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "21",
+        "text": "The number of ways, 5 boys and 4 girls can sit in a row so that either all the boys sit together or no two boys sit together, is ________.",
+        "formattedText": "The number of ways, 5 boys and 4 girls can sit in a row so that either all the boys sit together or no two boys sit together, is ________.",
+        "latexText": "\\(The number of ways, 5 boys and 4 girls can sit in a row so that either all the boys sit together or no two boys sit together, is ________.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 1\n",
+        "type": "mathematical",
+        "position": 151
+      },
+      {
+        "equation": "q = 1 coff of x\n2 ",
+        "type": "mathematical",
+        "position": 449
+      },
+      {
+        "equation": "p + q) = ",
+        "type": "mathematical",
+        "position": 587
+      },
+      {
+        "equation": "p + q = 5 p = 3 q = 2 so p\n2 + q\n2 = 13 2",
+        "type": "mathematical",
+        "position": 600
+      },
+      {
+        "equation": "A = ",
+        "type": "mathematical",
+        "position": 647
+      },
+      {
+        "equation": "x + y",
+        "type": "mathematical",
+        "position": 670
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 686
+      },
+      {
+        "equation": "C = ",
+        "type": "mathematical",
+        "position": 727
+      },
+      {
+        "equation": "x = 0 or y = 0",
+        "type": "mathematical",
+        "position": 749
+      },
+      {
+        "equation": "C = ",
+        "type": "mathematical",
+        "position": 840
+      },
+      {
+        "equation": "x + y",
+        "type": "mathematical",
+        "position": 877
+      },
+      {
+        "equation": "x + y + z = 6",
+        "type": "mathematical",
+        "position": 916
+      },
+      {
+        "equation": "x + 2y + 5z = 9",
+        "type": "mathematical",
+        "position": 931
+      },
+      {
+        "equation": "x + 5y + ",
+        "type": "mathematical",
+        "position": 948
+      },
+      {
+        "equation": "z = ",
+        "type": "mathematical",
+        "position": 958
+      },
+      {
+        "equation": "y + 2 = 0 and y + 2 = 0",
+        "type": "mathematical",
+        "position": 1818
+      },
+      {
+        "equation": "y + ",
+        "type": "mathematical",
+        "position": 1960
+      },
+      {
+        "equation": "x + 28 y) ",
+        "type": "mathematical",
+        "position": 1965
+      },
+      {
+        "equation": "y = x + 2 B(\n",
+        "type": "mathematical",
+        "position": 2070
+      },
+      {
+        "equation": "y=\n",
+        "type": "mathematical",
+        "position": 2092
+      },
+      {
+        "equation": "k + 2 2",
+        "type": "mathematical",
+        "position": 2134
+      },
+      {
+        "equation": "a = 3h ",
+        "type": "mathematical",
+        "position": 2150
+      },
+      {
+        "equation": "B = 8 ",
+        "type": "mathematical",
+        "position": 2170
+      },
+      {
+        "equation": "x + 28y) = 76 ",
+        "type": "mathematical",
+        "position": 2372
+      },
+      {
+        "equation": "t + 2",
+        "type": "mathematical",
+        "position": 2675
+      },
+      {
+        "equation": "t + 6",
+        "type": "mathematical",
+        "position": 2683
+      },
+      {
+        "equation": "t + 3) ",
+        "type": "mathematical",
+        "position": 2691
+      },
+      {
+        "equation": "t + 1 2",
+        "type": "mathematical",
+        "position": 2703
+      },
+      {
+        "equation": "t + 6 ",
+        "type": "mathematical",
+        "position": 2719
+      },
+      {
+        "equation": "t = 0 so POI is (2",
+        "type": "mathematical",
+        "position": 2727
+      },
+      {
+        "equation": "r = 0 r = 7",
+        "type": "mathematical",
+        "position": 3276
+      },
+      {
+        "equation": "a + e\n",
+        "type": "mathematical",
+        "position": 3354
+      },
+      {
+        "equation": "x = ",
+        "type": "mathematical",
+        "position": 3482
+      },
+      {
+        "equation": "x = 1 O required area is ",
+        "type": "mathematical",
+        "position": 3490
+      },
+      {
+        "equation": "a + e ",
+        "type": "mathematical",
+        "position": 3573
+      },
+      {
+        "equation": "e + 8 + 1\ne 2a = 10 ",
+        "type": "mathematical",
+        "position": 3597
+      },
+      {
+        "equation": "a = 5 9",
+        "type": "mathematical",
+        "position": 3619
+      },
+      {
+        "equation": "e-cream of uniform thickness around it",
+        "type": "mathematical",
+        "position": 3672
+      },
+      {
+        "equation": "e-cream layer is 1 cm",
+        "type": "mathematical",
+        "position": 3740
+      },
+      {
+        "equation": "e-cream melts at the rate of 81 cm\n3\n/min and the thickness of the ice-cream layer decreases at the rate of 1\n4",
+        "type": "mathematical",
+        "position": 3769
+      },
+      {
+        "equation": "m/min",
+        "type": "mathematical",
+        "position": 3883
+      },
+      {
+        "equation": "e-cream layer) is ",
+        "type": "mathematical",
+        "position": 3955
+      },
+      {
+        "equation": "r = 9 surface area of chocolate = 4",
+        "type": "mathematical",
+        "position": 4094
+      },
+      {
+        "equation": "s = 16\nC\n2 = 120 Total ways for selecting common side squares ",
+        "type": "mathematical",
+        "position": 4402
+      },
+      {
+        "equation": "y = ",
+        "type": "mathematical",
+        "position": 4535
+      },
+      {
+        "equation": "x = x(y) be the solution of the differential equation dxx\nyx ysin\ndyy\n",
+        "type": "mathematical",
+        "position": 4564
+      },
+      {
+        "equation": "y = (xdy ",
+        "type": "mathematical",
+        "position": 4808
+      },
+      {
+        "equation": "y = cos\nx\ny + C x(1) = 2\n",
+        "type": "mathematical",
+        "position": 4949
+      },
+      {
+        "equation": "C=0 ",
+        "type": "mathematical",
+        "position": 4996
+      },
+      {
+        "equation": "y = cos\nx\ny but y = 2 ",
+        "type": "mathematical",
+        "position": 5002
+      },
+      {
+        "equation": "x = 2cos\n2\nx\n2 ",
+        "type": "mathematical",
+        "position": 5043
+      },
+      {
+        "equation": "x + 4y + 12 = 0 is ",
+        "type": "mathematical",
+        "position": 5263
+      },
+      {
+        "equation": "x = 6 + 4 cos3x sin3x cos6x = 6 + sin12x Range of f(x) is ",
+        "type": "mathematical",
+        "position": 5368
+      },
+      {
+        "equation": "e = 15 28 12\n5\n",
+        "type": "mathematical",
+        "position": 5456
+      },
+      {
+        "equation": "y + tx = 2t + t\n3 ",
+        "type": "mathematical",
+        "position": 5829
+      },
+      {
+        "equation": "t = 2t + t\n3 a = 2 + t\n2 ",
+        "type": "mathematical",
+        "position": 5857
+      },
+      {
+        "equation": "a = 5 ",
+        "type": "mathematical",
+        "position": 5940
+      },
+      {
+        "equation": "x + 5 = 0 14",
+        "type": "mathematical",
+        "position": 6076
+      },
+      {
+        "equation": "X = R ",
+        "type": "mathematical",
+        "position": 6094
+      },
+      {
+        "equation": "t-I",
+        "type": "mathematical",
+        "position": 6184
+      },
+      {
+        "equation": "t-II",
+        "type": "mathematical",
+        "position": 6227
+      },
+      {
+        "equation": "S = ",
+        "type": "mathematical",
+        "position": 6262
+      },
+      {
+        "equation": "y = x",
+        "type": "mathematical",
+        "position": 6327
+      },
+      {
+        "equation": "t-I and Statement-II are false",
+        "type": "mathematical",
+        "position": 6445
+      },
+      {
+        "equation": "t-I is true but Statement-II is false",
+        "type": "mathematical",
+        "position": 6489
+      },
+      {
+        "equation": "t-I and Statement-II are true",
+        "type": "mathematical",
+        "position": 6545
+      },
+      {
+        "equation": "t-I is false but Statement-II is true",
+        "type": "mathematical",
+        "position": 6588
+      },
+      {
+        "equation": "t-I is true",
+        "type": "mathematical",
+        "position": 6979
+      },
+      {
+        "equation": "y = b so False 4 ",
+        "type": "mathematical",
+        "position": 7013
+      },
+      {
+        "equation": "d-point is 1\n1",
+        "type": "mathematical",
+        "position": 7146
+      },
+      {
+        "equation": "T = S\n1 1\n2\nx",
+        "type": "mathematical",
+        "position": 7233
+      },
+      {
+        "equation": "x +y = 3\n2 solve with ellipse P\n",
+        "type": "mathematical",
+        "position": 7270
+      },
+      {
+        "equation": "x + 1 = 0 x\n1 + x\n2 = 2 x\n1\nx\n2 = 1/6 ",
+        "type": "mathematical",
+        "position": 7489
+      },
+      {
+        "equation": "R = 52\n2",
+        "type": "mathematical",
+        "position": 7569
+      },
+      {
+        "equation": "A = ",
+        "type": "mathematical",
+        "position": 7606
+      },
+      {
+        "equation": "A = 11\n12\n13\n21\n22\n23\n31\n32\n33\na\na\na\na\na\na\na\na\na\n",
+        "type": "mathematical",
+        "position": 7877
+      },
+      {
+        "equation": "m + n is equal to",
+        "type": "mathematical",
+        "position": 8728
+      },
+      {
+        "equation": "q\n- ",
+        "type": "mathematical",
+        "position": 8931
+      },
+      {
+        "equation": "m = 4",
+        "type": "mathematical",
+        "position": 8957
+      },
+      {
+        "equation": "n = 5 ",
+        "type": "mathematical",
+        "position": 8964
+      },
+      {
+        "equation": "m + n = 9 19",
+        "type": "mathematical",
+        "position": 8972
+      },
+      {
+        "equation": "I = 3\n2\n2\n33\n0\n22\nsin x\ndx\nsin x cos x\n",
+        "type": "mathematical",
+        "position": 8989
+      },
+      {
+        "equation": "x = t ",
+        "type": "mathematical",
+        "position": 9330
+      },
+      {
+        "equation": "x /2\n2\nx /2\nx\n2\n351\n21\nx3x\nx\nlim\n542\n31\nx3x\nx ",
+        "type": "mathematical",
+        "position": 9559
+      },
+      {
+        "equation": "N-B 21",
+        "type": "mathematical",
+        "position": 9721
+      },
+      {
+        "equation": "r = 5",
+        "type": "mathematical",
+        "position": 9930
+      },
+      {
+        "equation": "r = 4",
+        "type": "mathematical",
+        "position": 9985
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 10001
+      },
+      {
+        "equation": "s = 5",
+        "type": "mathematical",
+        "position": 10026
+      },
+      {
+        "equation": "b = 0 with Im(",
+        "type": "mathematical",
+        "position": 10108
+      },
+      {
+        "equation": "n = ",
+        "type": "mathematical",
+        "position": 10140
+      },
+      {
+        "equation": "a = 3",
+        "type": "mathematical",
+        "position": 10431
+      },
+      {
+        "equation": "b = ",
+        "type": "mathematical",
+        "position": 10438
+      },
+      {
+        "equation": "x + 16 is the centre of the circle C of radius 5",
+        "type": "mathematical",
+        "position": 10551
+      },
+      {
+        "equation": "y = 0 and x + ",
+        "type": "mathematical",
+        "position": 10692
+      },
+      {
+        "equation": "y = 4",
+        "type": "mathematical",
+        "position": 10707
+      },
+      {
+        "equation": "x + 4) Equation of circle (x + 3)\n2 + y\n2 = 25 Passes through the point of intersection of two lines 3x ",
+        "type": "mathematical",
+        "position": 10807
+      },
+      {
+        "equation": "y = 0 and x + ",
+        "type": "mathematical",
+        "position": 10913
+      },
+      {
+        "equation": "y = 4 ",
+        "type": "mathematical",
+        "position": 10928
+      },
+      {
+        "equation": "n = 325 n = 25 no",
+        "type": "mathematical",
+        "position": 11129
+      },
+      {
+        "equation": "s = 25 mean = ",
+        "type": "mathematical",
+        "position": 11155
+      },
+      {
+        "equation": "x + q = 0 are 10\nth and 11\nth terms of an arithmetic progression with common difference 3\n2\n",
+        "type": "mathematical",
+        "position": 11357
+      },
+      {
+        "equation": "a + 5d = 8 ",
+        "type": "mathematical",
+        "position": 11598
+      },
+      {
+        "equation": "q = 651 q ",
+        "type": "mathematical",
+        "position": 11772
+      },
+      {
+        "equation": "p = 651 ",
+        "type": "mathematical",
+        "position": 11785
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 169
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1151
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1189
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1370
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1379
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1387
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1408
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1417
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1425
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1446
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1455
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1464
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1471
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1501
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1510
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1519
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1526
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1577
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1585
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1595
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1603
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2422
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2757
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4626
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4688
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 4722
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 4739
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 4760
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 4783
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4824
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4854
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4906
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4953
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4982
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5006
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5026
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5040
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5048
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5125
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5132
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5155
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5178
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5186
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5222
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5340
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5358
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5364
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5378
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5384
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5390
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5402
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5452
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5503
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5595
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8524
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8596
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9007
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9016
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9022
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9051
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9057
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9066
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9072
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9225
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9231
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9242
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9248
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9294
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9312
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9324
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Algebra",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "quadratic",
+          "matrix"
+        ],
+        "possibleSubtopics": [
+          "Quadratic Equations",
+          "Matrices",
+          "Complex Numbers",
+          "Sequences and Series"
+        ]
+      },
+      {
+        "name": "Calculus",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "integration"
+        ],
+        "possibleSubtopics": [
+          "Differentiation",
+          "Integration",
+          "Limits",
+          "Applications of Derivatives"
+        ]
+      },
+      {
+        "name": "Geometry",
+        "confidence": 0.2857142857142857,
+        "matchedKeywords": [
+          "circle",
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Quadratic Equations",
+        "parentTopic": "Algebra",
+        "confidence": 0.75,
+        "matchedKeywords": [
+          "quadratic",
+          "roots",
+          "equation"
+        ]
+      },
+      {
+        "name": "Complex Numbers",
+        "parentTopic": "Algebra",
+        "confidence": 1,
+        "matchedKeywords": [
+          "complex numbers"
+        ]
+      },
+      {
+        "name": "Integration",
+        "parentTopic": "Calculus",
+        "confidence": 0.25,
+        "matchedKeywords": [
+          "integration"
+        ]
+      },
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      }
+    ],
+    "tags": [],
+    "wordCount": 3734,
+    "characterCount": 11810
+  },
+  "images": []
+}

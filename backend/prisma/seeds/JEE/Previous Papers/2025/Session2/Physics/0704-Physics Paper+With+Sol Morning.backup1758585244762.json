@@ -1,0 +1,986 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2025\\Session2\\Physics\\0704-Physics Paper+With+Sol Morning.pdf",
+  "relativePath": "JEE\\Previous Papers\\2025\\Session2\\Physics\\0704-Physics Paper+With+Sol Morning.pdf",
+  "metadata": {
+    "originalFileName": "0704-Physics Paper+With+Sol Morning.pdf",
+    "subject": "Physics",
+    "year": 2025,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 9,
+    "fileSize": 7688608,
+    "processedAt": "2025-09-22T23:50:41.294Z"
+  },
+  "content": {
+    "originalText": "1 JEE–MAIN EXAMINATION – APRIL 2025\nPHYSICS TEST PAPER WITH SOLUTION \n(HELD ON MONDAY 07\nth APRIL 2025) TIME : 9:00 AM TO 12:00 NOON\nSECTION-A 26.Two harmonic waves moving in the same direction\nsuperimpose to form a wave x = a cos (1.5t) cos (50.5t)\nwhere t is in seconds. Find the period with which\nthey beat (close to nearest integer)\n(1) 6 s(2) 4 s\n(3) 1 s(4) 2 s\nAns. (4) Sol. The given equation can be written as aa\nx\ncos[1.5 50.5]t\ncos[50.5 1.5]\n22\n\n\n\n\naa\nx\ncos[52t]\ncos[49t]\n22\n\nHere, 2f\n1 & 2f\n2 = 49 1\n52\nf\n2\n\n\n, 2\n49\nf\n2\n\n\nf\nBeat = f\n1 – f\n2 =\n3\n2\nHz Beat\nBeat\n12\nTsec\nf3\n\n\n= 2.09 sec  2 sec 27.Two plane polarized light waves combine at a\ncertain point whose electric field components are\nE\n1 = E\n0 sin t\nE\n2 = E\n0 sin(t + 3\n\n) Find the amplitude of the resultant wave. (1) 0.9 E (2) E\n0\n(3) 1.7 E\n0\n(4) 3.4 E\n0\nAns. (3) Sol. 22\n0\n0\n0\n0\nE\n(E )\n(E )\n2(E )(E ) cos\n3\n\n\n\n\n22\n0000\nE2EE3E1.73E \n28.A wire of resistance R is bent into a triangular\npyramid as shown in figure with each segment\nhaving same length. The resistance between points\nA and B is R/n. The value of n is :\nA B (1) 16(2) 14\n(3) 10(4) 12\nAns. (4) Sol. As R\nr\n6\n\nr r r r r r A B r r r r\nr A B (As balanced wheat stone bridge is formed)\nNow, Equivalent resistance between A and B can be written as AB\n11112\nR2r2rrr\n   \nAB\nR\nR\n12\n\nALLEN 2  29. Uniform magnetic fields of different strengths (B\n1 and B\n2\n), both normal to the plane of the paper exist as shown in the figure. A charged particle of mass m and charge q, at the interface at an instant, moves into the region 2 with velocity and returns to the interface. It continues to move into region 1 and finally reaches the interface. What is the displacement of the particle during this movement along the interface ? × × × × × × × × × × × × × × × × × × × × × × × × × × × × × × × × Interface B\n1 B\n2 Region 2 Region 1 (Consider the velocity of the particle to be normal to the magnetic field and B\n2 > B\n1\n) (1) 2\n11\nB\nm\n1– 2\nqB\nB\n\n\n\n\n (2) 1\n12\nB\nm\n1–\nqB\nB\n\n\n\n (3) 2\n11\nB\nm\n1–\nqB\nB\n\n\n\n (4) 1\n12\nB\nm\n1– 2\nqB\nB\n\n\n\n\n Ans. (4) Sol. As v is  to B\n, so charge particle will move in circular path, whose radius is given by mv\nR\nqB\n A C D v Starting point  A Ending point  C  Net displacement = AC AC = CD – AD 12\n2mv2mv\nAC\nqBqB\n 1\n12\nB\n2mv\nAC1\nqBB\n\n\n\n 30. If 0\n\ndenotes the permittivity of free space and E\n\nis the flux of the electric field through the area bounded by the closed surface, then dimension of E\n0\nd\ndt\n\n\n\n\n\nare that of : (1) Electric field (2) Electric potential (3) Electric charge (4) Electric current Ans. (4) Sol. We know that formula for displacement current is given by 0\nd\nid\ndt\n\n\n 31. A rod of length 5 L is bent right angle keeping one side length as 2 L. 2L x 3L y The position of the centre of mass of the system: (Consider L = 10 cm) (1) 2i + 3j (2) 3i 7 j (3) 5i 8 j (4) 4i 9 j Ans. (4) Sol. y x COM of 3L (mass = 3m) COM of 2L (mass = 2m) com\n2m(10) 3m(0)\nx4cm\n5m\n\n com\n2m(0) 3m(15)\ny9cm\n5m\n\n com\nˆˆ\nr4i 9 j ALLEN 3  32. The percentage increase in magnetic field (B) when space within a current carrying solenoid is filled with magnesium (magnetic susceptibility \nmg = 1.2 × 10\n–5\n) is : (1) –3\n6\n10 %\n5\n (2) –5\n5\n10 %\n6\n (3) –4\n5\n10 %\n6\n (4) –5\n5\n10 %\n3\n Ans. (1) Sol. % change in new\nold\nold\nBB\nB\n100%\nB\n\n 00\n00\nμni μ ni(μ μ )\n100%100%\nμ niμ\n\n 0 r\n0\n0\n(μ μ\nμ )\n100%\nμ\n\n = (μ\nr –1) × 100% = n\n100%\n = 1.2 × 10\n–\n3 % 33. A lens having refractive index 1.6 has focal length of 12 cm, when it is in air. Find the focal length of the lens when it is placed in water. (Take refractive index of water as 1.28) (1) 355 mm (2) 288 mm (3) 555 mm (4) 655 mm Ans. (2) Sol. As we know, L\nm12\nμ\n111\n1\nfμRR\n \n\n \n  For air μ\nm = 1 \n12\n111\n1.6 1\n12RR\n\n \n\n 12\n1611\n1210 RR\n\n\n\n 12\n1110\nRR72\n\n\n\n For water 11.610\n1\nf1.2872\n  \n\n  \n  \n3210\n128 72\n 11 10\nf4 72\n f = 28.8 cm f = 288 mm 34. An ac current is represented as i = 5 2 10 cos 650 t\nAmp\n6\n\n\n\n \n\n The r.m.s value of the current is (1) 50 Amp (2) 100 Amp (3) 10 Amp (4) 52 Amp Ans. (3) Sol. i 5 2 10 cos 650 t\n6\n\n\n \n \n\n 22\ni\n50 100 cos\n650 t\n6\n\n\n \n \n\n (2)(5 2 )(10) cos 650 t\n6\n\n\n\n \n\n 2\n100\ni\n50\n0\n2\n    < i\n2 > = 100 < i > = 10 Amp. 35. Two thin convex lenses of focal lengths 30 cm and 10 cm are placed coaxially, 10 cm apart. The power of this combination is : (1) 5 D (2) 1 D (3) 20 D (4) 10 D Ans. (4) Sol. f\n1 = 30 cm, f\n2 = 10 cm eq121 2\n111d\nffff f\n  \n, d = distance between lens eq\n1110.1\nf0.3 0.1 (0.3)(0.1)\n   eq\n11\nf0.1\n Power = eq\n1\n10 D\nf\n ALLEN 4  36. In the following circuit, the reading of the ammeter will be (Take Zener breakdown voltage = 4 V) A V 100\n 400\n 12 V (1) 24 mA (2) 80 mA (3) 10 mA (4) 60 mA Ans. (3) Sol. 400\n 12V V A 1\n00\n V\n1 1\n400\n4\n48\nV\n12V\n12\nV\n100 400\n5\n5\n\n   \n here, V\n1 > V\nz , (V\nz = Zener Voltage) So, Zener breakdown will be take place So, voltage across 400will be 4V 41\nIA10mA\n400100A\n 37. Two projectiles are fired from ground with same initial speeds from same point at angles (45º + ) and (45º – ) with horizontal direction. The ratio of their times of flights is (1) 1 (2) 1–tan\n1 tan\n\n (3) 1 sin 2\n1–sin2\n\n (4) 1 tan\n1–tan\n\n Ans. (4) Sol. \n1 = 45 +  ; \n2 = 45 –  Time of flight, 2v sin\nT\ng\n\n 1\n2\nT\nsin(45)\nTsin(45)\n\n\n 1\n2\n11\ncossin\nT\n22\n11\nT\ncossin\n22\n \n\n  1\n2\nT\ncossin1 tan\nTcossin1 tan\n    \n\n     38. Match the List-I with List-II List-I List-II A. Triatomic rigid gas I. P\nV\nC\n5\nC3\n B. Diatomic non-rigid gas II. P\nV\nC\n7\nC5\n C. Monoatomic gas III. P\nV\nC\n4\nC3\n D. Diatomic rigid gas IV P\nV\nC\n9\nC7\n Choose the correct answer from the options given below : (1) A-III, B-IV, C-I, D-II (2) A-III, B-II, C-IV, D-I (3) A-II, B-IV, C-I, D-III (4) A-IV, B-II, C-III, D-I Ans. (1) Sol. 2\n1\nf\n   f = 6, Triatomic rigid gas f = 7, Diatomic non-rigid gas f = 5, Diatomic rigid gas f = 3, monoatomic rigid gas 24\n1\n63\n    (Triatomic) 29\n1\n77\n    (Diatomic, non-rigid) 27\n1\n55\n    (Diatomic, rigid) 25\n1\n33\n    (Monoatomic, rigid) A-III, B-IV, C-I, D-II ALLEN 5  39. A cubic block of mass m is sliding down on an inclined plane at 60° with an acceleration of g\n2\n, the value of coefficient of kinetic friction is (1) 31\n (2) 3\n2 (3) 2\n3\n(4) 3\n1\n2\n Ans. (1) Sol. a = g/2 mgcos60° mgsin60° μmgcos60° 60° N mgsin60° – μmgcos60° = ma g\ng sin 60 μg cos 60\n2\n 3μ1\n222\n μ3 1 40. In a hydrogen like ion, the energy difference between the 2\nnd excitation energy state and ground is 108.8 eV. The atomic number of the ion is (1) 4 (2) 2 (3) 1 (4) 3 Allen Ans. (4) NTA Ans. (2) Sol. 2\n22\n12\n11\nE 13.6z\nnn\n\n \n\n\n 2\n11\n(13.6)z108.8\n19\n\n\n\n 2\n(13.6)(8)\n(z ) 108.8\n9\n z = 3 41. For a hydrogen atom, the ratio of the largest wavelength of Lyman series to that of the Balmer series is. (1) 5 : 36 (2) 5 : 27 (3) 3 : 4 (4) 27 : 5 Ans. (2) Sol. Lyman n = 2 n = 1 1\n1\n1 1\n3R\nR\n1 4\n4\n\n  \n\n\n 1\n4\n3R\n ...(1) and Balmer n = 3 n = 2 2\n1\n1 1\n5R\nR\n4 9\n36\n\n\n \n\n\n 2\n36\n5R\n Then, 1\n2\n5\n27\n\n\n 42. A particle of charge q, mass m and kinetic energy E enters in magnetic field perpendicular to its velocity and undergoes a circular arc of radius(r). Which of the following curves represents the variation of r with E? (1) r E (2) r E (3) r E (4) r E Ans. (4) ALLEN 6  Sol. v B 2\nmv\nqvB\nr\n mv = qBr 2\n1\nE\nmv\n2\n 2 2 2\n2 2 2\n2\n1\nq B r\nq B r\nEm\n2\n2m\nm\n\n\n\n\n 22\n2\nqB\nEr\n2m\n\n\n\n\n 2\nrE\n r E 43. An object of mass 1000 g experiences a time dependent force \n2\nˆ\nˆ\nF2ti 3t j N\n. The power generated by the force at time t is : (1) (2t\n2 + 3t\n3\n) W (2) (2t\n2 + 18t\n3\n) W (3) (3t\n3 + 5t\n5\n) W (4) (2t\n3 + 3t\n5\n) W Ans. (4) Sol. ˆˆ\nF (2ti 3tj)N m = 1000 gm = 1 kg F ma\n, 2\nˆˆ\na2ti 3t j 2\ndv\nˆˆ\n2ti 3t j\ndt\n 23\nˆˆ\nvt i t j Power, P F v 223\nˆ ˆ ˆ ˆ\nP(2ti 3t j) (t i t j)   35\nP(2t3t )W 44. Two wires A and B are made of same material having ratio of lengths\nA\nB\nL\n1\nL3\n and their diameters ratio A\nB\nd\n2\nd\n\n. If both the wires are stretched using same force, what would be the ratio of their respective elongations? (1) 1 : 6 (2) 1 : 12 (3) 3 : 4 (4) 1 : 3 Ans. (2) Sol. A\nB\nL\n1\nL3\n and A\nB\nd\n2\nd\n AA\nA\nAA\nFL\nL\nAY\n and BB\nB\nBB\nFL\nL\nAY\n Given, F\nA = F\nB and Y\nA = Y\nB AA\nA\nA A\nA\nB\nBB\nB\nB\nA\nBB\nFL\nL\nA Y\nL\nA\nFL\nL\nL\nA\nAY\n  \n\n\n  \n\n   2\n2\nB\nAAAB\n2\nBBBA\nA\nd\nLLLd\n4\nLLLd\nd\n4\n\n\n\n   \n\n\n\n   \n\n\n   \n\n 2\nA\nB\nL\n111\nL3212\n\n  \n\n  \n\n   45. Two charges q\n1 and q\n2 are separated by a distance of 30 cm. A third charge q\n3 initially at 'C' as shown in the figure, is moved along the circular path of radius 40 cm from C to D. If the difference in potential energy due to movement of q\n3 from C to D is given by 3\n0\nqK\n4\n, the value of K is : 40cm B D A C q\n1 q\n2 q\n3 30cm (1) 8q\n2 (2) 6q\n2 (3) 8q\n1 (4) 6q\n1 Ans. (1) ALLEN 7  Sol. Potential at C 12\nC\nkq\nkq\nV\n0.4\n0.5\n Potential at D 12\nD\nkq\nkq\nV\n0.4\n0.1\n U = (V\nD – V\nC\n)(q\n3\n) = 22\n3\nkqkq\n(q )\n0.10.5\n\n\n\n U = 8kq\n2\nq\n3 = 23\n0\n8q q\n4\n SECTION-B 46. A,B and C are disc, solid sphere and spherical shell respectively with same radii and masses. These masses are placed as shown in figure. Q C B A P The moment of inertia of the given system about PQ is x\nI,\n15 where I is the moment of inertia of the disc about its diameter. The value of x is_____. Ans. (199) Sol. P Q A B C All bodies have same mass and same radius. A  Disc B  Solid sphere C  Spherical shell and, 2\nMR\nI\n4\n 2\n22\nPQ\nMR\n2\nI\nMR\nMR\n45\n\n\n\n\n\n\n22\n2\nMR\nMR\n3\n\n\n\n 2\n2\n2\n2\n2\nPQ\n15MR\n24MR\n60MR\n40MR\n60MR\nI\n60\n\n\n\n\n 2\n2\nPQ\n199\n199 MR\nI\nMR\n60\n15\n4\n\n\n\n\n 199\nI\n15\n 47. For ac circuit shown in figure, R = 100 k and C = 100 pF and the phase difference between V\nin and (V\nB – V\nA\n) is 90°. The input signal frequency is 10\nx rad/sec, where 'x' is _____ V\nA V\nB R C R V\nin C Ans. (5) Sol. Input voltage V\nC \nV\nR V\nin X\nC \nR V\nA – V\nB : V\nC \nV\nV\nA – V\nB X\nC \nR  +  = 90° ;  = 45° C\nX\ntan\nR\n C\nC\n1\nXRR\nW\n   312\nC\n11\nW\nR\n100 10100 10\n\n\n   12\n5\n7\n10\n10\n10\n ALLEN 8  48. A container contains a liquid with refractive index of 1.2 up to a height of 60 cm and another liquid having refractive index 1.6 is added to height H above first liquid. If viewed from above, the apparent shift in the position of bottom of container is 40 cm. The value of H is___cm. (Consider liquids are immisible) Ans. (80) Sol. H 60 μ\n2 = 1.6 μ\n1 = 1.\n2 view y = apparent depth of bottom yH60\n11.6 1.2\n Shift = 40 H + 60 – y = 40 H + 60 – H60\n1.6 1.2\n = 40 6\nH 30\n16\n H = 80 cm 49. A wire of length 10 cm and diameter 0.5 mm is used in a bulb. The temperature of the wire is 1727°C and power radiated by the wire is 94.2 W. Its emissivity is x\n8 where x =_____ (Given  = 6.0 × 10\n–8 W m\n–2 K\n–4\n,  = 3.14 and assume that the emissivity of wire material is same at all wavelength. ) Ans. (5) Sol. L = 10 cm, d = 0.5 mm, T = 1727°C = 2000 K Power, P = 94.2 W P = AT\n4 94.2 =  × (6 × 10\n–8\n)(dL)(2000)\n4 94.2 =  × (6 × 10\n–\n8\n) (3.14) (0.5) (10\n–3\n) (10 × 10\n–2\n)(2000)\n4 94.25\n(94.2)(16)8\n  50. An ideal gas has undergone through the cyclic process as shown in the figure. Work done by the gas in the entire cycle is_____ × 10\n–1 J. (Take  = 3.14) 300 400 500 350 250 150 V (cm\n3\n) P(kPa) Ans. (314) Sol. 350 v 250 150 300 500 (cm\n3\n) P (kPa) Area of circle, 12\nWd d\n4\n\n 36\nW (500 300) 10 (350 –150) 10\n4\n\n\n  W = 31.4 Joule W = 314 × 10\n–1 Joule ALLEN",
+    "questions": [
+      {
+        "number": "29",
+        "text": "Uniform magnetic fields of different strengths (B\n1 and B\n2\n), both normal to the plane of the paper exist as shown in the figure. A charged particle of mass m and charge q, at the interface at an instant, moves into the region 2 with velocity and returns to the interface. It continues to move into region 1 and finally reaches the interface. What is the displacement of the particle during this movement along the interface ? × × × × × × × × × × × × × × × × × × × × × × × × × × × × × × × × Interface B\n1 B\n2 Region 2 Region 1 (Consider the velocity of the particle to be normal to the magnetic field and B\n2 > B\n1\n) (1) 2\n11\nB\nm\n1– 2\nqB\nB\n\n\n\n\n (2) 1\n12\nB\nm\n1–\nqB\nB\n\n\n\n (3) 2\n11\nB\nm\n1–\nqB\nB\n\n\n\n (4) 1\n12\nB\nm\n1– 2\nqB\nB\n\n\n\n\n",
+        "formattedText": "Uniform magnetic fields of different strengths (B\n1 and B\n2\n), both normal to the plane of the paper exist as shown in the figure. A charged particle of mass m and charge q, at the interface at an instant, moves into the region 2 with velocity and returns to the interface. It continues to move into region 1 and finally reaches the interface. What is the displacement of the particle during this movement along the interface ? × × × × × × × × × × × × × × × × × × × × × × × × × × × × × × × × Interface B\n1 B\n2 Region 2 Region 1 (Consider the velocity of the particle to be normal to the magnetic field and B\n2 > B\n1\n) (1) 2\n11\nB\nm\n1– 2\nqB\nB\n\n\n\n\n (2) 1\n12\nB\nm\n1–\nqB\nB\n\n\n\n (3) 2\n11\nB\nm\n1–\nqB\nB\n\n\n\n (4) 1\n12\nB\nm\n1– 2\nqB\nB\n\n\n\n\n",
+        "latexText": "\\(Uniform magnetic fields of different strengths (B^{1} and B^{2} ), both normal to the plane of the paper exist as shown in the figure. A charged particle of mass m and charge q, at the interface at an instant, moves into the region 2 with velocity and returns to the interface. It continues to move into region 1 and finally reaches the interface. What is the displacement of the particle during this movement along the interface ? \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times Interface B^{1} B^{2} Region 2 Region 1 (Consider the velocity of the particle to be normal to the magnetic field and B^{2} > B^{1} ) (1) 2^{11} B m^{1}– \\frac{2}{qB}B      (2) 1^{12} B m^{1}– \\frac{qB}{B}    (3) 2^{11} B m^{1}– \\frac{qB}{B}    (4) 1^{12} B m^{1}– \\frac{2}{qB}B     \\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "2 11 B m 1– 2 qB B     "
+          },
+          {
+            "letter": "2",
+            "text": "1 12 B m 1– qB B    "
+          },
+          {
+            "letter": "3",
+            "text": "2 11 B m 1– qB B    "
+          },
+          {
+            "letter": "4",
+            "text": "1 12 B m 1– 2 qB B     "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "2 11 B m 1– 2 qB B     ",
+            "formattedText": "2 11 B m 1– 2 qB B     ",
+            "latexText": "2 11 B m 1– 2 qB B     "
+          },
+          {
+            "letter": "2",
+            "text": "1 12 B m 1– qB B    ",
+            "formattedText": "1 12 B m 1– qB B    ",
+            "latexText": "1 12 B m 1– qB B    "
+          },
+          {
+            "letter": "3",
+            "text": "2 11 B m 1– qB B    ",
+            "formattedText": "2 11 B m 1– qB B    ",
+            "latexText": "2 11 B m 1– qB B    "
+          },
+          {
+            "letter": "4",
+            "text": "1 12 B m 1– 2 qB B     ",
+            "formattedText": "1 12 B m 1– 2 qB B     ",
+            "latexText": "1 12 B m 1– 2 qB B     "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "33",
+        "text": "A lens having refractive index 1.6 has focal length of 12 cm, when it is in air. Find the focal length of the lens when it is placed in water. (Take refractive index of water as 1.28) (1) 355 mm (2) 288 mm (3) 555 mm (4) 655 mm",
+        "formattedText": "A lens having refractive index 1.6 has focal length of 12 cm, when it is in air. Find the focal length of the lens when it is placed in water. (Take refractive index of water as 1.28) (1) 355 mm (2) 288 mm (3) 555 mm (4) 655 mm",
+        "latexText": "A lens having refractive index 1.6 has focal length of 12 cm, when it is in air. Find the focal length of the lens when it is placed in water. (Take refractive index of water as 1.28) (1) 355 mm (2) 288 mm (3) 555 mm (4) 655 mm",
+        "options": [
+          {
+            "letter": "1",
+            "text": "355 mm"
+          },
+          {
+            "letter": "2",
+            "text": "288 mm"
+          },
+          {
+            "letter": "3",
+            "text": "555 mm"
+          },
+          {
+            "letter": "4",
+            "text": "655 mm"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "355 mm",
+            "formattedText": "355 mm",
+            "latexText": "355 mm"
+          },
+          {
+            "letter": "2",
+            "text": "288 mm",
+            "formattedText": "288 mm",
+            "latexText": "288 mm"
+          },
+          {
+            "letter": "3",
+            "text": "555 mm",
+            "formattedText": "555 mm",
+            "latexText": "555 mm"
+          },
+          {
+            "letter": "4",
+            "text": "655 mm",
+            "formattedText": "655 mm",
+            "latexText": "655 mm"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "39",
+        "text": "A cubic block of mass m is sliding down on an inclined plane at 60° with an acceleration of g\n2\n, the value of coefficient of kinetic friction is (1) 31\n (2) 3\n2 (3) 2\n3\n(4) 3\n1\n2\n",
+        "formattedText": "A cubic block of mass m is sliding down on an inclined plane at 60° with an acceleration of g\n2\n, the value of coefficient of kinetic friction is (1) 31\n (2) 3\n2 (3) 2\n3\n(4) 3\n1\n2\n",
+        "latexText": "\\(A cubic block of mass m is sliding down on an inclined plane at 60^\\circ with an acceleration of g^{2} , the value of coefficient of kinetic friction is (1) 31  (2) 3^{2} (3) 2^{3} (4) 3^{1}^{2}\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "31 "
+          },
+          {
+            "letter": "4",
+            "text": "3 1 2 "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "31 ",
+            "formattedText": "31 ",
+            "latexText": "31 "
+          },
+          {
+            "letter": "4",
+            "text": "3 1 2 ",
+            "formattedText": "3 1 2 ",
+            "latexText": "3 1 2 "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "44",
+        "text": "Two wires A and B are made of same material having ratio of lengths\nA\nB\nL\n1\nL3\n and their diameters ratio A\nB\nd\n2\nd\n\n. If both the wires are stretched using same force, what would be the ratio of their respective elongations? (1) 1 : 6 (2) 1 : 12 (3) 3 : 4 (4) 1 : 3",
+        "formattedText": "Two wires A and B are made of same material having ratio of lengths\nA\nB\nL\n1\nL3\n and their diameters ratio A\nB\nd\n2\nd\n\n. If both the wires are stretched using same force, what would be the ratio of their respective elongations? (1) 1 : 6 (2) 1 : 12 (3) 3 : 4 (4) 1 : 3",
+        "latexText": "\\(Two wires A and B are made of same material having ratio of \\frac{lengths}{A}B L^{1} L_{3}  and their diameters ratio \\frac{A}{B}d^{2} d  . If both the wires are stretched using same force, what would be the ratio of their respective elongations? (1) 1 : 6 (2) 1 : 12 (3) 3 : 4 (4) 1 : 3\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "1 : 6"
+          },
+          {
+            "letter": "2",
+            "text": "1 : 12"
+          },
+          {
+            "letter": "3",
+            "text": "3 : 4"
+          },
+          {
+            "letter": "4",
+            "text": "1 : 3"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "1 : 6",
+            "formattedText": "1 : 6",
+            "latexText": "1 : 6"
+          },
+          {
+            "letter": "2",
+            "text": "1 : 12",
+            "formattedText": "1 : 12",
+            "latexText": "1 : 12"
+          },
+          {
+            "letter": "3",
+            "text": "3 : 4",
+            "formattedText": "3 : 4",
+            "latexText": "3 : 4"
+          },
+          {
+            "letter": "4",
+            "text": "1 : 3",
+            "formattedText": "1 : 3",
+            "latexText": "1 : 3"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "46",
+        "text": "A,B and C are disc, solid sphere and spherical shell respectively with same radii and masses. These masses are placed as shown in figure. Q C B A P The moment of inertia of the given system about PQ is x\nI,\n15 where I is the moment of inertia of the disc about its diameter. The value of x is_____.",
+        "formattedText": "A,B and C are disc, solid sphere and spherical shell respectively with same radii and masses. These masses are placed as shown in figure. Q C B A P The moment of inertia of the given system about PQ is x\nI,\n15 where I is the moment of inertia of the disc about its diameter. The value of x is_____.",
+        "latexText": "\\(A,B and C are disc, solid sphere and spherical shell respectively with same radii and masses. These masses are placed as shown in figure. Q C B A P The moment of inertia of the given system about PQ is x I, 15 where I is the moment of inertia of the disc about its diameter. The value of x is_____.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "PQ",
+            "latex": "PQ",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "48",
+        "text": "A container contains a liquid with refractive index of 1.2 up to a height of 60 cm and another liquid having refractive index 1.6 is added to height H above first liquid. If viewed from above, the apparent shift in the position of bottom of container is 40 cm. The value of H is___cm. (Consider liquids are immisible)",
+        "formattedText": "A container contains a liquid with refractive index of 1.2 up to a height of 60 cm and another liquid having refractive index 1.6 is added to height H above first liquid. If viewed from above, the apparent shift in the position of bottom of container is 40 cm. The value of H is___cm. (Consider liquids are immisible)",
+        "latexText": "\\(A container contains a liquid with refractive index of 1.2 up to a height of 60 cm and another liquid having refractive index 1.6 is added to height H above first liquid. If viewed from above, the apparent shift in the position of bottom of container is 40 cm. The value of H is___{cm}. (Consider liquids are immisible)\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "49",
+        "text": "A wire of length 10 cm and diameter 0.5 mm is used in a bulb. The temperature of the wire is 1727°C and power radiated by the wire is 94.2 W. Its emissivity is x\n8 where x =_____ (Given  = 6.0 × 10\n–8 W m\n–2 K\n–4\n,  = 3.14 and assume that the emissivity of wire material is same at all wavelength. )",
+        "formattedText": "A wire of length 10 cm and diameter 0.5 mm is used in a bulb. The temperature of the wire is 1727°C and power radiated by the wire is 94.2 W. Its emissivity is x\n8 where x =_____ (Given  = 6.0 × 10\n–8 W m\n–2 K\n–4\n,  = 3.14 and assume that the emissivity of wire material is same at all wavelength. )",
+        "latexText": "\\(A wire of length 10 cm and diameter 0.5 mm is used in a bulb. The temperature of the wire is 1727^\\circC and power radiated by the wire is 94.2 W. Its emissivity is x^{8} where x =_____ (Given  = 6.0 \\times 10 –8 W m –2 K –4 ,  = 3.14 and assume that the emissivity of wire material is same at all wavelength. )\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 26",
+        "type": "mathematical",
+        "position": 144
+      },
+      {
+        "equation": "x = a cos (1",
+        "type": "mathematical",
+        "position": 226
+      },
+      {
+        "equation": "t = f\n1 ",
+        "type": "mathematical",
+        "position": 556
+      },
+      {
+        "equation": "t + 3\n",
+        "type": "mathematical",
+        "position": 756
+      },
+      {
+        "equation": "R/n",
+        "type": "mathematical",
+        "position": 1094
+      },
+      {
+        "equation": "t = AC AC = CD ",
+        "type": "mathematical",
+        "position": 2293
+      },
+      {
+        "equation": "L = 10 cm) (1) 2i + 3j (2) 3i 7 j",
+        "type": "mathematical",
+        "position": 2877
+      },
+      {
+        "equation": "s = 3m) COM of 2L (mass = 2m) com\n2m(10) 3m(0)\nx4cm\n5m\n",
+        "type": "mathematical",
+        "position": 2968
+      },
+      {
+        "equation": "g = 1",
+        "type": "mathematical",
+        "position": 3238
+      },
+      {
+        "equation": "m = 1 ",
+        "type": "mathematical",
+        "position": 3817
+      },
+      {
+        "equation": "f = 28",
+        "type": "mathematical",
+        "position": 3992
+      },
+      {
+        "equation": "f = 288 mm 34",
+        "type": "mathematical",
+        "position": 4004
+      },
+      {
+        "equation": "i = 5 2 10 cos 650 t\nAmp\n6\n",
+        "type": "mathematical",
+        "position": 4051
+      },
+      {
+        "equation": "d = distance between lens eq\n1110",
+        "type": "mathematical",
+        "position": 4599
+      },
+      {
+        "equation": "r = eq\n1\n10 D\nf\n",
+        "type": "mathematical",
+        "position": 4678
+      },
+      {
+        "equation": "e = 4 V) A V 100\n",
+        "type": "mathematical",
+        "position": 4803
+      },
+      {
+        "equation": "z = Zener Voltage) So",
+        "type": "mathematical",
+        "position": 4979
+      },
+      {
+        "equation": "t-I with List-II List-I List-II A",
+        "type": "mathematical",
+        "position": 5570
+      },
+      {
+        "equation": "n-rigid gas II",
+        "type": "mathematical",
+        "position": 5655
+      },
+      {
+        "equation": "A-III",
+        "type": "mathematical",
+        "position": 5819
+      },
+      {
+        "equation": "B-IV",
+        "type": "mathematical",
+        "position": 5826
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 5832
+      },
+      {
+        "equation": "D-II (2) A-III",
+        "type": "mathematical",
+        "position": 5837
+      },
+      {
+        "equation": "B-II",
+        "type": "mathematical",
+        "position": 5853
+      },
+      {
+        "equation": "C-IV",
+        "type": "mathematical",
+        "position": 5859
+      },
+      {
+        "equation": "D-I (3) A-II",
+        "type": "mathematical",
+        "position": 5865
+      },
+      {
+        "equation": "B-IV",
+        "type": "mathematical",
+        "position": 5879
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 5885
+      },
+      {
+        "equation": "D-III (4) A-IV",
+        "type": "mathematical",
+        "position": 5890
+      },
+      {
+        "equation": "B-II",
+        "type": "mathematical",
+        "position": 5906
+      },
+      {
+        "equation": "C-III",
+        "type": "mathematical",
+        "position": 5912
+      },
+      {
+        "equation": "D-I Ans",
+        "type": "mathematical",
+        "position": 5919
+      },
+      {
+        "equation": "f = 6",
+        "type": "mathematical",
+        "position": 5949
+      },
+      {
+        "equation": "f = 7",
+        "type": "mathematical",
+        "position": 5976
+      },
+      {
+        "equation": "n-rigid gas f = 5",
+        "type": "mathematical",
+        "position": 5994
+      },
+      {
+        "equation": "f = 3",
+        "type": "mathematical",
+        "position": 6032
+      },
+      {
+        "equation": "n-rigid) 27\n1\n55\n",
+        "type": "mathematical",
+        "position": 6117
+      },
+      {
+        "equation": "A-III",
+        "type": "mathematical",
+        "position": 6196
+      },
+      {
+        "equation": "B-IV",
+        "type": "mathematical",
+        "position": 6203
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 6209
+      },
+      {
+        "equation": "D-II ALLEN 5 ",
+        "type": "mathematical",
+        "position": 6214
+      },
+      {
+        "equation": "a = g/2 mgcos60",
+        "type": "mathematical",
+        "position": 6434
+      },
+      {
+        "equation": "z = 3 41",
+        "type": "mathematical",
+        "position": 6849
+      },
+      {
+        "equation": "n = 2 n = 1 1\n1\n1 1\n3R\nR\n1 4\n4\n",
+        "type": "mathematical",
+        "position": 7028
+      },
+      {
+        "equation": "n = 3 n = 2 2\n1\n1 1\n5R\nR\n4 9\n36\n",
+        "type": "mathematical",
+        "position": 7104
+      },
+      {
+        "equation": "v = qBr 2\n1\nE\nmv\n2\n",
+        "type": "mathematical",
+        "position": 7485
+      },
+      {
+        "equation": "m = 1000 gm = 1 kg F ma",
+        "type": "mathematical",
+        "position": 7852
+      },
+      {
+        "equation": "A = F\nB and Y\nA = Y\nB AA\nA\nA A\nA\nB\nBB\nB\nB\nA\nBB\nFL\nL\nA Y\nL\nA\nFL\nL\nL\nA\nAY\n",
+        "type": "mathematical",
+        "position": 8373
+      },
+      {
+        "equation": "U = (V\nD ",
+        "type": "mathematical",
+        "position": 9092
+      },
+      {
+        "equation": "U = 8kq\n2\nq\n3 = 23\n0\n8q q\n4\n",
+        "type": "mathematical",
+        "position": 9151
+      },
+      {
+        "equation": "N-B 46",
+        "type": "mathematical",
+        "position": 9188
+      },
+      {
+        "equation": "R = 100 k",
+        "type": "mathematical",
+        "position": 9836
+      },
+      {
+        "equation": "C = 100 pF and the phase difference between V\nin and (V\nB ",
+        "type": "mathematical",
+        "position": 9851
+      },
+      {
+        "equation": "d/sec",
+        "type": "mathematical",
+        "position": 9962
+      },
+      {
+        "equation": "y = apparent depth of bottom yH60\n11",
+        "type": "mathematical",
+        "position": 10593
+      },
+      {
+        "equation": "t = 40 H + 60 ",
+        "type": "mathematical",
+        "position": 10643
+      },
+      {
+        "equation": "y = 40 H + 60 ",
+        "type": "mathematical",
+        "position": 10659
+      },
+      {
+        "equation": "H = 80 cm 49",
+        "type": "mathematical",
+        "position": 10706
+      },
+      {
+        "equation": "L = 10 cm",
+        "type": "mathematical",
+        "position": 11036
+      },
+      {
+        "equation": "d = 0",
+        "type": "mathematical",
+        "position": 11047
+      },
+      {
+        "equation": "T = 1727",
+        "type": "mathematical",
+        "position": 11059
+      },
+      {
+        "equation": "C = 2000 K Power",
+        "type": "mathematical",
+        "position": 11068
+      },
+      {
+        "equation": "P = 94",
+        "type": "mathematical",
+        "position": 11086
+      },
+      {
+        "equation": "P = ",
+        "type": "mathematical",
+        "position": 11097
+      },
+      {
+        "equation": "W = 31",
+        "type": "mathematical",
+        "position": 11565
+      },
+      {
+        "equation": "W = 314 ",
+        "type": "mathematical",
+        "position": 11580
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 232
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 243
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 428
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 443
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 473
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 482
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 734
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 751
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 797
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 897
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 954
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1062
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1268
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1563
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4062
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4197
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4240
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4285
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4606
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5289
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5295
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5310
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5318
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5334
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5340
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5410
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5428
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5437
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5460
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5463
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5477
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5480
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5505
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5508
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5513
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 5518
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5521
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5526
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 6444
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 6453
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 6463
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 6478
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 6490
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 6506
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 6516
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 7627
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8164
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8663
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10128
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.2857142857142857,
+        "matchedKeywords": [
+          "circle",
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "force",
+          "acceleration",
+          "velocity"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current",
+          "voltage"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "waves",
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "force",
+          "friction"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "charge",
+          "electric field",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      },
+      {
+        "name": "Light Waves",
+        "parentTopic": "Waves & Optics",
+        "confidence": 1,
+        "matchedKeywords": [
+          "light waves"
+        ]
+      }
+    ],
+    "tags": [
+      "Formula Based"
+    ],
+    "wordCount": 3044,
+    "characterCount": 11607
+  },
+  "images": []
+}

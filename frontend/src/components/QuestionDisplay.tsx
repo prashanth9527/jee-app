@@ -13,13 +13,36 @@ export default function QuestionDisplay({ content, className = '' }: QuestionDis
     // Re-render math equations after content is displayed
     if (typeof window !== 'undefined') {
       if (window.MathJax) {
-        window.MathJax.typesetPromise?.();
+        // Use a timeout to ensure DOM is updated before MathJax processes
+        setTimeout(() => {
+          // Force MathJax to reprocess the content
+          window.MathJax.typesetPromise?.();
+        }, 100);
       }
     }
   }, [content]);
 
+  // Process content to ensure LaTeX expressions are properly formatted
+  const processContent = (content: string) => {
+    // Fix common LaTeX issues that might prevent rendering
+    return content
+      // Fix malformed LaTeX expressions like $1\\alpha -> $\\alpha
+      .replace(/\$(\d+)\\([a-zA-Z]+)/g, '$\\\\$2')
+      // Fix missing backslashes in LaTeX commands
+      .replace(/\$([^$]*?)([a-zA-Z]+)([^$]*?)\$/g, (match, before, command, after) => {
+        // Check if it's a LaTeX command that needs backslashes
+        const latexCommands = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'theta', 'lambda', 'mu', 'pi', 'sigma', 'tau', 'phi', 'omega', 'left', 'right', 'sqrt', 'frac', 'sum', 'int', 'lim', 'sin', 'cos', 'tan', 'log', 'ln', 'exp', 'max', 'min', 'det', 'trace', 'adj', 'binom'];
+        if (latexCommands.includes(command)) {
+          return `$${before}\\\\${command}${after}$`;
+        }
+        return match;
+      })
+      // Convert $...$ to \(...\) for better MathJax compatibility
+      .replace(/\$([^$]+)\$/g, '\\($1\\)');
+  };
+
   // Parse HTML content and render it safely
-  const parsedContent = parse(content, {
+  const parsedContent = parse(processContent(content), {
     replace: (domNode: any) => {
       // Handle any special cases if needed
       return domNode;
@@ -27,7 +50,7 @@ export default function QuestionDisplay({ content, className = '' }: QuestionDis
   });
 
   return (
-    <div className={`question-content ${className}`}>
+    <div className={`question-content tex2jax_process ${className}`}>
       {parsedContent}
     </div>
   );

@@ -21,6 +21,7 @@ const pdfParse = require('pdf-parse');
 const { fromPath } = require('pdf2pic');
 const sharp = require('sharp');
 const Tesseract = require('tesseract.js');
+const { enhancedMathToLaTeX, enhancedFormatForRichTextEditor } = require('./enhanced-equation-processor');
 
 const CONFIG = {
   // Input configuration
@@ -570,12 +571,12 @@ function extractQuestions(text) {
       questions.push({
         number: currentMatch.number,
         text: questionText,
-        formattedText: formatForRichTextEditor(questionText),
+        formattedText: convertMathToTinyMathBlock(questionText),
         latexText: formatForLaTeX(questionText),
         options: options,
         formattedOptions: options.map(opt => ({
           ...opt,
-          formattedText: formatForRichTextEditor(opt.text),
+          formattedText: convertMathToTinyMathBlock(opt.text),
           latexText: formatForLaTeX(opt.text)
         })),
         hasMath: /[+\-*/=<>(){}[\]^_|\\]/.test(questionText),
@@ -769,24 +770,10 @@ function extractOptions(text) {
 
 /**
  * Format text for rich text editor (TinyMCE/Quill)
+ * Enhanced version with proper LaTeX handling
  */
 function formatForRichTextEditor(text) {
-  if (!text) return '';
-  
-  let formatted = text;
-  
-  // Convert line breaks to <br> first
-  formatted = formatted.replace(/\n/g, '<br>');
-  
-  // Convert special characters to HTML entities
-  formatted = formatted
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-  
-  return formatted;
+  return enhancedFormatForRichTextEditor(text);
 }
 
 /**
@@ -808,81 +795,103 @@ function formatForLaTeX(text) {
 
 /**
  * Convert mathematical expressions to LaTeX format
+ * Enhanced version with better OCR artifact handling
  */
 function convertMathToLaTeX(text) {
-  let latex = text;
+  return enhancedMathToLaTeX(text);
+}
+
+/**
+ * Convert mathematical expressions to tiny-math-block format
+ * This creates the HTML structure that works well with the frontend
+ */
+function convertMathToTinyMathBlock(text) {
+  if (!text) return '';
+
+  let result = text;
+
+  // Handle $...$ expressions directly
+  result = result.replace(/\$([^$]+)\$/g, (match, content) => {
+    const cleanContent = content.trim();
+    // Convert LaTeX to MathML for the content
+    const mathml = convertLaTeXToMathML(cleanContent);
+    return `<tiny-math-block formula="${cleanContent}"><math><mrow>${mathml}</mrow></math></tiny-math-block>`;
+  });
+
+  // Handle inline math expressions \(...\) - handle the case where the entire text is wrapped
+  if (result.startsWith('\\(') && result.endsWith('\\)')) {
+    const content = result.slice(2, -2).trim();
+    const mathml = convertLaTeXToMathML(content);
+    return `<tiny-math-block formula="${content}"><math><mrow>${mathml}</mrow></math></tiny-math-block>`;
+  }
+
+  // Handle inline math expressions \(...\) - handle partial matches
+  result = result.replace(/\\\(([^)]+)\\\)/g, (match, content) => {
+    const cleanContent = content.trim();
+    const mathml = convertLaTeXToMathML(cleanContent);
+    return `<tiny-math-block formula="${cleanContent}"><math><mrow>${mathml}</mrow></math></tiny-math-block>`;
+  });
+
+  // Handle display math expressions \[...\]
+  result = result.replace(/\\\[([^\]]+)\\\]/g, (match, content) => {
+    const cleanContent = content.trim();
+    const mathml = convertLaTeXToMathML(cleanContent);
+    return `<tiny-math-block formula="${cleanContent}"><math><mrow>${mathml}</mrow></math></tiny-math-block>`;
+  });
+
+  // Handle mathematical expressions without delimiters (Greek letters, operators, etc.)
+  // Look for patterns that contain mathematical symbols
+  const mathPattern = /([αβγδεζηθικλμνξοπρστυφχψω][αβγδεζηθικλμνξοπρστυφχψωa-zA-Z0-9+\-*/=<>(){}[\]^_|\\\s]*)/g;
+  result = result.replace(mathPattern, (match) => {
+    // Only convert if it looks like a mathematical expression and contains Greek letters
+    if (match.length > 1 && /[αβγδεζηθικλμνξοπρστυφχψω]/.test(match)) {
+      const mathml = convertLaTeXToMathML(match);
+      return `<tiny-math-block formula="${match}"><math><mrow>${mathml}</mrow></math></tiny-math-block>`;
+    }
+    return match;
+  });
+
+  return result;
+}
+
+/**
+ * Convert LaTeX expressions to tiny-math-block HTML format
+ */
+function convertLaTeXToTinyMathBlock(text) {
+  if (!text) return '';
   
-  // Handle adjoint expressions first: adj(A-1) → adj(A)^{-1}
-  latex = latex.replace(/adj\(([^)]+)-1\)/g, 'adj($1)^{-1}');
+  let result = text;
   
-  // Matrix inverses and superscripts: A-1 → A^{-1}
-  latex = latex.replace(/(\w+)-1\b/g, '$1^{-1}');
+  // Handle inline math expressions \(...\)
+  result = result.replace(/\\\(([^)]+)\\\)/g, (match, content) => {
+    const cleanContent = content.trim();
+    return `<tiny-math-block formula="${cleanContent}"><math><mrow>${convertLaTeXToMathML(cleanContent)}</mrow></math></tiny-math-block>`;
+  });
   
-  // Handle complex expressions like A(adj(A-1) + adj(B-1))-1B
-  latex = latex.replace(/\(([^)]+)\)-1/g, '($1)^{-1}');
+  // Handle display math expressions \[...\]
+  result = result.replace(/\\\[([^\]]+)\\\]/g, (match, content) => {
+    const cleanContent = content.trim();
+    return `<tiny-math-block formula="${cleanContent}"><math><mrow>${convertLaTeXToMathML(cleanContent)}</mrow></math></tiny-math-block>`;
+  });
   
-  // Fix remaining -1 patterns that weren't caught
-  latex = latex.replace(/(\w+)-1(\w+)/g, '$1^{-1}$2');
+  // Handle $...$ expressions
+  result = result.replace(/\$([^$]+)\$/g, (match, content) => {
+    const cleanContent = content.trim();
+    return `<tiny-math-block formula="${cleanContent}"><math><mrow>${convertLaTeXToMathML(cleanContent)}</mrow></math></tiny-math-block>`;
+  });
   
-  // Fix the specific case of )-1B pattern
-  latex = latex.replace(/\)-1(\w+)/g, ')^{-1}$1');
-  
-  // Powers: x^2 → x^{2}
-  latex = latex.replace(/(\w+)\^(\d+)/g, '$1^{$2}');
-  
-  // Fractions: a/b → \frac{a}{b} (but be more specific to avoid over-conversion)
-  latex = latex.replace(/(\w+)\/(\d+)/g, '\\frac{$1}{$2}');
-  
-  // Handle specific fraction patterns like y^3/4 or y^{3}/4
-  latex = latex.replace(/(\w+\^?\d*\{?\d+\}?)\/(\d+)/g, '\\frac{$1}{$2}');
-  
-  // Subscripts: H2O → H_2O (but avoid converting numbers that are part of superscripts)
-  latex = latex.replace(/([A-Z][a-z]?)(\d+)(?![\^{-])/g, '$1_$2');
-  
-  // Square root: √x → \sqrt{x}
-  latex = latex.replace(/√([^√\s]+)/g, '\\sqrt{$1}');
-  
-  // Integrals: ∫ → \int
-  latex = latex.replace(/∫/g, '\\int');
-  
-  // Summation: ∑ → \sum
-  latex = latex.replace(/∑/g, '\\sum');
-  
-  // Absolute value: |z| → |z|
-  latex = latex.replace(/\|([^|]+)\|/g, '|$1|');
-  
-  // Complex numbers: zz* → z\bar{z}
-  latex = latex.replace(/(\w)\1\*/g, '$1\\bar{$1}');
-  
-  // Handle complex conjugate: zz → z\bar{z} (when it appears in context)
-  latex = latex.replace(/\bzz\b/g, 'z\\bar{z}');
-  
-  // Greek letters and symbols
-  latex = latex
-    .replace(/α/g, '\\alpha')
-    .replace(/β/g, '\\beta')
-    .replace(/γ/g, '\\gamma')
-    .replace(/δ/g, '\\delta')
-    .replace(/ε/g, '\\epsilon')
-    .replace(/θ/g, '\\theta')
-    .replace(/λ/g, '\\lambda')
-    .replace(/μ/g, '\\mu')
-    .replace(/π/g, '\\pi')
-    .replace(/σ/g, '\\sigma')
-    .replace(/τ/g, '\\tau')
-    .replace(/φ/g, '\\phi')
-    .replace(/ω/g, '\\omega');
-  
-  // Arrows
-  latex = latex
-    .replace(/→/g, '\\rightarrow')
-    .replace(/←/g, '\\leftarrow')
-    .replace(/⇌/g, '\\rightleftharpoons')
-    .replace(/⇒/g, '\\Rightarrow');
-  
-  // Clean up any double conversions
-  latex = latex.replace(/\^{-1}\^{-1}/g, '^{-1}');
-  
+  return result;
+}
+
+/**
+ * Convert LaTeX to MathML (simplified version)
+ * This is a basic converter for common mathematical expressions
+ */
+function convertLaTeXToMathML(latex) {
+  if (!latex) return '';
+
+  // For now, let's use a simple approach that just returns the original text
+  // The frontend can handle the rendering with MathJax
   return latex;
 }
 
@@ -1472,5 +1481,8 @@ module.exports = {
   convertContentToJson,
   processPDF,
   processImage,
+  convertMathToTinyMathBlock,
+  convertLaTeXToTinyMathBlock,
+  convertLaTeXToMathML,
   CONFIG
 };

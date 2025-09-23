@@ -1,0 +1,663 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2023\\Session2\\Physics\\0604-Physics Paper Morning.pdf",
+  "relativePath": "JEE\\Previous Papers\\2023\\Session2\\Physics\\0604-Physics Paper Morning.pdf",
+  "metadata": {
+    "originalFileName": "0604-Physics Paper Morning.pdf",
+    "subject": "Physics",
+    "year": 2023,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 8,
+    "fileSize": 489028,
+    "processedAt": "2025-09-22T23:32:56.955Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2023 (Held On Thursday 06\nth April, 2023) TIME : 9 : 00 AM to 12 : 00 NOON PHYSICS TEST PAPER WITH SOLUTION SECTION-A 31. For the plane electromagnetic wave given by E = E\n0 sin (t – kx) and B = B\n0 sin (t – kx), the ratio of average electric energy density to average magnetic energy density is (1) 1 (2) 1/2 (3) 2 (4) 4 Official Ans. by NTA (1) Allen Ans. (1) Sol. 32. Name the logic gate equivalent to the diagram attached (1) OR (2) NOR (3) NAND (4) AND Official Ans. by NTA (2) Allen Ans. (2) Sol. Circuit is closed when neither A nor B is closed  current flows for A = 0 B = 0 when either or both of A & B is closed we get current bypass from switch Hence it is “NOR” gate 33. A small ball of mass M and density  is dropped in a viscous liquid of density \n0\n. After some time, the ball falls with a constant velocity. What is the viscous force on the ball ? (1) (2) (3) (4) Official Ans. by NTA (1) Allen Ans. (1) Sol. F\nvis\n0 + vg\n\n\nvg For constant velocity F\nnet = 0 F\nvis + \n\nvg = vg F\nvis = ( – \n0\n) vg 34. The number of air molecules per cm\n3 increased from 3 × 10\n19 to 12 × 10\n19\n. The ratio of collision frequency of air molecules before and after the increase in number respectively is (1) 1.25 (2) 0.25 (3) 0.75 (4) 0.50 Official Ans. by NTA (2) Allen Ans. (2) Sol. Collision frequency,  f  n\nv\n, n\nv is number density 2\n0\nrms\n2\nrms\n0\n1\nE\nElectric energy density\n2\nMagnetic energy density\nB\n2\n\n=\n\n\n\n\n\n=\n \n\n\n2\nrms\n00\nrms\nE\n.\nB\n00\n1\nC\n\n=\n\n\n\n2\n2\nC\n1\nC\n==\n\n\n=−\n\n\n\n0\nF Mg 1\n\n\n=+\n\n\n\n0\nF Mg 1\n\n\n=+\n\n\n\n0\nF Mg 1\n0\nF Mg(1\n)\n=\n\n0\nvg 1\n\n\n=  −\n\n\n\n0\nMg 1\n\n\n=−\n\n\n\n2\nv\n2\nv\nVV\nf\n2 d vn\n1\n2 d n\n= =\n= \n\n\n\n\n\n\n1\n2\n19\nv\n1\n19\n2v\nn\nf\n3 10\n0.25\nfn12 10\n−\n\n= ==\n 2 35. A source supplies heat to a system at the rate of 1000 W. If the system performs work at a rate of 200 W. The rate at which internal energy of the system increases (1) 1200 W (2) 600 W (3) 500 W (4) 800 W Official Ans. by NTA (4) Allen Ans. (4) Sol. dQ = dU + dw dU\ndQ\ndw\ndt\ndt\ndt\n=− dU\ndt\n= 1000 – 200 = 800 W 36. A particle is moving with constant speed in a circular path. When the particle turns by an angle 90°, the ratio of instantaneous velocity to its average velocity is The value of x will be (1) 2 (2) 5 (3) 1 (4) 7 Official Ans. by NTA (1) Allen Ans. (1) Sol. Let instantaneous velocity be v. time, average velocity,  37. A small block of mass 100 g is tied to a spring of spring constant 7.5 N/m and length 20 cm. The other end of spring is fixed at a particular point A. If the block moves in a circular path on a smooth horizontal surface with constant angular velocity 5 rad/s about point A, then tension in the spring is (1) 1.5 N (2) 0.75 N (3) 0.25 N (4) 0.50 N Official Ans. by NTA (2) Allen Ans. (2) Sol. 0.2 + x\nm\nr\n\n2\nkx Let extension in length of spring be x. Radius of circle r = 0.2 + x Kx = m\n2\nr    Tension in spring 38. A monochromatic light wave with wavelength \n1 and frequency v\n1 in air enters another medium. If the angle of incidence and angle of refraction at the interface are 45° and 30° respectively, then the wavelength \n2 and frequency v\n2 of the refracted wave are : (1) 2121\n,2 =   =  (2) 2\n1\n2\n1\n1\n,\n2\n =   =  (3) 2\n1\n2\n1\n2,\n =   =  (4) 2\n1\n2\n1\n1\n,\n2\n =   =  Official Ans. by NTA (2) Allen Ans. (2) Sol. 45°\n30°\n\n2\n\n1 Snell’s law \n1 sin 45° = \n2 sin 30° Frequency doesn’t change on change in medium. \n: x 2.\nR\n2\nArc lengthR\n4\nt\nvv2v\n\n\n===\nAB\nR 2(2v)\n2 2v\nv\ntR\n = =\n=\n\nV\n.\nV\n22\n\n=\n\n(\n)\n2\n1\n7.5x\n5 (0.2 x)\n10\n\n=+\n\n\n15\n5\n1\nxx\n2\n2\n5\n\n=+\n\n\n1\nx\n10\n=\n1\nkx 7.5\n0.75N\n10\n= =  =\n1\n2\n1\n2\n\n=\n\n12\n21\n1\n2\n\n= =\n\n1\n2\n2\n\n  = 3 39. Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R. Assertion A : When a body is projected at an angle 45°, it’s range is maximum. Reason R : For maximum range, the value of sin2 should be equal to one. In the light of the above statements, choose the correct answer from the options given below : (1) Both A and R are correct but R is NOT the correct explanation of A (2) Both A and R are correct R is the correct explanation of A (3) A is true but R is false (4) A is false but R is true Official Ans. by NTA (2) Allen Ans. (2) Sol. R is maximum for 2 = 90°. 40. Two resistances are given as and . The percentage error in the measurement of equivalent resistance when they are connected in parallel is (1) 6.33 (2) 2.33 (3) 4.33 (4) 5.33 Official Ans. by NTA (3) Allen Ans. (3) Sol. Differentiating both sides, we get 41. A planet has double the mass of the earth. Its average density is equal to the that of the earth. An object weighing W on earth will weigh on that planet : (1) 2\n2/3 W (2) W (3) 2\n1/3 W (4) 2 W Official Ans. by NTA (3) Allen Ans. (3) Sol. So, 42. Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R. Assertion A : Earth has atmosphere whereas moon doesn’t have any atmosphere. Reason R : The escape velocity on moon is very small as compared to that on earth. In the light of the above statement, choose the correct answer from the options given below : (1) A is true but R is false (2) A is false but R is true (3) Both A and R are correct but R is NOT the correct explanation of A (4) Both A and R are correct and R is correct explanation of A Official Ans. by NTA (4) Allen Ans. (4) 2\nu\nR\nsin 2\ng\n=\n=  \n1\nR(10 0.5)\n=  \n2\nR(15 0.5)\n12\n111\nRRR\n=+\n12\n222\n12\nRR\nR\nRRR\n\n\n=+\n12\n12\nRR\n10 15\nR6\nRR10 15\n\n\n===\n\n++\n\n12\n22\n12\nRR\nR\nR\nR\nR\nR\n\n\n\n\n=\n+\n\n\n0.50.5\n6\n100225\n\n=+\n\n\n6 0.51113\n2549300\n\n\n=+ =\n\n\nR13\n1004.33%\nR3\n\n = =\n3\n4\nmR\n3\n=  \n1\n3\nR\nm (\ncons tan t)\n  =\n2\nGm\nweight\nW\ng\nR\n=  \n1/3\n2/3\nm\nWm\nm\n\n1\n1/3\nW\n(2) W\n= 4 Sol. At Moon, due to low escape velocity, the rms velocity of molecules is greater than escape velocity. Hence molecules escape and there is no atmosphere at Moon. 43. For a uniformly charged thin spherical shell, the electric potential (V) radially away from the center (O) of shell can be graphically represented as (1) (2) (3) (4) Official Ans. by NTA (1) Allen Ans. (1) Sol. inside\nkQ\nV\nR\n= outside\nkQ\nV\nr\n= v=constant\nv1/r\nr\nv\nv 1/r 44. The resistivity () of semiconductor varies with temperature. Which of the following curve represents the correct behaviour (1) (2) (3) (4) Official Ans. by NTA (2) Allen Ans. (2) Sol. T\n 2\nm\nne\n=\n With rise in temperature, number density (n) of electrons and holes increases for semiconductors. As m, e,  are constant [Rectangular hyperbola] 45. The kinetic energy of an electron, -particle and a proton are given as 4K, 2K and K respectively. The de-Broglie wavelength associated with electron (e) -particle () and the proton (p) are as follows : (1)  = p < e (2)  > p > e (3)  < p < e (4)  = p > e Official Ans. by NTA (3) Allen Ans. (3) 11\nnT\n     5 Sol. Electron\nAlpha\nProton\nMass :\nCharge :\nKinetic : energy\nm\n1\n8\n4\n0\n4m\nm\ne\n4K\n2e\n2K\ne\nK\nh\nm\n2\n.\n.\n4\nK\n1\n8\n4\n0\nh\n2\n.\n4\nm\n.\n2\nK\nh\n2\nm\nK\nh\n2\nm\nK\n=\n \n < \np < \ne 46. By what percentage will the transmission range of a TV tower be affected when the height of the tower is increased by 21% ? (1) 14% (2) 12% (3) 10% (4) 15% Official Ans. by NTA (3) Allen Ans. (3) Sol.   R\n2 = 1.1 R\n1 % increase in range = (1.1 – 1) × 100 = 10% 47. The energy levels of an hydrogen atom are shown below. The transition corresponding to emission of shortest wavelength is (1) C (2) D (3) B (4) A Official Ans. by NTA (2) Allen Ans. (2) Sol. For shortest wavelength, energy gap should be maximum. So, correct choice is transition from n = 3 to n = 1. 48. A mass m is attached to two springs as shown in figure. The spring constants of two springs are K\n1 and K\n2\n. For the frictionless surface, the time period of oscillation of mass m is (1) (2) (3) (4) Official Ans. by NTA (3) Allen Ans. (3) Sol. k\n2\nk\n1\n+\nk\n2\nx\nk\n1\nx\nx On displacing m to right by x F = – (k\n1\nx + k\n2\nx) = –(k\n1 + k\n2\n)x 49. The induced emf can be produced in a coil by A. moving the coil with uniform speed inside magnetic field B. moving the coil with non-uniform speed inside uniform magnetic field C. rotating the coil inside the uniform magnetic field D. changing the area of the coil inside the uniform magnetic field Choose the correct answer from the options given below: (1) B and D only (2) B and C only (3) A and C only (4) C and D only Official Ans. by NTA (4) Allen Ans. (4) Range, R\n2Rh\n=\n11\nR\n2Rh\n=\n2\n1\n1\n1\n21\nh\nh\nh\n1.21h\n100\n\n= + \n=\n\n\n2\n2\n1\n1\nR\n2Rh\n2R(1.21)h\n1.1 2Rh\n=\n=\n=\n2\n1\n2\n11\nR\nR\nR\n100\n1\n100\nRR\n\n−\n=\n = − \n\n\nhc1\nE\nE\n =  \n\n+\n\n12\nKK\n1\n2m\n−\n\n12\nKK\n1\n2m\n\n+\n12\nm\n2\nKK\n\n−\n12\nm\n2\nKK\n2\n12\nkk\nF\na\nx\nx\nmm\n+\n\n= = −\n= −\n\n\n12\n12\nkk\n2m\nT2\nm\nk\nk\n+\n\n =\n = = \n+ 6 Sol. ×××\n×××\nv Moving a coil inside a uniform magnetic field either with uniform or non-uniform speed doesn’t changes flux, so, no emf is induced. 50. A long straight wire of circular cross-section (radius a) is carrying steady current I. The current I is uniformly distributed across this cross-section. The magnetic field is (1) Zero in the region r < a and inversely proportional to r in the region r > a (2) Inversely proportional to r in the region r < a and uniform throughout in the region r > a (3) Directly proportional to r in the region r < a and inversely proportional to r in the region r > a (4) Uniform in the region r < a and inversely proportional to distance r from the axis, in the region r > a Official Ans. by NTA (3) Allen Ans. (3) Sol. SECTION-B 51. A pole is vertically submerged in swimming pool, such that it gives a length of shadow 2.15 m within water when sunlight is incident at an angle of 30° with the surface of water. If swimming pool is filled to a height of 1.5 m, then the height of the pole above the water surface in centimetres is (n\nw = 4/3) ________ . Official Ans. by NTA (50) Allen Ans. (50) Sol. x\n1.51.5\n1.5tanr\nx 3\nr\n60°\n30°\nx 3 By Snell’s law By the diagram = 1.241 – 0.739 = 0.502 x = 50 cm 52. The length of a metallic wire is increased by 20% and its area of cross section is reduced by 4%. The percentage change in resistance of the metallic wire is _______ . Official Ans. by NTA (25) Allen Ans. (25) Sol. be the initial resistance new resistance percentage change 1.25R R\n100 25%\nR\n−\n= = 0\n2\n0\n2\nIr\nra\na\nB\nI\nra\nr\n\n\n\n\n\n\n=\n\n\n\n\n\n\n\n4\n3 3\n3 3\n1sin 60\nsin r\nsin r\ntan r\n38\n37\n =\n→ = → =\nx 3 1.5 tan r\n2.15\n+=\n33\nx 3 2.15 –1.5\n37\n=\n2.15 1.5 3\nx\n3\n37\n\n=−\n0.50 meter\n\nR\nA\n=\n1.2\nR '1.251.25R\n0.96AA\n= =  = 7 53. A particle of mass 10 g moves in a straight line with retardation 2x, where x is the displacement in SI units. Its loss of kinetic energy for above displacement is The value of n will be _______ . Official Ans. by NTA (2) Allen Ans. (2) Sol. Loss of K.E = work done against retarding force. So n = 2 54. Two identical circular wires of radius 20 cm and carrying current A are placed in perpendicular planes as shown in figure. The net magnetic field at the centre of the circular wire is _______ × 10\n–8 T. (Take  = 3.14) Official Ans. by NTA (628) Allen Ans. (628) Sol. Magnetic field B\nC at center Net magnetic field is 55. A person driving car at a constant speed of 15 m/s is approaching a vertical wall. The person notices a change of 40 Hz in the frequency of his car’s horn upon reflection from the wall. The frequency of horn is ________ Hz. (Given : Speed of sound : 330 m/s) Official Ans. by NTA (420) Allen Ans. (420) Sol. Frequency of reflected sound 56. The radius of fifth orbit of the Li\n++ is _____ × 10\n–12 m. Take : radius of hydrogen atom = 0.51Å Official Ans. by NTA (425) Allen Ans. (425) Sol. = 425 × 10\n–12 m 57. A steel rod has a radius of 20 mm and a length of 2.0 m. A force of 62.8 kN stretches it along its length. Young’s modulus of steel is 2.0 × 10\n11 N/m\n2\n. The longitudinal strain produced in the wire is ______ × 10\n–5 Official Ans. by NTA (25) Allen Ans. (25) −\n\n\n\nn\n10\nJ.\nx\nxx\n2\n00\nmadx\nm2xdx\nmx\n=\n=\n=\n\n2\n22\n10\n(10 kg)x J\nJ\nx\n−\n−\n\n==\n\n\n2\n0\ni\n2r\n\n=\n7\n410\n2T\n2 0.2\n−\n\n=\n\n7\nC\n4102\nB22T\n2 0.2\n−\n \n=\n\n6\n2\n10 T\n−\n= \n8\n20010 T\n−\n= \n8\n2 314 10 T\n−\n=  \n8\n628 10 T\n−\n=\nc\n0\nc\nvv\nf\nvv\n\n+\n=\n\n−\n\n0\n330 15\nff\n330 15\n+\n\n=\n\n−\n\n0\n345\nf\n315\n=\n00\n345\nf\nf\n40\n315\n−=\n0\n30\nf\n40\n315\n=\n0\n4 315\nf\n420Hz\n3\n\n==\n2\n10\nn\n0\nn\nn\n25\nr\nr\nr\n0.51\nÅ 4.25 10\nm\nz3\n−\n=\n→ = \n=  8 Sol. Strain 3\n2\n11\n62.8 10\nstress\n(0.02)\nY\n2 10\n\n\n==\n 3\n411\n62.8 10\n3.14 4 102 10\n−\n\n=\n    = 2.5 × 10\n–4 = 25 × 10\n–5 58. An ideal transformer with purely resistive load operates at 12 kV on the primary side. It supplies electrical energy to a number of nearby houses at 120 V. The average rate of energy consumption in the houses served by the transformer is 60 kW. The value of resistive load (Rs) required in the secondary circuit will be ______ m. Official Ans. by NTA (240) Allen Ans. (240) Sol. v\np = 12 × 10\n3 volts v\ns = 120 volts p\ns = 60 KW = v\ns ×i\ns = 240 m 59. Two identical solid spheres each of mass 2 kg and radii 10 cm are fixed at the ends of a light rod. The separation between the centres of the spheres is 40 cm. The moment of inertia of the system about an axis perpendicular to the rod passing through its middle point is _______ × 10\n–3 kg-m\n2 Official Ans. by NTA (176) Allen Ans. (176) Sol. m=2kg\nm=2kg\n40cm\nr=10cm\nr=10cm 60. A parallel plate capacitor with plate area A and plate separation d is filled with a dielectric material of dielectric constant K = 4. The thickness of the dielectric material is x, where x < d. Let C\n1 and C\n2 be the capacitance of the system for and respectively. If C\n1 = 2F the value of C\n2 is ______ F Official Ans. by NTA (3) Allen Ans. (3) Sol. For x = 0\n1\nA\n4\nC2 F\n3d\n\n==  6\n2 3 F\n4\n  =  3\n2\ns\n60 10\ni\n5 10 A\n120\n\n=\n= \n23\ns\nL\n2\ns\nv\n120\nR\n24 10\n240 10\ni\n5 10\n−−\n= =\n=  =  \n\n(\n)\n2\ncm\nI 2 I\nmd\n=+\n22\n2\n2\nmr\nmd\n5\n\n=+\n\n\n22\n4\n2 (0.1)\n2(2)(0.20)\n5\n=  \n+\n22\n8\n10\n16 10\n5\n−−\n=  + \n2\n(1.6 16) 10\n−\n= + \n2\n17.6 10\n−\n=\n32\nI 176 10 kg m\n−\n=\n=\n1\nxd\n3\n=\n2d\nx,\n3\nd\n3\n00\n1\nAA\nC\nd\n2d\nd / 3\n2d\n12\n3\nk3\n\n==\n\n+\n+\n\n\n0\nA\n12\nd9\n\n\n=\n\n\n2d\nfor x\n3\n=\n00\n2\nAA\nC2\n2d / 3d\nd\nk3\n\n==\n\n+\n\n",
+    "questions": [],
+    "mathEquations": [
+      {
+        "equation": "N-A 31",
+        "type": "mathematical",
+        "position": 152
+      },
+      {
+        "equation": "E = E\n0 sin (",
+        "type": "mathematical",
+        "position": 204
+      },
+      {
+        "equation": "B = B\n0 sin (",
+        "type": "mathematical",
+        "position": 230
+      },
+      {
+        "equation": "A = 0 B = 0 when either or both of A ",
+        "type": "mathematical",
+        "position": 612
+      },
+      {
+        "equation": "t = 0 F\nvis + ",
+        "type": "mathematical",
+        "position": 1014
+      },
+      {
+        "equation": "g = ",
+        "type": "mathematical",
+        "position": 1033
+      },
+      {
+        "equation": "s = (",
+        "type": "mathematical",
+        "position": 1045
+      },
+      {
+        "equation": "C\n==\n",
+        "type": "mathematical",
+        "position": 1539
+      },
+      {
+        "equation": "n\n= =\n= ",
+        "type": "mathematical",
+        "position": 1711
+      },
+      {
+        "equation": "Q = dU + dw dU\ndQ\ndw\ndt\ndt\ndt\n=",
+        "type": "mathematical",
+        "position": 2044
+      },
+      {
+        "equation": "t\n= 1000 ",
+        "type": "mathematical",
+        "position": 2081
+      },
+      {
+        "equation": "N/m and length 20 cm",
+        "type": "mathematical",
+        "position": 2499
+      },
+      {
+        "equation": "d/s about point A",
+        "type": "mathematical",
+        "position": 2683
+      },
+      {
+        "equation": "r = 0",
+        "type": "mathematical",
+        "position": 2896
+      },
+      {
+        "equation": "x = m",
+        "type": "mathematical",
+        "position": 2909
+      },
+      {
+        "equation": "R\n=+\n12\n222\n12\nRR\nR\nRRR\n",
+        "type": "mathematical",
+        "position": 5487
+      },
+      {
+        "equation": "R\n= ",
+        "type": "mathematical",
+        "position": 5757
+      },
+      {
+        "equation": "W\n= 4 Sol",
+        "type": "mathematical",
+        "position": 5795
+      },
+      {
+        "equation": "R\n= outside\nkQ\nV\nr\n= v=constant\nv1/r",
+        "type": "mathematical",
+        "position": 6192
+      },
+      {
+        "equation": "e-Broglie wavelength associated with electron (",
+        "type": "mathematical",
+        "position": 6700
+      },
+      {
+        "equation": "K\n=\n",
+        "type": "mathematical",
+        "position": 7072
+      },
+      {
+        "equation": "e = (1",
+        "type": "mathematical",
+        "position": 7335
+      },
+      {
+        "equation": "n = 3 to n = 1",
+        "type": "mathematical",
+        "position": 7649
+      },
+      {
+        "equation": "F = ",
+        "type": "mathematical",
+        "position": 7968
+      },
+      {
+        "equation": "x + k\n2\nx) = ",
+        "type": "mathematical",
+        "position": 7979
+      },
+      {
+        "equation": "n-uniform speed inside uniform magnetic field C",
+        "type": "mathematical",
+        "position": 8142
+      },
+      {
+        "equation": "h\n=\n11\nR\n2Rh\n=\n2\n1\n1\n1\n21\nh\nh\nh\n1",
+        "type": "mathematical",
+        "position": 8485
+      },
+      {
+        "equation": "h\n=\n=\n=\n2\n1\n2\n11\nR\nR\nR\n100\n1\n100\nRR\n",
+        "type": "mathematical",
+        "position": 8574
+      },
+      {
+        "equation": "m\n+\n",
+        "type": "mathematical",
+        "position": 8726
+      },
+      {
+        "equation": "k\n+\n",
+        "type": "mathematical",
+        "position": 8769
+      },
+      {
+        "equation": "n-uniform speed doesn",
+        "type": "mathematical",
+        "position": 8879
+      },
+      {
+        "equation": "s-section (radius a) is carrying steady current I",
+        "type": "mathematical",
+        "position": 8981
+      },
+      {
+        "equation": "s-section",
+        "type": "mathematical",
+        "position": 9087
+      },
+      {
+        "equation": "N-B 51",
+        "type": "mathematical",
+        "position": 9558
+      },
+      {
+        "equation": "w = 4/3) ",
+        "type": "mathematical",
+        "position": 9867
+      },
+      {
+        "equation": "m = 1",
+        "type": "mathematical",
+        "position": 9997
+      },
+      {
+        "equation": "x = 50 cm 52",
+        "type": "mathematical",
+        "position": 10023
+      },
+      {
+        "equation": "A\n= ",
+        "type": "mathematical",
+        "position": 10553
+      },
+      {
+        "equation": "E = work done against retarding force",
+        "type": "mathematical",
+        "position": 10822
+      },
+      {
+        "equation": "n = 2 54",
+        "type": "mathematical",
+        "position": 10864
+      },
+      {
+        "equation": "m/s is approaching a vertical wall",
+        "type": "mathematical",
+        "position": 11244
+      },
+      {
+        "equation": "m/s) Official Ans",
+        "type": "mathematical",
+        "position": 11451
+      },
+      {
+        "equation": "i\n++ is ",
+        "type": "mathematical",
+        "position": 11572
+      },
+      {
+        "equation": "m = 0",
+        "type": "mathematical",
+        "position": 11627
+      },
+      {
+        "equation": "N/m\n2\n",
+        "type": "mathematical",
+        "position": 11854
+      },
+      {
+        "equation": "x\n=\n=\n=\n",
+        "type": "mathematical",
+        "position": 12008
+      },
+      {
+        "equation": "p = 12 ",
+        "type": "mathematical",
+        "position": 12907
+      },
+      {
+        "equation": "s = 120 volts p\ns = 60 KW = v\ns ",
+        "type": "mathematical",
+        "position": 12929
+      },
+      {
+        "equation": "s = 240 m",
+        "type": "mathematical",
+        "position": 12964
+      },
+      {
+        "equation": "g-m\n2 Official Ans",
+        "type": "mathematical",
+        "position": 13267
+      },
+      {
+        "equation": "m=2kg\nm=2kg\n40cm\nr=10cm\nr=10cm 60",
+        "type": "mathematical",
+        "position": 13322
+      },
+      {
+        "equation": "K = 4",
+        "type": "mathematical",
+        "position": 13485
+      },
+      {
+        "equation": "x = 0\n1\nA\n4\nC2 F\n3d\n",
+        "type": "mathematical",
+        "position": 13715
+      },
+      {
+        "equation": "d\n=+\n22\n2\n2\nmr\nmd\n5\n",
+        "type": "mathematical",
+        "position": 13867
+      },
+      {
+        "equation": "d / 3\n2d\n12\n3\nk3\n",
+        "type": "mathematical",
+        "position": 14057
+      },
+      {
+        "equation": "d / 3d\nd\nk3\n",
+        "type": "mathematical",
+        "position": 14142
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 212
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 238
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 420
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 852
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 996
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2138
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2226
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2229
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2372
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2375
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2490
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2657
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3397
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3411
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3937
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 4116
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 4179
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4339
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4424
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 5305
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 5368
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5431
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5728
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6219
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6563
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6572
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7740
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9464
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9946
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10165
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10272
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10287
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10400
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10407
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10413
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10419
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10451
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11227
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 13217
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13480
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13581
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.2857142857142857,
+        "matchedKeywords": [
+          "circle",
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "sin",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "force",
+          "velocity"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "light",
+          "sound",
+          "reflection",
+          "refraction"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "velocity",
+          "displacement"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "force",
+          "friction"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "charge",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit"
+        ]
+      }
+    ],
+    "tags": [],
+    "wordCount": 3417,
+    "characterCount": 14171
+  },
+  "images": []
+}

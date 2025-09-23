@@ -1,0 +1,1496 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2025\\Session2\\Physics\\0204-Physics Paper+With+Sol Morning Revised.pdf",
+  "relativePath": "JEE\\Previous Papers\\2025\\Session2\\Physics\\0204-Physics Paper+With+Sol Morning Revised.pdf",
+  "metadata": {
+    "originalFileName": "0204-Physics Paper+With+Sol Morning Revised.pdf",
+    "subject": "Physics",
+    "year": 2025,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 9,
+    "fileSize": 7433965,
+    "processedAt": "2025-09-22T23:54:02.613Z"
+  },
+  "content": {
+    "originalText": "1 JEE–MAIN EXAMINATION – APRIL 2025 PHYSICS TEST PAPER WITH SOLUTION  (HELD ON WEDNESDAY 2\nnd APRIL 2025) TIME : 9:00 AM TO 12:00 NOON SECTION-A 26. A light wave is propagating with plane wave fronts of the type x + y + z = constant. The angle made by the direction of wave propagation with the x-axis is : (1) 1\n1\ncos\n3\n\n\n\n (2) 1\n2\ncos\n3\n\n\n\n (3) 1\n1\ncos\n3\n\n\n\n (4) 1\n2\ncos\n3\n\n\n\n\n Ans. (1) Sol. The direction of propagation of light is perpendicular to the wave front and is symmetric about x, y and z axis.  Angle made by the light with x, y & z axis is same.  cos = cos = cos (,  &  are angle made by light with x, y & z axis respectively) Also cos\n2\n + cos\n2\n + cos\n2\n = 1 [Sum of direction cosines] \n1\n1\ncos\n3\n\n\n\n27. The equation for real gas is given by \n \n\n\n2\na\nP(V b)RT\nV\n, where P,V,T and R are the pressure, volume, temperature and gas constant, respectively. The dimension of ab\n–2 is equivalent to that of : (1) Planck's constant (2) Compressibility (3) Strain (4) Energy density Ans. (4) Sol. \n \n\n\n2\na\nP(V b) RT\nV  [a] = [P] [V\n2\n] = ML\n–\n1\nT\n–2\nL\n6 = ML\n5\nT\n–\n2 [b] = [V] = L\n3 [ab\n–\n2\n] = ML\n5\nT\n–2\nL\n–6 = ML\n–1\nT\n–2 Dimension of energy density. 28. A cord of negligible mass is wound around the rim of a wheel supported by spokes with negligible mass. The mass of wheel is 10 kg and radius is 10 cm and it can freely rotate without any friction. Initially the wheel is at rest. If a steady pull of 20 N is applied on the cord, the angular velocity of the wheel, after the cord is unwound by 1 m, would be : R F = 20 N (1) 20 rad/s (2) 30 rad/s (3) 10 rad/s (4) 0 rad/s Ans. (1) Sol. W\nF = 20 × 1 = 20 J  KE = 20 J = \n2\n1\nI\n2 I = MR\n2 = 10 × 0.1\n2 = 0.1 kg m\n2 \n  \n2\n1\n200.1\n2   = 20 rad/sec 29. A slanted object AB is placed on one side of convex lens as shown in the diagram. The image is formed on the opposite side. Angle made by the image with principal axis is : A 1 cm f = 20 cm 30 cm \nB 2 cm (1) 2\n\n (2) –45° (3) +45° (4) – Ans. (2) ALLEN 2 \nSol. A 1 cm f = 20 cm 30 cm \n\nB 2 cm 6\n0 cm A\n' \n\nLocation of image of A :- 11111111\nv 60cm\nvufv3020v60\n        \n\nm = 2\nSince size of object is small wrt the location hence dv = m\n2\ndu  dv = 4 × 1 = 4 cm h\ni = mh\n0  h\ni\n(dy) = 2 × 2 = 4 cm Angle made with principle axis = –\n45°\n30.Consider two infinitely large plane parallel\nconducting plates as shown below. The plates are\nuniformly charged with a surface charge density\n+ and –\n2. The force experienced by a point\ncharge +q placed at the mid point between two\nplates will be :\n+ d/2 d/2 –2 +q\n(1) 0\nq\n4\n\n\n(2) 0\n3q\n2\n\n\n(3) 0\n3q\n4\n\n\n(4) 0\nq\n2\n\n\nAns. (2) Sol.  d/2 d/2 –2 q y x Final charge distribution will be Plate 2 Plate 1 F\nnet =\n0\n3\nq\n2\n\n\n31.A river is flowing from west to east direction with\nspeed of 9 km h\n–1\n. If a boat capable of moving at a\nmaximum speed of 27 km h\n–1 in still water, crosses\nthe river in half a minute, while moving with\nmaximum speed at an angle of 150° to direction of\nriver flow, then the width of the river is :\n(1) 300 m(2) 112.5 m\n(3) 75 m(4) 112.5 ×\n3\nm Ans. (2) Sol. 9 km/hr 27 km/hr 60° V\n = river flow = 27 × cos60° =\n27\nkm / hr.\n2\nTime taken = 30 sec. S = Vt =\n275\n30m 112.5m\n218\n  \n32.A point charge +q is placed at the origin. A second\npoint charge +9q is placed at (d, 0, 0) in Cartesian\ncoordinate system. The point in between them\nwhere the electric field vanishes is :\n(1) (4d/3, 0, 0)(2) (d/4, 0, 0)\n(3) (3d/4, 0, 0)(4) (d/3, 0, 0)\nAns. (2) ALLEN 3  Sol. q x p 9\nq (\n0, 0, 0\n) (\nd\n, 0, 0\n) Let E\nP = 0  2\nkq\nk9q\nx\n(d x)\n\n\n  d xd\n3x\nx4\n\n    co-ordinate of P is d\n, 0, 0\n4\n\n\n 33. The battery of a mobile phone is rated as 4.2 V, 5800 mAh. How much energy is stored in it when fully charged ? (1) 43.8 kJ (2) 48.7 kJ (3) 87.7 kJ (4) 24.4 kJ Ans. (3) Sol. Given V = 4.2 volt  Energy supplied by battery = vq = 4.2 × 5800 × 3600 × 10\n–3 J = 87.696 kJ  Energy stored in the battery when fully charged = 87.696 kJ  87.7 kJ 34. A particle is subjected two simple harmonic motions as : 1\nx7 sin 5t cm and 2\nx2 7 sin 5tcm\n3\n\n\n\n\n where x is displacement and t is time in seconds. The maximum acceleration of the particle is x × 10\n–\n2 ms\n–2\n. The value of x is : (1) 175 (2) 25 7 (3) 57 (4) 125 Ans. (1) Sol. x\n1 = 7 sin 5t x\n2 = 2 7 sin 5t\n3\n\n\n\n\n From phasor, 60°  Amplitude of resultant SHM = 7  = 1\n1\n1\n2 7\n3 / 2\n21\n3\ntan\ntan\ntan\n1\n2\n27\n7 2 7\n2\n\n\n\n\n\n  X\nR = 7 sin (5t + ) a\nR = –7 × 25 sin (5t + )  a\nmax = 175 cm/sec = 175 × 10\n–2 m/sec 35. The relationship between the magnetic susceptibility () and the magnetic permeability () is given by : (\n0 is the permeability of free space and \nr is relative permeability) (1) 0\n1\n\n  \n (2) r\n0\n1\n\n  \n (3)  = \nr + 1 (4) 0\n1\n\n  \n Ans. (1) Sol. We have \nr = (1 +)  = (\nr –1)  = \n0\n\nr \nr\n0\n\n\n  0\n1\n\n\n  \n\n\n ALLEN 4  36. A zener diode with 5V zener voltage is used to regulate an unregulated dc voltage input of 25 V. For a 400  resistor connected in series, the zener current is found to be 4 times load current. The load current (I\nL\n) and load resistance (R\nL\n) are : (1) I\nL = 20 mA; R\nL = 250  (2) I\nL = 10 A; R\nL = 0.5  (3) I\nL = 0.02 mA; R\nL = 250  (4) I\nL = 10 mA; R\nL = 500  Ans. (4) Sol. 400  5V 25V A\ni i 5i From the circuit diagram, 20\n1\n5i\nA\n400\n20\n \n1\niA\n100\n\n= 10 mA = Load current Also, V\nL = 5 V  L\n3\n5\nR\n10 10\n\n\n = 500  37. In an adiabatic process, which of the following statements is true ? (1) The molar heat capacity is infinite (2) Work done by the gas equals the increase in internal energy (3) The molar heat capacity is zero (4) The internal energy of the gas decreases as the temperature increases Ans. (3) Sol. For adiabatic process, dQ = 0  Molar heat capacity = 0  dQ = 0  dU = –dW Also dU = f\nnRdT\n2  Only option (3) is correct. 38. A square Lamina OABC of length 10 cm is pivoted at 'O'. Forces act at Lamina as shown in figure. If Lamina remains stationary, then the magnitude of F is : 10N 10N O 10N F C B A 10N 10N 10 cm (1) 20 N (2) 0 (zero) (3) 10 N (4) 10 2 N Ans. (3) Sol. Since the lamina is equilibrium.  F\nnet = 0 & \nnet = 0  10N 10N O 10N F  10N 10N    T\nO = 10 –F  F = 10 N 39. Let B\n1 be the magnitude of magnetic field at center of a circular coil of radius R carrying current I. Let B\n2 be the magnitude of magnetic field at an axial distance 'x' from the center. For x : R = 3 : 4, 2\n1\nB\nB is : (1) 4 : 5 (2) 16 : 25 (3) 64 : 125 (4) 25 : 16 Ans. (3) Sol. O R x P 0\n1\ni\nB\n2R\n\n B\n2 = B\n1\nsin\n3\n  3\n3\n2\n1\nB\n464\nsin\nB5125\n\n  \n\n ALLEN 5  40. Considering Bohr's atomic model for hydrogen atom : (A) the energy of H atom in ground state is same as energy of He\n+ ion in its first excited state. (B) the energy of H atom in ground state is same as that for Li\n++ ion in its second excited state. (C) the energy of H atom in its ground state is same as that of He\n+ ion for its ground state. (D) the energy of He\n+ ion in its first excited state is same as that for Li\n++ ion in its ground state Choose the correct answer from the options given below : (1) (B), (D) only (2) (A), (B) only (3) (A), (D) only (4) (A), (C) only Ans. (2) Sol. 2\nZ\nE\nn\n Z\nH = 1 He\nZ2\n\n 2\nLi\nZ3\n\n 1\nst excited state  n = 2 2\nnd excited state  n = 3 From the given statements only A & B are correct. 41. Moment of inertia of a rod of mass 'M' and length 'L' about an axis passing through its center and normal to its length is ''. Now the rod is cut into two equal parts and these parts are joined symmetrically to form a cross shape. Moment of inertia of cross about an axis passing through its center and normal to plane containing cross is : (1)  (2) /4 (3) /8 (4) /2 Ans. (2) Sol. M,  2\nM\n12\n ... (i) 2\nM\n22\n'2\n12\n\n\n\n\n\n\n\n\n\n\n 2\nM\n'\n48\n4\n\n \n Correct option is (2) 42. 0.2 m R=0.4 m C O Medium\n-\n1 Medium\n-\n2 n\n1\n=1 n\n1\n=\n1.5 A spherical surface separates two media of refractive indices 1 and 1.5 as shown in figure. Distance of the image of an object 'O', is : (C is the center of curvature of the spherical surface and R is the radius of curvature) (1) 0.24 m right to the spherical surface (2) 0.4 m left to the spherical surface (3) 0.24 m left to the spherical surface (4) 0.4 m right to the spherical surface Ans. (2) Sol. 2121\nvuR\n   \n 1.511.5 1\nv( 0.2)0.4\n\n\n 1.50.51\nv0.40.2\n 1.51.5\nv0.4\n v = –0.4 m ALLEN 6  43. Match List–I with List–II. List–I List–II (A) Coefficient of viscosity (I) [ML\n0\nT\n–\n3\n] (B) Intensity of wave (II) [ML\n–2\nT\n–2\n] (C) Pressure gradient (III) [M\n–1\nLT\n2\n] (D) Compressibility (IV) [ML\n–\n1\nT\n–1\n] Choose the correct answer from the options given below : (1) (A)–(I), (B)–(IV), (C)–(III), (D)–(II) (2) (A)–(IV), (B)–(I), (C)–(II), (D)–(III) (3) (A)–(IV), (B)–(II), (C)–(I), (D)–(III) (4) (A)–(II), (B)–(III), (C)–(IV), (D)–(I) Ans. (2) Sol. (A) Coefficient of viscosity [] = [M\n1\nL\n–\n1\nT\n–1\n] (B) Intensity [I] = [M\n1\nL\n0\nT\n–3\n] (C) Pressure gradient = [ML\n–\n2\nT\n–2\n] (D) Compressibility [K] = [M\n–\n1\nL\n1\nT\n2\n] 44. A small bob of mass 100 mg and charge +10 C is connected to an insulating string of length 1 m. It is brought near to an infinitely long non–\nconducting sheet of charge density '' as shown in figure. If string subtends an angle of 45° with the sheet at equilibrium the charge density of sheet will be : (Given, \n0 = 8.85 × 10\n–\n12 F\nm and acceleration due to gravity, g = 10 m/s\n2\n) + A  = 1 m + + + + + + + +10C 45° (1) 0.885 nC/m\n2 (2) 17.7 nC/m\n2 (3) 885 nC/m\n2 (4) 1.77 nC/m\n2 Ans. (4) Sol. T mg F\ne = qE qE = mg 0\nq\nmg\n2\n\n\n\n\n\n 0\n2 mg\nq\n\n \n\n   \n\n\n126\n6\n2 8.85 10100 1010\n10 10  = 17.7 × 10\n–\n10 C/m\n2  = 1.77 nC/m\n2 45. A monochromatic light is incident on a metallic plate having work function . An electron, emitted normally to the plate from a point A with maximum kinetic energy, enters a constant magnetic field, perpendicular to the initial velocity of electron. The electron passes through a curve and hits back the plate at a point B. The distance between A and B is : (Given : The magnitude of charge of an electron is e and mass is m, h is Planck's constant and c is velocity of light. Take the magnetic field exists throughout the path of electron) (1) hc\n2m/ eB\n\n\n\n\n (2) hc\nm/ eB\n\n\n\n\n (3) hc\n8m/ eB\n\n\n\n\n (4) hc\n2 m/ eB\n\n\n\n\n Ans. (3) ALLEN 7  Sol. max\nhc\nKE\n \n \nmax\np\n2mK \n\n\n\n\n\nhc\np\n2m d\nA–\nB = 2R \n\n\n\np\n2\nqB AB\nhc\n2 2m\nd\neB\n\n\n\n\n\n hc\n8m\neB\n\n\n\n\n\n SECTION-B 46. A vessel with square cross–section and height of 6 m is vertically partitioned. A small window of 100 cm\n2 with hinged door is fitted at a depth of 3 m in the partition wall. One part of the vessel is filled completely with water and the other side is filled with the liquid having density 1.5 × 10\n3 kg/m\n3\n. What force one needs to apply on the hinged door so that it does not get opened ? (Acceleration due to gravity = 10 m/s\n2\n) Ans. (150) Sol. F\next F\nw F\n in equilibrium F\next + F\nw = F\n  F\next = F\n – F\nw = (P\n0 + \n\ngh)A – (P\n0 + \nw\ngh)A = (\n – \nw\n)ghA = (1500 – 1000) × 10 × 3 × (100 × 10\n–4\n) = 150 m 47. A steel wire of length 2 m and Young's modulus 2.0 × 10\n11 Nm\n–\n2 is stretched by a force. If Poisson ratio and transverse strain for the wire are 0.2 and 10\n–3 respectively, then the elastic potential energy density of the wire is ____ × 10\n5 (in SI units) Ans. (25) Sol.  = 2m ; Y = 2 × 10\n11 2\nN\nm  = \n\n\n\n\n\n  \n\n\n\n\n\n\n\nr\n1r\nr\nr = 3\n1\n(10 )\n0.2\n\n  3\n5 10\n\n\n u = 2113 2\n11\ny2 10[5 10 ]\n22\n\n      = 25 48. If the measured angular separation between the second minimum to the left of the central maximum and the third minimum to the right of the central maximum is 30° in a single slit diffraction pattern recorded using 628 nm light, then the width of the slit is ____ m. Ans. (6) Sol. 1\n1\n2\nsin\na\n\n\n\n\n\n 1\n2\n3\nsin\na\n\n\n\n\n\n  \n1 + \n2 = 30° ALLEN 8  11\n23\nsin\nsin\na\na\n6\n\n\n \n \n \n\n\n\n \n \n \n  22\n2332\n11sin\naaaa6\n\n  \n\n  \n   Here  = 628 nm After solving A = 6.07 m Approximate Method :  = \n1 + \n2   \n  \n23\n6\na\na  \n\n\n\n5\n628nm\n6a  a = 6 m 49. \nA is the specific heat ratio of monoatomic gas A having 3 translational degrees of freedom. \nB is the specific heat ratio of polyatomic gas B having 3 translational, 3 rotational degrees of freedom and 1 vibrational mode. If A\nB\n1\n1\nn\n\n\n\n\n\n\n, then the value of n is ______. Ans. (3) Sol. AAB\nBAB\nf2f\nff2\n\n\n 3 2(6 2)\n3(6 2) 2\n\n\n 5840\n3 1030\n    401\n1\n30n\n  401\n1\n30n\n  n = 3 50. A person travelling on a straight line moves with a uniform velocity v\n1 for a distance x and with a uniform velocity v\n2 for the next 3\nx\n2 distance. The average velocity in this motion is 50\nm / s\n7\n. If v\n1 is 5 m/s then v\n2 = _____ m/s. Ans. (10) Sol. 12\navg\n12\nxx\nv\ntt\n\n\n  2\n3x\nx\n50\n2\nx\n3x\n7\n5\n2v\n\n\n \n2\n50\n5 / 2\n13\n7\n5\n2v\n\n  2\n137\n52v20\n  2\n3717 4\n2v20520\n\n    2\n33\n2v20\n  v\n2 = 10 m/s ALLEN",
+    "questions": [
+      {
+        "number": "27",
+        "text": "The equation for real gas is given by \n \n\n\n2\na\nP(V b)RT\nV\n, where P,V,T and R are the pressure, volume, temperature and gas constant, respectively. The dimension of ab\n–2 is equivalent to that of : (1) Planck's constant (2) Compressibility (3) Strain (4) Energy density",
+        "formattedText": "The equation for real gas is given by \n \n\n\n2\na\nP(V b)RT\nV\n, where P,V,T and R are the pressure, volume, temperature and gas constant, respectively. The dimension of ab\n–2 is equivalent to that of : (1) Planck's constant (2) Compressibility (3) Strain (4) Energy density",
+        "latexText": "\\(The equation for real gas is given by     ^{2}a P(V b)\\frac{RT}{V}, where P,V,T and R are the pressure, volume, temperature and gas constant, respectively. The dimension of ab –2 is equivalent to that of : (1) Planck's constant (2) Compressibility (3) Strain (4) Energy density\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Planck's constant"
+          },
+          {
+            "letter": "2",
+            "text": "Compressibility"
+          },
+          {
+            "letter": "3",
+            "text": "Strain"
+          },
+          {
+            "letter": "4",
+            "text": "Energy density"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Planck's constant",
+            "formattedText": "Planck's constant",
+            "latexText": "Planck's constant"
+          },
+          {
+            "letter": "2",
+            "text": "Compressibility",
+            "formattedText": "Compressibility",
+            "latexText": "Compressibility"
+          },
+          {
+            "letter": "3",
+            "text": "Strain",
+            "formattedText": "Strain",
+            "latexText": "Strain"
+          },
+          {
+            "letter": "4",
+            "text": "Energy density",
+            "formattedText": "Energy density",
+            "latexText": "Energy density"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "RT",
+            "latex": "RT",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "33",
+        "text": "The battery of a mobile phone is rated as 4.2 V, 5800 mAh. How much energy is stored in it when fully charged ? (1) 43.8 kJ (2) 48.7 kJ (3) 87.7 kJ (4) 24.4 kJ",
+        "formattedText": "The battery of a mobile phone is rated as 4.2 V, 5800 mAh. How much energy is stored in it when fully charged ? (1) 43.8 kJ (2) 48.7 kJ (3) 87.7 kJ (4) 24.4 kJ",
+        "latexText": "The battery of a mobile phone is rated as 4.2 V, 5800 mAh. How much energy is stored in it when fully charged ? (1) 43.8 kJ (2) 48.7 kJ (3) 87.7 kJ (4) 24.4 kJ",
+        "options": [
+          {
+            "letter": "1",
+            "text": "43.8 kJ"
+          },
+          {
+            "letter": "2",
+            "text": "48.7 kJ"
+          },
+          {
+            "letter": "3",
+            "text": "87.7 kJ"
+          },
+          {
+            "letter": "4",
+            "text": "24.4 kJ"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "43.8 kJ",
+            "formattedText": "43.8 kJ",
+            "latexText": "43.8 kJ"
+          },
+          {
+            "letter": "2",
+            "text": "48.7 kJ",
+            "formattedText": "48.7 kJ",
+            "latexText": "48.7 kJ"
+          },
+          {
+            "letter": "3",
+            "text": "87.7 kJ",
+            "formattedText": "87.7 kJ",
+            "latexText": "87.7 kJ"
+          },
+          {
+            "letter": "4",
+            "text": "24.4 kJ",
+            "formattedText": "24.4 kJ",
+            "latexText": "24.4 kJ"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "34",
+        "text": "A particle is subjected two simple harmonic motions as : 1\nx7 sin 5t cm and 2\nx2 7 sin 5tcm\n3\n\n\n\n\n where x is displacement and t is time in seconds. The maximum acceleration of the particle is x × 10\n–\n2 ms\n–2\n. The value of x is : (1) 175 (2) 25 7 (3) 57 (4) 125",
+        "formattedText": "A particle is subjected two simple harmonic motions as : 1\nx7 sin 5t cm and 2\nx2 7 sin 5tcm\n3\n\n\n\n\n where x is displacement and t is time in seconds. The maximum acceleration of the particle is x × 10\n–\n2 ms\n–2\n. The value of x is : (1) 175 (2) 25 7 (3) 57 (4) 125",
+        "latexText": "\\(A particle is subjected two simple harmonic motions as : 1 x7 \\sin 5t cm and 2 x2 7 \\sin 5tcm^{3}      where x is displacement and t is time in seconds. The maximum acceleration of the particle is x \\times 10 – 2 ms –2 . The value of x is : (1) 175 (2) 25 7 (3) 57 (4) 125\\)",
+        "options": [
+          {
+            "letter": "2",
+            "text": "25 7"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "2",
+            "text": "25 7",
+            "formattedText": "25 7",
+            "latexText": "25 7"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "37",
+        "text": "In an adiabatic process, which of the following statements is true ? (1) The molar heat capacity is infinite (2) Work done by the gas equals the increase in internal energy (3) The molar heat capacity is zero (4) The internal energy of the gas decreases as the temperature increases",
+        "formattedText": "In an adiabatic process, which of the following statements is true ? (1) The molar heat capacity is infinite (2) Work done by the gas equals the increase in internal energy (3) The molar heat capacity is zero (4) The internal energy of the gas decreases as the temperature increases",
+        "latexText": "In an adiabatic process, which of the following statements is true ? (1) The molar heat capacity is infinite (2) Work done by the gas equals the increase in internal energy (3) The molar heat capacity is zero (4) The internal energy of the gas decreases as the temperature increases",
+        "options": [
+          {
+            "letter": "1",
+            "text": "The molar heat capacity is infinite"
+          },
+          {
+            "letter": "2",
+            "text": "Work done by the gas equals the increase in internal energy"
+          },
+          {
+            "letter": "3",
+            "text": "The molar heat capacity is zero"
+          },
+          {
+            "letter": "4",
+            "text": "The internal energy of the gas decreases as the temperature increases"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "The molar heat capacity is infinite",
+            "formattedText": "The molar heat capacity is infinite",
+            "latexText": "The molar heat capacity is infinite"
+          },
+          {
+            "letter": "2",
+            "text": "Work done by the gas equals the increase in internal energy",
+            "formattedText": "Work done by the gas equals the increase in internal energy",
+            "latexText": "Work done by the gas equals the increase in internal energy"
+          },
+          {
+            "letter": "3",
+            "text": "The molar heat capacity is zero",
+            "formattedText": "The molar heat capacity is zero",
+            "latexText": "The molar heat capacity is zero"
+          },
+          {
+            "letter": "4",
+            "text": "The internal energy of the gas decreases as the temperature increases",
+            "formattedText": "The internal energy of the gas decreases as the temperature increases",
+            "latexText": "The internal energy of the gas decreases as the temperature increases"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "38",
+        "text": "A square Lamina OABC of length 10 cm is pivoted at 'O'. Forces act at Lamina as shown in figure. If Lamina remains stationary, then the magnitude of F is : 10N 10N O 10N F C B A 10N 10N 10 cm (1) 20 N (2) 0 (zero) (3) 10 N (4) 10 2 N",
+        "formattedText": "A square Lamina OABC of length 10 cm is pivoted at 'O'. Forces act at Lamina as shown in figure. If Lamina remains stationary, then the magnitude of F is : 10N 10N O 10N F C B A 10N 10N 10 cm (1) 20 N (2) 0 (zero) (3) 10 N (4) 10 2 N",
+        "latexText": "A square Lamina OABC of length 10 cm is pivoted at 'O'. Forces act at Lamina as shown in figure. If Lamina remains stationary, then the magnitude of F is : 10N 10N O 10N F C B A 10N 10N 10 cm (1) 20 N (2) 0 (zero) (3) 10 N (4) 10 2 N",
+        "options": [
+          {
+            "letter": "1",
+            "text": "20 N"
+          },
+          {
+            "letter": "3",
+            "text": "10 N"
+          },
+          {
+            "letter": "4",
+            "text": "10 2 N"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "20 N",
+            "formattedText": "20 N",
+            "latexText": "20 N"
+          },
+          {
+            "letter": "3",
+            "text": "10 N",
+            "formattedText": "10 N",
+            "latexText": "10 N"
+          },
+          {
+            "letter": "4",
+            "text": "10 2 N",
+            "formattedText": "10 2 N",
+            "latexText": "10 2 N"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "OA",
+            "latex": "OA",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "BC",
+            "latex": "BC",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "40",
+        "text": "Considering Bohr's atomic model for hydrogen atom : (A) the energy of H atom in ground state is same as energy of He\n+ ion in its first excited state. (B) the energy of H atom in ground state is same as that for Li\n++ ion in its second excited state. (C) the energy of H atom in its ground state is same as that of He\n+ ion for its ground state. (D) the energy of He\n+ ion in its first excited state is same as that for Li\n++ ion in its ground state Choose the correct answer from the options given below : (1) (B), (D) only (2) (A), (B) only (3) (A), (D) only (4) (A), (C) only",
+        "formattedText": "Considering Bohr's atomic model for hydrogen atom : (A) the energy of H atom in ground state is same as energy of He\n+ ion in its first excited state. (B) the energy of H atom in ground state is same as that for Li\n++ ion in its second excited state. (C) the energy of H atom in its ground state is same as that of He\n+ ion for its ground state. (D) the energy of He\n+ ion in its first excited state is same as that for Li\n++ ion in its ground state Choose the correct answer from the options given below : (1) (B), (D) only (2) (A), (B) only (3) (A), (D) only (4) (A), (C) only",
+        "latexText": "\\(Considering Bohr's atomic model for hydrogen atom : (A) the energy of H atom in ground state is same as energy of He + ion in its first excited state. (B) the energy of H atom in ground state is same as that for Li + + ion in its second excited state. (C) the energy of H atom in its ground state is same as that of He + ion for its ground state. (D) the energy of He + ion in its first excited state is same as that for Li + + ion in its ground state Choose the correct answer from the options given below : (1) (B), (D) only (2) (A), (B) only (3) (A), (D) only (4) (A), (C) only\\)",
+        "options": [
+          {
+            "letter": "A",
+            "text": "the energy of H atom in ground state is same as energy of He + ion in its first excited state."
+          },
+          {
+            "letter": "B",
+            "text": "the energy of H atom in ground state is same as that for Li ++ ion in its second excited state."
+          },
+          {
+            "letter": "B",
+            "text": "only"
+          },
+          {
+            "letter": "C",
+            "text": "the energy of H atom in its ground state is same as that of He + ion for its ground state."
+          },
+          {
+            "letter": "C",
+            "text": "only"
+          },
+          {
+            "letter": "D",
+            "text": "the energy of He + ion in its first excited state is same as that for Li ++ ion in its ground state Choose the correct answer from the options given below :"
+          },
+          {
+            "letter": "D",
+            "text": "only"
+          },
+          {
+            "letter": "D",
+            "text": "only"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "A",
+            "text": "the energy of H atom in ground state is same as energy of He + ion in its first excited state.",
+            "formattedText": "the energy of H atom in ground state is same as energy of He + ion in its first excited state.",
+            "latexText": "\\(the energy of H atom in ground state is same as energy of He + ion in its first excited state.\\)"
+          },
+          {
+            "letter": "B",
+            "text": "the energy of H atom in ground state is same as that for Li ++ ion in its second excited state.",
+            "formattedText": "the energy of H atom in ground state is same as that for Li ++ ion in its second excited state.",
+            "latexText": "\\(the energy of H atom in ground state is same as that for Li ++ ion in its second excited state.\\)"
+          },
+          {
+            "letter": "B",
+            "text": "only",
+            "formattedText": "only",
+            "latexText": "only"
+          },
+          {
+            "letter": "C",
+            "text": "the energy of H atom in its ground state is same as that of He + ion for its ground state.",
+            "formattedText": "the energy of H atom in its ground state is same as that of He + ion for its ground state.",
+            "latexText": "\\(the energy of H atom in its ground state is same as that of He + ion for its ground state.\\)"
+          },
+          {
+            "letter": "C",
+            "text": "only",
+            "formattedText": "only",
+            "latexText": "only"
+          },
+          {
+            "letter": "D",
+            "text": "the energy of He + ion in its first excited state is same as that for Li ++ ion in its ground state Choose the correct answer from the options given below :",
+            "formattedText": "the energy of He + ion in its first excited state is same as that for Li ++ ion in its ground state Choose the correct answer from the options given below :",
+            "latexText": "\\(the energy of He + ion in its first excited state is same as that for Li ++ ion in its ground state Choose the correct answer from the options given below :\\)"
+          },
+          {
+            "letter": "D",
+            "text": "only",
+            "formattedText": "only",
+            "latexText": "only"
+          },
+          {
+            "letter": "D",
+            "text": "only",
+            "formattedText": "only",
+            "latexText": "only"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "43",
+        "text": "Match List–I with List–II. List–I List–II (A) Coefficient of viscosity (I) [ML\n0\nT\n–\n3\n] (B) Intensity of wave (II) [ML\n–2\nT\n–2\n] (C) Pressure gradient (III) [M\n–1\nLT\n2\n] (D) Compressibility (IV) [ML\n–\n1\nT\n–1\n] Choose the correct answer from the options given below : (1) (A)–(I), (B)–(IV), (C)–(III), (D)–(II) (2) (A)–(IV), (B)–(I), (C)–(II), (D)–(III) (3) (A)–(IV), (B)–(II), (C)–(I), (D)–(III) (4) (A)–(II), (B)–(III), (C)–(IV), (D)–(I)",
+        "formattedText": "Match List–I with List–II. List–I List–II (A) Coefficient of viscosity (I) [ML\n0\nT\n–\n3\n] (B) Intensity of wave (II) [ML\n–2\nT\n–2\n] (C) Pressure gradient (III) [M\n–1\nLT\n2\n] (D) Compressibility (IV) [ML\n–\n1\nT\n–1\n] Choose the correct answer from the options given below : (1) (A)–(I), (B)–(IV), (C)–(III), (D)–(II) (2) (A)–(IV), (B)–(I), (C)–(II), (D)–(III) (3) (A)–(IV), (B)–(II), (C)–(I), (D)–(III) (4) (A)–(II), (B)–(III), (C)–(IV), (D)–(I)",
+        "latexText": "\\(Match List–I with List–II. List–I List–II (A) Coefficient of viscosity (I) [ML^{0} T –^{3}] (B) Intensity of wave (II) [ML –\\frac{2}{T}–2 ] (C) Pressure gradient (III) [M –1 LT^{2} ] (D) Compressibility (IV) [ML –^{1}T –1 ] Choose the correct answer from the options given below : (1) (A)–(I), (B)–(IV), (C)–(III), (D)–(II) (2) (A)–(IV), (B)–(I), (C)–(II), (D)–(III) (3) (A)–(IV), (B)–(II), (C)–(I), (D)–(III) (4) (A)–(II), (B)–(III), (C)–(IV), (D)–(I)\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "ML",
+            "latex": "ML",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "ML",
+            "latex": "ML",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "LT",
+            "latex": "LT",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "ML",
+            "latex": "ML",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "44",
+        "text": "A small bob of mass 100 mg and charge +10 C is connected to an insulating string of length 1 m. It is brought near to an infinitely long non–\nconducting sheet of charge density '' as shown in figure. If string subtends an angle of 45° with the sheet at equilibrium the charge density of sheet will be : (Given, \n0 = 8.85 × 10\n–\n12 F\nm and acceleration due to gravity, g = 10 m/s\n2\n) + A  = 1 m + + + + + + + +10C 45° (1) 0.885 nC/m\n2 (2) 17.7 nC/m\n2 (3) 885 nC/m\n2 (4) 1.77 nC/m\n2",
+        "formattedText": "A small bob of mass 100 mg and charge +10 C is connected to an insulating string of length 1 m. It is brought near to an infinitely long non–\nconducting sheet of charge density '' as shown in figure. If string subtends an angle of 45° with the sheet at equilibrium the charge density of sheet will be : (Given, \n0 = 8.85 × 10\n–\n12 F\nm and acceleration due to gravity, g = 10 m/s\n2\n) + A  = 1 m + + + + + + + +10C 45° (1) 0.885 nC/m\n2 (2) 17.7 nC/m\n2 (3) 885 nC/m\n2 (4) 1.77 nC/m\n2",
+        "latexText": "\\(A small bob of mass 100 mg and charge +10 C is connected to an insulating string of length 1 m. It is brought near to an infinitely long non– conducting sheet of charge density '' as shown in figure. If string subtends an angle of 45^\\circ with the sheet at equilibrium the charge density of sheet will be : (Given,  0 = 8.85 \\times 10 – 12 F m and acceleration due to gravity, g = 10 \\frac{m}{s}^{2} ) + A  = 1 m + + + + + + + +10C 45^\\circ (1) 0.885 \\frac{nC}{m}^{2} (2) 17.7 \\frac{nC}{m}^{2} (3) 885 \\frac{nC}{m}^{2} (4) 1.77 \\frac{nC}{m}^{2}\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "0.885 nC/m 2"
+          },
+          {
+            "letter": "2",
+            "text": "17.7 nC/m 2"
+          },
+          {
+            "letter": "3",
+            "text": "885 nC/m 2"
+          },
+          {
+            "letter": "4",
+            "text": "1.77 nC/m 2"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "0.885 nC/m 2",
+            "formattedText": "0.885 nC/m 2",
+            "latexText": "\\(0.885 \\frac{nC}{m} 2\\)"
+          },
+          {
+            "letter": "2",
+            "text": "17.7 nC/m 2",
+            "formattedText": "17.7 nC/m 2",
+            "latexText": "\\(17.7 \\frac{nC}{m} 2\\)"
+          },
+          {
+            "letter": "3",
+            "text": "885 nC/m 2",
+            "formattedText": "885 nC/m 2",
+            "latexText": "\\(885 \\frac{nC}{m} 2\\)"
+          },
+          {
+            "letter": "4",
+            "text": "1.77 nC/m 2",
+            "formattedText": "1.77 nC/m 2",
+            "latexText": "\\(1.77 \\frac{nC}{m} 2\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "nC/m",
+            "latex": "\\(\\frac{nC}{m}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "nC/m",
+            "latex": "\\(\\frac{nC}{m}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "nC/m",
+            "latex": "\\(\\frac{nC}{m}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "nC/m",
+            "latex": "\\(\\frac{nC}{m}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "49",
+        "text": "\nA is the specific heat ratio of monoatomic gas A having 3 translational degrees of freedom. \nB is the specific heat ratio of polyatomic gas B having 3 translational, 3 rotational degrees of freedom and 1 vibrational mode. If A\nB\n1\n1\nn\n\n\n\n\n\n\n, then the value of n is ______.",
+        "formattedText": "\nA is the specific heat ratio of monoatomic gas A having 3 translational degrees of freedom. \nB is the specific heat ratio of polyatomic gas B having 3 translational, 3 rotational degrees of freedom and 1 vibrational mode. If A\nB\n1\n1\nn\n\n\n\n\n\n\n, then the value of n is ______.",
+        "latexText": "\\( A is the specific heat ratio of monoatomic gas A having 3 translational degrees of freedom.  B is the specific heat ratio of polyatomic gas B having 3 translational, 3 rotational degrees of freedom and 1 vibrational mode. If A B^{1}^{1}n       , then the value of n is ______.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 26",
+        "type": "mathematical",
+        "position": 146
+      },
+      {
+        "equation": "x + y + z = constant",
+        "type": "mathematical",
+        "position": 217
+      },
+      {
+        "equation": "x-axis is ",
+        "type": "mathematical",
+        "position": 300
+      },
+      {
+        "equation": "F = 20 N (1) 20 rad/s (2) 30 rad/s (3) 10 rad/s (4) 0 rad/s Ans",
+        "type": "mathematical",
+        "position": 1594
+      },
+      {
+        "equation": "F = 20 ",
+        "type": "mathematical",
+        "position": 1670
+      },
+      {
+        "equation": "E = 20 J = ",
+        "type": "mathematical",
+        "position": 1692
+      },
+      {
+        "equation": "I = MR\n2 = 10 ",
+        "type": "mathematical",
+        "position": 1713
+      },
+      {
+        "equation": "d/sec 29",
+        "type": "mathematical",
+        "position": 1781
+      },
+      {
+        "equation": "f = 20 cm 30 cm ",
+        "type": "mathematical",
+        "position": 1971
+      },
+      {
+        "equation": "f = 20 cm 30 cm ",
+        "type": "mathematical",
+        "position": 2067
+      },
+      {
+        "equation": "m = 2\nSince size of object is small wrt the location hence dv = m\n2\ndu ",
+        "type": "mathematical",
+        "position": 2184
+      },
+      {
+        "equation": "v = 4 ",
+        "type": "mathematical",
+        "position": 2258
+      },
+      {
+        "equation": "i = mh\n0 ",
+        "type": "mathematical",
+        "position": 2277
+      },
+      {
+        "equation": "s = ",
+        "type": "mathematical",
+        "position": 2342
+      },
+      {
+        "equation": "e +q placed at the mid point between two\nplates will be ",
+        "type": "mathematical",
+        "position": 2548
+      },
+      {
+        "equation": "d/2 d/2 ",
+        "type": "mathematical",
+        "position": 2609
+      },
+      {
+        "equation": "d/2 d/2 ",
+        "type": "mathematical",
+        "position": 2698
+      },
+      {
+        "equation": "t =\n0\n3\nq\n2\n",
+        "type": "mathematical",
+        "position": 2771
+      },
+      {
+        "equation": "m/hr 27 km/hr 60",
+        "type": "mathematical",
+        "position": 3151
+      },
+      {
+        "equation": "w = 27 ",
+        "type": "mathematical",
+        "position": 3185
+      },
+      {
+        "equation": "m / hr",
+        "type": "mathematical",
+        "position": 3207
+      },
+      {
+        "equation": "n = 30 sec",
+        "type": "mathematical",
+        "position": 3226
+      },
+      {
+        "equation": "S = Vt =\n275\n30m 112",
+        "type": "mathematical",
+        "position": 3239
+      },
+      {
+        "equation": "e +q is placed at the origin",
+        "type": "mathematical",
+        "position": 3289
+      },
+      {
+        "equation": "e +9q is placed at (d",
+        "type": "mathematical",
+        "position": 3339
+      },
+      {
+        "equation": "d/3",
+        "type": "mathematical",
+        "position": 3471
+      },
+      {
+        "equation": "d/4",
+        "type": "mathematical",
+        "position": 3486
+      },
+      {
+        "equation": "d/4",
+        "type": "mathematical",
+        "position": 3503
+      },
+      {
+        "equation": "d/3",
+        "type": "mathematical",
+        "position": 3518
+      },
+      {
+        "equation": "P = 0 ",
+        "type": "mathematical",
+        "position": 3598
+      },
+      {
+        "equation": "o-ordinate of P is d\n",
+        "type": "mathematical",
+        "position": 3653
+      },
+      {
+        "equation": "V = 4",
+        "type": "mathematical",
+        "position": 3876
+      },
+      {
+        "equation": "y = vq = 4",
+        "type": "mathematical",
+        "position": 3916
+      },
+      {
+        "equation": "J = 87",
+        "type": "mathematical",
+        "position": 3951
+      },
+      {
+        "equation": "d = 87",
+        "type": "mathematical",
+        "position": 4013
+      },
+      {
+        "equation": "M = 7 ",
+        "type": "mathematical",
+        "position": 4420
+      },
+      {
+        "equation": "R = 7 sin (5t + ",
+        "type": "mathematical",
+        "position": 4496
+      },
+      {
+        "equation": "R = ",
+        "type": "mathematical",
+        "position": 4517
+      },
+      {
+        "equation": "t + ",
+        "type": "mathematical",
+        "position": 4535
+      },
+      {
+        "equation": "x = 175 cm/sec = 175 ",
+        "type": "mathematical",
+        "position": 4548
+      },
+      {
+        "equation": "m/sec 35",
+        "type": "mathematical",
+        "position": 4577
+      },
+      {
+        "equation": "r + 1 (4) 0\n1\n",
+        "type": "mathematical",
+        "position": 4813
+      },
+      {
+        "equation": "r = (1 +",
+        "type": "mathematical",
+        "position": 4861
+      },
+      {
+        "equation": "L = 20 mA",
+        "type": "mathematical",
+        "position": 5213
+      },
+      {
+        "equation": "L = 250 ",
+        "type": "mathematical",
+        "position": 5226
+      },
+      {
+        "equation": "L = 10 A",
+        "type": "mathematical",
+        "position": 5242
+      },
+      {
+        "equation": "L = 0",
+        "type": "mathematical",
+        "position": 5254
+      },
+      {
+        "equation": "L = 0",
+        "type": "mathematical",
+        "position": 5270
+      },
+      {
+        "equation": "L = 250 ",
+        "type": "mathematical",
+        "position": 5285
+      },
+      {
+        "equation": "L = 10 mA",
+        "type": "mathematical",
+        "position": 5301
+      },
+      {
+        "equation": "L = 500 ",
+        "type": "mathematical",
+        "position": 5314
+      },
+      {
+        "equation": "A = Load current Also",
+        "type": "mathematical",
+        "position": 5426
+      },
+      {
+        "equation": "L = 5 V ",
+        "type": "mathematical",
+        "position": 5451
+      },
+      {
+        "equation": "Q = 0 ",
+        "type": "mathematical",
+        "position": 5815
+      },
+      {
+        "equation": "y = 0 ",
+        "type": "mathematical",
+        "position": 5841
+      },
+      {
+        "equation": "Q = 0 ",
+        "type": "mathematical",
+        "position": 5850
+      },
+      {
+        "equation": "U = ",
+        "type": "mathematical",
+        "position": 5859
+      },
+      {
+        "equation": "U = f\nnRdT\n2 ",
+        "type": "mathematical",
+        "position": 5873
+      },
+      {
+        "equation": "t = 0 ",
+        "type": "mathematical",
+        "position": 6207
+      },
+      {
+        "equation": "t = 0 ",
+        "type": "mathematical",
+        "position": 6219
+      },
+      {
+        "equation": "O = 10",
+        "type": "mathematical",
+        "position": 6261
+      },
+      {
+        "equation": "F = 10 N 39",
+        "type": "mathematical",
+        "position": 6275
+      },
+      {
+        "equation": "R = 3 ",
+        "type": "mathematical",
+        "position": 6485
+      },
+      {
+        "equation": "e\n+ ion in its first excited state",
+        "type": "mathematical",
+        "position": 6786
+      },
+      {
+        "equation": "i\n++ ion in its second excited state",
+        "type": "mathematical",
+        "position": 6884
+      },
+      {
+        "equation": "e\n+ ion for its ground state",
+        "type": "mathematical",
+        "position": 6987
+      },
+      {
+        "equation": "e\n+ ion in its first excited state is same as that for Li\n++ ion in its ground state Choose the correct answer from the options given below ",
+        "type": "mathematical",
+        "position": 7036
+      },
+      {
+        "equation": "H = 1 He\nZ2\n",
+        "type": "mathematical",
+        "position": 7276
+      },
+      {
+        "equation": "n = 2 2\nnd excited state ",
+        "type": "mathematical",
+        "position": 7325
+      },
+      {
+        "equation": "n = 3 From the given statements only A ",
+        "type": "mathematical",
+        "position": 7352
+      },
+      {
+        "equation": "R=0",
+        "type": "mathematical",
+        "position": 7918
+      },
+      {
+        "equation": "m\n-\n1 Medium\n-\n2 n\n1\n=1 n\n1\n=\n1",
+        "type": "mathematical",
+        "position": 7935
+      },
+      {
+        "equation": "v = ",
+        "type": "mathematical",
+        "position": 8456
+      },
+      {
+        "equation": "t = ",
+        "type": "mathematical",
+        "position": 9048
+      },
+      {
+        "equation": "e +10 ",
+        "type": "mathematical",
+        "position": 9150
+      },
+      {
+        "equation": "g = 10 m/s\n2\n) + A ",
+        "type": "mathematical",
+        "position": 9485
+      },
+      {
+        "equation": "m + + + + + + +",
+        "type": "mathematical",
+        "position": 9510
+      },
+      {
+        "equation": "C/m\n2 (2) 17",
+        "type": "mathematical",
+        "position": 9548
+      },
+      {
+        "equation": "C/m\n2 (3) 885 nC/m\n2 (4) 1",
+        "type": "mathematical",
+        "position": 9564
+      },
+      {
+        "equation": "C/m\n2 Ans",
+        "type": "mathematical",
+        "position": 9595
+      },
+      {
+        "equation": "e = qE qE = mg 0\nq\nmg\n2\n",
+        "type": "mathematical",
+        "position": 9622
+      },
+      {
+        "equation": "C/m\n2 ",
+        "type": "mathematical",
+        "position": 9743
+      },
+      {
+        "equation": "C/m\n2 45",
+        "type": "mathematical",
+        "position": 9759
+      },
+      {
+        "equation": "m/ eB\n",
+        "type": "mathematical",
+        "position": 10318
+      },
+      {
+        "equation": "m/ eB\n",
+        "type": "mathematical",
+        "position": 10345
+      },
+      {
+        "equation": "m/ eB\n",
+        "type": "mathematical",
+        "position": 10373
+      },
+      {
+        "equation": "m/ eB\n",
+        "type": "mathematical",
+        "position": 10402
+      },
+      {
+        "equation": "B = 2R ",
+        "type": "mathematical",
+        "position": 10508
+      },
+      {
+        "equation": "N-B 46",
+        "type": "mathematical",
+        "position": 10596
+      },
+      {
+        "equation": "g/m\n3\n",
+        "type": "mathematical",
+        "position": 10906
+      },
+      {
+        "equation": "y = 10 m/s\n2\n) Ans",
+        "type": "mathematical",
+        "position": 11023
+      },
+      {
+        "equation": "t + F\nw = F\n",
+        "type": "mathematical",
+        "position": 11087
+      },
+      {
+        "equation": "t = F\n",
+        "type": "mathematical",
+        "position": 11107
+      },
+      {
+        "equation": "w = (P\n0 + ",
+        "type": "mathematical",
+        "position": 11119
+      },
+      {
+        "equation": "A = (",
+        "type": "mathematical",
+        "position": 11155
+      },
+      {
+        "equation": "A = (1500 ",
+        "type": "mathematical",
+        "position": 11173
+      },
+      {
+        "equation": "Y = 2 ",
+        "type": "mathematical",
+        "position": 11511
+      },
+      {
+        "equation": "r = 3\n1\n(10 )\n0",
+        "type": "mathematical",
+        "position": 11585
+      },
+      {
+        "equation": "u = 2113 2\n11\ny2 10",
+        "type": "mathematical",
+        "position": 11623
+      },
+      {
+        "equation": "A = 6",
+        "type": "mathematical",
+        "position": 12187
+      },
+      {
+        "equation": "a = 6 ",
+        "type": "mathematical",
+        "position": 12278
+      },
+      {
+        "equation": "n = 3 50",
+        "type": "mathematical",
+        "position": 12694
+      },
+      {
+        "equation": "m / s\n7\n",
+        "type": "mathematical",
+        "position": 12897
+      },
+      {
+        "equation": "m/s then v\n2 = ",
+        "type": "mathematical",
+        "position": 12919
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 12940
+      },
+      {
+        "equation": "m/s ALLEN",
+        "type": "mathematical",
+        "position": 13113
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 233
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 320
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 345
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 370
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 395
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 598
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 605
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 612
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 689
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 699
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 709
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 739
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 755
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 909
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 996
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 2520
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 3194
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4103
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4125
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4337
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4354
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4413
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4451
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4455
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4459
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4502
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4529
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5188
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6450
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 6603
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 6627
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7483
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7688
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8064
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8549
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8961
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9947
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10100
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10213
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11843
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11885
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11963
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11991
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12051
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12055
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12114
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12786
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12848
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.14285714285714285,
+        "matchedKeywords": [
+          "coordinate"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "acceleration",
+          "velocity"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current",
+          "voltage"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "equilibrium"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "force",
+          "friction"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "charge",
+          "electric field",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit"
+        ]
+      }
+    ],
+    "tags": [
+      "JEE Mains"
+    ],
+    "wordCount": 3290,
+    "characterCount": 13122
+  },
+  "images": []
+}

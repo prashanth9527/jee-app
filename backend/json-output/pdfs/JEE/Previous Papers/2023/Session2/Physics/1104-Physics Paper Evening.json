@@ -1,0 +1,658 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2023\\Session2\\Physics\\1104-Physics Paper Evening.pdf",
+  "relativePath": "JEE\\Previous Papers\\2023\\Session2\\Physics\\1104-Physics Paper Evening.pdf",
+  "metadata": {
+    "originalFileName": "1104-Physics Paper Evening.pdf",
+    "subject": "Physics",
+    "year": 2023,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 7,
+    "fileSize": 384831,
+    "processedAt": "2025-09-22T23:53:14.176Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2023 (Held On Tuesday 11\nth April, 2023) TIME : 3 : 00 PM to 6 : 00 PM PHYSICS TEST PAPER WITH SOLUTION SECTION-A 31. Eight equal drops of water are falling through air with a steady speed of 10 cm/s. If the drops coalesce, the new velocity is:- (1) 10 cm/s (2) 40 cm/s (3) 16 cm/s (4) 5 cm/s Official Ans. by NTA (2) Allen Ans. (2) Sol. 2\nvr\n 2\n1\n2\nv\nr\nvR\n\n=\n\n 33\n44\n8.\nr\nR\n33\n =  R = 2r 2\n2\n10\n1\nv2\n\n=\n\n v\n2 = 40 cm/s 32. A car P travelling at 20 ms\n–1 sounds its horn at a frequency of 400 Hz. Another car Q is travelling behind the first car in the same direction with a velocity 40 ms\n–1\n. The frequency heard by the passenger of the car Q is approximately [Take, velocity of sound = 360 ms\n–1\n] (1) 514 Hz (2) 421 Hz (3) 485 Hz (4) 471 Hz Official Ans. by NTA (2) Allen Ans. (2) Sol. 0\n0\ns\ncv\nff\ncv\n\n+\n=\n\n+\n 360 40\nf400\n360 20\n+\n\n=\n\n+\n f = 421 Hz 33. A plane electromagnetic wave of frequency 20 MHz propagates in free space along x-direction. At a particular space and time, ˆ\nE 6.6j V / m\n=\n. What is B at this point ? (1) 8\nˆ\n2.2 10 i T\n−\n− (2) 8\nˆ\n2.2 10 k T\n−\n (3) 8\nˆ\n2.2 10 k T\n−\n− (4) 8\nˆ\n2.2 10 i T\n−\n Official Ans. by NTA (2) Allen Ans. (2) Sol. ˆ\nE 6.6j= 20 MHz\n= 8\nˆ\nc 3 10 i\n= 8\n| E |\n| B |2.2 10 T\nc\n−\n= =  ˆˆ\nˆ\nE B c\n= 8\nˆ\nB 2.2 10 k T\n−\n= 34. A capacitor of capacitance C is charged to a potential V. The flux of the electric field through a closed surface enclosing the positive plate of the capacitor is: (1) 0\nCV\n2\n (2) 0\n2CV\n (3) 0\nCV\n (4) Zero Official Ans. by NTA (3) Allen Ans. (3) Sol. in\n0\nq\n=\n 0\nQ\n=\n 0\nCV\n=\n 2 35. If force (F), velocity (V) and time (T) are considered as fundamental physical quantity, then dimensional formula of density will be: (1) FV\n–2\nT\n2 (2) FV\n–4\nT\n2 (3) FV\n4\nT\n–6 (3) F\n2\nV\n–2\nT\n6 Official Ans. by NTA (2) Allen Ans. (2) Sol. [ML\n-3\n] = [MLT\n-2\n]\na\n[LT\n-1\n]\nb\n[T]\nc = [M\na\nL\na+b\nT\n-2a-b+c\n] a=1, a + b = –3,  b= –4, also – 2a – b + c=0 c = –2 36. In satellite communication, the uplink frequency band used is: (1) 3.7 – 4.2 GHz (2) 5.925 – 6.425 GHz (2) 76 – 88 MHz (4) 420 – 890 MHz Official Ans. by NTA (2) Allen Ans. (2) Sol. Conceptual 37. If V is the gravitational potential due to sphere of uniform density on it’s surface, then it’s value at the center of sphere will be:- (1) 3V\n2 (2) V (3) 4\nV\n3 (4) V\n2 Official Ans. by NTA (1) Allen Ans. (1) Sol. (\n)\n22\n3\nGM\nV\n3R\nr\n2R\n=− at GM\nrRV\nR\n\n=  =\n\n at r = 0, 0\n3GM3V\nV\n2R2\n\n==\n\n 38. A body of mass 500 g moves along x-axis such that it’s velocity varies with displacement x according to the relation v 10 x\n= m/s the force acting on the body is:- (1) 166 N (2) 25 N (3) 125 N (4) 5 N Official Ans. by NTA (2) Allen Ans. (2) Sol. 2\nv 10 xv100x= = 2\ndv\n2v\n100\na 50 m / s\ndx\n=  = F= 25 N 39. A projectile is projected at 30° from horizontal with initial velocity 40 ms\n–1\n. The velocity of the projectile at t = 2 s from the start will be: (Given g = 10 m/s\n2\n) (1) 1\n20 3 ms\n− (2) 1\n40 3 ms\n− (3) 20 ms\n–1 (4) Zero Official Ans. by NTA (1) Allen Ans. (1) Sol. At t = 2 particle is at maximum height moving with velocity V = 40cos30° =\n1\n20 3 ms\n−\n. 40. When one light ray is reflected from a plane mirror with 30° angle of reflection, the angle of deviation of the ray after reflection is: (1) 140° (2) 120° (3) 110° (4) 130° Official Ans. by NTA (2) Allen Ans. (2) Sol. 18060120 =  −  =  3 41. A spaceship of mass 2 × 10\n4 kg is launched into a circular orbit close to the earth surface. The additional velocity to be imparted to the spaceship in the orbit to overcome the gravitational pull will be (if g = 10 m/s\n2 and radius of earth = 6400 km) (1) (\n)\n11.2\n2 1 km / s\n− (2) (\n)\n7.9\n2 1 km / s\n− (3) (\n)\n8\n2 1 km / s\n− (4) (\n)\n7.4\n2 1 km / s\n− Official Ans. by NTA (3) Allen Ans. (3) Sol. orbit\nGM\nv\ngR ;\nR\n== ==\nescape\n2GM\nv\n2gR\nR ()()\nv2 1gR82 1 km / s = −=− 42. The ratio of the de-Broglie wavelengths of proton and electron having same kinetic energy: (Assume m\np = m\ne × 1849) (1) 1 : 43 (2) 1 : 30 (3) 1 : 62 (4) 2 : 43 Official Ans. by NTA (1) Allen Ans. (1) Sol. p\ne\nep\nm\n1\n1: 43\nm\nm\n\n   ==\n 43. The thermodynamic process, in which internal energy of the system remains constant is (1) Isochoric (2) Isothermal (3) Adiabatic (4) Isobaric Official Ans. by NTA (2) Allen Ans. (2) Sol. T = constant  U = constant 44. The energy of He\n+ ion in its first excited state is. (The ground state energy for the Hydrogen atom is –13.6 eV): (1) –3.4 eV (2) –54.4 eV (3) –13.6 eV (4) –27.2 eV Official Ans. by NTA (3) Allen Ans. (3) Sol. 2\nn\n2\n13.6Z\n13.6 4\nE\n13.6 eV\nn4\n−\n− \n=\n=\n= − 45. The logic operations performed by the given digital circuit is equivalent to: (1) AND (2) NOR (3) OR (4) NAND Official Ans. by NTA (1) Allen Ans. (1) Sol. (\n)\n(\n)\nZ A B . A . B\n=+ ()()\nY ZA B . A.B= = + Y = A. B  It is an AND Gate 46. The root mean square speed of molecules of nitrogen gas at 27°C is approximately: (Given mass of a nitrogen molecule =4.6×10\n–26\nkg and take Boltzmann constant k\nB = 1.4 ×10\n–23 JK\n–1\n) (1) 523 m/s (2) 1260 m/s (3) 91 m/s (4) 27.4 m/s Official Ans. by NTA (1) Allen Ans. (1) Sol. 23\nB\nrms\n26\n3k T\n3 1.4 10300\nV523 m / s\nm4.6 10\n−\n−\n  \n===\n 4 47. The current flowing through R\n2 is: (1) 2\nA\n3 (2) 1\nA\n4 (3) 1\nA\n2 (4) 1\nA\n3 Official Ans. by NTA (4) Allen Ans. (4) Sol. eq\nR4\n= i\n2A\n4\n\n== 1\n2 32\niA\n3 63\n\n==\n+ 2\n2 / 31\niA\n23\n== 48. When vector ˆ ˆ ˆ\nA 2i 3j 2k\n= + + is subtracted from vector B\n, it gives a vector equal to ˆ\n2j\n. Then the magnitude of vector B will be: (1) 13 (2) 3 (3) 6 (4) 5 Official Ans. by NTA (BONUS) Allen Ans. (BONUS) Sol. B A 2 j\n−= ˆ ˆ ˆ\nB 2i 5j 2k\n= + + B\n33\n= 49. Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R. Assertion A: A bar magnet dropped through a metallic cylindrical pipe takes more time to come down compared to a non–magnetic bar with same geometry and mass. Reason R: For the magnetic bar, Eddy currents are produced in the metallic pipe which oppose the motion of the magnetic bar. In the light of the above statements, choose the correct answer from the options given below (1) Both A and R are true but R is NOT the correct explanation of A (2) A is true but R is false (3) Both A and R are true and R is the correct explanation of A (4) A is false but R is true Official Ans. by NTA (3) Allen Ans. (3) Sol. Conceptual 3 \n6 \nR\n6\n4 \n8V\nR\n3\nR\n5\n2 \nR\n7\nR\n4\n3 \n4 \nR\n2\n2 \nR\n1\nD\nC\nB\nA\nE 5 50. An electron is allowed to move with constant velocity along the axis of current carrying straight solenoid. A. The electron will experience magnetic force along the axis of the solenoid. B. The electron will not experience magnetic force. C. The electron will continue to move along the axis of the solenoid. D. The electron will be accelerated along the axis of the solenoid. E. The electron will follow parabolic path–inside the solenoid. Choose the correct answer from the options given below: (1) B, C and D only (2) B and C only (3) A and D only (4) B and E only Official Ans. by NTA (2) Allen Ans. (2) Sol. (\n)\nF q v B\n= as angle between v and B is 0° F0= SECTION-B 51. In the given circuit, C\n1 = 2 F, C\n2 = 0.2 F, C\n3 = 2 F, C\n4 = 4 F, C\n5\n=2 F, C\n6 = 2 F, the charge stored on capacitor C\n4 is ______ C. Official Ans. by NTA (4) Allen Ans. (4) Sol. C\neq = 0.5 F Q = 0.5 × 10 = 5 C C 0.8\nQ '4 C\n0.8 0.2\n \n== \n+ 52. A circular plate is rotating in horizontal plane, about an axis passing through its center and perpendicular to the plate, with an angular velocity . A person sits at the center having two dumbbells in his hands. When he stretches out his hands, the moment of inertia of the system becomes triple. If E be the initial Kinetic energy of the system, then final Kinetic energy will be E\nx\n. The value of x is Official Ans. by NTA (3) Allen Ans. (3) Sol. 2\nfinal\ninitial\nfinal\ninitial\nfinal\nKE\nI\nKE\nL1\nKE\n2I\nKE\nI\nE\n3\n= \n=\n\n= final\nE\nKE\n3\n= 53. A nucleus disintegrates into two nuclear parts, in such a way that ratio of their nuclear sizes is 1 : 2\n1/3\n. Their respective speed have a ratio of n : 1. The value of n is ______ Official Ans. by NTA (2) Allen Ans. (2) Sol. 1\n2\n2\n2\n1\n1\nv\nm\nA\n2\nv\nm\nA\n1\n= = = 54. Two identical cells each of emf 1.5 V are connected in series across a 10  resistance. An ideal voltmeter connected across 10  resistance reads 1.5 V. The internal resistance of each cell is ____. Official Ans. by NTA (5) Allen Ans. (5) Sol. V = I × 10 3\n1.510\n10 2r\n\n=\n\n+\n r = 5  C\n6\nC\n5\nC\n4\nC\n3\nC\n1\nC\n2\n10V 6 55. A block of mass 5 kg starting from rest pulled up on a smooth incline plane making an angle of 30° with horizontal with an affective acceleration of 1 ms\n–2\n. The power delivered by the pulling force at t = 10 s from the start is _____ W. [Use g = 10 ms\n–2\n] (calculate the nearest integer value) Official Ans. by NTA (300) Allen Ans. (300) Sol. F - 5g sin30° = 5a  F= 5 + 25 = 30N V\n10 = u + at  v\n10 = 0 + 1(10) = 10 m/s P\n10 = Fv = 300 W 56. A coil has an inductance of 2H and resistance of 4. A 10 V is applied across the coil. The energy stored in the magnetic field after the current has built up to its equilibrium value will be ____×10\n–2\nJ Official Ans. by NTA (625) Allen Ans. (625) Sol. V5\nIA\nR2\n== 2\n2\n1\n1\n5\nE\nLI\n2\n2\n2\n2\n\n=\n=  \n\n 2\nE 625 10 J\n−\n= 57. A metallic cube of side 15 cm moving along y–\naxis at a uniform velocity of 2 ms\n–1\n. In a region of uniform magnetic field of magnitude 0.5 T directed along z-axis. In equilibrium the potential difference between the faces of higher and lower potential developed because of the motion through the field will be _____ mV. Official Ans. by NTA (150) Allen Ans. (150) Sol. V = (v×B)d V = (2×1/2)0.15 V = 150 mV 58. A wire of density 8 × 10\n3 kg/m\n3 is stretched between two clamps 0.5 m apart. The extension developed in the wire is 3.2×10\n–4 m. If Y = 8×10\n10 N/m\n2\n, the fundamental frequency of vibration in the wire will be ______ Hz. Official Ans. by NTA (80) Allen Ans. (80) Sol. 1\nT\n1\nYA L\nf\n2L\n2L\nAL\n\n==\n f = 80 Hz 59. The surface tension of soap solution is 3.5 × 10\n–2 Nm\n–1\n. The amount of work done required to increase the radius of soap bubble from 10 cm to 20 cm is _____× 10\n–4 J. Official Ans. by NTA (264) Allen Ans. (264) Sol. W = T.(A) (\n)\n(\n)\n22\n21\nW T 8 r\nr\n=  − W = 264 × 10\n–4 J 60. As shown in the figure, a plane mirror is fixed at a height of 50 cm from the bottom of tank containing water 4\n3\n\n=\n\n\n. The height of water in the tank is 8 cm. A small bulb is placed at the bottom of the water tank. The distance of image of the bulb formed by mirror from the bottom of the tank is _______ cm. 50 cm\n8 cm Official Ans. by NTA (98) Allen Ans. (98) 7 Sol. Apparent depth of d\nO6\n==\n Distance between O and I\n2 = 48 + 50 = 98 cm",
+    "questions": [],
+    "mathEquations": [
+      {
+        "equation": "N-A 31",
+        "type": "mathematical",
+        "position": 148
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 234
+      },
+      {
+        "equation": "m/s (2) 40 cm/s (3) 16 cm/s (4) 5 cm/s Official Ans",
+        "type": "mathematical",
+        "position": 292
+      },
+      {
+        "equation": "R = 2r 2\n2\n10\n1\nv2\n",
+        "type": "mathematical",
+        "position": 429
+      },
+      {
+        "equation": "m/s 32",
+        "type": "mathematical",
+        "position": 469
+      },
+      {
+        "equation": "d = 360 ms\n",
+        "type": "mathematical",
+        "position": 738
+      },
+      {
+        "equation": "f = 421 Hz 33",
+        "type": "mathematical",
+        "position": 907
+      },
+      {
+        "equation": "x-direction",
+        "type": "mathematical",
+        "position": 1002
+      },
+      {
+        "equation": "V / m\n=\n",
+        "type": "mathematical",
+        "position": 1056
+      },
+      {
+        "equation": "j= 20 MHz\n",
+        "type": "mathematical",
+        "position": 1238
+      },
+      {
+        "equation": "Q\n=\n",
+        "type": "mathematical",
+        "position": 1607
+      },
+      {
+        "equation": "V\n=\n",
+        "type": "mathematical",
+        "position": 1616
+      },
+      {
+        "equation": "L\n-3\n",
+        "type": "mathematical",
+        "position": 1868
+      },
+      {
+        "equation": "T\n-2\n",
+        "type": "mathematical",
+        "position": 1880
+      },
+      {
+        "equation": "T\n-1\n",
+        "type": "mathematical",
+        "position": 1891
+      },
+      {
+        "equation": "c = ",
+        "type": "mathematical",
+        "position": 1904
+      },
+      {
+        "equation": "a+b\nT\n-2a-b+c\n",
+        "type": "mathematical",
+        "position": 1915
+      },
+      {
+        "equation": "a=1",
+        "type": "mathematical",
+        "position": 1931
+      },
+      {
+        "equation": "a + b = ",
+        "type": "mathematical",
+        "position": 1936
+      },
+      {
+        "equation": "b= ",
+        "type": "mathematical",
+        "position": 1950
+      },
+      {
+        "equation": "b + c=0 c = ",
+        "type": "mathematical",
+        "position": 1969
+      },
+      {
+        "equation": "r = 0",
+        "type": "mathematical",
+        "position": 2454
+      },
+      {
+        "equation": "x-axis such that it",
+        "type": "mathematical",
+        "position": 2524
+      },
+      {
+        "equation": "x\n= m/s the force acting on the body is",
+        "type": "mathematical",
+        "position": 2613
+      },
+      {
+        "equation": "m / s\ndx\n= ",
+        "type": "mathematical",
+        "position": 2772
+      },
+      {
+        "equation": "F= 25 N 39",
+        "type": "mathematical",
+        "position": 2787
+      },
+      {
+        "equation": "t = 2 s from the start will be",
+        "type": "mathematical",
+        "position": 2915
+      },
+      {
+        "equation": "g = 10 m/s\n2\n) (1) 1\n20 3 ms\n",
+        "type": "mathematical",
+        "position": 2954
+      },
+      {
+        "equation": "t = 2 particle is at maximum height moving with velocity V = 40cos30",
+        "type": "mathematical",
+        "position": 3071
+      },
+      {
+        "equation": "g = 10 m/s\n2 and radius of earth = 6400 km) (1) (\n)\n11",
+        "type": "mathematical",
+        "position": 3617
+      },
+      {
+        "equation": "m / s\n",
+        "type": "mathematical",
+        "position": 3679
+      },
+      {
+        "equation": "m / s\n",
+        "type": "mathematical",
+        "position": 3704
+      },
+      {
+        "equation": "m / s\n",
+        "type": "mathematical",
+        "position": 3727
+      },
+      {
+        "equation": "m / s\n",
+        "type": "mathematical",
+        "position": 3752
+      },
+      {
+        "equation": "R\n== ==\nescape\n2GM\nv\n2gR\nR ()()\nv2 1gR82 1 km / s",
+        "type": "mathematical",
+        "position": 3821
+      },
+      {
+        "equation": "e-Broglie wavelengths of proton and electron having same kinetic energy",
+        "type": "mathematical",
+        "position": 3900
+      },
+      {
+        "equation": "p = m\ne ",
+        "type": "mathematical",
+        "position": 3983
+      },
+      {
+        "equation": "T = constant ",
+        "type": "mathematical",
+        "position": 4313
+      },
+      {
+        "equation": "U = constant 44",
+        "type": "mathematical",
+        "position": 4328
+      },
+      {
+        "equation": "e\n+ ion in its first excited state is",
+        "type": "mathematical",
+        "position": 4360
+      },
+      {
+        "equation": "B\n=+ ()()\nY ZA B ",
+        "type": "mathematical",
+        "position": 4781
+      },
+      {
+        "equation": "B= = + Y = A",
+        "type": "mathematical",
+        "position": 4802
+      },
+      {
+        "equation": "e =4",
+        "type": "mathematical",
+        "position": 4957
+      },
+      {
+        "equation": "B = 1",
+        "type": "mathematical",
+        "position": 5004
+      },
+      {
+        "equation": "m/s (2) 1260 m/s (3) 91 m/s (4) 27",
+        "type": "mathematical",
+        "position": 5036
+      },
+      {
+        "equation": "m/s Official Ans",
+        "type": "mathematical",
+        "position": 5073
+      },
+      {
+        "equation": "m / s\nm4",
+        "type": "mathematical",
+        "position": 5156
+      },
+      {
+        "equation": "k\n= + + is subtracted from vector B\n",
+        "type": "mathematical",
+        "position": 5405
+      },
+      {
+        "equation": "k\n= + + B\n33\n= 49",
+        "type": "mathematical",
+        "position": 5621
+      },
+      {
+        "equation": "N-B 51",
+        "type": "mathematical",
+        "position": 7110
+      },
+      {
+        "equation": "q = 0",
+        "type": "mathematical",
+        "position": 7310
+      },
+      {
+        "equation": "Q = 0",
+        "type": "mathematical",
+        "position": 7321
+      },
+      {
+        "equation": "V = I ",
+        "type": "mathematical",
+        "position": 8432
+      },
+      {
+        "equation": "r = 5 ",
+        "type": "mathematical",
+        "position": 8471
+      },
+      {
+        "equation": "t = 10 s from the start is ",
+        "type": "mathematical",
+        "position": 8716
+      },
+      {
+        "equation": "g = 10 ms\n",
+        "type": "mathematical",
+        "position": 8757
+      },
+      {
+        "equation": "F - 5g sin30",
+        "type": "mathematical",
+        "position": 8859
+      },
+      {
+        "equation": "F= 5 + 25 = 30N V\n10 = u + at ",
+        "type": "mathematical",
+        "position": 8880
+      },
+      {
+        "equation": "m/s P\n10 = Fv = 300 W 56",
+        "type": "mathematical",
+        "position": 8934
+      },
+      {
+        "equation": "z-axis",
+        "type": "mathematical",
+        "position": 9446
+      },
+      {
+        "equation": "V = (v",
+        "type": "mathematical",
+        "position": 9660
+      },
+      {
+        "equation": "V = (2",
+        "type": "mathematical",
+        "position": 9672
+      },
+      {
+        "equation": "V = 150 mV 58",
+        "type": "mathematical",
+        "position": 9689
+      },
+      {
+        "equation": "g/m\n3 is stretched between two clamps 0",
+        "type": "mathematical",
+        "position": 9732
+      },
+      {
+        "equation": "Y = 8",
+        "type": "mathematical",
+        "position": 9838
+      },
+      {
+        "equation": "N/m\n2\n",
+        "type": "mathematical",
+        "position": 9850
+      },
+      {
+        "equation": "f = 80 Hz 59",
+        "type": "mathematical",
+        "position": 10005
+      },
+      {
+        "equation": "W = T",
+        "type": "mathematical",
+        "position": 10238
+      },
+      {
+        "equation": "r\n= ",
+        "type": "mathematical",
+        "position": 10271
+      },
+      {
+        "equation": "W = 264 ",
+        "type": "mathematical",
+        "position": 10279
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1360
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1458
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 3134
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4204
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4321
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4336
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 4610
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4997
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 6171
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 6264
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6481
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 6570
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 6653
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7445
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7934
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8268
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8321
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8358
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8866
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8979
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9000
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10389
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10456
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10520
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10533
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10600
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10711
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.14285714285714285,
+        "matchedKeywords": [
+          "geometry"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "acceleration",
+          "velocity"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "light",
+          "sound",
+          "reflection"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "equilibrium",
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "force"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "charge",
+          "electric field",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      }
+    ],
+    "tags": [
+      "JEE Mains",
+      "Conceptual",
+      "Formula Based"
+    ],
+    "wordCount": 2557,
+    "characterCount": 10752
+  },
+  "images": []
+}

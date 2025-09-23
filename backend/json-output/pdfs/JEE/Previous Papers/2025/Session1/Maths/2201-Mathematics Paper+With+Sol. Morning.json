@@ -1,0 +1,895 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2025\\Session1\\Maths\\2201-Mathematics Paper+With+Sol. Morning.pdf",
+  "relativePath": "JEE\\Previous Papers\\2025\\Session1\\Maths\\2201-Mathematics Paper+With+Sol. Morning.pdf",
+  "metadata": {
+    "originalFileName": "2201-Mathematics Paper+With+Sol. Morning.pdf",
+    "subject": "Mathematics",
+    "year": 2025,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 9,
+    "fileSize": 6499163,
+    "processedAt": "2025-09-23T00:14:42.247Z"
+  },
+  "content": {
+    "originalText": "1 JEE–MAIN EXAMINATION – JANUARY 2025 MATHEMATICS TEST PAPER WITH SOLUTION  (HELD ON WEDNESDAY 22\nnd JANUARY 2025) TIME : 9:00 AM TO 12:00 NOON SECTION-A 1. The number of non-empty equivalence relations on the set {1,2,3} is : (1) 6 (2) 7 (3) 5 (4) 4 Ans. (3) Sol. Let R be the required relation A = {(1, 1) (2, 2), (3, 3)} (i) | R | = 3, when R = A (ii) | R | = 5, e.g. R = A  {(1, 2), (2, 1)} Number of R can be [3] (iii) R = {1, 2, 3} × {1, 2, 3} Ans. (5) 2\n. Let ƒ : RR be a twice differentiable function such that ƒ(x + y) = ƒ(x) ƒ(y) for all x, y  R. If ƒ'(0) = 4a and ƒ staisfies ƒ''(x) – 3a ƒ'(x) – ƒ(x) = 0, a > 0, then the area of the region R = {(x,y) | 0  y  ƒ(ax), 0  x  2} is : (1) e\n2 – 1 (2) e\n4 + 1 (3) e\n4 – 1 (4) e\n2 + 1 Ans. (1) Sol. f(x + y) = f(x).f(y)  f(x) = e\n\nx f (0) = 4a  f (x) = e\n\nx   = 4a So, f(x) = e\n4ax f (x) – 3af (x) – f (x) = 0  \n2 – 3a – 1 = 0  16a\n2 – 12a\n2 – 1 = 0  4a\n2 = 1 \n1\na\n2\n x = 0 x = 2 f(ax) = e\nx F(x) = e\n2x 2\nx2\n0\nAreae dxe1 \n 3\n. Let the triangle PQR be the image of the triangle with vertices (1,3), (3,1) and (2, 4) in the line x + 2y = 2. If the centroid of PQR is the point (, ), then 15( – ) is equal to : (1) 24 (2) 19 (3) 21 (4) 22 Ans. (4) Sol. Let ‘G’ be the centroid of  formed by (1, 3) (3, 1) & (2, 4) 8\nG\n2,\n3\n\n\n\n Image of G w.r.t. x + 2y – 2 = 0 16\n8\n22\n2\n3\n3\n2\n121 4\n\n\n\n\n\n\n \n 2 16\n53\n\n\n\n\n  322\n2\n1515\n\n   \n, 32 2824\n15315\n \n   15( – ) = – 2 + 24 = 22 4. Let z\n1\n, z\n2 and z\n3 be three complex numbers on the circle |z| = 1 with \n\n1\narg(z )\n4\n, arg(z\n2\n) = 0 and \n\n3\narg(z )\n4\n. If    \n2\n1 22 33 1\nz zz zz z2\n, ,   Z, then the value of \n2 + \n2 is : (1) 24 (2) 41 (3) 31 (4) 29 Ans. (4) ALLEN 2  Sol. Z\n1 = e\n–i \n/4 , Z\n2 = 1, Z\n3 = e\ni \n/4 2\n1 2\n2 3\n3 1\nz z\nz z\nz z\n = 2\ni\ni\ni\ni\n4\n4\n4\n4\ne\n1 1 e\ne\ne\n\n\n\n\n\n     2\ni\ni\ni\n4\n4\n4\neee\n\n\n\n\n 2\ni\n4\n2ei\n\n\n = 2\n22i i   =  \n\n\n22\n2\n1\n2\n = 2 + 1 + 2 – 2\n2 = 5 – 22  = 5,  = –2  \n2 + \n2 = 29 5. Using the principal values of the inverse trigonometric functions the sum of the maximum and the minimum values of 16((sec\n–1\nx)\n2 + (cosec\n–1\nx)\n2\n) is : (1) 24\n2 (2) 18\n2 (3) 31\n2 (4) 22\n2 Ans. (4) Sol. 16(sec\n–\n1\nx)\n2 + (cosec\n–1\nx)\n2 Sec\n–1\nx = a[0, ] – 2\n\n\n\n cosec\n–1\nx = a\n2\n\n = 2\n2\n22\n16 aa16 2aa\n24\n\n\n\n\n   \n\n\n\n\n\n\n max]\na =  = 16[2\n2 – \n2 + 2\n4\n\n] = 20\n2 a\n4\nmin]\n\n = 222\n2\n2\n162\n1644\n\n  \n   \n\n Sum = 22\n2 6\n. A coin is tossed three times. Let X denote the number of times a tail follows a head. If  and \n2 denote the mean and variance of X, then the value of 64( + \n2\n) is : (1) 51 (2) 48 (3) 32 (4) 64 Ans. (2) Sol. HHH  0 HHT  0 HTH  1 HTT  0 THH  1 THT  1 TTH  1 TTT  0 Probability distribution i\ni\nx01\n11\nP(x )\n22 ii\n1\nxp\n2\n \n\n 2\n2\n2\nii\nx p\nμ\n \n\n 1\n1\n1\n2\n4\n4\n 64(μ + \n2\n) = 11\n64\n24\n\n\n\n = 48 7\n. Let a\n1\n, a\n2\n, a\n3\n..... be a G.P. of increasing positive terms. If a\n1\na\n5 = 28 and a\n2 + a\n4 = 29, the a\n6 is equal to (1) 628 (2) 526 (3) 784 (4) 812 Ans. (3) Sol. a\n1\n.a\n5 = 28  a.ar\n4 = 28  a\n2\nr\n4 = 28 ...(1) a\n2 + a\n4 = 29  ar + ar\n3 = 29  ar(1 + r\n2\n) = 29  a\n2\nr\n2\n(1 + r\n2\n)\n2 = (29)\n2 ...(2) By Eq. (1) & (2) 2\n22\nr28\n(1 r )29 29\n\n  2\nr28\n1 r29\n\n  r28  a\n2\nr\n4 = 28  a\n2 × (28)\n2 = 28  1\na\n28\n  a\n6 = ar\n5 = 2\n1\n(28)28784\n28\n ALLEN 3  8. Let \n\n\n\n1\nx 1\ny 2\nz 3\nL:\n2\n3\n4 and \n\n\n\n2\nx 2\ny 4\nz 5\nL:\n3\n4\n5 be two lines. Then which of the following points lies on the line of the shortest distance between L\n1 and L\n2 ? (1) \n\n\n\n5\n, 7,1\n3 (2) \n\n\n1\n2,3,\n3 (3) \n\n\n\n81\n, 1,\n33 (4) \n\n\n\n14\n22\n, 3,\n33 Ans. (4) Sol. P Q L\n1 L\n2 P(2 + 1, 3 + 2, 4 + 3) on L\n1 Q(3μ + 2, 4μ + 4, 5μ + 5) on L\n2 Dr’s of PQ = 3μ – 2 + 1, 4μ – 3 + 2, 5μ – 4 + 2 PQ  L\n1  (3μ – 2 + 1)2 + (4μ – 3 + 2)3 + (5μ – 4 + 2)4 = 0 38μ – 29 + 16 = 0 ...(1) PQ  L\n2  (3μ – 2 + 1)3 + (4μ – 3 + 2)4 + (5μ – 4 + 2)5 = 0 50μ – 38 + 21 = 0 ...(2) By (1) & (2) 1\n3\n\n; 1\nμ\n6\n\n \n513\nP, 3,\n33\n\n\n & 3 10 25\nQ,,\n2 36\n\n\n Line PQ 5\nx\n3\n1\n6\n y3\n1\n3\n\n 13\nz\n3\n1\n6\n 5\n13\nxz\ny3\n33\n1\n2\n1\n\n\n\n Point\n14\n22\n, 3,\n33\n\n\n\n lies on the line PQ 9. The product of all solutions of the equation \n\n\n\n2\ne\n5 log x\n3\n8\nex\n, x > 0, is : (1) e\n8/5 (2) e\n6/5 (3) e\n2 (4) e Ans. (1) Sol. 2\n5( nx )\n3\n8\nex\n\n \n2\n5( nx )\n3\n8\nn e\nn x\n\n\n  5(nx)\n2 + 3 = 8nx (nx = t)  5t\n2 – 8t + 3 = 0 t\n1 + t\n2 = 8\n5 nx\n1\nx\n2 = 8\n5 x\n1\nx\n2 = e\n8/5 10. If \n\n\n\nn\nr\nr1\n(2n 1)(2n 1)(2n 3)(2n 5)\nT\n64\n, then \n\n\n\n\n\nn\nn\nr1\nr\n1\nlim\nT is equal to : (1) 1 (2) 0 (3) 2\n3 (4) 1\n3 Ans. (3) Sol. T\nn = S\nn – S\nn–1  T\nn = 1\n8\n(2n – 1)(2n + 1)(2n + 3) \nn\n18\nT(2n 1)(2n 1)(2n 3)\n\n\n\nALLEN 4  \nnn\nnn\nr 1\nr 1\nr\n11\nlim\nlim 8\nT\n(2n 1)(2n 1)(2n 3)\n\n\n\n\n\n\n\n\n\n\nn\n8\n1\n1\nlim\n4\n(2n 1)(2n 1)\n(2n 1)(2n 3)\n\n\n\n\n\n\n\n\n\n\n\n\nn\n1\n1\n1\n1\nlim 2\n...\n1.3\n3.5\n3.5\n5.7\n\n\n\n \n\n\n\n\n\n\n\n \n\n\n\n \n\n\n\n\n2\n3\n\n\n11. From all the English alphabets, five letters are chosen and are arranged in alphabetical order. The total number of ways, in which the middle letter is ‘M’, is : (1) 14950 (2) 6084 (3) 4356 (4) 5148 Ans. (4) Sol. 12\n13\nAB\nM N..........Z 1213\n22\nSelection of twoSelection of two\nletters before Mletters after M\nCC5148 12. Let x = x(y) be the solution of the differential equation \n \n\n\n2\n1\ny dxxdy 0\ny\n. If x(1) = 1, then \n\n\n1\nx\n2 is : (1) \n1\ne\n2 (2) \n3\ne\n2 (3) 3 – e (4) 3 + e Ans. (3) Sol. 23\ndx11\nx\ndyyy\n\n\n\n I.F. = 2\n1\n1\ndy\nyy\nee\n\n\n 1\n1\ny\nt\n3\n1\nx.ee.dy\ny\n\n\n\n\n\n\n Put 1\nt\ny\n 2\n1\ndy dt\ny\n 1\nt\ny\nx.e\nt.e dt\n\n\n 1\ntt\ny\nx.e\nte\ne\nC\n\n    1\n1\n1\ny\ny\ny\n1\nx.e\ne\ne\nC\ny\n\n\n\n\n\n  x = 1, y = 1 1\n1 1\nC\ne\ne\ne\n    1\nC\ne\n Put y = 1\n2 2\n2\n2\nx\n2\n1\n1\ne\ne\ne\ne\n   x = 3 – e 13. Let the parabola y = x\n2 + px – 3, meet the coo\nrdinate axes at the points P, Q and R. If the circle C with centre at (–1, –1) passes through the points P, Q and R, then the area of PQR is : (1) 4 (2) 6 (3) 7 (4) 5 Ans. (2) Sol. y = x\n2 + px – 3 Let P(, 0), Q(, 0), R(0, –3) Circle with centre (–1, –1) is (x + 1)\n2 + (y + 1)\n2 = r\n2 Passes through (0, –3) 1\n2 + (–2)\n2 = r\n2 ] r\n2 = 5 (x + 1)\n2 + (y + 1)\n2 = 5 Put y = 0 (x + 1)\n2 = 5 – 1 (x + 1)\n2 = 4 x + 1 = ±2 x = 1 or x = –3  P(1, 0) and Q(–3,0) Area of PQR = 101\n1\n3016\n2\n03 1\n\n ALLEN 5  14. A circle C of radius 2 lies in the second quadrant and touches both the coordinate axes. Let r be the radius of a circle that has centre at the point (2, 5) and intersects the circle C at exactly two points. If the set of all possible values of r is the interval (, ), then 3 – 2 is equal to : (1) 15 (2) 14 (3) 12 (4) 10 Ans. (1) Sol. (\n–\n2,2) S\n1 : (x + 2)\n2 + (y – 2)\n2 = 2\n2 S\n2 : (x – 2)\n2 + (y – 5)\n2 = r\n2 Both circle intersect at two points  |r\n1 – r\n2\n| < c\n1\nc\n2 < r\n1 + r\n2 |r – 2| < 5 < 2 + r  3 < r < 7 r  (3, 7)  = 3,  = 7 3 – 2 = 15 15. Let for ƒ(x) = 7tan\n8\nx + 7tan\n6\nx – 3tan\n4\nx – 3tan\n2\nx, \n\n\n/4\n1\n0\nIƒ(x)dx and \n\n\n/4\n2\n0\nIxƒ(x)dx\n. Then 7I\n1 + 12I\n2 is equal to : (1) 2 (2)  (3) 1 (4) 2 Ans. (3) Sol. f(x) = (7tan\n6\nx – 3tan\n2\nx)(sec\n2\nx) /4\n622\n1\n0\nI(7 tan x 3 tan x)(sec x) dx\n\n\n Put tanx = t 1\n1\n6273\n1\n0\n0\nI(7t3t ) dttt0\n\n  \n\n /4\n6\n2\n2\n2\nI\n0\nII\nI\nx (7 tan x 3 tan x)(sec x) dx\n\n\n \n\n/4\n/4\n7\n3\n7\n3\n0\n0\nx tan x tan x\n(tan x tan x) dx\n\n\n\n\n\n\n\n\n \n\n\n/4\n3\n2\n2\n0\n0\ntan x tan x 1 1 tan x dx\n\n \n \n Put tanx = t \n\n1\n64\n53\n0\nt\nt\n1\nt\nt dt\n6\n4\n12\n\n  \n   \n\n\n 7I\n1 + 12I\n2 = 1 16. Let ƒ(x) be a real differentiable function such that ƒ(0) = 1 and ƒ(x + y) = ƒ(x)ƒ'(y) + ƒ'(x) ƒ(y) for all x, y  R. Then \n\n100\ne\nn1\nlog ƒ(n) is equal to : (1) 2384 (2) 2525 (3) 5220 (4) 2406 Ans. (2) Sol. f(x + y) = f(x) f(y) + f(x) f(x) Put = x = y = 0 f(0) = f(0)f(0) + f(0)f(0) f(0) = 1\n2 Put y = 0 f(x) = f(x) f(0) + f(x)f(0)     \n1\nf xf xf x\n2\n   \n \nfx\nfx\n2\n dyydydx\ndx2y2\n  \n  ny = x\nc\n2\n  f (0) = 1  C = 0 ny = 2\n\n f(x) = x / 2\ne ALLEN 6  n f (n) = n\n2  \n100\n100\nn 1\nn 1\n1\n5050\nf n\nn\n22\n\n\n = 2525 17. Let A = {1,2,3,.......,10} and \n\n\n\nm\nB\n: m, n A, m < n and gcd (m, n) =1\nn\n. Then n(B) is equal to : (1) 31 (2) 36 (3) 37 (4) 29 Ans. (1) Sol. A = {1, 2, ....10} B {\nm\nn\n= m, n A, m < n, gcd (m, n) = 1} n(B) n = 2 1\n2\n\n\n n = 3 12\n,\n33\n\n\n n = 4 13\n,\n44\n\n\n n = 5 1 2 3 4\n, , ,\n5555\n\n\n n = 6 15\n,\n66\n\n\n n = 7 1 2 3 4 5 6\n,,,,,\n777777\n\n\n n = 8 1 3 5 7\n, , ,\n8 8 8 8\n\n\n n = 9 1 2 4 5 7 8\n, , , , ,\n9 9 9 9 9 9\n\n\n n = 10 13 7 9\n,,,\n10 10 10 10\n\n\n n(B) = 31 18. The area of the region, inside the circle \n\n\n2\n2\nx – 2 3 y 12 and outside the parabola \n2\ny2 3x\nis (1) 6 – 8 (2) 3 – 8 (3) 6 – 16 (4) 3 + 8 Ans. (3) Sol. (0,0) (2\n,0) y\n2 = 2 3x  \n22\n2\nx 2 3y2 3  23\n2\n0\nr\nA22 3x dx\n2\n\n\n  \n \n2/3\n3/2\n0\nx\n12\n2 2 3\n23 / 2\n\n = 6 – 16 19. Two balls are selected at random one by one without replacement from a bag containing 4 white and 6 black balls. If the probability that the first selected ball is black, given that the second selected ball is also black, is m\nn\n, where gcd(m, n) = 1, then m + n is equal to : (1) 14 (2) 4 (3) 11 (4) 13 Ans. (1) ALLEN 7  Sol. 65\n5\n10 9\nP\n4\n6\n6\n5\n9\n10 9 10 9\n\n\n   m = 5, n = 9 m + n = 14 20. Let the foci of a hyperbola be (1, 14) and (1, –12). If it passes through the point (1, 6), then the length of its latus-rectum is : (1) 25\n6 (2) 24\n5 (3) 288\n5 (4) 144\n5 Ans. (3) Sol. 0 (1, 14) (1, 6) (1, –12) be = 13, b = 5 a\n2 = b\n2 (e\n2 – 1) = b\n2\ne\n2 – b\n2 = 169 – 25 = 144  \n2\n2a2 144288\nLR\nb55\n\n  SECTION-B 21. Let the function, \n\n\n\n\n\n\n\n2\n2\n–3ax – 2, x 1\nf(x)\nabx,x 1 Be differentiable for all x  R, where a > 1, b \nR. If the area of the region enclosed by y = f(x) and the line y = – 20 is  + 3\n, , ,\n\nZ, then the value of  +  is ____. Ans. (34) Sol. f(x) is continuous and differentiable at x = 1; LHL = RHL, LHD = RHD –3a – 2 = a\n2 + b, –6a = b a = 2, 1; b = –\n12 2\n6x\n2 ; x 1\nf (x)\n4 12x\n; x 1\n\n \n\n\n\n\n (2,\n–\n20\n) (\n1\n,\n–\n8\n) y=\n–\n20 Area = \n\n12\n2\n1\n3\n6x\n2 20 dx\n(4 12x 20) dx\n\n  \n  \n 16 12 3 6 22 12 3\n\n   22. If \n\n\n\n\n11\n5\n2 r 1\nr0\nC\nm\n2r 2n\n, gcd(m, n) =1, then m – n is equal to ______. Ans. (2035) Sol. 1\n1\n23\n11\n12\no\n0\n0\nC xC x\n(1 x) dxC x...\n23\n\n\n\n\n 12\n3\n12\n0\nC\nCC\n21\nC...\n12234\n\n     0\n0\n23\n11\n12\n0\n1\n1\nC xC x\n(1 x) dxC x...\n23\n\n\n\n\n\n\n 3\n12\n0\nC\nCC\n1\nC...\n12234\n     12\n35\n1\nCC\nC\n22\n2...\n12246\n\n\n  \n\n 11\n35\n1\nCC\nC\n212047\n...\n2461212\n\n    23. Let A be a square matrix of order 3 such that det(A) = –2 and det(3adj(–6adj(3A))) =2\nm+n\n.3\nmn\n, m > n. Then 4m + 2n is equal to _____. Ans. (34) ALLEN 8  Sol. |A| = –2 det(3adj(–\n6adj(3A))) = 3\n3\ndet(adj(–adj(3A))) = 3\n3\n(–6)\n6\n(det(3A))\n4 = 3\n21 × 2\n10 m + n = 10 mn = 21 m = 7 ; n = 3 24. Let L\n1 : \n\n\n\nx 1\ny 1\nz 1\n3 –1 0 and L\n2 : \n\n\nx 2\ny\nz 4\n20\n,  \nR, be two lines, which intersect at the point B. If P is the foot of perpendicular from the point A(1, 1, –\n1) on L\n2\n, then the value of 26 (PB)\n2 is ____. Ans. (216) Sol. Point B (3 + 1, – + 1, –1)  (2μ + 2, 0, μ – 4) 3 + 1 = 2μ + 2 –\n + 1 = 0 –1 = μ – 4  = 1, μ = 1,  = 3 B(4, 0, –1) Let Point ‘P’ is (2 + 2, 0, 3 – 4) Dr’s of AP < 2 + 1, –1, 3 – 3 > AP  L\n2  7\n13\n 4031\nP, 0,\n1313\n\n\n\n 2\n144324\n2(PB)26 3\n169169\n\n  \n\n = 216 25. Let c be the projection vector of  \nˆˆ\nb\ni 4k\n,  > 0, on the vector   \nˆ ˆ ˆ\na i 2 j 2k\n. If \n| a c |\n=7, then the area of the parallelogram formed by the vectors b and c is ______. Ans. (16) Sol. b a\na\nc\na\n| a\n\n\n\n\n\n \n\n8\nˆ ˆ ˆ\ni 2 j 2k\n9\n\n\n\n \n\n a c7     = 4 Area of parallelogram = ˆ ˆ ˆ\ni\nj\nk\n4\n8\n8\nb c |\n|\n3\n3\n3\n4\n0\n4\n = 16 ALLEN",
+    "questions": [
+      {
+        "number": "1",
+        "text": "The number of non-empty equivalence relations on the set {1,2,3} is : (1) 6 (2) 7 (3) 5 (4) 4",
+        "formattedText": "The number of non-empty equivalence relations on the set {1,2,3} is : (1) 6 (2) 7 (3) 5 (4) 4",
+        "latexText": "\\(The number of non-empty equivalence relations on the set {1,2,3} is : (1) 6 (2) 7 (3) 5 (4) 4\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "2",
+        "text": "If the centroid of PQR is the point (, ), then 15( – ) is equal to : (1) 24 (2) 19 (3) 21 (4) 22",
+        "formattedText": "If the centroid of PQR is the point (, ), then 15( – ) is equal to : (1) 24 (2) 19 (3) 21 (4) 22",
+        "latexText": "If the centroid of PQR is the point (, ), then 15( – ) is equal to : (1) 24 (2) 19 (3) 21 (4) 22",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "PQ",
+            "latex": "PQ",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "8",
+        "text": "Let \n\n\n\n1\nx 1\ny 2\nz 3\nL:\n2\n3\n4 and \n\n\n\n2\nx 2\ny 4\nz 5\nL:\n3\n4\n5 be two lines. Then which of the following points lies on the line of the shortest distance between L\n1 and L\n2 ? (1) \n\n\n\n5\n, 7,1\n3 (2) \n\n\n1\n2,3,\n3 (3) \n\n\n\n81\n, 1,\n33 (4) \n\n\n\n14\n22\n, 3,\n33",
+        "formattedText": "Let \n\n\n\n1\nx 1\ny 2\nz 3\nL:\n2\n3\n4 and \n\n\n\n2\nx 2\ny 4\nz 5\nL:\n3\n4\n5 be two lines. Then which of the following points lies on the line of the shortest distance between L\n1 and L\n2 ? (1) \n\n\n\n5\n, 7,1\n3 (2) \n\n\n1\n2,3,\n3 (3) \n\n\n\n81\n, 1,\n33 (4) \n\n\n\n14\n22\n, 3,\n33",
+        "latexText": "\\(Let    ^{1}x 1 y 2 z 3 L: 2^{3} 4 and    ^{2}x 2 y 4 z 5 L: 3^{4} 5 be two lines. Then which of the following points lies on the line of the shortest distance between L^{1} and L^{2} ? (1)    ^{5}, 7,1^{3} (2)    1^{2},3, 3 (3)    ^{81}, 1, 33 (4)     14^{22} , 3, 33\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "    5 , 7,1 3"
+          },
+          {
+            "letter": "2",
+            "text": "   1 2,3, 3"
+          },
+          {
+            "letter": "3",
+            "text": "    81 , 1, 33"
+          },
+          {
+            "letter": "4",
+            "text": "    14 22 , 3, 33"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "    5 , 7,1 3",
+            "formattedText": "    5 , 7,1 3",
+            "latexText": "    5 , 7,1 3"
+          },
+          {
+            "letter": "2",
+            "text": "   1 2,3, 3",
+            "formattedText": "   1 2,3, 3",
+            "latexText": "   1 2,3, 3"
+          },
+          {
+            "letter": "3",
+            "text": "    81 , 1, 33",
+            "formattedText": "    81 , 1, 33",
+            "latexText": "    81 , 1, 33"
+          },
+          {
+            "letter": "4",
+            "text": "    14 22 , 3, 33",
+            "formattedText": "    14 22 , 3, 33",
+            "latexText": "    14 22 , 3, 33"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "11",
+        "text": "From all the English alphabets, five letters are chosen and are arranged in alphabetical order. The total number of ways, in which the middle letter is ‘M’, is : (1) 14950 (2) 6084 (3) 4356 (4) 5148",
+        "formattedText": "From all the English alphabets, five letters are chosen and are arranged in alphabetical order. The total number of ways, in which the middle letter is ‘M’, is : (1) 14950 (2) 6084 (3) 4356 (4) 5148",
+        "latexText": "From all the English alphabets, five letters are chosen and are arranged in alphabetical order. The total number of ways, in which the middle letter is ‘M’, is : (1) 14950 (2) 6084 (3) 4356 (4) 5148",
+        "options": [
+          {
+            "letter": "1",
+            "text": "14950"
+          },
+          {
+            "letter": "2",
+            "text": "6084"
+          },
+          {
+            "letter": "3",
+            "text": "4356"
+          },
+          {
+            "letter": "4",
+            "text": "5148"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "14950",
+            "formattedText": "14950",
+            "latexText": "14950"
+          },
+          {
+            "letter": "2",
+            "text": "6084",
+            "formattedText": "6084",
+            "latexText": "6084"
+          },
+          {
+            "letter": "3",
+            "text": "4356",
+            "formattedText": "4356",
+            "latexText": "4356"
+          },
+          {
+            "letter": "4",
+            "text": "5148",
+            "formattedText": "5148",
+            "latexText": "5148"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "12",
+        "text": "Let x = x(y) be the solution of the differential equation \n \n\n\n2\n1\ny dxxdy 0\ny\n. If x(1) = 1, then \n\n\n1\nx\n2 is : (1) \n1\ne\n2 (2) \n3\ne\n2 (3) 3 – e (4) 3 + e",
+        "formattedText": "Let x = x(y) be the solution of the differential equation \n \n\n\n2\n1\ny dxxdy 0\ny\n. If x(1) = 1, then \n\n\n1\nx\n2 is : (1) \n1\ne\n2 (2) \n3\ne\n2 (3) 3 – e (4) 3 + e",
+        "latexText": "\\(Let x = x(y) be the solution of the differential equation      2^{1} y dxxdy \\frac{0}{y}. If x(1) = 1, then   ^{1}x^{2} is : (1) ^{1}e^{2} (2) ^{3}e^{2} (3) 3 – e (4) 3 + e\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "= 1, then    1 x 2 is :"
+          },
+          {
+            "letter": "1",
+            "text": " 1 e 2"
+          },
+          {
+            "letter": "2",
+            "text": " 3 e 2"
+          },
+          {
+            "letter": "3",
+            "text": "3 – e"
+          },
+          {
+            "letter": "4",
+            "text": "3 + e"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "= 1, then    1 x 2 is :",
+            "formattedText": "= 1, then    1 x 2 is :",
+            "latexText": "\\(= 1, then    1 x 2 is :\\)"
+          },
+          {
+            "letter": "1",
+            "text": " 1 e 2",
+            "formattedText": " 1 e 2",
+            "latexText": " 1 e 2"
+          },
+          {
+            "letter": "2",
+            "text": " 3 e 2",
+            "formattedText": " 3 e 2",
+            "latexText": " 3 e 2"
+          },
+          {
+            "letter": "3",
+            "text": "3 – e",
+            "formattedText": "3 – e",
+            "latexText": "3 – e"
+          },
+          {
+            "letter": "4",
+            "text": "3 + e",
+            "formattedText": "3 + e",
+            "latexText": "\\(3 + e\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "14",
+        "text": "A circle C of radius 2 lies in the second quadrant and touches both the coordinate axes. Let r be the radius of a circle that has centre at the point (2, 5) and intersects the circle C at exactly two points. If the set of all possible values of r is the interval (, ), then 3 – 2 is equal to : (1) 15 (2) 14 (3) 12 (4) 10",
+        "formattedText": "A circle C of radius 2 lies in the second quadrant and touches both the coordinate axes. Let r be the radius of a circle that has centre at the point (2, 5) and intersects the circle C at exactly two points. If the set of all possible values of r is the interval (, ), then 3 – 2 is equal to : (1) 15 (2) 14 (3) 12 (4) 10",
+        "latexText": "A circle C of radius 2 lies in the second quadrant and touches both the coordinate axes. Let r be the radius of a circle that has centre at the point (2, 5) and intersects the circle C at exactly two points. If the set of all possible values of r is the interval (, ), then 3 – 2 is equal to : (1) 15 (2) 14 (3) 12 (4) 10",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "21",
+        "text": "Let the function, \n\n\n\n\n\n\n\n2\n2\n–3ax – 2, x 1\nf(x)\nabx,x 1 Be differentiable for all x  R, where a > 1, b \nR. If the area of the region enclosed by y = f(x) and the line y = – 20 is  + 3\n, , ,\n\nZ, then the value of  +  is ____.",
+        "formattedText": "Let the function, \n\n\n\n\n\n\n\n2\n2\n–3ax – 2, x 1\nf(x)\nabx,x 1 Be differentiable for all x  R, where a > 1, b \nR. If the area of the region enclosed by y = f(x) and the line y = – 20 is  + 3\n, , ,\n\nZ, then the value of  +  is ____.",
+        "latexText": "\\(Let the function,         2^{2} –3ax – 2, x 1 f(x) abx,x 1 Be differentiable for all x  R, where a > 1, b  R. If the area of the region enclosed by y = f(x) and the line y = – 20 is  + 3 , , ,  Z, then the value of  +  is ____.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "24",
+        "text": "Let L\n1 : \n\n\n\nx 1\ny 1\nz 1\n3 –1 0 and L\n2 : \n\n\nx 2\ny\nz 4\n20\n,  \nR, be two lines, which intersect at the point B. If P is the foot of perpendicular from the point A(1, 1, –\n1) on L\n2\n, then the value of 26 (PB)\n2 is ____.",
+        "formattedText": "Let L\n1 : \n\n\n\nx 1\ny 1\nz 1\n3 –1 0 and L\n2 : \n\n\nx 2\ny\nz 4\n20\n,  \nR, be two lines, which intersect at the point B. If P is the foot of perpendicular from the point A(1, 1, –\n1) on L\n2\n, then the value of 26 (PB)\n2 is ____.",
+        "latexText": "\\(Let L^{1} :     x 1 y 1 z 1^{3} –1 0 and L^{2} :    x \\frac{2}{y}z 4^{20} ,   R, be two lines, which intersect at the point B. If P is the foot of perpendicular from the point A(1, 1, – 1) on L^{2} , then the value of 26 (PB) 2 is ____.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "PB",
+            "latex": "PB",
+            "type": "chemical_formula"
+          }
+        ]
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 1",
+        "type": "mathematical",
+        "position": 155
+      },
+      {
+        "equation": "n-empty equivalence relations on the set ",
+        "type": "mathematical",
+        "position": 178
+      },
+      {
+        "equation": "A = ",
+        "type": "mathematical",
+        "position": 301
+      },
+      {
+        "equation": "R = A (ii) ",
+        "type": "mathematical",
+        "position": 349
+      },
+      {
+        "equation": "R = A ",
+        "type": "mathematical",
+        "position": 376
+      },
+      {
+        "equation": "R = ",
+        "type": "mathematical",
+        "position": 430
+      },
+      {
+        "equation": "x + y) = ",
+        "type": "mathematical",
+        "position": 528
+      },
+      {
+        "equation": "R = ",
+        "type": "mathematical",
+        "position": 660
+      },
+      {
+        "equation": "x + y) = f(x)",
+        "type": "mathematical",
+        "position": 768
+      },
+      {
+        "equation": "x = 0 x = 2 f(ax) = e\nx F(x) = e\n2x 2\nx2\n0\nAreae dxe1",
+        "type": "mathematical",
+        "position": 955
+      },
+      {
+        "equation": "x + 2y = 2",
+        "type": "mathematical",
+        "position": 1119
+      },
+      {
+        "equation": "x + 2y ",
+        "type": "mathematical",
+        "position": 1347
+      },
+      {
+        "equation": "x = a",
+        "type": "mathematical",
+        "position": 2295
+      },
+      {
+        "equation": "x = a\n2\n",
+        "type": "mathematical",
+        "position": 2332
+      },
+      {
+        "equation": "a = ",
+        "type": "mathematical",
+        "position": 2416
+      },
+      {
+        "equation": "m = 22",
+        "type": "mathematical",
+        "position": 2514
+      },
+      {
+        "equation": "r + ar\n3 = 29 ",
+        "type": "mathematical",
+        "position": 3186
+      },
+      {
+        "equation": "Q = 3",
+        "type": "mathematical",
+        "position": 3814
+      },
+      {
+        "equation": "x = t) ",
+        "type": "mathematical",
+        "position": 4461
+      },
+      {
+        "equation": "t + 3 = 0 t\n1 + t\n2 = 8\n5 ",
+        "type": "mathematical",
+        "position": 4478
+      },
+      {
+        "equation": "n = S\nn ",
+        "type": "mathematical",
+        "position": 4689
+      },
+      {
+        "equation": "n = 1\n8\n(2n ",
+        "type": "mathematical",
+        "position": 4709
+      },
+      {
+        "equation": "n + 1)(2n + 3) ",
+        "type": "mathematical",
+        "position": 4727
+      },
+      {
+        "equation": "x = x(y) be the solution of the differential equation ",
+        "type": "mathematical",
+        "position": 5367
+      },
+      {
+        "equation": "x = 1",
+        "type": "mathematical",
+        "position": 5764
+      },
+      {
+        "equation": "y = 1 1\n1 1\nC\ne\ne\ne\n",
+        "type": "mathematical",
+        "position": 5771
+      },
+      {
+        "equation": "y = 1\n2 2\n2\n2\nx\n2\n1\n1\ne\ne\ne\ne\n",
+        "type": "mathematical",
+        "position": 5812
+      },
+      {
+        "equation": "x = 3 ",
+        "type": "mathematical",
+        "position": 5848
+      },
+      {
+        "equation": "y = x\n2 + px ",
+        "type": "mathematical",
+        "position": 5879
+      },
+      {
+        "equation": "y = x\n2 + px ",
+        "type": "mathematical",
+        "position": 6092
+      },
+      {
+        "equation": "x + 1)\n2 + (y + 1)\n2 = r\n2 Passes through (0",
+        "type": "mathematical",
+        "position": 6172
+      },
+      {
+        "equation": "x + 1)\n2 + (y + 1)\n2 = 5 Put y = 0 (x + 1)\n2 = 5 ",
+        "type": "mathematical",
+        "position": 6252
+      },
+      {
+        "equation": "x + 1)\n2 = 4 x + 1 = ",
+        "type": "mathematical",
+        "position": 6306
+      },
+      {
+        "equation": "x = 1 or x = ",
+        "type": "mathematical",
+        "position": 6330
+      },
+      {
+        "equation": "R = 101\n1\n3016\n2\n03 1\n",
+        "type": "mathematical",
+        "position": 6379
+      },
+      {
+        "equation": "x + 2)\n2 + (y ",
+        "type": "mathematical",
+        "position": 6780
+      },
+      {
+        "equation": "x + 7tan\n6\nx ",
+        "type": "mathematical",
+        "position": 7009
+      },
+      {
+        "equation": "x = t 1\n1\n6273\n1\n0\n0\nI(7t3t ) dttt0\n",
+        "type": "mathematical",
+        "position": 7257
+      },
+      {
+        "equation": "x = t ",
+        "type": "mathematical",
+        "position": 7503
+      },
+      {
+        "equation": "x + y) = ",
+        "type": "mathematical",
+        "position": 7657
+      },
+      {
+        "equation": "x + y) = f(x) f",
+        "type": "mathematical",
+        "position": 7800
+      },
+      {
+        "equation": "t = x = y = 0 f(0) = f(0)f",
+        "type": "mathematical",
+        "position": 7835
+      },
+      {
+        "equation": "y = 0 f(x) = f(x) f",
+        "type": "mathematical",
+        "position": 7894
+      },
+      {
+        "equation": "y = x\nc\n2\n",
+        "type": "mathematical",
+        "position": 8006
+      },
+      {
+        "equation": "C = 0 ",
+        "type": "mathematical",
+        "position": 8032
+      },
+      {
+        "equation": "y = 2\n",
+        "type": "mathematical",
+        "position": 8040
+      },
+      {
+        "equation": "x / 2\ne ALLEN 6 ",
+        "type": "mathematical",
+        "position": 8057
+      },
+      {
+        "equation": "A = ",
+        "type": "mathematical",
+        "position": 8154
+      },
+      {
+        "equation": "A = ",
+        "type": "mathematical",
+        "position": 8301
+      },
+      {
+        "equation": "n\n= m",
+        "type": "mathematical",
+        "position": 8326
+      },
+      {
+        "equation": "n = 2 1\n2\n",
+        "type": "mathematical",
+        "position": 8368
+      },
+      {
+        "equation": "n = 3 12\n",
+        "type": "mathematical",
+        "position": 8387
+      },
+      {
+        "equation": "n = 4 13\n",
+        "type": "mathematical",
+        "position": 8410
+      },
+      {
+        "equation": "n = 5 1 2 3 4\n",
+        "type": "mathematical",
+        "position": 8433
+      },
+      {
+        "equation": "n = 6 15\n",
+        "type": "mathematical",
+        "position": 8467
+      },
+      {
+        "equation": "n = 7 1 2 3 4 5 6\n",
+        "type": "mathematical",
+        "position": 8490
+      },
+      {
+        "equation": "n = 8 1 3 5 7\n",
+        "type": "mathematical",
+        "position": 8530
+      },
+      {
+        "equation": "n = 9 1 2 4 5 7 8\n",
+        "type": "mathematical",
+        "position": 8567
+      },
+      {
+        "equation": "n = 10 13 7 9\n",
+        "type": "mathematical",
+        "position": 8616
+      },
+      {
+        "equation": "m + n is equal to ",
+        "type": "mathematical",
+        "position": 9220
+      },
+      {
+        "equation": "m = 5",
+        "type": "mathematical",
+        "position": 9338
+      },
+      {
+        "equation": "n = 9 m + n = 14 20",
+        "type": "mathematical",
+        "position": 9345
+      },
+      {
+        "equation": "s-rectum is ",
+        "type": "mathematical",
+        "position": 9485
+      },
+      {
+        "equation": "e = 13",
+        "type": "mathematical",
+        "position": 9578
+      },
+      {
+        "equation": "b = 5 a\n2 = b\n2 (e\n2 ",
+        "type": "mathematical",
+        "position": 9586
+      },
+      {
+        "equation": "N-B 21",
+        "type": "mathematical",
+        "position": 9682
+      },
+      {
+        "equation": "y = f(x) and the line y = ",
+        "type": "mathematical",
+        "position": 9847
+      },
+      {
+        "equation": "x = 1",
+        "type": "mathematical",
+        "position": 9990
+      },
+      {
+        "equation": "L = RHL",
+        "type": "mathematical",
+        "position": 9999
+      },
+      {
+        "equation": "D = RHD ",
+        "type": "mathematical",
+        "position": 10010
+      },
+      {
+        "equation": "a = b a = 2",
+        "type": "mathematical",
+        "position": 10039
+      },
+      {
+        "equation": "b = ",
+        "type": "mathematical",
+        "position": 10055
+      },
+      {
+        "equation": "y=\n",
+        "type": "mathematical",
+        "position": 10135
+      },
+      {
+        "equation": "a = ",
+        "type": "mathematical",
+        "position": 10146
+      },
+      {
+        "equation": "m+n\n",
+        "type": "mathematical",
+        "position": 10716
+      },
+      {
+        "equation": "m + 2n is equal to ",
+        "type": "mathematical",
+        "position": 10741
+      },
+      {
+        "equation": "m + n = 10 mn = 21 m = 7 ",
+        "type": "mathematical",
+        "position": 10891
+      },
+      {
+        "equation": "n = 3 24",
+        "type": "mathematical",
+        "position": 10918
+      },
+      {
+        "equation": "m = ",
+        "type": "mathematical",
+        "position": 11785
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2047
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 2180
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 2274
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 2323
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2995
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3582
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 4308
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7003
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7014
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7025
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7036
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7174
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7185
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7218
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7226
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7254
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7334
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7342
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7390
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7396
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7403
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7409
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7459
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7465
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7475
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7500
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 7725
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 11613
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 11780
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Algebra",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "matrix"
+        ],
+        "possibleSubtopics": [
+          "Quadratic Equations",
+          "Matrices",
+          "Complex Numbers",
+          "Sequences and Series"
+        ]
+      },
+      {
+        "name": "Geometry",
+        "confidence": 0.5714285714285714,
+        "matchedKeywords": [
+          "triangle",
+          "circle",
+          "area",
+          "coordinate"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.8333333333333334,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "trigonometric",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Quadratic Equations",
+        "parentTopic": "Algebra",
+        "confidence": 0.25,
+        "matchedKeywords": [
+          "equation"
+        ]
+      },
+      {
+        "name": "Complex Numbers",
+        "parentTopic": "Algebra",
+        "confidence": 1,
+        "matchedKeywords": [
+          "complex numbers"
+        ]
+      },
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Trigonometric Functions",
+        "parentTopic": "Trigonometry",
+        "confidence": 1,
+        "matchedKeywords": [
+          "trigonometric functions"
+        ]
+      },
+      {
+        "name": "Inverse Trigonometric Functions",
+        "parentTopic": "Trigonometry",
+        "confidence": 1,
+        "matchedKeywords": [
+          "inverse trigonometric functions"
+        ]
+      }
+    ],
+    "tags": [],
+    "wordCount": 3756,
+    "characterCount": 11840
+  },
+  "images": []
+}

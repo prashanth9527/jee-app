@@ -1,0 +1,788 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2023\\Session2\\Physics\\1004-Physics Paper Morning.pdf",
+  "relativePath": "JEE\\Previous Papers\\2023\\Session2\\Physics\\1004-Physics Paper Morning.pdf",
+  "metadata": {
+    "originalFileName": "1004-Physics Paper Morning.pdf",
+    "subject": "Physics",
+    "year": 2023,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 9,
+    "fileSize": 417339,
+    "processedAt": "2025-09-22T23:49:50.504Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2023 (Held On Monday 10\nth April, 2023) TIME : 9 : 00 AM to 12 : 00 NOON PHYSICS TEST PAPER WITH SOLUTION SECTION-A 31. A physical quantity P is given as 23\nab\nP\ncd\n= The percentage error in the measurement of a, b, c and d are 1%, 2%, 3% and 4% respectively. The percentage error in the measurement of quantity P will be (1) 13% (2) 14% (3) 12% (4) 16% Official Ans. by NTA (1) Allen Ans. (1) Sol. P\na\nb\nc\n1 d\n100%\n2\n3\n100%\nP\na\nb\nc\n2 d\n\n  \n\n\n\n=\n+ + +\n\n\n\n=2(1%) + 3(2%) + 3% + 1\n2 × 4% = 13% 32. Assuming the earth to be a sphere of uniform mass density, the weight of a body at a depth R\nd\n2\n= from the surface of earth, if its weight on the surface of earth is 200 N, will be: (Given R = Radius of earth) (1) 400 N (2) 500 N (3) 300 N (4) 100 N Official Ans. by NTA (4) Allen Ans. (4) Sol. W200\nM20 kg\ng10\n= = = Acc. due to gravity at a depth g’ = g(1-\nd\nR\n) d → depth from surface d = R\n2 g’ = g(1 - R / 2\nR\n) = g\n2 = 5 m/s\n2 weight = m × g at depth R/2 = 20 × 5 = 100 N 33. A zener diode of power rating 1.6 W is to be used as voltage regulator. If the zener diode has a breakdown of 8V and it has to regulate voltage fluctuating between 3V and 10 V. The value of resistance R\ns for safe operation of diode will be : Unregulated voltage Regulated voltage R\ns (1) 13.3\n (2) 12\n (3) 10\n (4) 13\n Official Ans. by NTA (3) Allen Ans. (3) Sol. R\ns\nUnregulated\nvoltage\nRegulated\nvoltage\n10V\n0V\n0V\n8V\nB\nA\nC\nD V\nb = 8 volt V\nA – V\nB = 8 volt Current through zener diode, P\n1.6 W\ni\n0.2A\nV\n8V\n= =\n= V\nC – V\nA = 10 – 8 volt CA\nVV\n2V\nR10\ni0.2A\n−\n ===  [Note : A zener diode can regulate only if input voltage is  zener breakdown voltage the range of input voltage should be 8 to 10 V so that output voltage remains constant = 8 V] 34. The range of the projectile projected at an angle of 15° with horizontal is 50 m. If the projectile is projected with same velocity at an angle of 45º with horizontal, then its range will be : (1) 50 m (2) 50 2 m (3) 100 m (4) 100 2 m Official Ans. by NTA (3) Allen Ans. (3) 2 Sol. 2\nsin 2\nR\ng\n\n= R\nsin(2 )\n 11\n22\nR\nsin(2 )\nsin(2 15)\nsin 30\nR\nsin(2 )\nsin(2 45)\nsin 90\n\n\n=\n=\n=\n\n\n 2\n50\n1\nR2\n= R\n2 = 100m 35. A carrier wave of amplitude 15V is modulated by a sinusoidal base band signal of amplitude 3V. The ratio of maximum amplitude to minimum amplitude in an amplitude modulated wave is : (1) 2 (2) 3\n2 (3) 5 (4) 1 Official Ans. by NTA (2) Allen Ans. (2) Sol. Given, A\nc = 15 V A\nm = 3V Maximum amplitude of modulated wave A\nmax = A\nc + A\nm = 15 + 3 = 18V Minimum amplitude of modulated wave A\nmin = A\nc – A\nm = 15 – 3 = 12V cm\ncm\nAA\n18\n3\nA\nA\n12\n2\n+\n\n= =\n− 36. The angular momentum for the electron in Bohr’s orbit is L. If the electron is assumed to revolve in second orbit of hydrogen atom, then the change in angular momentum will be : (1) L\n2 (2) zero (3) L (4) 2L Official Ans. by NTA (3) Allen Ans. (3) Sol. L = mvr, 2\nrn\n\n, 1\nv\nn\n Ln Also, nh\nL\n2\n=\n\n, Bohr orbit is, 1\n1.h\nLL\n2\n==\n L\n2 = 2[L] = 2L 2\n2h\nL\n2\n=\n So, change = L\n2 – L\n1 = 2L – L = L 37. A particle of mass m moving with velocity v collides with a stationary particle of mass 2m. After collision, they stick together and continue to move together with velocity (1) v (2) v\n2 (3) v\n3 (4) v\n4 Official Ans. by NTA (3) Allen Ans. (3) Sol. m\nv\n2m\nm\n2m\nv' Applying conservation of linear momentum  if\nPP\n= mv + 2m × 0 = (3m)v’  mv = 3mv’ v’ = v\n3 38. Given below are two statement : Statement I : If the number of turns in the coil of a moving coil galvanometer is doubled then the current sensitivity becomes double. Statement II : Increasing current sensitivity of a moving coil galvanometer by only increasing the number of turns in the coil will also increase its voltage sensitivity in the same ratio: In the light of the above statement, choose the correct answer from the options given below : (1) Statement I is false but Statement II is true (2) Both Statement I and Statement II are true (3) Both Statement I and Statement II are false (4) Statement I is true but Statement II is false Official Ans. by NTA (4) Allen Ans. (4) 3 Sol. For a moving coil galvanometer BiNA = k BNA\ni\nk\n\n=\n\n ; Current sensitive = BNA\nk So, if N is doubled then current sensitivity is doubled. Voltage sensitivity V\nB\nNA\nk\nR\n= BNA\nV\nRk\n=\n, as N is doubled R is also doubled. So, no change in voltage sensitivity. Hence, option (4) is right. 39. Match List I with List II : List-I List II (A) 3 Translational degrees of freedom (I) Monoatomic gases (B) 3 Translational, 2 rotational degrees of freedoms (II) Polyatomic gases (C) 3 Translational, 2 rotational and 1 vibrational degrees of freedom (III) Rigid diatomic gases (D) 3 Translational, 3 rotational and more than one vibrational degrees of freedom (IV) Nonrigid diatomic gases Choose the correct answer from the options given below : (1) (A) – (IV), (B) – (III), (C) – (II), (D) – (I) (2) (A) – (IV), (B) – (II), (C) – (I), (D) – (III) (3) (A) – (I), (B) – (III), (C) – (IV), (D) – (II) (4) (A) – (I), (B) – (IV), (C) – (III), (D) – (II) Official Ans. by NTA (3) Allen Ans. (3) Sol. Factual Type of gases No. of degrees of freedom Monoatomic gas 3 T Diatomic + rigid 3T + 2R Diatomic + non-rigid 3T+ 2R + 1V Polyatomic 3T + 3R + More than 1V T = Translational degree of freedom R = Rotational degree of freedom V = Vibrational degree of freedom 40. The equivalent resistance of the circuit shown below between points a and b is : 4\n\n4\n\n4\n\n4\n\n16\n\na\nb (1) 24\n (2) 3.2 (3) 20\n (4) 16\n Official Ans. by NTA (2) Allen Ans. (2) Sol. The circuit can be reduced to 4\n44\n16 eq\n16 4\n16\nR\n16 4\n5\n\n =\n= \n+ = R\neq = 3.2\n 41. Consider two containers A and B containing monoatomic gases at the same Pressure (P), Volume (V) and Temperature (T). The gas in A is compressed isothermally to 1\n8 of its original volume while the gas B is compressed adiabatically to 1\n8 of its original volume. The ratio of final pressure of gas in B to that of gas in A is : (1) 8 (2) 3\n2\n8 (3) 1\n8 (4) 4 Official Ans. by NTA (4) Allen Ans. (4) 4 Sol. Isothermal process, T = constant PV = nRT = constant P\n1\nV\n1 = P\n2\nV\n2 PV = P\nA\n(V/8) P\nA = 8P Adiabatic process, PV\n = constant  for monoatomic gas is 5\n3\n. P\n1\nV\n1\n = P\n2\nV\n2\n 5\n3\nB1\n2\nPV\nV\nP\nV\nV / 8\n\n\n\n==\n\n\n\n P\nB = 32P B\nA\nP\n32P\n4\nP\n8P\n== 42. Given below are two statements: Statement I : Maximum power is dissipated in a circuit containing an inductor, a capacitor and a resistor connected in series with an AC source, when resonance occurs Statement II : Maximum power is dissipated in a circuit containing pure resistor due to zero phase difference between current and voltage. In the light of the above statements, choose the correct answer from the options given below : (1) Statement I is false but Statement II is true (2) Statement I is true but Statement II is false (3) Both Statement I and Statement II are true (4) Both Statement I and Statement II are false Official Ans. by NTA (3) Allen Ans. (3) Sol. Power will be maximum when impedance is minimum 1\n22\n2\nLC\nZ [R(XX ) ]= + − At resonance, X\nL = X\nC Z\nmin = R 43. Two satellites of masses m and 3m revolve around the earth in circular orbits of radii r & 3r respectively. The ratio of orbital speeds of the satellites respectively is : (1) 1 : 1 (2) 3 : 1 (3) 3 :1 (4) 9 : 1 Official Ans. by NTA (3) Allen Ans. (3) Sol. GM\nr\n= 1\nr\n 12\n21\nr\n3r\nrr\n\n = =\n 3 :1\n= 44. Given below are two statements: Statement I : Pressure in a reservoir of water is same at all points at the same level of water. Statement II : The pressure applied to enclosed water is transmitted in all directions equally. In the light of the above statements, choose the correct answer from the options given below : (1) Statement I is false but Statement II is true (2) Both Statement I and Statement II are true (3) Statement I is true but Statement II is false (4) Both Statement I and Statement II are false Official Ans. by NTA (2) Allen Ans. (2) Sol. Pressure in a static liquid will be same at each point on same horizontal level.  P = atm\nP\n+ gh As per Pascal law, same pressure applied to enclosed water is transmitted in all directions equally. 45. The equivalent capacitance of the combination shown is C\nC\nC (1) C\n2 (2) 4C (3) 2C (4) 5\nC\n3 Official Ans. by NTA (3) Allen Ans. (3) 5 Sol. The circuit can be reduced to C C Parallel combination C\neq = C + C = 2C 46. The energy of an electromagnetic wave contained in a small volume oscillates with (1) zero frequency (2) half the frequency of the wave (3) double the frequency of the wave (4) the frequency of the wave Official Ans. by NTA (3) Allen Ans. (3) Sol. (\n)\n0\nE\nE sin\nt kx\n=\n − Energy density (\n)\n22\n00\ndu\nE sin\nt kx\ndv\n\n= \n −\n\n (\n)\n\n\n−\n −\n\n2\n00\nE\n1 cos 2 t 2kx\n2 47. An object is placed at a distance of 12 cm in front of a plane mirror. The virtual and erect image is formed by the mirror. Now the mirror is moved by 4 cm towards the stationary object. The distance by which the position of image would be shifted, will be: (1) 4 cm towards mirror (2) 8 cm towards mirror (3) 8 cm away from mirror (4) 2 cm towards mirror Official Ans. by NTA (2) Allen Ans. (2) Sol. O x = –\n12 x = 12 I x\n= 0 Initial O x = –\n12 x = 4 I Final 4cm 8cm 8cm x = –\n4  Shifting of image will be 8 cm towards mirror. 48. The de Broglie wavelength of a molecule in a gas at room temperature (300 K) is 1\n\n. If the temperature of the gas is increased to 600 K, then the de Broglie wavelength of the same gas molecule becomes (1) 1\n1\n2\n (2) 1\n2\n (3) 1\n1\n2\n (4) 1\n2\n Official Ans. by NTA (1) Allen Ans. (1) Sol. From K.T.G. B\nRMS\n3k T\nm\n= RMS\nT\n and RMS\nh\nm\n=\n i.e., 1\nT\n 21\n12\nT\n3001\nT600\n2\n\n===\n 1\n2\n2\n\n= 6 49. A particle executes S.H.M. of amplitude A along x-axis. At t = 0, the position of the particle is A\nx\n2\n= and it moves along positive x-axis the displacement of particle in time t I (\n)\nx\nA sin\nt\n=\n + \n, then the value  will be : (1) 6\n (2) 3\n (3) 4\n (4) 2\n Official Ans. by NTA (1) Allen Ans. (1) Sol. X = Asin(t + ) V = Acos(t + ) A\nA sin( t\n)\n2\n=\n +  V is +ve,  must be At t = 0 in 1\nst quadrant or 4\nth 15\nsin\n,\n2\n6 6\n\n =   = quadrant  Common solution is 6\n\n= 50. The position-time graphs for two students A and B returning from the school to their homes are shown in figure : x\nt\nB\nA\nO (A) A lives closer to the school (B) B lives closer to the school (C) A takes lesser time to reach home (D) A travels faster than B (E) B travels faster than A Choose the correct answer from the options given below : (1) (A) and (E) only (2) (B) and (E) only (3) (A), (C) and (E) only (4) (A), (C) and (D) only Official Ans. by NTA (1) Allen Ans. (1) Sol. As slope of B > Slope of A  V\nB > V\nA Also, t\nB < t\nA SECTION-B 51. Unpolarised light of intensity 2\n32Wm\n− passes through the combination of three polaroids such that the pass axis of the last polaroid is perpendicular to that of the pass axis of first polaroid. If intensity of emerging light is 2\n3Wm\n−\n, then the angle between pass axis of first two polaroids is ______________º . Official Ans. by NTA (30) Allen Ans. (30, 60) Sol. 2\n0\nI\n32w / m\n= I st  2 nd I 2 0 C\nos\n2  I 2 0 cos 2  sin 3  3 rd I\n0\n/2 22\nnet\n32\nI\n3\ncos\n.sin\n2\n= =\n  (\n)\n2\n22\n3\n4 sin\n. cos\nsin 2\n4\n=\n  =\n ()\n3\nsin 2\n2\n= Hence, 30º\n=\nand 60º 52. A closed circular tube of average radius 15 cm, whose inner walls are rough, is kept in vertical plane. A block of mass 1 kg just fit inside the tube. The speed of block is 22 m/s, when it is introduced at the top of tube. After completing five oscillations, the block stops at the bottom region of tube. The work done by the tube on the block is ______ J. [Given g = 10 m/s\n2\n] 30cm\n22ms\n–1 Official Ans. by NTA (+245) Allen Ans. (-245) 7 Sol. r\navg = 15 cm w\nf + w\ng = KE w\nf + 10 × 0.3 = 1\n2\n− × 484 w\nf = –245 J 53. If the earth suddenly shrinks to 1\nth\n64 of its original volume with its mass remaining the same, the period of rotation of earth becomes 24\nh\nx\n. The value of x is _________ . Official Ans. by NTA (16) Allen Ans. (16) Sol. From conservation of angular momentum V M  1 R/4 V\n/64 M  2 2\n2\n12\n2\n2\nR\nMR\nM\n5\n5\n4\n\n =\n\n\n 2\n2\n12\nMR\nMR\n16\n\n =\n 1211\n222\nTTt\n1116\n16T16T1x\n\n =  =  = =\n 1\n2\n16\n24\nt\n24\nx 16\n1t\n =  =  = 54. The current required to be passed through a solenoid of 15 cm length and 60 turns in order to demagnetise a bar magnet of magnetic intensity 31\n2.4 10 Am\n−\n is __________ A. Official Ans. by NTA (6) Allen Ans. (6) Sol. I = H Given, I = 2.4 × 10\n3 A/m 2.4 × 10\n3 = H = ni n = N 2.4 × 10\n3 = 2\n60\ni\n15 10\n−\n 2.4 15 10\ni\n60\n\n=\n36\n6A\n6\n== 55. A 1m long metal rod XY completes the circuit as shown in figure. The plane of the circuit is perpendicular to the magnetic field of flux density 0.15 T. If the resistance of the circuit is 5\n\n, the force needed to move the rod in direction, as indicated, with a constant speed of 4 m/s will be ______ 3\n10 N\n−\n. Y\n5\n\n\n× × × ×\n× × × ×\n× × × ×\n× × × ×\n× × × × Official Ans. by NTA (18) Allen Ans. (18) Sol. F i B\n= 2\n22\n2\nvB\nvB\n4\n15\nB\nB\n1\nR\nR\nR\n5\n100\n\n \n \n \n=\n=\n=\n= \n\n \n \n \n \n \n  4\n4 225\n5\n10\n= 4\n180\n0.018 N\n10\n== = 18 × 10\n–3 N 56. A transverse harmonic wave on a string is given by (\n)\n(\n)\ny x, t\n5sin 6t 0.003x\n=+ where x and y are in cm and t in sec. The wave velocity is ________ 1\nms\n−\n. Official Ans. by NTA (20) Allen Ans. (20) Sol. y(x, t) = 5sin(6t + 0.003x) k = 0.003 cm\n-1\n,  = 6 rad/s, v = k\n 2\n6\n0.003 10\n\n = 20 ms\n–1 8 57. The decay constant for a radioactive nuclide is 51\n1.5 10 s\n−−\n\n. Atomic of the substance is 60 g 1\nmole\n−\n, (\n)\n23\nA\nN\n6 10\n=\n. The activity of 1.0 g\n of the substance is _____ 10\n10 Bq.\n Official Ans. by NTA (15) Allen Ans. (15) Sol.  = 1.5 × 10\n–5 s\n–1 No. of mole = 67\n1 10\n10\n60\n6\n−−\n\n= No. of atoms = no. of moles × N\nA 7\n23\n16\n10\n6 10\n10\n6\n−\n=   = t\n0\nA\nN e\n−\n= For, t = 0, A = A\n0 = N\n0\n = 1.5 × 10\n–5 × 10\n16 = 15 × 10\n10 Bq. 58. Three concentric spherical metallic shells X, Y and Z of radius a, b and c respectively \n\na\nb\nc\n have surface charge densities ,\n − and \n, respectively. The shells X and Z are at same potential. If the radii of X & Y are 2 cm and 3 cm, respectively. The radius of shell Z is ___________ cm. Official Ans. by NTA (5) Allen Ans. (5) Sol. x\ny\n−\nz\n+\nc\nb\na 2\nx\nq\n4 a\n=   2\ny\nq\n4 b\n= −  2\nz\nq\n4 c\n=   Potential x = potential z V\nx = V\nz yy\nx\nz\nx\nz\n0\n0\n0\n0\n0\n0\nqq\nq\nq\nq\nq\n4\na\n4\nb\n4\nc\n4\nc\n4\nc\n4\nc\n+\n+\n=\n+\n+\n\n\n\n\n\n\n2\n2\n2\n2\n2\n2\n4 a\n4 b\n4 c\n4\n[a\nb\nc ]\na\nb\nc\nc\n     \n − +\n−\n+\n= c(a – b + c) = a\n2 – b\n2 + c\n2 c (a – b) = a\n2 – b\n2 c = a + b c = 5 cm 59. 10 resistors each of resistance 10 can be connected in such as to get maximum and minimum equivalent resistance. The ratio of maximum and minimum equivalent resistance will be _______ . Official Ans. by NTA (100) Allen Ans. (100) Sol. Maximum resistance occurs When all the resisters are connected in series combination max\nR\n10 R\n= Here R = 10 ohm Minimum resistance occurs When all the resistance are connected in parallel combination min\nR\nR\n10\n= max\nmin\nR\n100\nR\n= 9 60. Two wires each of radius 0.2 cm and negligible mass, one made of steel and other made of brass are loaded as shown in the figure. The elongation of the steel wire is _____ 6\n10 m\n−\n\n. [Young’s modulus for steel = 11\n2\n2 10 Nm\n−\n and 2\ng 10 ms\n−\n=\n] 1m brass\n1.14kg\n1.6m steel Official Ans. by NTA (20) Allen Ans. (20) Sol. Tension in steel wire 21\nT\n2g T\n=+ 2\nT\n20 11.4\n=+ 31.4 N\n= 1.14kg Steel (1.6m) Brass (1m) T 1 1.14g 2g T 1 2kg T\n2 Elongation in steel wire 2\nTL\nL\nAy\n= ()\n2\n211\n31.4 1.6\nL\n0.2 102 10\n−\n\n=\n   6\n11\n16\nL\n2 4 10\n10\n−\n=\n   5\n2 10 m\n−\n= 6\n20 10 m\n−\n=",
+    "questions": [],
+    "mathEquations": [
+      {
+        "equation": "N-A 31",
+        "type": "mathematical",
+        "position": 150
+      },
+      {
+        "equation": "d\n= The percentage error in the measurement of a",
+        "type": "mathematical",
+        "position": 201
+      },
+      {
+        "equation": "R = Radius of earth) (1) 400 N (2) 500 N (3) 300 N (4) 100 N Official Ans",
+        "type": "mathematical",
+        "position": 737
+      },
+      {
+        "equation": "d = R\n2 g",
+        "type": "mathematical",
+        "position": 935
+      },
+      {
+        "equation": "R / 2\nR\n) = g\n2 = 5 m/s\n2 weight = m ",
+        "type": "mathematical",
+        "position": 954
+      },
+      {
+        "equation": "R/2 = 20 ",
+        "type": "mathematical",
+        "position": 1004
+      },
+      {
+        "equation": "b = 8 volt V\nA ",
+        "type": "mathematical",
+        "position": 1462
+      },
+      {
+        "equation": "B = 8 volt Current through zener diode",
+        "type": "mathematical",
+        "position": 1481
+      },
+      {
+        "equation": "V\n= =\n= V\nC ",
+        "type": "mathematical",
+        "position": 1539
+      },
+      {
+        "equation": "A = 10 ",
+        "type": "mathematical",
+        "position": 1555
+      },
+      {
+        "equation": "t = 8 V",
+        "type": "mathematical",
+        "position": 1771
+      },
+      {
+        "equation": "c = 15 V A\nm = 3V Maximum amplitude of modulated wave A\nmax = A\nc + A\nm = 15 + 3 = 18V Minimum amplitude of modulated wave A\nmin = A\nc ",
+        "type": "mathematical",
+        "position": 2463
+      },
+      {
+        "equation": "m = 15 ",
+        "type": "mathematical",
+        "position": 2602
+      },
+      {
+        "equation": "L = mvr",
+        "type": "mathematical",
+        "position": 2909
+      },
+      {
+        "equation": "e = L\n2 ",
+        "type": "mathematical",
+        "position": 3028
+      },
+      {
+        "equation": "L = L 37",
+        "type": "mathematical",
+        "position": 3049
+      },
+      {
+        "equation": "P\n= mv + 2m ",
+        "type": "mathematical",
+        "position": 3369
+      },
+      {
+        "equation": "v = 3mv",
+        "type": "mathematical",
+        "position": 3397
+      },
+      {
+        "equation": "A = k",
+        "type": "mathematical",
+        "position": 4145
+      },
+      {
+        "equation": "e = BNA\nk So",
+        "type": "mathematical",
+        "position": 4190
+      },
+      {
+        "equation": "t-I List II (A) 3 Translational degrees of freedom (I) Monoatomic gases (B) 3 Translational",
+        "type": "mathematical",
+        "position": 4441
+      },
+      {
+        "equation": "c + rigid 3T + 2R Diatomic + non-rigid 3T+ 2R + 1V Polyatomic 3T + 3R + More than 1V T = Translational degree of freedom R = Rotational degree of freedom V = Vibrational degree of freedom 40",
+        "type": "mathematical",
+        "position": 5179
+      },
+      {
+        "equation": "q = 3",
+        "type": "mathematical",
+        "position": 5637
+      },
+      {
+        "equation": "T = constant PV = nRT = constant P\n1\nV\n1 = P\n2\nV\n2 PV = P\nA\n(V/8) P\nA = 8P Adiabatic process",
+        "type": "mathematical",
+        "position": 6076
+      },
+      {
+        "equation": "V / 8\n",
+        "type": "mathematical",
+        "position": 6256
+      },
+      {
+        "equation": "B = 32P B\nA\nP\n32P\n4\nP\n8P\n== 42",
+        "type": "mathematical",
+        "position": 6287
+      },
+      {
+        "equation": "L = X\nC Z\nmin = R 43",
+        "type": "mathematical",
+        "position": 7083
+      },
+      {
+        "equation": "P = atm\nP\n+ ",
+        "type": "mathematical",
+        "position": 8054
+      },
+      {
+        "equation": "q = C + C = 2C 46",
+        "type": "mathematical",
+        "position": 8373
+      },
+      {
+        "equation": "x\n=\n",
+        "type": "mathematical",
+        "position": 8657
+      },
+      {
+        "equation": "x = ",
+        "type": "mathematical",
+        "position": 9172
+      },
+      {
+        "equation": "x = 12 I x\n= 0 Initial O x = ",
+        "type": "mathematical",
+        "position": 9181
+      },
+      {
+        "equation": "x = 4 I Final 4cm 8cm 8cm x = ",
+        "type": "mathematical",
+        "position": 9215
+      },
+      {
+        "equation": "x-axis",
+        "type": "mathematical",
+        "position": 9754
+      },
+      {
+        "equation": "t = 0",
+        "type": "mathematical",
+        "position": 9765
+      },
+      {
+        "equation": "x-axis the displacement of particle in time t I (\n)\nx\nA sin\nt\n=\n",
+        "type": "mathematical",
+        "position": 9840
+      },
+      {
+        "equation": "X = Asin(",
+        "type": "mathematical",
+        "position": 10016
+      },
+      {
+        "equation": "t + ",
+        "type": "mathematical",
+        "position": 10026
+      },
+      {
+        "equation": "V = A",
+        "type": "mathematical",
+        "position": 10033
+      },
+      {
+        "equation": "t + ",
+        "type": "mathematical",
+        "position": 10044
+      },
+      {
+        "equation": "s +ve",
+        "type": "mathematical",
+        "position": 10078
+      },
+      {
+        "equation": "t = 0 in 1\nst quadrant or 4\nth 15\nsin\n",
+        "type": "mathematical",
+        "position": 10098
+      },
+      {
+        "equation": "n-time graphs for two students A and B returning from the school to their homes are shown in figure ",
+        "type": "mathematical",
+        "position": 10209
+      },
+      {
+        "equation": "N-B 51",
+        "type": "mathematical",
+        "position": 10738
+      },
+      {
+        "equation": "w / m\n= I st ",
+        "type": "mathematical",
+        "position": 11122
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 11484
+      },
+      {
+        "equation": "g = 10 m/s\n2\n",
+        "type": "mathematical",
+        "position": 11672
+      },
+      {
+        "equation": "g = 15 cm w\nf + w\ng = ",
+        "type": "mathematical",
+        "position": 11757
+      },
+      {
+        "equation": "f + 10 ",
+        "type": "mathematical",
+        "position": 11785
+      },
+      {
+        "equation": "f = ",
+        "type": "mathematical",
+        "position": 11814
+      },
+      {
+        "equation": "R/4 V\n/64 M ",
+        "type": "mathematical",
+        "position": 12099
+      },
+      {
+        "equation": "I = H Given",
+        "type": "mathematical",
+        "position": 12482
+      },
+      {
+        "equation": "I = 2",
+        "type": "mathematical",
+        "position": 12495
+      },
+      {
+        "equation": "A/m 2",
+        "type": "mathematical",
+        "position": 12510
+      },
+      {
+        "equation": "H = ni n = N 2",
+        "type": "mathematical",
+        "position": 12527
+      },
+      {
+        "equation": "m/s will be ",
+        "type": "mathematical",
+        "position": 12888
+      },
+      {
+        "equation": "B\n= 2\n22\n2\nvB\nvB\n4\n15\nB\nB\n1\nR\nR\nR\n5\n100\n",
+        "type": "mathematical",
+        "position": 13017
+      },
+      {
+        "equation": "x\n=+ where x and y are in cm and t in sec",
+        "type": "mathematical",
+        "position": 13241
+      },
+      {
+        "equation": "t + 0",
+        "type": "mathematical",
+        "position": 13386
+      },
+      {
+        "equation": "k = 0",
+        "type": "mathematical",
+        "position": 13398
+      },
+      {
+        "equation": "m\n-1\n",
+        "type": "mathematical",
+        "position": 13409
+      },
+      {
+        "equation": "d/s",
+        "type": "mathematical",
+        "position": 13424
+      },
+      {
+        "equation": "v = k\n",
+        "type": "mathematical",
+        "position": 13429
+      },
+      {
+        "equation": "e = 67\n1 10\n10\n60\n6\n",
+        "type": "mathematical",
+        "position": 13742
+      },
+      {
+        "equation": "s = no",
+        "type": "mathematical",
+        "position": 13780
+      },
+      {
+        "equation": "t = 0",
+        "type": "mathematical",
+        "position": 13855
+      },
+      {
+        "equation": "A = A\n0 = N\n0\n",
+        "type": "mathematical",
+        "position": 13862
+      },
+      {
+        "equation": "a\n= ",
+        "type": "mathematical",
+        "position": 14290
+      },
+      {
+        "equation": "b\n= ",
+        "type": "mathematical",
+        "position": 14306
+      },
+      {
+        "equation": "c\n= ",
+        "type": "mathematical",
+        "position": 14323
+      },
+      {
+        "equation": "x = potential z V\nx = V\nz yy\nx\nz\nx\nz\n0\n0\n0\n0\n0\n0\nqq\nq\nq\nq\nq\n4\na\n4\nb\n4\nc\n4\nc\n4\nc\n4\nc\n+\n+\n=\n+\n+\n",
+        "type": "mathematical",
+        "position": 14341
+      },
+      {
+        "equation": "b + c) = a\n2 ",
+        "type": "mathematical",
+        "position": 14527
+      },
+      {
+        "equation": "c = a + b c = 5 cm 59",
+        "type": "mathematical",
+        "position": 14574
+      },
+      {
+        "equation": "R = 10 ohm Minimum resistance occurs When all the resistance are connected in parallel combination min\nR\nR\n10\n= max\nmin\nR\n100\nR\n",
+        "type": "mathematical",
+        "position": 14937
+      },
+      {
+        "equation": "l = 11\n2\n2 10 Nm\n",
+        "type": "mathematical",
+        "position": 15284
+      },
+      {
+        "equation": "T\n=+ 2\nT\n20 11",
+        "type": "mathematical",
+        "position": 15429
+      },
+      {
+        "equation": "N\n= 1",
+        "type": "mathematical",
+        "position": 15454
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1224
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1768
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2068
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2085
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2104
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2112
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2122
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2131
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2139
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2149
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2250
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3607
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3676
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5391
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6084
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6104
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6181
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8196
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8650
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8695
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8751
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8797
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8963
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9896
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10021
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10039
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10055
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10132
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 11163
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11172
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 11206
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11211
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11238
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 11244
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11248
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11271
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12770
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12872
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 13229
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 13381
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13485
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13556
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13637
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 14623
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 14704
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 14760
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 14846
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 14961
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 14992
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "force",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "magnetic",
+          "current",
+          "voltage"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "velocity",
+          "displacement"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "force",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "charge",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 1,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "ohm",
+          "power"
+        ]
+      }
+    ],
+    "tags": [
+      "JEE Mains"
+    ],
+    "wordCount": 3772,
+    "characterCount": 15656
+  },
+  "images": []
+}

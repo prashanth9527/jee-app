@@ -1,0 +1,1434 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2024\\Session2\\Physics\\0504-Physics-Paper-With-Solution-Evening.pdf",
+  "relativePath": "JEE\\Previous Papers\\2024\\Session2\\Physics\\0504-Physics-Paper-With-Solution-Evening.pdf",
+  "metadata": {
+    "originalFileName": "0504-Physics-Paper-With-Solution-Evening.pdf",
+    "subject": "Physics",
+    "year": 2024,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 8,
+    "fileSize": 3957798,
+    "processedAt": "2025-09-22T23:33:23.207Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2024 (Held On Friday 05\nth April, 2024) TIME : 3 : 00 PM to 6 : 00 PM PHYSICS TEST PAPER WITH SOLUTION SECTION-A 31. Given below are two statements : Statement I : When the white light passed through a prism, the red light bends lesser than yellow and violet. Statement II : The refractive indices are different for different wavelengths in dispersive medium. In the light of the above statements, choose the correct answer from the options given below : (1) Both Statement I and Statement II are true. (2) Statement I is true but Statement II is false. (3) Both Statement I and Statement II are false. (4) Statement I is false but Statement II is true. Ans. (1) Sol. As \nred > \nyellow > \nviolet Light ray with longer wavelength bends less. 32. Which of the following statement is not true about stopping potential (V\n0\n)? (1) It depends on the nature of emitter material. (2) It depends upon frequency of the incident light. (3) It increases with increase in intensity of the incident light. (4) It is 1/e times the maximum kinetic energy of electrons emitted. Ans. (3) Sol. KE\nmax = h – \n0 = eV 33. The angular momentum of an electron in a hydrogen atom is proportional to : (Where r is the radius of orbit of electron) (1) r (2) 1\nr (3) r (4) 1\nr Ans. (1) Sol. 2\nC\nmv\nF\nr\n 2\n12\n2\nKq q\nmv\nr\nr\n mv\n2\nr\n2 = Kq\n1\nq\n2\nr 2\n12\nL\nKq q r\nm\n Lr 34. A galvanometer of resistance 100 when connected in series with 400 measures a voltage of upto 10 V. The value of resistance required to convert the galvanometer into ammeter to read upto 10 A is x × 10\n–\n2 . The value of x is : (1) 2 (2) 800 (3) 20 (4) 200 Ans. (3) Sol. 3\ng\n10\ni20 10 A\n400 100\n\n \n For ammeter Let shunt resistance = S i\ng\nR = (i – i\ng\n)S 20 × 10\n–\n3 × 100 = 10 S S = 20 × 10\n–2  35. The vehicles carrying inflammable fluids usually have metallic chains touching the ground : (1) To conduct excess charge due to air friction to ground and prevent sparking. (2) To alert other vehicles. (3) To protect tyres from catching dirt from ground. (4) It is a custom. Ans. (1) Sol. Static charge is developed due to air friction. This can result in combustion. So, metallic chains is used to discharge excess charge. $//(1\n® 2 36. If n is the number density and d is the diameter of the molecule, then the average distance covered by a molecule between two successive collisions (i.e. mean free path) is represented by : (1) 2\n1\n2n d (2) 2\n2n d (3) 2\n1\n2n d (4) 2 2 2\n1\n2n d Ans. (3) Sol. n = number of molecule per unit volume d = diameter of the molecule 2\n1\n2 d n\n\n (By Theory) 37. A particle moves in x-y plane under the influence of a force F such that its linear momentum is ˆˆ\nP(t) i cos(kt) jsin(kt)\n. If k is constant, the angle between F and P will be : (1) 2\n (2) 6\n (3) 4\n (4) 3\n Ans. (1) Sol. ˆˆ\nP cos(kt)i sin(kt)j ; P1 P mv ˆ\nˆ\nPv ˆˆ\nˆ\nv cos(kt)i sin(kt)j  ˆˆ\nksin(kt)i kcos(kt)j\nˆ\na\nk\n\n ˆˆ\nˆ\na sin kti cosktj   ˆˆ\nˆ\nˆ\nF a sin kt i coskt j   ˆˆ\nF.Psin kt cos t sin kt cos t\ncos0\nˆˆ\n11\nFP\n\n  \n 2\n\n   38. The electrostatic force 1\n(F ) and magnetic force 2\n(F ) acting on a charge q moving with velocity v can be written : (1) 1\nF qV.E\n, 2\nF q(B.V) (2) 1\nF qB\n, 2\nF q(B V) (3) 1\nF qE\n, 2\nF q(V B) (4) 1\nF qE\n, 2\nF q(B V) Ans. (3) Sol. 1\nF qE (Theory) 2\nF q(V B) 39. A man carrying a monkey on his shoulder does cycling smoothly on a circular track of radius 9m and completes 120 revolutions in 3 minutes. The magnitude of centripetal acceleration of monkey is (in m/s\n2\n) : (1) zero (2) 16 \n2 ms\n–\n2 (3) 4\n2 ms\n–2 (4) 57600 \n2 ms\n–2 Ans. (2) Sol. Given : R = 9m, 120 revolution in 3 min 120Rev. 120 2 rad 4\nrad / s\n3min.3 60 sec 3\n \n \n a\ncentripetal = \n2\nR = 2\n4\n9\n3\n\n\n\n\n = 16\n2 m/s\n2 40. A series LCR circuit is subjected to an AC signal of 200 V, 50 Hz. If the voltage across the inductor (L = 10 mH) is 31.4 V, then the current in this circuit is ________ : (1) 68 A (2) 63 A (3) 10 A (4) 10 mA Ans. (3) Sol. Voltage across inductor V\nL = IX\nL 31.4 = I[L] 31.4 = I[L(2f)] 31.4 = I[10 × 10\n–3\n(2 × 3.14) × 50  I = 10 A $//(1\n® 3 41. What is the dimensional formula of ab\n–1 in the equation 2\na\nP\nV\n\n\n\n\n(V – b) = RT, where letters have their usual meaning. (1) [M\n0\nL\n3\nT\n–2\n] (2) [ML\n2\nT\n–2\n] (3) [M\n–1\nL\n5\nT\n3\n] (4) [M\n6\nL\n7\nT\n4\n] Ans. (2) Sol. [V] = [b]  Dimension of b = [L\n3\n] & 2\na\n[P]\nV\n\n\n\n [a] = [PV\n2\n] = [ML\n–1\nT\n–2\n][L\n6\n] Dimension of a = [ML\n5\nT\n–2\n] 52\n12 2\n3\n[ML T ]\nab[ML T ]\n[L ]\n\n\n 42. The output (Y) of logic circuit given below is 0 only when : A B 1 Y (1) A = 1, B = 0 (2) A = 0, B = 0 (3) A = 1, B = 1 (4) A = 0, B = 1 Ans. (2) Sol. A B 1 Y 0 0 0 0 0 0 0 0 OR gate OR gate AND gate 43. A body is moving unidirectionally under the influence of a constant power source. Its displacement in time t is proportional to : (1) t\n2 (2) t\n2/3 (3) t\n3/2 (4) t Ans. (3) Sol. P = costant  FV = constant dV\nmV\ndt\n = constant Vt\n00\nVdV (C) dt\n 2\nV\nCt\n2\n\n\n\n V  t\n1/2 1/2\nds\nt\ndt\n St\n1/2\n00\nds K t dt\n 3/2\n2\nS K t\n3\n S  t\n3/2  displacement is proportional to (t)\n3/2 44. Match List-I with List-II :- List-I EM-Wave List-II Wavelength Range (A) Infra-red (I) < 10\n–3 nm (B) Ultraviolet (II) 400 nm to 1 nm (C) X-rays (III) 1 mm to 700 nm (D) Gamma rays (IV) 1 nm to 10\n–3 nm Choose the correct answer from the options given below : (1) (A)-(II), (B)-(I), (C)-(IV), (D)-(III) (2) (A)-(III), (B)-(II), (C)-(IV), (D)-(I) (3) (A)-(IV), (B)-(III), (C)-(II), (D)-(I) (4) (A)-(I), (B)-(III), (C)-(II), (D)-(IV) Ans. (2) Sol. Infrared is the least energetic thus having biggest wavelength () & gamma rays are most energetic thus having smallest wavelength (). $//(1\n® 4 45. During an adiabatic process, if the pressure of a gas is found to be proportional to the cube of its absolute temperature, then the ratio of P\nV\nC\nC for the gas is : (1) 5\n3 (2) 9\n7 (3) 3\n2 (4) 7\n5 Ans. (3) Sol. P  T\n3 PT\n–3 = constant PV\nnR\nT\n = constant from ideal gas equation (P) (PV)\n–\n3 = constant P\n–2 V\n–3 = cosntant ...(1) Process equation for adiabatic process is PV\ny = constant ...(2) Comparing equation (1) and (2) P\nV\nC\n3\ny\nC2\n 46. Match List-I with List-II : List-I List-II (A) A force that restores an elastic body of unit area to its original state (I) Bulk modulus (B) Two equal and opposite forces parallel to opposite faces (II) Young's modulus (C) Forces perpendicular everywhere to the surface per unit area same everywhere (III) Stress (D) Two equal and opposite forces perpendicular to opposite faces (IV) Shear modulus Choose the correct answer from the options given below : (1) (A)-(II), (B)-(IV), (C)-(I), (D)-(III) (2) (A)-(IV), (B)-(II), (C)-(III), (D)-(I) (3) (A)-(III), (B)-(IV), (C)-(I), (D)-(II) (4) (A)-(III), (B)-(I), (C)-(II), (D)-(IV) Ans. (3) Sol. (A) restoring\nF\nstress\nA\n If A = 1 Stress = F\nrestoring (A)-(III) (B)  Shear stress (B)-(IV) (C)  Volumetric stress (C)-(I) (D)  Longitudinal stress (D)-(II) 47. A vernier callipers has 20 divisions on the vernier scale, which coincides with 19\nth division on the main scale. The least count of the instrument is 0.1 mm. One main scale division is equal to ____mm. (1) 1 (2) 0.5 (3) 2 (4) 5 Ans. (3) Sol. 20 VSD = 19 MSD 19\n1VSDMSD\n20\n L.C. = 1 MSD – 1 VSD 0.1 mm = 19\n1MSDMSD\n20\n 1\n0.1MSD\n20\n 1 MSD = 2mm $//(1\n® 5 48. A heavy box of mass 50 kg is moving on a horizontal surface. If co-efficient of kinetic friction between the box and horizontal surface is 0.3 then force of kinetic friction is : (1) 14.7 N (2) 147 N (3) 1.47 N (4) 1470 N Ans. (2) Sol. 50kg v μ\nk = 0.3 F\nk = μ\nk\nN = 0.3 × 50 × 9.8 = 147 N 49. A satellite revolving around a planet in stationary orbit has time period 6 hours. The mass of planet is one-fourth the mass of earth. The radius orbit of planet is : (Given = Radius of geo-stationary orbit for earth is 4.2 × 10\n4 km) (1) 1.4 × 10\n4 km (2) 8.4 × 10\n4 km (3) 1.68 × 10\n5 km (4) 1.05 × 10\n4 km Ans. (4) Sol. 3/2\n2r\nT\nGM\n\n 3/21/2\n112\n221\nT rM\nT rM\n   \n\n   \n    1/2\n3/2\n1\n4 3/2\n(r )\n6M\n24M / 4\n(4.2 10 )\n\n\n\n\n r\n1 = 1.05 × 10\n4 km 50. The ratio of heat dissipated per second through the resistance 5  and 10  in the circuit given below is : 20 5 10 10V (1) 1 : 2 (2) 2 : 1 (3) 4 : 1 (4) 1 : 1 Ans. (2) Sol. 20 5 10 10V i\n1 i\n2 1\n2\ni\n10 2\ni 5 1\n 2\n2\n11 1\n2\n2\n22\nP i R\n25 2\nP1 10 1\niR\n\n \n\n SECTION-B 51. A solenoid of length 0.5 m has a radius of 1 cm and is made up of 'm' number of turns. It carries a current of 5A. If the magnitude of the magnetic field inside the solenoid is 6.28 × 10\n–\n3 T, then the value of m is : Ans. (500) Sol. μ\n0\nni = B n = number of turns per unit length 0\nm\nμi B\n\n\n\n 3\n7\n0\nB. 6.28 10 0.5\nm\nμi\n12.56 10 5\n\n\n\n\n m = 500 $//(1\n® 6 52. The shortest wavelength of the spectral lines in the Lyman series of hydrogen spectrum is 915 Å. The longest wavelength of spectral lines in the Balmer series will be _______ Å. Ans. (6588) Sol. Lyman Series n = L Shortest, 22\n12\nhc1 1\n13.6\nnn\n\n \n\n\n  E ;  \n0\nhc\n13.6 1\n Balmer Series : n = 2 n = 3 22\n1\nhc1 1\n13.6\n23\n\n \n\n\n 1\nhc1 1\n13.6\n49\n\n \n\n\n 1\nhc5\n13.6\n36\n\n  \n\n\n 0\n1\n13.6\n5\n13.6\n36\n\n  \n 0\n1\n36\n5\n\n\n= 915 36\n6588\n5\n\n 53. In a single slit experiment, a parallel beam of green light of wavelength 550 nm passes through a slit of width 0.20 mm. The transmitted light is collected on a screen 100 cm away. The distance of first order minima from the central maximum will be x × 10\n–\n5 m. The value of x is : Ans. (275) Sol. y 100cm  = 550 nm d = 0.2 mm 92\n3\nD 550 10 100 10\ny\nd\n0.2 10\n\n\n  \n\n\n= 275 54. A sonometer wire of resonating length 90 cm has a fundamental frequency of 400 Hz when kept under some tension. The resonating length of the wire with fundamental frequency of 600 Hz under same tension _______ cm. Ans. (60) Sol. L /2 f\n0 = 400 Hz ; T\nv\nμ\n = constant L\n2\n\n\n; v = f\n0\n 0\nv\nL\n2f\n  v = 2Lf\n0 0\n2Lf\nv\nL'\n2f ' 2f '\n 0\nLf\n90 400\n60\nf '600\n\n  55. A hollow sphere is rolling on a plane surface about its axis of symmetry. The ratio of rotational kinetic energy to its total kinetic energy is x\n5\n. The value of x is ________. Ans. (2) Sol. 22\n2\n22\n222\n12\n1\nmR\nI\n23\n2\n11\n1 21\nImv\nmRm(R )\n22\n2 32\n \n\n\n \n \n\n \n\n \n \n  2\n2\n3\n2\n5\n1\n3\n\n x = 2 $//(1\n® 7 56. A hydraulic press containing water has two arms with diameters as mentioned in the figure. A force of 10 N is applied on the surface of water in the thinner arm. The force required to be applied on the surface of water in the thicker arm to maintain equilibrium of water is _______ N. 14cm 10N 1.4cm Ans. (1000 N) Sol. 12\n12\nFF\nAA\n 1\n22\nF\n10\n(7)(0.7)\n\n F\n1 = 1000 N 57. The electric field at point p due to an electric dipole is E. The electric field at point R on equitorial line will be E\nx\n. The value of x : R Q 2r r –q O +q p r Ans. (16) Sol. P\n3\n2KP\nEE\nr\n R\n3\nKP E\nE\n16\n(2r)\n x = 16 58. The maximum height reached by a projectile is 64 m. If the initial velocity is halved, the new maximum height of the projectile is ______ m. Ans. (16) Sol. 22\nmax\nu sin\nH\n2g\n\n 2\n1max\n1\n2\n2max\n2\nH\nu\nH\nu\n 2\n2\n2max\n64u\nH\n(u / 2)\n H\n2\nmax = 16 m 59. A wire of resistance 20  is divided into 10 equal parts. A combination of two parts are connected in parallel and so on. Now resulting pairs of parallel combination are connected in series. The equivalent resistance of final combination is _______ . Ans. (5) Sol.  10 equal part 20 Each part has resistance = 2 2 parts are connected in parallel so, R = 1 Now, there will be 5 parts each of resistance 1, they are connected in series. R\neq = 5R, R\neq = 5 60. The current in an inductor is given by I = (3t + 8) where t is in second. The magnitude of induced emf produced in the inductor is 12 mV. The self- inductance of the inductor _______ mH. Ans. (4) Sol. I = 3t + 8  = 12 mV dI\nL\ndt\n 12 = L × 3 L = 4 mH $//(1\n®",
+    "questions": [
+      {
+        "number": "31",
+        "text": "Given below are two statements : Statement I : When the white light passed through a prism, the red light bends lesser than yellow and violet. Statement II : The refractive indices are different for different wavelengths in dispersive medium. In the light of the above statements, choose the correct answer from the options given below : (1) Both Statement I and Statement II are true. (2) Statement I is true but Statement II is false. (3) Both Statement I and Statement II are false. (4) Statement I is false but Statement II is true.",
+        "formattedText": "Given below are two statements : Statement I : When the white light passed through a prism, the red light bends lesser than yellow and violet. Statement II : The refractive indices are different for different wavelengths in dispersive medium. In the light of the above statements, choose the correct answer from the options given below : (1) Both Statement I and Statement II are true. (2) Statement I is true but Statement II is false. (3) Both Statement I and Statement II are false. (4) Statement I is false but Statement II is true.",
+        "latexText": "Given below are two statements : Statement I : When the white light passed through a prism, the red light bends lesser than yellow and violet. Statement II : The refractive indices are different for different wavelengths in dispersive medium. In the light of the above statements, choose the correct answer from the options given below : (1) Both Statement I and Statement II are true. (2) Statement I is true but Statement II is false. (3) Both Statement I and Statement II are false. (4) Statement I is false but Statement II is true.",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Both Statement I and Statement II are true."
+          },
+          {
+            "letter": "2",
+            "text": "Statement I is true but Statement II is false."
+          },
+          {
+            "letter": "3",
+            "text": "Both Statement I and Statement II are false."
+          },
+          {
+            "letter": "4",
+            "text": "Statement I is false but Statement II is true."
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Both Statement I and Statement II are true.",
+            "formattedText": "Both Statement I and Statement II are true.",
+            "latexText": "Both Statement I and Statement II are true."
+          },
+          {
+            "letter": "2",
+            "text": "Statement I is true but Statement II is false.",
+            "formattedText": "Statement I is true but Statement II is false.",
+            "latexText": "Statement I is true but Statement II is false."
+          },
+          {
+            "letter": "3",
+            "text": "Both Statement I and Statement II are false.",
+            "formattedText": "Both Statement I and Statement II are false.",
+            "latexText": "Both Statement I and Statement II are false."
+          },
+          {
+            "letter": "4",
+            "text": "Statement I is false but Statement II is true.",
+            "formattedText": "Statement I is false but Statement II is true.",
+            "latexText": "Statement I is false but Statement II is true."
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "32",
+        "text": "Which of the following statement is not true about stopping potential (V\n0\n)? (1) It depends on the nature of emitter material. (2) It depends upon frequency of the incident light. (3) It increases with increase in intensity of the incident light. (4) It is 1/e times the maximum kinetic energy of electrons emitted.",
+        "formattedText": "Which of the following statement is not true about stopping potential (V\n0\n)? (1) It depends on the nature of emitter material. (2) It depends upon frequency of the incident light. (3) It increases with increase in intensity of the incident light. (4) It is 1/e times the maximum kinetic energy of electrons emitted.",
+        "latexText": "\\(Which of the following statement is not true about stopping potential (V^{0} )? (1) It depends on the nature of emitter material. (2) It depends upon frequency of the incident light. (3) It increases with increase in intensity of the incident light. (4) It is \\frac{1}{e} times the maximum kinetic energy of electrons emitted.\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "It depends on the nature of emitter material."
+          },
+          {
+            "letter": "2",
+            "text": "It depends upon frequency of the incident light."
+          },
+          {
+            "letter": "3",
+            "text": "It increases with increase in intensity of the incident light."
+          },
+          {
+            "letter": "4",
+            "text": "It is 1/e times the maximum kinetic energy of electrons emitted."
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "It depends on the nature of emitter material.",
+            "formattedText": "It depends on the nature of emitter material.",
+            "latexText": "It depends on the nature of emitter material."
+          },
+          {
+            "letter": "2",
+            "text": "It depends upon frequency of the incident light.",
+            "formattedText": "It depends upon frequency of the incident light.",
+            "latexText": "It depends upon frequency of the incident light."
+          },
+          {
+            "letter": "3",
+            "text": "It increases with increase in intensity of the incident light.",
+            "formattedText": "It increases with increase in intensity of the incident light.",
+            "latexText": "It increases with increase in intensity of the incident light."
+          },
+          {
+            "letter": "4",
+            "text": "It is 1/e times the maximum kinetic energy of electrons emitted.",
+            "formattedText": "It is 1/e times the maximum kinetic energy of electrons emitted.",
+            "latexText": "\\(It is \\frac{1}{e} times the maximum kinetic energy of electrons emitted.\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "1/e",
+            "latex": "\\(\\frac{1}{e}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "34",
+        "text": "A galvanometer of resistance 100 when connected in series with 400 measures a voltage of upto 10 V. The value of resistance required to convert the galvanometer into ammeter to read upto 10 A is x × 10\n–\n2 . The value of x is : (1) 2 (2) 800 (3) 20 (4) 200",
+        "formattedText": "A galvanometer of resistance 100 when connected in series with 400 measures a voltage of upto 10 V. The value of resistance required to convert the galvanometer into ammeter to read upto 10 A is x × 10\n–\n2 . The value of x is : (1) 2 (2) 800 (3) 20 (4) 200",
+        "latexText": "\\(A galvanometer of resistance 100 when connected in series with 400 measures a voltage of upto 10 V. The value of resistance required to convert the galvanometer into ammeter to read upto 10 A is x \\times 10 – 2 . The value of x is : (1) 2 (2) 800 (3) 20 (4) 200\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "36",
+        "text": "If n is the number density and d is the diameter of the molecule, then the average distance covered by a molecule between two successive collisions (i.e. mean free path) is represented by : (1) 2\n1\n2n d (2) 2\n2n d (3) 2\n1\n2n d (4) 2 2 2\n1\n2n d",
+        "formattedText": "If n is the number density and d is the diameter of the molecule, then the average distance covered by a molecule between two successive collisions (i.e. mean free path) is represented by : (1) 2\n1\n2n d (2) 2\n2n d (3) 2\n1\n2n d (4) 2 2 2\n1\n2n d",
+        "latexText": "\\(If n is the number density and d is the diameter of the molecule, then the average distance covered by a molecule between two successive collisions (i.e. mean free path) is represented by : (1) 2^{1} 2n d (2) 2^{2}n d (3) 2^{1} 2n d (4) 2 2 2^{1} 2n d\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "2 1 2n d"
+          },
+          {
+            "letter": "2",
+            "text": "2 2n d"
+          },
+          {
+            "letter": "3",
+            "text": "2 1 2n d"
+          },
+          {
+            "letter": "4",
+            "text": "2 2 2 1 2n d"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "2 1 2n d",
+            "formattedText": "2 1 2n d",
+            "latexText": "2 1 2n d"
+          },
+          {
+            "letter": "2",
+            "text": "2 2n d",
+            "formattedText": "2 2n d",
+            "latexText": "2 2n d"
+          },
+          {
+            "letter": "3",
+            "text": "2 1 2n d",
+            "formattedText": "2 1 2n d",
+            "latexText": "2 1 2n d"
+          },
+          {
+            "letter": "4",
+            "text": "2 2 2 1 2n d",
+            "formattedText": "2 2 2 1 2n d",
+            "latexText": "2 2 2 1 2n d"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "40",
+        "text": "A series LCR circuit is subjected to an AC signal of 200 V, 50 Hz. If the voltage across the inductor (L = 10 mH) is 31.4 V, then the current in this circuit is ________ : (1) 68 A (2) 63 A (3) 10 A (4) 10 mA",
+        "formattedText": "A series LCR circuit is subjected to an AC signal of 200 V, 50 Hz. If the voltage across the inductor (L = 10 mH) is 31.4 V, then the current in this circuit is ________ : (1) 68 A (2) 63 A (3) 10 A (4) 10 mA",
+        "latexText": "\\(A series LCR circuit is subjected to an AC signal of 200 V, 50 Hz. If the voltage across the inductor (L = 10 mH) is 31.4 V, then the current in this circuit is ________ : (1) 68 A (2) 63 A (3) 10 A (4) 10 mA\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "68 A"
+          },
+          {
+            "letter": "2",
+            "text": "63 A"
+          },
+          {
+            "letter": "3",
+            "text": "10 A"
+          },
+          {
+            "letter": "4",
+            "text": "10 mA"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "68 A",
+            "formattedText": "68 A",
+            "latexText": "68 A"
+          },
+          {
+            "letter": "2",
+            "text": "63 A",
+            "formattedText": "63 A",
+            "latexText": "63 A"
+          },
+          {
+            "letter": "3",
+            "text": "10 A",
+            "formattedText": "10 A",
+            "latexText": "10 A"
+          },
+          {
+            "letter": "4",
+            "text": "10 mA",
+            "formattedText": "10 mA",
+            "latexText": "10 mA"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "LC",
+            "latex": "LC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AC",
+            "latex": "AC",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "41",
+        "text": "What is the dimensional formula of ab\n–1 in the equation 2\na\nP\nV\n\n\n\n\n(V – b) = RT, where letters have their usual meaning. (1) [M\n0\nL\n3\nT\n–2\n] (2) [ML\n2\nT\n–2\n] (3) [M\n–1\nL\n5\nT\n3\n] (4) [M\n6\nL\n7\nT\n4\n]",
+        "formattedText": "What is the dimensional formula of ab\n–1 in the equation 2\na\nP\nV\n\n\n\n\n(V – b) = RT, where letters have their usual meaning. (1) [M\n0\nL\n3\nT\n–2\n] (2) [ML\n2\nT\n–2\n] (3) [M\n–1\nL\n5\nT\n3\n] (4) [M\n6\nL\n7\nT\n4\n]",
+        "latexText": "\\(What is the dimensional formula of ab –1 in the equation \\frac{2}{a}\\frac{P}{V}    (V – b) = RT, where letters have their usual meaning. (1) [M^{0} L^{3} T –2 ] (2) [ML^{2} T –2 ] (3) [M –1 L^{5} T^{3} ] (4) [M^{6} L^{7} T^{4} ]\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "[M 0 L 3 T –2 ]"
+          },
+          {
+            "letter": "2",
+            "text": "[ML 2 T –2 ]"
+          },
+          {
+            "letter": "3",
+            "text": "[M –1 L 5 T 3 ]"
+          },
+          {
+            "letter": "4",
+            "text": "[M 6 L 7 T 4 ]"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "[M 0 L 3 T –2 ]",
+            "formattedText": "[M 0 L 3 T –2 ]",
+            "latexText": "[M 0 L 3 T –2 ]"
+          },
+          {
+            "letter": "2",
+            "text": "[ML 2 T –2 ]",
+            "formattedText": "[ML 2 T –2 ]",
+            "latexText": "[ML 2 T –2 ]"
+          },
+          {
+            "letter": "3",
+            "text": "[M –1 L 5 T 3 ]",
+            "formattedText": "[M –1 L 5 T 3 ]",
+            "latexText": "[M –1 L 5 T 3 ]"
+          },
+          {
+            "letter": "4",
+            "text": "[M 6 L 7 T 4 ]",
+            "formattedText": "[M 6 L 7 T 4 ]",
+            "latexText": "[M 6 L 7 T 4 ]"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "RT",
+            "latex": "RT",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "ML",
+            "latex": "ML",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "42",
+        "text": "The output (Y) of logic circuit given below is 0 only when : A B 1 Y (1) A = 1, B = 0 (2) A = 0, B = 0 (3) A = 1, B = 1 (4) A = 0, B = 1",
+        "formattedText": "The output (Y) of logic circuit given below is 0 only when : A B 1 Y (1) A = 1, B = 0 (2) A = 0, B = 0 (3) A = 1, B = 1 (4) A = 0, B = 1",
+        "latexText": "\\(The output (Y) of logic circuit given below is 0 only when : A B 1 Y (1) A = 1, B = 0 (2) A = 0, B = 0 (3) A = 1, B = 1 (4) A = 0, B = 1\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "A = 1, B = 0"
+          },
+          {
+            "letter": "2",
+            "text": "A = 0, B = 0"
+          },
+          {
+            "letter": "3",
+            "text": "A = 1, B = 1"
+          },
+          {
+            "letter": "4",
+            "text": "A = 0, B = 1"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "A = 1, B = 0",
+            "formattedText": "A = 1, B = 0",
+            "latexText": "\\(A = 1, B = 0\\)"
+          },
+          {
+            "letter": "2",
+            "text": "A = 0, B = 0",
+            "formattedText": "A = 0, B = 0",
+            "latexText": "\\(A = 0, B = 0\\)"
+          },
+          {
+            "letter": "3",
+            "text": "A = 1, B = 1",
+            "formattedText": "A = 1, B = 1",
+            "latexText": "\\(A = 1, B = 1\\)"
+          },
+          {
+            "letter": "4",
+            "text": "A = 0, B = 1",
+            "formattedText": "A = 0, B = 1",
+            "latexText": "\\(A = 0, B = 1\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "44",
+        "text": "Match List-I with List-II :- List-I EM-Wave List-II Wavelength Range (A) Infra-red (I) < 10\n–3 nm (B) Ultraviolet (II) 400 nm to 1 nm (C) X-rays (III) 1 mm to 700 nm (D) Gamma rays (IV) 1 nm to 10\n–3 nm Choose the correct answer from the options given below : (1) (A)-(II), (B)-(I), (C)-(IV), (D)-(III) (2) (A)-(III), (B)-(II), (C)-(IV), (D)-(I) (3) (A)-(IV), (B)-(III), (C)-(II), (D)-(I) (4) (A)-(I), (B)-(III), (C)-(II), (D)-(IV)",
+        "formattedText": "Match List-I with List-II :- List-I EM-Wave List-II Wavelength Range (A) Infra-red (I) < 10\n–3 nm (B) Ultraviolet (II) 400 nm to 1 nm (C) X-rays (III) 1 mm to 700 nm (D) Gamma rays (IV) 1 nm to 10\n–3 nm Choose the correct answer from the options given below : (1) (A)-(II), (B)-(I), (C)-(IV), (D)-(III) (2) (A)-(III), (B)-(II), (C)-(IV), (D)-(I) (3) (A)-(IV), (B)-(III), (C)-(II), (D)-(I) (4) (A)-(I), (B)-(III), (C)-(II), (D)-(IV)",
+        "latexText": "\\(Match List-I with List-II :- List-I EM-Wave List-II Wavelength Range (A) Infra-red (I) < 10 –3 nm (B) Ultraviolet (II) 400 nm to 1 nm (C) X-rays (III) 1 mm to 700 nm (D) \\Gamma rays (IV) 1 nm to 10 –3 nm Choose the correct answer from the options given below : (1) (A)-(II), (B)-(I), (C)-(IV), (D)-(III) (2) (A)-(III), (B)-(II), (C)-(IV), (D)-(I) (3) (A)-(IV), (B)-(III), (C)-(II), (D)-(I) (4) (A)-(I), (B)-(III), (C)-(II), (D)-(IV)\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "EM",
+            "latex": "EM",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "45",
+        "text": "During an adiabatic process, if the pressure of a gas is found to be proportional to the cube of its absolute temperature, then the ratio of P\nV\nC\nC for the gas is : (1) 5\n3 (2) 9\n7 (3) 3\n2 (4) 7\n5",
+        "formattedText": "During an adiabatic process, if the pressure of a gas is found to be proportional to the cube of its absolute temperature, then the ratio of P\nV\nC\nC for the gas is : (1) 5\n3 (2) 9\n7 (3) 3\n2 (4) 7\n5",
+        "latexText": "\\(During an adiabatic process, if the pressure of a gas is found to be proportional to the cube of its absolute temperature, then the ratio of \\frac{P}{V}C C for the gas is : (1) 5^{3} (2) 9^{7} (3) 3^{2} (4) 7^{5}\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "46",
+        "text": "Match List-I with List-II : List-I List-II (A) A force that restores an elastic body of unit area to its original state (I) Bulk modulus (B) Two equal and opposite forces parallel to opposite faces (II) Young's modulus (C) Forces perpendicular everywhere to the surface per unit area same everywhere (III) Stress (D) Two equal and opposite forces perpendicular to opposite faces (IV) Shear modulus Choose the correct answer from the options given below : (1) (A)-(II), (B)-(IV), (C)-(I), (D)-(III) (2) (A)-(IV), (B)-(II), (C)-(III), (D)-(I) (3) (A)-(III), (B)-(IV), (C)-(I), (D)-(II) (4) (A)-(III), (B)-(I), (C)-(II), (D)-(IV)",
+        "formattedText": "Match List-I with List-II : List-I List-II (A) A force that restores an elastic body of unit area to its original state (I) Bulk modulus (B) Two equal and opposite forces parallel to opposite faces (II) Young's modulus (C) Forces perpendicular everywhere to the surface per unit area same everywhere (III) Stress (D) Two equal and opposite forces perpendicular to opposite faces (IV) Shear modulus Choose the correct answer from the options given below : (1) (A)-(II), (B)-(IV), (C)-(I), (D)-(III) (2) (A)-(IV), (B)-(II), (C)-(III), (D)-(I) (3) (A)-(III), (B)-(IV), (C)-(I), (D)-(II) (4) (A)-(III), (B)-(I), (C)-(II), (D)-(IV)",
+        "latexText": "\\(Match List-I with List-II : List-I List-II (A) A force that restores an elastic body of unit area to its original state (I) Bulk modulus (B) Two equal and opposite forces parallel to opposite faces (II) Young's modulus (C) Forces perpendicular everywhere to the surface per unit area same everywhere (III) Stress (D) Two equal and opposite forces perpendicular to opposite faces (IV) Shear modulus Choose the correct answer from the options given below : (1) (A)-(II), (B)-(IV), (C)-(I), (D)-(III) (2) (A)-(IV), (B)-(II), (C)-(III), (D)-(I) (3) (A)-(III), (B)-(IV), (C)-(I), (D)-(II) (4) (A)-(III), (B)-(I), (C)-(II), (D)-(IV)\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "47",
+        "text": "A vernier callipers has 20 divisions on the vernier scale, which coincides with 19\nth division on the main scale. The least count of the instrument is 0.1 mm. One main scale division is equal to ____mm. (1) 1 (2) 0.5 (3) 2 (4) 5",
+        "formattedText": "A vernier callipers has 20 divisions on the vernier scale, which coincides with 19\nth division on the main scale. The least count of the instrument is 0.1 mm. One main scale division is equal to ____mm. (1) 1 (2) 0.5 (3) 2 (4) 5",
+        "latexText": "\\(A vernier callipers has 20 divisions on the vernier scale, which coincides with 19 th division on the main scale. The least count of the instrument is 0.1 mm. One main scale division is equal to ____{mm}. (1) 1 (2) 0.5 (3) 2 (4) 5\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "48",
+        "text": "A heavy box of mass 50 kg is moving on a horizontal surface. If co-efficient of kinetic friction between the box and horizontal surface is 0.3 then force of kinetic friction is : (1) 14.7 N (2) 147 N (3) 1.47 N (4) 1470 N",
+        "formattedText": "A heavy box of mass 50 kg is moving on a horizontal surface. If co-efficient of kinetic friction between the box and horizontal surface is 0.3 then force of kinetic friction is : (1) 14.7 N (2) 147 N (3) 1.47 N (4) 1470 N",
+        "latexText": "\\(A heavy box of mass 50 kg is moving on a horizontal surface. If co-efficient of kinetic friction between the box and horizontal surface is 0.3 then force of kinetic friction is : (1) 14.7 N (2) 147 N (3) 1.47 N (4) 1470 N\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "14.7 N"
+          },
+          {
+            "letter": "2",
+            "text": "147 N"
+          },
+          {
+            "letter": "3",
+            "text": "1.47 N"
+          },
+          {
+            "letter": "4",
+            "text": "1470 N"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "14.7 N",
+            "formattedText": "14.7 N",
+            "latexText": "14.7 N"
+          },
+          {
+            "letter": "2",
+            "text": "147 N",
+            "formattedText": "147 N",
+            "latexText": "147 N"
+          },
+          {
+            "letter": "3",
+            "text": "1.47 N",
+            "formattedText": "1.47 N",
+            "latexText": "1.47 N"
+          },
+          {
+            "letter": "4",
+            "text": "1470 N",
+            "formattedText": "1470 N",
+            "latexText": "1470 N"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "51",
+        "text": "A solenoid of length 0.5 m has a radius of 1 cm and is made up of 'm' number of turns. It carries a current of 5A. If the magnitude of the magnetic field inside the solenoid is 6.28 × 10\n–\n3 T, then the value of m is :",
+        "formattedText": "A solenoid of length 0.5 m has a radius of 1 cm and is made up of 'm' number of turns. It carries a current of 5A. If the magnitude of the magnetic field inside the solenoid is 6.28 × 10\n–\n3 T, then the value of m is :",
+        "latexText": "\\(A solenoid of length 0.5 m has a radius of 1 cm and is made up of 'm' number of turns. It carries a current of 5A. If the magnitude of the magnetic field inside the solenoid is 6.28 \\times 10 – 3 T, then the value of m is :\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": false,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "53",
+        "text": "In a single slit experiment, a parallel beam of green light of wavelength 550 nm passes through a slit of width 0.20 mm. The transmitted light is collected on a screen 100 cm away. The distance of first order minima from the central maximum will be x × 10\n–\n5 m. The value of x is :",
+        "formattedText": "In a single slit experiment, a parallel beam of green light of wavelength 550 nm passes through a slit of width 0.20 mm. The transmitted light is collected on a screen 100 cm away. The distance of first order minima from the central maximum will be x × 10\n–\n5 m. The value of x is :",
+        "latexText": "\\(In a single slit experiment, a parallel beam of green light of wavelength 550 nm passes through a slit of width 0.20 mm. The transmitted light is collected on a screen 100 cm away. The distance of first order minima from the central maximum will be x \\times 10 – 5 m. The value of x is :\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": false,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "55",
+        "text": "A hollow sphere is rolling on a plane surface about its axis of symmetry. The ratio of rotational kinetic energy to its total kinetic energy is x\n5\n. The value of x is ________.",
+        "formattedText": "A hollow sphere is rolling on a plane surface about its axis of symmetry. The ratio of rotational kinetic energy to its total kinetic energy is x\n5\n. The value of x is ________.",
+        "latexText": "\\(A hollow sphere is rolling on a plane surface about its axis of symmetry. The ratio of rotational kinetic energy to its total kinetic energy is x^{5} . The value of x is ________.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "57",
+        "text": "The electric field at point p due to an electric dipole is E. The electric field at point R on equitorial line will be E\nx\n. The value of x : R Q 2r r –q O +q p r",
+        "formattedText": "The electric field at point p due to an electric dipole is E. The electric field at point R on equitorial line will be E\nx\n. The value of x : R Q 2r r –q O +q p r",
+        "latexText": "\\(The electric field at point p due to an electric dipole is E. The electric field at point R on equitorial line will be \\frac{E}{x}. The value of x : R Q 2r r –q O +q p r\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "60",
+        "text": "The current in an inductor is given by I = (3t + 8) where t is in second. The magnitude of induced emf produced in the inductor is 12 mV. The self- inductance of the inductor _______ mH.",
+        "formattedText": "The current in an inductor is given by I = (3t + 8) where t is in second. The magnitude of induced emf produced in the inductor is 12 mV. The self- inductance of the inductor _______ mH.",
+        "latexText": "\\(The current in an inductor is given by I = (3t + 8) where t is in second. The magnitude of induced emf produced in the inductor is 12 mV. The self- inductance of the inductor _______ mH.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 31",
+        "type": "mathematical",
+        "position": 147
+      },
+      {
+        "equation": "x = h",
+        "type": "mathematical",
+        "position": 1122
+      },
+      {
+        "equation": "e = S i\ng\nR = (i ",
+        "type": "mathematical",
+        "position": 1729
+      },
+      {
+        "equation": "S = 20 ",
+        "type": "mathematical",
+        "position": 1780
+      },
+      {
+        "equation": "n = number of molecule per unit volume d = diameter of the molecule 2\n1\n2 d n\n",
+        "type": "mathematical",
+        "position": 2501
+      },
+      {
+        "equation": "x-y plane under the influence of a force F such that its linear momentum is ",
+        "type": "mathematical",
+        "position": 2620
+      },
+      {
+        "equation": "m/s\n2\n) ",
+        "type": "mathematical",
+        "position": 3543
+      },
+      {
+        "equation": "R = 9m",
+        "type": "mathematical",
+        "position": 3637
+      },
+      {
+        "equation": "d / s\n3min",
+        "type": "mathematical",
+        "position": 3691
+      },
+      {
+        "equation": "l = ",
+        "type": "mathematical",
+        "position": 3738
+      },
+      {
+        "equation": "R = 2\n4\n9\n3\n",
+        "type": "mathematical",
+        "position": 3746
+      },
+      {
+        "equation": "m/s\n2 40",
+        "type": "mathematical",
+        "position": 3779
+      },
+      {
+        "equation": "L = 10 mH) is 31",
+        "type": "mathematical",
+        "position": 3892
+      },
+      {
+        "equation": "L = IX\nL 31",
+        "type": "mathematical",
+        "position": 4038
+      },
+      {
+        "equation": "I = 10 A ",
+        "type": "mathematical",
+        "position": 4115
+      },
+      {
+        "equation": "b = ",
+        "type": "mathematical",
+        "position": 4383
+      },
+      {
+        "equation": "a = ",
+        "type": "mathematical",
+        "position": 4466
+      },
+      {
+        "equation": "A = 1",
+        "type": "mathematical",
+        "position": 4602
+      },
+      {
+        "equation": "B = 0 (2) A = 0",
+        "type": "mathematical",
+        "position": 4609
+      },
+      {
+        "equation": "B = 0 (3) A = 1",
+        "type": "mathematical",
+        "position": 4626
+      },
+      {
+        "equation": "B = 1 (4) A = 0",
+        "type": "mathematical",
+        "position": 4643
+      },
+      {
+        "equation": "B = 1 Ans",
+        "type": "mathematical",
+        "position": 4660
+      },
+      {
+        "equation": "P = costant ",
+        "type": "mathematical",
+        "position": 4911
+      },
+      {
+        "equation": "V = constant dV\nmV\ndt\n",
+        "type": "mathematical",
+        "position": 4926
+      },
+      {
+        "equation": "t-I with List-II ",
+        "type": "mathematical",
+        "position": 5132
+      },
+      {
+        "equation": "t-I EM-Wave List-II Wavelength Range (A) Infra-red (I) ",
+        "type": "mathematical",
+        "position": 5155
+      },
+      {
+        "equation": "X-rays (III) 1 mm to 700 nm (D) Gamma rays (IV) 1 nm to 10\n",
+        "type": "mathematical",
+        "position": 5261
+      },
+      {
+        "equation": "y = constant ",
+        "type": "mathematical",
+        "position": 6098
+      },
+      {
+        "equation": "t-I with List-II ",
+        "type": "mathematical",
+        "position": 6178
+      },
+      {
+        "equation": "t-I List-II (A) A force that restores an elastic body of unit area to its original state (I) Bulk modulus (B) Two equal and opposite forces parallel to opposite faces (II) Young",
+        "type": "mathematical",
+        "position": 6200
+      },
+      {
+        "equation": "A = 1 Stress = F\nrestoring (A)-(III) (B) ",
+        "type": "mathematical",
+        "position": 6840
+      },
+      {
+        "equation": "D = 19 MSD 19\n1VSDMSD\n20\n",
+        "type": "mathematical",
+        "position": 7224
+      },
+      {
+        "equation": "m = 19\n1MSDMSD\n20\n",
+        "type": "mathematical",
+        "position": 7277
+      },
+      {
+        "equation": "D = 2mm ",
+        "type": "mathematical",
+        "position": 7315
+      },
+      {
+        "equation": "o-efficient of kinetic friction between the box and horizontal surface is 0",
+        "type": "mathematical",
+        "position": 7402
+      },
+      {
+        "equation": "k = 0",
+        "type": "mathematical",
+        "position": 7582
+      },
+      {
+        "equation": "k = ",
+        "type": "mathematical",
+        "position": 7592
+      },
+      {
+        "equation": "N = 0",
+        "type": "mathematical",
+        "position": 7600
+      },
+      {
+        "equation": "e-fourth the mass of earth",
+        "type": "mathematical",
+        "position": 7738
+      },
+      {
+        "equation": "n = Radius of geo-stationary orbit for earth is 4",
+        "type": "mathematical",
+        "position": 7803
+      },
+      {
+        "equation": "M / 4\n(4",
+        "type": "mathematical",
+        "position": 8047
+      },
+      {
+        "equation": "N-B 51",
+        "type": "mathematical",
+        "position": 8380
+      },
+      {
+        "equation": "i = B n = number of turns per unit length 0\nm\n",
+        "type": "mathematical",
+        "position": 8628
+      },
+      {
+        "equation": "m = 500 ",
+        "type": "mathematical",
+        "position": 8740
+      },
+      {
+        "equation": "n = L Shortest",
+        "type": "mathematical",
+        "position": 8970
+      },
+      {
+        "equation": "n = 2 n = 3 22\n1\nhc1 1\n13",
+        "type": "mathematical",
+        "position": 9066
+      },
+      {
+        "equation": "d = 0",
+        "type": "mathematical",
+        "position": 9564
+      },
+      {
+        "equation": "v = f\n0\n",
+        "type": "mathematical",
+        "position": 9913
+      },
+      {
+        "equation": "v = 2Lf\n0 0\n2Lf\nv\nL",
+        "type": "mathematical",
+        "position": 9936
+      },
+      {
+        "equation": "x = 2 ",
+        "type": "mathematical",
+        "position": 10319
+      },
+      {
+        "equation": "O +q p r Ans",
+        "type": "mathematical",
+        "position": 10868
+      },
+      {
+        "equation": "x = 16 58",
+        "type": "mathematical",
+        "position": 10930
+      },
+      {
+        "equation": "u / 2)\n",
+        "type": "mathematical",
+        "position": 11163
+      },
+      {
+        "equation": "x = 16 m 59",
+        "type": "mathematical",
+        "position": 11178
+      },
+      {
+        "equation": "e = 2",
+        "type": "mathematical",
+        "position": 11500
+      },
+      {
+        "equation": "R = 1",
+        "type": "mathematical",
+        "position": 11545
+      },
+      {
+        "equation": "q = 5R",
+        "type": "mathematical",
+        "position": 11635
+      },
+      {
+        "equation": "q = 5",
+        "type": "mathematical",
+        "position": 11646
+      },
+      {
+        "equation": "I = (3t + 8) where t is in second",
+        "type": "mathematical",
+        "position": 11696
+      },
+      {
+        "equation": "f- inductance of the inductor ",
+        "type": "mathematical",
+        "position": 11802
+      },
+      {
+        "equation": "I = 3t + 8 ",
+        "type": "mathematical",
+        "position": 11858
+      },
+      {
+        "equation": "L = 4 mH ",
+        "type": "mathematical",
+        "position": 11901
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1412
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1511
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1725
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2325
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 2706
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2715
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2739
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 2832
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2841
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 2880
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2889
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2906
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 2916
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2943
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 2951
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2975
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 2984
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3004
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 3011
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3017
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 3024
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 3030
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 4547
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4796
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4915
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4918
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4934
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4956
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5951
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5972
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6020
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 6037
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6041
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6106
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8158
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9251
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 9263
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9434
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9898
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11106
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11206
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11402
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11496
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11592
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11810
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.14285714285714285,
+        "matchedKeywords": [
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "force",
+          "acceleration",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current",
+          "voltage"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "equilibrium",
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "force",
+          "friction",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "charge",
+          "electric field",
+          "electrostatic",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      }
+    ],
+    "tags": [
+      "Formula Based"
+    ],
+    "wordCount": 2790,
+    "characterCount": 11917
+  },
+  "images": []
+}

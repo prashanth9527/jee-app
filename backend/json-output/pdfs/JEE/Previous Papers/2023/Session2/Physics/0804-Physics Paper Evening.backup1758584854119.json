@@ -1,0 +1,871 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2023\\Session2\\Physics\\0804-Physics Paper Evening.pdf",
+  "relativePath": "JEE\\Previous Papers\\2023\\Session2\\Physics\\0804-Physics Paper Evening.pdf",
+  "metadata": {
+    "originalFileName": "0804-Physics Paper Evening.pdf",
+    "subject": "Physics",
+    "year": 2023,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 8,
+    "fileSize": 480948,
+    "processedAt": "2025-09-22T23:32:57.370Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2023 (Held On Saturday 08\nth April, 2023) TIME : 3 : 00 PM to 6 : 00 PM PHYSICS TEST PAPER WITH SOLUTION SECTION-A 31. Electric potential at a point 'P' due to a point charge of 5×10\n-9 C is 50 V. The distance of 'P' from the point charge is: (Assume, 9\n2\n2\n0\n1\n9 10 Nm C\n4\n+−\n=\n\n) (1) 3 cm (2) 9 cm (3) 90 cm (4) 0.9 cm Official Ans. by NTA (3) Allen Ans. (3) Sol. P\nKQ\nV\nr\n= 45\n9\nr\n0.9m 90cm\n50\n10\n= = =\n= 32. For particle P revolving round the centre O with radius of circular path r and angular velocity , as shown in below figure, the projection of OP on the x-axis at time t is 30°\nx\nP( = 0)\nt\nP( = 0)\nt\nP(t)\nO\nr\nT = 6s\ny (1) ()\nx tr cost\n6\n\n\n= +\n\n (2) (\n)\n(\n)\nx t\nr cos\nt\n= (3) ()\nx tr sint\n6\n\n\n= +\n\n (4) ()\nx tr cost\n6\n\n\n= − \n\n Official Ans. by NTA (1) Allen Ans. (1) Sol. 30\n0\nx\nx\n(\n)\nt\nP( = 0)\nt\nP( = 0)\nt\nP(t)\nO\n\nt\nr\ny x(t) = r cos(t + 30°) x(t) = r cos(t + /6) 33. Match List I with List II LIST-I LIST-II A. Torque I. ML\n–2\nT\n–2 B. Stress II. ML\n2\nT\n–2 C. Pressure gradient III. ML\n–1\nT\n–1 D. Coefficient of viscosity IV. ML\n–1\nT\n–2 Choose the correct answer from the options given below: (1) A-III, B-IV, C-I, D-II (2) A-IV, B-II, C-III, D-I (3) A-II, B-IV, C-I, D-III (4) A-II, B-I, C-IV, D-III Official Ans. by NTA (3) Allen Ans. (3) Sol. A. Torque  \n\n\n\n2\n22\nL MLT\nML T\n−\n−\n\n=\n\n B. [stress] = ML\n–1\nT\n–2 C. Pressure gradient = P\nX\n\n  ML\n–2\nT\n–2 D. Coefficient of viscosity  F = 6rv MLT\n–2 = [] L\n2\nT\n–1 [] = ML\n–1\nT\n–1 99\n9 10\n5 10\n50\nr\n−\n  \n=\nrF = \n2\n2\nFMLT\nStress\nA\nL\n−\n=\n\n\n\n\n2\n3\nFA\nMLT\nL\nL\n−\n 2 34. For a given transistor amplifier circuit in CE configuration V\nCC = 1 V, R\nc = 1 k, R\nb = 100 k and  = 100. Value of base current I\nb is (1) I\nb = 1.0 A (2) I\nb = 0.10 A (3) I\nb = 100 A (4) I\nb = 10 A Official Ans. by NTA (4) Allen Ans. (4) Sol. C\nB\nE\nI\nC\nI\ne\nV\n= 1V\nCC V\nBB\nI\nb\nR\n= 100 k\nb \nR = 1k\nC\n Considering the transistor in saturation mode V\nCE = 0 Using KVL –I\nc\nR\nc + V\nCC = 0 CC\nc\n3\nC\nV\n1\nI\nR1 10\n==\n I\nc = 10\n–3\nA c\nb\nI\nI\n= 3\n5\nb\n10\nI10 A\n100\n−\n−\n=  I\nb = 10 A 35. The trajectory of projectile, projected from the ground is given by 2\nx\nyx\n20\n=−\n. Where x and y are measured in meter. The maximum height attained by the projectile will be. (1) 5 m (2) 10 2m (3) 200 m (4) 10 m Official Ans. by NTA (1) Allen Ans. (1) Sol. 2\nx\nyx\n20\n=− For maximum height, dy\n2x\n0\n1\n0\ndx\n20\n=  − = x = 10 So, y\nmax =\n100\n10\n20\n− = 5m 36. A radio-active material is reduced to 1/8 of its original amount in 3 days. If 8 × 10\n–3 kg of the material is left after 5 days. The initial amount of the material is (1) 64 g (2) 40 g (3) 32 g (4) 256 g Official Ans. by NTA (4) Allen Ans. (4) Sol. N = N\n0 n\n1\n2\n\n\n n\n0\n0\nN\n1\nN\n82\n\n=\n\n n = 3 3 half lives = 3 days 1 half life = 1 day 5 days = 5 half life N = N\n0 n\n1\n2\n\n\n 8 × 10\n–3 = N\n0 5\n1\n2\n\n\n N\n0 = 256 × 10\n–3 kg N\n0 = 256 g 37. The equivalent resistance between A and B as shown in figure is: A\nB\nD\nC\n20 k\n\n10 k\n\n20 k\n (1) 5 k (2) 30 k (3) 10 k (4) 20 k Official Ans. by NTA (1) Allen Ans. (1) 3 Sol. A\nB\nD\nC\n20 k\n\n10 k\n\n20 k\n V\nA = V\nD V\nC = V\nB 10k\n\n20k\n\n20k\n\nA,D\nB,C All resistors are in parallel. So, eq\n1111\nR102020\n= + + R\neq = 5 k 38. A hydraulic automobile lift is designed to lift vehicles of mass 5000 kg. The area of cross section of the cylinder carrying the load is 250 cm\n2\n. The maximum pressure the smaller piston would have to bear is [Assume g = 10 m/s\n2\n] : (1) 200 × 10\n+6 Pa (2) 20 × 10\n+6 Pa (3) 2 × 10\n+6 Pa (4) 2 × 10\n+5 Pa Official Ans. by NTA (3) Allen Ans. (3) Sol. Force = mg = 5000 g Area of cross section = 250 cm\n2 = 250 × 10\n–4 m\n2 Force\nmax imum pressure = area of cross section 6\n44\n5000g20 g\n2 10 Pa\n250 1010\n−−\n\n=== \n 39. The orbital angular momentum of a satellite is L, when it is revolving in a circular orbit at height h from earth surface. If the distance of satellite from the earth centre is increased by eight times to its initial value, then the new angular momentum will be- (1) 8 L (2) 4 L (3) 9 L (4) 3 L Official Ans. by NTA (4) Allen Ans. (4) Sol. h\nm\nR\nM\ne\nr L = mvr e\nGM\nv\nr\n= e\nGM\nL m\n·r\nr\n= 1\n2\nLr\n Now distance from centre is increased by 8 times. So new distance from centre = r + 8r = 9r Now angular momentum L  (9r)\n1/2 (\n)\n1/2\n1/2\nL\nr\n1\nL '\n3\n9r\n== L’= 3 L 40. The temperature at which the kinetic energy of oxygen molecules becomes double than its value at 27°C is (1) 1227° C (2) 927°C (3) 327°C (4) 627°C Official Ans. by NTA (3) Allen Ans. (3) Sol. Kinetic energy = f\nkT\n2\n, T is absolute temperature. If K\n1 is kinetic energy at 27°C. K\n2 is kinetic energy at new temperature T. 11\n22\nKT\nKT\n=\n1\n300\n2T\n= T = 600 K T = 327°C 41. The acceleration due to gravity at height h above the earth if h <<R (radius of earth) is given by (1) 2h\ng ' g 1\nR\n\n=−\n\n (2) 2\n2\n2h\ng ' g 1\nR\n\n=−\n\n (3) h\ng ' g 1\n2R\n\n=−\n\n (4) 2\n2\nh\ng ' g 1\n2R\n\n=−\n\n Official Ans. by NTA (1) Allen Ans. (1) 4 Sol. For point outside the surface of earth 2\nGM\ng\nr\n= h\nR\nr r = distance from center of earth  g(h) = (\n)\n2\nGM\nRh\n+  g(h) = 2\n2\nGM\nh\nR1\nR\n\n+\n\n  g(h) = 2\n2\nGM\nh\n1\nRR\n−\n\n+\n\n If h <<< R, 2\nh\n2h\n11\nRR\n−\n\n+\n −\n\n  g(h) = 2\nGM\n2h\n1\nRR\n\n−\n\n  g(h) = g\nsurface 2h\n1\nR\n\n−\n\n\n, surface\n2\nGM\ng\nR\n= 42. Work done by a Carnot engine operating between temperatures 127°C and 27°C is 2 kJ. The amount of heat transferred to the engine by the reservoir is: (1) 4kJ (2) 2 kJ (3) 8kJ (4) 2.67 kJ Official Ans. by NTA (3) Allen Ans. (3) Sol. Engine\nT400 K\n1 = T\n2 =300 K\nW\nQ\n1\nQ\n2 Efficiency of carnot engine 2\n11\nT\nW\n1\nTQ\n = − =  1\nW\n300\n1\n1\nQ\n400\n4\n= − =  1\n2kJ1\nQ4\n=  Q\n1 = 8 kJ 43. Given below are two statements: Statement I: Area under velocity- time graph gives the distance travelled by the body in a given time. Statement II: Area under acceleration- time graph is equal to the change in velocity- in the given time. In the light of given statements, choose the correct answer from the options given below. (1) Both Statement I and Statement II are true. (2) Statement I is correct but Statement II is false. (3) Statement I is incorrect but Statement II is true. (4) Both Statement I and Statement II are False. Official Ans. by NTA (1) Allen Ans. (3) Sol. Area under velocity time graph gives displacement of body in given time. Area under acceleration time graph gives change in velocity in the given time. So Statement I false Statement II True 44. The waves emitted when a metal target is bombarded with high energy electrons are (1) Microwaves (2) X-rays (3) Infrared rays (4) Radio Waves Official Ans. by NTA (2) Allen Ans. (2) Sol. X rays are emitted when target metal is bombarded with high energy electron. 45. The width of fringe is 2 mm on the screen in a double slits experiment for the light of wavelength of 400 nm. The width of the fringe for the light of wavelength 600 nm will be: (1) 4 mm (2) 1.33 mm (3) 3 mm (4) 2 mm Official Ans. by NTA (3) Allen Ans. (3) 5 Sol. Fringe width (\n)\nD\nd\n\n=  22\n11\n\n=\n 2\n600nm\n3\n2mm\n400nm\n2\n\n\n=\n= 2\n3mm  = 46. Given below are two statements; one is labelled as Assertion A and the other is labelled as Reason R Assertion A: Electromagnets are made of soft iron. Reason R: Soft iron has high permeability and low retentivity. In the light of above, statements, choose the most appropriate answer from the options given below. (1) A is not correct but R is correct (2) Both A and R are correct and R is the correct explanation of A (3) Both A and R are correct but R is NOT the correct explanation of A (4) A is correct but R is not correct Official Ans. by NTA (2) Allen Ans. (2) Sol. Electromagnets are made of soft iron because it has high permeability and low retentivity. So, Both A and R are correct and R is the correct explanation of A 47. In photo electric effect A. The photocurrent is proportional to the intensity of the incident radiation. B. Maximum Kinetic energy with which photoelectrons are emitted depends on the intensity of incident light. C. Max. K.E with which photoelectrons are emitted depends on the frequency of incident light. D. The emission of photoelectrons require a minimum threshold intensity of incident radiation. E. Max. K.E of the photoelectrons is independent of the frequency of the incident light. Choose the correct answer from the options given below: (1) A and C only (2) A and E only (3) B and C only (4) A and B only Official Ans. by NTA (1) Allen Ans. (1) Sol. Intensity of light \nnumber of photons \nno of photo electrons \nphoto current So, A is correct KE\nmax = h –  KE\nmax depends on frequency So, C is correct So, A and C are correct 48. An emf of 0.08 V is induced in a metal rod of length 10 cm held normal to a uniform magnetic field of 0.4 T, when moves with a velocity of: (1) 2 ms\n–-1 (2) 3.2 ms\n–1 (3) 0.5 ms\n–1 (4) 20 ms\n–1 Sol. Official Ans. by NTA (1) Allen Ans. (1) \nv\nB Induced emf = Blv  0.08 = 0.4 10\nv\n100\n\n\n 0.08 10\nv\n0.4\n\n\n=\n\n  v = 2m/s 49. A bullet of mass 0.1 kg moving horizontally with speed 400 ms\n–1 hits a wooden block of mass 3.9 kg kept on a horizontal rough surface. The bullet gets embedded into the block and moves 20 m before coming to rest. The coefficient of friction between the block and the surface is______. (Given g= 10 ms\n2\n) (1) 0.50 (2) 0.90 (3) 0.65 (4) 0.25 Official Ans. by NTA (4) Allen Ans. (4) 6 x\n.\n20\nSol. 3.9kg\nv=0\n20m\nRough surface\n0.1kg\n400m/s\nv P\ni = P\nf (Collision)  (0.1) (400) = (0.1+3.9)v  v = 0.1 400\n4\n\n=10m/s mg\nag\nm\n\n=\n=  Apply equation of motion, v\n2 = u\n2 + 2as  0 = (10)\n2 – 2g ×20  40g = 100   = 1001\n2 10 204\n=\n 50. The power radiated from a linear antenna of length l is proportional to (Given,  = Wavelength of wave): (1) (2) 2\n\nl (3) 2\n\nl (4) 2\n\n\n\n\nl Official Ans. by NTA (4) Allen Ans. (4) Sol. Power radiated form a linear antenna of length 2\n\n\n\n\n\nl\nl SECTION-B 51. A series combination of resistor of resistance 100 , inductor of inductance 1 H and capacitor of capacitance 6.25 F is connected to an ac source. The quality factor of the circuit will be __________. Official Ans. by NTA 4 Allen Ans. 4 Sol. Quality factor = L\nX\nL\nRR\n\n= 3\n6\n1110\n400 / sec\n2.5\nLC\n1 6.25 10\n−\n=== =\n Q-factor = 400 1\n4\n100\n\n= 52. A guitar string of length 90 cm vibrates with a fundamental frequency of 120 Hz. The length of the string producing a fundamental frequency of 180 Hz will be ___________ cm. Official Ans. by NTA 60 Allen Ans. 60 Sol. nv\nf,\n2\n= for fundamental mode n = 1 v\nf\n2\n= 1\nf 12\n21\nf\nf\n= 2\n120\n180\n90\n= 2\n60cm\n= 53. The ratio of wavelength of spectral lines H\n and H\n in the Balmer series is The value of x is __________ Official Ans. by NTA 27 Allen Ans. 27 Sol. 22\n12\n1\n1\n1\nR\nnn\n\n=−\n\n\n for H-atom For balmer series, n\n1\n=2 2\n2\n1\n1\n1\nR\n4n\n\n=−\n\n\n For H\n\n, n\n2 = 3 & H\n\n, n\n2 = 4 H\n1\n1\n1\n5R\nR\n4\n9\n36\n\n\n=\n− =\n\n\n H\n1113R\nR\n4 1616\n\n\n=− =\n\n\n H\nH\n1\n5R\n36\n1\n3R\n16\n\n\n\n=\n H\nH\n27x\n2020\n\n\n\n==\n x = 27 \nl 7 54. The number density of free electrons in copper is nearly 8 × 10\n28 m\n–3\n. A copper wire has its area of cross section = 2 × 10\n–6 m\n2 and is carrying a current of 3.2 A. The drift speed of the electrons is ____________ ×10\n–6 ms\n–1\n. Official Ans. by NTA 125 Allen Ans. 125 Sol. n = 8×10\n28 m\n–3 Area = 2×10\n–6 m\n2 I = 3.2 A I = neAv\nd V\nd = –6\nI\n125 10 m / s\nneA\n= 55. A steel rod of length 1 m and cross sectional area 10\n–4 m\n2 is heated from 0°C to 200°C without being allowed to extend or bend. The compressive tension produced in the rod is _________ × 10\n4 N. (Given Young’s modulus of steel = 2 × 10\n11 Nm\n–2\n, coefficient of linear expansion = 10\n-5\nK\n–1\n. Official Ans. by NTA 4 Allen Ans. 4 Sol. Stress = Y × strain Stress = Y ×  T\nY\nY\nT\n\n= \n=  Compressive Tension = Stress × Area of cross section = YAT = 4 × 10\n4 N 56. A hollow spherical ball of uniform density rolls up a curved surface with an initial velocity 3 m/s (as shown in figure). Maximum height with respect to the initial position covered by it will be _____ cm. 3 m\ns Official Ans. by NTA 75 Allen Ans. 75 Sol. v=0\nv At highest point KE\nf = 0 Initial KE = Translational KE + Rotational KE = 22\n11\nmv\nI\n22\n+ In case of rolling v = R = 2\n22\n2\n1\n1 2\nv\nmv\nmR\n2\n2 3\nR\n+ \n = 2\n5\nmv\n6 Apply energy conservation i\ni\nf\nf\nKE\nPE\nKE\nPE\n+ = + 2\n5\nmv\nmgh\n6\n= 5\n15\nh\n9m\nm 75cm\n6 10\n20\n=\n =\n=\n 57. A body of mass 5 kg is moving with a momentum of 10 kg ms\n–1\n. Now a force of 2 N acts on the body in the direction of its motion for 5 s. The increase in the Kinetic energy of the body is __________ J. Official Ans. by NTA (30) Allen Ans. (30) Sol. Given M = 5 kg P\ni = 10 kg m/s (initial momentum) Impulse = Ft = P = P\nf – P\ni 2 × 5 = P\nf – 10 P\nf = 20 kg m/s (final momentum) Increase in KE = KE\nf – KE\ni 22\nfi\nPP\n2m2m\n=− 400100\n40 10 30J\n2 5 2 5\n=−= − =\n 8 58. A 600 pF capacitor is charged by 200V supply. It is then disconnected from the supply and is connected to another uncharged 600 pF capacitor. Electrostatic energy lost in the process is __________ J. Official Ans. by NTA (6) Allen Ans. (6) Sol. v = 200 V\nC\n6 = 00 PF\n+Q\n–Q Q = CV = 600 × 10\n–12 × 200 = 12×10\n–8\nC Initial energy = 2\n1\nCV\n2 = –12\n2\n1\n600 10\n(200)\n2\n   = 12 J\n When connected to another uncharged capacitor Q –Q\nQ –Q Charge will be equally distributed on identical capacitor –8\nQ\nQ '6 10\n2\n= =  Final energy = 22\nQ '\nQ '\n2\n2C\nC\n= ()\n2\n8\n12\n6 10\n6J\n600 10\n−\n−\n\n=\n Energy lost = Initial energy – Final energy = (12–6) J = 6J 59. Two transparent media having refractive indices 1.0 and 1.5 are separated by a spherical refracting surface of radius of curvature 30 cm. The centre of curvature of surface is towards denser medium and a point object is placed on the principle axis in rarer medium at a distance of 15 cm from the pole of the surface. The distance of image from the pole of the surface is ____________ cm. Official Ans. by NTA 30 Allen Ans. 30 Sol. 15 cm\nObject\n\n1\n=1\n\n2\n=1.5\nR=30cm 2121\nvuR\n   −\n−= 1.511.5 11\nv153060\n−\n− ==\n− 1.5\n1\n1\nv\n15\n60\n+= 1.5\n1\n1\n1\nv\n60 15\n20\n−\n= − = 1.5\n1\nv\n30cm\nv\n20\n= −  = − 60. The ratio of magnetic field at the centre of a current carrying coil of radius r to the magnetic field at distance r from the centre of coil on its axis is x : 1\n. The value of x is ____________ Official Ans. by NTA 8 Allen Ans. 8 Sol. B\n1\nB\n2\nI\nd=r\nr Magnetic field at centre (B\n1\n) = 0\nI\n2r\n Magnetic field on axis = 2\n0\n22 3/2\nIr\n2(rd )\n\n+ Value of d = r (given) 0\n2\nI\nB\n4 2r\n\n= 0\n1\n20\nI\nB\n4 2r\nB2rI\n\n=\n 2 28\n11\n== x = 8",
+    "questions": [],
+    "mathEquations": [
+      {
+        "equation": "N-A 31",
+        "type": "mathematical",
+        "position": 149
+      },
+      {
+        "equation": "r\n= 45\n9\nr\n0",
+        "type": "mathematical",
+        "position": 414
+      },
+      {
+        "equation": "x-axis at time t is 30",
+        "type": "mathematical",
+        "position": 606
+      },
+      {
+        "equation": "T = 6s\ny (1) ()\nx tr cost\n6\n",
+        "type": "mathematical",
+        "position": 661
+      },
+      {
+        "equation": "t + 30",
+        "type": "mathematical",
+        "position": 913
+      },
+      {
+        "equation": "t + ",
+        "type": "mathematical",
+        "position": 936
+      },
+      {
+        "equation": "T-I LIST-II A",
+        "type": "mathematical",
+        "position": 978
+      },
+      {
+        "equation": "A-III",
+        "type": "mathematical",
+        "position": 1178
+      },
+      {
+        "equation": "B-IV",
+        "type": "mathematical",
+        "position": 1185
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 1191
+      },
+      {
+        "equation": "D-II (2) A-IV",
+        "type": "mathematical",
+        "position": 1196
+      },
+      {
+        "equation": "B-II",
+        "type": "mathematical",
+        "position": 1211
+      },
+      {
+        "equation": "C-III",
+        "type": "mathematical",
+        "position": 1217
+      },
+      {
+        "equation": "D-I (3) A-II",
+        "type": "mathematical",
+        "position": 1224
+      },
+      {
+        "equation": "B-IV",
+        "type": "mathematical",
+        "position": 1238
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 1244
+      },
+      {
+        "equation": "D-III (4) A-II",
+        "type": "mathematical",
+        "position": 1249
+      },
+      {
+        "equation": "B-I",
+        "type": "mathematical",
+        "position": 1265
+      },
+      {
+        "equation": "C-IV",
+        "type": "mathematical",
+        "position": 1270
+      },
+      {
+        "equation": "D-III Official Ans",
+        "type": "mathematical",
+        "position": 1276
+      },
+      {
+        "equation": "t = P\nX\n",
+        "type": "mathematical",
+        "position": 1422
+      },
+      {
+        "equation": "F = 6",
+        "type": "mathematical",
+        "position": 1477
+      },
+      {
+        "equation": "C = 1 V",
+        "type": "mathematical",
+        "position": 1685
+      },
+      {
+        "equation": "c = 1 k",
+        "type": "mathematical",
+        "position": 1696
+      },
+      {
+        "equation": "b = 100 k",
+        "type": "mathematical",
+        "position": 1708
+      },
+      {
+        "equation": "b = 1",
+        "type": "mathematical",
+        "position": 1767
+      },
+      {
+        "equation": "b = 0",
+        "type": "mathematical",
+        "position": 1784
+      },
+      {
+        "equation": "b = 100 ",
+        "type": "mathematical",
+        "position": 1802
+      },
+      {
+        "equation": "b = 10 ",
+        "type": "mathematical",
+        "position": 1819
+      },
+      {
+        "equation": "V\n= 1V\nCC V\nBB\nI\nb\nR\n= 100 k\nb ",
+        "type": "mathematical",
+        "position": 1888
+      },
+      {
+        "equation": "R = 1k\nC\n",
+        "type": "mathematical",
+        "position": 1921
+      },
+      {
+        "equation": "E = 0 Using KVL ",
+        "type": "mathematical",
+        "position": 1981
+      },
+      {
+        "equation": "c + V\nCC = 0 CC\nc\n3\nC\nV\n1\nI\nR1 10\n==\n",
+        "type": "mathematical",
+        "position": 2004
+      },
+      {
+        "equation": "c = 10\n",
+        "type": "mathematical",
+        "position": 2045
+      },
+      {
+        "equation": "b = 10 ",
+        "type": "mathematical",
+        "position": 2098
+      },
+      {
+        "equation": "x = 10 So",
+        "type": "mathematical",
+        "position": 2428
+      },
+      {
+        "equation": "x =\n100\n10\n20\n",
+        "type": "mathematical",
+        "position": 2443
+      },
+      {
+        "equation": "o-active material is reduced to 1/8 of its original amount in 3 days",
+        "type": "mathematical",
+        "position": 2474
+      },
+      {
+        "equation": "N = N\n0 n\n1\n2\n",
+        "type": "mathematical",
+        "position": 2718
+      },
+      {
+        "equation": "n = 3 3 half lives = 3 days 1 half life = 1 day 5 days = 5 half life N = N\n0 n\n1\n2\n",
+        "type": "mathematical",
+        "position": 2767
+      },
+      {
+        "equation": "A = V\nD V\nC = V\nB 10k\n",
+        "type": "mathematical",
+        "position": 3138
+      },
+      {
+        "equation": "q = 5 k",
+        "type": "mathematical",
+        "position": 3242
+      },
+      {
+        "equation": "g = 10 m/s\n2\n",
+        "type": "mathematical",
+        "position": 3474
+      },
+      {
+        "equation": "e = mg = 5000 g Area of cross section = 250 cm\n2 = 250 ",
+        "type": "mathematical",
+        "position": 3611
+      },
+      {
+        "equation": "e = area of cross section 6\n44\n5000g20 g\n2 10 Pa\n250 1010\n",
+        "type": "mathematical",
+        "position": 3700
+      },
+      {
+        "equation": "e- (1) 8 L (2) 4 L (3) 9 L (4) 3 L Official Ans",
+        "type": "mathematical",
+        "position": 4035
+      },
+      {
+        "equation": "L = mvr e\nGM\nv\nr\n= e\nGM\nL m\n",
+        "type": "mathematical",
+        "position": 4127
+      },
+      {
+        "equation": "r\n= 1\n2\nLr\n",
+        "type": "mathematical",
+        "position": 4158
+      },
+      {
+        "equation": "e = r + 8r = 9r Now angular momentum L",
+        "type": "mathematical",
+        "position": 4247
+      },
+      {
+        "equation": "r\n== L",
+        "type": "mathematical",
+        "position": 4323
+      },
+      {
+        "equation": "y = f\nkT\n2\n",
+        "type": "mathematical",
+        "position": 4545
+      },
+      {
+        "equation": "T\n=\n1\n300\n2T\n",
+        "type": "mathematical",
+        "position": 4673
+      },
+      {
+        "equation": "T = 600 K T = 327",
+        "type": "mathematical",
+        "position": 4689
+      },
+      {
+        "equation": "r\n= h\nR\nr r = distance from center of earth ",
+        "type": "mathematical",
+        "position": 5029
+      },
+      {
+        "equation": "h\n+ ",
+        "type": "mathematical",
+        "position": 5092
+      },
+      {
+        "equation": "R\n= 42",
+        "type": "mathematical",
+        "position": 5295
+      },
+      {
+        "equation": "y- time graph gives the distance travelled by the body in a given time",
+        "type": "mathematical",
+        "position": 5746
+      },
+      {
+        "equation": "n- time graph is equal to the change in velocity- in the given time",
+        "type": "mathematical",
+        "position": 5854
+      },
+      {
+        "equation": "X-rays (3) Infrared rays (4) Radio Waves Official Ans",
+        "type": "mathematical",
+        "position": 6560
+      },
+      {
+        "equation": "x = h",
+        "type": "mathematical",
+        "position": 8575
+      },
+      {
+        "equation": "f = Blv ",
+        "type": "mathematical",
+        "position": 8914
+      },
+      {
+        "equation": "v = 2m/s 49",
+        "type": "mathematical",
+        "position": 8983
+      },
+      {
+        "equation": "g= 10 ms\n2\n) (1) 0",
+        "type": "mathematical",
+        "position": 9289
+      },
+      {
+        "equation": "v=0\n20m\nRough surface\n0",
+        "type": "mathematical",
+        "position": 9398
+      },
+      {
+        "equation": "m/s\nv P\ni = P\nf (Collision) ",
+        "type": "mathematical",
+        "position": 9429
+      },
+      {
+        "equation": "v = 0",
+        "type": "mathematical",
+        "position": 9486
+      },
+      {
+        "equation": "m/s mg\nag\nm\n",
+        "type": "mathematical",
+        "position": 9505
+      },
+      {
+        "equation": "g = 100 ",
+        "type": "mathematical",
+        "position": 9595
+      },
+      {
+        "equation": "N-B 51",
+        "type": "mathematical",
+        "position": 9897
+      },
+      {
+        "equation": "r = L\nX\nL\nRR\n",
+        "type": "mathematical",
+        "position": 10161
+      },
+      {
+        "equation": "Q-factor = 400 1\n4\n100\n",
+        "type": "mathematical",
+        "position": 10226
+      },
+      {
+        "equation": "n = 1 v\nf\n2\n= 1\nf",
+        "type": "mathematical",
+        "position": 10505
+      },
+      {
+        "equation": "f\n= 2\n120\n180\n90\n= 2\n60cm\n= 53",
+        "type": "mathematical",
+        "position": 10532
+      },
+      {
+        "equation": "H-atom For balmer series",
+        "type": "mathematical",
+        "position": 10749
+      },
+      {
+        "equation": "x = 27 ",
+        "type": "mathematical",
+        "position": 10973
+      },
+      {
+        "equation": "n = 2 ",
+        "type": "mathematical",
+        "position": 11106
+      },
+      {
+        "equation": "n = 8",
+        "type": "mathematical",
+        "position": 11269
+      },
+      {
+        "equation": "a = 2",
+        "type": "mathematical",
+        "position": 11289
+      },
+      {
+        "equation": "I = 3",
+        "type": "mathematical",
+        "position": 11305
+      },
+      {
+        "equation": "I = neAv\nd V\nd = ",
+        "type": "mathematical",
+        "position": 11315
+      },
+      {
+        "equation": "m / s\nneA\n=",
+        "type": "mathematical",
+        "position": 11344
+      },
+      {
+        "equation": "l = 2 ",
+        "type": "mathematical",
+        "position": 11588
+      },
+      {
+        "equation": "n = 10\n-5\nK\n",
+        "type": "mathematical",
+        "position": 11640
+      },
+      {
+        "equation": "s = Y ",
+        "type": "mathematical",
+        "position": 11703
+      },
+      {
+        "equation": "s = Y ",
+        "type": "mathematical",
+        "position": 11723
+      },
+      {
+        "equation": "n = Stress ",
+        "type": "mathematical",
+        "position": 11771
+      },
+      {
+        "equation": "n = YA",
+        "type": "mathematical",
+        "position": 11804
+      },
+      {
+        "equation": "T = 4 ",
+        "type": "mathematical",
+        "position": 11812
+      },
+      {
+        "equation": "m/s (as shown in figure)",
+        "type": "mathematical",
+        "position": 11927
+      },
+      {
+        "equation": "v=0\nv At highest point KE\nf = 0 Initial KE = Translational KE + Rotational KE = 22\n11\nmv\nI\n22\n+",
+        "type": "mathematical",
+        "position": 12086
+      },
+      {
+        "equation": "v = R",
+        "type": "mathematical",
+        "position": 12202
+      },
+      {
+        "equation": "R\n+ ",
+        "type": "mathematical",
+        "position": 12238
+      },
+      {
+        "equation": "E\n+ = + 2\n5\nmv\nmgh\n6\n= 5\n15\nh\n9m\nm 75cm\n6 10\n20\n=\n",
+        "type": "mathematical",
+        "position": 12301
+      },
+      {
+        "equation": "M = 5 kg P\ni = 10 kg m/s (initial momentum) Impulse = F",
+        "type": "mathematical",
+        "position": 12619
+      },
+      {
+        "equation": "t = ",
+        "type": "mathematical",
+        "position": 12675
+      },
+      {
+        "equation": "P = P\nf ",
+        "type": "mathematical",
+        "position": 12680
+      },
+      {
+        "equation": "f = 20 kg m/s (final momentum) Increase in KE = KE\nf ",
+        "type": "mathematical",
+        "position": 12713
+      },
+      {
+        "equation": "v = 200 V\nC\n6 = 00 PF\n+Q\n",
+        "type": "mathematical",
+        "position": 13078
+      },
+      {
+        "equation": "Q = CV = 600 ",
+        "type": "mathematical",
+        "position": 13106
+      },
+      {
+        "equation": "y = 2\n1\nCV\n2 = ",
+        "type": "mathematical",
+        "position": 13160
+      },
+      {
+        "equation": "y = 22\nQ ",
+        "type": "mathematical",
+        "position": 13363
+      },
+      {
+        "equation": "t = Initial energy ",
+        "type": "mathematical",
+        "position": 13434
+      },
+      {
+        "equation": "y = (12",
+        "type": "mathematical",
+        "position": 13466
+      },
+      {
+        "equation": "J = 6",
+        "type": "mathematical",
+        "position": 13478
+      },
+      {
+        "equation": "R=30cm 2121\nvuR\n",
+        "type": "mathematical",
+        "position": 13951
+      },
+      {
+        "equation": "d=r\nr Magnetic field at centre (B\n1\n) = 0\nI\n2r\n",
+        "type": "mathematical",
+        "position": 14333
+      },
+      {
+        "equation": "s = 2\n0\n22 3/2\nIr\n2(rd )\n",
+        "type": "mathematical",
+        "position": 14403
+      },
+      {
+        "equation": "d = r (given) 0\n2\nI\nB\n4 2r\n",
+        "type": "mathematical",
+        "position": 14441
+      },
+      {
+        "equation": "x = 8",
+        "type": "mathematical",
+        "position": 14511
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 242
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 682
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 723
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 744
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 779
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 908
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 931
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1096
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 1468
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1988
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2947
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3908
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4178
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4231
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5046
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5773
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 6787
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 7481
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 7552
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 7793
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9946
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9976
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10009
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 11632
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13763
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13815
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 14196
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.14285714285714285,
+        "matchedKeywords": [
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.8333333333333334,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "acceleration",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "waves",
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "force",
+          "friction",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "charge",
+          "electrostatic",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      },
+      {
+        "name": "Heat Transfer",
+        "parentTopic": "Thermodynamics",
+        "confidence": 1,
+        "matchedKeywords": [
+          "heat transfer"
+        ]
+      }
+    ],
+    "tags": [],
+    "wordCount": 3550,
+    "characterCount": 14516
+  },
+  "images": []
+}

@@ -1,0 +1,1047 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2024\\Session1\\Physics\\25-JAN-2023 SHIFT-1 JM PHYSICS PAPER SOLUTION.pdf",
+  "relativePath": "JEE\\Previous Papers\\2024\\Session1\\Physics\\25-JAN-2023 SHIFT-1 JM PHYSICS PAPER SOLUTION.pdf",
+  "metadata": {
+    "originalFileName": "25-JAN-2023 SHIFT-1 JM PHYSICS PAPER SOLUTION.pdf",
+    "subject": "Physics",
+    "year": 2023,
+    "session": null,
+    "shift": "Morning",
+    "paperType": "With Solution",
+    "date": "25-01-2023",
+    "fileType": "pdf",
+    "totalPages": 9,
+    "fileSize": 521401,
+    "processedAt": "2025-09-22T23:50:05.922Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – JANUARY, 2023 (Held On Wednesday 25\nth January, 2023) TIME : 9 : 00 AM to 12 : 00 NOON PHYSICS TEST PAPER WITH SOLUTION Final JEE-Main Exam January, 2023/25-01-2023/Morning Session SECTION-A 1. Electron beam used in an electron microscope, when accelerated by a voltage of 20 kV. has a de-Broglie wavelength of \no\n. If the voltage is increased to 40 kV. then the de-Broglie wavelength associated with the electron beam would be: (1) 3\n0 (2) 9\n0 (3) 0\n2\n (4) 0\n2\n Official Ans. by NTA (4) Allen Ans. (4) Sol. When electron is accelerated through potential difference V, then K.E. = eV  (\n)\nhh\n2meV\n2m KE\n\n==  1\nV\n  0\n20\n40\n\n\n=  0\n2\n\n\n= 2. An object of mass 8 kg is hanging from one end of a uniform rod CD of mass 2 kg and length 1 m pivoted at its end C on a vertical wall as shown in figure. It is supported by a cable AB such that the system is in equilibrium. The tension in the cable is : (Take g = 10 m/s\n2\n) (1) 240 N (2) 90 N (3) 300 N (4) 30 N Official Ans. by NTA (3) Allen Ans. (3) Sol. 60cm\nC\nmg=20\n8×g=80\nTsin30\n50cm Taking torque about point C T\n60\n2\n = 20 × 50 + 80 × 100  3T = 100 + 800  = 300 N 3. A Carnot engine with efficiency 50% takes heat from a source at 600 K. In order to increase the efficiency to 70%, keeping the temperature of sink same, the new temperature of the source will be : (1) 360 K (2) 1000 K (3) 900 K (4) 300 K Official Ans. by NTA (2) Allen Ans. (2) Sol. W\nsink\nT\n2\nSource\nT = 600 K\n1 Initially 1\n2\n= But 2\n1\nT\n1\nT\n\n=−  2\nT\n1\n1\n2\n600\n=−  2\nT\n1\n600 2\n=  T\n2 = 300 K Now efficiency is increased to 70% and T\n2 = 300 K, Let temp of source T\n1 = T  7300\n1\n10T\n=−  3007\n1\nT10\n=−  300 3\nT 10\n=  T = 1000 K / / // / / // / / / // / / // / / / // / / // / / / // / / // / / / // / / // / / / // / /\n8 kg\n40 cm\n60 cm\n90°\nD\n30°\nWall\nC\nB\nA 2 Final JEE-Main Exam January, 2023/25-01-2023/Morning Session 4. T is the time period of simple pendulum on the earth's surface. Its time period becomes x T when taken to a height R (equal to earth's radius) above the earth's surface. Then, the value of x will be: (1) 4 (2) 2 (3) 1\n2 (4) 1\n4 Official Ans. by NTA (2) Allen Ans. (2) Sol. At surface of earth time period T2\ng\n\n= At height h = R 2\ngg\ng'\n4\nh\n1\nR\n==\n\n+\n\n  (\n)\nxT 2\ng / 4\n\n=  xT 2 2\ng\n\n=  xT = 2T  x = 2 5. Assume that the earth is a solid sphere of uniform density and a tunnel is dug along its diameter throughout the earth. It is found that when a particle is released in this tunnel, it executes a simple harmonic motion. The mass of the particle is 100 g. The time period of the motion of the particle will be (approximately) (take g = 10 ms\n-2\n,radius of earth = 6400 km ) (1) 24 hours (2) 1 hour 24 minutes (3) 1 hour 40 minutes (4) 12 hours Official Ans. by NTA (2) Allen Ans. (2) Sol. x Let at some time particle is at a distance x from centre of Earth, then at that position field 3\nGM\nEx\nR\n=  Acceleration of particle 3\nGM\nax\nR\n=−  3\nGM\ng\nR\nR\n\n== Now T\n2R\n2\ng\n\n\n\n==  3\n6400 10\nT 2 3.14\n10\n\n=   2 3.14 800sec\n=    1 hour 24 minutes 6. A car travels a distance of 'x' with speed V\n1 and then same distance 'x' with speed V\n2 in the same direction. The average speed of the car is: (1) ()\n12\n12\nvv\n2 v v+ (2) 12\nvv\n2\n+ (3) 12\n2x\nvv\n+ (4) 12\n12\n2v v\nvv\n+ Official Ans. by NTA (4) Allen Ans. (4) Sol. A\nC\nv\n1\nB\nv\n2\nx\nx Average velocity Total displacement\nTotal time\n= 12\n12\n12\n2v v\nxx\nxx\nvv\nvv\n+\n==\n+\n+ 7. A parallel plate capacitor has plate area 40cm\n2 and plates separation 2 mm. The space between the plates is filled with a dielectric medium of a thickness 1 mm and dielectric constant 5. The capacitance of the system is : (1) 0\n24 F\n (2) 0\n3\nF\n10\n (3) 0\n10\nF\n3\n (4) 0\n10 F Official Ans. by NTA (3) Allen Ans. (3) Sol. t\nair\nd\nA This can be seen as two capacitors in series combination so eq12\n1 1 1\nCC C\n=+ 00\n11\nK AA\ntd t\n=+\n\n− 3 Final JEE-Main Exam January, 2023/25-01-2023/Morning Session 00\nt\nd t\nK A\nA\n−\n=+\n 33\n44\n00\n1 10\n1 10\n5 40 10\n40 10\n−−\n−−\n\n=+\n  \n  eq00\n111\nC204\n=+\n 00\neq\n20 4\n10\nCF\n24\n3\n \n\n== 8. The root mean square velocity of molecules of gas is (1) Proportional to square of temperature (T\n2\n). (2) Inversely proportional to square root of temperature\n1\nT\n. (3) Proportional to square root of temperature T\n. (4) Proportional to temperature (T). Official Ans. by NTA (3) Allen Ans. (3) Sol. The rms speed of a gas molecule is RMS\n3RT\nV\nM\n= RMS\nVT\n 9. Match List I with List II List – I List - II A Surface tension I. Kg m\n-1 s\n-1 B Pressure II. Kg ms\n-1 C Viscosity III. Kg m\n-1 s\n-2 D Impulse IV. Kg s\n-2 Choose the correct answer from the options given below : (1) A-IV, B-III, C- II, D- I (2) A-IV, B-III, C-I, D-II (3) A-III, B-IV, C-I, D-II (4) A-II, B-I, C-III, D-IV Official Ans. by NTA (2) Allen Ans. (2) Sol. (A) Surface Tension 2\n12\nF MLT\nML T\nL\n−\n−−\n= == 2\nKgs (IV)\n−\n= (B) Pressure = 2\nF MLT\nA\nL\n−\n\n= 12\nkg m s (III)\n−−\n= (C) Viscosity = 2\n1\n2\nFMLT\ndV\nLT\nA\nL\ndz\nL\n−\n−\n==\n \n\n\n\n\n 1 11 1\nML T kg m s (I)\n− −− −\n== (D) Impulse 2\nFdt MLT T\n−\n==\n 11\nMLT Kgms (II)\n−−\n== So A-(IV), B-(III), C-(I), D- (II) 10. In an LC oscillator, if values of inductance and capacitance become twice and eight times, respectively, then the resonant frequency of oscillator becomes x times its initial resonant frequency \n0\n. The value of x is: (1) 1/4 (2) 16 (3) 1/16 (4) 4 Official Ans. by NTA (1) Allen Ans. (1) Sol. The resonance frequency of LC oscillations circuit is 0\n1\nLC\n\n= L 2L\n→ C 8C\n→ 11\n2L 8C 4 LC\n\n==\n 0\n4\n\n\n= So 1\nx\n4\n= 11. The ratio of the density of oxygen nucleus (\n)\n16\n8\nO and helium nucleus (\n)\n4\n2\nHe is (1) 4:1 (2) 8:1 (3) 1:1 (4) 2:1 Official Ans. by NTA (3) Allen Ans. (3) Sol. Nuclear density is independent of mass number As nuclear density 3\nAu\n4\nR\n3\n\n= Also , 1\n3\n0\nR R A\n= And 33\n0\nR R A=  3\n0\nAu\nNuclear density\n4\nRA\n3\n\n= 3\n0\n3u\nNuclear density\n4R\n=  Nuclear density is independent of A 12. A message signal of frequency 5 kHz is used to modulate a carrier signal of frequency 2 MHz. The bandwidth for amplitude modulation is: (1) 5 kHz (2) 20 kHz (3) 10 kHz (4) 2.5 kHz Official Ans. by NTA (3) Allen Ans. (3) 4 Final JEE-Main Exam January, 2023/25-01-2023/Morning Session Sol. Given Signal frequency m\nf 5kHz\n= Carrier wave frequency c\nf 2MHz\n= c\nf 2000KHz\n= The resultant signal will have band width of frequency given by ()()\nc mc m\nf ff f\n\n+ − −\n  (\n)\n(\n)\n2000 5 2000 5 kHz\n\n+ −\n−\n  10 kHz 13. All electromagnetic wave is transporting energy in the negative z direction. At a certain point and certain time the direction of electric field of the wave is along positive y direction. What will be the direction of the magnetic field of the wave at that point and instant? (1) Positive direction of x (2) Positive direction of z (3) Negative direction of x (4) Negative direction of y Official Ans. by NTA (1) Allen Ans. (1) Sol. As , poynting vector S E H\n= Given energy transport = negative z direction Electric field = positive y direction (\n)\n(\n)\nˆ ˆ ˆ\nk\nj i\n\n− = + \n Hence according to vector cross product magnetic field should be positive x direction. 14. In Young's double slits experiment, the position of 5\nth bright fringe from the central maximum is 5 cm. The distance between slits and screen is 1 m and wavelength of used monochromatic light is 600 nm. The separation between the slits is: (1) 60 m (2) 48 m (3) 12 m (4) 36 m Official Ans. by NTA (1) Allen Ans. (1) Sol. Given D = 1m 9\n600 10 m\n\n−\n= n = 5 As nth\nnD\ny\nd\n\n=  9\n2\n5 600 10 1\n5 10\nd\n−\n−\n  \n=  9\n2\n5 600 10 1\nd\n5 10\n−\n−\n  \n=\n 6\n60 10 m\n−\n=  d = 60 m 15. Math List I with List II List – I (Current configuration) List – II (Magnetic field at point O) A I\nI\nr\nO I. \n0\n0\nI\nB2\n4r\n\n\n\n=+ B I\nI\nO\nr II. 0\n0\nI\nB\n4r\n\n= C III. \n0\n0\nI\nB1\n2r\n\n\n\n=− D I\nI\nr\nO IV \n\n0\n0\nI\nB1\n4r\n\n\n\n=+ Choose the correct answer from the option given below: (1) A-III, B-IV, C-I, D-II (2) A-I, B-III, C-IV, D-II (3) A-III, B-I, C-IV, D-II (4) A-II, B-I, C-IV, D-III Official Ans. by NTA (3) Allen Ans. (3) Sol. (A) a\ne\nd\nb\nc\nI\nI\nr\nO 0\nab\nI\nB\n(out of the plane)\n4r\n\n\n= (\n)\n0\nbcd\nI\nB\n2 (inthe plane)\n4r\n\n\n\n= 0\nde\nI\nB\n(out of the plane)\n4r\n\n\n= Hence magnetic field at O is (\n)\n0\n0\n0\n0\nI\nI\nI\nB2\n4 r 4 r\n4 r\n\n\n\n\n\n\n\n= −\n+\n− ()\n0\n0\nI\nB1\n2r\n\n\n\n=−\n.......... (III) (B) c\nd\nb\na\ne\nI\nI\nO\nr 0\nab\nI\nB(out of the plane)\n4r\n\n\n= ()\n0\nbcd\nI\nB(out of the plane)\n4r\n\n\n\n= 5 Final JEE-Main Exam January, 2023/25-01-2023/Morning Session 0\nde\nI\nB\n(out of the plane)\n4r\n\n\n= Hence magnetic field at O is (\n)\n0\n0\n0\n0\nI\nI\nI\nB\n4 r 4 r\n4 r\n\n\n\n\n\n\n\n=\n+\n+ (\n)\n0\n0\nI\nB2\n4r\n\n\n\n=+\n.... (I) (C) c\nO\nr\nI\nI\na\ne\nb\nd 0\nab\nI\nB\n(in the plane)\n4r\n\n\n= (\n)\n0\nbcd\nI\nB\n(inthe plane)\n4r\n\n\n\n= de\nB 0 (at the axis)= Hence magnetic field at O is (\n)\n0\n0\nI\nB1\n4r\n\n\n\n=+\n.... (IV) (D) c\nI\nI\nr\nO\na\ne\nd\nb ab\nB 0 (at the axis)= (\n)\n0\nbcd\nI\nB\n(outof the plane)\n4r\n\n\n\n= de\nB 0 (at the axis)\n= Hence magnetic field at O is 0\n0\nI\nB\n4r\n\n=\n.... (II) 16. Given below are two statements : one is labeled as Assertion A and the other is labeled as Reason R Assertion A: Photodiodes are used in forward bias usually for measuring the light intensity. Reason R: For a p-n junction diode, at applied voltage V the current in the forward bias is more than the current in the reverse bias for z0\nVV V   where V\no is the threshold voltage and V\nz is the breakdown voltage. In the light of the above statements, choose the correct answer from the options given below (1) Both A and R are true and R is correct explanation A (2) Both A and R are true but R is NOT the correct explanation A (3) A is false but R is true (4) A is true but R is false Official Ans. by NTA (3) Allen Ans. (3) Sol. Theory based Photodiodes are operated in reverse bias condition. For P-N junction current in forward bias (\n)\n0\nforV V\n is always greater than current in reverse bias (\n)\nz\nforV V\n\n. Hence Assertion if false but Reason is true 17. A solenoid of 1200 turns is wound uniformly in a single layer on a glass tube 2 m long and 0.2 m in diameter. The magnetic intensity at the center of the solenoid when a current of 2 A flows through it is: (1) 2.4 × 10\n3 A m\n-1 (2) 1.2 × 10\n3 A m\n-1 (3) 1 A m\n-1 (4) 2.4 × 10\n-3 A m\n-1 Official Ans. by NTA (2) Allen Ans. (2) Sol. Magnetic field at centre inside the solenoid is given by B = \n0\nnI So magnetic intensity at centre 0\nB\nH\nnI\n\n==\n(\n)\n1200\n2\n2\n\n=\n\n H = 1.2 ×10\n3 Am\n–1 18. A uniform metallic wire carries a current 2 A. when 3.4 V battery is connected across it. The mass of uniform metallic wire is 8.92×10\n–\n3 kg. density is 8.92 ×10\n3 kg/m\n3 and resistivity is 1.7 × 10\n–\n8  –m. The length of wire is : (1) l =6.8 m (2) l = 10 m (3) l = 5 m (4) l = 100 m Official Ans. by NTA (2) Allen Ans. (2) Sol. I = 2A V = 3.4 V Using Ohm’s Law 3.4\nR\n1.7\n2\n= =  L\n1.7\nA\n\n= ()\n1.7 A\nL\n\n= M = (density volume) 6 Final JEE-Main Exam January, 2023/25-01-2023/Morning Session 3\n6\n3\n8.92 10\nVolume\n10\n8.92 10\n−\n−\n\n==\n (\n)\n26\n1.7\nL\n10\n\n−\n=\n2\n1.7\n10\n1.7\n= L=10m 19. A bowl filled with very hot soup cools from 98°C to 86°C in 2 minutes when the room temperature is 22°C. How long it will take to cool from 75°C to 69°C ? (1) 2 minutes (2) 1.4 minutes (3) 0.5 minute (4) 1 minute Official Ans. by NTA (2) Allen Ans. (2) Sol. ()\n0\nQ\nK T T\nt\n\n= − −\n (\n)\navg 0\nQ\nK T\nT\nt\n\n= −\n−\n (i) ms 12\n98 86\nK\n22\n22\n+\n\n= −\n−\n\n K 98 86\n6\n22\nms 2\n+\n\n= −\n−\n\n \n\nK\n6\n70\nms\n=− ............(i) (ii) ms 6\n75 69\nK\n22\nt2\n+\n\n= −\n−\n\n\n (\n)\n6K\n50\nt ms\n=−\n\n............(ii) (ii)  (i) (\n)\n6\n50\nt 6 70\n=\n 7\nt\n1.4min\n5\n = = 20. A car is moving with a constant speed of 20 m/s in a circular horizontal track of radius 40 m. A bob is suspended from the roof of the car by a massless string. The angle made by the string with the vertical will be : (Take g = 10 m/s\n2\n) (1) 6\n (2) 2\n (3) 4\n (4) 3\n Official Ans. by NTA (3) Allen Ans. (3) Sol. \nT\nmv\n2\nR\nmg Tcos mg\n\n= 2\nmv\nTsin\nR\n\n= 2\nv\ntan\nRg\n\n= 2\n20\ntan\n40 10\n\n=\n tan = 1  4\n\n\n= SECTION-B 21. A ray of light is incident from air on a glass plate having thickness 3\ncm and refractive index 2\n. The angle of incidence of a ray is equal to the critical angle for glass-air interface . The lateral displacement of the ray when it passes through the plate is___×10\n–\n2\ncm. (given sin 15° = 0.26) Official Ans. by NTA (52) Allen Ans. (52) Sol. c\n\n\nc\nt=\n3\n\n=\n2 1\nsinc\n2\n= c = 45° sinc sin= 1\n2sin\n2\n=  = 30° Lateral displacement: 7 Final JEE-Main Exam January, 2023/25-01-2023/Morning Session (\n)\nx tsin i r secr\n=− (\n)\nx 3 sin 45 30 sec30\n=\n − \n ()\n2\nx 3 0.26\n3\n\n=\n\n X = 0.52 cm 2\nx 52 10 cm\n−\n= 22. In the given circuit, the equivalent resistance between the terminal A and B is_____. Official Ans. by NTA (10.00 ) Allen Ans. (10) Sol. Both 4 resistance gets short. Remove the resistors that have no current. 2 \n3 \n2 \n6 \nB\nA ()\neq\nR 3 2 || 2 6= ++ eq\nR 3 1 6\n= + + eq\nR 10= 23. As shown in the figure, in an experiment to determine Young's modulus of a wire, the extension-load curve is plotted. The curve is a straight line passing through the origin and makes an angle of 45° with the load axis. The length of wire is 62.8 cm and its diameter is 4 mm. The Young's modulus is found to be x × 10\n4 Nm\n-2\n. The value of x is _____. Official Ans. by NTA (5 ) Allen Ans. (5) Sol. \nL\nF\n45° From graph : F = L FL\nY\nAL\n=\n L\nY\nA\n= (\n)\n2\n2\n3\n62.8 10\nY\n2 10\n\n−\n−\n\n=\n 42\nY 5 10 N/m\n= 24. An object of mass 'm' initially at rest on a smooth horizontal plane starts moving under the action of force F = 2N. In the process of its linear motion, the angle  (as shown in figure) between the direction of force and horizontal varies as  = kx, where k is a constant and x is the distance covered by the object from its initial position. The expression of kinetic energy of the object will be n\nE sin\nk\n\n=\n. The value of n is___. Official Ans. by NTA (2) Allen Ans. (2) Sol. Fcos ma\n\n= ()\nmvdv\n2cos kx\ndx\n= 8 Final JEE-Main Exam January, 2023/25-01-2023/Morning Session (\n)\nvx\n00\nvdv 2 cos kx dx\n=\n 2\nmv 2\nsin kx\n2k\n= 2\nK.E. sin\nk\n\n= n = 2 25. The wavelength of the radiation emitted is \n0 when an electron jumps from the second excited state to the first excited state of hydrogen atom. If the electron jumps from the third excited state to the second orbit of the hydrogen atom, the wavelength of the radiation emitted will be 0\n20\nx\n\n. The value of x is_____. Official Ans. by NTA (27) Allen Ans. (27) Sol. _____________ n = 4 _____________ n = 3 _____________ n = 2 _____________ n = 1 Second excited state → first excited state n = 3 → n =2 22\n0\nhc\n1 1\n13.6\n.......(i)\n23\n\n\n=−\n\n Third excited state → second orbit n = 4 → n = 2 (\n)\n22\n0\nhc\n1 1\n13.6\n.......(ii)\n20 / x\n24\n\n\n=−\n\n (ii)  (i) 22\n22\n11\nx\n24\n11\n20\n23\n−\n=\n− x = 27 26. I\nCM is moment of inertia of a circular disc about an axis (CM) passing through its center and perpendicular to the plane of disc. I\nAB is it's moment of inertia about an axis AB perpendicular to plane and parallel to axis CM at a distance 2\nR\n3 from center. Where R is the radius of the disc. The ratio of I\nAB and I\nCM is x: 9. The value of x is___. C\nA\nR\n2\n3\nR\nB\nM Official Ans. by NTA (17) Allen Ans. (17) Sol. 2\ncm\nmR\nI\n2\n= 2\n2\nAB\nmR\n2R\nIm\n23\n\n=+\n\n\n2\n17\nmR\n18\n= AB\ncm\nI\n17\nx 17\nI9\n=  = 27. The distance between two consecutive points with phase difference of 60° in a wave of frequency 500 Hz is 6.0 m. The velocity with which wave is traveling is______ km/s Official Ans. by NTA (18 ) Allen Ans. (18) Sol. 2\nx\n\n\n\n =  (\n)\n2\n6m\n3\n\n\n=  36m\n\n= (\n)\n(\n)\nV f 500Hz 36m\n\n== = 18000 m/s = 18 km/s 28. A uniform electric field of 10 N/C is created between two parallel charged plates (as shown in figure). An electron enters the field symmetrically between the plates with a kinetic energy 0.5 eV. The length of each plate is 10 cm. The angle () of deviation of the path of electron as it comes out of the field is ___ (in degree). Official Ans. by NTA (45) Allen Ans. (45 ) 9 Final JEE-Main Exam January, 2023/25-01-2023/Morning Session Sol. 2\nxx\n1e\n0.5e mv v\n2m\n=\n = Along x x\ne\nL v t\nt\nm\n== Along y y\neE\nvt\nm\n= dividing y\nx\nv\ne\nE\nEv\nLm\n==  y\nx\nv\nTan\nE L 10 0.1 1\nv\n\n= =  =  = 45\n\n= 29. An LCR series circuit of capacitance 62.5 nF and resistance of 50 . is connected to an A.C. source of frequency 2.0 kHz. For maximum value of amplitude of current in circuit, the value of inductance is ______mH. (take \n2 = 10) Official Ans. by NTA (100) Allen Ans. (100) Sol. 1\nf\n2 LC\n\n= 9\n1\n2000Hz\n2 L 62.5 10\n\n−\n=\n 2\n2\n9\n1\nL\n0.1H 100mH\n4 2000 62.5 10\n\n−\n=\n=\n=\n\n  30. If ˆ ˆ ˆ\nP 3i 3j 2k\n= + + and ˆ ˆ ˆ\nQ 4i 3j 2.5k\n= + + then, The unit vector in the direction of PQ\n is (\n)\n1\nˆ ˆ ˆ\n3i j 2 3k\nx\n+−\n. The value of x is Official Ans. by NTA (4) Allen Ans. (4) Sol. ˆ ˆ ˆ\ni j k\nˆˆ\nij\nˆ\nP Q 3 3 233k\n22\n4 3 2.5\n ==+ − \nˆˆ\nP Q 1i j\nˆ\n33k\n22 2\nPQ\n\n\n=+ −\n\n\n\n (\n)\n1\nˆ ˆ ˆ\n3 i j 2 3k\n4\n=\n+ − x = 4",
+    "questions": [],
+    "mathEquations": [
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 159
+      },
+      {
+        "equation": "N-A 1",
+        "type": "mathematical",
+        "position": 218
+      },
+      {
+        "equation": "e-Broglie wavelength of ",
+        "type": "mathematical",
+        "position": 318
+      },
+      {
+        "equation": "e-Broglie wavelength associated with the electron beam would be",
+        "type": "mathematical",
+        "position": 396
+      },
+      {
+        "equation": "g = 10 m/s\n2\n) (1) 240 N (2) 90 N (3) 300 N (4) 30 N Official Ans",
+        "type": "mathematical",
+        "position": 946
+      },
+      {
+        "equation": "g=20\n8",
+        "type": "mathematical",
+        "position": 1052
+      },
+      {
+        "equation": "g=80\nTsin30\n50cm Taking torque about point C T\n60\n2\n",
+        "type": "mathematical",
+        "position": 1059
+      },
+      {
+        "equation": "T = 100 + 800 ",
+        "type": "mathematical",
+        "position": 1137
+      },
+      {
+        "equation": "T = 600 K\n1 Initially 1\n2\n",
+        "type": "mathematical",
+        "position": 1465
+      },
+      {
+        "equation": "T = 1000 K / / // / / // / / / // / / // / / / // / / // / / / // / / // / / / // / / // / / / // / /\n8 kg\n40 cm\n60 cm\n90",
+        "type": "mathematical",
+        "position": 1690
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 1840
+      },
+      {
+        "equation": "h = R 2\ngg\ng",
+        "type": "mathematical",
+        "position": 2220
+      },
+      {
+        "equation": "R\n==\n",
+        "type": "mathematical",
+        "position": 2240
+      },
+      {
+        "equation": "g / 4\n",
+        "type": "mathematical",
+        "position": 2267
+      },
+      {
+        "equation": "T = 2T ",
+        "type": "mathematical",
+        "position": 2296
+      },
+      {
+        "equation": "x = 2 5",
+        "type": "mathematical",
+        "position": 2305
+      },
+      {
+        "equation": "g = 10 ms\n-2\n",
+        "type": "mathematical",
+        "position": 2644
+      },
+      {
+        "equation": "h = 6400 km ) (1) 24 hours (2) 1 hour 24 minutes (3) 1 hour 40 minutes (4) 12 hours Official Ans",
+        "type": "mathematical",
+        "position": 2672
+      },
+      {
+        "equation": "R\n= ",
+        "type": "mathematical",
+        "position": 2906
+      },
+      {
+        "equation": "c\n= ",
+        "type": "mathematical",
+        "position": 3034
+      },
+      {
+        "equation": "v+ (2) 12\nvv\n2\n+ (3) 12\n2x\nvv\n+ (4) 12\n12\n2v v\nvv\n+ Official Ans",
+        "type": "mathematical",
+        "position": 3230
+      },
+      {
+        "equation": "e\n= 12\n12\n12\n2v v\nxx\nxx\nvv\nvv\n+\n==\n+\n+ 7",
+        "type": "mathematical",
+        "position": 3390
+      },
+      {
+        "equation": "C\n=+ 00\n11\nK AA\ntd t\n=+\n",
+        "type": "mathematical",
+        "position": 3839
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 3878
+      },
+      {
+        "equation": "M\n= RMS\nVT\n",
+        "type": "mathematical",
+        "position": 4407
+      },
+      {
+        "equation": "t - II A Surface tension I",
+        "type": "mathematical",
+        "position": 4461
+      },
+      {
+        "equation": "m\n-1 s\n-1 B Pressure II",
+        "type": "mathematical",
+        "position": 4492
+      },
+      {
+        "equation": "s\n-1 C Viscosity III",
+        "type": "mathematical",
+        "position": 4521
+      },
+      {
+        "equation": "m\n-1 s\n-2 D Impulse IV",
+        "type": "mathematical",
+        "position": 4546
+      },
+      {
+        "equation": "s\n-2 Choose the correct answer from the options given below ",
+        "type": "mathematical",
+        "position": 4573
+      },
+      {
+        "equation": "A-IV",
+        "type": "mathematical",
+        "position": 4639
+      },
+      {
+        "equation": "B-III",
+        "type": "mathematical",
+        "position": 4645
+      },
+      {
+        "equation": "C- II",
+        "type": "mathematical",
+        "position": 4652
+      },
+      {
+        "equation": "D- I (2) A-IV",
+        "type": "mathematical",
+        "position": 4659
+      },
+      {
+        "equation": "B-III",
+        "type": "mathematical",
+        "position": 4674
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 4681
+      },
+      {
+        "equation": "D-II (3) A-III",
+        "type": "mathematical",
+        "position": 4686
+      },
+      {
+        "equation": "B-IV",
+        "type": "mathematical",
+        "position": 4702
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 4708
+      },
+      {
+        "equation": "D-II (4) A-II",
+        "type": "mathematical",
+        "position": 4713
+      },
+      {
+        "equation": "B-I",
+        "type": "mathematical",
+        "position": 4728
+      },
+      {
+        "equation": "C-III",
+        "type": "mathematical",
+        "position": 4733
+      },
+      {
+        "equation": "D-IV Official Ans",
+        "type": "mathematical",
+        "position": 4740
+      },
+      {
+        "equation": "e = 2\nF MLT\nA\nL\n",
+        "type": "mathematical",
+        "position": 4864
+      },
+      {
+        "equation": "y = 2\n1\n2\nFMLT\ndV\nLT\nA\nL\ndz\nL\n",
+        "type": "mathematical",
+        "position": 4919
+      },
+      {
+        "equation": "A-(IV)",
+        "type": "mathematical",
+        "position": 5068
+      },
+      {
+        "equation": "B-(III)",
+        "type": "mathematical",
+        "position": 5076
+      },
+      {
+        "equation": "C-(I)",
+        "type": "mathematical",
+        "position": 5085
+      },
+      {
+        "equation": "D- (II) 10",
+        "type": "mathematical",
+        "position": 5092
+      },
+      {
+        "equation": "A\n= And 33\n0\nR R A= ",
+        "type": "mathematical",
+        "position": 5784
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 6141
+      },
+      {
+        "equation": "z\n= Carrier wave frequency c\nf 2MHz\n= c\nf 2000KHz\n= The resultant signal will have band width of frequency given by ()()\nc mc m\nf ff f\n",
+        "type": "mathematical",
+        "position": 6229
+      },
+      {
+        "equation": "t = negative z direction Electric field = positive y direction (\n)\n(\n)\n",
+        "type": "mathematical",
+        "position": 6913
+      },
+      {
+        "equation": "D = 1m 9\n600 10 m\n",
+        "type": "mathematical",
+        "position": 7433
+      },
+      {
+        "equation": "n = 5 As nth\nnD\ny\nd\n",
+        "type": "mathematical",
+        "position": 7458
+      },
+      {
+        "equation": "d = 60 ",
+        "type": "mathematical",
+        "position": 7574
+      },
+      {
+        "equation": "A-III",
+        "type": "mathematical",
+        "position": 7878
+      },
+      {
+        "equation": "B-IV",
+        "type": "mathematical",
+        "position": 7885
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 7891
+      },
+      {
+        "equation": "D-II (2) A-I",
+        "type": "mathematical",
+        "position": 7896
+      },
+      {
+        "equation": "B-III",
+        "type": "mathematical",
+        "position": 7910
+      },
+      {
+        "equation": "C-IV",
+        "type": "mathematical",
+        "position": 7917
+      },
+      {
+        "equation": "D-II (3) A-III",
+        "type": "mathematical",
+        "position": 7923
+      },
+      {
+        "equation": "B-I",
+        "type": "mathematical",
+        "position": 7939
+      },
+      {
+        "equation": "C-IV",
+        "type": "mathematical",
+        "position": 7944
+      },
+      {
+        "equation": "D-II (4) A-II",
+        "type": "mathematical",
+        "position": 7950
+      },
+      {
+        "equation": "B-I",
+        "type": "mathematical",
+        "position": 7965
+      },
+      {
+        "equation": "C-IV",
+        "type": "mathematical",
+        "position": 7970
+      },
+      {
+        "equation": "D-III Official Ans",
+        "type": "mathematical",
+        "position": 7976
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 8399
+      },
+      {
+        "equation": "p-n junction diode",
+        "type": "mathematical",
+        "position": 9161
+      },
+      {
+        "equation": "P-N junction current in forward bias (\n)\n0\nforV V\n",
+        "type": "mathematical",
+        "position": 9752
+      },
+      {
+        "equation": "m\n-1 (2) 1",
+        "type": "mathematical",
+        "position": 10139
+      },
+      {
+        "equation": "m\n-1 (3) 1 A m\n-1 (4) 2",
+        "type": "mathematical",
+        "position": 10161
+      },
+      {
+        "equation": "m\n-1 Official Ans",
+        "type": "mathematical",
+        "position": 10197
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 10304
+      },
+      {
+        "equation": "H = 1",
+        "type": "mathematical",
+        "position": 10385
+      },
+      {
+        "equation": "g/m\n3 and resistivity is 1",
+        "type": "mathematical",
+        "position": 10575
+      },
+      {
+        "equation": "l =6",
+        "type": "mathematical",
+        "position": 10647
+      },
+      {
+        "equation": "l = 10 m (3) l = 5 m (4) l = 100 m Official Ans",
+        "type": "mathematical",
+        "position": 10660
+      },
+      {
+        "equation": "I = 2A ",
+        "type": "mathematical",
+        "position": 10740
+      },
+      {
+        "equation": "V = 3",
+        "type": "mathematical",
+        "position": 10748
+      },
+      {
+        "equation": "M = (density volume) 6 Final JEE-Main Exam January",
+        "type": "mathematical",
+        "position": 10819
+      },
+      {
+        "equation": "L=10m 19",
+        "type": "mathematical",
+        "position": 10984
+      },
+      {
+        "equation": "m/s in a circular horizontal track of radius 40 m",
+        "type": "mathematical",
+        "position": 11596
+      },
+      {
+        "equation": "g = 10 m/s\n2\n) (1) 6\n",
+        "type": "mathematical",
+        "position": 11776
+      },
+      {
+        "equation": "N-B 21",
+        "type": "mathematical",
+        "position": 11971
+      },
+      {
+        "equation": "s-air interface ",
+        "type": "mathematical",
+        "position": 12150
+      },
+      {
+        "equation": "t=\n3\n",
+        "type": "mathematical",
+        "position": 12332
+      },
+      {
+        "equation": "c = 45",
+        "type": "mathematical",
+        "position": 12354
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 12426
+      },
+      {
+        "equation": "X = 0",
+        "type": "mathematical",
+        "position": 12563
+      },
+      {
+        "equation": "n-load curve is plotted",
+        "type": "mathematical",
+        "position": 12976
+      },
+      {
+        "equation": "m\n-2\n",
+        "type": "mathematical",
+        "position": 13204
+      },
+      {
+        "equation": "F = ",
+        "type": "mathematical",
+        "position": 13305
+      },
+      {
+        "equation": "L\n=\n",
+        "type": "mathematical",
+        "position": 13318
+      },
+      {
+        "equation": "A\n= (\n)\n2\n2\n3\n62",
+        "type": "mathematical",
+        "position": 13328
+      },
+      {
+        "equation": "N/m\n=",
+        "type": "mathematical",
+        "position": 13379
+      },
+      {
+        "equation": "F = 2N",
+        "type": "mathematical",
+        "position": 13499
+      },
+      {
+        "equation": "x\n= 8 Final JEE-Main Exam January",
+        "type": "mathematical",
+        "position": 13901
+      },
+      {
+        "equation": "x\n=\n",
+        "type": "mathematical",
+        "position": 13992
+      },
+      {
+        "equation": "k\n= 2\nK",
+        "type": "mathematical",
+        "position": 14014
+      },
+      {
+        "equation": "n = 2 25",
+        "type": "mathematical",
+        "position": 14035
+      },
+      {
+        "equation": "n = 4 ",
+        "type": "mathematical",
+        "position": 14427
+      },
+      {
+        "equation": "n = 3 ",
+        "type": "mathematical",
+        "position": 14447
+      },
+      {
+        "equation": "n = 2 ",
+        "type": "mathematical",
+        "position": 14467
+      },
+      {
+        "equation": "n = 1 Second excited state ",
+        "type": "mathematical",
+        "position": 14487
+      },
+      {
+        "equation": "n = 3 ",
+        "type": "mathematical",
+        "position": 14536
+      },
+      {
+        "equation": "n =2 22\n0\nhc\n1 1\n13",
+        "type": "mathematical",
+        "position": 14544
+      },
+      {
+        "equation": "n = 4 ",
+        "type": "mathematical",
+        "position": 14629
+      },
+      {
+        "equation": "n = 2 (\n)\n22\n0\nhc\n1 1\n13",
+        "type": "mathematical",
+        "position": 14637
+      },
+      {
+        "equation": "x = 27 26",
+        "type": "mathematical",
+        "position": 14740
+      },
+      {
+        "equation": "m/s Official Ans",
+        "type": "mathematical",
+        "position": 15418
+      },
+      {
+        "equation": "m/s = 18 km/s 28",
+        "type": "mathematical",
+        "position": 15549
+      },
+      {
+        "equation": "N/C is created between two parallel charged plates (as shown in figure)",
+        "type": "mathematical",
+        "position": 15598
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 15951
+      },
+      {
+        "equation": "m\n=\n",
+        "type": "mathematical",
+        "position": 16028
+      },
+      {
+        "equation": "m\n== Along y y\neE\nvt\nm\n= dividing y\nx\nv\ne\nE\nEv\nLm\n== ",
+        "type": "mathematical",
+        "position": 16056
+      },
+      {
+        "equation": "k\n= + + and ",
+        "type": "mathematical",
+        "position": 16559
+      },
+      {
+        "equation": "k\n= + + then",
+        "type": "mathematical",
+        "position": 16588
+      },
+      {
+        "equation": "x = 4",
+        "type": "mathematical",
+        "position": 16870
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1065
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1306
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1449
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2840
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3084
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3129
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3612
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3630
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4531
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 4914
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5143
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5159
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6290
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6699
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 7125
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7213
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 9501
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 9566
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9965
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10759
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11579
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 11883
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11900
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11914
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11930
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11946
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12261
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12345
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12362
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12367
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12377
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12486
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12510
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12639
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12748
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 12913
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 13033
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13658
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13679
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 13738
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 13793
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 13873
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 13893
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 13984
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 14006
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 14025
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 14818
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 14985
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 15260
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 16193
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 16216
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 16356
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.14285714285714285,
+        "matchedKeywords": [
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "acceleration",
+          "velocity"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current",
+          "voltage"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "equilibrium",
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "force"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "charge",
+          "electric field",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "ohm"
+        ]
+      }
+    ],
+    "tags": [],
+    "wordCount": 4157,
+    "characterCount": 16875
+  },
+  "images": []
+}

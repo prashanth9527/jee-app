@@ -140,3 +140,5 @@ The mathematical expression conversion system now:
 The frontend can use the `latexText` field for KaTeX rendering to display mathematical expressions like `A^{-1}`, `adj(A)^{-1}`, and `\frac{y^{3}}{4}` correctly.
 
 
+
+

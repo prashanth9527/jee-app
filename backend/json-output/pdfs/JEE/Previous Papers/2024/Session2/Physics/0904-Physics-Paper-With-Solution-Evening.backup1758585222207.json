@@ -1,0 +1,1279 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2024\\Session2\\Physics\\0904-Physics-Paper-With-Solution-Evening.pdf",
+  "relativePath": "JEE\\Previous Papers\\2024\\Session2\\Physics\\0904-Physics-Paper-With-Solution-Evening.pdf",
+  "metadata": {
+    "originalFileName": "0904-Physics-Paper-With-Solution-Evening.pdf",
+    "subject": "Physics",
+    "year": 2024,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 9,
+    "fileSize": 4073846,
+    "processedAt": "2025-09-22T23:50:18.571Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2024 (Held On Tuseday 09\nth April, 2024) TIME : 3 : 00 PM to 6 : 00 PM PHYSICS TEST PAPER WITH SOLUTION SECTION-A 3\n1. A nucleus at rest disintegrates into two smaller nuclei with their masses in the ratio of 2:1. After disintegration they will move :- (1) In opposite directions with speed in the ratio of 1:2 respectively (2) In opposite directions with speed in the ratio of 2:1 respectively (3) In the same direction with same speed. (4) In opposite directions with the same speed. Ans. (1) Sol. By conservation of momentum p\ni = p\nf O = m\n1 u\n1 + m\n2 u\n2 1\n2\nu\n1\nu2\n\n\n\n as 1\n2\nm\n2\nm1\n mov\ne in opposite direction with speed ratio 1 : 2 32. The following figure represents two biconvex lenses L\n1 and L\n2 having focal length 10 cm and 15 cm respectively. The distance between L\n1 & L\n2 is : L\n1 L (1) 10 cm (2) 15 cm (3) 25 cm (4) 35 cm Ans. (3) S o l . f\n1 f\n2 D = f\n1 + f\n2 = 25 cm Paraxial parallel rays pass through focus and ray from focus of convex lens will become parallel 33. The temperature of a gas is –78° C and the average translational kinetic energy of its molecules is K. The temperature at which the average translational kinetic energy of the molecules of the same gas becomes 2K is : (1) –39°C (2) 117°C (3) 127°C (4) –78°C Ans. (2) Sol. K.E = 1\nnf RT\n2 T\ni = –78°C –78°CK\nT To double the K.E energy temp also become double T\nf = 390 K T\nf = 117°C 34. A hydrogen atom in ground state is given an energy of 10.2 eV. How many spectral lines will be emitted due to transition of electrons ? (1) 6 (2) 3 (3) 10 (4) 1 Ans. (4) Sol. Hydrogen will be in first excited state therefore it will emit one spectral line corresponding to transition b/w energy level 2 to 1 35. The magnetic field in a plane electromagnetic wave is B\ny = (3.5 × 10\n–\n7\n) sin (1.5 × 10\n3\nx + 0.5 ×10\n11\nt)T. The corresponding electric field will be (1) E\ny = 1.17 sin (1.5 × 10\n3\nx + 0.5 × 10\n11\nt)Vm\n–1 (2) E\nz = 105 sin (1.5 × 10\n3\nx + 0.5 × 10\n11\nt)Vm\n–1 (3) E\nz = 1.17 sin (1.5 × 10\n3\nx + 0.5 × 10\n11\nt)Vm\n–\n1 (4) E\ny = 10.5 sin (1.5 × 10\n3\nx + 0.5 × 10\n11\nt)Vm\n–1 Ans. (2) Sol. E\n0 = B\n0\nC E\n0 = 3 × 10\n8 × (3.5 × 10\n–7\n) sin (1.5 × 10\n3\nx + 0.5 ×10\n11\nt) E\n0 = 105 sin (1.5 × 10\n3\nx + 0.5 × 10\n11\nt)Vm\n–\n1 Data inconsistent while calculating speed of wave. You can challenge for data. $//(1\n® 2 36. A square loop of side 15 cm being moved towards right at a constant speed of 2 cm/s as shown in figure. The front edge enters the 50 cm wide magnetic field at t = 0. The value of induced emf in the loop at t = 10 s will be : 2cm/s 15cm × × × × × × × × × × × × × × × × B=1.0T 50cm (1) 0.3 mV (2) 4.5 mV (3) zero (4) 3 mV Ans. (3) Sol. At t = 10 sec complete loop is in magnetic field therefore no change in flux Bv Bv d\ne0\ndt\n\n e = 0 for complete loop 37. Two cars are travelling towards each other at speed of 20 m s\n–1 each. When the cars are 300 m apart, both the drivers apply brakes and the cars retard at the rate of 2 m s\n–2 . The distance between them when they come to rest is : (1) 200 m (2) 50 m (3) 100 m (4) 25 m Ans. (3) Sol. A 20 m/s 20 m/s B 300 m BA\nu40 m s BA\na4 m s Apply (v\n2 = u\n2 + 2as)\nrelative O = (40)\n2 + 2(–4)(S) S = 200 m Remaining distance = 300 – 200 = 100 m 38. The I-V characteristics of an electronic device shown in the figure. The device is : I V(volt) 5(A) (1) a solar cell (2) a transistor which can be used as an amplifier (3) a zener diode which can be used as voltage regulator (4) a diode which can be used as a rectifier Ans. (3) Sol. Theory Zener diode used as voltage regulator 39. The excess pressure inside a soap bubble is thrice the excess pressure inside a second soap bubble. The ratio between the volume of the first and the second bubble is : (1) 1 : 9 (2) 1 : 3 (3) 1 : 81 (4) 1 : 27 Ans. (4) Sol. P\n1 r\n1 P\n2 r\n2 10\n1\n4T\nPP\nr\n 20\n2\n4T\nPP\nr\n 1020\nPP3(PP )   12\n4T4T\n3\nrr\n r\n2 = 3r\n1 3\n1\n1\n3\n2\n2\n4\nr\nV\n1\n3\n4\nV27\nr\n3\n\n\n $//(1\n® 3 40. The de-Broglie wavelength associated with a particle of mass m and energy E is h / 2mE\n. The dimensional formula for Planck's constant is : (1) [ML\n–1\nT\n–\n2\n] (2) [ML\n2\nT\n–1\n] (3) [MLT\n–2\n] (4) [M\n2\nL\n2\nT\n–2\n] Ans. (2) Sol. h\n2mE\n or E = h 221\n[ML T ] h[T ]\n\n 21\nh [ML T ]\n\n 4\n1. A satellite of 10\n3 kg mass is revolving in circular orbit of radius 2R. If\n4\n10 R\n6\nJ\nenergy is supplied to the satellite, it would revolve in a new circular orbit of radius : (use g = 10m/s\n2\n, R = radius of earth) (1) 2.5 R (2) 3 R (3) 4 R (4) 6 R Ans. (4) Sol. M R 2R m Total energy = GMm\n2(2R)\n if energy = 4\n10 R\n6 is added then 4\nGMm 10 RGMm\n4R62r\n\n where r is new radius of revolving and 2\nGM\ng\nR\n 42\nmgR 10 RmgR\n462r\n  (m = 10\n3 kg) 3432\n1010 R 10 R1010 R\n462r\n  \n  11R\n462r\n    r = 6R 42. The effective resistance between A and B, if resistance of each resistor is R, will be R R A B R\n R\n R R (1) 2\nR\n3 (2) 8R\n3 (3) 5R\n3 (4) 4R\n3 Ans. (2) Sol. From symmetry we can remove two middle resistance. New circuit is R R A B R R  R R A B 2R 2R 2R  R R A B 2R 3  A B 8R 3 $//(1\n® 4 43. Five charges +q, +5q, –2q, +3q and –4q are situated as shown in the figure. The electric flux due to this configuration through the surface S is : –4q +5q +3q q –2q S (1) 0\n5q\n (2) 0\n4q\n (3) 0\n3q\n (4) 0\nq\n Ans. (2) Sol. As per gauss theorem,  =  \nin\n00\nq2q5q\nq\n  \n\n 0\n4q\n 44. A proton and a deutron (q= +e, m = 2.0u) having same kinetic energies enter a region of uniform magnetic field B\n, moving perpendicular to B\n. The ratio of the radius r\nd of deutron path to the radius r\np of the proton path is : (1) 1 : 1 (2) 1: 2 (3)\n2 :1 (4) 1 : 2 Ans. (3) Sol. In uniform magnetic field,  \n2m K.E\nm\nR qBqB\n\n Since same K.E m\nR\nq\n \np\ndeutrond\nprotonpd\nq\nRm\nRmq\n\n\n\n21\n\n\nd\n\np\n= 2 :1\n 45. UV light of 4.13 eV is incident on a photosensitive metal surface having work function 3.13 eV. The maximum kinetic energy of ejected photoelectrons will be : (1) 4.13 eV (2) 1 eV (3) 3.13 eV (4) 7.26 eV Ans. (2) Sol. E\nphoton = (work function) + K.E\nmax K.E\nmax K.E\nmax = 1 eV 46. The energy released in the fusion of 2 kg of hydrogen deep in the sun is E\nH and the energy released in the fission of 2 kg of 235\nU is E\nU\n. The ratio H\nU\nE\nE is approximately : (Consider the fusion reaction as 1\n14\n2\n4 H 2eHe 2v 626.7 MeV,\n\n     \nenergy released in the fission reaction of 235\nU is 200 MeV per fission nucleus and N\nA = 6.023×10\n23\n) (1) 9.13 (2) 15.04 (3) 7.62 (4) 25.6 Ans. (3) Sol. In each fusion reaction, 4 1\n1\nH\nnucleus are used. Energy released per Nuclei of 1\n1\nH\n=\n26.7\nMeV\n4  Energy released by 2 kg hydrogen (E\nH\n) = A\n200026.7\nNMeV\n14\n &  Energy released by 2 kg Vranium (E\nV\n) = A\n2000\nN200MeV\n235\n So, H\nV\nE\n26.7\n2357.84\nE4 200\n \n  Approximately close to 7.62 $//(1\n® 5 47. A real gas within a closed chamber at 27°C undergoes the cyclic process as shown in figure. The gas obeys PV\n3 = RT equation for the path A to B . The net work done in the complete cycle is (assuming R = 8J/molK): P(N/m\n2\n) 20 A C 10 B 2 4 V(m\n3\n) (1) 225 J (2) 205 J (3) 20 J (4) –20 J Ans. (2) Sol. W\nAB = PdV\n (Assuming T to be constant) = 3\nRTdV\nV\n = 4\n3\n2\nRT V dV\n\n = 8 × 300 × 22\n1 11\n2\n42\n\n\n\n\n\n\n = 225 J W\nBC = 2\n4\nP dV 10(2 – 4) –20J\n W\nCA = 0 W\ncycle = 205 J Note : Data is inconsistent in process AB. So needs to be challenged. 48. A 1 kg mass is suspended from the ceiling by a rope of length 4m. A horizontal force 'F' is applied at the mid point of the rope so that the rope makes an angle of 45° with respect to the vertical axis as shown in figure. The magnitude of F is : F 1 Kg T\n2 T\n1 (1) 0\nN\n2\n (2) 1 N (3) 1\nN\n102 (4) 10 N Ans. (4) Sol. T\n1\nsin45° = F T\n1 cos45° = T\n2 = 1×g  tan45° = F\ng F = 10N 49. A spherical ball of radius 1×10\n–\n4 m and density 10\n5 kg/m\n3 falls freely under gravity through a distance h before entering a tank of water, If after entering in water the velocity of the ball does not change, then the value of h is approximately : (The coefficient of viscosity of water is 9.8 × 10\n–\n6 N s/m\n2\n) (1) 2296 m (2) 2249 m (3) 2518 m (4) 2396 m Ans. (3) $//(1\n® 6 Sol. \n2\nBL\nT\nR\n2g\nV\n9\n \n\n \n \n2\n4\n53\nT\n6\n1010\n2\nV1010\n9\n9.8 10\n\n\n\n\n \n\n V\nT = 224.5 when ball fall from height (h) V2gh 2\nV\nh2518m\n2g\n\n\n\n\n 50. E A B A B E 0 0 0 0 1 X 1 0 Y 1 1 0 In the truth table of the above circuit the value of X and Y are : (1) 1, 1 (2) 1, 0 (3) 0, 1 (4) 0, 0 Ans. (1) Sol. For x E 0=A 1=B 0 0 1 0 1 x = 1 For y E 1=A 0=B 0 1 0 0 1 SECTION-B 51. A straight magnetic strip has a magnetic moment of 44 Am\n2\n. If the strip is bent in a semicircular shape, its magnetic moment will be .......... Am\n2. (Given  = 22\n7\n) Ans. (28) Sol. Magnetic moment of straight wire = mx = 44  \n\nR =R Magnetic moment of arc = m × 2 r = m × 2\n = 44 288\n28\n\n\n 52. A particle of mass 0.50 kg executes simple harmonic motion under force F = –50(Nm\n–1\n)x. The time period of oscillation is x\ns\n35\n. The value of x is ................. (Given  = 22\n7\n) Ans. (22) Sol. m = 0.5 kg F = – 50 (x) ma = (–50x) 0.5 a = – 50x a = (–100x) W\n2 = 100 w = 10 T = 22222\n1057 1535\n\n  \n \n  \n\n   22\n3535\n\n\nx22 $//(1\n® 7 53. A capacitor of reactance 43 and a resistor of resistance 4 are connected in series with an ac source of peak value 8 2V. The power dissipation in the circuit is .................W. Ans. (4) S o l . ~ R = 4 Z = 22\nRX L Z =  \n2\n2\n44 3 = 8 V\nrms =  \nV8 2\n8V\n22\n I\nrms = rms\nV\n8\n1A\nz8\n Power dissipated = I\n2\nrms × R = 1 × 4 = (4W) 54. An electric field 1\nˆ\n(2xi)NC\n\n exists in space. A cube of side 2m is placed in the space as per figure given below. The electric flux through the cube is .................. Nm\n2\n/C. X 2m Y Z 0 2m Ans. (16) S o l . (0,0) x=2 x=4 x y ˆ\nE2xi E. A 2\nin\n– 4 4 16Nm / c     2\nout\n8 4 32Nm / c    d\nnet = \nin + \nout = –\n16 + 32 = 16 Nm\n2 /c 55. A circular disc reaches from top to bottom of an inclined plane of length l. When it slips down the plane, if takes t s. When it rolls down the plane then it takes 1/ 2\n2\n\n\n\n t s, where  is ........... Ans. (3) Sol. For slipping a = gsin\n = 1\n2\nat\n2 2\nt\ng sin\n\n For rolling '\n2\n2\ng sin\na\nk\n1\nR\n\n\n\nR\nk\n2\n\n\n\n a' = 2g sin\n3\n  \n2\n1\na ' t '\n2\n \n62\nt'\n2g sin2g sin\n\n\n\n\n\n3\n\n56. To determine the resistance (R) of a wire, a circuit is designed below, The V-I characteristic curve for this circuit is plotted for the voltmeter and the ammeter readings as shown in figure. The value of R is ............ . R V 10 k E mA $//(1\n® 8 I(mA) 2 3 4 0 4 6 8 V(volt) Ans. (2500) Sol. 4\n4\n10 R\nReq\n10R\n\n E = 4V, I = 2mA \n4\n3\n4\n4 10R\nE\nI2 10\nReq\n10 R\n\n\n   20R = 40000 + 4R 16R = 40000 R = 2500 57. The resultant of two vectors A and B is perpendicular to A and its magnitude is half that of B\n. The angle between vectors A and B is ............. Ans. ( 150 ) Sol. \n\n\n Bcos = B\n2  = 60° So, angle between A &\nB is 90° + 60° = 150° 58. Monochromatic light of wavelength 500 nm is used in Young's double slit experiment. An interference pattern is obtained on a screen When one of the slits is covered with a very thin glass plate (refractive index = 1.5), the central maximum is shifted to a position previously occupied by the 4\nth bright fringe. The thickness of the glass-plate is ...................μm. Ans. (4) Sol. (– 1) t = n (1.5 – 1) t = 4 × 500 × 10\n–9 m t = 4000 × 10\n–9 m t = 4m 59. A force (3x\n2 + 2x – 5) N displaces a body from x = 2 m to x = 4m. Work done by this force is ............J. Ans. (58) Sol. 2\n1\nx\nx\nWFdx\n \n4\n2\n2\nW 3x 2x – 5 dx\n 4\n32\n2\nWxx5x\n\n  \n \nW60 2 J58J   60. At room temperature (27ºC), the resistance of a heating element is 50. The temperature coefficient of the material is 2.4 × 10\n–\n4 ºC\n–\n1\n. The temperature of the element, when its resistance is 62 , is ............. ºC. Ans. (1027) Sol. R = R\n0\n(1 + T) 62 = 50 [1 + 2.4 × 10\n–\n4\nT] T = 1000°C C T 1027 C\n\n$//(1\n®",
+    "questions": [
+      {
+        "number": "33",
+        "text": "The temperature of a gas is –78° C and the average translational kinetic energy of its molecules is K. The temperature at which the average translational kinetic energy of the molecules of the same gas becomes 2K is : (1) –39°C (2) 117°C (3) 127°C (4) –78°C",
+        "formattedText": "The temperature of a gas is –78° C and the average translational kinetic energy of its molecules is K. The temperature at which the average translational kinetic energy of the molecules of the same gas becomes 2K is : (1) –39°C (2) 117°C (3) 127°C (4) –78°C",
+        "latexText": "\\(The temperature of a gas is –78^\\circ C and the average translational kinetic energy of its molecules is K. The temperature at which the average translational kinetic energy of the molecules of the same gas becomes 2K is : (1) –39^\\circC (2) 117^\\circC (3) 127^\\circC (4) –78^\\circC\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "–39°C"
+          },
+          {
+            "letter": "2",
+            "text": "117°C"
+          },
+          {
+            "letter": "3",
+            "text": "127°C"
+          },
+          {
+            "letter": "4",
+            "text": "–78°C"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "–39°C",
+            "formattedText": "–39°C",
+            "latexText": "\\(–39^\\circC\\)"
+          },
+          {
+            "letter": "2",
+            "text": "117°C",
+            "formattedText": "117°C",
+            "latexText": "\\(117^\\circC\\)"
+          },
+          {
+            "letter": "3",
+            "text": "127°C",
+            "formattedText": "127°C",
+            "latexText": "\\(127^\\circC\\)"
+          },
+          {
+            "letter": "4",
+            "text": "–78°C",
+            "formattedText": "–78°C",
+            "latexText": "\\(–78^\\circC\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "34",
+        "text": "A hydrogen atom in ground state is given an energy of 10.2 eV. How many spectral lines will be emitted due to transition of electrons ? (1) 6 (2) 3 (3) 10 (4) 1",
+        "formattedText": "A hydrogen atom in ground state is given an energy of 10.2 eV. How many spectral lines will be emitted due to transition of electrons ? (1) 6 (2) 3 (3) 10 (4) 1",
+        "latexText": "A hydrogen atom in ground state is given an energy of 10.2 eV. How many spectral lines will be emitted due to transition of electrons ? (1) 6 (2) 3 (3) 10 (4) 1",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "36",
+        "text": "A square loop of side 15 cm being moved towards right at a constant speed of 2 cm/s as shown in figure. The front edge enters the 50 cm wide magnetic field at t =",
+        "formattedText": "A square loop of side 15 cm being moved towards right at a constant speed of 2 cm/s as shown in figure. The front edge enters the 50 cm wide magnetic field at t =",
+        "latexText": "\\(A square loop of side 15 cm being moved towards right at a constant speed of 2 \\frac{cm}{s} as shown in figure. The front edge enters the 50 cm wide magnetic field at t =\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "cm/s",
+            "latex": "\\(\\frac{cm}{s}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "0",
+        "text": "The value of induced emf in the loop at t = 10 s will be : 2cm/s 15cm × × × × × × × × × × × × × × × × B=1.0T 50cm (1) 0.3 mV (2) 4.5 mV (3) zero (4) 3 mV",
+        "formattedText": "The value of induced emf in the loop at t = 10 s will be : 2cm/s 15cm × × × × × × × × × × × × × × × × B=1.0T 50cm (1) 0.3 mV (2) 4.5 mV (3) zero (4) 3 mV",
+        "latexText": "\\(The value of induced emf in the loop at t = 10 s will be : \\frac{2cm}{s} 15cm \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times \\times B=1.0T 50cm (1) 0.3 mV (2) 4.5 mV (3) zero (4) 3 mV\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "0.3 mV"
+          },
+          {
+            "letter": "2",
+            "text": "4.5 mV"
+          },
+          {
+            "letter": "3",
+            "text": "zero"
+          },
+          {
+            "letter": "4",
+            "text": "3 mV"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "0.3 mV",
+            "formattedText": "0.3 mV",
+            "latexText": "0.3 mV"
+          },
+          {
+            "letter": "2",
+            "text": "4.5 mV",
+            "formattedText": "4.5 mV",
+            "latexText": "4.5 mV"
+          },
+          {
+            "letter": "3",
+            "text": "zero",
+            "formattedText": "zero",
+            "latexText": "zero"
+          },
+          {
+            "letter": "4",
+            "text": "3 mV",
+            "formattedText": "3 mV",
+            "latexText": "3 mV"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "2cm/s",
+            "latex": "\\(\\frac{2cm}{s}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "38",
+        "text": "The I-V characteristics of an electronic device shown in the figure. The device is : I V(volt) 5(A) (1) a solar cell (2) a transistor which can be used as an amplifier (3) a zener diode which can be used as voltage regulator (4) a diode which can be used as a rectifier",
+        "formattedText": "The I-V characteristics of an electronic device shown in the figure. The device is : I V(volt) 5(A) (1) a solar cell (2) a transistor which can be used as an amplifier (3) a zener diode which can be used as voltage regulator (4) a diode which can be used as a rectifier",
+        "latexText": "\\(The I-V characteristics of an electronic device shown in the figure. The device is : I V(volt) 5(A) (1) a solar cell (2) a transistor which can be used as an amplifier (3) a zener diode which can be used as voltage regulator (4) a diode which can be used as a rectifier\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "a solar cell"
+          },
+          {
+            "letter": "2",
+            "text": "a transistor which can be used as an amplifier"
+          },
+          {
+            "letter": "3",
+            "text": "a zener diode which can be used as voltage regulator"
+          },
+          {
+            "letter": "4",
+            "text": "a diode which can be used as a rectifier"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "a solar cell",
+            "formattedText": "a solar cell",
+            "latexText": "a solar cell"
+          },
+          {
+            "letter": "2",
+            "text": "a transistor which can be used as an amplifier",
+            "formattedText": "a transistor which can be used as an amplifier",
+            "latexText": "a transistor which can be used as an amplifier"
+          },
+          {
+            "letter": "3",
+            "text": "a zener diode which can be used as voltage regulator",
+            "formattedText": "a zener diode which can be used as voltage regulator",
+            "latexText": "a zener diode which can be used as voltage regulator"
+          },
+          {
+            "letter": "4",
+            "text": "a diode which can be used as a rectifier",
+            "formattedText": "a diode which can be used as a rectifier",
+            "latexText": "a diode which can be used as a rectifier"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "1",
+        "text": "A satellite of 10\n3 kg mass is revolving in circular orbit of radius 2R. If\n4\n10 R\n6\nJ\nenergy is supplied to the satellite, it would revolve in a new circular orbit of radius : (use g = 10m/s\n2\n, R = radius of earth) (1) 2.5 R (2) 3 R (3) 4 R (4) 6 R",
+        "formattedText": "A satellite of 10\n3 kg mass is revolving in circular orbit of radius 2R. If\n4\n10 R\n6\nJ\nenergy is supplied to the satellite, it would revolve in a new circular orbit of radius : (use g = 10m/s\n2\n, R = radius of earth) (1) 2.5 R (2) 3 R (3) 4 R (4) 6 R",
+        "latexText": "\\(A satellite of 10^{3} kg mass is revolving in circular orbit of radius 2R. If^{4} 10 R^{6} J energy is supplied to the satellite, it would revolve in a new circular orbit of radius : (use g = \\frac{10m}{s}^{2} , R = radius of earth) (1) 2.5 R (2) 3 R (3) 4 R (4) 6 R\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "2.5 R"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "2.5 R",
+            "formattedText": "2.5 R",
+            "latexText": "2.5 R"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "10m/s",
+            "latex": "\\(\\frac{10m}{s}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "43",
+        "text": "Five charges +q, +5q, –2q, +3q and –4q are situated as shown in the figure. The electric flux due to this configuration through the surface S is : –4q +5q +3q q –2q S (1) 0\n5q\n (2) 0\n4q\n (3) 0\n3q\n (4) 0\nq\n",
+        "formattedText": "Five charges +q, +5q, –2q, +3q and –4q are situated as shown in the figure. The electric flux due to this configuration through the surface S is : –4q +5q +3q q –2q S (1) 0\n5q\n (2) 0\n4q\n (3) 0\n3q\n (4) 0\nq\n",
+        "latexText": "\\(Five charges +q, +5q, –2q, +3q and –4q are situated as shown in the figure. The electric flux due to this configuration through the surface S is : –4q +5q +3q q –2q S (1) 0^{5}q  (2) 0^{4}q  (3) 0^{3}q  (4) \\frac{0}{q}\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "0 5q "
+          },
+          {
+            "letter": "2",
+            "text": "0 4q "
+          },
+          {
+            "letter": "3",
+            "text": "0 3q "
+          },
+          {
+            "letter": "4",
+            "text": "0 q "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "0 5q ",
+            "formattedText": "0 5q ",
+            "latexText": "0 5q "
+          },
+          {
+            "letter": "2",
+            "text": "0 4q ",
+            "formattedText": "0 4q ",
+            "latexText": "0 4q "
+          },
+          {
+            "letter": "3",
+            "text": "0 3q ",
+            "formattedText": "0 3q ",
+            "latexText": "0 3q "
+          },
+          {
+            "letter": "4",
+            "text": "0 q ",
+            "formattedText": "0 q ",
+            "latexText": "0 q "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "48",
+        "text": "A 1 kg mass is suspended from the ceiling by a rope of length 4m. A horizontal force 'F' is applied at the mid point of the rope so that the rope makes an angle of 45° with respect to the vertical axis as shown in figure. The magnitude of F is : F 1 Kg T\n2 T\n1 (1) 0\nN\n2\n (2) 1 N (3) 1\nN\n102 (4) 10 N",
+        "formattedText": "A 1 kg mass is suspended from the ceiling by a rope of length 4m. A horizontal force 'F' is applied at the mid point of the rope so that the rope makes an angle of 45° with respect to the vertical axis as shown in figure. The magnitude of F is : F 1 Kg T\n2 T\n1 (1) 0\nN\n2\n (2) 1 N (3) 1\nN\n102 (4) 10 N",
+        "latexText": "\\(A 1 kg mass is suspended from the ceiling by a rope of length 4m. A horizontal force 'F' is applied at the mid point of the rope so that the rope makes an angle of 45^\\circ with respect to the vertical axis as shown in figure. The magnitude of F is : F 1 Kg T^{2} T^{1} (1) 0 N^{2}  (2) 1 N (3) 1 N^{102} (4) 10 N\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "0 N 2 "
+          },
+          {
+            "letter": "3",
+            "text": "1 N 102"
+          },
+          {
+            "letter": "4",
+            "text": "10 N"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "0 N 2 ",
+            "formattedText": "0 N 2 ",
+            "latexText": "0 N 2 "
+          },
+          {
+            "letter": "3",
+            "text": "1 N 102",
+            "formattedText": "1 N 102",
+            "latexText": "1 N 102"
+          },
+          {
+            "letter": "4",
+            "text": "10 N",
+            "formattedText": "10 N",
+            "latexText": "10 N"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "49",
+        "text": "A spherical ball of radius 1×10\n–\n4 m and density 10\n5 kg/m\n3 falls freely under gravity through a distance h before entering a tank of water, If after entering in water the velocity of the ball does not change, then the value of h is approximately : (The coefficient of viscosity of water is 9.8 × 10\n–\n6 N s/m\n2\n) (1) 2296 m (2) 2249 m (3) 2518 m (4) 2396 m",
+        "formattedText": "A spherical ball of radius 1×10\n–\n4 m and density 10\n5 kg/m\n3 falls freely under gravity through a distance h before entering a tank of water, If after entering in water the velocity of the ball does not change, then the value of h is approximately : (The coefficient of viscosity of water is 9.8 × 10\n–\n6 N s/m\n2\n) (1) 2296 m (2) 2249 m (3) 2518 m (4) 2396 m",
+        "latexText": "\\(A spherical ball of radius 1\\times10 – 4 m and density 10^{5} \\frac{kg}{m}^{3} falls freely under gravity through a distance h before entering a tank of water, If after entering in water the velocity of the ball does not change, then the value of h is approximately : (The coefficient of viscosity of water is 9.8 \\times 10 – 6 N \\frac{s}{m}^{2} ) (1) 2296 m (2) 2249 m (3) 2518 m (4) 2396 m\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "2296 m"
+          },
+          {
+            "letter": "2",
+            "text": "2249 m"
+          },
+          {
+            "letter": "3",
+            "text": "2518 m"
+          },
+          {
+            "letter": "4",
+            "text": "2396 m"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "2296 m",
+            "formattedText": "2296 m",
+            "latexText": "2296 m"
+          },
+          {
+            "letter": "2",
+            "text": "2249 m",
+            "formattedText": "2249 m",
+            "latexText": "2249 m"
+          },
+          {
+            "letter": "3",
+            "text": "2518 m",
+            "formattedText": "2518 m",
+            "latexText": "2518 m"
+          },
+          {
+            "letter": "4",
+            "text": "2396 m",
+            "formattedText": "2396 m",
+            "latexText": "2396 m"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "kg/m",
+            "latex": "\\(\\frac{kg}{m}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "s/m",
+            "latex": "\\(\\frac{s}{m}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "52",
+        "text": "A particle of mass 0.50 kg executes simple harmonic motion under force F = –50(Nm\n–1\n)x. The time period of oscillation is x\ns\n35\n. The value of x is ................. (Given  = 22\n7\n)",
+        "formattedText": "A particle of mass 0.50 kg executes simple harmonic motion under force F = –50(Nm\n–1\n)x. The time period of oscillation is x\ns\n35\n. The value of x is ................. (Given  = 22\n7\n)",
+        "latexText": "\\(A particle of mass 0.50 kg executes simple harmonic motion under force F = –50(Nm –1 )x. The time period of oscillation is x s^{35} . The value of x is ................. (Given  = 22^{7} )\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "55",
+        "text": "A circular disc reaches from top to bottom of an inclined plane of length l. When it slips down the plane, if takes t s. When it rolls down the plane then it takes 1/ 2\n2\n\n\n\n t s, where  is ...........",
+        "formattedText": "A circular disc reaches from top to bottom of an inclined plane of length l. When it slips down the plane, if takes t s. When it rolls down the plane then it takes 1/ 2\n2\n\n\n\n t s, where  is ...........",
+        "latexText": "\\(A circular disc reaches from top to bottom of an inclined plane of length l. When it slips down the plane, if takes t s. When it rolls down the plane then it takes 1/ 2^{2}     t s, where  is ...........\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "56",
+        "text": "To determine the resistance (R) of a wire, a circuit is designed below, The V-I characteristic curve for this circuit is plotted for the voltmeter and the ammeter readings as shown in figure. The value of R is ............ . R V 10 k E mA $//(1\n® 8 I(mA) 2 3 4 0 4 6 8 V(volt)",
+        "formattedText": "To determine the resistance (R) of a wire, a circuit is designed below, The V-I characteristic curve for this circuit is plotted for the voltmeter and the ammeter readings as shown in figure. The value of R is ............ . R V 10 k E mA $//(1\n® 8 I(mA) 2 3 4 0 4 6 8 V(volt)",
+        "latexText": "\\(To determine the resistance (R) of a wire, a circuit is designed below, The V-I characteristic curve for this circuit is plotted for the voltmeter and the ammeter readings as shown in figure. The value of R is ............ . R V 10 k E mA $//(1 ® 8 I(mA) 2 3 4 0 4 6 8 V(volt)\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "58",
+        "text": "Monochromatic light of wavelength 500 nm is used in Young's double slit experiment. An interference pattern is obtained on a screen When one of the slits is covered with a very thin glass plate (refractive index = 1.5), the central maximum is shifted to a position previously occupied by the 4\nth bright fringe. The thickness of the glass-plate is ...................μm.",
+        "formattedText": "Monochromatic light of wavelength 500 nm is used in Young's double slit experiment. An interference pattern is obtained on a screen When one of the slits is covered with a very thin glass plate (refractive index = 1.5), the central maximum is shifted to a position previously occupied by the 4\nth bright fringe. The thickness of the glass-plate is ...................<tiny-math-block formula=\"μm\"><math><mrow>μm</mrow></math></tiny-math-block>.",
+        "latexText": "\\(Monochromatic light of wavelength 500 nm is used in Young's double slit experiment. An interference pattern is obtained on a screen When one of the slits is covered with a very thin glass plate (refractive index = 1.5), the central maximum is shifted to a position previously occupied by the 4 th bright fringe. The thickness of the glass-plate is ...................\\mum.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 3\n1",
+        "type": "mathematical",
+        "position": 148
+      },
+      {
+        "equation": "i = p\nf O = m\n1 u\n1 + m\n2 u\n2 1\n2\nu\n1\nu2\n",
+        "type": "mathematical",
+        "position": 568
+      },
+      {
+        "equation": "D = f\n1 + f\n2 = 25 cm Paraxial parallel rays pass through focus and ray from focus of convex lens will become parallel 33",
+        "type": "mathematical",
+        "position": 913
+      },
+      {
+        "equation": "E = 1\nnf RT\n2 T\ni = ",
+        "type": "mathematical",
+        "position": 1310
+      },
+      {
+        "equation": "f = 390 K T\nf = 117",
+        "type": "mathematical",
+        "position": 1420
+      },
+      {
+        "equation": "b/w energy level 2 to 1 35",
+        "type": "mathematical",
+        "position": 1730
+      },
+      {
+        "equation": "y = (3",
+        "type": "mathematical",
+        "position": 1814
+      },
+      {
+        "equation": "x + 0",
+        "type": "mathematical",
+        "position": 1850
+      },
+      {
+        "equation": "y = 1",
+        "type": "mathematical",
+        "position": 1917
+      },
+      {
+        "equation": "x + 0",
+        "type": "mathematical",
+        "position": 1942
+      },
+      {
+        "equation": "z = 105 sin (1",
+        "type": "mathematical",
+        "position": 1972
+      },
+      {
+        "equation": "x + 0",
+        "type": "mathematical",
+        "position": 1996
+      },
+      {
+        "equation": "z = 1",
+        "type": "mathematical",
+        "position": 2026
+      },
+      {
+        "equation": "x + 0",
+        "type": "mathematical",
+        "position": 2051
+      },
+      {
+        "equation": "y = 10",
+        "type": "mathematical",
+        "position": 2082
+      },
+      {
+        "equation": "x + 0",
+        "type": "mathematical",
+        "position": 2107
+      },
+      {
+        "equation": "x + 0",
+        "type": "mathematical",
+        "position": 2205
+      },
+      {
+        "equation": "x + 0",
+        "type": "mathematical",
+        "position": 2249
+      },
+      {
+        "equation": "m/s as shown in figure",
+        "type": "mathematical",
+        "position": 2447
+      },
+      {
+        "equation": "t = 0",
+        "type": "mathematical",
+        "position": 2526
+      },
+      {
+        "equation": "t = 10 s will be ",
+        "type": "mathematical",
+        "position": 2573
+      },
+      {
+        "equation": "m/s 15cm ",
+        "type": "mathematical",
+        "position": 2594
+      },
+      {
+        "equation": "B=1",
+        "type": "mathematical",
+        "position": 2635
+      },
+      {
+        "equation": "t = 10 sec complete loop is in magnetic field therefore no change in flux B",
+        "type": "mathematical",
+        "position": 2704
+      },
+      {
+        "equation": "e = 0 for complete loop 37",
+        "type": "mathematical",
+        "position": 2799
+      },
+      {
+        "equation": "m/s 20 m/s B 300 m BA\nu40 m s",
+        "type": "mathematical",
+        "position": 3116
+      },
+      {
+        "equation": "O = (40)\n2 + 2(",
+        "type": "mathematical",
+        "position": 3191
+      },
+      {
+        "equation": "S = 200 m Remaining distance = 300 ",
+        "type": "mathematical",
+        "position": 3213
+      },
+      {
+        "equation": "I-V characteristics of an electronic device shown in the figure",
+        "type": "mathematical",
+        "position": 3270
+      },
+      {
+        "equation": "e-Broglie wavelength associated with a particle of mass m and energy E is h / 2mE\n",
+        "type": "mathematical",
+        "position": 3976
+      },
+      {
+        "equation": "E = h",
+        "type": "mathematical",
+        "position": 4207
+      },
+      {
+        "equation": "g = 10m/s\n2\n",
+        "type": "mathematical",
+        "position": 4441
+      },
+      {
+        "equation": "R = radius of earth) (1) 2",
+        "type": "mathematical",
+        "position": 4455
+      },
+      {
+        "equation": "y = GMm\n2(2R)\n",
+        "type": "mathematical",
+        "position": 4544
+      },
+      {
+        "equation": "y = 4\n10 R\n6 is added then 4\nGMm 10 RGMm\n4R62r\n",
+        "type": "mathematical",
+        "position": 4568
+      },
+      {
+        "equation": "m = 10\n3 kg) 3432\n1010 R 10 R1010 R\n462r\n",
+        "type": "mathematical",
+        "position": 4698
+      },
+      {
+        "equation": "r = 6R 42",
+        "type": "mathematical",
+        "position": 4769
+      },
+      {
+        "equation": "s +q",
+        "type": "mathematical",
+        "position": 5097
+      },
+      {
+        "equation": "q +5q +3q q ",
+        "type": "mathematical",
+        "position": 5235
+      },
+      {
+        "equation": "q= +e",
+        "type": "mathematical",
+        "position": 5400
+      },
+      {
+        "equation": "m = 2",
+        "type": "mathematical",
+        "position": 5407
+      },
+      {
+        "equation": "n = (work function) + K",
+        "type": "mathematical",
+        "position": 6034
+      },
+      {
+        "equation": "x = 1 eV 46",
+        "type": "mathematical",
+        "position": 6096
+      },
+      {
+        "equation": "A = 6",
+        "type": "mathematical",
+        "position": 6451
+      },
+      {
+        "equation": "H\n=\n26",
+        "type": "mathematical",
+        "position": 6605
+      },
+      {
+        "equation": "R = 8J/molK)",
+        "type": "mathematical",
+        "position": 7035
+      },
+      {
+        "equation": "N/m\n2\n) 20 A C 10 B 2 4 V(m\n3\n) (1) 225 J (2) 205 J (3) 20 J (4) ",
+        "type": "mathematical",
+        "position": 7051
+      },
+      {
+        "equation": "B = PdV\n",
+        "type": "mathematical",
+        "position": 7139
+      },
+      {
+        "equation": "C = 2\n4\nP dV 10(2 ",
+        "type": "mathematical",
+        "position": 7267
+      },
+      {
+        "equation": "A = 0 ",
+        "type": "mathematical",
+        "position": 7302
+      },
+      {
+        "equation": "e = 205 J Note ",
+        "type": "mathematical",
+        "position": 7316
+      },
+      {
+        "equation": "F = 10N 49",
+        "type": "mathematical",
+        "position": 7772
+      },
+      {
+        "equation": "g/m\n3 falls freely under gravity through a distance h before entering a tank of water",
+        "type": "mathematical",
+        "position": 7840
+      },
+      {
+        "equation": "s/m\n2\n) (1) 2296 m (2) 2249 m (3) 2518 m (4) 2396 m Ans",
+        "type": "mathematical",
+        "position": 8092
+      },
+      {
+        "equation": "T = 224",
+        "type": "mathematical",
+        "position": 8258
+      },
+      {
+        "equation": "x = 1 For y E 1=A 0=B 0 1 0 0 1 SECTION-B 51",
+        "type": "mathematical",
+        "position": 8517
+      },
+      {
+        "equation": "e = mx",
+        "type": "mathematical",
+        "position": 8779
+      },
+      {
+        "equation": "c = m ",
+        "type": "mathematical",
+        "position": 8826
+      },
+      {
+        "equation": "r = m ",
+        "type": "mathematical",
+        "position": 8836
+      },
+      {
+        "equation": "F = ",
+        "type": "mathematical",
+        "position": 8943
+      },
+      {
+        "equation": "m = 0",
+        "type": "mathematical",
+        "position": 9073
+      },
+      {
+        "equation": "F = ",
+        "type": "mathematical",
+        "position": 9084
+      },
+      {
+        "equation": "a = (",
+        "type": "mathematical",
+        "position": 9098
+      },
+      {
+        "equation": "a = ",
+        "type": "mathematical",
+        "position": 9113
+      },
+      {
+        "equation": "a = (",
+        "type": "mathematical",
+        "position": 9123
+      },
+      {
+        "equation": "w = 10",
+        "type": "mathematical",
+        "position": 9148
+      },
+      {
+        "equation": "T = 22222\n1057 1535\n",
+        "type": "mathematical",
+        "position": 9157
+      },
+      {
+        "equation": "R = 4",
+        "type": "mathematical",
+        "position": 9442
+      },
+      {
+        "equation": "Z = 22\nRX L",
+        "type": "mathematical",
+        "position": 9449
+      },
+      {
+        "equation": "Z = ",
+        "type": "mathematical",
+        "position": 9462
+      },
+      {
+        "equation": "s = ",
+        "type": "mathematical",
+        "position": 9490
+      },
+      {
+        "equation": "s = rms\nV\n8\n1A\nz8\n",
+        "type": "mathematical",
+        "position": 9516
+      },
+      {
+        "equation": "d = I\n2\nrms ",
+        "type": "mathematical",
+        "position": 9552
+      },
+      {
+        "equation": "R = 1 ",
+        "type": "mathematical",
+        "position": 9566
+      },
+      {
+        "equation": "x=2 x=4 x y ",
+        "type": "mathematical",
+        "position": 9811
+      },
+      {
+        "equation": "m / c",
+        "type": "mathematical",
+        "position": 9852
+      },
+      {
+        "equation": "m / c",
+        "type": "mathematical",
+        "position": 9880
+      },
+      {
+        "equation": "t = ",
+        "type": "mathematical",
+        "position": 9897
+      },
+      {
+        "equation": "n + ",
+        "type": "mathematical",
+        "position": 9904
+      },
+      {
+        "equation": "t = ",
+        "type": "mathematical",
+        "position": 9912
+      },
+      {
+        "equation": "a = gsin",
+        "type": "mathematical",
+        "position": 10180
+      },
+      {
+        "equation": "V-I characteristic curve for this circuit is plotted for the voltmeter and the ammeter readings as shown in figure",
+        "type": "mathematical",
+        "position": 10435
+      },
+      {
+        "equation": "E = 4V",
+        "type": "mathematical",
+        "position": 10676
+      },
+      {
+        "equation": "I = 2mA ",
+        "type": "mathematical",
+        "position": 10684
+      },
+      {
+        "equation": "R = 40000 + 4R 16R = 40000 R = 2500",
+        "type": "mathematical",
+        "position": 10739
+      },
+      {
+        "equation": "x = 1",
+        "type": "mathematical",
+        "position": 11235
+      },
+      {
+        "equation": "s-plate is ",
+        "type": "mathematical",
+        "position": 11362
+      },
+      {
+        "equation": "t = n",
+        "type": "mathematical",
+        "position": 11418
+      },
+      {
+        "equation": "t = 4 ",
+        "type": "mathematical",
+        "position": 11436
+      },
+      {
+        "equation": "t = 4000 ",
+        "type": "mathematical",
+        "position": 11458
+      },
+      {
+        "equation": "t = 4",
+        "type": "mathematical",
+        "position": 11477
+      },
+      {
+        "equation": "x = 2 m to x = 4m",
+        "type": "mathematical",
+        "position": 11537
+      },
+      {
+        "equation": "R = R\n0\n(1 + ",
+        "type": "mathematical",
+        "position": 11945
+      },
+      {
+        "equation": "T = 1000",
+        "type": "mathematical",
+        "position": 11994
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 177
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 260
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 813
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1834
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1926
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1980
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2035
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2091
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2189
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2233
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2430
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3012
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3236
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4101
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4799
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4830
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4986
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7171
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7721
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 7736
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7757
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7886
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7912
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8058
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9259
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9292
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10185
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10211
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10240
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10285
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10325
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10331
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10381
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10789
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10956
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 11097
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11742
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11892
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Calculus",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "integration"
+        ],
+        "possibleSubtopics": [
+          "Differentiation",
+          "Integration",
+          "Limits",
+          "Applications of Derivatives"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "voltage"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      },
+      {
+        "name": "Organic Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "reaction"
+        ],
+        "possibleSubtopics": [
+          "Hydrocarbons",
+          "Functional Groups",
+          "Reaction Mechanisms",
+          "Biomolecules"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Integration",
+        "parentTopic": "Calculus",
+        "confidence": 0.25,
+        "matchedKeywords": [
+          "integration"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "velocity",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "force",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "charge",
+          "electric field"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      }
+    ],
+    "tags": [
+      "Formula Based"
+    ],
+    "wordCount": 2993,
+    "characterCount": 12043
+  },
+  "images": []
+}

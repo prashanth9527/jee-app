@@ -76,7 +76,7 @@ export class JsonImportService {
   }
 
   /**
-   * Read and parse a JSON file from the seeds directory
+   * Read and parse a JSON file from the seeds directory, handling both direct question arrays and our converted format
    */
   async readJsonFile(filePath: string): Promise<JSONQuestion[]> {
     const fullPath = path.join(process.cwd(), 'prisma', 'seeds', filePath);
@@ -87,13 +87,19 @@ export class JsonImportService {
 
     try {
       const fileContent = fs.readFileSync(fullPath, 'utf-8');
-      const questions = JSON.parse(fileContent);
+      const jsonData = JSON.parse(fileContent);
+
+      // Handle our converted JSON format (with metadata and nested questions)
+      if (jsonData.content && jsonData.content.questions && Array.isArray(jsonData.content.questions)) {
+        return this.convertToStandardFormat(jsonData.content.questions);
+      }
       
-      if (!Array.isArray(questions)) {
-        throw new BadRequestException('JSON file must contain an array of questions');
+      // Handle direct question array format
+      if (Array.isArray(jsonData)) {
+        return this.convertToStandardFormat(jsonData);
       }
 
-      return questions;
+      throw new BadRequestException('JSON file must contain an array of questions');
     } catch (error) {
       if (error instanceof SyntaxError) {
         throw new BadRequestException(`Invalid JSON format in file: ${filePath}`);
@@ -384,6 +390,83 @@ export class JsonImportService {
     if (upperDifficulty === 'EASY') return 'EASY';
     if (upperDifficulty === 'HARD') return 'HARD';
     return 'MEDIUM';
+  }
+
+
+  /**
+   * Convert our question format to the standard JSONQuestion format
+   */
+  private convertToStandardFormat(questions: any[]): JSONQuestion[] {
+    return questions.map((q, index) => {
+      // Handle our converted format
+      if (q.text) {
+        // Extract options from the question text if options array is empty or invalid
+        let options = [];
+        if (q.options && Array.isArray(q.options) && q.options.length > 0) {
+          options = q.options.map((opt: any) => ({
+            text: opt.formattedText || opt.text || '',
+            isCorrect: opt.isCorrect || false
+          }));
+        } else {
+          // Try to extract options from the question text
+          options = this.extractOptionsFromText(q.text);
+        }
+
+        return {
+          stem: q.formattedText || q.text,
+          options: options,
+          explanation: q.explanation || '',
+          tip_formula: q.tip_formula || '',
+          difficulty: q.difficulty || 'Medium',
+          yearAppeared: q.yearAppeared || new Date().getFullYear(),
+          isPreviousYear: q.isPreviousYear || true,
+          isAIGenerated: q.isAIGenerated || false,
+          aiPrompt: q.aiPrompt || '',
+          stream: 'JEE',
+          subject: q.subject || 'Mathematics',
+          lesson: q.lesson || 'General',
+          topic: q.topic || 'General',
+          subtopic: q.subtopic || '',
+          tags: q.tags || []
+        };
+      }
+      
+      // Handle standard format
+      return q;
+    });
+  }
+
+  /**
+   * Extract options from question text when options array is empty
+   */
+  private extractOptionsFromText(text: string): Array<{text: string, isCorrect: boolean}> {
+    const options: Array<{text: string, isCorrect: boolean}> = [];
+    
+    // Look for patterns like (1) option1 (2) option2 (3) option3 (4) option4
+    const optionPattern = /\((\d+)\)\s*([^(]+?)(?=\s*\(\d+\)|$)/g;
+    let match;
+    
+    while ((match = optionPattern.exec(text)) !== null) {
+      const optionNumber = match[1];
+      const optionText = match[2].trim();
+      
+      if (optionText && optionText.length > 0) {
+        options.push({
+          text: `(${optionNumber}) ${optionText}`,
+          isCorrect: false // We can't determine correctness from text alone
+        });
+      }
+    }
+    
+    // If no options found with the pattern, create a single option with the full text
+    if (options.length === 0) {
+      options.push({
+        text: text,
+        isCorrect: false
+      });
+    }
+    
+    return options;
   }
 
   /**

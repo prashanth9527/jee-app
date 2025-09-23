@@ -1,0 +1,1453 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2024\\Session2\\Physics\\0604-Physics-Paper-With-Solution-Evening.pdf",
+  "relativePath": "JEE\\Previous Papers\\2024\\Session2\\Physics\\0604-Physics-Paper-With-Solution-Evening.pdf",
+  "metadata": {
+    "originalFileName": "0604-Physics-Paper-With-Solution-Evening.pdf",
+    "subject": "Physics",
+    "year": 2024,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 9,
+    "fileSize": 3929646,
+    "processedAt": "2025-09-22T23:53:41.040Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2024 (Held On Saturday 06\nth April, 2024) TIME : 3 : 00 PM to 6 : 00 PM PHYSICS TEST PAPER WITH SOLUTION SECTION-A 31. The longest wavelength associated with Paschen series is : (Given R\nH =1.097 × 10\n7 SI unit) (1) 1.094 × 10\n–6\nm (2) 2.973 × 10\n–6\nm (3) 3.646 × 10\n–6\nm (4) 1.876 × 10\n–6\nm Ans. (4) Sol. For longest wavelength in Paschen's series: 22\n12\n111\nR\nnn\n\n\n\n\n For longest n\n1 = 3 n\n2 = 4 22\n111\nR\n(3)(4)\n\n\n\n\n 111\nR\n9 16\n\n\n\n\n 116 9\nR\n16 9\n\n\n\n\n\n   = 7\n16 916 9\n7R\n7 1.097 10\n\n\n  = 1.876 × 10\n–6 m 32. A total of 48 J heat is given to one mole of helium kept in a cylinder. The temperature of helium increases by 2°C. The work done by the gas is : (Given, R = 8.3 J K\n–\n1\nmol\n–1\n.) (1) 72.9 J (2) 24.9 J (3) 48 J (4) 23.1 J Ans. (4) Sol. 1\nst law of thermodynamics Q = U + W  +48 = nC\nv\nT + W  48 = (1) 3R\n2\n\n\n\n(2) + W  W = 48 – 3 × R  W = 48 – 3 × (8.3)  W 23.1 Joule 33. In finding out refractive index of glass slab the following observations were made through travelling microscope 50 vernier scale division = 49 MSD; 20 divisions on main scale in each cm For mark on paper MSR = 8.45 cm, VC = 26 For mark on paper seen through slab MSR = 7.12 cm, VC = 41 For powder particle on the top surface of the glass slab MSR = 4.05 cm, VC = 1 (MSR = Main Scale Reading, VC = Vernier Coincidence) Refractive index of the glass slab is: (1) 1.42 (2) 1.52 (3) 1.24 (4) 1.35 Ans. (1) Sol. 1 MSD = 1cm\n20\n= 0.05 cm 1 VSD = 49\n50\nMSD = 49\n50\n×0.05 cm = 0.049 cm LC = 1MSD – 1VSD = 0.001 cm For mark on paper, L\n1 = 8.45 cm + 26 × 0.001 cm = 84.76 mm For mark on paper through slab, L2 = 7.12 cm + 41× 0.001 cm = 71.61 mm For powder particle on top surface, ZE = 4.05 cm + 1 × 0.001 cm = 40.51 mm  actual L\n1 = 84.76 – 40.51 = 44.25 mm actual L2 = 71.61 – 40.51 = 31.10 mm 1\n2\nL\nL\n  1\n2\nL\n44.25\n1.42\nL31.10\n   $//(1\n® 2 34. In the given electromagnetic wave E\ny = 600 sin (t – kx) Vm\n–\n1\n, intensity of the associated light beam is (in W/m\n2\n); (Given \n0 = 9×10\n–\n12\nC\n2\nN\n–1\nm\n–2\n) (1) 486 (2) 243 (3) 729 (4) 972 Ans. (1) Sol. Intensity = 2\n00\n1\nEc\n2\n =\n1\n2\n× 9 ×10\n–12 × (600)\n2 × 3 × 10\n8 = 9\n2\n× 36 × 3 = 486 w/m\n2 35. Assuming the earth to be a sphere of uniform mass density, a body weighed 300 N on the surface of earth. How much it would weigh at R/4 depth under surface of earth ? (1) 75 N (2) 375 N (3) 300 N (4) 225 N Ans. (4) Sol. At surface: mg = 300 N m = s\n300\ng At Depth R\n4\n: g\nd = s\nd\ng1\nR\n\n\n\n ds\nR\ngg 1\n4R\n\n\n\n s\nd\n3g\ng\n4\n weight at depth = m × g\nd = s\n3g\nm\n4\n = 3\n300\n4\n = 225 N 36. The acceptor level of a p-type semiconductor is 6eV. The maximum wavelength of light which can create a hole would be : Given hc = 1242 eV nm. (1) 407 nm (2) 414 nm (3) 207 nm (4) 103.5 nm Ans. (3) Sol. Energy = hc\n\n; 1240\nEeV\n(nm)\n\n 1240\n6\n(nm)\n\n 1240\n207nm\n6\n  3\n7. A car of 800 kg is taking turn on a banked road of radius 300 m and angle of banking 30°. If coefficient of static friction is 0.2 then the maximum speed with which car can negotiate the turn safely : (g = 10 m/s\n2\n, 3\n=1.73) (1) 70.4 m/s (2) 51.4 m/s (3) 264 m/s (4) 102.8 m/s Ans. (2) Sol. m = 800 kg r = 300 m  = 30° \ns = 0.2 max\ntan\nVRg\n1tan\n \n\n\n\n \n = tan 300.2\n300 g\n1 0.2 tan 30\n\n\n\n\n \n = 0.57 0.2\n300 10\n1 0.2 0.57\n\n\n\n\n\n V\nmax = 51.4 m/s 38. Two identical conducting spheres P and S with charge Q on each, repel each other with a force 16N. A third identical uncharged conducting sphere R is successively brought in contact with the two spheres. The new force of repulsion between P and S is : (1) 4 N (2) 6 N (3) 1 N (4) 12 N Ans. (2) Sol. $//(1\n® 3 Q Q 0 P S R F\nPS  Q\n2 F\nPS = 16 N Now If P & R are brought in contact then Q/2 Q Q/2 P S R Now If S & R are brought in contact then Q/2 3Q/4 3Q/4 P S R New force between P & S is : F\nPS  Q 3Q\n24\n F\nPS  2\n3Q\n8\n= 3\n16\n8\n\n6N 39. In a coil, the current changes form –2 A to +2A in 0.2 s and induces an emf of 0.1 V. The self-\ninductance of the coil is : (1) 5 mH (2) 1 mH (3) 2.5 mH (4) 4 mH Ans. (1) Sol. (Emf)\ninduced = di\n–L\ndt In magnitude form, ind\ndi\nEmf (–)L\ndt\n  0.1 = (L)[ 2 ( 2)]\n0.2\n    0.1 0.2\nL5mH\n4\n\n 40. For the thin convex lens, the radii of curvature are at 15 cm and 30 cm respectively. The focal length the lens is 20 cm. The refractive index of the material is : (1) 1.2 (2) 1.4 (3) 1.5 (4) 1.8 Ans. (3) Sol. lens\nair12\n111\n1\nfRR\n\n\n\n\n\n\n\n\n  111\n1\n20115( 30)\n\n\n\n \n\n\n\n\n  1\n20\n= (–1) 3\n30\n\n\n   –1 =\n1\n2  13\n11 5\n22\n      41. Energy of 10 non rigid diatomic molecules at temperature T is : (1) 7\n2\nRT (2) 70 K\nB\nT (3) 35 RT (4) 35 K\nB\nT Ans. (4) Sol. Degree of freedom(f) = 5 + 2(3N – 5) f = 5 + 2(3 × 2 –1) = 7 energy of one molecule = B\nf\nKT\n2 energy of 10 molecules = B\nf\n10K T\n2\n\n\n\n= B\n7\n10K T\n2\n\n\n = 35 K\nB\nT 42. A body of weight 200 N is suspended form a tree branch thought a chain of mass 10 kg. The branch pulls the chain by a force equal to (if g = 10 m/s\n2\n): (1) 150 N (2) 300 N (3) 200 N (4) 100 N Ans. (2) Sol. total weight = 200+10×10 =300N 200N 10×10 T Chain block system is in equilibrium so T = 200 + 100 = 300 N. $//(1\n® 4 43. When UV light of wavelength 300 nm is incident on the metal surface having work function 2.13 eV, electron emission takes place. The stopping potential is : (Given hc = 1240 eV nm) (1) 4 V (2) 4.1 V (3) 2 V (4) 1.5 V Ans. (3) Sol. s\nhc\ne.V \n  1240\n300\neV – 2.13 eV = eVs  4.13 eV – 2.13 eV = eVs.  So, s\nV2volt 44. The number of electrons flowing per second in the filament of a 110 W bulb operating at 220 V is : (Given e = 1.6 × 10\n–19 C) (1) 31.25 × 10\n17 (2) 6.25 × 10\n18 (3) 6.25 × 10\n17 (4) 1.25 × 10\n19 Ans. (1) Sol. Power (P) = V.I  110 = (220) (I)  I = 0.5 A Now, I = ne\nt\n  0.5 = n\nt\n\n\n (1.6 × 10\n–\n19\n)  n\nt\n= 19\n0.5\n1.6 10\n\n  17\nn\n31.25 10\nt\n 45. When kinetic energy of a body becomes 36 times of its original value, the percentage increase in the momentum of the body will be : (1) 500% (2) 600% (3) 6% (4) 60% Ans. (1) Sol. Kinetic energy (K) = 2\nP\n2m  P2mK If K\nf = 36 K\ni So, P\nf = 6 P\ni % increase in momentum = fi\ni\nPP\n100%\nP\n\n = ii\ni\n6PP\n100%\nP\n\n = 500% 46. Pressure inside a soap bubble is greater than the pressure outside by an amount : (given : R = Radius of bubble, S = Surface tension of bubble) (1) 4S\nR (2) 4R\nS (3) S\nR (4) 2S\nR Ans. (1) Sol. There are two liquid-air surfaces in bubble so 2S4S\nP2\nRR\n\n \n\n 47. Match List-I with List-II List-I (Y vs X) List-II (Shape of Graph) (A) Y = magnetic susceptibility X = magnetising field (I) Y X (B) Y = magnetic field X = distance from centre of a current carrying wire for x < a (where a=radius of wire) (II) Y X (C) Y = magnetic field X = distance from centre of a current carrying wire for x > a (where a = radius of wire) (III) X Y (D) Y= magnetic field inside solenoid X = distance from center (IV) Y X Choose the correct answer from the options given below : (1) (A)-(III), (B)-(I), (C)-(IV), (D)-(II) (2) (A)-(I), (B)-(III), (C)-(II), (D)-(IV) (3) (A)-(IV), (B)-(I), (C)-(III), (D)-(II) (4) (A)-(III), (B)-(IV), (C)-(I), (D)-(II) Ans. (4) $//(1\n® 5 Sol. (A) Graph between Magnetic susceptibility and magnetising field is : X Y (B) magnetic field due to a current carrying wire for x a : 0\n2\nir\nB\n2a\n\n\n Y X (C) magnetic field due to a current carrying wire for x a : 0\ni\nB\n2a\n\n\n Y X (D) magnetic field inside solenoid varies as: Y X 48. In a vernier calliper, when both jaws touch each other, zero of the vernier scale shifts towards left and its 4\nth division coincides exactly with a certain division on main scale. If 50 vernier scale divisions equal to 49 main scale divisions and zero error in the instrument is 0.04 mm then how many main scale divisions are there in 1 cm ? (1) 40 (2) 5 (3) 20 (4) 10 NTA Ans. (3\n) Allen Ans. (Bonus) Sol. 4\nth division coincides with 3\nrd division then 0.004 cm = 4VSD – 3MSD 49MSD = 50 VSD 1MSD = 1\nN\ncm 0.004 = \n49\n4MSD\n50\n– 3MSD 0.004 = 196\n3\n50\n\n\n\n 1\nN\n\n\n N = 46 100046 1000\n230\n504200\n\n 49. Given below are two statements : Statement (I) : Dimensions of specific heat is [L\n2\nT\n–\n2\nK\n–1\n] Statement (II) : Dimensions of gas constant is [M L\n2\nT\n–1\nK\n–1\n] (1) Statement (I) is incorrect but statement (II) is correct (2) Both statement (I) and statement (II) are incorrect (3) Statement (I) is correct but statement (II) is incorrect (4) Both statement (I) and statement (II) are correct Ans. (3) Sol. Q = mST s = Q\nmT\n\n [s] = 22\nML T\nMK\n\n\n\n [s] = [L\n2 T\n–2 K\n–1\n] Statement-(I) is correct PV = nRT  R = PV\nnT [R] = 123\n[ML T ][L ]\n[mol][K]\n [R] = [ML\n2\nT\n–2 mol\n–1\nK\n–1\n] Statement-II is incorrect 50. A body projected vertically upwards with a certain speed from the top of a tower reaches the ground in t\n1\n. If it is projected vertically downwards from the same point with the same speed, it reaches the ground in t\n2\n. Time required to reach the ground, if it is dropped from the top of the tower, is : (1) 12\ntt (2) 12\ntt (3) 1\n2\nt\nt (4) 12\ntt Ans. (1) $//(1\n® 6 Sol. 2\n1\nuu2gh\nt\ng\n\n 2\n2\nuu2gh\nt\ng\n  \n 2gh\nt\ng\n 22\n2\n12\n22\n(u2gh) u2gh\nt tt\ngg\n\n   12\ntt t SECTION-B 51. In Franck-Hertz experiment, the first dip in the current-voltage graph for hydrogen is observed at 10.2 V. The wavelength of light emitted by hydrogen atom when excited to the first excitation level is ______ nm. (Given hc = 1245 eV nm, e = 1.6 × 10\n–\n19\nC). Ans. (122) Sol. 10.2 eV = hc\n 1245 eV nm\n10.2eV\n\n\n= 122.06 nm 52. For a given series LCR circuit it is found that maximum current is drawn when value of variable capacitance is 2.5 nF. If resistance of 200 and 100 mH inductor is being used in the given circuit. The frequency of ac source is _____ × 10\n3 Hz. (given \n2 = 10) Ans. (10) Sol. for maximum current, circuit must be in resonance. 0\n1\nf\n2L C\n\n 0\n–39\n1\nf\n2100 102.5 10\n\n\n    = 11\n1\n225 10\n\n = 5\n1\n1010\n25\n\n\nHz =\n3\n100\n10\n10\n\nHz f\n0 = 10 × 10\n3 Hz 53. A particle moves in a straight line so that its displacement x at any time t is given by x\n2\n=1 +t\n2\n. Its acceleration at any time t is x\n–\nn where n = _____. Ans. (3) Sol. x\n2 = 1 + t\n2 dx\n2x2t\ndt\n xv = t dvdx\nxv1\ndtdt\n x.a+v\n2 =1 a = 222\n1 v1 t / x\nxx\n\n a = 3\n3\n1\nx\nx\n\n 54. Three balls of masses 2kg, 4kg and 6kg respectively are arranged at centre of the edges of an equilateral triangle of side 2 m. The moment of inertia of the system about an axis through the centroid and perpendicular to the plane of triangle, will be ______ kg m\n2\n. Ans. (4) Sol. 2kg 4kg 6kg r r c r Moment of inertia about C and perpendicular to the plane is : I = r\n2 [2 + 4 + 6] = 1\n12\n3\n I = 4 kg-m\n2 55. A coil having 100 turns, area of 5 × 10\n–3\nm\n2\n, carrying current of 1 mA is placed in uniform magnetic field of 0.20 T such a way that plane of coil is perpendicular to the magnetic field. The work done in turning the coil through 90° is _____ J. Ans. (100) Sol. W = U = U\nf – U\ni W = fi\n(– .B) (– .B)   = 0 + i\n( .B) = (100 × 5 × 10\n–\n3 × 1 × 10\n–3\n) × 0.2 J = 1 × 10\n–4 J = 100 J $//(1\n® 7 56. In the given figure an ammeter A consists of a 240 coil connected in parallel to a 10  shunt. The reading of the ammeter is ______ mA. A 24V 140.4 Ans. (160) Sol. 24\n140.4 I 240 Req = 240 10\n140.4\n240 10\n\n\n Req = 140.4 + 2400\n250 Req. = 150  Current in ammeter = 24\n150 = 160 mA 57. A wire of cross sectional area A, modulus of elasticity 2 × 10\n11 Nm\n–\n2 and length 2 m is stretched between two vertical rigid supports. When a mass of 2 kg is suspended at the middle it sags lower from its original position making angle 1\n100\n\nradian on the points of support. The value of A is _____ × 10\n–\n4 m\n2 (consider x<<L). (given : g=10 m/s\n2\n) 2L x  2kg Ans. (1) Sol. 2L x  20 T T In vertical derection 2T sin = 20 using small angle approximation sin =   = 1\n100  T = 10\n T = 1000N Change in length L = 22\n2 xL2L = 2\n2\nx\n2L 11\n2L\n\n\n\n L =\n2\nx\nL  Modulus of elasticity = stress\nstrain 2 × 10\n11 = 3\n2\n10\n2L\nx\nA\nL\n\n  A = 1 × 10\n–\n4 m\n2 58. Two coherent monochromatic light beams of intensities I and 4I are superimposed. The difference between maximum and minimum possible intensities in the resulting beam is x I. The value of x is______. Ans. (8) Sol. I\nmax = \n2\nI4I9I I\nmin = \n2\n4III  I\nmax – I\nmin = 8I 59. Two open organ pipes of length 60 cm and 90 cm resonate at 6\nth and 5\nth harmonics respectively. The difference of frequencies for the given modes is _____ Hz. (Velocity of sound in air = 333 m/s) Ans. (740) Sol. The difference in frequency in open organ pipe = nv\nf\n2L\n 6v5v\nf\n2 0.62 0.9\n \n v = 333 m/s f = 740 Hz $//(1\n® 8 60. A capacitor of 10 F capacitance whose plates are separated by 10 mm through air and each plate has area 4 cm\n2 is now filled equally with two dielectric media of K\n1 = 2, K\n2 = 3 respectively as shown in figure. If new force between the plates is 8 N. The supply voltage is _____ V. K\n1\n=2 d K\n2\n=3 NTA Ans. (80) Allen Ans. (Bonus) Sol. V C\n1 C\n2 C\neq = C\n1 + C\n2 0\n1\n2A\nC10 F\n2d\n\n \n 0\n2\n3A\nC15 F\n2d\n\n  C\neq = 25 F Now the charge on C\n1 = 10V c C\n2 = 1.5 V C. Now force between the plates 2\n0\nQ\nF\n2A\n\n\n\n\n 212212\n44\n00\n100V10225V10\n8\n2 2 102 2 10\n\n\n\n\n      325 V\n2 = 8 × 4 × 10\n–\n4 × 8.85 V\n2 = 4\n32 8.85 10\n325\n\n  4\n283.2 10\nV\n325\n\n\n 2\nV 0.93 10\n\n $//(1\n®",
+    "questions": [
+      {
+        "number": "33",
+        "text": "In finding out refractive index of glass slab the following observations were made through travelling microscope 50 vernier scale division = 49 MSD; 20 divisions on main scale in each cm For mark on paper MSR = 8.45 cm, VC = 26 For mark on paper seen through slab MSR = 7.12 cm, VC = 41 For powder particle on the top surface of the glass slab MSR = 4.05 cm, VC = 1 (MSR = Main Scale Reading, VC = Vernier Coincidence) Refractive index of the glass slab is: (1) 1.42 (2) 1.52 (3) 1.24 (4) 1.35",
+        "formattedText": "In finding out refractive index of glass slab the following observations were made through travelling microscope 50 vernier scale division = 49 MSD; 20 divisions on main scale in each cm For mark on paper MSR = 8.45 cm, VC = 26 For mark on paper seen through slab MSR = 7.12 cm, VC = 41 For powder particle on the top surface of the glass slab MSR = 4.05 cm, VC = 1 (MSR = Main Scale Reading, VC = Vernier Coincidence) Refractive index of the glass slab is: (1) 1.42 (2) 1.52 (3) 1.24 (4) 1.35",
+        "latexText": "\\(In finding out refractive index of glass slab the following observations were made through travelling microscope 50 vernier scale division = 49 MSD; 20 divisions on main scale in each cm For mark on paper MSR = 8.45 cm, VC = 26 For mark on paper seen through slab MSR = 7.12 cm, VC = 41 For powder particle on the top surface of the glass slab MSR = 4.05 cm, VC = 1 (MSR = Main Scale Reading, VC = Vernier Coincidence) Refractive index of the glass slab is: (1) 1.42 (2) 1.52 (3) 1.24 (4) 1.35\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "1.42"
+          },
+          {
+            "letter": "2",
+            "text": "1.52"
+          },
+          {
+            "letter": "3",
+            "text": "1.24"
+          },
+          {
+            "letter": "4",
+            "text": "1.35"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "1.42",
+            "formattedText": "1.42",
+            "latexText": "1.42"
+          },
+          {
+            "letter": "2",
+            "text": "1.52",
+            "formattedText": "1.52",
+            "latexText": "1.52"
+          },
+          {
+            "letter": "3",
+            "text": "1.24",
+            "formattedText": "1.24",
+            "latexText": "1.24"
+          },
+          {
+            "letter": "4",
+            "text": "1.35",
+            "formattedText": "1.35",
+            "latexText": "1.35"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "MS",
+            "latex": "MS",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "MS",
+            "latex": "MS",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "VC",
+            "latex": "VC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "MS",
+            "latex": "MS",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "VC",
+            "latex": "VC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "MS",
+            "latex": "MS",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "VC",
+            "latex": "VC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "MS",
+            "latex": "MS",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "VC",
+            "latex": "VC",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "35",
+        "text": "Assuming the earth to be a sphere of uniform mass density, a body weighed 300 N on the surface of earth. How much it would weigh at R/4 depth under surface of earth ? (1) 75 N (2) 375 N (3) 300 N (4) 225 N",
+        "formattedText": "Assuming the earth to be a sphere of uniform mass density, a body weighed 300 N on the surface of earth. How much it would weigh at R/4 depth under surface of earth ? (1) 75 N (2) 375 N (3) 300 N (4) 225 N",
+        "latexText": "\\(Assuming the earth to be a sphere of uniform mass density, a body weighed 300 N on the surface of earth. How much it would weigh at \\frac{R}{4} depth under surface of earth ? (1) 75 N (2) 375 N (3) 300 N (4) 225 N\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "75 N"
+          },
+          {
+            "letter": "2",
+            "text": "375 N"
+          },
+          {
+            "letter": "3",
+            "text": "300 N"
+          },
+          {
+            "letter": "4",
+            "text": "225 N"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "75 N",
+            "formattedText": "75 N",
+            "latexText": "75 N"
+          },
+          {
+            "letter": "2",
+            "text": "375 N",
+            "formattedText": "375 N",
+            "latexText": "375 N"
+          },
+          {
+            "letter": "3",
+            "text": "300 N",
+            "formattedText": "300 N",
+            "latexText": "300 N"
+          },
+          {
+            "letter": "4",
+            "text": "225 N",
+            "formattedText": "225 N",
+            "latexText": "225 N"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "R/4",
+            "latex": "\\(\\frac{R}{4}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "36",
+        "text": "The acceptor level of a p-type semiconductor is 6eV. The maximum wavelength of light which can create a hole would be : Given hc = 1242 eV nm. (1) 407 nm (2) 414 nm (3) 207 nm (4) 103.5 nm",
+        "formattedText": "The acceptor level of a p-type semiconductor is 6eV. The maximum wavelength of light which can create a hole would be : Given hc = 1242 eV nm. (1) 407 nm (2) 414 nm (3) 207 nm (4) 103.5 nm",
+        "latexText": "\\(The acceptor level of a p-type semiconductor is 6eV. The maximum wavelength of light which can create a hole would be : Given hc = 1242 eV nm. (1) 407 nm (2) 414 nm (3) 207 nm (4) 103.5 nm\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "407 nm"
+          },
+          {
+            "letter": "2",
+            "text": "414 nm"
+          },
+          {
+            "letter": "3",
+            "text": "207 nm"
+          },
+          {
+            "letter": "4",
+            "text": "103.5 nm"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "407 nm",
+            "formattedText": "407 nm",
+            "latexText": "407 nm"
+          },
+          {
+            "letter": "2",
+            "text": "414 nm",
+            "formattedText": "414 nm",
+            "latexText": "414 nm"
+          },
+          {
+            "letter": "3",
+            "text": "207 nm",
+            "formattedText": "207 nm",
+            "latexText": "207 nm"
+          },
+          {
+            "letter": "4",
+            "text": "103.5 nm",
+            "formattedText": "103.5 nm",
+            "latexText": "103.5 nm"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "7",
+        "text": "A car of 800 kg is taking turn on a banked road of radius 300 m and angle of banking 30°. If coefficient of static friction is 0.2 then the maximum speed with which car can negotiate the turn safely : (g = 10 m/s\n2\n, 3\n=1.73) (1) 70.4 m/s (2) 51.4 m/s (3) 264 m/s (4) 102.8 m/s",
+        "formattedText": "A car of 800 kg is taking turn on a banked road of radius 300 m and angle of banking 30°. If coefficient of static friction is 0.2 then the maximum speed with which car can negotiate the turn safely : (g = 10 m/s\n2\n, 3\n=1.73) (1) 70.4 m/s (2) 51.4 m/s (3) 264 m/s (4) 102.8 m/s",
+        "latexText": "\\(A car of 800 kg is taking turn on a banked road of radius 300 m and angle of banking 30^\\circ. If coefficient of static friction is 0.2 then the maximum speed with which car can negotiate the turn safely : (g = 10 \\frac{m}{s}^{2} , 3 = 1.73) (1) 70.4 \\frac{m}{s} (2) 51.4 \\frac{m}{s} (3) 264 \\frac{m}{s} (4) 102.8 \\frac{m}{s}\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "70.4 m/s"
+          },
+          {
+            "letter": "2",
+            "text": "51.4 m/s"
+          },
+          {
+            "letter": "3",
+            "text": "264 m/s"
+          },
+          {
+            "letter": "4",
+            "text": "102.8 m/s"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "70.4 m/s",
+            "formattedText": "70.4 m/s",
+            "latexText": "\\(70.4 \\frac{m}{s}\\)"
+          },
+          {
+            "letter": "2",
+            "text": "51.4 m/s",
+            "formattedText": "51.4 m/s",
+            "latexText": "\\(51.4 \\frac{m}{s}\\)"
+          },
+          {
+            "letter": "3",
+            "text": "264 m/s",
+            "formattedText": "264 m/s",
+            "latexText": "\\(264 \\frac{m}{s}\\)"
+          },
+          {
+            "letter": "4",
+            "text": "102.8 m/s",
+            "formattedText": "102.8 m/s",
+            "latexText": "\\(102.8 \\frac{m}{s}\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "43",
+        "text": "When UV light of wavelength 300 nm is incident on the metal surface having work function 2.13 eV, electron emission takes place. The stopping potential is : (Given hc = 1240 eV nm) (1) 4 V (2) 4.1 V (3) 2 V (4) 1.5 V",
+        "formattedText": "When UV light of wavelength 300 nm is incident on the metal surface having work function 2.13 eV, electron emission takes place. The stopping potential is : (Given hc = 1240 eV nm) (1) 4 V (2) 4.1 V (3) 2 V (4) 1.5 V",
+        "latexText": "\\(When UV light of wavelength 300 nm is incident on the metal surface having work function 2.13 eV, electron emission takes place. The stopping potential is : (Given hc = 1240 eV nm) (1) 4 V (2) 4.1 V (3) 2 V (4) 1.5 V\\)",
+        "options": [
+          {
+            "letter": "2",
+            "text": "4.1 V"
+          },
+          {
+            "letter": "4",
+            "text": "1.5 V"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "2",
+            "text": "4.1 V",
+            "formattedText": "4.1 V",
+            "latexText": "4.1 V"
+          },
+          {
+            "letter": "4",
+            "text": "1.5 V",
+            "formattedText": "1.5 V",
+            "latexText": "1.5 V"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "UV",
+            "latex": "UV",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "44",
+        "text": "The number of electrons flowing per second in the filament of a 110 W bulb operating at 220 V is : (Given e = 1.6 × 10\n–19 C) (1) 31.25 × 10\n17 (2) 6.25 × 10\n18 (3) 6.25 × 10\n17 (4) 1.25 × 10\n19",
+        "formattedText": "The number of electrons flowing per second in the filament of a 110 W bulb operating at 220 V is : (Given e = 1.6 × 10\n–19 C) (1) 31.25 × 10\n17 (2) 6.25 × 10\n18 (3) 6.25 × 10\n17 (4) 1.25 × 10\n19",
+        "latexText": "\\(The number of electrons flowing per second in the filament of a 110 W bulb operating at 220 V is : (Given e = 1.6 \\times 10 –19 C) (1) 31.25 \\times 10^{17} (2) 6.25 \\times 10^{18} (3) 6.25 \\times 10^{17} (4) 1.25 \\times 10^{19}\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "31.25 × 10 17"
+          },
+          {
+            "letter": "2",
+            "text": "6.25 × 10 18"
+          },
+          {
+            "letter": "3",
+            "text": "6.25 × 10 17"
+          },
+          {
+            "letter": "4",
+            "text": "1.25 × 10 19"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "31.25 × 10 17",
+            "formattedText": "31.25 × 10 17",
+            "latexText": "\\(31.25 \\times 10 17\\)"
+          },
+          {
+            "letter": "2",
+            "text": "6.25 × 10 18",
+            "formattedText": "6.25 × 10 18",
+            "latexText": "\\(6.25 \\times 10 18\\)"
+          },
+          {
+            "letter": "3",
+            "text": "6.25 × 10 17",
+            "formattedText": "6.25 × 10 17",
+            "latexText": "\\(6.25 \\times 10 17\\)"
+          },
+          {
+            "letter": "4",
+            "text": "1.25 × 10 19",
+            "formattedText": "1.25 × 10 19",
+            "latexText": "\\(1.25 \\times 10 19\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "45",
+        "text": "When kinetic energy of a body becomes 36 times of its original value, the percentage increase in the momentum of the body will be : (1) 500% (2) 600% (3) 6% (4) 60%",
+        "formattedText": "When kinetic energy of a body becomes 36 times of its original value, the percentage increase in the momentum of the body will be : (1) 500% (2) 600% (3) 6% (4) 60%",
+        "latexText": "When kinetic energy of a body becomes 36 times of its original value, the percentage increase in the momentum of the body will be : (1) 500% (2) 600% (3) 6% (4) 60%",
+        "options": [
+          {
+            "letter": "1",
+            "text": "500%"
+          },
+          {
+            "letter": "2",
+            "text": "600%"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "500%",
+            "formattedText": "500%",
+            "latexText": "500%"
+          },
+          {
+            "letter": "2",
+            "text": "600%",
+            "formattedText": "600%",
+            "latexText": "600%"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "47",
+        "text": "Match List-I with List-II List-I (Y vs X) List-II (Shape of Graph) (A) Y = magnetic susceptibility X = magnetising field (I) Y X (B) Y = magnetic field X = distance from centre of a current carrying wire for x < a (where a=radius of wire) (II) Y X (C) Y = magnetic field X = distance from centre of a current carrying wire for x > a (where a = radius of wire) (III) X Y (D) Y= magnetic field inside solenoid X = distance from center (IV) Y X Choose the correct answer from the options given below : (1) (A)-(III), (B)-(I), (C)-(IV), (D)-(II) (2) (A)-(I), (B)-(III), (C)-(II), (D)-(IV) (3) (A)-(IV), (B)-(I), (C)-(III), (D)-(II) (4) (A)-(III), (B)-(IV), (C)-(I), (D)-(II)",
+        "formattedText": "Match List-I with List-II List-I (Y vs X) List-II (Shape of Graph) (A) Y = magnetic susceptibility X = magnetising field (I) Y X (B) Y = magnetic field X = distance from centre of a current carrying wire for x < a (where a=radius of wire) (II) Y X (C) Y = magnetic field X = distance from centre of a current carrying wire for x > a (where a = radius of wire) (III) X Y (D) Y= magnetic field inside solenoid X = distance from center (IV) Y X Choose the correct answer from the options given below : (1) (A)-(III), (B)-(I), (C)-(IV), (D)-(II) (2) (A)-(I), (B)-(III), (C)-(II), (D)-(IV) (3) (A)-(IV), (B)-(I), (C)-(III), (D)-(II) (4) (A)-(III), (B)-(IV), (C)-(I), (D)-(II)",
+        "latexText": "\\(Match List-I with List-II List-I (Y vs X) List-II (Shape of Graph) (A) Y = magnetic susceptibility X = magnetising field (I) Y X (B) Y = magnetic field X = distance from centre of a current carrying wire for x < a (where a=radius of wire) (II) Y X (C) Y = magnetic field X = distance from centre of a current carrying wire for x > a (where a = radius of wire) (III) X Y (D) Y= magnetic field inside solenoid X = distance from center (IV) Y X Choose the correct answer from the options given below : (1) (A)-(III), (B)-(I), (C)-(IV), (D)-(II) (2) (A)-(I), (B)-(III), (C)-(II), (D)-(IV) (3) (A)-(IV), (B)-(I), (C)-(III), (D)-(II) (4) (A)-(III), (B)-(IV), (C)-(I), (D)-(II)\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "51",
+        "text": "In Franck-Hertz experiment, the first dip in the current-voltage graph for hydrogen is observed at 10.2 V. The wavelength of light emitted by hydrogen atom when excited to the first excitation level is ______ nm. (Given hc = 1245 eV nm, e = 1.6 × 10\n–\n19\nC).",
+        "formattedText": "In Franck-Hertz experiment, the first dip in the current-voltage graph for hydrogen is observed at 10.2 V. The wavelength of light emitted by hydrogen atom when excited to the first excitation level is ______ nm. (Given hc = 1245 eV nm, e = 1.6 × 10\n–\n19\nC).",
+        "latexText": "\\(In Franck-Hertz experiment, the first dip in the current-voltage graph for hydrogen is observed at 10.2 V. The wavelength of light emitted by hydrogen atom when excited to the first excitation level is ______ nm. (Given hc = 1245 eV nm, e = 1.6 \\times 10 –^{19}C).\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "52",
+        "text": "For a given series LCR circuit it is found that maximum current is drawn when value of variable capacitance is 2.5 nF. If resistance of 200 and 100 mH inductor is being used in the given circuit. The frequency of ac source is _____ × 10\n3 Hz. (given \n2 = 10)",
+        "formattedText": "For a given series LCR circuit it is found that maximum current is drawn when value of variable capacitance is 2.5 nF. If resistance of 200 and 100 mH inductor is being used in the given circuit. The frequency of ac source is _____ × 10\n3 Hz. (given \n2 = 10)",
+        "latexText": "\\(For a given series LCR circuit it is found that maximum current is drawn when value of variable capacitance is 2.5 nF. If resistance of 200 and 100 mH inductor is being used in the given circuit. The frequency of ac source is _____ \\times 10^{3} Hz. (given  2 = 10)\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "LC",
+            "latex": "LC",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "53",
+        "text": "A particle moves in a straight line so that its displacement x at any time t is given by x\n2\n=1 +t\n2\n. Its acceleration at any time t is x\n–\nn where n = _____.",
+        "formattedText": "A particle moves in a straight line so that its displacement x at any time t is given by x\n2\n=1 +t\n2\n. Its acceleration at any time t is x\n–\nn where n = _____.",
+        "latexText": "\\(A particle moves in a straight line so that its displacement x at any time t is given by x^{2} = 1 +t^{2} . Its acceleration at any time t is x – n where n = _____.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "54",
+        "text": "Three balls of masses 2kg, 4kg and 6kg respectively are arranged at centre of the edges of an equilateral triangle of side 2 m. The moment of inertia of the system about an axis through the centroid and perpendicular to the plane of triangle, will be ______ kg m\n2\n.",
+        "formattedText": "Three balls of masses 2kg, 4kg and 6kg respectively are arranged at centre of the edges of an equilateral triangle of side 2 m. The moment of inertia of the system about an axis through the centroid and perpendicular to the plane of triangle, will be ______ kg m\n2\n.",
+        "latexText": "\\(Three balls of masses 2kg, 4kg and 6kg respectively are arranged at centre of the edges of an equilateral triangle of side 2 m. The moment of inertia of the system about an axis through the centroid and perpendicular to the plane of triangle, will be ______ kg m^{2} .\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "58",
+        "text": "Two coherent monochromatic light beams of intensities I and 4I are superimposed. The difference between maximum and minimum possible intensities in the resulting beam is x I. The value of x is______.",
+        "formattedText": "Two coherent monochromatic light beams of intensities I and 4I are superimposed. The difference between maximum and minimum possible intensities in the resulting beam is x I. The value of x is______.",
+        "latexText": "\\(Two coherent monochromatic light beams of intensities I and 4I are superimposed. The difference between maximum and minimum possible intensities in the resulting beam is x I. The value of x is______.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 31",
+        "type": "mathematical",
+        "position": 149
+      },
+      {
+        "equation": "H =1",
+        "type": "mathematical",
+        "position": 225
+      },
+      {
+        "equation": "R = 8",
+        "type": "mathematical",
+        "position": 747
+      },
+      {
+        "equation": "Q = ",
+        "type": "mathematical",
+        "position": 857
+      },
+      {
+        "equation": "U + W ",
+        "type": "mathematical",
+        "position": 862
+      },
+      {
+        "equation": "T + W ",
+        "type": "mathematical",
+        "position": 882
+      },
+      {
+        "equation": "W = 48 ",
+        "type": "mathematical",
+        "position": 923
+      },
+      {
+        "equation": "W = 48 ",
+        "type": "mathematical",
+        "position": 940
+      },
+      {
+        "equation": "n = 49 MSD",
+        "type": "mathematical",
+        "position": 1116
+      },
+      {
+        "equation": "R = 8",
+        "type": "mathematical",
+        "position": 1186
+      },
+      {
+        "equation": "C = 26 For mark on paper seen through slab MSR = 7",
+        "type": "mathematical",
+        "position": 1200
+      },
+      {
+        "equation": "C = 41 For powder particle on the top surface of the glass slab MSR = 4",
+        "type": "mathematical",
+        "position": 1259
+      },
+      {
+        "equation": "C = 1 (MSR = Main Scale Reading",
+        "type": "mathematical",
+        "position": 1339
+      },
+      {
+        "equation": "C = Vernier Coincidence) Refractive index of the glass slab is",
+        "type": "mathematical",
+        "position": 1373
+      },
+      {
+        "equation": "D = 1cm\n20\n= 0",
+        "type": "mathematical",
+        "position": 1491
+      },
+      {
+        "equation": "D = 49\n50\nMSD = 49\n50\n",
+        "type": "mathematical",
+        "position": 1516
+      },
+      {
+        "equation": "m = 0",
+        "type": "mathematical",
+        "position": 1545
+      },
+      {
+        "equation": "C = 1MSD ",
+        "type": "mathematical",
+        "position": 1559
+      },
+      {
+        "equation": "D = 0",
+        "type": "mathematical",
+        "position": 1573
+      },
+      {
+        "equation": "m + 26 ",
+        "type": "mathematical",
+        "position": 1617
+      },
+      {
+        "equation": "m = 84",
+        "type": "mathematical",
+        "position": 1633
+      },
+      {
+        "equation": "m + 41",
+        "type": "mathematical",
+        "position": 1689
+      },
+      {
+        "equation": "m = 71",
+        "type": "mathematical",
+        "position": 1704
+      },
+      {
+        "equation": "E = 4",
+        "type": "mathematical",
+        "position": 1754
+      },
+      {
+        "equation": "m + 1 ",
+        "type": "mathematical",
+        "position": 1764
+      },
+      {
+        "equation": "m = 40",
+        "type": "mathematical",
+        "position": 1779
+      },
+      {
+        "equation": "y = 600 sin (",
+        "type": "mathematical",
+        "position": 1963
+      },
+      {
+        "equation": "W/m\n2\n)",
+        "type": "mathematical",
+        "position": 2040
+      },
+      {
+        "equation": "y = 2\n00\n1\nEc\n2\n",
+        "type": "mathematical",
+        "position": 2142
+      },
+      {
+        "equation": "w/m\n2 35",
+        "type": "mathematical",
+        "position": 2220
+      },
+      {
+        "equation": "R/4 depth under surface of earth ",
+        "type": "mathematical",
+        "position": 2362
+      },
+      {
+        "equation": "g = 300 N m = s\n300\ng At Depth R\n4\n",
+        "type": "mathematical",
+        "position": 2463
+      },
+      {
+        "equation": "d = s\nd\ng1\nR\n",
+        "type": "mathematical",
+        "position": 2502
+      },
+      {
+        "equation": "h = m ",
+        "type": "mathematical",
+        "position": 2578
+      },
+      {
+        "equation": "d = s\n3g\nm\n4\n",
+        "type": "mathematical",
+        "position": 2588
+      },
+      {
+        "equation": "p-type semiconductor is 6eV",
+        "type": "mathematical",
+        "position": 2651
+      },
+      {
+        "equation": "c = 1242 eV nm",
+        "type": "mathematical",
+        "position": 2754
+      },
+      {
+        "equation": "y = hc\n",
+        "type": "mathematical",
+        "position": 2835
+      },
+      {
+        "equation": "g = 10 m/s\n2\n",
+        "type": "mathematical",
+        "position": 3105
+      },
+      {
+        "equation": "m/s (2) 51",
+        "type": "mathematical",
+        "position": 3138
+      },
+      {
+        "equation": "m/s (3) 264 m/s (4) 102",
+        "type": "mathematical",
+        "position": 3151
+      },
+      {
+        "equation": "m/s Ans",
+        "type": "mathematical",
+        "position": 3177
+      },
+      {
+        "equation": "m = 800 kg r = 300 m ",
+        "type": "mathematical",
+        "position": 3195
+      },
+      {
+        "equation": "s = 0",
+        "type": "mathematical",
+        "position": 3226
+      },
+      {
+        "equation": "x = 51",
+        "type": "mathematical",
+        "position": 3373
+      },
+      {
+        "equation": "m/s 38",
+        "type": "mathematical",
+        "position": 3382
+      },
+      {
+        "equation": "S = 16 N Now If P ",
+        "type": "mathematical",
+        "position": 3725
+      },
+      {
+        "equation": "Q/2 Q Q/2 P S R Now If S ",
+        "type": "mathematical",
+        "position": 3775
+      },
+      {
+        "equation": "Q/2 3Q/4 3Q/4 P S R New force between P ",
+        "type": "mathematical",
+        "position": 3832
+      },
+      {
+        "equation": "o +2A in 0",
+        "type": "mathematical",
+        "position": 3973
+      },
+      {
+        "equation": "f-\ninductance of the coil is ",
+        "type": "mathematical",
+        "position": 4024
+      },
+      {
+        "equation": "d = di\n",
+        "type": "mathematical",
+        "position": 4119
+      },
+      {
+        "equation": "f = 5 + 2(3 ",
+        "type": "mathematical",
+        "position": 4767
+      },
+      {
+        "equation": "e = B\nf\nKT\n2 energy of 10 molecules = B\nf\n10K T\n2\n",
+        "type": "mathematical",
+        "position": 4812
+      },
+      {
+        "equation": "g = 10 m/s\n2\n)",
+        "type": "mathematical",
+        "position": 5046
+      },
+      {
+        "equation": "t = 200+10",
+        "type": "mathematical",
+        "position": 5127
+      },
+      {
+        "equation": "T = 200 + 100 = 300 N",
+        "type": "mathematical",
+        "position": 5200
+      },
+      {
+        "equation": "c = 1240 eV nm) (1) 4 V (2) 4",
+        "type": "mathematical",
+        "position": 5402
+      },
+      {
+        "equation": "V = eVs ",
+        "type": "mathematical",
+        "position": 5505
+      },
+      {
+        "equation": "V = eVs",
+        "type": "mathematical",
+        "position": 5531
+      },
+      {
+        "equation": "e = 1",
+        "type": "mathematical",
+        "position": 5666
+      },
+      {
+        "equation": "I = 0",
+        "type": "mathematical",
+        "position": 5805
+      },
+      {
+        "equation": "I = ne\nt\n",
+        "type": "mathematical",
+        "position": 5820
+      },
+      {
+        "equation": "t\n= 19\n0",
+        "type": "mathematical",
+        "position": 5873
+      },
+      {
+        "equation": "f = 36 K\ni So",
+        "type": "mathematical",
+        "position": 6140
+      },
+      {
+        "equation": "f = 6 P\ni ",
+        "type": "mathematical",
+        "position": 6157
+      },
+      {
+        "equation": "m = fi\ni\nPP\n100",
+        "type": "mathematical",
+        "position": 6188
+      },
+      {
+        "equation": "R = Radius of bubble",
+        "type": "mathematical",
+        "position": 6335
+      },
+      {
+        "equation": "S = Surface tension of bubble) (1) 4S\nR (2) 4R\nS (3) S\nR (4) 2S\nR Ans",
+        "type": "mathematical",
+        "position": 6357
+      },
+      {
+        "equation": "d-air surfaces in bubble so 2S4S\nP2\nRR\n",
+        "type": "mathematical",
+        "position": 6456
+      },
+      {
+        "equation": "t-I with List-II List-I (Y vs X) List-II (Shape of Graph) (A) Y = magnetic susceptibility X = magnetising field (I) Y X (B) Y = magnetic field X = distance from centre of a current carrying wire for x ",
+        "type": "mathematical",
+        "position": 6522
+      },
+      {
+        "equation": "a=radius of wire) (II) Y X (C) Y = magnetic field X = distance from centre of a current carrying wire for x ",
+        "type": "mathematical",
+        "position": 6734
+      },
+      {
+        "equation": "a = radius of wire) (III) X Y (D) Y= magnetic field inside solenoid X = distance from center (IV) Y X Choose the correct answer from the options given below ",
+        "type": "mathematical",
+        "position": 6853
+      },
+      {
+        "equation": "m = 4VSD ",
+        "type": "mathematical",
+        "position": 7963
+      },
+      {
+        "equation": "D = 50 VSD 1MSD = 1\nN\ncm 0",
+        "type": "mathematical",
+        "position": 7983
+      },
+      {
+        "equation": "N = 46 100046 1000\n230\n504200\n",
+        "type": "mathematical",
+        "position": 8078
+      },
+      {
+        "equation": "Q = mS",
+        "type": "mathematical",
+        "position": 8529
+      },
+      {
+        "equation": "s = Q\nmT\n",
+        "type": "mathematical",
+        "position": 8538
+      },
+      {
+        "equation": "t-(I) is correct PV = nRT ",
+        "type": "mathematical",
+        "position": 8610
+      },
+      {
+        "equation": "R = PV\nnT ",
+        "type": "mathematical",
+        "position": 8638
+      },
+      {
+        "equation": "t-II is incorrect 50",
+        "type": "mathematical",
+        "position": 8721
+      },
+      {
+        "equation": "N-B 51",
+        "type": "mathematical",
+        "position": 9223
+      },
+      {
+        "equation": "k-Hertz experiment",
+        "type": "mathematical",
+        "position": 9239
+      },
+      {
+        "equation": "t-voltage graph for hydrogen is observed at 10",
+        "type": "mathematical",
+        "position": 9286
+      },
+      {
+        "equation": "c = 1245 eV nm",
+        "type": "mathematical",
+        "position": 9452
+      },
+      {
+        "equation": "e = 1",
+        "type": "mathematical",
+        "position": 9468
+      },
+      {
+        "equation": "V = hc\n",
+        "type": "mathematical",
+        "position": 9512
+      },
+      {
+        "equation": "z =\n3\n100\n10\n10\n",
+        "type": "mathematical",
+        "position": 9979
+      },
+      {
+        "equation": "n = ",
+        "type": "mathematical",
+        "position": 10172
+      },
+      {
+        "equation": "v = t dvdx\nxv1\ndtdt\n",
+        "type": "mathematical",
+        "position": 10225
+      },
+      {
+        "equation": "a+v\n2 =1 a = 222\n1 v1 t / x\nxx\n",
+        "type": "mathematical",
+        "position": 10250
+      },
+      {
+        "equation": "a = 3\n3\n1\nx\nx\n",
+        "type": "mathematical",
+        "position": 10286
+      },
+      {
+        "equation": "I = r\n2 ",
+        "type": "mathematical",
+        "position": 10671
+      },
+      {
+        "equation": "I = 4 kg-m\n2 55",
+        "type": "mathematical",
+        "position": 10702
+      },
+      {
+        "equation": "W = ",
+        "type": "mathematical",
+        "position": 10984
+      },
+      {
+        "equation": "U = U\nf ",
+        "type": "mathematical",
+        "position": 10989
+      },
+      {
+        "equation": "W = fi\n(",
+        "type": "mathematical",
+        "position": 11003
+      },
+      {
+        "equation": "J = 1 ",
+        "type": "mathematical",
+        "position": 11084
+      },
+      {
+        "equation": "J = 100 ",
+        "type": "mathematical",
+        "position": 11098
+      },
+      {
+        "equation": "q = 240 10\n140",
+        "type": "mathematical",
+        "position": 11307
+      },
+      {
+        "equation": "q = 140",
+        "type": "mathematical",
+        "position": 11339
+      },
+      {
+        "equation": "r = 24\n150 = 160 mA 57",
+        "type": "mathematical",
+        "position": 11391
+      },
+      {
+        "equation": "g=10 m/s\n2\n) 2L x ",
+        "type": "mathematical",
+        "position": 11759
+      },
+      {
+        "equation": "T = 10\n",
+        "type": "mathematical",
+        "position": 11899
+      },
+      {
+        "equation": "T = 1000N Change in length ",
+        "type": "mathematical",
+        "position": 11908
+      },
+      {
+        "equation": "L = 22\n2 xL2L",
+        "type": "mathematical",
+        "position": 11936
+      },
+      {
+        "equation": "L =\n2\nx\nL ",
+        "type": "mathematical",
+        "position": 11982
+      },
+      {
+        "equation": "y = stress\nstrain 2 ",
+        "type": "mathematical",
+        "position": 12014
+      },
+      {
+        "equation": "A = 1 ",
+        "type": "mathematical",
+        "position": 12066
+      },
+      {
+        "equation": "x = ",
+        "type": "mathematical",
+        "position": 12307
+      },
+      {
+        "equation": "n = ",
+        "type": "mathematical",
+        "position": 12328
+      },
+      {
+        "equation": "n = 8I 59",
+        "type": "mathematical",
+        "position": 12358
+      },
+      {
+        "equation": "r = 333 m/s) Ans",
+        "type": "mathematical",
+        "position": 12553
+      },
+      {
+        "equation": "e = nv\nf\n2L\n",
+        "type": "mathematical",
+        "position": 12627
+      },
+      {
+        "equation": "v = 333 m/s ",
+        "type": "mathematical",
+        "position": 12667
+      },
+      {
+        "equation": "f = 740 Hz ",
+        "type": "mathematical",
+        "position": 12680
+      },
+      {
+        "equation": "q = C\n1 + C\n2 0\n1\n2A\nC10 F\n2d\n",
+        "type": "mathematical",
+        "position": 13056
+      },
+      {
+        "equation": "q = 25 ",
+        "type": "mathematical",
+        "position": 13121
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1971
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3238
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3247
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3274
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3296
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4032
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 6623
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6672
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6791
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6928
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7261
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8255
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 9247
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9662
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9687
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11836
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11847
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 11878
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12732
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.2857142857142857,
+        "matchedKeywords": [
+          "triangle",
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "sin",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "force",
+          "acceleration",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current",
+          "voltage"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "light",
+          "sound"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "thermodynamics",
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "thermodynamics",
+          "equilibrium",
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "force",
+          "friction",
+          "dynamics",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "charge",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "parentTopic": "Physical Chemistry",
+        "confidence": 1,
+        "matchedKeywords": [
+          "thermodynamics"
+        ]
+      }
+    ],
+    "tags": [],
+    "wordCount": 3319,
+    "characterCount": 13406
+  },
+  "images": []
+}

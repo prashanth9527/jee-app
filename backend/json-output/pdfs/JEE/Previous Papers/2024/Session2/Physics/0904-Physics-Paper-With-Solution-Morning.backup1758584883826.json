@@ -1,0 +1,1191 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2024\\Session2\\Physics\\0904-Physics-Paper-With-Solution-Morning.pdf",
+  "relativePath": "JEE\\Previous Papers\\2024\\Session2\\Physics\\0904-Physics-Paper-With-Solution-Morning.pdf",
+  "metadata": {
+    "originalFileName": "0904-Physics-Paper-With-Solution-Morning.pdf",
+    "subject": "Physics",
+    "year": 2024,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 9,
+    "fileSize": 4043896,
+    "processedAt": "2025-09-22T23:33:24.961Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2024 (Held On Tuesday 09\nth April, 2024) TIME : 9 : 00 AM to 12 : 00 NOON PHYSICS TEST PAPER WITH SOLUTION SECTION-A 31. A proton, an electron and an alpha particle have the same energies. Their de-Broglie wavelengths will be compared as: (1) \ne > \n > \np (2) \n < \np < \ne (3) \np < \ne < \n (4) \np > \ne > \n Ans. (2) Sol. \nDB = hh\np\n2mk\n \nDB\n\n1\nm \na < \np < \ne 32. A particle moving in a straight line covers half the distance with speed 6 m/s. The other half is covered in two equal time intervals with speeds 9 m/s and 15 m/s respectively. The average speed of the particle during the motion is : (1) 8.8 m/s (2) 10 m/s (3) 9.2 m/s (4) 8 m/s Ans. (4) Sol. A t\n1 S B t S C D t BD  S = 9t + 15t = 24t AB  S = 6t\n1 = 24t  t\n1 = 4t < speed > = 1\ndist.48t\ntime2t t\n\n = 48t48t\n2t 4t6t\n\n  8 m/s 33. A plane EM wave is propagating along x direction. It has a wavelength of 4 mm. If electric field is in y direction with the maximum magnitude of 6\n0 Vm\n–1\n, the equation for magnetic field is: (1) \n8\nz\nˆ\nB60 sinx 3 10 t kT\n2\n\n\n \n\n (2) \n–738\nz\nˆ\nB2 10 sin10 x 3 10 t kT\n2\n\n\n  \n\n (3) \n8\nx\nˆ\nB60 sinx 3 10 t iT\n2\n\n\n \n\n (4) \n–78\nz\nˆ\nB2 10 sinx 3 10 t kT\n2\n\n\n  \n\n Ans. (2) Sol. E = BC  60 = B × 3 × 10\n8  B = 2 × 10\n–7 Also C = f  3 × 10\n8 = f × 4 × 10\n–3  f = 11\n3\n10\n4\n   = 2f = 11\n3\n210\n4\n    = 3\n10 C\n2\n\n  Electric field  y direction Propagation  x direction Magnetic field  z-direction 34. Given below are two statements: Statement (I): When an object is placed at the centre of curvature of a concave lens, image is formed at the centre of curvature of the lens on the other side. Statement (II): Concave lens always forms a virtual and erect image. In the light of the above statements, choose the correct answer from the options given below: (1) Statement I is false but Statement II is true. (2) Both Statement I and Statement II are false. (3) Statement I is true but Statement II is false. (4) Both Statement I and Statement II are true. NTA Ans. (1) Allen Ans. (2) Sol. 111\nvuf\n 111\nv2ff\n\n  11\nv2f\n\n  v = –2f 111\nvuf\n  Virtual image of Real object. In statement II, it is not mentioned that object is real or virtual hence Statement II is false. $//(1\n® 2 35. A light emitting diode (LED) is fabricated using GaAs semiconducting material whose band gap is 1.42 eV. The wavelength of light emitted from the LED is: (1) 650 nm (2) 1243 nm (3) 875 nm (4) 1400 nm Ans. (3) Sol. 1240\n1.42\n = 875 nm (Approx) 36. A sphere of relative density  and diameter D has concentric cavity of diameter d. The ratio of D\nd\n, if it just floats on water in a tank is: (1) 1\n3\n1\n\n\n\n\n (2) 1\n3\n1\n1\n\n\n\n\n (3) 1\n3\n1\n\n\n\n (4) 1\n3\n2\n2\n\n\n\n\n Ans. (1) Sol. weight (w) = 33\n4Dd\ng\n38\n\n\n\n\n\n Buoyant force (F\nb\n) = 3\n4D\n1g\n38\n\n \n\n\n For Just Float  w = F\nb  (D\n3 – d\n3\n) = D\n3  3\n3\nd1\n1\nD\n\n  3\n1d\n1\nD\n\n\n\n\n  1\n3\nD\n1d\n\n  \n\n  \n\n   37. A capacitor is made of a flat plate of area A and a second plate having a stair-like structure as shown in figure. If the area of each stair is A\n3 and the height is d, the capacitance of the arrangement is: d d d A/3 A/3 A/3 A (1) 0\n11 A\n18d\n (2) 0\n13 A\n17d\n (3) 0\n11 A\n20 d\n (4) 0\n18 A\n11d\n Ans. (1) Sol. All capacitor are in parallel combination. Also effective area is common area only  C\neq = C\n1 + C\n2 + C\n3  C\neq = 000\nAAA\n3d3(2d)3(3d)\n\n q\n0\ne\nA\n11\n36d\nC\n\n\n\n\n q\n0\ne\n11A\n18d\nC\n\n 38. A light unstretchable string passing over a smooth light pulley connects two blocks of masses m\n1 and m\n2\n. If the acceleration of the system is g\n8\n, then the ratio of the masses 2\n1\nm\nm is: (1) 9 : 7 (2) 4 : 3 (3) 5 : 3 (4) 8 : 1 Ans. (1) Sol. 21\nsys\n12\nmm\ng\nag\nmm8\n\n\n\n\n\n  2\n1\nm\n9\nm7\n $//(1\n® 3 39. The dimensional formula of latent heat is: (1) [M\n0\nLT\n–2\n] (2) [MLT\n–2\n] (3) [M\n0\nL\n2\nT\n–\n2\n] (4) [ML\n2\nT\n–2\n] Ans. (3) Sol. Latent heat is specific heat  22\nML T\nM\n = M\n0\nL\n2\nT\n–2 40. The volume of an ideal gas ( = 1.5) is changed adiabatically from 5 litres to 4 litres. The ratio of initial pressure to final pressure is: (1) 4\n5 (2) 16\n25 (3) 8\n55 (4) 2\n5 Ans. (3) Sol. For Adiabatic process i if\nf\nP VP V\n\n P\ni (5)\n1.5 = P\nf (4)\n1.5 31\n22\ni\nf\nP\n444\nP555\n  \n \n  \n    8\n55 41. The energy equivalent of 1g of substance is: (1) 11.2 × 10\n24 MeV (2) 5.6 × 10\n12 MeV (3) 5.6 eV (4) 5.6 × 10\n26 MeV Ans. (4) Sol. E = mC\n2  E = (1 × 10\n–3\n) × (3 × 10\n8\n)\n2 J  E = (10\n–3\n) (9 × 10\n16\n) (6.241 × 10\n18\n) eV E = 56.169 × 10\n31 eV E  5.6 × 10\n26 MeV 42. An astronaut takes a ball of mass m from earth to space. He throws the ball into a circular orbit about earth at an altitude of 318.5 km. From earth’s surface to the orbit, the change in total mechanical energy of the ball is e\ne\nGM m\nx\n21R\n. The value of x is (take R\ne = 6370 km): (1) 11 (2) 9 (3) 12 (4) 10 Ans. (1) Sol. h = 318.5 \ne\nR\n20\n\n\n\n TE\ni = e\ne\nGM m\nR\n\n TE\nf = ee\ne\ne\ne\nGM mGM m\nR\n2(Rh)\n2R\n20\n\n\n\n\n\n\n  TE\nf = e\ne\n10 GM m\n21R\n Change in total mechanical energy = TE\nf – TE\ni = ee\nGM m11GM m\n10\n1\nRe2121Re\n\n\n\n 43. Given below are two statements: Statement (I) : When currents vary with time, Newton’s third law is valid only if momentum carried by the electromagnetic field is taken into account. Statement (II) : Ampere’s circuital law does not depend on Biot-Savart’s law. In the light of the above statements, choose the correct answer from the options given below: (1) Both Statement I and Statement II are false. (2) Statement I is true but Statement II is false. (3) Statement I is false but Statement II is true. (4) Both Statement I and Statement II are true. Ans. (2) Sol. Conceptual. $//(1\n® 4 44. A particle of mass m moves on a straight line with its velocity increasing with distance according to the equation vx\n, where  is a constant. The total work done by all the forces applied on the particle during its displacement from x = 0 to x = d, will be: (1) 2\nm\n2d (2) 2\nmd\n2 (3) 2\nmd\n2\n (4) 2m\n2\nd Ans. (3) Sol. vx at x = 0 : v = 0 & at x = d ; vd W.D = K\nf – K\ni W.D =  \n2\n2\n11\nmdm(0)\n22\n  W.D = 2\nmd\n2\n 45. A galvanmeter has a coil of resistance 200 with a full scale deflection at 20 A. The value of resistance to be added to use it as an ammeter of range (0–20) mA is: (1) 0.40  (2) 0.20  (3) 0.50  (4) 0.10  Ans. (2) Sol. G = 200  i\ng = 20 A i = g\nG\ni1\nS\n\n\n\n  20 × 10\n–3 = 20 × 10\n–6\n200\n1\nS\n\n\n\n  200\n999\nS\n  S  0.2 \n46. A heavy iron bar, of weight W is having its one end on the ground and the other on the shoulder of a person. The bar makes an angle  with the horizontal. The weight experienced by the person is: (1) W\n2 (2) W (3) W cos  (4) W sin  Ans. (1) Sol. \nW N\ng R R = net reaction force by shoulder Balancing torque about pt of contact on ground: \nL\nWcosR L cos\n2\n\n \n\n  W\nR\n2\n 47. One main scale division of a vernier caliper is equal to m units. If n\nth division of main scale coincides with (n + 1)\nth division of vernier scale, the least count of the vernier caliper is: (1) n\n(n 1) (2) m\n(n 1) (3) 1\n(n 1) (4) m\nn(n 1) Ans. (2) Sol. n MSD = (n + 1) VSD  1 VSD = n\nn1 MSD LC = 1 MSD – 1 VSD LC = n\nmm\nn1\n\n\n\n\n LC = n 1 n\nm\nn1\n\n\n\n\n  LC = m\nn1\n\n\n\n 48. A bulb and a capacitor are connected in series across an ac supply. A dielectric is then placed between the plates of the capacitor. The glow of the bulb: (1) increases (2) remains same (3) becomes zero (4) decreases Ans. (1) $//(1\n® 5 Sol. R ~ C 22\nC\nZRX\n& C\n1\nX\nWC\n due to dielectric C   X\nC   Z  So, current increases & thus bulb will glow more brighter. 49. The equivalent resistance between A and B is: 10  6  8  4  11  8  5  7  A B (1) 18  (2) 25  (3) 27  (4) 19  Ans. (4) Sol. 10  6  8  4  11  8  5  7  A B D D C C A C 15 15 15 D 8 B 6 A C 5 D B 6 8 \n  R\neq = 6 + 5 + 8 = 19 50. A sample of 1 mole gas at temperature T is adiabatically expanded to double its volume. If adiabatic constant for the gas is 3\n2\n\n, then the work done by the gas in the process is: (1) RT 22\n\n\n (2) R\n22\nT\n\n\n (3) RT 22\n\n\n (4) T\n22\nR\n\n\n Ans. (1) Sol. TV\n\n– 1 = constant   \n3\n3\n1\n1\n2\n2\nf\nT(V)T 2V\n\n\n \n111\n222\nf\nTVT (2) (V) \nf\nT\nT\n2\n\n\n\n\n\nNow, W.D. = T\n1 RT\nnR T\n2\n3\n1\n1\n2\n\n\n\n\n\n\n\n  W.D. = 1\n2RT 1\n2\n\n\n\n  W.D. = RT 22\n\n\n SECTION-B 51. If a and b makes an angle 1\n5\ncos\n9\n\n\n\n with each other, then | a b |2 | a b |  for | a | n | b | The integer value of n is _______. Ans. (3) Sol. 5\ncos\n9\n a b5\nab9\n\n .......(1) | a b |2 | a b |  2222\nab2a b 2a2b4a b       22\n6 a b ab   $//(1\n® 6 22\n5\n6ab ab\n9\n   22\n10\nab ab\n3\n & a = nb 22 22\n10\nnbn bb\n3\n 3n\n2 – 10n + 3 = 0 1\nn\n3\n and n = 3 integer value n = 3 52. At the centre of a half ring of radius R = 10 cm and linear charge density 4n C m\n–1\n, the potential is x  V. The value of x is ________. Ans. (36) Sol. Potential at centre of half ring V = KQ\nR KR\nV\nR\n\n V = K  V = 9 × 10\n9 × 4 × 10\n–9\n V = 36 53. A star has 100% helium composition. It starts to convert three 4\nHe into one 12\nC via triple alpha process as 4\nHe + 4\nHe + 4\nHe  12\nC + Q. The mass of the star is 2.0 × 10\n32 kg and it generates energy at the rate of 5.808 × 10\n30 W. The rate of converting these 4\nHe to 12\nC is n × 10\n42 s\n–\n1\n, where n is _______. [Take, mass of 4\nHe = 4.0026 u, mass of 12\nC = 12 u] NTA Ans. (5) Allen Ans. (15) Sol. 4\nHe + 4\nHe + 4\nHe  12\nC + Q power generated = N\nQ\nt where, N  No. of reaction/sec. Q = \n2\nHeC\n3mmC Q = (3 × 4.0026 – 12) (3 × 10\n8\n)\n2 Q = 7.266 MeV 30\n619\nNpower5.808 10\ntQ\n7.266 101.6 10\n\n\n\n   42\nN\n5 10\nt\n rate of conversion of 4\nHe into 12\nC = 15 × 10\n42 Hence, n = 15 54. In a Young’s double slit experiment, the intensity at a point is th\n1\n4\n\n\n of the maximum intensity, the minimum distance of the point from the central maximum is ________ m. (Given :  = 600 nm, d = 1.0 mm, D = 1.0 m) Ans. (200) Sol. 2\n0\nI I cos\n2\n\n\n\n\n 2\n0\nI\ncos\n42\n\n\n\n\n 2\n3\n\n  2yd2\nD3\n\n\n\n\n\n 9\n3\nD600 101\ny\n3d\n3 10\n\n\n \n\n = 2 × 10\n–4 m 55. A string is wrapped around the rim of a wheel of moment of inertia 0.40 kgm\n2 and radius 10 cm. The wheel is free to rotate about its axis. Initially the wheel is at rest. The string is now pulled by a force of 40 N. The angular velocity of the wheel after 10 s is x rad/s, where x is _______. Ans. (100) Sol.  = FR = I  40 × 0.1 = 0.4  = 10 rad/s\n2 W\nf = 10 × 10 = 100 rad/s 56. A square loop of edge length 2 m carrying current of 2 A is placed with its edges parallel to the x-y axis. A magnetic field is passing through the x-y plane and expressed as 0\nˆ\nB B (1 4x)k\n, where B\n0 = 5 T. The net magnetic force experienced by the loop is _______ N. Ans. (160) $//(1\n® 7 Sol. y x F\n1 F\n2 i = 2A x = 0 x = 2  = 2m B(x = 0) = B\n0\n, B(x = 2) = 9B\n0 Also, F = iB  F\n1 = iB\n0 & F\n2 = 9iB\n0 F = F\n2 – F\n1 = 8iB\n0 = 8 × 2 × 2 × 5 F = 160 N 57. Two persons pull a wire towards themselves. Each person exerts a force of 200 N on the wire. Young’s modulus of the material of wire is 1 × 10\n11 N m\n–2\n. Original length of the wire is 2 m and the area of cross section is 2 cm\n2\n. The wire will extend in length by ______ m. Ans. (20) Sol. 200 N 200 N FF\nY=\nAAY\n\n   = –411\n200 2\n2 1010\n\n = 2 × 10\n–5 = 20m 58. When a coil is connected across a 20 V dc supply, it draws a current of 5 A. When it is connected across 20 V, 50 Hz ac supply, it draws a current of 4 A. The self inductance of the coil is ______ mH. (Take  = 3) Ans. (10) Sol. Case-I: L,R 5 A 20 V i = 20\nR R = 4 Case-II: L,R 5 A 20 V, 50 Hz ~ i = 20\nZ 4 = 22\nL\n22\nL\n20\nRX5\nRX\n \n R\n2 + 2\nL\nX = 25  X\nL = 3 \nL = 311000\nmH\n2 f2 50100\n\n L = 10 mH 59. The position, velocity and acceleration of a particle executing simple harmonic motion are found to have magnitudes of 4 m, 2 ms\n–\n1 and 16 ms\n–2 at a certain instant. The amplitude of the motion is x m where x is _______. Ans. (17) Sol. x = 4 m, V = 2 m/s, a = 16 m/s\n2 |a| = \n2 x  16 = \n2\n(4)  = 2 rad/s v = 22\nA – x A = 2\n2\n2\nv\nx\n  A = 4\n16\n4\n A = 17 m 60. The current flowing through the 1  resistor is n\n10 A. The value of n is ________. B E 4 2 10V I\n1 1 C 2 5V 4 D A Ans. (25) $//(1\n® 8 Sol. 5V 4\n2 10V 1 yV 2 5V 4 0V xV I\n1 (x–10)V y – 5 y – 0 y – x 10\n0\n221\n\n y – 5 + y + 2y – 2x + 20 = 0 4y – 2x + 15 = 0 ....(i) x – 5 x – 0 x –10 – y\n0\n441\n x – 5 + x + 4x – 40 – 4y = 0 6x – 4y – 45 0 ..(i)\n–2x 4y 15 0 ..(ii)\n4x – 30 0\n\n  \n x = 15\n2 & 4y – 15 + 15 = 0 y = 0 i = y – x 10\n1\n i = 0 – 7.5 10\n1\n i = 2.5A = n\nA\n10 n = 25 $//(1\n®",
+    "questions": [
+      {
+        "number": "37",
+        "text": "A capacitor is made of a flat plate of area A and a second plate having a stair-like structure as shown in figure. If the area of each stair is A\n3 and the height is d, the capacitance of the arrangement is: d d d A/3 A/3 A/3 A (1) 0\n11 A\n18d\n (2) 0\n13 A\n17d\n (3) 0\n11 A\n20 d\n (4) 0\n18 A\n11d\n",
+        "formattedText": "A capacitor is made of a flat plate of area A and a second plate having a stair-like structure as shown in figure. If the area of each stair is A\n3 and the height is d, the capacitance of the arrangement is: d d d A/3 A/3 A/3 A (1) 0\n11 A\n18d\n (2) 0\n13 A\n17d\n (3) 0\n11 A\n20 d\n (4) 0\n18 A\n11d\n",
+        "latexText": "\\(A capacitor is made of a flat plate of area A and a second plate having a stair-like structure as shown in figure. If the area of each stair is A^{3} and the height is d, the capacitance of the arrangement is: d d d \\frac{A}{3} \\frac{A}{3} \\frac{A}{3} A (1) 0^{11} A^{18}d  (2) 0^{13} A^{17}d  (3) 0^{11} A^{20} d  (4) 0^{18} A^{11}d \\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "0 11 A 18d "
+          },
+          {
+            "letter": "2",
+            "text": "0 13 A 17d "
+          },
+          {
+            "letter": "3",
+            "text": "0 11 A 20 d "
+          },
+          {
+            "letter": "4",
+            "text": "0 18 A 11d "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "0 11 A 18d ",
+            "formattedText": "0 11 A 18d ",
+            "latexText": "0 11 A 18d "
+          },
+          {
+            "letter": "2",
+            "text": "0 13 A 17d ",
+            "formattedText": "0 13 A 17d ",
+            "latexText": "0 13 A 17d "
+          },
+          {
+            "letter": "3",
+            "text": "0 11 A 20 d ",
+            "formattedText": "0 11 A 20 d ",
+            "latexText": "0 11 A 20 d "
+          },
+          {
+            "letter": "4",
+            "text": "0 18 A 11d ",
+            "formattedText": "0 18 A 11d ",
+            "latexText": "0 18 A 11d "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "A/3",
+            "latex": "\\(\\frac{A}{3}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "A/3",
+            "latex": "\\(\\frac{A}{3}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "A/3",
+            "latex": "\\(\\frac{A}{3}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "42",
+        "text": "An astronaut takes a ball of mass m from earth to space. He throws the ball into a circular orbit about earth at an altitude of 318.5 km. From earth’s surface to the orbit, the change in total mechanical energy of the ball is e\ne\nGM m\nx\n21R\n. The value of x is (take R\ne = 6370 km): (1) 11 (2) 9 (3) 12 (4) 10",
+        "formattedText": "An astronaut takes a ball of mass m from earth to space. He throws the ball into a circular orbit about earth at an altitude of 318.5 km. From earth’s surface to the orbit, the change in total mechanical energy of the ball is e\ne\nGM m\nx\n21R\n. The value of x is (take R\ne = 6370 km): (1) 11 (2) 9 (3) 12 (4) 10",
+        "latexText": "\\(An astronaut takes a ball of mass m from earth to space. He throws the ball into a circular orbit about earth at an altitude of 318.5 km. From earth’s surface to the orbit, the change in total mechanical energy of the ball is \\frac{e}{e}GM m x^{21}R . The value of x is (take R e = 6370 km): (1) 11 (2) 9 (3) 12 (4) 10\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "GM",
+            "latex": "GM",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "43",
+        "text": "Given below are two statements: Statement (I) : When currents vary with time, Newton’s third law is valid only if momentum carried by the electromagnetic field is taken into account. Statement (II) : Ampere’s circuital law does not depend on Biot-Savart’s law. In the light of the above statements, choose the correct answer from the options given below: (1) Both Statement I and Statement II are false. (2) Statement I is true but Statement II is false. (3) Statement I is false but Statement II is true. (4) Both Statement I and Statement II are true.",
+        "formattedText": "Given below are two statements: Statement (I) : When currents vary with time, Newton’s third law is valid only if momentum carried by the electromagnetic field is taken into account. Statement (II) : Ampere’s circuital law does not depend on Biot-Savart’s law. In the light of the above statements, choose the correct answer from the options given below: (1) Both Statement I and Statement II are false. (2) Statement I is true but Statement II is false. (3) Statement I is false but Statement II is true. (4) Both Statement I and Statement II are true.",
+        "latexText": "\\(Given below are two statements: Statement (I) : When currents vary with time, Newton’s third law is valid only if momentum carried by the electromagnetic field is taken into account. Statement (II) : Ampere’s circuital law does not depend on Biot-Savart’s law. In the light of the above statements, choose the correct answer from the options given below: (1) Both Statement I and Statement II are false. (2) Statement I is true but Statement II is false. (3) Statement I is false but Statement II is true. (4) Both Statement I and Statement II are true.\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Both Statement I and Statement II are false."
+          },
+          {
+            "letter": "2",
+            "text": "Statement I is true but Statement II is false."
+          },
+          {
+            "letter": "3",
+            "text": "Statement I is false but Statement II is true."
+          },
+          {
+            "letter": "4",
+            "text": "Both Statement I and Statement II are true."
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Both Statement I and Statement II are false.",
+            "formattedText": "Both Statement I and Statement II are false.",
+            "latexText": "Both Statement I and Statement II are false."
+          },
+          {
+            "letter": "2",
+            "text": "Statement I is true but Statement II is false.",
+            "formattedText": "Statement I is true but Statement II is false.",
+            "latexText": "Statement I is true but Statement II is false."
+          },
+          {
+            "letter": "3",
+            "text": "Statement I is false but Statement II is true.",
+            "formattedText": "Statement I is false but Statement II is true.",
+            "latexText": "Statement I is false but Statement II is true."
+          },
+          {
+            "letter": "4",
+            "text": "Both Statement I and Statement II are true.",
+            "formattedText": "Both Statement I and Statement II are true.",
+            "latexText": "Both Statement I and Statement II are true."
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "45",
+        "text": "A galvanmeter has a coil of resistance 200 with a full scale deflection at 20 A. The value of resistance to be added to use it as an ammeter of range (0–20) mA is: (1) 0.40  (2) 0.20  (3) 0.50  (4) 0.10 ",
+        "formattedText": "A galvanmeter has a coil of resistance 200 with a full scale deflection at 20 A. The value of resistance to be added to use it as an ammeter of range (0–20) mA is: (1) 0.40  (2) 0.20  (3) 0.50  (4) 0.10 ",
+        "latexText": "A galvanmeter has a coil of resistance 200 with a full scale deflection at 20 A. The value of resistance to be added to use it as an ammeter of range (0–20) mA is: (1) 0.40  (2) 0.20  (3) 0.50  (4) 0.10 ",
+        "options": [
+          {
+            "letter": "1",
+            "text": "0.40 "
+          },
+          {
+            "letter": "2",
+            "text": "0.20 "
+          },
+          {
+            "letter": "3",
+            "text": "0.50 "
+          },
+          {
+            "letter": "4",
+            "text": "0.10 "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "0.40 ",
+            "formattedText": "0.40 ",
+            "latexText": "0.40 "
+          },
+          {
+            "letter": "2",
+            "text": "0.20 ",
+            "formattedText": "0.20 ",
+            "latexText": "0.20 "
+          },
+          {
+            "letter": "3",
+            "text": "0.50 ",
+            "formattedText": "0.50 ",
+            "latexText": "0.50 "
+          },
+          {
+            "letter": "4",
+            "text": "0.10 ",
+            "formattedText": "0.10 ",
+            "latexText": "0.10 "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "52",
+        "text": "At the centre of a half ring of radius R = 10 cm and linear charge density 4n C m\n–1\n, the potential is x  V. The value of x is ________.",
+        "formattedText": "At the centre of a half ring of radius R = 10 cm and linear charge density 4n C m\n–1\n, the potential is x  V. The value of x is ________.",
+        "latexText": "\\(At the centre of a half ring of radius R = 10 cm and linear charge density 4n C m –1 , the potential is x  V. The value of x is ________.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "60",
+        "text": "The current flowing through the 1  resistor is n\n10 A. The value of n is ________. B E 4 2 10V I\n1 1 C 2 5V 4 D A",
+        "formattedText": "The current flowing through the 1  resistor is n\n10 A. The value of n is ________. B E 4 2 10V I\n1 1 C 2 5V 4 D A",
+        "latexText": "\\(The current flowing through the 1  resistor is n^{10} A. The value of n is ________. B E 4 2 10V I^{1} 1 C 2 5V 4 D A\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 31",
+        "type": "mathematical",
+        "position": 151
+      },
+      {
+        "equation": "e-Broglie wavelengths will be compared as",
+        "type": "mathematical",
+        "position": 234
+      },
+      {
+        "equation": "B = hh\np\n2mk\n",
+        "type": "mathematical",
+        "position": 374
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 501
+      },
+      {
+        "equation": "m/s and 15 m/s respectively",
+        "type": "mathematical",
+        "position": 574
+      },
+      {
+        "equation": "m/s (2) 10 m/s (3) 9",
+        "type": "mathematical",
+        "position": 668
+      },
+      {
+        "equation": "m/s (4) 8 m/s Ans",
+        "type": "mathematical",
+        "position": 691
+      },
+      {
+        "equation": "S = 9t + 15t = 24t AB ",
+        "type": "mathematical",
+        "position": 744
+      },
+      {
+        "equation": "S = 6t\n1 = 24t ",
+        "type": "mathematical",
+        "position": 768
+      },
+      {
+        "equation": "m/s 33",
+        "type": "mathematical",
+        "position": 855
+      },
+      {
+        "equation": "E = BC ",
+        "type": "mathematical",
+        "position": 1287
+      },
+      {
+        "equation": "B = 2 ",
+        "type": "mathematical",
+        "position": 1316
+      },
+      {
+        "equation": "C = f",
+        "type": "mathematical",
+        "position": 1335
+      },
+      {
+        "equation": "f = 11\n3\n10\n4\n",
+        "type": "mathematical",
+        "position": 1371
+      },
+      {
+        "equation": "f = 11\n3\n210\n4\n",
+        "type": "mathematical",
+        "position": 1395
+      },
+      {
+        "equation": "z-direction 34",
+        "type": "mathematical",
+        "position": 1508
+      },
+      {
+        "equation": "v = ",
+        "type": "mathematical",
+        "position": 2152
+      },
+      {
+        "equation": "w = F\nb ",
+        "type": "mathematical",
+        "position": 2931
+      },
+      {
+        "equation": "r-like structure as shown in figure",
+        "type": "mathematical",
+        "position": 3125
+      },
+      {
+        "equation": "A/3 A/3 A/3 A (1) 0\n11 A\n18d\n",
+        "type": "mathematical",
+        "position": 3261
+      },
+      {
+        "equation": "q = C\n1 + C\n2 + C\n3 ",
+        "type": "mathematical",
+        "position": 3446
+      },
+      {
+        "equation": "q = 000\nAAA\n3d3(2d)3(3d)\n",
+        "type": "mathematical",
+        "position": 3471
+      },
+      {
+        "equation": "E = mC\n2 ",
+        "type": "mathematical",
+        "position": 4505
+      },
+      {
+        "equation": "E = (1 ",
+        "type": "mathematical",
+        "position": 4516
+      },
+      {
+        "equation": "E = (10\n",
+        "type": "mathematical",
+        "position": 4553
+      },
+      {
+        "equation": "E = 56",
+        "type": "mathematical",
+        "position": 4599
+      },
+      {
+        "equation": "e = 6370 km)",
+        "type": "mathematical",
+        "position": 4914
+      },
+      {
+        "equation": "h = 318",
+        "type": "mathematical",
+        "position": 4969
+      },
+      {
+        "equation": "i = e\ne\nGM m\nR\n",
+        "type": "mathematical",
+        "position": 5004
+      },
+      {
+        "equation": "f = ee\ne\ne\ne\nGM mGM m\nR\n2(Rh)\n2R\n20\n",
+        "type": "mathematical",
+        "position": 5027
+      },
+      {
+        "equation": "f = e\ne\n10 GM m\n21R\n",
+        "type": "mathematical",
+        "position": 5087
+      },
+      {
+        "equation": "y = TE\nf ",
+        "type": "mathematical",
+        "position": 5141
+      },
+      {
+        "equation": "i = ee\nGM m11GM m\n10\n1\nRe2121Re\n",
+        "type": "mathematical",
+        "position": 5155
+      },
+      {
+        "equation": "t-Savart",
+        "type": "mathematical",
+        "position": 5448
+      },
+      {
+        "equation": "x = 0 to x = d",
+        "type": "mathematical",
+        "position": 6033
+      },
+      {
+        "equation": "x = 0 ",
+        "type": "mathematical",
+        "position": 6129
+      },
+      {
+        "equation": "v = 0 ",
+        "type": "mathematical",
+        "position": 6137
+      },
+      {
+        "equation": "x = d ",
+        "type": "mathematical",
+        "position": 6148
+      },
+      {
+        "equation": "D = K\nf ",
+        "type": "mathematical",
+        "position": 6163
+      },
+      {
+        "equation": "D = ",
+        "type": "mathematical",
+        "position": 6179
+      },
+      {
+        "equation": "D = 2\nmd\n2\n",
+        "type": "mathematical",
+        "position": 6211
+      },
+      {
+        "equation": "G = 200 ",
+        "type": "mathematical",
+        "position": 6453
+      },
+      {
+        "equation": "g = 20 ",
+        "type": "mathematical",
+        "position": 6465
+      },
+      {
+        "equation": "i = g\nG\ni1\nS\n",
+        "type": "mathematical",
+        "position": 6475
+      },
+      {
+        "equation": "R = net reaction force by shoulder Balancing torque about pt of contact on ground",
+        "type": "mathematical",
+        "position": 6835
+      },
+      {
+        "equation": "n + 1)\nth division of vernier scale",
+        "type": "mathematical",
+        "position": 7078
+      },
+      {
+        "equation": "D = (n + 1) VSD ",
+        "type": "mathematical",
+        "position": 7229
+      },
+      {
+        "equation": "D = n\nn1",
+        "type": "mathematical",
+        "position": 7251
+      },
+      {
+        "equation": "C = 1 MSD ",
+        "type": "mathematical",
+        "position": 7267
+      },
+      {
+        "equation": "C = n\nmm\nn1\n",
+        "type": "mathematical",
+        "position": 7287
+      },
+      {
+        "equation": "C = n 1 n\nm\nn1\n",
+        "type": "mathematical",
+        "position": 7314
+      },
+      {
+        "equation": "C = m\nn1\n",
+        "type": "mathematical",
+        "position": 7347
+      },
+      {
+        "equation": "q = 6",
+        "type": "mathematical",
+        "position": 7975
+      },
+      {
+        "equation": "N-B 51",
+        "type": "mathematical",
+        "position": 8497
+      },
+      {
+        "equation": "a = nb 22 22\n10\nnbn bb\n3\n",
+        "type": "mathematical",
+        "position": 8819
+      },
+      {
+        "equation": "n + 3 = 0 1\nn\n3\n",
+        "type": "mathematical",
+        "position": 8856
+      },
+      {
+        "equation": "n = 3 integer value n = 3 52",
+        "type": "mathematical",
+        "position": 8878
+      },
+      {
+        "equation": "R = 10 cm and linear charge density 4n C m\n",
+        "type": "mathematical",
+        "position": 8947
+      },
+      {
+        "equation": "V = KQ\nR KR\nV\nR\n",
+        "type": "mathematical",
+        "position": 9095
+      },
+      {
+        "equation": "V = K",
+        "type": "mathematical",
+        "position": 9116
+      },
+      {
+        "equation": "V = 9 ",
+        "type": "mathematical",
+        "position": 9126
+      },
+      {
+        "equation": "V = 36",
+        "type": "mathematical",
+        "position": 9153
+      },
+      {
+        "equation": "e + 4\nHe + 4\nHe ",
+        "type": "mathematical",
+        "position": 9278
+      },
+      {
+        "equation": "C + Q",
+        "type": "mathematical",
+        "position": 9299
+      },
+      {
+        "equation": "e = 4",
+        "type": "mathematical",
+        "position": 9502
+      },
+      {
+        "equation": "C = 12 u",
+        "type": "mathematical",
+        "position": 9527
+      },
+      {
+        "equation": "e + 4\nHe + 4\nHe ",
+        "type": "mathematical",
+        "position": 9574
+      },
+      {
+        "equation": "C + Q power generated = N\nQ\nt where",
+        "type": "mathematical",
+        "position": 9595
+      },
+      {
+        "equation": "n/sec",
+        "type": "mathematical",
+        "position": 9650
+      },
+      {
+        "equation": "Q = ",
+        "type": "mathematical",
+        "position": 9657
+      },
+      {
+        "equation": "Q = (3 ",
+        "type": "mathematical",
+        "position": 9676
+      },
+      {
+        "equation": "Q = 7",
+        "type": "mathematical",
+        "position": 9712
+      },
+      {
+        "equation": "C = 15 ",
+        "type": "mathematical",
+        "position": 9829
+      },
+      {
+        "equation": "n = 15 54",
+        "type": "mathematical",
+        "position": 9851
+      },
+      {
+        "equation": "d = 1",
+        "type": "mathematical",
+        "position": 10065
+      },
+      {
+        "equation": "D = 1",
+        "type": "mathematical",
+        "position": 10077
+      },
+      {
+        "equation": "d/s",
+        "type": "mathematical",
+        "position": 10518
+      },
+      {
+        "equation": "R = I",
+        "type": "mathematical",
+        "position": 10564
+      },
+      {
+        "equation": "d/s\n2 W\nf = 10 ",
+        "type": "mathematical",
+        "position": 10598
+      },
+      {
+        "equation": "d/s 56",
+        "type": "mathematical",
+        "position": 10626
+      },
+      {
+        "equation": "x-y axis",
+        "type": "mathematical",
+        "position": 10732
+      },
+      {
+        "equation": "x-y plane and expressed as 0\n",
+        "type": "mathematical",
+        "position": 10782
+      },
+      {
+        "equation": "i = 2A x = 0 x = 2 ",
+        "type": "mathematical",
+        "position": 10945
+      },
+      {
+        "equation": "x = 0) = B\n0\n",
+        "type": "mathematical",
+        "position": 10973
+      },
+      {
+        "equation": "x = 2) = 9B\n0 Also",
+        "type": "mathematical",
+        "position": 10990
+      },
+      {
+        "equation": "F = i",
+        "type": "mathematical",
+        "position": 11010
+      },
+      {
+        "equation": "F = F\n2 ",
+        "type": "mathematical",
+        "position": 11047
+      },
+      {
+        "equation": "F = 160 N 57",
+        "type": "mathematical",
+        "position": 11086
+      },
+      {
+        "equation": "Y=\nAAY\n",
+        "type": "mathematical",
+        "position": 11407
+      },
+      {
+        "equation": "e-I",
+        "type": "mathematical",
+        "position": 11704
+      },
+      {
+        "equation": "i = 20\nR ",
+        "type": "mathematical",
+        "position": 11722
+      },
+      {
+        "equation": "R = 4",
+        "type": "mathematical",
+        "position": 11733
+      },
+      {
+        "equation": "e-II",
+        "type": "mathematical",
+        "position": 11744
+      },
+      {
+        "equation": "i = 20\nZ 4 = 22\nL\n22\nL\n20\nRX5\nRX\n",
+        "type": "mathematical",
+        "position": 11772
+      },
+      {
+        "equation": "X = 25 ",
+        "type": "mathematical",
+        "position": 11822
+      },
+      {
+        "equation": "L = 3 ",
+        "type": "mathematical",
+        "position": 11833
+      },
+      {
+        "equation": "L = 311000\nmH\n2 f2 50100\n",
+        "type": "mathematical",
+        "position": 11842
+      },
+      {
+        "equation": "L = 10 mH 59",
+        "type": "mathematical",
+        "position": 11873
+      },
+      {
+        "equation": "x = 4 m",
+        "type": "mathematical",
+        "position": 12125
+      },
+      {
+        "equation": "V = 2 m/s",
+        "type": "mathematical",
+        "position": 12134
+      },
+      {
+        "equation": "a = 16 m/s\n2 ",
+        "type": "mathematical",
+        "position": 12145
+      },
+      {
+        "equation": "d/s v = 22\nA ",
+        "type": "mathematical",
+        "position": 12193
+      },
+      {
+        "equation": "A = 2\n2\n2\nv\nx",
+        "type": "mathematical",
+        "position": 12211
+      },
+      {
+        "equation": "A = 4\n16\n4\n",
+        "type": "mathematical",
+        "position": 12230
+      },
+      {
+        "equation": "A = 17 m 60",
+        "type": "mathematical",
+        "position": 12243
+      },
+      {
+        "equation": "y + 2y ",
+        "type": "mathematical",
+        "position": 12487
+      },
+      {
+        "equation": "x + 20 = 0 4y ",
+        "type": "mathematical",
+        "position": 12497
+      },
+      {
+        "equation": "x + 15 = 0 ",
+        "type": "mathematical",
+        "position": 12514
+      },
+      {
+        "equation": "x + 4x ",
+        "type": "mathematical",
+        "position": 12573
+      },
+      {
+        "equation": "y = 0 6x ",
+        "type": "mathematical",
+        "position": 12588
+      },
+      {
+        "equation": "x = 15\n2 ",
+        "type": "mathematical",
+        "position": 12654
+      },
+      {
+        "equation": "y = 0 i = y ",
+        "type": "mathematical",
+        "position": 12682
+      },
+      {
+        "equation": "i = 0 ",
+        "type": "mathematical",
+        "position": 12705
+      },
+      {
+        "equation": "i = 2",
+        "type": "mathematical",
+        "position": 12724
+      },
+      {
+        "equation": "A = n\nA\n10 n = 25 ",
+        "type": "mathematical",
+        "position": 12731
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 482
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1073
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1128
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1184
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1238
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2358
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2697
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3226
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3591
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4409
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5867
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5880
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5936
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6261
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6330
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 6742
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 6792
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 6804
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 6924
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 6931
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7761
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 8060
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8108
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8290
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8535
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8665
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 9887
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9984
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10112
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10138
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 10765
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 10796
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 10869
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11641
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12049
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.14285714285714285,
+        "matchedKeywords": [
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.8333333333333334,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "acceleration",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      },
+      {
+        "name": "Organic Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "reaction"
+        ],
+        "possibleSubtopics": [
+          "Hydrocarbons",
+          "Functional Groups",
+          "Reaction Mechanisms",
+          "Biomolecules"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "force",
+          "newton",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "charge",
+          "electric field",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      }
+    ],
+    "tags": [
+      "JEE Mains",
+      "Conceptual",
+      "Formula Based"
+    ],
+    "wordCount": 3421,
+    "characterCount": 12756
+  },
+  "images": []
+}

@@ -89,7 +89,7 @@ export default function AddPYQQuestionPage() {
       ]);
       
       setSubjects(subjectsRes.data);
-      setTags(tagsRes.data);
+      setTags(tagsRes.data.tags || []);
     } catch (error) {
       console.error('Error loading initial data:', error);
       Swal.fire({
@@ -105,7 +105,7 @@ export default function AddPYQQuestionPage() {
   const loadTopics = async (subjectId: string) => {
     try {
       const response = await api.get(`/admin/topics?subjectId=${subjectId}`);
-      setTopics(response.data);
+      setTopics(response.data.topics || []);
       // Reset topic and subtopic selection
       setFormData(prev => ({ ...prev, topicId: '', subtopicId: '' }));
       setSubtopics([]);
@@ -117,7 +117,7 @@ export default function AddPYQQuestionPage() {
   const loadSubtopics = async (topicId: string) => {
     try {
       const response = await api.get(`/admin/subtopics?topicId=${topicId}`);
-      setSubtopics(response.data);
+      setSubtopics(response.data.subtopics || []);
       // Reset subtopic selection
       setFormData(prev => ({ ...prev, subtopicId: '' }));
     } catch (error) {

@@ -1,0 +1,873 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2024\\Session1\\Physics\\01-FEB-2023 SHIFT-1 JM PHYSICS PAPER SOLUTION.pdf",
+  "relativePath": "JEE\\Previous Papers\\2024\\Session1\\Physics\\01-FEB-2023 SHIFT-1 JM PHYSICS PAPER SOLUTION.pdf",
+  "metadata": {
+    "originalFileName": "01-FEB-2023 SHIFT-1 JM PHYSICS PAPER SOLUTION.pdf",
+    "subject": "Physics",
+    "year": 2023,
+    "session": null,
+    "shift": "Morning",
+    "paperType": "With Solution",
+    "date": "01-02-2023",
+    "fileType": "pdf",
+    "totalPages": 7,
+    "fileSize": 471533,
+    "processedAt": "2025-09-22T23:47:48.934Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – JANUARY, 2023 (Held On Wednesday 1\nst\nFebruary, 2023) TIME : 9 : 00 AM to 12 : 00 NOON PHYSICS TEST PAPER WITH SOLUTION Final JEE-Main Exam January, 2023/01-02-2023/Morning Session SECTION-A Q.1 Match the List I with List II List I List II A. Intrinsic Semiconductor I. Fermi-level near conduction band B. n-type semiconductor II. Fermi-level at middle C. p-type semiconductor III. Fermi-level near valence band D. Metals IV. Fermi-level inside conduction band Choose the correct answer from the options given below: (1) (A) → I, (B) → II, (C) → III, (D) → IV (2) (A) → II, (B) → I, (C) → III, (D) →IV (3) (A) → II, (B) → III, (C) → I, (D) → IV (4) (A) → III, (B) → I, (C) → II, (D) → IV Official Ans. by NTA (3) Allen Ans. (3) Sol. Based on theory. 2. An object moves with speed v 1\n, v 2\n, and v\n3 along a line segment AB, BC and CD respectively as shown in figure. Where AB = BC and AD = 3 AB, then average speed of the object will be : A\nB\nC\nD (1) 1\n2\n3\n()\n3\n++\nv\nv\nv (2) 1 2 3\n1 22 33 1\n3()++\nv v v\nv vv vv v (3) 1 2 3\n1 2\n2 3\n3 1\n3\n++\nv v v\nv v\nv v\nv v (4) 1\n2\n3\n1 2 3\n()\n3\n++\nv\nv\nv\nv v v Official Ans. by NTA (3) Allen Ans. (3) Sol. AB = x BC = x 2x + CD = 3x CD = x  =\n=\n++\n++\n1 2 3\n2 3\n1 3\n1 2\n1\n2\n3\n3\n3\nv\nvvv\nx\nxxx\nvvvvvv\nvvv 3. Given below are two statements : Statement-I: Acceleration due to gravity is different at different places on the surface of earth. Statement-II: Acceleration due to gravity increases as we go down below the earth's surface. In the light of the above statements, choose the correct answer from the options given below (1) Both Statement I and Statement II are true (2) Both Statement I and Statement II are false (3) Statement I is true but Statement II is false (4) Statement I is false but Statement II is true Official Ans. by NTA (3) Allen Ans. (3) Sol. g\neff = g – \n2 R\ne sin\n2\n  → co-latitude angle \n=−\n\n\n1\neff\ne\nd\ngg\nR\n, d here depth 4. Match the List-I with List-II. List I List II A. AC generator I. Presence of both L and C B. Transformer II. Electromagnetic Induction C. Resonance phenomenon to occur III. Quality factor D. Sharpness of resonance IV. Mutual Inductance Choose the correct answer from the options given below: (1) A-IV, B-II, C-I, D-III (2) A-II, B-I, C-III, D-IV (3) A-II, B-IV, C-I, D-III (4) A-IV, B-III, C-I, D-II Official Ans. by NTA (3) Allen Ans. (3) Sol. Based on theory. 2 Final JEE-Main Exam January, 2023/01-02-2023/Morning Session 5. Match the List-I with List-II: List I List II A. Microwaves I. Radio active decay of the nucleus B. Gamma rays II. Rapid acceleration and deceleration of electron in aerials C. Radio waves III. Inner shell electrons D. X-rays IV. Klystron valve Choose the correct answer from the options given below: (1) A-I, B-II, C-III, D-IV (2) A-IV, B-I, C-II, D-III (3) A-I, B-III, C-IV, D-II (4) A-IV, B-III, C-II, D-I Official Ans. by NTA (2) Allen Ans. (2) Sol. Based on theory. 6. If earth has a mass nine times and radius twice to the of a planet P. Then 1\nms\n3\n−\ne\nv\nx will be the minimum velocity required by a rocket to pull out of gravitational force of P, where v\ne is escape velocity on earth. The value of x is (1) 2 (2) 3 (3) 18 (4) 1 Official Ans. by NTA (1) Allen Ans. (1) Sol. =\n(escape)plant\n2\nP\nP\nGM\nv\nR = \n\n\n=\n\n\n\n2\n2\n9\n3\n2\ne\ne\ne\nM\nG\nv\nR\n x = 2 7. ‘n’ polarizing sheets are arranged such that each makes an angle 45° with the proceeding sheet. An unpolarized light of intensity I is incident into this arrangement. The output intensity is found to be 64\nI\n. The value of n will be: (1) 3 (2) 6 (3) 5 (4) 4 Official Ans. by NTA (2) Allen Ans. (2) Sol. After passing through first sheet I\n1 = I\n2 After passing through second sheet I\n2 = I\n1\ncos\n2\n(45º) = I\n4 After passing through n\nth sheet I\nn = n\n64\n2\n=\nII n = 6 8. Find the magnetic field at the point P in figure. The curved portion is a semicircle connected to two long straight wires. P i\nr (1) 0\n2\n1\n2\n\n+\n\n\n\ni\nr\n (2) 0\n1\n1\n2\n\n+\n\n\n\ni\nr\n (3) 0\n11\n2\n2\n2\n\n+\n\n\n\ni\nr\n (4) 0\n11\n22\n\n+\n\n\n\ni\nr\n Official Ans. by NTA (3) Allen Ans. (3) Sol. \n\n\n\n\n\nP\n0\n0\n0\nμ i\nμ i\nμ i\n11\nB =\n+\n=\n+\n4r\n4\nπr 2r 2 2π 9. Which of the following frequencies does not belong to FM broadcast. (1) 106 MHz (2) 64 MHz (3) 99 MHz (4) 89 MHz Official Ans. by NTA (2) Allen Ans. (2) Sol. FM broadcast range is 88MHz to 108MHz 10. A steel wire with mass per unit length 7.0 × 10\n–3 kg m\n–1 is under tension of 70 N. The speed of transverse waves in the wire will be: (1) 200  m/s (2) 100 m/s (3) 10 m/s (4) 50 m/s Official Ans. by NTA (2) Allen Ans. (2) Sol. −\n==\n\n3\n70\n70 10\nT\nμ\nv = 100 m/s 3 Final JEE-Main Exam January, 2023/01-02-2023/Morning Session 11. A child stands on the edge of the cliff 10 m above the ground and throws a stone horizontally with an initial speed of 5 ms\n–1\n. Neglecting the air resistance, the speed with which the stone hits the ground will be _____ ms\n–1 (given, g = 10 ms\n–2\n). (1) 20 (2) 15 (3) 30 (4) 25 Official Ans. by NTA (2) Allen Ans. (2) Sol. 5m/s\n5m/s\nV\ny v\ny = 2\ngh = 200 =+\n25 200\nnet\nv = 15 m/s 12. A proton moving with one tenth of velocity of light has a certain de Broglie wavelength of . An alpha particle having certain kinetic energy has the same de-Brogle wavelength . The ratio of kinetic energy of proton and that of alpha particle is: (1) 2 : 1 (2) 4 : 1 (3) 1 : 2 (4) 1 : 4 Official Ans. by NTA (2) Allen Ans. (2) Sol. KE = =\n\n2\n2\n2\np\n2m\n2\nh\nm \n\n==\n4 :1\np\np\nKE\nm\nKEm 13. A sample of gas at temperature T is adiabatically expanded to double its volume. The work done by the gas in the process is 3\ngiven,\n2\n\n=\n\n\n: (1) W = TR [ 2 2]\n− (2) W = [ 2\n2]\n−\nT\nR (3) W = [22 ]−\nR\nT (4) W = RT [22]− Official Ans. by NTA (4) Allen Ans. (4) Sol. −\n−\n=\n11\n1 1\n2 2\nTVTV =\n1/2\n1/2\n2\n(2 )\nTVTV T\n2 = 2\nT W = \n−\n\n\n−\n=\n−\n12\n()\n2\n1\n1\n2\nT\nRT\nRTT = RT\n(\n)\n−\n22 14. The equivalent resistance between A and B of the network shown in figure: R\n3R\n6R\n9R\n2R\nAB (1) 11\n2\n3\nR (2) 14R (3) 21 R (4) 8\n3\nR Official Ans. by NTA (4) Allen Ans. (4) Sol. Wheat stone bridge is in balanced condition. R\n3\nR\n6\nR\n2\nR\nA\nB =+\n1 1 1\n48\neq\nRRR =\n8\n3\neq\nR\nR 15. Let  be the uniform surface charge density of two infinite thin plane sheets shown in figure. Then the electric fields in three different region E\nI\n, E\nII and E\nIII are:\nSurface Charge\ndensity \nII\nIIII\nd\n+ +  4 Final JEE-Main Exam January, 2023/01-02-2023/Morning Session (1) I\nII\nIII\n00\n22\nˆˆ\n,\n0,\n\n=\n=\n=\n\nE\nn E\nE\nn (2) I\nII\nIII\n0\nˆ\n0,\n,\n0\n\n=\n=\n=\n\nE\nE\nn E (3) I\nII\nIII\n00\nˆˆ\n,\n0,\n22\n\n=\n=\n=\n\nE\nn E\nE\nn (4) IIIIII\n00\nˆˆ\n– , 0,\n\n===\n\nEn EEn Official Ans. by NTA (4) Allen Ans. (4) Sol. Assuming RHS to be ˆ\nn I\n0\n0\n0\nˆ\nˆ\nˆ\n(\n)\n(\n)\n22\n\n\n\n=\n− +\n− = −\n\n\n\nE\nn\nn\nn 0,=\nII\nE 0\n0\n0\nˆ\nˆ\nˆ\n( )\n( )\n( )\n22\n\n\n\n=\n+\n=\n\n\n\nIII\nE\nn\nn\nn 16. A mercury drop of radius 10\n–3 m is broken into 125 equal size droplets. Surface tension of mercury is 0.45 Nm\n–1\n. The gain in surface energy is: (1) 2.26 × 10\n–5 J (2) 28 × 10\n–5 J (3) 17.5 × 10\n–5 J (4) 5 × 10\n–5 J Official Ans. by NTA (1) Allen Ans. (1) Sol. Initial surface energy = 0.45 × 4 (10\n–3\n)\n2 −\n\n\n= \n3 3\n3\nnew\n44\n(10 ) 125\n33\nR  10\n–3 = 5 R\nnew  −\n=\n3\nnew\n10\nm\n5\nR So, final surface energy = 0.45 × 125 × 4\n2\n3\n10\n5\n−\n\n\n Increase in energy = 0.45 × 4 × (10\n–3\n)\n2\n125\n1\n25\n\n−\n\n = 4 × 0.45 × 4 × 10\n–6 = 2.26 × 10\n–5 J 17. The mass of proton, neutron and helium nucleus are respectively 1.0073 u, 1.0087 u and 4.0015u. The binding energy of helium nucleus is: (1) 14.2 MeV (2) 28.4 MeV (3) 56.8 MeV (4) 7.1 MeV Official Ans. by NTA (2) Allen Ans. (2) Sol. B.E of Helium = (2m\nP + 2m\nN – m\nHe\n) c\n2 = 28.4 MeV 18. 2\n\n+\n\n\na\nP\nV (V – b) = RT represents the equation of state of some gases. Where P is the pressure, V is the volume, T is the temperature and a, b, R are the constants. The physical quantity, which has dimensional formula as that of 2\nb\na\n, will be : (1) Bulk modulus (2) Modulus of rigidity (3) Compressibility (4) Energy density Official Ans. by NTA (3) Allen Ans. (3) Sol. [b] = [V] \n=\n\n\n2\n[]\na\nP\nb  \n= = =\n\n\n2\n11\n[]\n[ ] [ ]\nb\nK\naPB 19. The average kinetic energy of a molecule of the gas is (1) proportional to absolute temperature (2) proportional to volume (3) proportional to pressure (4) dependent on the nature of the gas Official Ans. by NTA (1) Allen Ans. (1) Sol. Basic theory Translational K.E on average of a molecule is 3\n2 KT which is independent of nature, pressure and volume. 20. A block of mass 5 kg is placed at rest on a table of rough surface. Now, if a force of 30N is applied in the direction parallel to surface of the table, the block slides through a distance of 50 m in an interval of time 10s. Coefficient of kinetic friction is (given, g = 10 ms\n–2\n): (1) 0.60 (2) 0.75 (3) 0.50 (4) 0.25 Official Ans. by NTA (3) Allen Ans. (3) Sol. S = ut + 1\n2 at\n2 50 = 0 + 1\n2 × a × 100 a = 1 m/s\n2 F – μmg = ma 30 – μ × 50 = 5 × 1 50μ = 25 μ = 1\n2 5 Final JEE-Main Exam January, 2023/01-02-2023/Morning Session SECTION-B 21. A charge particle of 2 C accelerated by a potential difference of 100V enters a region of uniform magnetic field of magnitude 4 mT at right angle to the direction of field. The charge particle completes semicircle of radius 3 cm inside magnetic field. The mass of the charge particle is_____ × 10\n–18 kg. Official Ans. by NTA (144) Allen Ans. (144) Sol. 2\n2\n2\nmv\n2km\nr q B\nr =\n=\n,m =\nqB\nqB\n2k × × × ×\n× × × ×\n× × × ×\n3 cm −\n−\n−\n−\n       \n=\n\n3\n3\n12\n6\n13\n2 2 4 10 4 10 10\n100 100\nm\n2 (100) 10 = 144 × 10\n–18 kg 22. In an experiment to find emf of a cell using potentiometer, the length of null point for a cell of emf 1.5 V is found to be 60 cm. If this cell is replaced by another cell of emf E. the length-of null point increases by 40 cm. The value of E is 10\nx\nV. The value of x is __________. Official Ans. by NTA (25) Allen Ans. (25) Sol. =\n11\n22\nEl\nEl == =\n+\n2\n1.5606 3\n60 40 10 5E ==\n2\n5\n2 10\nx\nE x = 25 23. A small particle moves to position ˆ\nˆˆ\n52\n−+\ni\nj k from its initial position ˆ\nˆˆ\n2\n3\n4\n+−\ni\nj\nk under the action of force ˆ\nˆˆ\n2N\n+\n5i\nj +7k . The value of work done will be ___________ J. Official Ans. by NTA (40) Allen Ans. (40) Sol. W = (\n)\ni\n−\nf\nF r\nr = (\n)\n(\n)\n(\n)\n(\n)\nˆ\nˆ\nˆ\nˆ ˆ\nˆ ˆ\nˆ ˆ\n5\n2\n7\n5\n2\n2\n3\n4\n+ +  − + − + −\ni\nj\nk\ni\nj k\ni\nj\nk W = 40 J 24. A light of energy 12.75 eV is incident on a hydrogen atom in its ground state. The atom absorbs the radiation and reaches to one of its excited states. The angular momentum of the atom in the excited state is \nx × 10\n–17 eVs. The value of x is ________ (use h = 4.14 × l0\n–15\neVs, c = 3 × l0\n8 ms\n–1\n). Official Ans. by NTA (828) Allen Ans. (828) Sol. In the ground state energy = –13.6 eV So energy 2\n13.6eV\n−\nn = –13.6 + 12.75 2\n13.6eV\n−\nn = –0.85 n = 16 4=n Angular momentum = 42\n22\n==\n  \nnh\nh\nh Angular momentum = 15\n2\n4.14 10\n−\n\n = 17\n828 10\neVs\n−\n\n 6 Final JEE-Main Exam January, 2023/01-02-2023/Morning Session 25. A certain pressure 'P' is applied to 1 litre of water and 2 litre of a liquid separately. Water gets compressed to 0.01% whereas the liquid gets compressed to 0.03%. The ratio of Bulk modulus of water to that of the liquid is 3\nx\n. The value of x is __________. Official Ans. by NTA (1) Allen Ans. (1) Sol. B\nwater = 0.01\n100\n− −\n=\n\n\n\n\nPP\nV\nV B\nliquid = 0.03\n100\n−\nP water\nliquid\nB\nB = 3 x = 1 26. Two equal positive point charges are separated by a distance 2a. The distance of a point from the centre of the line joining two charges on the equatorial line (perpendicular bisector) at which force experienced by a test charge q\n0 becomes maximum is a\nx\n. The value of x is __________. Official Ans. by NTA (2) Allen Ans. (2) Sol. F(x)\n2\na\nq\nq\nx\nq\n0 F = 0\n22 3/2\n2\n()+\nKqq x\nxa For F to be maximum d\nd\nF\nx = 0 x = 2\na 27. A thin cylindrical rod of length 10 cm is placed horizontally on the principle axis of a concave mirror of focal length 20 cm. The rod is placed in a such a way that mid point of the rod is at 40 cm from the pole of mirror. The length of the image formed by the mirror will be 3\nx cm. The value of x is _____________. Official Ans. by NTA (32) Allen Ans. (32) Sol. /\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n/\n+ve\n40 cm\nAB\n10 cm U\nA = –45 cm, f = –20 cm V\nA = 45 ( 20)\n900\n45 ( 20)\n25\n−  −\n−\n=\n− − − = – 36 cm And U\nB = – 35cm  V\nB = 35 ( 20)\n700\n35 ( 20)\n15\n−  −\n=\n− − −\n−  V\nA –V\nB = length of image = 140\n36cm\n3\n\n−+\n\n = 108 140\ncm\n3\n−+ = 32\n3\ncm  x = 32 28. A solid cylinder is released from rest from the top of an inclined plane of inclination 30° and length 60 cm. If the cylinder rolls without slipping, its speed upon reaching the bottom of the inclined plane is __________ ms\n–1\n. (Given g = 10 ms\n–2\n) 30º\n60 cm Official Ans. by NTA (2) Allen Ans. (2) 7 Final JEE-Main Exam January, 2023/01-02-2023/Morning Session Sol. v = 2\n2\n2\n1\n+\ngh\nk\nR Where h = 60 sin30º = 30 cm k\n2 = 2\n2\nR v = 2 ms\n–1 29. The amplitude of a particle executing SHM is 3 cm. The displacement at which its kinetic energy will be 25% more than the potential energy is: ________ cm. Official Ans. by NTA (2) Allen Ans. (2) Sol. KE = PE + 4\nPE KE = 5\n4\nPE 1\n2\nm\n2 (A\n2 – x\n2\n) = 5\n4\n× 1\n2\nm\n2\nx\n2 22\n[v\nA\nx ]\n=  − A\n2 – x\n2 = 2\n5\n4\nx 2\n9\n4\nx\n= A\n2 2\n3\n=\nxA  x = 2\n3 × 3cm x = 2 cm 30. A series LCR circuit is connected to an ac source of 220V, 50Hz. The circuit contain a resistance R = 100 and an inductor of inductive reactance X\nL = 79.6 . The capacitance of the capacitor needed to maximize the average rate at which energy is supplied will be _________ F. Official Ans. by NTA (40) Allen Ans. (40) Sol. To maximize the average rate at which energy supplied i.e. power will be maximum. So in LCR circuit power will be maximum at the condition of resonance and in resonance condition X\nL = X\nC 79.6 = 1\n\nC  C = 1\n2\n50 79.6\n    40 F\n=\nC",
+    "questions": [],
+    "mathEquations": [
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 159
+      },
+      {
+        "equation": "N-A Q",
+        "type": "mathematical",
+        "position": 218
+      },
+      {
+        "equation": "i-level near conduction band B",
+        "type": "mathematical",
+        "position": 305
+      },
+      {
+        "equation": "n-type semiconductor II",
+        "type": "mathematical",
+        "position": 337
+      },
+      {
+        "equation": "i-level at middle C",
+        "type": "mathematical",
+        "position": 366
+      },
+      {
+        "equation": "p-type semiconductor III",
+        "type": "mathematical",
+        "position": 387
+      },
+      {
+        "equation": "i-level near valence band D",
+        "type": "mathematical",
+        "position": 417
+      },
+      {
+        "equation": "i-level inside conduction band Choose the correct answer from the options given below",
+        "type": "mathematical",
+        "position": 461
+      },
+      {
+        "equation": "B = BC and AD = 3 AB",
+        "type": "mathematical",
+        "position": 906
+      },
+      {
+        "equation": "B = x BC = x 2x + CD = 3x CD = x ",
+        "type": "mathematical",
+        "position": 1172
+      },
+      {
+        "equation": "t-I",
+        "type": "mathematical",
+        "position": 1313
+      },
+      {
+        "equation": "t-II",
+        "type": "mathematical",
+        "position": 1412
+      },
+      {
+        "equation": "f = g ",
+        "type": "mathematical",
+        "position": 1834
+      },
+      {
+        "equation": "o-latitude angle ",
+        "type": "mathematical",
+        "position": 1864
+      },
+      {
+        "equation": "t-I with List-II",
+        "type": "mathematical",
+        "position": 1939
+      },
+      {
+        "equation": "A-IV",
+        "type": "mathematical",
+        "position": 2222
+      },
+      {
+        "equation": "B-II",
+        "type": "mathematical",
+        "position": 2228
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 2234
+      },
+      {
+        "equation": "D-III (2) A-II",
+        "type": "mathematical",
+        "position": 2239
+      },
+      {
+        "equation": "B-I",
+        "type": "mathematical",
+        "position": 2255
+      },
+      {
+        "equation": "C-III",
+        "type": "mathematical",
+        "position": 2260
+      },
+      {
+        "equation": "D-IV (3) A-II",
+        "type": "mathematical",
+        "position": 2267
+      },
+      {
+        "equation": "B-IV",
+        "type": "mathematical",
+        "position": 2282
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 2288
+      },
+      {
+        "equation": "D-III (4) A-IV",
+        "type": "mathematical",
+        "position": 2293
+      },
+      {
+        "equation": "B-III",
+        "type": "mathematical",
+        "position": 2309
+      },
+      {
+        "equation": "C-I",
+        "type": "mathematical",
+        "position": 2316
+      },
+      {
+        "equation": "D-II Official Ans",
+        "type": "mathematical",
+        "position": 2321
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 2398
+      },
+      {
+        "equation": "t-I with List-II",
+        "type": "mathematical",
+        "position": 2467
+      },
+      {
+        "equation": "X-rays IV",
+        "type": "mathematical",
+        "position": 2673
+      },
+      {
+        "equation": "A-I",
+        "type": "mathematical",
+        "position": 2759
+      },
+      {
+        "equation": "B-II",
+        "type": "mathematical",
+        "position": 2764
+      },
+      {
+        "equation": "C-III",
+        "type": "mathematical",
+        "position": 2770
+      },
+      {
+        "equation": "D-IV (2) A-IV",
+        "type": "mathematical",
+        "position": 2777
+      },
+      {
+        "equation": "B-I",
+        "type": "mathematical",
+        "position": 2792
+      },
+      {
+        "equation": "C-II",
+        "type": "mathematical",
+        "position": 2797
+      },
+      {
+        "equation": "D-III (3) A-I",
+        "type": "mathematical",
+        "position": 2803
+      },
+      {
+        "equation": "B-III",
+        "type": "mathematical",
+        "position": 2818
+      },
+      {
+        "equation": "C-IV",
+        "type": "mathematical",
+        "position": 2825
+      },
+      {
+        "equation": "D-II (4) A-IV",
+        "type": "mathematical",
+        "position": 2831
+      },
+      {
+        "equation": "B-III",
+        "type": "mathematical",
+        "position": 2846
+      },
+      {
+        "equation": "C-II",
+        "type": "mathematical",
+        "position": 2853
+      },
+      {
+        "equation": "D-I Official Ans",
+        "type": "mathematical",
+        "position": 2859
+      },
+      {
+        "equation": "R = ",
+        "type": "mathematical",
+        "position": 3263
+      },
+      {
+        "equation": "x = 2 7",
+        "type": "mathematical",
+        "position": 3313
+      },
+      {
+        "equation": "n = n\n64\n2\n=\nII n = 6 8",
+        "type": "mathematical",
+        "position": 3767
+      },
+      {
+        "equation": "B =\n+\n=\n+\n4r\n4\n",
+        "type": "mathematical",
+        "position": 4134
+      },
+      {
+        "equation": "m/s (2) 100 m/s (3) 10 m/s (4) 50 m/s Official Ans",
+        "type": "mathematical",
+        "position": 4509
+      },
+      {
+        "equation": "v = 100 m/s 3 Final JEE-Main Exam January",
+        "type": "mathematical",
+        "position": 4614
+      },
+      {
+        "equation": "g = 10 ms\n",
+        "type": "mathematical",
+        "position": 4928
+      },
+      {
+        "equation": "m/s\n5m/s\nV\ny v\ny = 2\ngh = 200 =+\n25 200\nnet\nv = 15 m/s 12",
+        "type": "mathematical",
+        "position": 5018
+      },
+      {
+        "equation": "e-Brogle wavelength ",
+        "type": "mathematical",
+        "position": 5233
+      },
+      {
+        "equation": "E = =\n",
+        "type": "mathematical",
+        "position": 5411
+      },
+      {
+        "equation": "W = TR ",
+        "type": "mathematical",
+        "position": 5618
+      },
+      {
+        "equation": "W = ",
+        "type": "mathematical",
+        "position": 5638
+      },
+      {
+        "equation": "W = ",
+        "type": "mathematical",
+        "position": 5659
+      },
+      {
+        "equation": "W = RT ",
+        "type": "mathematical",
+        "position": 5678
+      },
+      {
+        "equation": "V =\n1/2\n1/2\n2\n(2 )\nTVTV T\n2 = 2\nT W = ",
+        "type": "mathematical",
+        "position": 5758
+      },
+      {
+        "equation": "T = RT\n(\n)\n",
+        "type": "mathematical",
+        "position": 5835
+      },
+      {
+        "equation": "B =+\n1 1 1\n48\neq\nRRR =\n8\n3\neq\nR\nR 15",
+        "type": "mathematical",
+        "position": 6092
+      },
+      {
+        "equation": "d\n+ ",
+        "type": "mathematical",
+        "position": 6335
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 6354
+      },
+      {
+        "equation": "y = 0",
+        "type": "mathematical",
+        "position": 7067
+      },
+      {
+        "equation": "y = 0",
+        "type": "mathematical",
+        "position": 7192
+      },
+      {
+        "equation": "y = 0",
+        "type": "mathematical",
+        "position": 7249
+      },
+      {
+        "equation": "m = (2m\nP + 2m\nN ",
+        "type": "mathematical",
+        "position": 7586
+      },
+      {
+        "equation": "g = 10 ms\n",
+        "type": "mathematical",
+        "position": 8716
+      },
+      {
+        "equation": "S = ut + 1\n2 at\n2 50 = 0 + 1\n2 ",
+        "type": "mathematical",
+        "position": 8813
+      },
+      {
+        "equation": "a = 1 m/s\n2 F ",
+        "type": "mathematical",
+        "position": 8854
+      },
+      {
+        "equation": "g = ma 30 ",
+        "type": "mathematical",
+        "position": 8872
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 8926
+      },
+      {
+        "equation": "N-B 21",
+        "type": "mathematical",
+        "position": 8985
+      },
+      {
+        "equation": "r =\n=\n",
+        "type": "mathematical",
+        "position": 9367
+      },
+      {
+        "equation": "m =\nqB\nqB\n2k ",
+        "type": "mathematical",
+        "position": 9374
+      },
+      {
+        "equation": "h-of null point increases by 40 cm",
+        "type": "mathematical",
+        "position": 9708
+      },
+      {
+        "equation": "l == =\n+\n2\n1",
+        "type": "mathematical",
+        "position": 9859
+      },
+      {
+        "equation": "E ==\n2\n5\n2 10\nx\nE x = 25 23",
+        "type": "mathematical",
+        "position": 9889
+      },
+      {
+        "equation": "N\n+\n5i\nj +7k ",
+        "type": "mathematical",
+        "position": 10048
+      },
+      {
+        "equation": "W = (\n)\ni\n",
+        "type": "mathematical",
+        "position": 10156
+      },
+      {
+        "equation": "r = (\n)\n(\n)\n(\n)\n(\n)\n",
+        "type": "mathematical",
+        "position": 10175
+      },
+      {
+        "equation": "W = 40 J 24",
+        "type": "mathematical",
+        "position": 10263
+      },
+      {
+        "equation": "h = 4",
+        "type": "mathematical",
+        "position": 10535
+      },
+      {
+        "equation": "c = 3 ",
+        "type": "mathematical",
+        "position": 10558
+      },
+      {
+        "equation": "y = ",
+        "type": "mathematical",
+        "position": 10654
+      },
+      {
+        "equation": "n = ",
+        "type": "mathematical",
+        "position": 10688
+      },
+      {
+        "equation": "n = ",
+        "type": "mathematical",
+        "position": 10717
+      },
+      {
+        "equation": "n = 16 4=n Angular momentum = 42\n22\n==\n",
+        "type": "mathematical",
+        "position": 10727
+      },
+      {
+        "equation": "m = 15\n2\n4",
+        "type": "mathematical",
+        "position": 10794
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 10850
+      },
+      {
+        "equation": "r = 0",
+        "type": "mathematical",
+        "position": 11220
+      },
+      {
+        "equation": "d = 0",
+        "type": "mathematical",
+        "position": 11266
+      },
+      {
+        "equation": "B = 3 x = 1 26",
+        "type": "mathematical",
+        "position": 11299
+      },
+      {
+        "equation": "F = 0\n22 3/2\n2\n()+\nKqq x\nxa For F to be maximum d\nd\nF\nx = 0 x = 2\na 27",
+        "type": "mathematical",
+        "position": 11667
+      },
+      {
+        "equation": "A = ",
+        "type": "mathematical",
+        "position": 12195
+      },
+      {
+        "equation": "f = ",
+        "type": "mathematical",
+        "position": 12207
+      },
+      {
+        "equation": "A = 45 ( 20)\n900\n45 ( 20)\n25\n",
+        "type": "mathematical",
+        "position": 12220
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 12281
+      },
+      {
+        "equation": "B = 35 ( 20)\n700\n35 ( 20)\n15\n",
+        "type": "mathematical",
+        "position": 12296
+      },
+      {
+        "equation": "B = length of image = 140\n36cm\n3\n",
+        "type": "mathematical",
+        "position": 12350
+      },
+      {
+        "equation": "x = 32 28",
+        "type": "mathematical",
+        "position": 12425
+      },
+      {
+        "equation": "g = 10 ms\n",
+        "type": "mathematical",
+        "position": 12672
+      },
+      {
+        "equation": "E-Main Exam January",
+        "type": "mathematical",
+        "position": 12747
+      },
+      {
+        "equation": "v = 2\n2\n2\n1\n+\ngh\nk\nR Where h = 60 sin30",
+        "type": "mathematical",
+        "position": 12805
+      },
+      {
+        "equation": "v = 2 ms\n",
+        "type": "mathematical",
+        "position": 12866
+      },
+      {
+        "equation": "E = PE + 4\nPE KE = 5\n4\nPE 1\n2\nm",
+        "type": "mathematical",
+        "position": 13084
+      },
+      {
+        "equation": "x\n= A\n2 2\n3\n=\nxA ",
+        "type": "mathematical",
+        "position": 13197
+      },
+      {
+        "equation": "x = 2\n3 ",
+        "type": "mathematical",
+        "position": 13216
+      },
+      {
+        "equation": "x = 2 cm 30",
+        "type": "mathematical",
+        "position": 13230
+      },
+      {
+        "equation": "R = 100",
+        "type": "mathematical",
+        "position": 13341
+      },
+      {
+        "equation": "L = 79",
+        "type": "mathematical",
+        "position": 13391
+      },
+      {
+        "equation": "L = X\nC 79",
+        "type": "mathematical",
+        "position": 13750
+      },
+      {
+        "equation": "C = 1\n2\n50 79",
+        "type": "mathematical",
+        "position": 13773
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1850
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2156
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3634
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3678
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 3714
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3741
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4702
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4846
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 5515
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5875
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7798
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8631
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 9523
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9557
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11370
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11387
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 11515
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 12839
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13335
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13383
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13413
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.14285714285714285,
+        "matchedKeywords": [
+          "circle"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "force",
+          "acceleration",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "electric",
+          "magnetic"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "waves",
+          "light"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "mole"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      },
+      {
+        "name": "Inorganic Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "metals"
+        ],
+        "possibleSubtopics": [
+          "Periodic Properties",
+          "Chemical Bonding",
+          "Coordination Compounds",
+          "s-Block Elements"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "force",
+          "friction",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "charge",
+          "electric field",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      },
+      {
+        "name": "Electromagnetic Induction",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 1,
+        "matchedKeywords": [
+          "electromagnetic induction"
+        ]
+      }
+    ],
+    "tags": [
+      "Formula Based"
+    ],
+    "wordCount": 3347,
+    "characterCount": 13806
+  },
+  "images": []
+}

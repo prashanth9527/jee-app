@@ -1,0 +1,1422 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2025\\Session1\\Physics\\2301-Physics Paper+With+Sol Morning.pdf",
+  "relativePath": "JEE\\Previous Papers\\2025\\Session1\\Physics\\2301-Physics Paper+With+Sol Morning.pdf",
+  "metadata": {
+    "originalFileName": "2301-Physics Paper+With+Sol Morning.pdf",
+    "subject": "Physics",
+    "year": 2025,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 9,
+    "fileSize": 6532391,
+    "processedAt": "2025-09-22T23:33:32.920Z"
+  },
+  "content": {
+    "originalText": "1 JEE–MAIN EXAMINATION – JANUARY 2025 PHYSICS TEST PAPER WITH SOLUTION  (HELD ON THURSDAY 23\nrd JANUARY 2025) TIME : 9:00 AM TO 12:00 NOON SECTION-A 26. Regarding self-inductance : A : The self-inductance of the coil depends on its geometry. B : Self-inductance does not depend on the permeability of the medium. C : Self-induced e.m.f. opposes any change in the current in a circuit. D : Self-inductance is electromagnetic analogue of mass in mechanics. E : Work needs to be done against self-induced e.m.f. in establishing the current. Choose the correct answer from the options given below: (1) A, B, C, D only (2) A, C, D, E only (3) A, B, C, E only (4) B, C, D, E only Ans. (2) Sol. Self inductance of coil L = \n\n2\n0\nNA\n2R 27. A light hollow cube of side length 10 cm and mass 10g, is floating in water. It is pushed down and released to execute simple harmonic oscillations. The time period of oscillations is y × 10\n–\n2 s, where the value of y is (Acceleration due to gravity, g = 10 m/s\n2\n, density of water = 10\n3 kg/m\n3\n) (1) 2 (2) 6 (3) 4 (4) 1 Ans. (1) Sol. a\n2\nx g = ma\nnet \n\n2\nnet\nLg\nxa\nm T = 2 \n2\nm\nLg where m = 10g, L = 10 cm, = 1000 kg/m\n3 28. Given below are two statements: Statement-I : The hot water flows faster than cold water. Statement-II : Soap water has higher surface tension as compared to fresh water. In the light above statements, choose the correct answer from the options given below (1) Statement-I is false but Statement II is true (2) Statement-I is true but Statement II is false (3) Both Statement-I and Statement-II are true (4) Both Statement-I and Statement-II are false Ans. (2) Sol. Hot water is less viscous then cold water. Surfactant reduces surface tension. 29. A sub-atomic particle of mass 10\n–\n30 kg is moving with a velocity 2.21 × 10\n6 m/s. Under the matter wave consideration, the particle will behave closely like ______. (h = 6.63 × 10\n–34 J.s) (1) Infra-red radiation (2) X-rays (3) Gamma rays (4) Visible radiation Ans. (2) Sol.  = \n\n\n\n34\n–306\nh6.63 10\np102.21 10 = 3 × 10\n–\n10\nm Hence particle will behave as x-ray. 30. A spherical surface of radius of curvature R, separates air from glass (refractive index = 1.5). The centre of curvature is in the glass medium. A point object ‘O’ placed in air on the optic axis of the surface, so that its real image is formed at ‘I’ inside glass. The line OI intersects the spherical surface at P and PO = PI. The distance PO equals to- (1) 5R (2) 3R (3) 2R (4) 1.5R Ans. (1) ALLEN 2  Sol. P air \n=1 \n=1.5 glass I O PO = u = –x PI = v = x PO = PI 2\n1\n2\n1\nv\nu\nR\n   \n 1.511\nxx2R\n 51\n2x\n2R\n X = 5R 31. A radioactive nucleus n\n2 has 3 times the decay constant as compared to the decay constant of another radioactive nucleus n\n1\n. If initial number of both nuclei are the same, what is the ratio of number of nuclei of n\n2 to the number of nuclei of n\n1\n, after one half-life of n\n1\n? (1) 1/4 (2) 1/8 (3) 4 (4) 8 Ans. (1) Sol. N\n2 = N\n0\ne\n–\n3\n\nt N\n1 = N\n0\ne\n–\n\nt 2t\n2\n1\nN\ne\nN\n\n 1\nhalf life ofN\nln 2\ntt\n n\n1 t\n0\n0\nN\nNe\n2\n\n t = ln2 ln 2\nt\n ln 2\n2\ne\n\n\n 2\n1\nN\n1\nN4\n 32. Identify the valid statements relevant to the given circuit at the instant when the key is closed. air A B R 5V Key A. There will be no current through resistor R. B. There will be maximum current in the connecting wires. C. Potential difference between the capacitor plates A and B is minimum. D. Charge on the capacitor plates is minimum. Choose the correct answer from the options given below : (1) C, D only (2\n) B, C, D only (3) A, C only (4) A, B, D only Ans. (2) Sol. Initially capacitor behave as a short circuit. So current will be maximum. Charge on capacitor will be zero. Potential difference across capacitor will be zero. 33. The position of a particle moving on x-axis is given by x(t) = A sin t + B cos\n2\nt + Ct\n2 + D, where t is time. The dimension of ABC\nD is- (1) L (2) L\n3 T\n–2 (3) L\n2 T\n–\n2 (4) L\n2 Ans. (3) Sol. Dimension [x(t)] = [L] [A] = [L] [B] = [L] [C] = [LT\n–\n2\n] [D] = [L] \n\n\n\n\n\n\n\n–2\nABCL L LT\nDL = [L\n2\nT\n–2\n] ALLEN 3  34. Match the List-I with List-II List-I List-II A. Pressure varies inversely with volume of an ideal gas. I. Adiabatic process B. Heat absorbed goes partly to increase internal energy and partly to do work. II. Isochoric process C. Heat is neither absorbed nor released by a system III\n. Isothermal process D. No work is done on or by a gas IV\n. Isobaric process Choose the correct answer from the options given below : (1) A–I, B–IV, C–II, D–III (2) A–III, B–I, C–IV, D–II (3) A–I, B–III, C–II, D–IV (4) A–III, B–IV, C–I, D–II Ans. (4) Sol. A →\n1\nP\nV\n  PV = constant  nRT = const.  T = const. Hence Isothermal III B → IV W  0, U  0, Q  0 [only isobaric] C → IQ = 0 Adiabatic D → II w = 0 Isochoric III IV I II 35. Consider a moving coil galvanometer (MCG) : A : The torsional constant in moving coil galvanometer has dimensions [ML\n2\nT\n–2\n] B : Increasing the current sensitivity may not necessarily increase the voltage sensitivity. C : If we increase number of turns (N) to its double (2N), then the voltage sensitivity doubles. D : MCG can be converted into an ammeter by introducing a shunt resistance of large value in parallel with galvanometer. E : Current sensitivity of MCG depends inversely on number of turns of coil. Choose the correct answer from the options given below : (1) A, B only (2\n) A, D, only (3) B, D, E only (4) A, B, E only Ans. (1) Sol. (A) = C[ML\n2\nT\n–2\n] = [C][1] (B) C.S = \n\nBNA\nIC\n; V.S. = BNA\nRC [R also depends on ‘N’] (C) NAB\nV.S.\nCR\n R → NR (D) False [Theory] (E) E [False] C.S  N NAB\nC.S.\nC\n ALLEN 4  36. A point particle of charge Q is located at P along the axis of an electric dipole 1 at a distance r as shown in the figure. The point P is also on the equatorial plane of a second electric dipole 2 at a distance r. The dipoles are made of opposite charge q separated by a distance 2a. For the charge particle at P not to experience any net force, which of the following correctly describes the situation? –\nq +q P r Dipole 1 Dipole 2 2a 2a +q –\nq r (1) \na\n20\nr (2) a\n~ 10\nr (3) a\n~ 0.5\nr (4) a\n~3\nr Ans. (4) Sol. \n\n\n \n   \n\n22\n22\nkqkq2kq\ncos\nra\nr ar a\n\n\n   \n\n223\n22\n2\n112a\nr ar a\nra\n\n\n   \n\n223\n22\n2\n112a\nr ar a\nra\n\n\n \n\n23\n22\n22\n2\n4ra2a\nra\nra\n\n\n \n\n\n\n23\n22\n22\n2\n2r\n1\nra\nra\n\n\n \n\n\n\n2\n43\n2\n2\n2\n2\n4r\n1\nr\na\nr\na\n\n  4r\n2\n(r\n2 + a\n2\n)\n3 = (r\n2 – a\n2\n)\n4 34\n22\n88\n22\naa\n4r 1r 1\nrr\n \n \n \n  34\n22\n22\naa\n4 1\n1\nrr\n\n \n\n\n \n\n \n\n\n \n Exact value cannot be solved in exam for this equation to be true \na\n1\nr  a > r But point charge Q lies between charges of dipole 1 hence electric field cannot be zero. There for it should be bonus. But by solving from mathematical software we are getting a/r  3. 37. A gun fires a lead bullet of temperature 300K into a wooden block. The bullet having melting temperature of 600 K penetrates into the block and melts down. If the total heat required for the process is 625 J, then the mass of the bullet is ___ grams. (Latent heat of fusion of lead = 2.5 × 10\n4 J Kg\n–1 and specific heat capacity of lead = 125 JKg\n–\n1 K\n–\n1\n) (1) 20 (2) 15 (3) 10 (4) 5 Ans. (3) Sol. 625 = msT + mL 625 = m[125 × 300 + 2.5 × 10\n4\n] 625 = m[37500 + 25000] 625 = m[62500] 1\nmkg\n100\n M = 10 grams ALLEN 5  38. What is the lateral shift of a ray refracted through a parallel-sided glass slab of thickness ‘h’ in terms of the angle of incidence ‘i’ and angle of refraction ‘r’, if the glass slab is placed in air medium ? (1) \nh tan(i r)\ntan r (2) \nh cos(i r)\nsin r (3) h (4) \nh sin(i r)\ncos r Ans. (4) Sol. Formula base h sin(i r)\ncos r\n 39. A solid sphere of mass ‘m’ and radius ‘r’ is allowed to roll without slipping from the highest point of an inclined plane of length ‘L’ and makes an angle 30º with the horizontal. The speed of the particle at the bottom of the plane is v\n1\n. If the angle of inclination is increased to 45º while keeping L constant. Then the new speed of the sphere at the bottom of the plane is v\n2\n. The ratio of v\n1\n2 : v\n2\n2 is (1) 1 : 2 (2) 1 : 3 (3) 1 : 2 (4) 1 : 3 Ans. (1) Sol. \n\nL Lsin using WET W\ng = k\nf – k\ni Mg L sin = k\nf – k\ni K.E. in pure rolling 22\ncmcm\n11\nmVI\n22\n 2\n22\n2\n11 2V\nmVmR\n22 5R\n  2\n7\nmV\n10 2\nf\n7\nmgL sinmV0\n10\n  2\nf\nVsin 2\n11\n22\nVsin\nVsin\n\n\n\n\n\n\nsin 30\nsin 45\n\n\n\n1\n2\n 40. Refer to the circuit diagram given in the figure, which of the following observation are correct? A. Total resistance of circuit is 6. B. Current in Ammeter is 1A C. Potential across AB is 4 Volts. D. Potential across CD is 4 Volts. E. Total resistance of the circuit is 8. Choose the correct answer from the options given below: 4\n 4\n 4\n E = 6V D A C B A (1) A, B and D only (2) A, C and D only (3) B, C and E only (4) A, B and C only Ans. (1) Sol. 4 6V D A 4 B A C 4 4 6 4\n4  \n\n6 2 4 \n\n6 6 ALLEN 6  Current through ammeter = 1 A R\nnet = 6 6V D A 0.5A B A C 0.5A 1A V\nAB = 0.5 × 4 = 2 volt V\nCD = 1 × 4 = 4 volt A, B & D are correct 41. The electric flux is  =  +  where  and  are linear and surface charge density, respectively, \n\n\n\n represents (1) charge (2) electric field (3) displacement (4) area Ans. (3) Sol.  =  +  [ = [ = [  \n \n \n\n\n  \n \n\n\n\n\n\n\n  \n \n \n\n\n  \n\nQ / L\nArea\nQ / AreaLength\n\n\n\n L\n\n\n\n\n\n 42. Given a thin convex lens (refractive index \n2\n), kept in a liquid (refractive index \n1\n, \n1 < \n2\n) having radii of curvature |R\n1\n| and |R\n2\n|. Its second surface is silver polished. Where should an object be placed on the optic axis so that a real and inverted image is formed at the same place ? (1) \n\n\n\n \n1\n1\n2\n2\n1\n2\n1\n1\nR . R\nR\nR\nR (2) \n\n\n\n \n1\n1\n2\n2\n1\n2\n1\n2\nR . R\nR\nR\nR (3) \n\n\n\n \n1\n1\n2\n2\n1\n2\n1\n1\n2\nR . R\n2 R\nR\nR . R (4) \n\n\n\n \n \n2\n1\n1\n21\nR Ans. (2) Sol. 1 |R\n1\n| |R\n2\n| \n2 \n1 \neqLm\n121\n–\nfff \n2\nm\n| R |\nf–\n2 \n\n\n\n\n\n2\nL112\n111\n–1\nfRR \n \n\n\n\n\n2112\neq1122\n–R R\n12\n2\nfR RR = \n   \n\n\n\n211211\n211\n( – )(R R ) R\n2\nRR = \n   \n\n\n\n2122111211\n211\nR R – R – R R\n2\nRR ALLEN 7   \n\n\n\n2\n1\n2\n2\n1\n2\neq\n1\n1\n2\n2[ R R – R ]\n1\nf\nR R For same size of image u = 2f u = \n \n112\n212212\nRR\nR R – R 43. The electric field of an electromagnetic wave in free space is E = 57 cos[7.5 × 10\n6 t – 5 × 10\n–3 (3x + 4y)] \n\n\nˆˆ\n4i 3 j\nN/C. The associated magnetic field in Tesla is- (1) \n\n8\n57\nBcos\n3 10 [7.5 × 10\n6\nt – 5 × 10\n–3 (3x + 4y)]  \nˆ\n5k (2) \n\n8\n57\nBcos\n3 10 [7.5 × 10\n6\nt – 5 × 10\n–3 (3x + 4y)]  \nˆ\nk (3)\n\n\n8\n57\nBcos\n3 10\n[7.5 × 10\n6\nt – 5 × 10\n–3 (3x + 4y)]  \nˆ\n5k (4) \n\n8\n57\nBcos\n3 10\n[7.5×10\n6\nt – 5 × 10\n–3 (3x + 4y)]  \nˆ\nk Ans. (3) Sol. \nˆˆ\nK 3i 4 j \n\nˆˆ\n3i 4 j\nˆ\nK\n5 \nˆˆ\n4i –3j\nˆ\nE\n5 \nˆ ˆ ˆ\nB K E \nˆˆ\nB –Z B\n0 = \n\n0\n8\nE\n57\nC3 10 44. The motion of an airplane is represented by velocity-time graph as shown below. The distance covered by airplane in the first 30.5 second is ____ km. 0 2 10 20 30 40 t(sec) A B 200 400 v(m/sec) (1) 9 (2) 6 (3) 3 (4) 12 Ans. (4) Sol. Total Area under curve. 45. Consider a circular disc of radius 20 cm with centre located at the origin. A circular hole of a radius 5 cm is cut from this disc in such a way that the edge of the hole touches the edge of the disc. The distance of centre of mass of residual or remaining disc from the origin will be- (1) 2.0 cm (2) 0.5 cm (3) 1.5 cm (4) 1.0 cm Ans. (4) Sol. 1 15 mass of disc = m mass of cut part = m\n16 X\ncom = \nm\nm 0 – 15\n16\nm\nm–\n16 = 1 cm. ALLEN 8  SECTION-B 46. A positive ion A and a negative ion B has charges 6.67 × 10\n–19 C and 9.6 × 10\n–10 C, and masses 19.2 × 10\n–27 kg and 9 × 10\n–27 kg respectively. At an instant, the ions are separated by a certain distance r. At that instant the ratio of the magnitudes of electrostatic force to gravitational force is P × 10\n–13\n, where the value of P is ____. (Take \n0\n1\n4 = 9 × 10\n9 Nm\n2\nC\n–1 and universal gravitational constant as 6.67 × 10\n–11 Nm\n2 kg\n–2\n) Ans. (BONUS) Sol.     \n    \n9\n–19\n–10\n–11\n–27\n–27\n9 10\n6.67 10\n9.6 10\n6.67 10\n19.2 10\n9 10 \n45\n1\n10\n2 Charge is not integral multiple of electron. 47. Two particles are located at equal distance from origin. The position vectors of those are represented by   \nˆˆ\nˆ\nA 2i 3nj 2k and   \nˆˆ\nˆ\nB 2i 2 j 4pk\n, respectively. If both the vectors are at right angle to each other, the value of n\n–\n1 is____. Ans. (3) Sol. A.B 0 4 – 6 n + 8p = 0 | A | | B | 4 + 9n\n2 + 4 = 4 + 4 + 16p\n2 9n 2 = 16p\n2 P = +\n3\nn\n4 4 – 6n + 6n = 0 12n = 4 n = 1\n3 48. An ideal gas initially at 0ºC temperature, is compressed suddenly to one fourth of its volume. If the ratio of specific heat at constant pressure to that at constant volume is 3/2, the change in temperature due to the thermodynamics process is____K. Ans. (273) Sol.  = 3\n2 Tv\n –1 = C 273 \n\n\n\n0.5\n0.5\n0\n0\nV\nVT\n4 T = 273 × 2 = 546 T = 273 49. A force \n22\nˆˆ\nf x yi y j acts on a particle in a plane x + y = 10. The work done by this force during a displacement from (0, 0) to (4m, 2m) is _____ Joule (round off to the nearest integer) Ans. (152) Sol. \n\n42\n22\n00\nx (10 – x)dx y dy =   \n\n  \n  \n42\n343\n00\n10xxy\n343\n= \n6408\n64\n33\n= 152 50. 3H 12V R In the given circuit the sliding contact is pulled outwards such that electric current in the circuit changes at the rate of 8 A/s. At an instant when R is 12 , the value of the current in the circuit will be ____A. Ans. (3) Sol. \nLdI\n– – IR 0\ndt 12 – 3 × (–8) – I × 12 = 0 I = 3 ALLEN",
+    "questions": [
+      {
+        "number": "26",
+        "text": "Regarding self-inductance : A : The self-inductance of the coil depends on its geometry. B : Self-inductance does not depend on the permeability of the medium. C : Self-induced e.m.f. opposes any change in the current in a circuit. D : Self-inductance is electromagnetic analogue of mass in mechanics. E : Work needs to be done against self-induced e.m.f. in establishing the current. Choose the correct answer from the options given below: (1) A, B, C, D only (2) A, C, D, E only (3) A, B, C, E only (4) B, C, D, E only",
+        "formattedText": "Regarding self-inductance : A : The self-inductance of the coil depends on its geometry. B : Self-inductance does not depend on the permeability of the medium. C : Self-induced e.m.f. opposes any change in the current in a circuit. D : Self-inductance is electromagnetic analogue of mass in mechanics. E : Work needs to be done against self-induced e.m.f. in establishing the current. Choose the correct answer from the options given below: (1) A, B, C, D only (2) A, C, D, E only (3) A, B, C, E only (4) B, C, D, E only",
+        "latexText": "\\(Regarding self-inductance : A : The self-inductance of the coil depends on its geometry. B : Self-inductance does not depend on the permeability of the medium. C : Self-induced e.m.f. opposes any change in the current in a circuit. D : Self-inductance is electromagnetic analogue of mass in mechanics. E : Work needs to be done against self-induced e.m.f. in establishing the current. Choose the correct answer from the options given below: (1) A, B, C, D only (2) A, C, D, E only (3) A, B, C, E only (4) B, C, D, E only\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "A, B, C, D only"
+          },
+          {
+            "letter": "2",
+            "text": "A, C, D, E only"
+          },
+          {
+            "letter": "3",
+            "text": "A, B, C, E only"
+          },
+          {
+            "letter": "4",
+            "text": "B, C, D, E only"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "A, B, C, D only",
+            "formattedText": "A, B, C, D only",
+            "latexText": "A, B, C, D only"
+          },
+          {
+            "letter": "2",
+            "text": "A, C, D, E only",
+            "formattedText": "A, C, D, E only",
+            "latexText": "A, C, D, E only"
+          },
+          {
+            "letter": "3",
+            "text": "A, B, C, E only",
+            "formattedText": "A, B, C, E only",
+            "latexText": "A, B, C, E only"
+          },
+          {
+            "letter": "4",
+            "text": "B, C, D, E only",
+            "formattedText": "B, C, D, E only",
+            "latexText": "B, C, D, E only"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "27",
+        "text": "A light hollow cube of side length 10 cm and mass 10g, is floating in water. It is pushed down and released to execute simple harmonic oscillations. The time period of oscillations is y × 10\n–\n2 s, where the value of y is (Acceleration due to gravity, g = 10 m/s\n2\n, density of water = 10\n3 kg/m\n3\n) (1) 2 (2) 6 (3) 4 (4) 1",
+        "formattedText": "A light hollow cube of side length 10 cm and mass 10g, is floating in water. It is pushed down and released to execute simple harmonic oscillations. The time period of oscillations is y × 10\n–\n2 s, where the value of y is (Acceleration due to gravity, g = 10 m/s\n2\n, density of water = 10\n3 kg/m\n3\n) (1) 2 (2) 6 (3) 4 (4) 1",
+        "latexText": "\\(A light hollow cube of side length 10 cm and mass 10g, is floating in water. It is pushed down and released to execute simple harmonic oscillations. The time period of oscillations is y \\times 10 – 2 s, where the value of y is (Acceleration due to gravity, g = 10 \\frac{m}{s}^{2} , density of water = 10^{3} \\frac{kg}{m}^{3} ) (1) 2 (2) 6 (3) 4 (4) 1\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "m/s",
+            "latex": "\\(\\frac{m}{s}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "kg/m",
+            "latex": "\\(\\frac{kg}{m}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "28",
+        "text": "Given below are two statements: Statement-I : The hot water flows faster than cold water. Statement-II : Soap water has higher surface tension as compared to fresh water. In the light above statements, choose the correct answer from the options given below (1) Statement-I is false but Statement II is true (2) Statement-I is true but Statement II is false (3) Both Statement-I and Statement-II are true (4) Both Statement-I and Statement-II are false",
+        "formattedText": "Given below are two statements: Statement-I : The hot water flows faster than cold water. Statement-II : Soap water has higher surface tension as compared to fresh water. In the light above statements, choose the correct answer from the options given below (1) Statement-I is false but Statement II is true (2) Statement-I is true but Statement II is false (3) Both Statement-I and Statement-II are true (4) Both Statement-I and Statement-II are false",
+        "latexText": "\\(Given below are two statements: Statement-I : The hot water flows faster than cold water. Statement-II : Soap water has higher surface tension as compared to fresh water. In the light above statements, choose the correct answer from the options given below (1) Statement-I is false but Statement II is true (2) Statement-I is true but Statement II is false (3) Both Statement-I and Statement-II are true (4) Both Statement-I and Statement-II are false\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Statement-I is false but Statement II is true"
+          },
+          {
+            "letter": "2",
+            "text": "Statement-I is true but Statement II is false"
+          },
+          {
+            "letter": "3",
+            "text": "Both Statement-I and Statement-II are true"
+          },
+          {
+            "letter": "4",
+            "text": "Both Statement-I and Statement-II are false"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Statement-I is false but Statement II is true",
+            "formattedText": "Statement-I is false but Statement II is true",
+            "latexText": "\\(Statement-I is false but Statement II is true\\)"
+          },
+          {
+            "letter": "2",
+            "text": "Statement-I is true but Statement II is false",
+            "formattedText": "Statement-I is true but Statement II is false",
+            "latexText": "\\(Statement-I is true but Statement II is false\\)"
+          },
+          {
+            "letter": "3",
+            "text": "Both Statement-I and Statement-II are true",
+            "formattedText": "Both Statement-I and Statement-II are true",
+            "latexText": "\\(Both Statement-I and Statement-II are true\\)"
+          },
+          {
+            "letter": "4",
+            "text": "Both Statement-I and Statement-II are false",
+            "formattedText": "Both Statement-I and Statement-II are false",
+            "latexText": "\\(Both Statement-I and Statement-II are false\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "31",
+        "text": "A radioactive nucleus n\n2 has 3 times the decay constant as compared to the decay constant of another radioactive nucleus n\n1\n. If initial number of both nuclei are the same, what is the ratio of number of nuclei of n\n2 to the number of nuclei of n\n1\n, after one half-life of n\n1\n? (1) 1/4 (2) 1/8 (3) 4 (4) 8",
+        "formattedText": "A radioactive nucleus n\n2 has 3 times the decay constant as compared to the decay constant of another radioactive nucleus n\n1\n. If initial number of both nuclei are the same, what is the ratio of number of nuclei of n\n2 to the number of nuclei of n\n1\n, after one half-life of n\n1\n? (1) 1/4 (2) 1/8 (3) 4 (4) 8",
+        "latexText": "\\(A radioactive nucleus n^{2} has 3 times the decay constant as compared to the decay constant of another radioactive nucleus n^{1} . If initial number of both nuclei are the same, what is the ratio of number of nuclei of n^{2} to the number of nuclei of n^{1} , after one half-life of n^{1} ? (1) \\frac{1}{4} (2) \\frac{1}{8} (3) 4 (4) 8\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "1/4",
+            "latex": "\\(\\frac{1}{4}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "1/8",
+            "latex": "\\(\\frac{1}{8}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "32",
+        "text": "Identify the valid statements relevant to the given circuit at the instant when the key is closed. air A B R 5V Key A. There will be no current through resistor R. B. There will be maximum current in the connecting wires. C. Potential difference between the capacitor plates A and B is minimum. D. Charge on the capacitor plates is minimum. Choose the correct answer from the options given below : (1) C, D only (2\n) B, C, D only (3) A, C only (4) A, B, D only",
+        "formattedText": "Identify the valid statements relevant to the given circuit at the instant when the key is closed. air A B R 5V Key A. There will be no current through resistor R. B. There will be maximum current in the connecting wires. C. Potential difference between the capacitor plates A and B is minimum. D. Charge on the capacitor plates is minimum. Choose the correct answer from the options given below : (1) C, D only (2\n) B, C, D only (3) A, C only (4) A, B, D only",
+        "latexText": "Identify the valid statements relevant to the given circuit at the instant when the key is closed. air A B R 5V Key A. There will be no current through resistor R. B. There will be maximum current in the connecting wires. C. Potential difference between the capacitor plates A and B is minimum. D. Charge on the capacitor plates is minimum. Choose the correct answer from the options given below : (1) C, D only (2 ) B, C, D only (3) A, C only (4) A, B, D only",
+        "options": [
+          {
+            "letter": "3",
+            "text": "A, C only"
+          },
+          {
+            "letter": "4",
+            "text": "A, B, D only"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "3",
+            "text": "A, C only",
+            "formattedText": "A, C only",
+            "latexText": "A, C only"
+          },
+          {
+            "letter": "4",
+            "text": "A, B, D only",
+            "formattedText": "A, B, D only",
+            "latexText": "A, B, D only"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "34",
+        "text": "Match the List-I with List-II List-I List-II A. Pressure varies inversely with volume of an ideal gas. I. Adiabatic process B. Heat absorbed goes partly to increase internal energy and partly to do work. II. Isochoric process C. Heat is neither absorbed nor released by a system III\n. Isothermal process D. No work is done on or by a gas IV\n. Isobaric process Choose the correct answer from the options given below : (1) A–I, B–IV, C–II, D–III (2) A–III, B–I, C–IV, D–II (3) A–I, B–III, C–II, D–IV (4) A–III, B–IV, C–I, D–II",
+        "formattedText": "Match the List-I with List-II List-I List-II A. Pressure varies inversely with volume of an ideal gas. I. Adiabatic process B. Heat absorbed goes partly to increase internal energy and partly to do work. II. Isochoric process C. Heat is neither absorbed nor released by a system III\n. Isothermal process D. No work is done on or by a gas IV\n. Isobaric process Choose the correct answer from the options given below : (1) A–I, B–IV, C–II, D–III (2) A–III, B–I, C–IV, D–II (3) A–I, B–III, C–II, D–IV (4) A–III, B–IV, C–I, D–II",
+        "latexText": "\\(Match the List-I with List-II List-I List-II A. Pressure varies inversely with volume of an ideal gas. I. Adiabatic process B. Heat absorbed goes partly to increase internal energy and partly to do work. II. Isochoric process C. Heat is neither absorbed nor released by a system III . Isothermal process D. No work is done on or by a gas IV . Isobaric process Choose the correct answer from the options given below : (1) A–I, B–IV, C–II, D–III (2) A–III, B–I, C–IV, D–II (3) A–I, B–III, C–II, D–IV (4) A–III, B–IV, C–I, D–II\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "A–I, B–IV, C–II, D–III"
+          },
+          {
+            "letter": "2",
+            "text": "A–III, B–I, C–IV, D–II"
+          },
+          {
+            "letter": "3",
+            "text": "A–I, B–III, C–II, D–IV"
+          },
+          {
+            "letter": "4",
+            "text": "A–III, B–IV, C–I, D–II"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "A–I, B–IV, C–II, D–III",
+            "formattedText": "A–I, B–IV, C–II, D–III",
+            "latexText": "A–I, B–IV, C–II, D–III"
+          },
+          {
+            "letter": "2",
+            "text": "A–III, B–I, C–IV, D–II",
+            "formattedText": "A–III, B–I, C–IV, D–II",
+            "latexText": "A–III, B–I, C–IV, D–II"
+          },
+          {
+            "letter": "3",
+            "text": "A–I, B–III, C–II, D–IV",
+            "formattedText": "A–I, B–III, C–II, D–IV",
+            "latexText": "A–I, B–III, C–II, D–IV"
+          },
+          {
+            "letter": "4",
+            "text": "A–III, B–IV, C–I, D–II",
+            "formattedText": "A–III, B–IV, C–I, D–II",
+            "latexText": "A–III, B–IV, C–I, D–II"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "36",
+        "text": "A point particle of charge Q is located at P along the axis of an electric dipole 1 at a distance r as shown in the figure. The point P is also on the equatorial plane of a second electric dipole 2 at a distance r. The dipoles are made of opposite charge q separated by a distance 2a. For the charge particle at P not to experience any net force, which of the following correctly describes the situation? –\nq +q P r Dipole 1 Dipole 2 2a 2a +q –\nq r (1) \na\n20\nr (2) a\n~ 10\nr (3) a\n~ 0.5\nr (4) a\n~3\nr",
+        "formattedText": "A point particle of charge Q is located at P along the axis of an electric dipole 1 at a distance r as shown in the figure. The point P is also on the equatorial plane of a second electric dipole 2 at a distance r. The dipoles are made of opposite charge q separated by a distance 2a. For the charge particle at P not to experience any net force, which of the following correctly describes the situation? –\nq +q P r Dipole 1 Dipole 2 2a 2a +q –\nq r (1) \na\n20\nr (2) a\n~ 10\nr (3) a\n~ 0.5\nr (4) a\n~3\nr",
+        "latexText": "\\(A point particle of charge Q is located at P along the axis of an electric dipole 1 at a distance r as shown in the figure. The point P is also on the equatorial plane of a second electric dipole 2 at a distance r. The dipoles are made of opposite charge q separated by a distance 2a. For the charge particle at P not to experience any net force, which of the following correctly describes the situation? – q +q P r Dipole 1 Dipole 2 2a 2a +q – q r (1)  a^{20} r (2) a ~ 10 r (3) a ~ 0.5 r (4) a ~3 r\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": " a 20 r"
+          },
+          {
+            "letter": "2",
+            "text": "a ~ 10 r"
+          },
+          {
+            "letter": "3",
+            "text": "a ~ 0.5 r"
+          },
+          {
+            "letter": "4",
+            "text": "a ~3 r"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": " a 20 r",
+            "formattedText": " a 20 r",
+            "latexText": " a 20 r"
+          },
+          {
+            "letter": "2",
+            "text": "a ~ 10 r",
+            "formattedText": "a ~ 10 r",
+            "latexText": "a ~ 10 r"
+          },
+          {
+            "letter": "3",
+            "text": "a ~ 0.5 r",
+            "formattedText": "a ~ 0.5 r",
+            "latexText": "a ~ 0.5 r"
+          },
+          {
+            "letter": "4",
+            "text": "a ~3 r",
+            "formattedText": "a ~3 r",
+            "latexText": "a ~3 r"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "38",
+        "text": "What is the lateral shift of a ray refracted through a parallel-sided glass slab of thickness ‘h’ in terms of the angle of incidence ‘i’ and angle of refraction ‘r’, if the glass slab is placed in air medium ? (1) \nh tan(i r)\ntan r (2) \nh cos(i r)\nsin r (3) h (4) \nh sin(i r)\ncos r",
+        "formattedText": "What is the lateral shift of a ray refracted through a parallel-sided glass slab of thickness ‘h’ in terms of the angle of incidence ‘i’ and angle of refraction ‘r’, if the glass slab is placed in air medium ? (1) \nh tan(i r)\ntan r (2) \nh cos(i r)\nsin r (3) h (4) \nh sin(i r)\ncos r",
+        "latexText": "\\(What is the lateral shift of a ray refracted through a parallel-sided glass slab of thickness ‘h’ in terms of the angle of incidence ‘i’ and angle of refraction ‘r’, if the glass slab is placed in air medium ? (1)  h \\tan(i r) \\tan r (2)  h \\cos(i r) \\sin r (3) h (4)  h \\sin(i r) \\cos r\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "39",
+        "text": "A solid sphere of mass ‘m’ and radius ‘r’ is allowed to roll without slipping from the highest point of an inclined plane of length ‘L’ and makes an angle 30º with the horizontal. The speed of the particle at the bottom of the plane is v\n1\n. If the angle of inclination is increased to 45º while keeping L constant. Then the new speed of the sphere at the bottom of the plane is v\n2\n. The ratio of v\n1\n2 : v\n2\n2 is (1) 1 : 2 (2) 1 : 3 (3) 1 : 2 (4) 1 : 3",
+        "formattedText": "A solid sphere of mass ‘m’ and radius ‘r’ is allowed to roll without slipping from the highest point of an inclined plane of length ‘L’ and makes an angle 30º with the horizontal. The speed of the particle at the bottom of the plane is v\n1\n. If the angle of inclination is increased to 45º while keeping L constant. Then the new speed of the sphere at the bottom of the plane is v\n2\n. The ratio of v\n1\n2 : v\n2\n2 is (1) 1 : 2 (2) 1 : 3 (3) 1 : 2 (4) 1 : 3",
+        "latexText": "\\(A solid sphere of mass ‘m’ and radius ‘r’ is allowed to roll without slipping from the highest point of an inclined plane of length ‘L’ and makes an angle 30º with the horizontal. The speed of the particle at the bottom of the plane is v^{1} . If the angle of inclination is increased to 45º while keeping L constant. Then the new speed of the sphere at the bottom of the plane is v^{2} . The ratio of v^{1} 2 : v^{2} 2 is (1) 1 : 2 (2) 1 : 3 (3) 1 : 2 (4) 1 : 3\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "1 : 2"
+          },
+          {
+            "letter": "2",
+            "text": "1 : 3"
+          },
+          {
+            "letter": "3",
+            "text": "1 : 2"
+          },
+          {
+            "letter": "4",
+            "text": "1 : 3"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "1 : 2",
+            "formattedText": "1 : 2",
+            "latexText": "1 : 2"
+          },
+          {
+            "letter": "2",
+            "text": "1 : 3",
+            "formattedText": "1 : 3",
+            "latexText": "1 : 3"
+          },
+          {
+            "letter": "3",
+            "text": "1 : 2",
+            "formattedText": "1 : 2",
+            "latexText": "1 : 2"
+          },
+          {
+            "letter": "4",
+            "text": "1 : 3",
+            "formattedText": "1 : 3",
+            "latexText": "1 : 3"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "44",
+        "text": "The motion of an airplane is represented by velocity-time graph as shown below. The distance covered by airplane in the first 30.5 second is ____ km. 0 2 10 20 30 40 t(sec) A B 200 400 v(m/sec) (1) 9 (2) 6 (3) 3 (4) 12",
+        "formattedText": "The motion of an airplane is represented by velocity-time graph as shown below. The distance covered by airplane in the first 30.5 second is ____ km. 0 2 10 20 30 40 t(sec) A B 200 400 v(m/sec) (1) 9 (2) 6 (3) 3 (4) 12",
+        "latexText": "\\(The motion of an airplane is represented by velocity-time graph as shown below. The distance covered by airplane in the first 30.5 second is ____ km. 0 2 10 20 30 40 t(\\sec) A B 200 400 v(\\frac{m}{\\sec}) (1) 9 (2) 6 (3) 3 (4) 12\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "m/sec",
+            "latex": "\\(\\frac{m}{\\sec}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "46",
+        "text": "A positive ion A and a negative ion B has charges 6.67 × 10\n–19 C and 9.6 × 10\n–10 C, and masses 19.2 × 10\n–27 kg and 9 × 10\n–27 kg respectively. At an instant, the ions are separated by a certain distance r. At that instant the ratio of the magnitudes of electrostatic force to gravitational force is P × 10\n–13\n, where the value of P is ____. (Take \n0\n1\n4 = 9 × 10\n9 Nm\n2\nC\n–1 and universal gravitational constant as 6.67 × 10\n–11 Nm\n2 kg\n–2\n)",
+        "formattedText": "A positive ion A and a negative ion B has charges 6.67 × 10\n–19 C and 9.6 × 10\n–10 C, and masses 19.2 × 10\n–27 kg and 9 × 10\n–27 kg respectively. At an instant, the ions are separated by a certain distance r. At that instant the ratio of the magnitudes of electrostatic force to gravitational force is P × 10\n–13\n, where the value of P is ____. (Take \n0\n1\n4 = 9 × 10\n9 Nm\n2\nC\n–1 and universal gravitational constant as 6.67 × 10\n–11 Nm\n2 kg\n–2\n)",
+        "latexText": "\\(A positive ion A and a negative ion B has charges 6.67 \\times 10 –19 C and 9.6 \\times 10 –10 C, and masses 19.2 \\times 10 –27 kg and 9 \\times 10 –27 kg respectively. At an instant, the ions are separated by a certain distance r. At that instant the ratio of the magnitudes of electrostatic force to gravitational force is P \\times 10 –13 , where the value of P is ____. (Take  0^{1} 4 = 9 \\times 10^{9} Nm^{2} C –1 and universal gravitational constant as 6.67 \\times 10 –11 Nm^{2} kg –2 )\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "47",
+        "text": "Two particles are located at equal distance from origin. The position vectors of those are represented by   \nˆˆ\nˆ\nA 2i 3nj 2k and   \nˆˆ\nˆ\nB 2i 2 j 4pk\n, respectively. If both the vectors are at right angle to each other, the value of n\n–\n1 is____.",
+        "formattedText": "Two particles are located at equal distance from origin. The position vectors of those are represented by   \nˆˆ\nˆ\nA 2i 3nj 2k and   \nˆˆ\nˆ\nB 2i 2 j 4pk\n, respectively. If both the vectors are at right angle to each other, the value of n\n–\n1 is____.",
+        "latexText": "\\(Two particles are located at equal distance from origin. The position vectors of those are represented by    ˆˆ ˆ A 2i 3nj 2k and    ˆˆ ˆ B 2i 2 j 4pk , respectively. If both the vectors are at right angle to each other, the value of n – 1 is____.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 26",
+        "type": "mathematical",
+        "position": 150
+      },
+      {
+        "equation": "f-inductance ",
+        "type": "mathematical",
+        "position": 171
+      },
+      {
+        "equation": "f-inductance of the coil depends on its geometry",
+        "type": "mathematical",
+        "position": 197
+      },
+      {
+        "equation": "f-inductance does not depend on the permeability of the medium",
+        "type": "mathematical",
+        "position": 254
+      },
+      {
+        "equation": "f-induced e",
+        "type": "mathematical",
+        "position": 325
+      },
+      {
+        "equation": "f-inductance is electromagnetic analogue of mass in mechanics",
+        "type": "mathematical",
+        "position": 397
+      },
+      {
+        "equation": "f-induced e",
+        "type": "mathematical",
+        "position": 497
+      },
+      {
+        "equation": "L = ",
+        "type": "mathematical",
+        "position": 717
+      },
+      {
+        "equation": "g = 10 m/s\n2\n",
+        "type": "mathematical",
+        "position": 992
+      },
+      {
+        "equation": "r = 10\n3 kg/m\n3\n) (1) 2 (2) 6 (3) 4 (4) 1 Ans",
+        "type": "mathematical",
+        "position": 1022
+      },
+      {
+        "equation": "g = ma\nnet ",
+        "type": "mathematical",
+        "position": 1085
+      },
+      {
+        "equation": "T = 2",
+        "type": "mathematical",
+        "position": 1114
+      },
+      {
+        "equation": "m = 10g",
+        "type": "mathematical",
+        "position": 1136
+      },
+      {
+        "equation": "L = 10 cm",
+        "type": "mathematical",
+        "position": 1145
+      },
+      {
+        "equation": "g/m\n3 28",
+        "type": "mathematical",
+        "position": 1166
+      },
+      {
+        "equation": "t-I ",
+        "type": "mathematical",
+        "position": 1216
+      },
+      {
+        "equation": "t-II ",
+        "type": "mathematical",
+        "position": 1274
+      },
+      {
+        "equation": "t-I is false but Statement II is true (2) Statement-I is true but Statement II is false (3) Both Statement-I and Statement-II are true (4) Both Statement-I and Statement-II are false Ans",
+        "type": "mathematical",
+        "position": 1445
+      },
+      {
+        "equation": "b-atomic particle of mass 10\n",
+        "type": "mathematical",
+        "position": 1729
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 1804
+      },
+      {
+        "equation": "h = 6",
+        "type": "mathematical",
+        "position": 1893
+      },
+      {
+        "equation": "a-red radiation (2) X-rays (3) Gamma rays (4) Visible radiation Ans",
+        "type": "mathematical",
+        "position": 1924
+      },
+      {
+        "equation": "x-ray",
+        "type": "mathematical",
+        "position": 2089
+      },
+      {
+        "equation": "x = 1",
+        "type": "mathematical",
+        "position": 2187
+      },
+      {
+        "equation": "O = PI",
+        "type": "mathematical",
+        "position": 2421
+      },
+      {
+        "equation": "o- (1) 5R (2) 3R (3) 2R (4) 1",
+        "type": "mathematical",
+        "position": 2453
+      },
+      {
+        "equation": "O = u = ",
+        "type": "mathematical",
+        "position": 2543
+      },
+      {
+        "equation": "I = v = x PO = PI 2\n1\n2\n1\nv\nu\nR\n",
+        "type": "mathematical",
+        "position": 2555
+      },
+      {
+        "equation": "X = 5R 31",
+        "type": "mathematical",
+        "position": 2624
+      },
+      {
+        "equation": "f-life of n\n1\n",
+        "type": "mathematical",
+        "position": 2901
+      },
+      {
+        "equation": "t = ln2 ln 2\nt",
+        "type": "mathematical",
+        "position": 3065
+      },
+      {
+        "equation": "x-axis is given by x(t) = A sin t + B cos\n2\nt + Ct\n2 + D",
+        "type": "mathematical",
+        "position": 3793
+      },
+      {
+        "equation": "s- (1) L (2) L\n3 T\n",
+        "type": "mathematical",
+        "position": 3892
+      },
+      {
+        "equation": "L = ",
+        "type": "mathematical",
+        "position": 4056
+      },
+      {
+        "equation": "t-I with List-II List-I List-II A",
+        "type": "mathematical",
+        "position": 4103
+      },
+      {
+        "equation": "V = constant ",
+        "type": "mathematical",
+        "position": 4644
+      },
+      {
+        "equation": "T = const",
+        "type": "mathematical",
+        "position": 4661
+      },
+      {
+        "equation": "T = const",
+        "type": "mathematical",
+        "position": 4674
+      },
+      {
+        "equation": "Q = 0 Adiabatic D ",
+        "type": "mathematical",
+        "position": 4758
+      },
+      {
+        "equation": "w = 0 Isochoric III IV I II 35",
+        "type": "mathematical",
+        "position": 4781
+      },
+      {
+        "equation": "S = ",
+        "type": "mathematical",
+        "position": 5504
+      },
+      {
+        "equation": "q +q P r Dipole 1 Dipole 2 2a 2a +q ",
+        "type": "mathematical",
+        "position": 6064
+      },
+      {
+        "equation": "a/r ",
+        "type": "mathematical",
+        "position": 6822
+      },
+      {
+        "equation": "d = 2",
+        "type": "mathematical",
+        "position": 7115
+      },
+      {
+        "equation": "d = 125 JKg\n",
+        "type": "mathematical",
+        "position": 7171
+      },
+      {
+        "equation": "T + mL 625 = m",
+        "type": "mathematical",
+        "position": 7245
+      },
+      {
+        "equation": "M = 10 grams ALLEN 5 ",
+        "type": "mathematical",
+        "position": 7335
+      },
+      {
+        "equation": "l-sided glass slab of thickness ",
+        "type": "mathematical",
+        "position": 7428
+      },
+      {
+        "equation": "g = k\nf ",
+        "type": "mathematical",
+        "position": 8194
+      },
+      {
+        "equation": "E = 6V D A C B A (1) A",
+        "type": "mathematical",
+        "position": 8755
+      },
+      {
+        "equation": "r = 1 A R\nnet = 6",
+        "type": "mathematical",
+        "position": 8956
+      },
+      {
+        "equation": "B = 0",
+        "type": "mathematical",
+        "position": 9005
+      },
+      {
+        "equation": "D = 1 ",
+        "type": "mathematical",
+        "position": 9029
+      },
+      {
+        "equation": "Q / L\nArea\nQ / AreaLength\n",
+        "type": "mathematical",
+        "position": 9368
+      },
+      {
+        "equation": "R = ",
+        "type": "mathematical",
+        "position": 10068
+      },
+      {
+        "equation": "R = ",
+        "type": "mathematical",
+        "position": 10120
+      },
+      {
+        "equation": "u = 2f u = ",
+        "type": "mathematical",
+        "position": 10270
+      },
+      {
+        "equation": "E = 57 cos",
+        "type": "mathematical",
+        "position": 10378
+      },
+      {
+        "equation": "x + 4y)",
+        "type": "mathematical",
+        "position": 10416
+      },
+      {
+        "equation": "N/C",
+        "type": "mathematical",
+        "position": 10441
+      },
+      {
+        "equation": "s- (1) ",
+        "type": "mathematical",
+        "position": 10486
+      },
+      {
+        "equation": "x + 4y)",
+        "type": "mathematical",
+        "position": 10540
+      },
+      {
+        "equation": "x + 4y)",
+        "type": "mathematical",
+        "position": 10609
+      },
+      {
+        "equation": "x + 4y)",
+        "type": "mathematical",
+        "position": 10678
+      },
+      {
+        "equation": "x + 4y)",
+        "type": "mathematical",
+        "position": 10746
+      },
+      {
+        "equation": "y-time graph as shown below",
+        "type": "mathematical",
+        "position": 10935
+      },
+      {
+        "equation": "m/sec) (1) 9 (2) 6 (3) 3 (4) 12 Ans",
+        "type": "mathematical",
+        "position": 11071
+      },
+      {
+        "equation": "e- (1) 2",
+        "type": "mathematical",
+        "position": 11429
+      },
+      {
+        "equation": "c = m mass of cut part = m\n16 X\ncom = ",
+        "type": "mathematical",
+        "position": 11506
+      },
+      {
+        "equation": "N-B 46",
+        "type": "mathematical",
+        "position": 11597
+      },
+      {
+        "equation": "n + 8p = 0 ",
+        "type": "mathematical",
+        "position": 12496
+      },
+      {
+        "equation": "P = +\n3\nn\n4 4 ",
+        "type": "mathematical",
+        "position": 12562
+      },
+      {
+        "equation": "n + 6n = 0 12n = 4 n = 1\n3 48",
+        "type": "mathematical",
+        "position": 12579
+      },
+      {
+        "equation": "T = 273 ",
+        "type": "mathematical",
+        "position": 12930
+      },
+      {
+        "equation": "T = 273 49",
+        "type": "mathematical",
+        "position": 12949
+      },
+      {
+        "equation": "x + y = 10",
+        "type": "mathematical",
+        "position": 13019
+      },
+      {
+        "equation": "y = ",
+        "type": "mathematical",
+        "position": 13201
+      },
+      {
+        "equation": "A/s",
+        "type": "mathematical",
+        "position": 13411
+      },
+      {
+        "equation": "I = 3 ALLEN",
+        "type": "mathematical",
+        "position": 13561
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 178
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 204
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 261
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 404
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 432
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 703
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 1691
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2436
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2687
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2721
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3031
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3069
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3073
+      },
+      {
+        "equation": "ln",
+        "type": "mathematical",
+        "position": 3083
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3186
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 3821
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 3831
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4652
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 4879
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4950
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5199
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5749
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5863
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 5932
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 5978
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 6207
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7584
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7593
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 7607
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7616
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7636
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 7645
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7680
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 7689
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8011
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8177
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8183
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8213
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8321
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8341
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8356
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8361
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8380
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8387
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8522
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8659
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10385
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10503
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10572
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10641
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10711
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10971
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11353
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11760
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11805
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 11825
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12018
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12253
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12742
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 12771
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13425
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Calculus",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "integral"
+        ],
+        "possibleSubtopics": [
+          "Differentiation",
+          "Integration",
+          "Limits",
+          "Applications of Derivatives"
+        ]
+      },
+      {
+        "name": "Geometry",
+        "confidence": 0.2857142857142857,
+        "matchedKeywords": [
+          "geometry",
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.8333333333333334,
+        "matchedKeywords": [
+          "mechanics",
+          "motion",
+          "force",
+          "acceleration",
+          "velocity"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current",
+          "voltage"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.3333333333333333,
+        "matchedKeywords": [
+          "light",
+          "refraction"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "thermodynamics",
+          "heat",
+          "temperature"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      },
+      {
+        "name": "Physical Chemistry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "thermodynamics"
+        ],
+        "possibleSubtopics": [
+          "Thermodynamics",
+          "Chemical Kinetics",
+          "Chemical Equilibrium",
+          "Atomic Structure"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Integration",
+        "parentTopic": "Calculus",
+        "confidence": 0.25,
+        "matchedKeywords": [
+          "integral"
+        ]
+      },
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "displacement",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "force",
+          "dynamics"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "charge",
+          "electric field",
+          "electrostatic",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "parentTopic": "Physical Chemistry",
+        "confidence": 1,
+        "matchedKeywords": [
+          "thermodynamics"
+        ]
+      }
+    ],
+    "tags": [
+      "Formula Based"
+    ],
+    "wordCount": 3338,
+    "characterCount": 13572
+  },
+  "images": []
+}

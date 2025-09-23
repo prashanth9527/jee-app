@@ -1,0 +1,1186 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2024\\Session2\\Maths\\0604-Mathematics-Paper-With-Solution-Evening.pdf",
+  "relativePath": "JEE\\Previous Papers\\2024\\Session2\\Maths\\0604-Mathematics-Paper-With-Solution-Evening.pdf",
+  "metadata": {
+    "originalFileName": "0604-Mathematics-Paper-With-Solution-Evening.pdf",
+    "subject": "Mathematics",
+    "year": 2024,
+    "session": null,
+    "shift": "Evening",
+    "paperType": "With Solution",
+    "date": "06-04-2024",
+    "fileType": "pdf",
+    "totalPages": 10,
+    "fileSize": 4270186,
+    "processedAt": "2025-09-22T23:33:20.739Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2024 (Held On Saturday 06\nth April, 2024) TIME : 3 : 00 PM to 6 : 00 PM NOON\nMATHEMATICS TEST PAPER WITH SOLUTION Final JEE-Main Exam April, 2024/06-04-2024/Evening Session SECTION-A 1.Let ABC be an equilateral triangle. A new triangle\nis formed by joining the middle points of all sides\nof the triangle ABC and the same process is\nrepeated infinitely many times. If P is the sum of\nperimeters and Q is be the sum of areas of all the\ntriangles formed in this process, then:\n(1)\n2\nP\n36 3Q\n\n(2) 2\nP\n6 3Q\n\n(3) 2\nP 36 3Q\n\n(4) 2\nP72 3Q\nAns. (1) Sol. a/2 a a a Area of first 2\n3a\n4\n\nArea of second 222\n3a a3a\n4416\n \nArea of third 2\na\n64\n\n\nsum of area = 2\n3a11\n1....\n4416\n\n\n\n\n22\n3a 1a\nQ\n3\n4\n3\n4\n perimeter of 1\nst\n = 3a\nperimeter of 2\nnd  = 3a\n2\nperimeter of 3\nrd  =\n3a\n4\n11\nP 3a 1...\n24\n\n  \n\n\nP = 3a.2 = 6a P\na\n6\n\n2\n1P\nQ\n36\n3\n\n2\nP36 3Q\n2.Let A = {1, 2, 3, 4, 5}. Let R be a relation on A\ndefined by xRy if and only if 4x 5y. Let m be the\nnumber of elements in R and n be the minimum\nnumber of elements from A × A that are required\nto be added to R to make it a symmetric relation.\nThen m + n is equal to:\n(1)24(2)23\n(3)25(4)26\nAns. (3) Sol. Given : 4x  5y then  \n\nR\n1,1 ,(1, 2),(1,3),(1, 4),(1, 5),(2, 2),(2,3),(2, 4)\n(2, 5),(3,3),(3, 4),(3, 5),(4, 4),(4, 5),(5, 4),(5, 5)}\n\ni.e. 16 elements.\ni.e. m = 16\nNow to make R a symmetric relation add {(2,1)(3, 2)(4,3)(3,1)(4, 2)(5,3)(4,1)(5, 2)(5,1)} i.e. n = 9\nSo m + n = 25 3\n.If three letters can be posted to any one of the 5\ndifferent addresses, then the probability that the\nthree letters are posted to exactly two addresses is:\n(1) 12\n25\n(2) 18\n25\n(3) 4\n25\n(4) 6\n25\nAns. (1) Sol. Total method = 5\n3 faverable = \n53\n2\nC 2 – 2 60\nprobability = 6012\n12525\n\n$//(1\n® 2 Final JEE-Main Exam April, 2024/06-04-2024/Evening Session 4. Suppose the solution of the differential equation dy\n(2\n)x\ny 2\ndx\nx 2 y (\n4 )\n   \n\n       represents a circle passing through origin. Then the radius of this circle is : (1) 17 (2) 1\n2 (3) 17\n2 (4) 2 Ans. (3) Sol. \n\n\n\ndy 2 x – y 2\ndx x – y 2\n4\n   \n\n\n     \nxdy – (2 )ydy 4 dy 2 xdx – ydx 2dx\n\n      \n   \n(xdy ydx) – (2 )ydy 4 dy 2 xdx 2dx\n \n        \n\n\n\n2\n2\n2y\n2x\nxy –\n4 y\n22\n \n\n\n   0\n   for this to be circle \n\n2\n2\nx\n2\ny 2x – 4 y 0\n2\n    \n  2 + a = 2a coeff. of x\n2 = y\n2 2   i.e. 2x\n2 + 2y\n2 + 2x – 8y = 0 x\n2 + y\n2 + x – 4y = 0 117\nrd4\n42\n   5. If the locus of the point, whose distances from the point (2, 1) and (1, 3) are in the ratio 5 : 4, is ax\n2 + by\n2 + cxy + dx + ey + 170 = 0, then the value of a\n2 + 2b + 3c + 4d + e is equal to: (1) 5 (2) –27 (3) 37 (4) 437 Ans. (3) Sol. let P(x, y)  \n \n \n2\n2\n22\nx – 2 (y –1) 25\n16\nx –1 y – 3\n\n\n 9x\n2 + 9y\n2 + 14x – 118y + 170 = 0 a\n2 + 2b + 3c + 4d + e = 81 + 18 + 0 + 56 – 118 = 155 – 118 = 37 6. \n\n22\n2\n3\n3\n3\n2\n2\n2\nn\n(1\n1)(n 1) (2\n2)(n 2) .....\n·1\n(n 1)\n(n 1)\nlim\n(1\n2\n..... n ) (1\n2\n..... n )\n\n      \n  \n      \nis equal to: (1) 2\n3 (2) 1\n3 (3) 3\n4 (4) 1\n2 Ans. (2) Sol. \n\n \nn–1\n2\nr1\nnn\nn\n32\nr 1\nr 1\nr – r n – r\nlim\nr – r\n\n\n\n\n  \n\n\n \n \n\nn–1\n32\nr1\n2\nn\n–r r n 1 – nr\nlim\nn n 1\nn n 1 2n 1\n–\n26\n\n\n\n\n\n\n\n\n\n  \n\n  \n \n2\n2\nn\nn –1 nn 1 n –1 n(2n –1) n (n –1)\n–\n262\nlim\nn(n 1) n n 12n 1\n–\n223\n\n\n\n\n\n\n\n\n\n    \n2\nn\nn n –1 –n n –1 n 1 (2n –1)\n–n\n223\nlim\nn(n 1) 3n 3n – 4n – 2\n26\n\n\n\n\n\n\n  \n\n\n \n\n22\n2\nn\nn –1 –3n 3n 2 2n n –1 – 6\nlim\nn 1 3n – n – 2\n\n \n  \n\n \n\n2\n2\nn\nn –1 n 5n –8 1\nlim\n3\nn 1 3n – n – 2\n\n\n\n 7. Let 0  r  n. If n+1\nC\nr+1 : n\nC\nr : n–1\nC\nr–1 = 55 : 35 : 21, then 2n + 5r is equal to: (1) 60 (2) 62 (3) 50 (4) 55 Ans. (3) Ans. n1\nr\nn\nr\nC\n55\n35\nC\n\n  \n \n \nn 1 ! r! n – r ! 11\n!\nr 1 !(n – r) n!7\n\n\n  \nn 111\nr 17\n\n\n $//(1\n® 3 Final JEE-Main Exam April, 2024/06-04-2024/Evening Session 7n = 4 + 11r n\nr\nn–1\nr–1\nC\n35\n21\nC\n  \nn!\n(r –1)!(n – r)! 5\nr! n – r !\n(n –1)!\n3\n n5\nr3\n 3n = 5r By solving r = 6 n = 10 2n + 5r = 50 8\n. A software company sets up m number of computer systems to finish an assignment in 17 days. If 4 computer systems crashed on the start of the second day, 4 more computer systems crashed on the start of the third day and so on, then it took 8 more days to finish the assignment. The value of m is equal to : (1) 125 (2) 150 (3) 180 (4) 160 Ans. (2) Sol. 17m = m + (m – 4) + (m – 4 × 2)...+...(m – 4 × 24) 17 m = 25m – 4 (1 + 2 ...24) 4 24 25\n8m150\n2\n\n 9\n. If z\n1\n, z\n2 are two distinct complex number such that 12\n12\nz2z\n2\n1\nzz\n2\n\n\n\n, then (1) either z\n1 lies on a circle of radius 1 or z\n2 lies on a circle of radius 1\n2 (2) either z\n1 lies on a circle of radius 1\n2 or z\n2 lies on a circle of radius 1. (3) z\n1 lies on a circle of radius 1\n2 and z\n2 lies on a circle of radius 1. (4) both z\n1 and z\n2 lie on the same circle. Ans. (1) Sol. 1\n2\n1\n2\n1 2\n1 2\nz – 2z z – 2z\n4\n11\n– z z – z z\n22\n 22\n1\n1 2\n1 2\n2\nz 2z z – 2z z 4 z\n 22\n1 2\n1 2\n12\nz z\nz z\n1\n4 – –\nz z\n4\n2\n2\n\n\n\n 1 1\n2\n2\n1 1\n2\n2\nz z 2z 2z – z z 2z 2z –1 0\n \n \n\n\n\n1\n2\n2\nz,z –1 1–2z 2z 0\n \n\n\n\n22\n12\nz –1 2z –1 0\n 10. If the function 2x\n1\nf (x)\nx\n\n\n\n ; x > 0 attains the maximum value at 1\nx\ne\n then : (1) e\ne\n\n (2) 2e\ne\n(2 )\n\n (3) e\ne\n\n (4) (2e)\n(2e)\n\n Ans. (3) Sol. Let 2x\n1\ny\nx\n\n\n\n ny = 1\n2x n\nx\n\n\n ny –2x nx \n1 dy\n–2 1 nx\ny dx\n for 1\nx\ne\n f\nn is decreasing so, e < \n\n2 e2\n11\ne\n\n   \n\n   \n\n    e\n > \ne 1\n1. Let ˆˆ\nˆ\na 6ij k   and ˆˆ\nb ij\n. If c is a is vector such that 6, a.c 6 ,2 2\ncc c a\n\n and the angle between ab and c is 60°, then  \nc\nab\n\n is equal to: (1) \n9\n66\n2\n (2) 3\n3\n2 (3) 3\n6\n2 (4) \n9\n66\n2\n Ans. (4) $//(1\n® 4 Final JEE-Main Exam April, 2024/06-04-2024/Evening Session Sol. \n\n3\na b c\na b c\n2\n    c – a 2 2\n 22\nc a – 2c a 8\n\n  2\nz 38–12 z 8\n 2\nz –12 z 30 0\n 12 144 –120\nz\n2\n\n 12 2 6\n2\n\n z\n6\n6\n ˆˆ\nˆ\njk\na b 6 1 –1\n1 1\n0\n ˆˆ\nˆ\n– j 5k\n a b\n27\n  \n\n3\na bz27 66\n2\n   \n9\n66\n2\n 1\n2. If all the words with or without meaning made using all the letters of the word \"NAGPUR\" are arranged as in a dictionary, then the word at 315\nth position in this arrangement is : (1) NRAGUP (2) NRAGPU (3) NRAPGU (4) NRAPUG Ans. (3) Sol. NAGPUR A  5! = 120 G ® 5! = 120 240 NA ® 4! = 24 264 NG ® 4! = 24 288 NP ® 4! = 24 312 NRAGPU = 1 313 NRAGUP 314 NRAPGU 315 13. Suppose for a differentiable function h, h(0) = 0, h(1) = 1 and h'(0) = h'(1) = 2. If g(x) = h(e\nx\n) e\nh(x)\n, then g'(0) is equal to: (1) 5 (2) 3 (3) 8 (4) 4 Ans. (4) Sol.  \n \nx\nh (x)\ng x\nh e\ne\n  \n \nx\nh(x)\nh(x)\nx\nx\ng ' x\nh(e ) e\nh '(x) e\nh ' e\ne\n\n \n\n h(0)h(0)\ng'(0) h(1)eh '(0) eh '(1) = 2 + 2 = 4 14. Let P () be the image of the point Q(3, –3, 1) in the line x 0\ny 3\nz 1\n1\n1\n1\n\n\n\n\n and R be the point (2, 5, –\n1). If the area of the triangle PQR is  and \n2 = 14K, then K is equal to: (1) 36 (2) 72 (3) 18 (4) 81 Ans. (4) Sol. \n\nR(2,5,–1) S P(,,) Q(3,–3,1) RQ1 64 469    ˆˆ\nˆ\nRQ –8j 2k ˆˆ\nˆ\nRSj– k RQ RS 1– 8 – 2 9\ncos\n69 33 23\nRQ RS\n\n  3RSRS\ncos\nRQ\n2369\n   RS 3 3 14QS\nsin\n2369\n  QS42 area = 1\n2QS RS42 3 3\n2\n    9 14 2\n81.14 14k  k = 81 $//(1\n® 5 Final JEE-Main Exam April, 2024/06-04-2024/Evening Session 15. If P(6, 1) be the orthocentre of the triangle whose vertices are A(5, –2), B(8, 3) and C(h, k), then the point C lies on the circle. (1) x\n2 + y\n2 – 65 = 0 (2) x\n2 + y\n2 – 74 = 0 (3) x\n2 + y\n2 – 61 = 0 (4) x\n2 + y\n2 – 52 = 0 Ans. (1) Sol. B(\n8,3\n) D C\n(\nh\n, k\n) (\n6,1\n)\nP F E A(\n5,\n–\n2\n) Slope of AD = 3 Slope of BC\n1\n–\n3\n equation of BC = 3y + x – 17 = 0 slope of BE = 1 Slope of AC = –1 equation of AC is x + y – 3 = 0 point C is (–4, 7) 16. Let 1\nf (x)\n7 sin 5x\n\n be a function defined on R. Then the range of the function f(x) is equal to: (1) 11\n,\n85\n\n\n (2) 11\n,\n76\n\n\n (3)\n11\n,\n75\n\n\n (4) 11\n,\n86\n\n\n Ans. (4) Sol. sin5x  [–1,1] –sin5x  [–1, 1] 7 – sin5x  [6, 8] 11 1\n,\n7 – sin5x 8 6\n\n\n\n 17. Let ˆˆ\nˆ\na 2i\nj k\n  \n,  \n\n\n\n\nˆˆ\nˆˆ\nb\na\ni\ni\nij\n \n \n\n. Then the square of the projection of a\non b is : (1) 1\n5 (2) 2 (3) 1\n3 (4) 2\n3 Ans. (2) Sol.  \nˆˆ\nˆ\nijk\nˆˆ\na i j 2 1 –1\n1 10\n   ˆˆ\nˆ\ni – j k\n  \n\n\nˆ ˆ ˆ\nˆ\nˆ\na\ni j\ni\nk\nj\n      \n\n\n\n\nˆ ˆ\nˆ ˆ\nˆ\na i j i i j– k\n     projection of a on ˆ\nb\nab\nb\n\n 11\n2\n2\n\n 18. If the area of the region 2\na1\n(x, y) :y, 1 x 2, 0 a 1\nx\nx\n\n     \n\n\nis (log\ne\n2) – 1\n7\nthen the value of 7a – 3 is equal to: (1) 2 (2) 0 (3) –1 (4) 1 Ans. (3) Sol. a 1 2 $//(1\n® 6 Final JEE-Main Exam April, 2024/06-04-2024/Evening Session area 2\n2\n1\n1a\n– dx\nx\nx\n\n\n\n 2\n1\na\nnx\nx\n\n\n\n e\na1\nn2 – a log 2 –\n27\n –a 1\n–\n27\n 2\na\n7\n 7a = 2 7a – 3 = –1 19. If 1\n2\n2\n2\n2\n11\ndx\ntan (3tan x)\n12\na sin x b cos x\n\n\n\n\n+ constant, then the maximum value of asinx + bcosx, is : (1) 40 (2) 39 (3) 42 (4) 41 Ans. (1) Sol. 2\n222\nsec xdx\na tan xb\n let tanx = t sec\n2\ndx = dt 2 22\ndt\na tb\n 22\n2\n1dt\na\nb\nt\na\n\n\n\n\n –1\n2\n1 1t\ntanac\nb\nb\na\na\n\n\n\n –1\n1\ntantan xc\nabb\n\n\n\n\n on comparing a\n3\nb\n ab = 12 a = 6, b = 2 maximum value of 6 sinx + 2cosx is 40 20. If A is a square matrix of order 3 such that det(A) = 3 and det(adj(–\n4 adj(–3 adj(3 adj((2A)\n–1\n))))) = 2\nm\n3\nn\n, then m +| 2n is equal to: (1) 3 (2) 2 (3) 4 (4) 6 Ans. (3) Sol. A3\n \n–1\nadj(–4adj(–3adj (3adj (2A) )))  \n\n2\n–1\n–4adj –3adj(3adj 2A \n\n\n\n2\n6\n–1\n4 adj –3adj 3adj(2A)  \n8\n–1\n12\n12\n2\n3 3adj 2A\n  \n12\n8\n–1\n1224\n233adj 2A  \n12\n16\n–1\n36\n232A 12\n36\n16\n1\n23\n2A\n 1236\n16\n48\n1\n23\n2A\n 1236\n4816\n1\n23\n23\n\n 20\n–36 20\n36\n3\n3\n2\n   m = – 36 n = 20 m + 2n = 4 $//(1\n® 7 Final JEE-Main Exam April, 2024/06-04-2024/Evening Session SECTION-B 2\n1. Let [t] denote the greatest integer less than or equal to t. Let f: [0, ) R be a function defined by x\nf(x)\n3\nx\n2\n\n\n\n\n\n\n\n. Let S be the set of all points in the interval [0, 8] at which f is not continuous. Then aS\na\n\n is equal to ________. Ans. (17) Sol. \n\n\n\nx\n3\n2 is discontinuous at x = 2,4,6,8 x is discontinuous at x = 1,4 F(x) is discontinuous at x = 1,2,6,8     \n\na 1 2 6 8 17 22. The length of the latus rectum and directrices of a hyperbola with eccentricity e are 9 and x = 4\n3\n\n, respectively. Let the line y – 3\nx + 3 = 0 touch this hyperbola at (x\n0\n, y\n0\n). If m is the product of the focal distances of the point (x\n0\n, y\n0\n), then 4e\n2 + m is equal to _______. NTA Ans. (61) Ans. (Bonus) Sol. Given 2\n2b\na = 9 and a4\ne\n3\n equation of tangent y – 3\nx + 3 = 0 by equation of tangent Let slope = S = 3 Constant = –\n3 By condition of tangency  6 = 6a\n2 – 9a  a = 2, b\n2 = 9 Equation of Hyperbola is 22\nxy\n–1\n49\n and for tangent Point of contact is (4, 3\n3\n) = (x\n0\n, y\n0\n) Now e = 9\n1\n4\n = 13\n2 Again product of focal distances m = (x\n0\ne + a) (x\n0\ne – a) m + 4e\n2 = 20e\n2 – a\n2 = 20 × 13\n4\n– 4 = 61 (There is a printing mistake in the equation of directrix x = 4\n3\n\n. Corrected equation is x = 4\n13\n for directrix, as eccentricity must be greater than one, so question must be bonus) 23. If S(x) = (1 + x) + 2(1 + x)\n2 + 3(1 + x)\n3\n+..... + 60(1 + x)\n60\n, x  0, and (60)\n2 S(60) = a(b)\nb + b, where a, b N, then (a + b) equal to ______ Ans. (3660) Sol. S(x)=(1+x) + 2(1+x)\n2 + 3(1+x)\n3\n+..+ 60(1 + x)\n60 (1+x)S = (1+x)\n2 + ....... 59 (1+x)\n60\n+ 60(1+x)\n61   \n \n60\n61\n1 x 1 x1\nxS60 1 x\nx\n  \n  Put x = 60  \n\n\n \n\n \n60\n61\n61 611\n60S60 61\n60 on solving 3660 24. Let [t] denote the largest integer less than or equal to t. If 2\n3\n2\n0\nx\n[x ]dx a b 235 c 67\n2\n\n\n     \n\n\n\n\n\n, where a, b, c  z, then a + b + c is equal to ______ Ans. (23) Sol. \n\n\n\n\n\n\n33\n2\n2\n00\nx\nxdxdx\n2 \n  \n1123\n01\n2\n0 dx1dx2 dx $//(1\n® 8 Final JEE-Main Exam April, 2024/06-04-2024/Evening Session \n\n\n  \n2\n5\n6\n2\n35\n3dx\n4 dx\n5dx \n\n\n  \n7\n8\n3\n6\n7\n8\n6 dx\n7 dx\n8dx \n\n22\n0\n2\n0 dx1dx +\n\n\n68\n2\n6\n2 dx\n3 dx\n+ 3\n8\n4dx 31 6 2\n3\n5\n   \n \n2 6\n7 a = 31 b = –6 c = – 2 a + b + c = 31 – 6 – 2 = 23 25. From a lot of 12 items containing 3 defectives, a sample of 5 items is drawn at random. Let the random variable X denote the number of defective items in the sample. Let items in the sample be drawn one by one without replacement. If variance of X is m\nn\n, where gcd(m, n) = 1, then n – m is equal to _______. Ans. (71) Sol. \n3\n5\n12\n5\nC\na1\nC \n9\n4\n12\n5\nC\nb 3.\nC \n9\n3\n12\n5\nC\nc 3.\nC \n9\n2\n12\n5\nC\nd 1.\nC u = 0.a + 1.b + 2.c + 3.d = 1.25 \n2 = 0.a +1.b + 4.c + 9d – u\n2 2\n105\n176\n Ans. 176 – 105 = 71 26. In a triangle ABC, BC = 7, AC = 8, AB =   and cosA =\n2\n3\n. If 49cos(3C) + 42 = m\nn\n, where gcd(m, n) = 1, then m + n is equal to _______ Ans. (39) 26. In a triangle ABC, BC = 7, AC = 8, AB =   and cosA =\n2\n3\n. If 49cos(3C) + 42 = m\nn\n, where gcd(m, n) = 1, then m + n is equal to _______ Ans. (39) Sol. \n\n222\nb\nc\na\ncos A\n2bc \n\n\n2\n2\n2\n2\n8\nc\n7\n3\n2 8 c C = 9 \n\n\n2\n2\n2\n7\n8\n9\n2\ncos C\n2 7 8\n7 49 cos3C + 42 49(4 cos\n3 C – 3 cosC) + 42 \n   \n\n\n   \n\n   \n\n3\n22\n49 4342\n77 \n32\n7 m + n = 32 + 7 = 39 27. If the shortest distance between the lines xy 2z 1\n311\n \n\n and x 2y 5z 4\n324\n\n\n is 44\n30\n, then the largest possible value of || is equal to _______. Ans. (43) Sol.   \n1\nˆˆ\nˆ\nai 2 j k    \n2\nˆˆ\nˆ\na2i 5j 4k    \nˆˆ\nˆ\np3i j k     \nˆˆ\nˆ\nq3i 2 j 4k  \n     \n12\nˆˆ\nˆ\n2 i 7 j 3kaa      \nˆˆ\nˆ\np q6i 15j 3k $//(1\n® 9 Final JEE-Main Exam April, 2024/06-04-2024/Evening Session    \n    \n\n   \n22\n2\n6\n12 105 9\n44\n30\n6\n15\n3 \n\n6\n126\n44\n30\n3 30  1326126  = 1,  = –43 || = 43 28. Let ,  be roots of 2\nx 2x –8 0\n\n. If nn\nn\nU,\n \nthen 10\n9\n8\nU\n12U\n2U\n is equal to _______. Ans. (4) Sol. \n\n\n\n    \n \n10\n10\n9\n9\n88\n2\n2 \n\n       \n \n8282\n88\n22\n2 \n88\n88\n88\n4\n2\n  \n\n  29. If the system of equations 2x + 7y + z = 3 3x + 2y + 5z = 4 x + y + 32z = –1 has infinitely many solutions, then ( – ) is equal to ________ : Ans. (38) Sol. D = D\n1 = D\n2 = D\n3 = 0 D\n3 =     \n\n2 73\n3 24039\n11 \n    \n\n27\nD32501\n139 32   38 30. If the solution y(x) of the given differential equation (e\ny + 1) cosx dx + e\ny sin x dy = 0 passes through the point ,0\n2\n\n\n\n\n, then the value of y\n6\ne\n\n\n\n is equal to ______. Ans. (3) Sol. (e\ny + 1) cosx dx + e\ny sinx dy = 0 \n\n\n\n\ny\nd e\n1 sin x = 0 \n\n\ny\ne\n1 sin x C It passes through \n\n\n\n,0\n2 \nc2 Now, x\n6\n\n \ny\ne3 $//(1\n®",
+    "questions": [
+      {
+        "number": "5",
+        "text": "If the locus of the point, whose distances from the point (2, 1) and (1, 3) are in the ratio 5 : 4, is ax\n2 + by\n2 + cxy + dx + ey + 170 = 0, then the value of a\n2 + 2b + 3c + 4d + e is equal to: (1) 5 (2) –27 (3) 37 (4) 437",
+        "formattedText": "If the locus of the point, whose distances from the point (2, 1) and (1, 3) are in the ratio 5 : 4, is ax\n2 + by\n2 + cxy + dx + ey + 170 = 0, then the value of a\n2 + 2b + 3c + 4d + e is equal to: (1) 5 (2) –27 (3) 37 (4) 437",
+        "latexText": "\\(If the locus of the point, whose distances from the point (2, 1) and (1, 3) are in the ratio 5 : 4, is ax^{2} + by^{2} + cxy + dx + ey + 170 = 0, then the value of a^{2} + 2b + 3c + 4d + e is equal to: (1) 5 (2) –27 (3) 37 (4) 437\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "7",
+        "text": "Let 0  r  n. If n+1\nC\nr+1 : n\nC\nr : n–1\nC\nr–1 = 55 : 35 : 21, then 2n + 5r is equal to: (1) 60 (2) 62 (3) 50 (4) 55",
+        "formattedText": "Let 0  r  n. If n+1\nC\nr+1 : n\nC\nr : n–1\nC\nr–1 = 55 : 35 : 21, then 2n + 5r is equal to: (1) 60 (2) 62 (3) 50 (4) 55",
+        "latexText": "\\(Let 0  r  n. If n+\\frac{1}{C}r+1 : \\frac{n}{C}r : n–\\frac{1}{C}r–1 = 55 : 35 : 21, then 2n + 5r is equal to: (1) 60 (2) 62 (3) 50 (4) 55\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "2",
+        "text": "If all the words with or without meaning made using all the letters of the word \"NAGPUR\" are arranged as in a dictionary, then the word at 315\nth position in this arrangement is : (1) NRAGUP (2) NRAGPU (3) NRAPGU (4) NRAPUG",
+        "formattedText": "If all the words with or without meaning made using all the letters of the word \"NAGPUR\" are arranged as in a dictionary, then the word at 315\nth position in this arrangement is : (1) NRAGUP (2) NRAGPU (3) NRAPGU (4) NRAPUG",
+        "latexText": "If all the words with or without meaning made using all the letters of the word \"NAGPUR\" are arranged as in a dictionary, then the word at 315 th position in this arrangement is : (1) NRAGUP (2) NRAGPU (3) NRAPGU (4) NRAPUG",
+        "options": [
+          {
+            "letter": "1",
+            "text": "NRAGUP"
+          },
+          {
+            "letter": "2",
+            "text": "NRAGPU"
+          },
+          {
+            "letter": "3",
+            "text": "NRAPGU"
+          },
+          {
+            "letter": "4",
+            "text": "NRAPUG"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "NRAGUP",
+            "formattedText": "NRAGUP",
+            "latexText": "NRAGUP"
+          },
+          {
+            "letter": "2",
+            "text": "NRAGPU",
+            "formattedText": "NRAGPU",
+            "latexText": "NRAGPU"
+          },
+          {
+            "letter": "3",
+            "text": "NRAPGU",
+            "formattedText": "NRAPGU",
+            "latexText": "NRAPGU"
+          },
+          {
+            "letter": "4",
+            "text": "NRAPUG",
+            "formattedText": "NRAPUG",
+            "latexText": "NRAPUG"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "NA",
+            "latex": "NA",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "GP",
+            "latex": "GP",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "UR",
+            "latex": "UR",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "NR",
+            "latex": "NR",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AG",
+            "latex": "AG",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "UP",
+            "latex": "UP",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "NR",
+            "latex": "NR",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AG",
+            "latex": "AG",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "PU",
+            "latex": "PU",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "NR",
+            "latex": "NR",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AP",
+            "latex": "AP",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "GU",
+            "latex": "GU",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "NR",
+            "latex": "NR",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AP",
+            "latex": "AP",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "UG",
+            "latex": "UG",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "15",
+        "text": "If P(6, 1) be the orthocentre of the triangle whose vertices are A(5, –2), B(8, 3) and C(h, k), then the point C lies on the circle. (1) x\n2 + y\n2 – 65 = 0 (2) x\n2 + y\n2 – 74 = 0 (3) x\n2 + y\n2 – 61 = 0 (4) x\n2 + y\n2 – 52 = 0",
+        "formattedText": "If P(6, 1) be the orthocentre of the triangle whose vertices are A(5, –2), B(8, 3) and C(h, k), then the point C lies on the circle. (1) x\n2 + y\n2 – 65 = 0 (2) x\n2 + y\n2 – 74 = 0 (3) x\n2 + y\n2 – 61 = 0 (4) x\n2 + y\n2 – 52 = 0",
+        "latexText": "\\(If P(6, 1) be the orthocentre of the triangle whose vertices are A(5, –2), B(8, 3) and C(h, k), then the point C lies on the circle. (1) x^{2} + y^{2} – 65 = 0 (2) x^{2} + y^{2} – 74 = 0 (3) x^{2} + y^{2} – 61 = 0 (4) x^{2} + y^{2} – 52 = 0\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "x 2 + y 2 – 65 = 0"
+          },
+          {
+            "letter": "2",
+            "text": "x 2 + y 2 – 74 = 0"
+          },
+          {
+            "letter": "3",
+            "text": "x 2 + y 2 – 61 = 0"
+          },
+          {
+            "letter": "4",
+            "text": "x 2 + y 2 – 52 = 0"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "x 2 + y 2 – 65 = 0",
+            "formattedText": "x 2 + y 2 – 65 = 0",
+            "latexText": "\\(x 2 + y 2 – 65 = 0\\)"
+          },
+          {
+            "letter": "2",
+            "text": "x 2 + y 2 – 74 = 0",
+            "formattedText": "x 2 + y 2 – 74 = 0",
+            "latexText": "\\(x 2 + y 2 – 74 = 0\\)"
+          },
+          {
+            "letter": "3",
+            "text": "x 2 + y 2 – 61 = 0",
+            "formattedText": "x 2 + y 2 – 61 = 0",
+            "latexText": "\\(x 2 + y 2 – 61 = 0\\)"
+          },
+          {
+            "letter": "4",
+            "text": "x 2 + y 2 – 52 = 0",
+            "formattedText": "x 2 + y 2 – 52 = 0",
+            "latexText": "\\(x 2 + y 2 – 52 = 0\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "18",
+        "text": "If the area of the region 2\na1\n(x, y) :y, 1 x 2, 0 a 1\nx\nx\n\n     \n\n\nis (log\ne\n2) – 1\n7\nthen the value of 7a – 3 is equal to: (1) 2 (2) 0 (3) –1 (4) 1",
+        "formattedText": "If the area of the region 2\na1\n(x, y) :y, 1 x 2, 0 a 1\nx\nx\n\n     \n\n\nis (log\ne\n2) – 1\n7\nthen the value of 7a – 3 is equal to: (1) 2 (2) 0 (3) –1 (4) 1",
+        "latexText": "\\(If the area of the region \\frac{2}{a1}(x, y) :y, 1 x 2, 0 a \\frac{1}{x}x          is (\\log e^{2}) – 1^{7} then the value of 7a – 3 is equal to: (1) 2 (2) 0 (3) –1 (4) 1\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "1",
+        "text": "Let [t] denote the greatest integer less than or equal to t. Let f: [0, ) R be a function defined by x\nf(x)\n3\nx\n2\n\n\n\n\n\n\n\n. Let S be the set of all points in the interval [0, 8] at which f is not continuous. Then aS\na\n\n is equal to ________.",
+        "formattedText": "Let [t] denote the greatest integer less than or equal to t. Let f: [0, ) R be a function defined by x\nf(x)\n3\nx\n2\n\n\n\n\n\n\n\n. Let S be the set of all points in the interval [0, 8] at which f is not continuous. Then aS\na\n\n is equal to ________.",
+        "latexText": "\\(Let [t] denote the greatest integer less than or equal to t. Let f: [0, ) R be a function defined by x f(x)^{3}x^{2}        . Let S be the set of all points in the interval [0, 8] at which f is not continuous. Then \\frac{aS}{a}  is equal to ________.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "23",
+        "text": "If S(x) = (1 + x) + 2(1 + x)\n2 + 3(1 + x)\n3\n+..... + 60(1 + x)\n60\n, x  0, and (60)\n2 S(60) = a(b)\nb + b, where a, b N, then (a + b) equal to ______",
+        "formattedText": "If S(x) = (1 + x) + 2(1 + x)\n2 + 3(1 + x)\n3\n+..... + 60(1 + x)\n60\n, x  0, and (60)\n2 S(60) = a(b)\nb + b, where a, b N, then (a + b) equal to ______",
+        "latexText": "\\(If S(x) = (1 + x) + 2(1 + x) 2 + 3(1 + x)^{3}+..... + 60(1 + x)^{60}, x  0, and (60) 2 S(60) = a(b) b + b, where a, b N, then (a + b) equal to ______\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "24",
+        "text": "Let [t] denote the largest integer less than or equal to t. If 2\n3\n2\n0\nx\n[x ]dx a b 235 c 67\n2\n\n\n     \n\n\n\n\n\n, where a, b, c  z, then a + b + c is equal to ______",
+        "formattedText": "Let [t] denote the largest integer less than or equal to t. If 2\n3\n2\n0\nx\n[x ]dx a b 235 c 67\n2\n\n\n     \n\n\n\n\n\n, where a, b, c  z, then a + b + c is equal to ______",
+        "latexText": "\\(Let [t] denote the largest integer less than or equal to t. If 2^{3} 2^{0} x [x ]dx a b 235 c 67^{2}              , where a, b, c  z, then a + b + c is equal to ______\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "25",
+        "text": "From a lot of 12 items containing 3 defectives, a sample of 5 items is drawn at random. Let the random variable X denote the number of defective items in the sample. Let items in the sample be drawn one by one without replacement. If variance of X is m\nn\n, where gcd(m, n) = 1, then n – m is equal to _______.",
+        "formattedText": "From a lot of 12 items containing 3 defectives, a sample of 5 items is drawn at random. Let the random variable X denote the number of defective items in the sample. Let items in the sample be drawn one by one without replacement. If variance of X is m\nn\n, where gcd(m, n) = 1, then n – m is equal to _______.",
+        "latexText": "\\(From a lot of 12 items containing 3 defectives, a sample of 5 items is drawn at random. Let the random variable X denote the number of defective items in the sample. Let items in the sample be drawn one by one without replacement. If variance of X is \\frac{m}{n}, where \\gcd(m, n) = 1, then n – m is equal to _______.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "26",
+        "text": "In a triangle ABC, BC = 7, AC = 8, AB =   and cosA =\n2\n3\n. If 49cos(3C) + 42 = m\nn\n, where gcd(m, n) = 1, then m + n is equal to _______",
+        "formattedText": "In a triangle ABC, BC = 7, AC = 8, AB =   and cosA =\n2\n3\n. If 49cos(3C) + 42 = m\nn\n, where gcd(m, n) = 1, then m + n is equal to _______",
+        "latexText": "\\(In a triangle ABC, BC = 7, AC = 8, AB =   and cosA = 2^{3} . If 49cos(3C) + 42 = \\frac{m}{n}, where \\gcd(m, n) = 1, then m + n is equal to _______\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "AB",
+            "latex": "AB",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "BC",
+            "latex": "BC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AC",
+            "latex": "AC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AB",
+            "latex": "AB",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "26",
+        "text": "In a triangle ABC, BC = 7, AC = 8, AB =   and cosA =\n2\n3\n. If 49cos(3C) + 42 = m\nn\n, where gcd(m, n) = 1, then m + n is equal to _______",
+        "formattedText": "In a triangle ABC, BC = 7, AC = 8, AB =   and cosA =\n2\n3\n. If 49cos(3C) + 42 = m\nn\n, where gcd(m, n) = 1, then m + n is equal to _______",
+        "latexText": "\\(In a triangle ABC, BC = 7, AC = 8, AB =   and cosA = 2^{3} . If 49cos(3C) + 42 = \\frac{m}{n}, where \\gcd(m, n) = 1, then m + n is equal to _______\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "AB",
+            "latex": "AB",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "BC",
+            "latex": "BC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AC",
+            "latex": "AC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "AB",
+            "latex": "AB",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "29",
+        "text": "If the system of equations 2x + 7y + z = 3 3x + 2y + 5z = 4 x + y + 32z = –1 has infinitely many solutions, then ( – ) is equal to ________ :",
+        "formattedText": "If the system of equations 2x + 7y + z = 3 3x + 2y + 5z = 4 x + y + 32z = –1 has infinitely many solutions, then ( – ) is equal to ________ :",
+        "latexText": "\\(If the system of equations 2x + 7y + z = 3 3x + 2y + 5z = 4 x + y + 32z = –1 has infinitely many solutions, then ( – ) is equal to ________ :\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "30",
+        "text": "If the solution y(x) of the given differential equation (e\ny + 1) cosx dx + e\ny sin x dy = 0 passes through the point ,0\n2\n\n\n\n\n, then the value of y\n6\ne\n\n\n\n is equal to ______.",
+        "formattedText": "If the solution y(x) of the given differential equation (e\ny + 1) cosx dx + e\ny sin x dy = 0 passes through the point ,0\n2\n\n\n\n\n, then the value of y\n6\ne\n\n\n\n is equal to ______.",
+        "latexText": "\\(If the solution y(x) of the given differential equation (e y + 1) cosx dx + e y \\sin x dy = 0 passes through the point ,0^{2}     , then the value of y^{6} e     is equal to ______.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "E-Main Exam April",
+        "type": "mathematical",
+        "position": 160
+      },
+      {
+        "equation": "N-A 1",
+        "type": "mathematical",
+        "position": 217
+      },
+      {
+        "equation": "a/2 a a a Area of first 2\n3a\n4\n",
+        "type": "mathematical",
+        "position": 587
+      },
+      {
+        "equation": "a = 2\n3a11\n1",
+        "type": "mathematical",
+        "position": 693
+      },
+      {
+        "equation": "P = 3a",
+        "type": "mathematical",
+        "position": 860
+      },
+      {
+        "equation": "A = ",
+        "type": "mathematical",
+        "position": 913
+      },
+      {
+        "equation": "m + n is equal to",
+        "type": "mathematical",
+        "position": 1159
+      },
+      {
+        "equation": "m = 16\nNow to make R a symmetric relation add ",
+        "type": "mathematical",
+        "position": 1376
+      },
+      {
+        "equation": "n = 9\nSo m + n = 25 3\n",
+        "type": "mathematical",
+        "position": 1478
+      },
+      {
+        "equation": "d = 5\n3 faverable = ",
+        "type": "mathematical",
+        "position": 1720
+      },
+      {
+        "equation": "y = 6012\n12525\n",
+        "type": "mathematical",
+        "position": 1770
+      },
+      {
+        "equation": "E-Main Exam April",
+        "type": "mathematical",
+        "position": 1805
+      },
+      {
+        "equation": "a = 2a coeff",
+        "type": "mathematical",
+        "position": 2383
+      },
+      {
+        "equation": "y = 0 x\n2 + y\n2 + x ",
+        "type": "mathematical",
+        "position": 2442
+      },
+      {
+        "equation": "y = 0 117\nrd4\n42\n",
+        "type": "mathematical",
+        "position": 2465
+      },
+      {
+        "equation": "y + dx + ey + 170 = 0",
+        "type": "mathematical",
+        "position": 2610
+      },
+      {
+        "equation": "b + 3c + 4d + e is equal to",
+        "type": "mathematical",
+        "position": 2658
+      },
+      {
+        "equation": "y + 170 = 0 a\n2 + 2b + 3c + 4d + e = 81 + 18 + 0 + 56 ",
+        "type": "mathematical",
+        "position": 2820
+      },
+      {
+        "equation": "n+1\nC\nr+1 ",
+        "type": "mathematical",
+        "position": 3642
+      },
+      {
+        "equation": "n + 5r is equal to",
+        "type": "mathematical",
+        "position": 3694
+      },
+      {
+        "equation": "E-Main Exam April",
+        "type": "mathematical",
+        "position": 3875
+      },
+      {
+        "equation": "n = 4 + 11r n\nr\nn",
+        "type": "mathematical",
+        "position": 3927
+      },
+      {
+        "equation": "n = 5r By solving r = 6 n = 10 2n + 5r = 50 8\n",
+        "type": "mathematical",
+        "position": 4021
+      },
+      {
+        "equation": "m = m + (m ",
+        "type": "mathematical",
+        "position": 4424
+      },
+      {
+        "equation": "m = 25m ",
+        "type": "mathematical",
+        "position": 4476
+      },
+      {
+        "equation": "y = 1\n2x n\nx\n",
+        "type": "mathematical",
+        "position": 5368
+      },
+      {
+        "equation": "E-Main Exam April",
+        "type": "mathematical",
+        "position": 5768
+      },
+      {
+        "equation": "U = 1 313 NRAGUP 314 NRAPGU 315 13",
+        "type": "mathematical",
+        "position": 6391
+      },
+      {
+        "equation": "a = 1\n2QS RS42 3 3\n2\n",
+        "type": "mathematical",
+        "position": 7176
+      },
+      {
+        "equation": "k = 81 ",
+        "type": "mathematical",
+        "position": 7228
+      },
+      {
+        "equation": "E-Main Exam April",
+        "type": "mathematical",
+        "position": 7253
+      },
+      {
+        "equation": "D = 3 Slope of BC\n1\n",
+        "type": "mathematical",
+        "position": 7606
+      },
+      {
+        "equation": "C = 3y + x ",
+        "type": "mathematical",
+        "position": 7645
+      },
+      {
+        "equation": "E = 1 Slope of AC = ",
+        "type": "mathematical",
+        "position": 7675
+      },
+      {
+        "equation": "x + y ",
+        "type": "mathematical",
+        "position": 7716
+      },
+      {
+        "equation": "E-Main Exam April",
+        "type": "mathematical",
+        "position": 8591
+      },
+      {
+        "equation": "a = 2 7a ",
+        "type": "mathematical",
+        "position": 8745
+      },
+      {
+        "equation": "x + bcosx",
+        "type": "mathematical",
+        "position": 8868
+      },
+      {
+        "equation": "x = t sec\n2\ndx = dt 2 22\ndt\na tb",
+        "type": "mathematical",
+        "position": 8959
+      },
+      {
+        "equation": "b = 12 a = 6",
+        "type": "mathematical",
+        "position": 9114
+      },
+      {
+        "equation": "b = 2 maximum value of 6 sinx + 2cosx is 40 20",
+        "type": "mathematical",
+        "position": 9128
+      },
+      {
+        "equation": "m = ",
+        "type": "mathematical",
+        "position": 9632
+      },
+      {
+        "equation": "n = 20 m + 2n = 4 ",
+        "type": "mathematical",
+        "position": 9641
+      },
+      {
+        "equation": "E-Main Exam April",
+        "type": "mathematical",
+        "position": 9677
+      },
+      {
+        "equation": "N-B 2\n1",
+        "type": "mathematical",
+        "position": 9734
+      },
+      {
+        "equation": "x = 2",
+        "type": "mathematical",
+        "position": 10054
+      },
+      {
+        "equation": "x = 1",
+        "type": "mathematical",
+        "position": 10088
+      },
+      {
+        "equation": "x = 1",
+        "type": "mathematical",
+        "position": 10121
+      },
+      {
+        "equation": "x = 4\n3\n",
+        "type": "mathematical",
+        "position": 10254
+      },
+      {
+        "equation": "x + 3 = 0 touch this hyperbola at (x\n0\n",
+        "type": "mathematical",
+        "position": 10299
+      },
+      {
+        "equation": "a = 9 and a4\ne\n3\n",
+        "type": "mathematical",
+        "position": 10495
+      },
+      {
+        "equation": "x + 3 = 0 by equation of tangent Let slope = S = 3 Constant = ",
+        "type": "mathematical",
+        "position": 10541
+      },
+      {
+        "equation": "a = 2",
+        "type": "mathematical",
+        "position": 10650
+      },
+      {
+        "equation": "e = 9\n1\n4\n",
+        "type": "mathematical",
+        "position": 10769
+      },
+      {
+        "equation": "m = (x\n0\ne + a) (x\n0\ne ",
+        "type": "mathematical",
+        "position": 10821
+      },
+      {
+        "equation": "m + 4e\n2 = 20e\n2 ",
+        "type": "mathematical",
+        "position": 10849
+      },
+      {
+        "equation": "x = 4\n3\n",
+        "type": "mathematical",
+        "position": 10951
+      },
+      {
+        "equation": "x = 4\n13\n",
+        "type": "mathematical",
+        "position": 10985
+      },
+      {
+        "equation": "b + b",
+        "type": "mathematical",
+        "position": 11183
+      },
+      {
+        "equation": "a + b) equal to ",
+        "type": "mathematical",
+        "position": 11212
+      },
+      {
+        "equation": "S = (1+x)\n2 + ",
+        "type": "mathematical",
+        "position": 11308
+      },
+      {
+        "equation": "x = 60 ",
+        "type": "mathematical",
+        "position": 11408
+      },
+      {
+        "equation": "a + b + c is equal to ",
+        "type": "mathematical",
+        "position": 11633
+      },
+      {
+        "equation": "E-Main Exam April",
+        "type": "mathematical",
+        "position": 11767
+      },
+      {
+        "equation": "x +\n",
+        "type": "mathematical",
+        "position": 11911
+      },
+      {
+        "equation": "x\n+ 3\n8\n4dx 31 6 2\n3\n5\n",
+        "type": "mathematical",
+        "position": 11935
+      },
+      {
+        "equation": "a = 31 b = ",
+        "type": "mathematical",
+        "position": 11977
+      },
+      {
+        "equation": "c = ",
+        "type": "mathematical",
+        "position": 11991
+      },
+      {
+        "equation": "a + b + c = 31 ",
+        "type": "mathematical",
+        "position": 11999
+      },
+      {
+        "equation": "u = 0",
+        "type": "mathematical",
+        "position": 12435
+      },
+      {
+        "equation": "a + 1",
+        "type": "mathematical",
+        "position": 12441
+      },
+      {
+        "equation": "b + 2",
+        "type": "mathematical",
+        "position": 12447
+      },
+      {
+        "equation": "c + 3",
+        "type": "mathematical",
+        "position": 12453
+      },
+      {
+        "equation": "d = 1",
+        "type": "mathematical",
+        "position": 12459
+      },
+      {
+        "equation": "a +1",
+        "type": "mathematical",
+        "position": 12476
+      },
+      {
+        "equation": "b + 4",
+        "type": "mathematical",
+        "position": 12481
+      },
+      {
+        "equation": "c + 9d ",
+        "type": "mathematical",
+        "position": 12487
+      },
+      {
+        "equation": "C = 7",
+        "type": "mathematical",
+        "position": 12557
+      },
+      {
+        "equation": "C = 8",
+        "type": "mathematical",
+        "position": 12565
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 12573
+      },
+      {
+        "equation": "A =\n2\n3\n",
+        "type": "mathematical",
+        "position": 12590
+      },
+      {
+        "equation": "m + n is equal to ",
+        "type": "mathematical",
+        "position": 12652
+      },
+      {
+        "equation": "C = 7",
+        "type": "mathematical",
+        "position": 12712
+      },
+      {
+        "equation": "C = 8",
+        "type": "mathematical",
+        "position": 12720
+      },
+      {
+        "equation": "B = ",
+        "type": "mathematical",
+        "position": 12728
+      },
+      {
+        "equation": "A =\n2\n3\n",
+        "type": "mathematical",
+        "position": 12745
+      },
+      {
+        "equation": "m + n is equal to ",
+        "type": "mathematical",
+        "position": 12807
+      },
+      {
+        "equation": "C = 9 ",
+        "type": "mathematical",
+        "position": 12903
+      },
+      {
+        "equation": "C + 42 49(4 cos\n3 C ",
+        "type": "mathematical",
+        "position": 12953
+      },
+      {
+        "equation": "m + n = 32 + 7 = 39 27",
+        "type": "mathematical",
+        "position": 13050
+      },
+      {
+        "equation": "E-Main Exam April",
+        "type": "mathematical",
+        "position": 13433
+      },
+      {
+        "equation": "x + 7y + ",
+        "type": "mathematical",
+        "position": 13862
+      },
+      {
+        "equation": "z = 3 3x + 2y + 5z = 4 x + ",
+        "type": "mathematical",
+        "position": 13872
+      },
+      {
+        "equation": "y + 32z = ",
+        "type": "mathematical",
+        "position": 13900
+      },
+      {
+        "equation": "D = D\n1 = D\n2 = D\n3 = 0 D\n3 = ",
+        "type": "mathematical",
+        "position": 13995
+      },
+      {
+        "equation": "y + 1) cosx dx + e\ny sin x dy = 0 passes through the point ",
+        "type": "mathematical",
+        "position": 14158
+      },
+      {
+        "equation": "y + 1) cosx dx + e\ny sinx dy = 0 ",
+        "type": "mathematical",
+        "position": 14307
+      },
+      {
+        "equation": "x = 0 ",
+        "type": "mathematical",
+        "position": 14363
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 1986
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2527
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5450
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 6107
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 7088
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 7121
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7153
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7767
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7953
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7969
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 7989
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8015
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 8475
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 8710
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8786
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8792
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8804
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8812
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8832
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 8865
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 8873
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8942
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8956
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9035
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9065
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9068
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9153
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9161
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10383
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10527
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10566
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10596
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10623
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10712
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 10814
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12587
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12605
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12742
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12760
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12863
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12932
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12949
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12965
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 12977
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 13093
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 14165
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 14179
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 14314
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 14328
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 14359
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 14382
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Algebra",
+        "confidence": 0.16666666666666666,
+        "matchedKeywords": [
+          "matrix"
+        ],
+        "possibleSubtopics": [
+          "Quadratic Equations",
+          "Matrices",
+          "Complex Numbers",
+          "Sequences and Series"
+        ]
+      },
+      {
+        "name": "Geometry",
+        "confidence": 0.5714285714285714,
+        "matchedKeywords": [
+          "triangle",
+          "circle",
+          "area",
+          "perimeter"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Quadratic Equations",
+        "parentTopic": "Algebra",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "roots",
+          "equation"
+        ]
+      },
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "distance",
+          "slope"
+        ]
+      }
+    ],
+    "tags": [],
+    "wordCount": 4329,
+    "characterCount": 14458
+  },
+  "images": []
+}

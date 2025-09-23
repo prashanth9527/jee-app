@@ -111,3 +111,5 @@ fs.writeFileSync(fixedFilePath, JSON.stringify(fixedData, null, 2));
 
 console.log(`\nFixed file written to: ${fixedFilePath}`);
 
+
+

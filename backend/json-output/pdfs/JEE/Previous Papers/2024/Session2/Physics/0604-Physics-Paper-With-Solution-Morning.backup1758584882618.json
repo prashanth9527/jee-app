@@ -1,0 +1,1251 @@
+{
+  "success": true,
+  "file": "..\\content\\JEE\\Previous Papers\\2024\\Session2\\Physics\\0604-Physics-Paper-With-Solution-Morning.pdf",
+  "relativePath": "JEE\\Previous Papers\\2024\\Session2\\Physics\\0604-Physics-Paper-With-Solution-Morning.pdf",
+  "metadata": {
+    "originalFileName": "0604-Physics-Paper-With-Solution-Morning.pdf",
+    "subject": "Physics",
+    "year": 2024,
+    "session": null,
+    "shift": null,
+    "paperType": "With Solution",
+    "date": null,
+    "fileType": "pdf",
+    "totalPages": 8,
+    "fileSize": 4133014,
+    "processedAt": "2025-09-22T23:33:23.933Z"
+  },
+  "content": {
+    "originalText": "1 FINAL JEE–MAIN EXAMINATION – APRIL, 2024 (Held On Saturday 06\nth April, 2024) TIME : 9 : 00 AM to 12 : 00 NOON PHYSICS TEST PAPER WITH SOLUTION SECTION-A 31. To find the spring constant (k) of a spring experimentally, a student commits 2% positive error in the measurement of time and 1% negative error in measurement of mass. The percentage error in determining value of k is : (1) 3% (2) 1% (3) 4% (4) 5% Ans. (4) Sol. m\nT2\nk\n 2\nm\nT\nk\n 2 Tmk\n%%%\nTmk\n\n km2 T\n%%%\nkmT\n\n k\n% ( 1)% 2(2)% | 5% | 5%\nk\n\n     32. A bullet of mass 50 g is fired with a speed 100 m/s on a plywood and emerges with 40 m/s. The percentage loss of kinetic energy is : (1) 32% (2) 44% (3) 16% (4) 84% Ans. (4) Sol. 2\ni\n1\nKm(100)\n2\n 2\nf\n1\nKm(40)\n2\n %loss\nfi\ni\n| KK |\nK\n\n × 100 = 22\n2\n11\nm(40)m(100)\n22\n100\n1\nm(100)\n2\n\n = | 1600 100 100 |\n100\n = 84% 33. The ratio of the shortest wavelength of Balmer series to the shortest wavelength of Lyman series for hydrogen atom is : (1) 4 : 1 (2) 1 : 2 (3) 1 : 4 (4) 2 : 1 Ans. (1) Sol n = 1 Balmer n = 2 Lyman n =  2\n22\n12\n111\nRz\nnn\n\n\n\n\n\n 2\n2\nL\n2\n2\nB\n11\nRz\n1\n11\nRz\n2\n\n\n\n\n\n\n\n\n\n B\nL\n4 :1\n\n\n 34. To project a body of mass m from earth's surface to infinity, the required kinetic energy is (assume, the radius of earth is R\nE\n, g = acceleration due to gravity on the surface of earth) : (1) 2mgR\nE (2) mgR\nE (3) 1\n2\nmgR\nE (4) 4mgR\nE Ans. (2) Sol. 2\ne\nE\n1GMm\nmv\n2R\n 2\nE\nGM\ng\nR\n E\nK mgR $//(1\n® 2 35. Electromagnetic waves travel in a medium with speed of 1.5 × 10\n8 ms\n–1\n. The relative permeability of the medium is 2.0. The relative permittivity will be : (1) 5 (2) 1 (3) 4 (4) 2 Ans. (4) Sol. 2\nmm\n00\n2\n1\nv\n1\nc\n \n\n  2\nrr\n2\nc\nv\n   82\nr\n82\n(3 10 )\n2\n(1.5 10 )\n\n  \n r\n24   r\n2 36. Which of the following phenomena does not explain by wave nature of light. (A) reflection (B) diffraction (C) photoelectric effect (D) interference (E) polarization Choose the most appropriate answer from the options given below : (1) E only (2) C only (3) B, D only (4) A, C only Ans. (2) Sol. (Theory) Photoelectric effect prove particle nature of light. 37. While measuring diameter of wire using screw gauge the following readings were noted. Main scale reading is 1 mm and circular scale reading is equal to 42 divisions. Pitch of screw gauge is 1 mm and it has 100 divisions on circular scale. The diameter of the wire is x\nmm\n50\n. The value of x is : (1) 142 (2) 71 (3) 42 (4) 21 Ans. (2) Sol. MSR = 1mm, CSR = 42, pitch = 1 mm pitch1\nLC0.01mm\nNo. of CSD100\n\n\n\n Diameter = MSR + LC × CSD Diameter = 1 + (0.01) × 42 mm Diameter = 1.42 mm = x\n50 x = 71 38.  is the uniform surface charge density of a thin spherical shell of radius R. The electric field at any point on the surface of the spherical shell is : (1) /\n0\nR (2) /2\n0 (3) /\n0 (4) /4\n0 Ans. (3) Sol. Gaussin Surface dA E \nE=0  By Gauss law in\n0\nq\nE ·dA\n\n 0\ndA\nEdA\n\n\n 0\nE\n\n\n 39. The value of unknown resistance (x) for which the potential difference between B and D will be zero in the arrangement shown, is : 24 12 12 1 1 B C A 0.5 12 12 x 14.5V D (1) 3  (2) 9  (3) 6  (4) 42  Ans. (3) $//(1\n® 3 Sol. 24 12 12 1 1 B C A 0.5 12 12 x 14.5V D \n0.5 B C A 14.5V D 0.5 In case of balanced Wheatstone Bridge BC\nAB\nADCD\nV\nV\nVV\n  120.5\n6 x0.5\n\n x = 6  40. The specific heat at constant pressure of a real gas obeying PV\n2 = RT equation is : (1) V\nCR (2) V\nR\nC\n3\n (3) R (4) V\nR\nC\n2V\n Ans. (4) Sol. dQ = du + dW CdT = C\nV\ndT + PdV .....(1) PV\n2 = RT P = constant P(2VdV) = RdT PdV = RdT\n2V Put in equation (1) V\nR\nCC\n2V\n 41. Match List I with List II LIST I LIST II A. Torque I. 1 122\n[M L T A ]\n B. Magnetic field II. 21\n[L A ] C. Magnetic moment III. 121\n[M T A ]\n D. Permeability of free space IV. 1 22\n[M L T ]\n Choose the correct answer from the options given below : (1) A-I, B-III, C-II, D-IV (2) A-IV, B-III, C-II, D-I (3) A-III, B-I, C-II, D-IV (4) A-IV, B-II, C-III, D-I Ans. (2) Sol. 22\n[ ] [r F] [ML T ]\n\n    [F] [qVB] \n2\n12\n1\nFMLT\nB[MA T ]\nqV\nATLT\n\n\n\n\n\n\n\n\n\n [M] = [I × A] = [AL\n2\n] 0\n2\nIdl sin\nB\n4\nr\n\n\n\n \n2\nBr\n[]\nIdl\n\n\n\n 22\n[MLT A ]\n\n 42. Given below are two statements : Statement I : In an LCR series circuit, current is maximum at resonance. Statement II : Current in a purely resistive circuit can never be less than that in a series LCR circuit when connected to same voltage source. In the light of the above statements, choose the correct from the options given below : (1) Statement I is true but Statement II is false (2) Statement I is false but Statement II is true (3) Both Statement I and Statement II are true (4) Both Statement I and Statement II are false Ans. (3) Sol. Statement-I m\nm\n22\nLC\nV\nI\nR(XX )\n\n at resonance X\nL = X\nC Thus, m\nm\nV\nI\nR\n Impendence is minimum therefore I is maximum at resonance. Statement-II V\nI\nR\n\n\n\n in purely resistive circuit. 212\nMT AL\nAL\n\n\n\n\n\n\n$//(1\n® 4 43. The correct truth table for the following logic circuit is : A B Y Options : (1) A B Y\n000\n011\n100\n111 (2) A B Y\n001\n011\n100\n111 (3) A B Y\n001\n011\n100\n110 (4) A B Y\n000\n010\n100\n111 Ans. (2) Sol. A B Y NOT AND OR 44. A sample contains mixture of helium and oxygen gas. The ratio of root mean square speed of helium and oxygen in the sample, is : (1) 1\n32 (2) 22\n1 (3) 1\n4 (4) 1\n22 Ans. (2) Sol. rms\nw\n3RT\nV\nM\n \n2\n2\nO\nw,He\nHew,O\nV\nM\nVM\n = 41\n32\n22\n 2\nHe\nO\nV\n22\nV1\n 45. A light string passing over a smooth light pulley connects two blocks of masses m\n1 and m\n2 (where m\n2 > m\n1\n). If the acceleration of the system is g\n2\n, then the ratio of the masses 1\n2\nm\nm\nis : (1) 21\n21\n\n (2) 15\n51\n\n (3) 15\n21\n\n (4) 31\n21\n\n Ans. (1) Sol. 21\n12\nMM\nag\nMM\n\n\n\n\n\n 21\n12\nMM\ng\ng\nMM\n2\n\n\n\n\n\n \n1221\nMM2M2M  1\n2\nM\n21\nM\n21\n\n\n\n\n\n\n 46. Four particles A, B, C, D of mass m\n2\n, m, 2m, 4m, have same momentum, respectively. The particle with maximum kinetic energy is : (1) D (2) C (3) A (4) B Ans. (3) Sol. 2\np\nKE\n2m\n Same momentum, so less mass means more KE. So m\n2 will have max. KE. 47. A train starting from rest first accelerates uniformly up to a speed of 80 km/h for time t, then it moves with a constant speed for time 3t. The average speed of the train for this duration of journey will be (in km/h) : (1) 80 (2) 70 (3) 30 (4) 40 Ans. (2) M\n1 a M\n2 a $//(1\n® 5 Sol. Average speed = total distance\ntime taken = 80 t\n80 3t\n2\n4t\n\n = 70 km/hr. 48. An element ˆ\nxi  l is placed at the origin and carries a large current I = 10A. The magnetic field on the y-axis at a distance of 0.5 m from the elements x of 1 cm length is : y P 0.5 m x x (1) 8\n4 10 T\n\n (2) 8\n8 10 T\n\n (3) 8\n12 10 T\n\n (4) 8\n10 10 T\n\n Ans. (1) Sol. y P x 0\n3\nI\n(dr)\ndB\n4\nr\n\n\n\n\nl (Tesla) 7\n3\n11\nˆ\n1010( k)\n2 100\n1\n2\n\n\n  \n\n\n\n\n\n\n= 8\nˆ\n4 10 T ( k)\n\n 49. A small ball of mass m and density is dropped in a viscous liquid of density 0\n\n. After sometime, the ball falls with constant velocity. The viscous force on the ball is : (1) 0\nmg1\n\n\n\n\n\n (2) 0\nmg 1\n\n\n\n\n\n (3) \n0\nmg 1 (4) 0\nmg 1\n\n\n\n\n\n Ans. (4) Sol. mg – F\nB – F\nv = ma a = 0 for constant velocity mg – F\nB = F\nv F\nv = mg – v \n0 g = mg – 0\n0\nm\ng mg 1\n\n\n \n\n\n 50. In photoelectric experiment energy of 2.48 eV irradiates a photo sensitive material. The stopping potential was measured to be 0.5 V. Work function of the photo sensitive material is : (1) 0.5 eV (2) 1.68 eV (3) 2.48 eV (4) 1.98 eV Ans. (4) Sol. eV\ns = h–  0.5 V = 2.48 –  work function () = 2.48 V – 0.5 V = 1.98 V SECTION-B 5\n1. If the radius of earth is reduced to three-fourth of its present value without change in its mass then value of duration of the day of earth will be ______ hours 30 minutes. Ans. (13) Sol. By conservation of angular momentum 1 122\nII   2\n2\n12\n22232\nMRMR\n5T54T\n\n \n\n \n  12\n19\nT16T\n 1\n2\n19\nT\nT16\n\n9\n24hr\n16\n\n27\nhr\n2\n\n= 13 hr 30 mins. 52. Three infinitely long charged thin sheets are placed as shown in figure. The magnitude of electric field at the point P is 0\nx\n\n. The value of x is _________ (all quantities are measured in SI units). – Y –2  X –X Z X = –a X = a X = 3a P O Ans. (2) $//(1\n® 6 Sol. – Y –2  X –X Z X = –a X = a X = 3a P O p\n000\n2\nˆ\nE( i)\n222\n\n  \n \n\n\n = 0\n2\nˆ\ni\n\n\n 53. A big drop is formed by coalescing 1000 small droplets of water. The ratio of surface energy of 1000 droplets to that of energy of big drop is 10\nx\n. The value of x is _________. Ans. (1) Sol. 1000 drops Big drop  33\n44\n1000rR\n33\n   10r = R R = 10r 2\n2\nS.E. of 1000 drops1000(4 r )T\nS.E. of Big drop\n4 R T\n\n\n 2\n2\n1000 r10\n10\nx\n(10r)\n\n  x = 1 54. When a dc voltage of 100V is applied to an inductor, a dc current of 5A flows through it. When an ac voltage of 200V peak value is connected to inductor, its inductive reactance is found to be 20 3\n. The power dissipated in the circuit is _________W. Ans. (250) Sol. For DC voltage V100\nR20\nI5\n    for AC voltage L\nX20 3 R = 20  22\nL\nZXR\n3 400 400   = 40 Power = 2\nrms\niR = 2\n2\nrms\n200\nV\n2\nR20250W\nZ40\n\n\n\n\n  \n\n\n\n\n 55. The refractive index of prism is 3 and the ratio of the angle of minimum deviation to the angle of prism is one. The value of angle of prism is _________°. Ans. (60) Sol. For \nmin i = e 12\nA\nrr\n2\n min\n1\nA\n\n 2i A\n1\nA\n\n 2i = 2A i = A A i r\n1 r\n2 e Snell's law 1 × sin i =  sin r A\nsin isin\n2\n\n\n\n A\nsin Asin\n2\n\n\n\n AAA\n2sincos3 sin\n222\n\n\n\n A3\ncos\n22\n\n\n\n \nA\n30\n2\n A = 60° $//(1\n® 7 56. A wire of resistance R and radius r is stretched till its radius became r/2. If new resistance of the stretched wire is x R, then value of x is _________. Ans. (16) Sol. We know R\nA\n\n\nl\n, 2\nR\nr\n\nl As we starch the wire, its length will increase but its radius will decrease keeping the volume constant if\nVV 2\n2\nf\nr\nr\n4\n  ll f\n4ll 2\nnew\n2\nold\nR\n4r\n16\nR\nr\n4\n\n\n\n\n\n\n\nl\nl R\nnew = 16R x = 16 57. Radius of a certain orbit of hydrogen atom is 8.48 Å. If energy of electron in this orbit is E/x, then x = _________. (Given a\n0 = 0.529Å, E = energy of electron in ground state) Ans. (16) Sol. We know 2\nn\nr0.529\nZ\n \n2\nn\n8.48 0.529\n1\n n\n2 = 16 n = 4 We know 2\n1\nE\nn\n th\nn\nE\nE\n16\n x = 16 58. A circular coil having 200 turns, 2.5 × 10\n– 4 m\n2 area and carrying 100 A current is placed in a uniform magnetic field of 1 T. Initially the magnetic dipole moment (M) was directed along B\n. Amount of work, required to rotate the coil through 90° from its initial orientation such that M becomes perpendicular to B\n, is _________ J. Ans. (5) Sol. initial final B M B M We know W\next = U + KE \nP.E.M · B fi\nM · BM · B0  = –\nMB cos 90 + MB cos 0 = MB = NIAB 64\n5\n200 100 10101\n2\n\n     \n= 5J 59. A particle is doing simple harmonic motion of amplitude 0.06 m and time period 3.14 s. The maximum velocity of the particle is _______ cm/s. Ans. (12) Sol. We know v\nmax = A at mean position = 2\nA\nT\n\n= 2\n0.06\n\n\n = 0.12 m/sec v\nmax = 12 cm/sec 60. For three vectors ˆˆ\nˆ\nA ( xi 6 j 2k)   \n, ˆˆ\nˆ\nB ( i 4 j 3k)    and ˆˆ\nˆ\nC ( 8ij 3k)   \n, if A·(B C) 0\n, them value of x is _________. Ans. (4) Sol. ˆˆ\nˆ\nijk\nB C143\n81 3\n  \n\nˆˆ\nˆ\n15i 21j 33k   ˆ ˆˆ ˆ\nˆˆ\nA ·(B C) ( xi 6 j 2k) ·(15i 21j 33k)      0 = –15x + 126 – 66 15x = 60 x = 4 $//(1\n®",
+    "questions": [
+      {
+        "number": "31",
+        "text": "To find the spring constant (k) of a spring experimentally, a student commits 2% positive error in the measurement of time and 1% negative error in measurement of mass. The percentage error in determining value of k is : (1) 3% (2) 1% (3) 4% (4) 5%",
+        "formattedText": "To find the spring constant (k) of a spring experimentally, a student commits 2% positive error in the measurement of time and 1% negative error in measurement of mass. The percentage error in determining value of k is : (1) 3% (2) 1% (3) 4% (4) 5%",
+        "latexText": "To find the spring constant (k) of a spring experimentally, a student commits 2% positive error in the measurement of time and 1% negative error in measurement of mass. The percentage error in determining value of k is : (1) 3% (2) 1% (3) 4% (4) 5%",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "36",
+        "text": "Which of the following phenomena does not explain by wave nature of light. (A) reflection (B) diffraction (C) photoelectric effect (D) interference (E) polarization Choose the most appropriate answer from the options given below : (1) E only (2) C only (3) B, D only (4) A, C only",
+        "formattedText": "Which of the following phenomena does not explain by wave nature of light. (A) reflection (B) diffraction (C) photoelectric effect (D) interference (E) polarization Choose the most appropriate answer from the options given below : (1) E only (2) C only (3) B, D only (4) A, C only",
+        "latexText": "Which of the following phenomena does not explain by wave nature of light. (A) reflection (B) diffraction (C) photoelectric effect (D) interference (E) polarization Choose the most appropriate answer from the options given below : (1) E only (2) C only (3) B, D only (4) A, C only",
+        "options": [
+          {
+            "letter": "1",
+            "text": "E only"
+          },
+          {
+            "letter": "2",
+            "text": "C only"
+          },
+          {
+            "letter": "3",
+            "text": "B, D only"
+          },
+          {
+            "letter": "4",
+            "text": "A, C only"
+          },
+          {
+            "letter": "A",
+            "text": "reflection"
+          },
+          {
+            "letter": "B",
+            "text": "diffraction"
+          },
+          {
+            "letter": "C",
+            "text": "photoelectric effect"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "E only",
+            "formattedText": "E only",
+            "latexText": "E only"
+          },
+          {
+            "letter": "2",
+            "text": "C only",
+            "formattedText": "C only",
+            "latexText": "C only"
+          },
+          {
+            "letter": "3",
+            "text": "B, D only",
+            "formattedText": "B, D only",
+            "latexText": "B, D only"
+          },
+          {
+            "letter": "4",
+            "text": "A, C only",
+            "formattedText": "A, C only",
+            "latexText": "A, C only"
+          },
+          {
+            "letter": "A",
+            "text": "reflection",
+            "formattedText": "reflection",
+            "latexText": "reflection"
+          },
+          {
+            "letter": "B",
+            "text": "diffraction",
+            "formattedText": "diffraction",
+            "latexText": "diffraction"
+          },
+          {
+            "letter": "C",
+            "text": "photoelectric effect",
+            "formattedText": "photoelectric effect",
+            "latexText": "photoelectric effect"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "37",
+        "text": "While measuring diameter of wire using screw gauge the following readings were noted. Main scale reading is 1 mm and circular scale reading is equal to 42 divisions. Pitch of screw gauge is 1 mm and it has 100 divisions on circular scale. The diameter of the wire is x\nmm\n50\n. The value of x is : (1) 142 (2) 71 (3) 42 (4) 21",
+        "formattedText": "While measuring diameter of wire using screw gauge the following readings were noted. Main scale reading is 1 mm and circular scale reading is equal to 42 divisions. Pitch of screw gauge is 1 mm and it has 100 divisions on circular scale. The diameter of the wire is x\nmm\n50\n. The value of x is : (1) 142 (2) 71 (3) 42 (4) 21",
+        "latexText": "\\(While measuring diameter of wire using screw gauge the following readings were noted. Main scale reading is 1 mm and circular scale reading is equal to 42 divisions. Pitch of screw gauge is 1 mm and it has 100 divisions on circular scale. The diameter of the wire is x mm^{50} . The value of x is : (1) 142 (2) 71 (3) 42 (4) 21\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "39",
+        "text": "The value of unknown resistance (x) for which the potential difference between B and D will be zero in the arrangement shown, is : 24 12 12 1 1 B C A 0.5 12 12 x 14.5V D (1) 3  (2) 9  (3) 6  (4) 42 ",
+        "formattedText": "The value of unknown resistance (x) for which the potential difference between B and D will be zero in the arrangement shown, is : 24 12 12 1 1 B C A 0.5 12 12 x 14.5V D (1) 3  (2) 9  (3) 6  (4) 42 ",
+        "latexText": "The value of unknown resistance (x) for which the potential difference between B and D will be zero in the arrangement shown, is : 24 12 12 1 1 B C A 0.5 12 12 x 14.5V D (1) 3  (2) 9  (3) 6  (4) 42 ",
+        "options": [
+          {
+            "letter": "4",
+            "text": "42 "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "4",
+            "text": "42 ",
+            "formattedText": "42 ",
+            "latexText": "42 "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "41",
+        "text": "Match List I with List II LIST I LIST II A. Torque I. 1 122\n[M L T A ]\n B. Magnetic field II. 21\n[L A ] C. Magnetic moment III. 121\n[M T A ]\n D. Permeability of free space IV. 1 22\n[M L T ]\n Choose the correct answer from the options given below : (1) A-I, B-III, C-II, D-IV (2) A-IV, B-III, C-II, D-I (3) A-III, B-I, C-II, D-IV (4) A-IV, B-II, C-III, D-I",
+        "formattedText": "Match List I with List II LIST I LIST II A. Torque I. 1 122\n[M L T A ]\n B. Magnetic field II. 21\n[L A ] C. Magnetic moment III. 121\n[M T A ]\n D. Permeability of free space IV. 1 22\n[M L T ]\n Choose the correct answer from the options given below : (1) A-I, B-III, C-II, D-IV (2) A-IV, B-III, C-II, D-I (3) A-III, B-I, C-II, D-IV (4) A-IV, B-II, C-III, D-I",
+        "latexText": "\\(Match List I with List II LIST I LIST II A. Torque I. 1 122 [M L T A ]  B. Magnetic field II. 21 [L A ] C. Magnetic moment III. 121 [M T A ]  D. Permeability of free space IV. 1 22 [M L T ]  Choose the correct answer from the options given below : (1) A-I, B-III, C-II, D-IV (2) A-IV, B-III, C-II, D-I (3) A-III, B-I, C-II, D-IV (4) A-IV, B-II, C-III, D-I\\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "A-I, B-III, C-II, D-IV"
+          },
+          {
+            "letter": "2",
+            "text": "A-IV, B-III, C-II, D-I"
+          },
+          {
+            "letter": "3",
+            "text": "A-III, B-I, C-II, D-IV"
+          },
+          {
+            "letter": "4",
+            "text": "A-IV, B-II, C-III, D-I"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "A-I, B-III, C-II, D-IV",
+            "formattedText": "A-I, B-III, C-II, D-IV",
+            "latexText": "\\(A-I, B-III, C-II, D-IV\\)"
+          },
+          {
+            "letter": "2",
+            "text": "A-IV, B-III, C-II, D-I",
+            "formattedText": "A-IV, B-III, C-II, D-I",
+            "latexText": "\\(A-IV, B-III, C-II, D-I\\)"
+          },
+          {
+            "letter": "3",
+            "text": "A-III, B-I, C-II, D-IV",
+            "formattedText": "A-III, B-I, C-II, D-IV",
+            "latexText": "\\(A-III, B-I, C-II, D-IV\\)"
+          },
+          {
+            "letter": "4",
+            "text": "A-IV, B-II, C-III, D-I",
+            "formattedText": "A-IV, B-II, C-III, D-I",
+            "latexText": "\\(A-IV, B-II, C-III, D-I\\)"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "LI",
+            "latex": "LI",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "ST",
+            "latex": "ST",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "LI",
+            "latex": "LI",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "ST",
+            "latex": "ST",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "IV",
+            "latex": "IV",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "42",
+        "text": "Given below are two statements : Statement I : In an LCR series circuit, current is maximum at resonance. Statement II : Current in a purely resistive circuit can never be less than that in a series LCR circuit when connected to same voltage source. In the light of the above statements, choose the correct from the options given below : (1) Statement I is true but Statement II is false (2) Statement I is false but Statement II is true (3) Both Statement I and Statement II are true (4) Both Statement I and Statement II are false",
+        "formattedText": "Given below are two statements : Statement I : In an LCR series circuit, current is maximum at resonance. Statement II : Current in a purely resistive circuit can never be less than that in a series LCR circuit when connected to same voltage source. In the light of the above statements, choose the correct from the options given below : (1) Statement I is true but Statement II is false (2) Statement I is false but Statement II is true (3) Both Statement I and Statement II are true (4) Both Statement I and Statement II are false",
+        "latexText": "Given below are two statements : Statement I : In an LCR series circuit, current is maximum at resonance. Statement II : Current in a purely resistive circuit can never be less than that in a series LCR circuit when connected to same voltage source. In the light of the above statements, choose the correct from the options given below : (1) Statement I is true but Statement II is false (2) Statement I is false but Statement II is true (3) Both Statement I and Statement II are true (4) Both Statement I and Statement II are false",
+        "options": [
+          {
+            "letter": "1",
+            "text": "Statement I is true but Statement II is false"
+          },
+          {
+            "letter": "2",
+            "text": "Statement I is false but Statement II is true"
+          },
+          {
+            "letter": "3",
+            "text": "Both Statement I and Statement II are true"
+          },
+          {
+            "letter": "4",
+            "text": "Both Statement I and Statement II are false"
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "Statement I is true but Statement II is false",
+            "formattedText": "Statement I is true but Statement II is false",
+            "latexText": "Statement I is true but Statement II is false"
+          },
+          {
+            "letter": "2",
+            "text": "Statement I is false but Statement II is true",
+            "formattedText": "Statement I is false but Statement II is true",
+            "latexText": "Statement I is false but Statement II is true"
+          },
+          {
+            "letter": "3",
+            "text": "Both Statement I and Statement II are true",
+            "formattedText": "Both Statement I and Statement II are true",
+            "latexText": "Both Statement I and Statement II are true"
+          },
+          {
+            "letter": "4",
+            "text": "Both Statement I and Statement II are false",
+            "formattedText": "Both Statement I and Statement II are false",
+            "latexText": "Both Statement I and Statement II are false"
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "LC",
+            "latex": "LC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "LC",
+            "latex": "LC",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          },
+          {
+            "original": "II",
+            "latex": "II",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "45",
+        "text": "A light string passing over a smooth light pulley connects two blocks of masses m\n1 and m\n2 (where m\n2 > m\n1\n). If the acceleration of the system is g\n2\n, then the ratio of the masses 1\n2\nm\nm\nis : (1) 21\n21\n\n (2) 15\n51\n\n (3) 15\n21\n\n (4) 31\n21\n\n",
+        "formattedText": "A light string passing over a smooth light pulley connects two blocks of masses m\n1 and m\n2 (where m\n2 > m\n1\n). If the acceleration of the system is g\n2\n, then the ratio of the masses 1\n2\nm\nm\nis : (1) 21\n21\n\n (2) 15\n51\n\n (3) 15\n21\n\n (4) 31\n21\n\n",
+        "latexText": "\\(A light string passing over a smooth light pulley connects two blocks of masses m^{1} and m^{2} (where m^{2} > m^{1} ). If the acceleration of the system is g^{2} , then the ratio of the masses 1^{2} \\frac{m}{m}is : (1) 21^{21}   (2) 15^{51}   (3) 15^{21}   (4) 31^{21}  \\)",
+        "options": [
+          {
+            "letter": "1",
+            "text": "21 21  "
+          },
+          {
+            "letter": "2",
+            "text": "15 51  "
+          },
+          {
+            "letter": "3",
+            "text": "15 21  "
+          },
+          {
+            "letter": "4",
+            "text": "31 21  "
+          }
+        ],
+        "formattedOptions": [
+          {
+            "letter": "1",
+            "text": "21 21  ",
+            "formattedText": "21 21  ",
+            "latexText": "21 21  "
+          },
+          {
+            "letter": "2",
+            "text": "15 51  ",
+            "formattedText": "15 51  ",
+            "latexText": "15 51  "
+          },
+          {
+            "letter": "3",
+            "text": "15 21  ",
+            "formattedText": "15 21  ",
+            "latexText": "15 21  "
+          },
+          {
+            "letter": "4",
+            "text": "31 21  ",
+            "formattedText": "31 21  ",
+            "latexText": "31 21  "
+          }
+        ],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "47",
+        "text": "A train starting from rest first accelerates uniformly up to a speed of 80 km/h for time t, then it moves with a constant speed for time 3t. The average speed of the train for this duration of journey will be (in km/h) : (1) 80 (2) 70 (3) 30 (4) 40",
+        "formattedText": "A train starting from rest first accelerates uniformly up to a speed of 80 km/h for time t, then it moves with a constant speed for time 3t. The average speed of the train for this duration of journey will be (in km/h) : (1) 80 (2) 70 (3) 30 (4) 40",
+        "latexText": "\\(A train starting from rest first accelerates uniformly up to a speed of 80 \\frac{km}{h} for time t, then it moves with a constant speed for time 3t. The average speed of the train for this duration of journey will be (in \\frac{km}{h}) : (1) 80 (2) 70 (3) 30 (4) 40\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "km/h",
+            "latex": "\\(\\frac{km}{h}\\)",
+            "type": "fraction"
+          },
+          {
+            "original": "km/h",
+            "latex": "\\(\\frac{km}{h}\\)",
+            "type": "fraction"
+          }
+        ]
+      },
+      {
+        "number": "1",
+        "text": "If the radius of earth is reduced to three-fourth of its present value without change in its mass then value of duration of the day of earth will be ______ hours 30 minutes.",
+        "formattedText": "If the radius of earth is reduced to three-fourth of its present value without change in its mass then value of duration of the day of earth will be ______ hours 30 minutes.",
+        "latexText": "\\(If the radius of earth is reduced to three-fourth of its present value without change in its mass then value of duration of the day of earth will be ______ hours 30 minutes.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "52",
+        "text": "Three infinitely long charged thin sheets are placed as shown in figure. The magnitude of electric field at the point P is 0\nx\n\n. The value of x is _________ (all quantities are measured in SI units). – Y –2  X –X Z X = –a X = a X = 3a P O",
+        "formattedText": "Three infinitely long charged thin sheets are placed as shown in figure. The magnitude of electric field at the point P is 0\nx\n\n. The value of x is _________ (all quantities are measured in SI units). – Y –2  X –X Z X = –a X = a X = 3a P O",
+        "latexText": "\\(Three infinitely long charged thin sheets are placed as shown in figure. The magnitude of electric field at the point P is 0 x  . The value of x is _________ (all quantities are measured in SI units). – Y –2  X –X Z X = –a X = a X = 3a P O\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "SI",
+            "latex": "SI",
+            "type": "chemical_formula"
+          }
+        ]
+      },
+      {
+        "number": "53",
+        "text": "A big drop is formed by coalescing 1000 small droplets of water. The ratio of surface energy of 1000 droplets to that of energy of big drop is 10\nx\n. The value of x is _________.",
+        "formattedText": "A big drop is formed by coalescing 1000 small droplets of water. The ratio of surface energy of 1000 droplets to that of energy of big drop is 10\nx\n. The value of x is _________.",
+        "latexText": "\\(A big drop is formed by coalescing 1000 small droplets of water. The ratio of surface energy of 1000 droplets to that of energy of big drop is \\frac{10}{x}. The value of x is _________.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "54",
+        "text": "When a dc voltage of 100V is applied to an inductor, a dc current of 5A flows through it. When an ac voltage of 200V peak value is connected to inductor, its inductive reactance is found to be 20 3\n. The power dissipated in the circuit is _________W.",
+        "formattedText": "When a dc voltage of 100V is applied to an inductor, a dc current of 5A flows through it. When an ac voltage of 200V peak value is connected to inductor, its inductive reactance is found to be 20 3\n. The power dissipated in the circuit is _________W.",
+        "latexText": "\\(When a dc voltage of 100V is applied to an inductor, a dc current of 5A flows through it. When an ac voltage of 200V peak value is connected to inductor, its inductive reactance is found to be 20 3 . The power dissipated in the circuit is _________{W}.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "55",
+        "text": "The refractive index of prism is 3 and the ratio of the angle of minimum deviation to the angle of prism is one. The value of angle of prism is _________°.",
+        "formattedText": "The refractive index of prism is 3 and the ratio of the angle of minimum deviation to the angle of prism is one. The value of angle of prism is _________°.",
+        "latexText": "\\(The refractive index of prism is 3 and the ratio of the angle of minimum deviation to the angle of prism is one. The value of angle of prism is _________^\\circ.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "2",
+        "text": "If new resistance of the stretched wire is x R, then value of x is _________.",
+        "formattedText": "If new resistance of the stretched wire is x R, then value of x is _________.",
+        "latexText": "\\(If new resistance of the stretched wire is x R, then value of x is _________.\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": []
+      },
+      {
+        "number": "57",
+        "text": "Radius of a certain orbit of hydrogen atom is 8.48 Å. If energy of electron in this orbit is E/x, then x = _________. (Given a\n0 = 0.529Å, E = energy of electron in ground state)",
+        "formattedText": "Radius of a certain orbit of hydrogen atom is 8.48 Å. If energy of electron in this orbit is E/x, then x = _________. (Given a\n0 = 0.529Å, E = energy of electron in ground state)",
+        "latexText": "\\(Radius of a certain orbit of hydrogen atom is 8.48 Å. If energy of electron in this orbit is \\frac{E}{x}, then x = _________. (Given a^{0} = 0.529Å, E = energy of electron in ground state)\\)",
+        "options": [],
+        "formattedOptions": [],
+        "hasMath": true,
+        "hasChemistry": true,
+        "equations": [
+          {
+            "original": "E/x",
+            "latex": "\\(\\frac{E}{x}\\)",
+            "type": "fraction"
+          }
+        ]
+      }
+    ],
+    "mathEquations": [
+      {
+        "equation": "N-A 31",
+        "type": "mathematical",
+        "position": 152
+      },
+      {
+        "equation": "m/s on a plywood and emerges with 40 m/s",
+        "type": "mathematical",
+        "position": 578
+      },
+      {
+        "equation": "n = 1 Balmer n = 2 Lyman n = ",
+        "type": "mathematical",
+        "position": 1027
+      },
+      {
+        "equation": "g = acceleration due to gravity on the surface of earth) ",
+        "type": "mathematical",
+        "position": 1297
+      },
+      {
+        "equation": "R = 1mm",
+        "type": "mathematical",
+        "position": 2476
+      },
+      {
+        "equation": "R = 42",
+        "type": "mathematical",
+        "position": 2487
+      },
+      {
+        "equation": "h = 1 mm pitch1\nLC0",
+        "type": "mathematical",
+        "position": 2499
+      },
+      {
+        "equation": "r = MSR + LC ",
+        "type": "mathematical",
+        "position": 2558
+      },
+      {
+        "equation": "r = 1 + (0",
+        "type": "mathematical",
+        "position": 2584
+      },
+      {
+        "equation": "r = 1",
+        "type": "mathematical",
+        "position": 2614
+      },
+      {
+        "equation": "m = x\n50 ",
+        "type": "mathematical",
+        "position": 2624
+      },
+      {
+        "equation": "x = 71 38",
+        "type": "mathematical",
+        "position": 2636
+      },
+      {
+        "equation": "E=0 ",
+        "type": "mathematical",
+        "position": 2883
+      },
+      {
+        "equation": "x = 6 ",
+        "type": "mathematical",
+        "position": 3339
+      },
+      {
+        "equation": "Q = du + dW CdT = C\nV\ndT + PdV ",
+        "type": "mathematical",
+        "position": 3496
+      },
+      {
+        "equation": "P = constant P(2VdV) = RdT PdV = RdT\n2V Put in equation (1) V\nR\nCC\n2V\n",
+        "type": "mathematical",
+        "position": 3548
+      },
+      {
+        "equation": "A-I",
+        "type": "mathematical",
+        "position": 3882
+      },
+      {
+        "equation": "B-III",
+        "type": "mathematical",
+        "position": 3887
+      },
+      {
+        "equation": "C-II",
+        "type": "mathematical",
+        "position": 3894
+      },
+      {
+        "equation": "D-IV (2) A-IV",
+        "type": "mathematical",
+        "position": 3900
+      },
+      {
+        "equation": "B-III",
+        "type": "mathematical",
+        "position": 3915
+      },
+      {
+        "equation": "C-II",
+        "type": "mathematical",
+        "position": 3922
+      },
+      {
+        "equation": "D-I (3) A-III",
+        "type": "mathematical",
+        "position": 3928
+      },
+      {
+        "equation": "B-I",
+        "type": "mathematical",
+        "position": 3943
+      },
+      {
+        "equation": "C-II",
+        "type": "mathematical",
+        "position": 3948
+      },
+      {
+        "equation": "D-IV (4) A-IV",
+        "type": "mathematical",
+        "position": 3954
+      },
+      {
+        "equation": "B-II",
+        "type": "mathematical",
+        "position": 3969
+      },
+      {
+        "equation": "C-III",
+        "type": "mathematical",
+        "position": 3975
+      },
+      {
+        "equation": "D-I Ans",
+        "type": "mathematical",
+        "position": 3982
+      },
+      {
+        "equation": "t-I m\nm\n22\nLC\nV\nI\nR(XX )\n",
+        "type": "mathematical",
+        "position": 4757
+      },
+      {
+        "equation": "L = X\nC Thus",
+        "type": "mathematical",
+        "position": 4802
+      },
+      {
+        "equation": "t-II V\nI\nR\n",
+        "type": "mathematical",
+        "position": 4895
+      },
+      {
+        "equation": "m/h for time t",
+        "type": "mathematical",
+        "position": 6177
+      },
+      {
+        "equation": "m/h) ",
+        "type": "mathematical",
+        "position": 6315
+      },
+      {
+        "equation": "d = total distance\ntime taken = 80 t\n80 3t\n2\n4t\n",
+        "type": "mathematical",
+        "position": 6398
+      },
+      {
+        "equation": "m/hr",
+        "type": "mathematical",
+        "position": 6457
+      },
+      {
+        "equation": "I = 10A",
+        "type": "mathematical",
+        "position": 6541
+      },
+      {
+        "equation": "y-axis at a distance of 0",
+        "type": "mathematical",
+        "position": 6576
+      },
+      {
+        "equation": "v = ma a = 0 for constant velocity mg ",
+        "type": "mathematical",
+        "position": 7168
+      },
+      {
+        "equation": "B = F\nv F\nv = mg ",
+        "type": "mathematical",
+        "position": 7210
+      },
+      {
+        "equation": "g = mg ",
+        "type": "mathematical",
+        "position": 7235
+      },
+      {
+        "equation": "s = h",
+        "type": "mathematical",
+        "position": 7529
+      },
+      {
+        "equation": "V = 2",
+        "type": "mathematical",
+        "position": 7544
+      },
+      {
+        "equation": "V = 1",
+        "type": "mathematical",
+        "position": 7590
+      },
+      {
+        "equation": "N-B 5\n1",
+        "type": "mathematical",
+        "position": 7607
+      },
+      {
+        "equation": "e-fourth of its present value without change in its mass then value of duration of the day of earth will be ",
+        "type": "mathematical",
+        "position": 7657
+      },
+      {
+        "equation": "X = ",
+        "type": "mathematical",
+        "position": 8196
+      },
+      {
+        "equation": "X = a X = 3a P O Ans",
+        "type": "mathematical",
+        "position": 8203
+      },
+      {
+        "equation": "X = ",
+        "type": "mathematical",
+        "position": 8262
+      },
+      {
+        "equation": "X = a X = 3a P O p\n000\n2\n",
+        "type": "mathematical",
+        "position": 8269
+      },
+      {
+        "equation": "r = R R = 10r 2\n2\nS",
+        "type": "mathematical",
+        "position": 8591
+      },
+      {
+        "equation": "x = 1 54",
+        "type": "mathematical",
+        "position": 8705
+      },
+      {
+        "equation": "R = 20 ",
+        "type": "mathematical",
+        "position": 9043
+      },
+      {
+        "equation": "r = 2\nrms\niR = 2\n2\nrms\n200\nV\n2\nR20250W\nZ40\n",
+        "type": "mathematical",
+        "position": 9090
+      },
+      {
+        "equation": "i = e 12\nA\nrr\n2\n",
+        "type": "mathematical",
+        "position": 9354
+      },
+      {
+        "equation": "i = 2A i = A A i r\n1 r\n2 e Snell",
+        "type": "mathematical",
+        "position": 9399
+      },
+      {
+        "equation": "i = ",
+        "type": "mathematical",
+        "position": 9446
+      },
+      {
+        "equation": "A = 60",
+        "type": "mathematical",
+        "position": 9576
+      },
+      {
+        "equation": "r/2",
+        "type": "mathematical",
+        "position": 9670
+      },
+      {
+        "equation": "w = 16R ",
+        "type": "mathematical",
+        "position": 9992
+      },
+      {
+        "equation": "x = 16 57",
+        "type": "mathematical",
+        "position": 10002
+      },
+      {
+        "equation": "E/x",
+        "type": "mathematical",
+        "position": 10106
+      },
+      {
+        "equation": "x = ",
+        "type": "mathematical",
+        "position": 10116
+      },
+      {
+        "equation": "E = energy of electron in ground state) Ans",
+        "type": "mathematical",
+        "position": 10152
+      },
+      {
+        "equation": "n = 4 We know 2\n1\nE\nn\n",
+        "type": "mathematical",
+        "position": 10263
+      },
+      {
+        "equation": "x = 16 58",
+        "type": "mathematical",
+        "position": 10301
+      },
+      {
+        "equation": "t = ",
+        "type": "mathematical",
+        "position": 10697
+      },
+      {
+        "equation": "U + ",
+        "type": "mathematical",
+        "position": 10702
+      },
+      {
+        "equation": "B = NIAB 64\n5\n200 100 10101\n2\n",
+        "type": "mathematical",
+        "position": 10773
+      },
+      {
+        "equation": "m/s",
+        "type": "mathematical",
+        "position": 10964
+      },
+      {
+        "equation": "x = ",
+        "type": "mathematical",
+        "position": 10996
+      },
+      {
+        "equation": "n = 2\nA\nT\n",
+        "type": "mathematical",
+        "position": 11018
+      },
+      {
+        "equation": "m/sec v\nmax = 12 cm/sec 60",
+        "type": "mathematical",
+        "position": 11052
+      },
+      {
+        "equation": "x + 126 ",
+        "type": "mathematical",
+        "position": 11362
+      },
+      {
+        "equation": "x = 60 x = 4 ",
+        "type": "mathematical",
+        "position": 11377
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 183
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 204
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 1815
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2168
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 2863
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 2977
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3376
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 3556
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 4136
+      },
+      {
+        "equation": "log",
+        "type": "mathematical",
+        "position": 5031
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 5480
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6218
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6411
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6591
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 6997
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 7189
+      },
+      {
+        "equation": "exp",
+        "type": "mathematical",
+        "position": 7297
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 8887
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9442
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9452
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9460
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9465
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9485
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9490
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9513
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9516
+      },
+      {
+        "equation": "sin",
+        "type": "mathematical",
+        "position": 9521
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 9543
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9613
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9687
+      },
+      {
+        "equation": "tan",
+        "type": "mathematical",
+        "position": 9898
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10752
+      },
+      {
+        "equation": "cos",
+        "type": "mathematical",
+        "position": 10764
+      }
+    ],
+    "chemicalEquations": [],
+    "topics": [
+      {
+        "name": "Geometry",
+        "confidence": 0.14285714285714285,
+        "matchedKeywords": [
+          "area"
+        ],
+        "possibleSubtopics": [
+          "Coordinate Geometry",
+          "Conic Sections",
+          "3D Geometry",
+          "Lines and Planes"
+        ]
+      },
+      {
+        "name": "Trigonometry",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "sin",
+          "cos",
+          "tan",
+          "angle"
+        ],
+        "possibleSubtopics": [
+          "Trigonometric Functions",
+          "Trigonometric Identities",
+          "Inverse Trigonometric Functions"
+        ]
+      },
+      {
+        "name": "Mechanics",
+        "confidence": 0.8333333333333334,
+        "matchedKeywords": [
+          "motion",
+          "force",
+          "acceleration",
+          "velocity",
+          "momentum"
+        ],
+        "possibleSubtopics": [
+          "Kinematics",
+          "Dynamics",
+          "Work & Energy",
+          "Rotational Motion"
+        ]
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "confidence": 0.6666666666666666,
+        "matchedKeywords": [
+          "electric",
+          "magnetic",
+          "current",
+          "voltage"
+        ],
+        "possibleSubtopics": [
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects",
+          "Electromagnetic Induction"
+        ]
+      },
+      {
+        "name": "Waves & Optics",
+        "confidence": 0.5,
+        "matchedKeywords": [
+          "waves",
+          "light",
+          "reflection"
+        ],
+        "possibleSubtopics": [
+          "Wave Motion",
+          "Sound Waves",
+          "Light Waves",
+          "Optical Instruments"
+        ]
+      },
+      {
+        "name": "Thermodynamics",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "heat"
+        ],
+        "possibleSubtopics": [
+          "Heat Transfer",
+          "Thermodynamic Laws",
+          "Kinetic Theory",
+          "Thermal Properties"
+        ]
+      }
+    ],
+    "subtopics": [
+      {
+        "name": "Coordinate Geometry",
+        "parentTopic": "Geometry",
+        "confidence": 0.2,
+        "matchedKeywords": [
+          "distance"
+        ]
+      },
+      {
+        "name": "Kinematics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "velocity",
+          "acceleration",
+          "motion"
+        ]
+      },
+      {
+        "name": "Dynamics",
+        "parentTopic": "Mechanics",
+        "confidence": 0.4,
+        "matchedKeywords": [
+          "force",
+          "momentum"
+        ]
+      },
+      {
+        "name": "Electrostatics",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.6,
+        "matchedKeywords": [
+          "charge",
+          "electric field",
+          "potential"
+        ]
+      },
+      {
+        "name": "Current Electricity",
+        "parentTopic": "Electricity & Magnetism",
+        "confidence": 0.8,
+        "matchedKeywords": [
+          "current",
+          "resistance",
+          "circuit",
+          "power"
+        ]
+      }
+    ],
+    "tags": [],
+    "wordCount": 2880,
+    "characterCount": 11397
+  },
+  "images": []
+}
