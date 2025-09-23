@@ -13,8 +13,6 @@ import { AdminExamPapersController } from './exam-papers.controller';
 import { AdminQuestionReportsController } from './question-reports.controller';
 import { SystemSettingsController } from './system-settings.controller';
 import { AdminSubscriptionsController } from './subscriptions.controller';
-import { JsonImportController } from './json-import.controller';
-import { JsonImportService } from './json-import.service';
 import { SyllabusImportController } from './syllabus-import.controller';
 import { SyllabusImportService } from './syllabus-import.service';
 import { PrismaModule } from '../prisma/prisma.module';
@@ -35,10 +33,9 @@ import { AwsModule } from '../aws/aws.module';
     AdminQuestionReportsController,
     SystemSettingsController,
     AdminSubscriptionsController,
-    JsonImportController,
     SyllabusImportController
   ],
-  providers: [AdminAnalyticsService, SystemSettingsService, JsonImportService, SyllabusImportService],
+  providers: [AdminAnalyticsService, SystemSettingsService, SyllabusImportService],
   exports: [AdminAnalyticsService, SystemSettingsService],
 })
 export class AdminModule {}
