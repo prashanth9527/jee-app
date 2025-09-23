@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { QuestionDisplay, QuestionStem, QuestionExplanation, QuestionTips, QuestionOption } from '../QuestionDisplay';
+import QuestionDisplay from '../QuestionDisplay';
 import MathRenderer from '../MathRenderer';
 
 interface Question {
@@ -154,7 +154,7 @@ export default function ViewQuestionModal({ question, isOpen, onClose }: ViewQue
                 <div>
                   <label className="text-sm font-medium text-gray-600 mb-2 block">Tags</label>
                   <div className="flex flex-wrap gap-2">
-                    {question.tags.map((tagWrapper, index) => (
+                    {question.tags.map((tagWrapper: { tag: { name: string } }, index: number) => (
                       <span
                         key={index}
                         className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800"
@@ -174,7 +174,7 @@ export default function ViewQuestionModal({ question, isOpen, onClose }: ViewQue
                   </span>
                   Question
                 </h3>
-                <QuestionStem stem={question.stem} />
+                <QuestionDisplay content={question.stem} />
               </div>
 
               {/* Options */}
@@ -199,15 +199,30 @@ export default function ViewQuestionModal({ question, isOpen, onClose }: ViewQue
                 </div>
                 <div className="space-y-3">
                   {question.options
-                    .sort((a, b) => (a.order || 0) - (b.order || 0))
-                    .map((option, index) => (
-                      <QuestionOption
+                    .sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
+                    .map((option: any, index: number) => (
+                      <div
                         key={option.id}
-                        option={option}
-                        index={index}
-                        showCorrect={showAnswers}
-                        className="p-3 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
-                      />
+                        className={`p-3 rounded-lg border transition-colors ${
+                          showAnswers && option.isCorrect
+                            ? 'border-green-500 bg-green-50'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="flex items-start space-x-3">
+                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-sm font-medium">
+                            {String.fromCharCode(65 + index)}
+                          </span>
+                          <div className="flex-1">
+                            <QuestionDisplay content={option.text} />
+                            {showAnswers && option.isCorrect && (
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 ml-2">
+                                ✓ Correct
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     ))}
                 </div>
               </div>
@@ -221,7 +236,7 @@ export default function ViewQuestionModal({ question, isOpen, onClose }: ViewQue
                     </span>
                     Explanation
                   </h3>
-                  <QuestionExplanation explanation={question.explanation} />
+                  <QuestionDisplay content={question.explanation || ''} />
                 </div>
               )}
 
@@ -234,7 +249,7 @@ export default function ViewQuestionModal({ question, isOpen, onClose }: ViewQue
                     </span>
                     Tips & Formulas
                   </h3>
-                  <QuestionTips tipFormula={question.tip_formula} />
+                  <QuestionDisplay content={question.tip_formula} />
                 </div>
               )}
             </div>
