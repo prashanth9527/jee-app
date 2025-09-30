@@ -26,14 +26,36 @@ import { Roles } from '../auth/roles.decorator';
 export class PDFProcessorController {
   constructor(private readonly pdfProcessorService: PDFProcessorService) {}
 
+  @Get('ai-providers')
+  async getAvailableAIProviders() {
+    try {
+      const providers = await this.pdfProcessorService.getAvailableAIProviders();
+      return {
+        success: true,
+        data: providers
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to get available AI providers',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
   @Get('list')
   async listPDFs() {
     try {
       const pdfs = await this.pdfProcessorService.listPDFs();
+      const currentAIService = process.env.AI_SERVICE || 'openai';
       return {
         success: true,
         data: pdfs,
-        total: pdfs.length
+        total: pdfs.length,
+        currentAIService
       };
     } catch (error) {
       throw new HttpException(

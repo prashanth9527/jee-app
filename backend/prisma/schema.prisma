@@ -995,6 +995,7 @@ model PDFProcessorCache {
   processingTimeMs  Int?
   retryCount        Int      @default(0)
   lastProcessedAt   DateTime?
+  importedAt        DateTime?  // Track when questions were imported to database
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   logs              PDFProcessorLog[]

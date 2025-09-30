@@ -21,6 +21,9 @@ import { PDFReviewController } from './pdf-review.controller';
 import { PDFReviewService } from './pdf-review.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { AwsModule } from '../aws/aws.module';
+import { AIProviderFactory } from '../ai/ai-provider.factory';
+import { OpenAIService } from '../ai/openai.service';
+import { DeepSeekService } from '../ai/deepseek.service';
 
 @Module({
   imports: [PrismaModule, AwsModule],
@@ -41,7 +44,16 @@ import { AwsModule } from '../aws/aws.module';
     PDFProcessorController,
     PDFReviewController
   ],
-  providers: [AdminAnalyticsService, SystemSettingsService, SyllabusImportService, PDFProcessorService, PDFReviewService],
+  providers: [
+    AdminAnalyticsService, 
+    SystemSettingsService, 
+    SyllabusImportService, 
+    PDFProcessorService, 
+    PDFReviewService,
+    AIProviderFactory,
+    OpenAIService,
+    DeepSeekService
+  ],
   exports: [AdminAnalyticsService, SystemSettingsService],
 })
 export class AdminModule {}

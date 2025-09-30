@@ -12,6 +12,7 @@ import LatexContentDisplay, {
   LatexQuestionTips,
   LatexQuestionOption 
 } from '@/components/LatexContentDisplay';
+import LatexRichTextEditor from '@/components/LatexRichTextEditor';
 
 interface Question {
   id: string;
@@ -529,11 +530,12 @@ export default function PDFReviewPage() {
                     <div className="bg-white rounded-lg shadow p-6 mb-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-4">Question</h3>
                       {isEditing ? (
-                        <textarea
+                        <LatexRichTextEditor
                           value={editData.stem || ''}
-                          onChange={(e) => setEditData({ ...editData, stem: e.target.value })}
-                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          rows={4}
+                          onChange={(content) => setEditData({ ...editData, stem: content })}
+                          placeholder="Enter the question text with LaTeX support..."
+                          height={200}
+                          className="border border-gray-300 rounded-md"
                         />
                       ) : (
                         <LatexQuestionStem stem={currentQuestion.stem} />
@@ -550,16 +552,19 @@ export default function PDFReviewPage() {
                               <span className="w-8 text-sm font-medium text-gray-600">
                                 {String.fromCharCode(65 + index)}
                               </span>
-                              <input
-                                type="text"
-                                value={option.text}
-                                onChange={(e) => {
-                                  const newOptions = [...(editData.options || [])];
-                                  newOptions[index] = { ...option, text: e.target.value };
-                                  setEditData({ ...editData, options: newOptions });
-                                }}
-                                className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                              />
+                              <div className="flex-1">
+                                <LatexRichTextEditor
+                                  value={option.text}
+                                  onChange={(content) => {
+                                    const newOptions = [...(editData.options || [])];
+                                    newOptions[index] = { ...option, text: content };
+                                    setEditData({ ...editData, options: newOptions });
+                                  }}
+                                  placeholder={`Enter option ${String.fromCharCode(65 + index)} text with LaTeX support...`}
+                                  height={100}
+                                  className="border border-gray-300 rounded-md"
+                                />
+                              </div>
                               <input
                                 type="radio"
                                 name="correctOption"
@@ -601,11 +606,12 @@ export default function PDFReviewPage() {
                     <div className="bg-white rounded-lg shadow p-6 mb-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-4">Explanation</h3>
                       {isEditing ? (
-                        <textarea
+                        <LatexRichTextEditor
                           value={editData.explanation || ''}
-                          onChange={(e) => setEditData({ ...editData, explanation: e.target.value })}
-                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          rows={6}
+                          onChange={(content) => setEditData({ ...editData, explanation: content })}
+                          placeholder="Enter the explanation with LaTeX support..."
+                          height={250}
+                          className="border border-gray-300 rounded-md"
                         />
                       ) : (
                         <LatexQuestionExplanation 
@@ -618,11 +624,12 @@ export default function PDFReviewPage() {
                     <div className="bg-white rounded-lg shadow p-6 mb-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-4">Tip/Formula</h3>
                       {isEditing ? (
-                        <textarea
+                        <LatexRichTextEditor
                           value={editData.tip_formula || ''}
-                          onChange={(e) => setEditData({ ...editData, tip_formula: e.target.value })}
-                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          rows={3}
+                          onChange={(content) => setEditData({ ...editData, tip_formula: content })}
+                          placeholder="Enter tips and formulas with LaTeX support..."
+                          height={150}
+                          className="border border-gray-300 rounded-md"
                         />
                       ) : (
                         <LatexQuestionTips 

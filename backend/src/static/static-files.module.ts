@@ -5,3 +5,4 @@ import { StaticFilesController } from './static-files.controller';
   controllers: [StaticFilesController],
 })
 export class StaticFilesModule {}
+

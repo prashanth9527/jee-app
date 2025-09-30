@@ -1,0 +1,345 @@
+{
+    "questions": [
+        {
+            "id": "q31",
+            "stem": "The compound which will have the lowest rate towards nucleophilic aromatic substitution on treatment with OH⁻ is",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$$\\ce{Cl-\\overset{\\text{NO}_2}{\\underset{|}{}}-}$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "$$\\ce{Cl-\\overset{\\text{}}{\\underset{\\text{NO}_2}{}}-}$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "$$\\ce{Cl-\\overset{\\text{NO}_2}{\\underset{\\text{NO}_2}{}}-}$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "$$\\ce{Cl-\\overset{\\text{}}{\\underset{|}{}}-\\text{NO}_2$$",
+                    "isCorrect": true
+                }
+            ],
+            "explanation": "Electron withdrawing groups are highly ineffective at meta position in nucleophilic aromatic substitution reactions. The compound with the nitro group at meta position relative to the chlorine will have the lowest rate in nucleophilic aromatic substitution.",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "topic": "Organic Chemistry",
+            "subtopic": "Nucleophilic Aromatic Substitution",
+            "yearAppeared": 2023,
+            "tags": ["aromatic-substitution", "electron-withdrawing-groups", "meta-position"]
+        },
+        {
+            "id": "q32",
+            "stem": "The variation of the rate of an enzyme catalyzed reaction with substrate concentration is correctly represented by graph",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "Graph showing linear increase then plateau",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "Graph showing hyperbolic curve",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "Graph showing exponential decay",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "Graph showing sigmoidal curve",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "The correct graph for enzyme kinetics shows a hyperbolic curve where the rate increases with substrate concentration and eventually reaches a maximum (Vmax) due to saturation of enzyme active sites. This follows Michaelis-Menten kinetics.",
+            "difficulty": "EASY",
+            "subject": "Chemistry",
+            "topic": "Biochemistry",
+            "subtopic": "Enzyme Kinetics",
+            "yearAppeared": 2023,
+            "tags": ["enzyme-kinetics", "michaelis-menten", "substrate-concentration"]
+        },
+        {
+            "id": "q33",
+            "stem": "Identify the product formed (A and E) in the reaction sequence: $$\\ce{Me-\\overset{\\text{NO}_2}{\\underset{|}{}}-Br ->[Br_2] A ->[Sn/HCl] B ->[NaNO_2/HCl] C ->[H_3PO_2/H_2O] D ->[(i) KMnO_4/KOH][(ii) H_3O^+] E}$$",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "A = $$\\ce{Br-\\overset{\\text{NO}_2}{\\underset{|}{}}-Br}$$, E = $$\\ce{HOOC-\\overset{\\text{}}{\\underset{|}{}}-Br}$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "A = $$\\ce{Br-\\overset{\\text{NO}_2}{\\underset{|}{}}-Br}$$, E = $$\\ce{HOOC-\\overset{\\text{}}{\\underset{|}{}}-COOH}$$",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "A = $$\\ce{Br-\\overset{\\text{}}{\\underset{|}{}}-NO_2}$$, E = $$\\ce{HOOC-\\overset{\\text{}}{\\underset{|}{}}-Br}$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "A = $$\\ce{Br-\\overset{\\text{}}{\\underset{|}{}}-NO_2}$$, E = $$\\ce{HOOC-\\overset{\\text{}}{\\underset{|}{}}-COOH}$$",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "The reaction sequence involves bromination of methyl nitrobenzene, reduction of nitro group, diazotization, deamination with H3PO2, and finally oxidation of methyl groups to carboxylic acids with KMnO4. The final product is terephthalic acid with bromine substituents replaced by carboxyl groups.",
+            "difficulty": "HARD",
+            "subject": "Chemistry",
+            "topic": "Organic Chemistry",
+            "subtopic": "Reaction Sequences",
+            "yearAppeared": 2023,
+            "tags": ["bromination", "diazotization", "oxidation", "aromatic-chemistry"]
+        },
+        {
+            "id": "q34",
+            "stem": "Match List I with List II: Elements with their flame test colors",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "A-II, B-I, C-III, D-IV",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "A-II, B-IV, C-I, D-III",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "A-II, B-I, C-IV, D-III",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "A-IV, B-III, C-II, D-I",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Correct matching: K (Violet), Ca (Brick red), Sr (Crimson red), Ba (Apple green). This is based on characteristic flame test colors of alkali and alkaline earth metals.",
+            "difficulty": "EASY",
+            "subject": "Chemistry",
+            "topic": "Inorganic Chemistry",
+            "subtopic": "Flame Tests",
+            "yearAppeared": 2023,
+            "tags": ["flame-test", "alkali-metals", "alkaline-earth-metals"]
+        },
+        {
+            "id": "q35",
+            "stem": "Reaction of thionyl chloride with white phosphorus forms a compound [A], which on hydrolysis gives [B], a dibasic acid. [A] and [B] are respectively",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$$\\ce{P4O6}$$ and $$\\ce{H3PO3}$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "$$\\ce{PCl3}$$ and $$\\ce{H3PO3}$$",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "$$\\ce{PCl5}$$ and $$\\ce{H3PO4}$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "$$\\ce{POCI3}$$ and $$\\ce{H3PO4}$$",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "White phosphorus reacts with thionyl chloride to form phosphorus trichloride: $$\\ce{P4 + 8SOCl2 -> 4PCl3 + 4SO2 + 2S2Cl2}$$. Phosphorus trichloride on hydrolysis gives phosphorous acid: $$\\ce{PCl3 + 3H2O -> H3PO3 + 3HCl}$$. $$\\ce{H3PO3}$$ is dibasic as it has two -OH groups.",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "topic": "Inorganic Chemistry",
+            "subtopic": "Phosphorus Compounds",
+            "yearAppeared": 2023,
+            "tags": ["phosphorus", "thionyl-chloride", "hydrolysis", "phosphorous-acid"]
+        },
+        {
+            "id": "q36",
+            "stem": "A cubic solid is made up of two elements X and Y. Atoms of X are present on every alternate corner and one at the center of cube. Y is at 1/3 of the total faces. The empirical formula of the compound is",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$$\\ce{X2Y1.5}$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "$$\\ce{X2Y}$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "$$\\ce{XY2.5}$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "$$\\ce{X1.5Y2}$$",
+                    "isCorrect": true
+                }
+            ],
+            "explanation": "X atoms: 4 corners × 1/8 = 0.5, plus 1 center = 1.5 total. Y atoms: 6 faces × 1/3 = 2 total. Therefore empirical formula is $$\\ce{X1.5Y2}$$ or $$\\ce{X3Y4}$$.",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "topic": "Solid State Chemistry",
+            "subtopic": "Crystal Structure",
+            "yearAppeared": 2023,
+            "tags": ["crystal-structure", "unit-cell", "empirical-formula"]
+        },
+        {
+            "id": "q37",
+            "stem": "The radius of the 2nd orbit of Li²⁺ is x. The expected radius of the 3rd orbit of Be³⁺ is",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$$\\frac{9}{4}x$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "$$\\frac{4}{9}x$$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "$$\\frac{27}{16}x$$",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "$$\\frac{16}{27}x$$",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Using Bohr's radius formula: $$r_n = \\frac{0.529n^2}{Z}$$ Å. For Li²⁺ (Z=3), $$r_2 = \\frac{0.529 × 4}{3} = x$$. For Be³⁺ (Z=4), $$r_3 = \\frac{0.529 × 9}{4}$$. Ratio: $$\\frac{r_3(Be^{3+})}{r_2(Li^{2+})} = \\frac{9/4}{4/3} = \\frac{9}{4} × \\frac{3}{4} = \\frac{27}{16}$$.",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "topic": "Physical Chemistry",
+            "subtopic": "Atomic Structure",
+            "yearAppeared": 2023,
+            "tags": ["bohr-model", "atomic-radius", "hydrogen-like-atoms"]
+        },
+        {
+            "id": "q38",
+            "stem": "Which of the following conformations will be the most stable?",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "Staggered with both methyl groups anti",
+                    "isCorrect": true
+                },
+                {
+                    "id": "B",
+                    "text": "Staggered with methyl groups gauche",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "Eclipsed with methyl groups staggered",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "Eclipsed with methyl groups eclipsed",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "The conformation with both methyl groups in anti position has the lowest van der Waals and torsional strain, making it the most stable conformation among the given options.",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "topic": "Organic Chemistry",
+            "subtopic": "Conformational Analysis",
+            "yearAppeared": 2023,
+            "tags": ["conformational-analysis", "staggered", "anti-conformation"]
+        },
+        {
+            "id": "q39",
+            "stem": "Match items of Row I with those of Row II for carbohydrate structures",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "P→iv, Q→iii, R→i, S→ii",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "P→i, Q→ii, R→iii, S→iv",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "P→iii, Q→iv, R→ii, S→i",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "P→iii, Q→iv, R→i, S→ii",
+                    "isCorrect": true
+                }
+            ],
+            "explanation": "P represents α-D-(+) Glucopyranose, Q represents β-D-(+) Glucopyranose, R represents α-D-(-) Fructofuranose, S represents β-D-(-) Fructofuranose based on the anomeric configuration and ring structure.",
+            "difficulty": "HARD",
+            "subject": "Chemistry",
+            "topic": "Organic Chemistry",
+            "subtopic": "Carbohydrates",
+            "yearAppeared": 2023,
+            "tags": ["carbohydrates", "glucose", "fructose", "anomers"]
+        },
+        {
+            "id": "q40",
+            "stem": "Assertion A: Acetal/Ketal is stable in basic medium. Reason R: The high leaving tendency of alkoxide ion gives the stability to acetal/ketal in basic medium.",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "A is true but R is false",
+                    "isCorrect": true
+                },
+                {
+                    "id": "B",
+                    "text": "A is false but R is true",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "Both A and R are true and R is the correct explanation of A",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "Both A and R are true but R is NOT the correct explanation of A",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Acetals and ketals are stable in basic medium but hydrolyze in acidic medium. However, alkoxide ion (RO⁻) is not a good leaving group, so the reason is false.",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "topic": "Organic Chemistry",
+            "subtopic": "Protecting Groups",
+            "yearAppeared": 2023,
+            "tags": ["acetals", "ketals", "protecting-groups", "carbonyl-chemistry"]
+        }
+    ],
+    "metadata": {
+        "totalQuestions": 10,
+        "subjects": ["Chemistry"],
+        "topics": ["Organic Chemistry", "Inorganic Chemistry", "Physical Chemistry", "Biochemistry", "Solid State Chemistry"],
+        "difficultyDistribution": {
+            "easy": 2,
+            "medium": 5,
+            "hard": 3
+        },
+        "processingTime": 45
+    }
+}

@@ -15,6 +15,7 @@ interface PDFFile {
   questionCount?: number;
   hasImportedQuestions?: boolean;
   cacheId?: string;
+  importedAt?: string;
 }
 
 interface ProcessingStats {
@@ -24,6 +25,11 @@ interface ProcessingStats {
   completed: number;
   failed: number;
   retrying: number;
+}
+
+interface AIProviders {
+  providers: string[];
+  available: { [key: string]: boolean };
 }
 
 interface ProcessingStatus {
@@ -52,10 +58,14 @@ export default function PDFProcessorPage() {
   const [customPrompt, setCustomPrompt] = useState('');
   const [statusDetails, setStatusDetails] = useState<ProcessingStatus | null>(null);
   const [showStatusModal, setShowStatusModal] = useState(false);
+  const [aiProviders, setAiProviders] = useState<AIProviders | null>(null);
+  const [selectedProvider, setSelectedProvider] = useState<string>('openai');
+  const [currentAIService, setCurrentAIService] = useState<string>('openai');
 
   useEffect(() => {
     fetchPDFs();
     fetchStats();
+    fetchAIProviders();
   }, []);
 
   const fetchPDFs = async () => {
@@ -63,6 +73,9 @@ export default function PDFProcessorPage() {
       const response = await api.get('/admin/pdf-processor/list');
       if (response.data.success) {
         const pdfs = response.data.data;
+        const currentAIService = response.data.currentAIService || 'openai';
+        setCurrentAIService(currentAIService);
+        setSelectedProvider(currentAIService);
         
         // Fetch question counts and import status for completed files
         const pdfsWithCounts = await Promise.all(
@@ -130,15 +143,34 @@ export default function PDFProcessorPage() {
     }
   };
 
+  const fetchAIProviders = async () => {
+    try {
+      const response = await api.get('/admin/pdf-processor/ai-providers');
+      if (response.data.success) {
+        setAiProviders(response.data.data);
+        // Set default provider to the first available one
+        const availableProviders = response.data.data.providers.filter((provider: string) => 
+          response.data.data.available[provider]
+        );
+        if (availableProviders.length > 0) {
+          setSelectedProvider(availableProviders[0]);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching AI providers:', error);
+    }
+  };
+
   const processPDF = async (fileName: string, filePath?: string) => {
     setProcessing(fileName);
-    toast.loading('Processing PDF...', 'Please wait');
+    toast.loading(`Processing PDF with ${selectedProvider.toUpperCase()}...`, 'Please wait');
     
     try {
       const response = await api.post('/admin/pdf-processor/process', {
         fileName,
         filePath,
-        userPrompt: customPrompt || undefined
+        userPrompt: customPrompt || undefined,
+        aiProvider: selectedProvider
       });
       
       if (response.data.success) {
@@ -355,7 +387,7 @@ export default function PDFProcessorPage() {
           {/* Header */}
           <div>
             <h1 className="text-2xl font-bold text-gray-900">PDF Processor</h1>
-            <p className="text-gray-600">Process JEE Previous Year Papers using ChatGPT API</p>
+            <p className="text-gray-600">Process JEE Previous Year Papers using AI providers (OpenAI GPT-4o or DeepSeek)</p>
           </div>
 
           {/* Stats Cards */}
@@ -388,10 +420,50 @@ export default function PDFProcessorPage() {
             </div>
           )}
 
-          {/* Custom Prompt Section */}
+          {/* AI Provider and Custom Prompt Section */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Custom Processing Prompt</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">AI Provider & Processing Settings</h3>
             <div className="space-y-4">
+              {/* AI Provider Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  AI Provider
+                </label>
+                <div className="mb-2">
+                  <span className="text-sm text-blue-600 font-medium">
+                    Current Default: {currentAIService.toUpperCase()}
+                  </span>
+                  <span className="text-xs text-gray-500 ml-2">
+                    (Set via AI_SERVICE environment variable)
+                  </span>
+                </div>
+                <div className="flex space-x-4">
+                  {aiProviders?.providers.map((provider) => (
+                    <label key={provider} className="flex items-center">
+                      <input
+                        type="radio"
+                        name="aiProvider"
+                        value={provider}
+                        checked={selectedProvider === provider}
+                        onChange={(e) => setSelectedProvider(e.target.value)}
+                        disabled={!aiProviders.available[provider]}
+                        className="mr-2"
+                      />
+                      <span className={`text-sm ${aiProviders.available[provider] ? 'text-gray-900' : 'text-gray-400'}`}>
+                        {provider.toUpperCase()}
+                        {provider === currentAIService && ' (Default)'}
+                        {!aiProviders.available[provider] && ' (Not Available)'}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+                <div className="text-xs text-gray-500 mt-1">
+                  {selectedProvider === 'openai' && 'Uses OpenAI GPT-4o with file upload and chunked processing'}
+                  {selectedProvider === 'deepseek' && 'Uses DeepSeek API with base64 PDF encoding and chunked processing'}
+                </div>
+              </div>
+
+              {/* Custom Prompt */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Additional Instructions (Optional)
@@ -497,13 +569,13 @@ export default function PDFProcessorPage() {
                             >
                               Download
                             </button>
-                            {pdf.hasImportedQuestions ? (
+                            {pdf.importedAt ? (
                               <button
                                 onClick={() => router.push(`/admin/pdf-review/${pdf.cacheId}`)}
                                 className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700"
-                                title={pdf.questionCount ? `Review ${pdf.questionCount} questions` : 'Review questions'}
+                                title={pdf.questionCount ? `Preview ${pdf.questionCount} questions` : 'Preview questions'}
                               >
-                                Review{pdf.questionCount ? ` (${pdf.questionCount})` : ''}
+                                Preview{pdf.questionCount ? ` (${pdf.questionCount})` : ''}
                               </button>
                             ) : (
                               <button

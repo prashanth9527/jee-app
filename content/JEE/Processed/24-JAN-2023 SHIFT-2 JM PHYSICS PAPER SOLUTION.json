@@ -1,0 +1,413 @@
+{
+  "questions": [
+    {
+      "id": "Q1",
+      "stem": "The electric potential at the centre of two concentric half rings of radii $$R_1$$ and $$R_2$$, having same linear charge density $$\\lambda$$ is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$\\frac{\\lambda}{2\\epsilon_0}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$$\\frac{2\\lambda}{\\epsilon_0}$$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$$\\frac{4\\lambda}{\\epsilon_0}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$$\\frac{\\lambda}{\\epsilon_0}$$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The potential at the center due to a half ring is given by $$V = \\frac{\\lambda}{2\\epsilon_0} (R_1 + R_2)$$. Therefore, the total potential is $$\\frac{2\\lambda}{\\epsilon_0}$$.",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "topic": "Electromagnetism",
+      "subtopic": "Electric Potential",
+      "yearAppeared": 2023,
+      "tags": [
+        "electric potential",
+        "concentric rings"
+      ],
+      "lesson": "Electromagnetism",
+      "tip_formula": "V = \\frac{\\lambda}{2\\epsilon_0} (R_1 + R_2)",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q2",
+      "stem": "Let $$\\gamma_1$$ be the ratio of molar specific heat at constant pressure and molar specific heat at constant volume of a monoatomic gas and $$\\gamma_2$$ be the similar ratio of diatomic gas. Considering the diatomic gas molecule as a rigid rotator, the ratio, $$\\frac{\\gamma_1}{\\gamma_2}$$ is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$\\frac{27}{35}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$$\\frac{35}{27}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$$\\frac{25}{21}$$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$$\\frac{21}{25}$$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "For a monoatomic gas, $$\\gamma_1 = \\frac{5}{3}$$ and for a diatomic gas, $$\\gamma_2 = \\frac{7}{5}$$. Therefore, $$\\frac{\\gamma_1}{\\gamma_2} = \\frac{5/3}{7/5} = \\frac{25}{21}$$.",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "topic": "Thermodynamics",
+      "subtopic": "Specific Heat Ratios",
+      "yearAppeared": 2023,
+      "tags": [
+        "specific heat",
+        "thermodynamics"
+      ],
+      "lesson": "Thermodynamics",
+      "tip_formula": "\\gamma = \\frac{C_p}{C_v}",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q3",
+      "stem": "An $$\\alpha$$-particle, a proton and an electron have the same kinetic energy. Which one of the following is correct in case of their De-Broglie wavelength:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$\\lambda_\\alpha > \\lambda_p > \\lambda_e$$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$$\\lambda_\\alpha < \\lambda_p < \\lambda_e$$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$$\\lambda_\\alpha = \\lambda_p = \\lambda_e$$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$$\\lambda_\\alpha > \\lambda_p < \\lambda_e$$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The De-Broglie wavelength $$\\lambda = \\frac{h}{\\sqrt{2mK}}$$, where $$m$$ is the mass and $$K$$ is the kinetic energy. Since $$K$$ is the same, $$\\lambda$$ is inversely proportional to the square root of mass. Thus, $$\\lambda_\\alpha < \\lambda_p < \\lambda_e$$.",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "topic": "Modern Physics",
+      "subtopic": "De-Broglie Wavelength",
+      "yearAppeared": 2023,
+      "tags": [
+        "de-broglie wavelength",
+        "modern physics"
+      ],
+      "lesson": "Modern Physics",
+      "tip_formula": "\\lambda = \\frac{h}{\\sqrt{2mK}}",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q4",
+      "stem": "If the distance of the earth from Sun is $$1.5 \\times 10^6$$ km. Then the distance of an imaginary planet from Sun, if its period of revolution is 2.83 years is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$6 \\times 10^7$$ km",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$$6 \\times 10^6$$ km",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$$3 \\times 10^6$$ km",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$$3 \\times 10^7$$ km",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Using Kepler's third law, $$T^2 \\propto R^3$$. For Earth, $$T_1 = 1$$ year and $$R_1 = 1.5 \\times 10^6$$ km. For the planet, $$T_2 = 2.83$$ years. Solving, $$R_2 = 3 \\times 10^6$$ km.",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "topic": "Mechanics",
+      "subtopic": "Kepler's Laws",
+      "yearAppeared": 2023,
+      "tags": [
+        "kepler's laws",
+        "planetary motion"
+      ],
+      "lesson": "Mechanics",
+      "tip_formula": "T^2 \\propto R^3",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q5",
+      "stem": "Match List I with List II: A. AM Broadcast I. 88-108 MHz, B. FM Broadcast II. 540-1600 kHz, C. Television III. 3.7-4.2 GHz, D. Satellite Communication IV. 54MHz - 590MHz",
+      "options": [
+        {
+          "id": "A",
+          "text": "A-II, B-I, C-IV, D-III",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "A-IV, B-III, C-I, D-II",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "A-II, B-III, C-I, D-IV",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "A-I, B-III, C-II, D-IV",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "AM Broadcast is 540-1600 kHz, FM Broadcast is 88-108 MHz, Television is 54-890 MHz, and Satellite Communication is 3.7-4.2 GHz.",
+      "difficulty": "EASY",
+      "subject": "Physics",
+      "topic": "Electromagnetism",
+      "subtopic": "Communication Systems",
+      "yearAppeared": 2023,
+      "tags": [
+        "communication systems",
+        "frequency bands"
+      ],
+      "lesson": "Electromagnetism",
+      "tip_formula": "Frequency ranges for communication",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q6",
+      "stem": "The logic gate equivalent to the given circuit diagram is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "OR",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "NAND",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "NOR",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "AND",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The truth table for the given circuit matches that of a NAND gate, where the output is 1 for all inputs except when both inputs are 1.",
+      "difficulty": "EASY",
+      "subject": "Physics",
+      "topic": "Electronics",
+      "subtopic": "Logic Gates",
+      "yearAppeared": 2023,
+      "tags": [
+        "logic gates",
+        "electronics"
+      ],
+      "lesson": "Electronics",
+      "tip_formula": "NAND gate truth table",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q7",
+      "stem": "A long solenoid is formed by winding 70 turns cm$$^{-1}$$. If 2.0 A current flows, then the magnetic field produced inside the solenoid is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$1232 \\times 10^{-4}$$ T",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$$176 \\times 10^{-4}$$ T",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$$352 \\times 10^{-4}$$ T",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$$88 \\times 10^{-4}$$ T",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The magnetic field inside a solenoid is given by $$B = \\mu_0 n I$$. Substituting the values, $$B = 4\\pi \\times 10^{-7} \\times 70 \\times 10^2 \\times 2 = 176 \\times 10^{-4}$$ T.",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "topic": "Electromagnetism",
+      "subtopic": "Magnetic Field",
+      "yearAppeared": 2023,
+      "tags": [
+        "solenoid",
+        "magnetic field"
+      ],
+      "lesson": "Electromagnetism",
+      "tip_formula": "B = \\mu_0 n I",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q8",
+      "stem": "Given below are two statements: Statement I: Acceleration due to earth's gravity decreases as you go 'up' or 'down' from earth's surface. Statement II: Acceleration due to earth's gravity is same at a height 'h' and depth 'd' from earth's surface, if h = d.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Statement I is incorrect but statement II is correct",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Both Statement I and Statement II are incorrect",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Statement I is correct but statement II is incorrect",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "Both Statement I and II are correct",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Statement I is correct as gravity decreases with altitude and depth. Statement II is incorrect because gravity at height and depth are not equal even if h = d.",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "topic": "Mechanics",
+      "subtopic": "Gravitational Field",
+      "yearAppeared": 2023,
+      "tags": [
+        "gravity",
+        "earth's gravity"
+      ],
+      "lesson": "Mechanics",
+      "tip_formula": "g' = g(1 - \\frac{2h}{R})",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q9",
+      "stem": "A metallic rod of length 'L' is rotated with an angular speed of ‘$$\\omega$$’ normal to a uniform magnetic field 'B' about an axis passing through one end of rod. The induced emf will be:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$\\frac{1}{4} B \\omega L^2$$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$$\\frac{1}{2} B \\omega L^2$$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$$\\frac{1}{4} B L^2 \\omega$$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$$\\frac{1}{2} B L^2 \\omega$$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The induced emf in a rotating rod is given by $$\\epsilon = \\frac{1}{2} B \\omega L^2$$, derived from integrating the emf along the length of the rod.",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "topic": "Electromagnetism",
+      "subtopic": "Electromagnetic Induction",
+      "yearAppeared": 2023,
+      "tags": [
+        "emf",
+        "rotating rod"
+      ],
+      "lesson": "Electromagnetism",
+      "tip_formula": "\\epsilon = \\frac{1}{2} B \\omega L^2",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q10",
+      "stem": "When a beam of white light is allowed to pass through convex lens parallel to principal axis, the different colours of light converge at different point on the principle axis after refraction. This is called:",
+      "options": [
+        {
+          "id": "A",
+          "text": "Scattering",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Chromatic aberration",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "Spherical aberration",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Polarisation",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Chromatic aberration occurs because different wavelengths of light refract by different amounts, causing them to focus at different points.",
+      "difficulty": "EASY",
+      "subject": "Physics",
+      "topic": "Optics",
+      "subtopic": "Lens Aberrations",
+      "yearAppeared": 2023,
+      "tags": [
+        "chromatic aberration",
+        "optics"
+      ],
+      "lesson": "Optics",
+      "tip_formula": "Chromatic aberration in lenses",
+      "isPreviousYear": true
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 10,
+    "subjects": [
+      "Physics"
+    ],
+    "topics": [
+      "Electromagnetism",
+      "Thermodynamics",
+      "Modern Physics",
+      "Mechanics",
+      "Optics"
+    ],
+    "difficultyDistribution": {
+      "easy": 3,
+      "medium": 7,
+      "hard": 0
+    },
+    "processingTime": 120
+  }
+}

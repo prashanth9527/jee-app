@@ -2,13 +2,15 @@ import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import * as fs from 'fs';
 import * as path from 'path';
-import { OpenAI } from 'openai';
+import { AIProviderFactory } from '../ai/ai-provider.factory';
+import { AIProviderType } from '../ai/ai-provider.interface';
 
 export interface PDFProcessingRequest {
   fileName: string;
   filePath?: string; // Full file path including subdirectories
   systemPrompt?: string;
   userPrompt?: string;
+  aiProvider?: AIProviderType; // AI provider to use for processing
 }
 
 export interface PDFProcessingResponse {
@@ -56,7 +58,6 @@ export interface ChatGPTResponse {
 @Injectable()
 export class PDFProcessorService {
   private readonly logger = new Logger(PDFProcessorService.name);
-  private readonly openai: OpenAI;
   private readonly contentDir = path.join(process.cwd(), '..', 'content', 'JEE', 'Previous Papers');
   private readonly processedDir = path.join(process.cwd(), '..', 'content', 'JEE', 'Processed');
 
@@ -146,20 +147,30 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
   }
 }`;
 
-  constructor(private readonly prisma: PrismaService) {
-    this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly aiProviderFactory: AIProviderFactory
+  ) {
     // Ensure processed directory exists
     if (!fs.existsSync(this.processedDir)) {
       fs.mkdirSync(this.processedDir, { recursive: true });
     }
   }
 
-  async listPDFs(): Promise<Array<{ fileName: string; filePath: string; fileSize: number; status: string }>> {
+  async getAvailableAIProviders(): Promise<{ providers: AIProviderType[]; available: { [key: string]: boolean } }> {
+    const providers = this.aiProviderFactory.getAvailableProviders();
+    const available: { [key: string]: boolean } = {};
+    
+    for (const provider of providers) {
+      available[provider] = this.aiProviderFactory.isProviderAvailable(provider);
+    }
+    
+    return { providers, available };
+  }
+
+  async listPDFs(): Promise<Array<{ fileName: string; filePath: string; fileSize: number; status: string; importedAt?: Date }>> {
     try {
-      const pdfFiles: Array<{ fileName: string; filePath: string; fileSize: number; status: string }> = [];
+      const pdfFiles: Array<{ fileName: string; filePath: string; fileSize: number; status: string; importedAt?: Date }> = [];
       
       const scanDirectory = (dir: string, relativePath: string = '') => {
         const items = fs.readdirSync(dir);
@@ -192,6 +203,7 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
         
         if (cache) {
           file.status = cache.processingStatus;
+          file.importedAt = cache.importedAt || undefined;
         }
       }
 
@@ -244,9 +256,16 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
 
       await this.logEvent(cache.id, 'INFO', 'Starting PDF processing', { fileName: request.fileName });
 
-      // Step 1: Upload file to ChatGPT
-      await this.logEvent(cache.id, 'FILE_UPLOAD', 'Uploading file to ChatGPT');
-      const fileUpload = await this.uploadFileToChatGPT(cache.filePath);
+      // Determine AI provider - use environment variable as default
+      const defaultAIProvider = process.env.AI_SERVICE || 'openai';
+      const aiProvider = (request.aiProvider || defaultAIProvider) as AIProviderType;
+      const provider = this.aiProviderFactory.getProvider(aiProvider);
+      
+      await this.logEvent(cache.id, 'INFO', `Using AI provider: ${provider.name}`);
+
+      // Step 1: Upload file to AI provider
+      await this.logEvent(cache.id, 'FILE_UPLOAD', `Uploading file to ${provider.name}`);
+      const fileUpload = await provider.uploadFile(cache.filePath);
       
       await this.prisma.pDFProcessorCache.update({
         where: { id: cache.id },
@@ -258,16 +277,23 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
 
       await this.logEvent(cache.id, 'SUCCESS', 'File uploaded successfully', { fileId: fileUpload.id });
 
-      // Step 2: Process with ChatGPT
-      await this.logEvent(cache.id, 'FILE_PROCESSING', 'Processing with ChatGPT');
+      // Step 2: Process with AI provider
+      await this.logEvent(cache.id, 'FILE_PROCESSING', `Processing with ${provider.name}`);
       await this.prisma.pDFProcessorCache.update({
         where: { id: cache.id },
         data: { processingStatus: 'PROCESSING' }
       });
 
-      const response = await this.processWithChatGPT(fileUpload.id, cache.systemPrompt!, cache.userPrompt || undefined);
+      let response;
+      if (aiProvider === 'deepseek' && provider.processWithChunkedApproach) {
+        // Use chunked approach for DeepSeek
+        response = await provider.processWithChunkedApproach(cache.filePath, cache.systemPrompt!, cache.userPrompt || undefined);
+      } else {
+        // Use standard approach for OpenAI
+        response = await provider.processPDF(cache.filePath, cache.systemPrompt!, cache.userPrompt || undefined);
+      }
       
-      await this.logEvent(cache.id, 'SUCCESS', 'ChatGPT processing completed', { 
+      await this.logEvent(cache.id, 'SUCCESS', `${provider.name} processing completed`, { 
         questionsCount: response.questions?.length || 0 
       });
 
@@ -330,341 +356,7 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     }
   }
 
-  private async uploadFileToChatGPT(filePath: string) {
-    try {
-      const file = await this.openai.files.create({
-        file: fs.createReadStream(filePath),
-        purpose: 'assistants'
-      });
-      return file;
-    } catch (error) {
-      this.logger.error('Error uploading file to ChatGPT:', error);
-      throw new Error(`Failed to upload file: ${error.message}`);
-    }
-  }
 
-  private async processWithChatGPT(fileId: string, systemPrompt: string, userPrompt?: string) {
-    try {
-      // Step 1: Create assistant
-      const assistant = await this.openai.beta.assistants.create({
-        name: "JEE PDF Processor - Complete Reader",
-        instructions: systemPrompt,
-        model: "gpt-4o", // Using gpt-4o for better PDF reading capabilities
-        tools: [{ type: "file_search" }],
-        temperature: 0.1 // Lower temperature for more consistent results
-      });
-
-      // Step 2: Create thread
-      const thread = await this.openai.beta.threads.create();
-
-      // Step 3: Send chunked processing message
-      const userMessage = userPrompt || 'AGGRESSIVE CHUNKED PROCESSING: Process this PDF in chunks to ensure complete coverage. JEE papers have 25-30 questions. First, read pages 1-3 and extract questions Q1-Q10. You MUST find at least 8-10 questions in this first chunk. Look for question numbers Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10. Do not stop until you find all questions in these pages. Return ONLY valid JSON for this chunk. Every question MUST have a "lesson" field. Ensure all mathematical expressions use LaTeX format with $$...$$ for display math. For each question, identify the lesson following this hierarchy - Chemistry: "Organic Chemistry", "Inorganic Chemistry", "Physical Chemistry"; Physics: "Mechanics", "Thermodynamics", "Electromagnetism", "Optics", "Modern Physics", "Waves"; Mathematics: "Algebra", "Calculus", "Geometry", "Trigonometry", "Statistics", "Coordinate Geometry". Also generate tip_formula and set isPreviousYear to true. CRITICAL: If any question has missing options, explanations, or unclear correct answers, you MUST generate them as a JEE expert. Create realistic options and detailed explanations using your subject expertise.';
-      
-      await this.openai.beta.threads.messages.create(thread.id, {
-        role: "user",
-        content: userMessage,
-        attachments: [
-          {
-            file_id: fileId,
-            tools: [{ type: "file_search" }]
-          }
-        ]
-      });
-
-      // Step 4: Run and fetch response
-      const run = await this.openai.beta.threads.runs.createAndPoll(thread.id, {
-        assistant_id: assistant.id
-      });
-
-      // Implement chunked processing approach
-      let allQuestions: any[] = [];
-      let responseText = '';
-      
-      // Get first chunk response
-      const initialMessages = await this.openai.beta.threads.messages.list(thread.id);
-      if (initialMessages.data[0]?.content[0]?.type === 'text') {
-        responseText = initialMessages.data[0].content[0].text.value;
-      }
-
-      // Parse first chunk
-      console.log('First chunk response length:', responseText.length);
-      console.log('First chunk response preview:', responseText.substring(0, 200) + '...');
-      
-      try {
-        const firstChunk = JSON.parse(responseText);
-        if (firstChunk.questions && Array.isArray(firstChunk.questions)) {
-          allQuestions = [...firstChunk.questions];
-          console.log(`First chunk: Found ${firstChunk.questions.length} questions`);
-          console.log('First chunk question IDs:', firstChunk.questions.map((q: any) => q.id));
-        } else {
-          console.log('First chunk: No questions array found');
-        }
-      } catch (error) {
-        console.log('Failed to parse first chunk, trying extraction...');
-        // Try to extract JSON from response
-        const firstBrace = responseText.indexOf('{');
-        const lastBrace = responseText.lastIndexOf('}');
-        if (firstBrace !== -1 && lastBrace !== -1) {
-          const jsonString = responseText.substring(firstBrace, lastBrace + 1);
-          try {
-            const firstChunk = JSON.parse(jsonString);
-            if (firstChunk.questions && Array.isArray(firstChunk.questions)) {
-              allQuestions = [...firstChunk.questions];
-              console.log(`First chunk (extracted): Found ${firstChunk.questions.length} questions`);
-            }
-          } catch (extractError) {
-            console.log('Failed to extract first chunk JSON');
-          }
-        }
-      }
-
-      // Process second chunk (pages 4-6, questions Q11-Q20)
-      if (allQuestions.length < 20) {
-        console.log(`Processing second chunk (pages 4-6, questions Q11-Q20)...`);
-        
-        const secondChunkMessage = `CRITICAL SECOND CHUNK: You only found ${allQuestions.length} questions in the first chunk. JEE papers have 25-30 questions total. You MUST read pages 4-6 of the PDF and extract questions Q11-Q20. Do not stop until you find at least 8-10 more questions. Look for question numbers Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20. Return ONLY valid JSON for this chunk. Every question MUST have a "lesson" field. Ensure all mathematical expressions use LaTeX format with $$...$$ for display math. CRITICAL: If any question has missing options, explanations, or unclear correct answers, you MUST generate them as a JEE expert. Create realistic options and detailed explanations using your subject expertise.`;
-        
-        await this.openai.beta.threads.messages.create(thread.id, {
-          role: "user",
-          content: secondChunkMessage,
-        });
-
-        const secondRun = await this.openai.beta.threads.runs.createAndPoll(thread.id, {
-          assistant_id: assistant.id
-        }, {
-          pollIntervalMs: 2000,
-          timeout: 300000
-        });
-
-        const secondMessages = await this.openai.beta.threads.messages.list(thread.id);
-        if (secondMessages.data[0]?.content[0]?.type === 'text') {
-          const secondResponseText = secondMessages.data[0].content[0].text.value;
-          
-          try {
-            const secondChunk = JSON.parse(secondResponseText);
-            if (secondChunk.questions && Array.isArray(secondChunk.questions)) {
-              allQuestions = [...allQuestions, ...secondChunk.questions];
-              console.log(`Second chunk: Found ${secondChunk.questions.length} questions. Total: ${allQuestions.length}`);
-            }
-          } catch (error) {
-            console.log('Failed to parse second chunk, trying extraction...');
-            const firstBrace = secondResponseText.indexOf('{');
-            const lastBrace = secondResponseText.lastIndexOf('}');
-            if (firstBrace !== -1 && lastBrace !== -1) {
-              const jsonString = secondResponseText.substring(firstBrace, lastBrace + 1);
-              try {
-                const secondChunk = JSON.parse(jsonString);
-                if (secondChunk.questions && Array.isArray(secondChunk.questions)) {
-                  allQuestions = [...allQuestions, ...secondChunk.questions];
-                  console.log(`Second chunk (extracted): Found ${secondChunk.questions.length} questions. Total: ${allQuestions.length}`);
-                }
-              } catch (extractError) {
-                console.log('Failed to extract second chunk JSON');
-              }
-            }
-          }
-        }
-      }
-
-      // Process third chunk (pages 7-12, questions Q21-Q30+)
-      if (allQuestions.length < 25) {
-        console.log(`Processing third chunk (pages 7-12, questions Q21-Q30+)...`);
-        
-        const thirdChunkMessage = `CRITICAL THIRD CHUNK: You have only found ${allQuestions.length} questions total. JEE papers have 25-30 questions. You MUST read pages 7-12 of the PDF and extract questions Q21-Q30+. This is the final chunk. Look for question numbers Q21, Q22, Q23, Q24, Q25, Q26, Q27, Q28, Q29, Q30, Q31, Q32, Q33, Q34, Q35. Do not stop until you find at least 10-15 more questions. Return ONLY valid JSON for this chunk. Every question MUST have a "lesson" field. Ensure all mathematical expressions use LaTeX format with $$...$$ for display math. CRITICAL: If any question has missing options, explanations, or unclear correct answers, you MUST generate them as a JEE expert. Create realistic options and detailed explanations using your subject expertise.`;
-        
-        await this.openai.beta.threads.messages.create(thread.id, {
-          role: "user",
-          content: thirdChunkMessage,
-        });
-
-        const thirdRun = await this.openai.beta.threads.runs.createAndPoll(thread.id, {
-          assistant_id: assistant.id
-        }, {
-          pollIntervalMs: 2000,
-          timeout: 300000
-        });
-
-        const thirdMessages = await this.openai.beta.threads.messages.list(thread.id);
-        if (thirdMessages.data[0]?.content[0]?.type === 'text') {
-          const thirdResponseText = thirdMessages.data[0].content[0].text.value;
-          
-          try {
-            const thirdChunk = JSON.parse(thirdResponseText);
-            if (thirdChunk.questions && Array.isArray(thirdChunk.questions)) {
-              allQuestions = [...allQuestions, ...thirdChunk.questions];
-              console.log(`Third chunk: Found ${thirdChunk.questions.length} questions. Total: ${allQuestions.length}`);
-            }
-          } catch (error) {
-            console.log('Failed to parse third chunk, trying extraction...');
-            const firstBrace = thirdResponseText.indexOf('{');
-            const lastBrace = thirdResponseText.lastIndexOf('}');
-            if (firstBrace !== -1 && lastBrace !== -1) {
-              const jsonString = thirdResponseText.substring(firstBrace, lastBrace + 1);
-              try {
-                const thirdChunk = JSON.parse(jsonString);
-                if (thirdChunk.questions && Array.isArray(thirdChunk.questions)) {
-                  allQuestions = [...allQuestions, ...thirdChunk.questions];
-                  console.log(`Third chunk (extracted): Found ${thirdChunk.questions.length} questions. Total: ${allQuestions.length}`);
-                }
-              } catch (extractError) {
-                console.log('Failed to extract third chunk JSON');
-              }
-            }
-          }
-        }
-      }
-
-      // Process fourth chunk (pages 13-16, questions Q31-Q40+) - for longer papers
-      if (allQuestions.length < 30) {
-        console.log(`Processing fourth chunk (pages 13-16, questions Q31-Q40+)...`);
-        
-        const fourthChunkMessage = `CRITICAL FOURTH CHUNK: You have only found ${allQuestions.length} questions total. JEE papers can have up to 30+ questions. You MUST read pages 13-16 of the PDF and extract questions Q31-Q40+. Look for question numbers Q31, Q32, Q33, Q34, Q35, Q36, Q37, Q38, Q39, Q40. Do not stop until you find at least 5-10 more questions. Return ONLY valid JSON for this chunk. Every question MUST have a "lesson" field. Ensure all mathematical expressions use LaTeX format with $$...$$ for display math. CRITICAL: If any question has missing options, explanations, or unclear correct answers, you MUST generate them as a JEE expert. Create realistic options and detailed explanations using your subject expertise.`;
-        
-        await this.openai.beta.threads.messages.create(thread.id, {
-          role: "user",
-          content: fourthChunkMessage,
-        });
-
-        const fourthRun = await this.openai.beta.threads.runs.createAndPoll(thread.id, {
-          assistant_id: assistant.id
-        }, {
-          pollIntervalMs: 2000,
-          timeout: 300000
-        });
-
-        const fourthMessages = await this.openai.beta.threads.messages.list(thread.id);
-        if (fourthMessages.data[0]?.content[0]?.type === 'text') {
-          const fourthResponseText = fourthMessages.data[0].content[0].text.value;
-          
-          try {
-            const fourthChunk = JSON.parse(fourthResponseText);
-            if (fourthChunk.questions && Array.isArray(fourthChunk.questions)) {
-              allQuestions = [...allQuestions, ...fourthChunk.questions];
-              console.log(`Fourth chunk: Found ${fourthChunk.questions.length} questions. Total: ${allQuestions.length}`);
-            }
-          } catch (error) {
-            console.log('Failed to parse fourth chunk, trying extraction...');
-            const firstBrace = fourthResponseText.indexOf('{');
-            const lastBrace = fourthResponseText.lastIndexOf('}');
-            if (firstBrace !== -1 && lastBrace !== -1) {
-              const jsonString = fourthResponseText.substring(firstBrace, lastBrace + 1);
-              try {
-                const fourthChunk = JSON.parse(jsonString);
-                if (fourthChunk.questions && Array.isArray(fourthChunk.questions)) {
-                  allQuestions = [...allQuestions, ...fourthChunk.questions];
-                  console.log(`Fourth chunk (extracted): Found ${fourthChunk.questions.length} questions. Total: ${allQuestions.length}`);
-                }
-              } catch (extractError) {
-                console.log('Failed to extract fourth chunk JSON');
-              }
-            }
-          }
-        }
-      }
-
-      // Create final combined response
-      if (allQuestions.length > 0) {
-        const finalResponse = {
-          questions: allQuestions,
-          metadata: {
-            totalQuestions: allQuestions.length,
-            subjects: [...new Set(allQuestions.map(q => q.subject))],
-            topics: [...new Set(allQuestions.map(q => q.topic))],
-            difficultyDistribution: {
-              easy: allQuestions.filter(q => q.difficulty === 'EASY').length,
-              medium: allQuestions.filter(q => q.difficulty === 'MEDIUM').length,
-              hard: allQuestions.filter(q => q.difficulty === 'HARD').length
-            },
-            processingTime: 120,
-            processingMethod: 'chunked'
-          }
-        };
-        
-        responseText = JSON.stringify(finalResponse);
-        console.log(`Chunked processing complete: Total questions found: ${allQuestions.length}`);
-      } else {
-        // Fallback: if chunked processing failed, try the original single-pass approach
-        console.log('Chunked processing failed, falling back to single-pass approach...');
-        
-        const fallbackMessage = `FALLBACK APPROACH: Chunked processing failed. Please read the ENTIRE PDF from start to finish and extract ALL questions. JEE papers have 25-30 questions. Look for Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20, Q21, Q22, Q23, Q24, Q25, Q26, Q27, Q28, Q29, Q30 and beyond. Return ONLY valid JSON. CRITICAL: If any question has missing options, explanations, or unclear correct answers, you MUST generate them as a JEE expert. Create realistic options and detailed explanations using your subject expertise.`;
-        
-        await this.openai.beta.threads.messages.create(thread.id, {
-          role: "user",
-          content: fallbackMessage,
-        });
-
-        const fallbackRun = await this.openai.beta.threads.runs.createAndPoll(thread.id, {
-          assistant_id: assistant.id
-        }, {
-          pollIntervalMs: 2000,
-          timeout: 300000
-        });
-
-        const fallbackMessages = await this.openai.beta.threads.messages.list(thread.id);
-        if (fallbackMessages.data[0]?.content[0]?.type === 'text') {
-          responseText = fallbackMessages.data[0].content[0].text.value;
-        }
-      }
-
-      if (run.status !== 'completed') {
-        throw new Error(`Assistant run failed with status: ${run.status}`);
-      }
-
-      // Step 5: Get the response
-      const finalMessages = await this.openai.beta.threads.messages.list(thread.id);
-      const lastMessage = finalMessages.data[0];
-      
-      if (!lastMessage.content || lastMessage.content.length === 0) {
-        throw new Error('No response content from assistant');
-      }
-
-      const content = lastMessage.content[0];
-      if (content.type !== 'text') {
-        throw new Error('Unexpected response type from assistant');
-      }
-
-      const finalResponseText = responseText || content.text.value;
-      console.log('Assistant response content:', finalResponseText);
-
-      // Try to parse JSON from response
-      try {
-        return JSON.parse(finalResponseText);
-      } catch (parseError) {
-        console.log('Direct JSON parse failed, attempting to extract JSON...');
-        
-        // If direct parsing fails, try to extract JSON from the response
-        // Look for content between first { and last }
-        const firstBrace = finalResponseText.indexOf('{');
-        const lastBrace = finalResponseText.lastIndexOf('}');
-        
-        if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-          const jsonString = finalResponseText.substring(firstBrace, lastBrace + 1);
-          console.log('Extracted JSON string:', jsonString);
-          try {
-            return JSON.parse(jsonString);
-          } catch (extractError) {
-            console.log('Extracted JSON also failed to parse:', extractError);
-          }
-        }
-        
-        // If all else fails, try regex approach
-        const jsonMatch = finalResponseText.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          console.log('Regex extracted JSON:', jsonMatch[0]);
-          try {
-            return JSON.parse(jsonMatch[0]);
-          } catch (regexError) {
-            console.log('Regex extracted JSON also failed:', regexError);
-          }
-        }
-        
-        throw new Error(`Could not parse JSON from assistant response. Content: ${responseText.substring(0, 500)}...`);
-      }
-    } catch (error) {
-      this.logger.error('Error processing with ChatGPT Assistant:', error);
-      throw new Error(`ChatGPT Assistant processing failed: ${error.message}`);
-    }
-  }
 
   private validateResponse(data: any): ChatGPTResponse {
     if (!data || typeof data !== 'object') {
@@ -1108,6 +800,12 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
         importedCount,
         skippedCount,
         errors: errors.slice(0, 10) // Log first 10 errors
+      });
+
+      // Update the cache to mark as imported
+      await this.prisma.pDFProcessorCache.update({
+        where: { id: cache.id },
+        data: { importedAt: new Date() }
       });
 
       return {
