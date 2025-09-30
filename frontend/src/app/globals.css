@@ -137,3 +137,195 @@ textarea:focus {
   background-color: #dbeafe;
   color: #1e40af;
 }
+
+/* LaTeX Editor Styles */
+.latex-rich-text-editor .math-inline {
+  display: inline;
+  margin: 0 2px;
+}
+
+.latex-rich-text-editor .math-display {
+  display: block;
+  text-align: center;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.latex-rich-text-editor .katex {
+  font-size: 1.1em;
+}
+
+.latex-rich-text-editor .katex-display {
+  margin: 1rem 0;
+}
+
+.latex-rich-text-editor .katex-display .katex {
+  font-size: 1.2em;
+}
+
+/* Prose styles for preview */
+.latex-rich-text-editor .prose {
+  line-height: 1.7;
+}
+
+.latex-rich-text-editor .prose h1,
+.latex-rich-text-editor .prose h2,
+.latex-rich-text-editor .prose h3,
+.latex-rich-text-editor .prose h4,
+.latex-rich-text-editor .prose h5,
+.latex-rich-text-editor .prose h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.latex-rich-text-editor .prose h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.latex-rich-text-editor .prose h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.latex-rich-text-editor .prose h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.latex-rich-text-editor .prose p {
+  margin-bottom: 1rem;
+}
+
+.latex-rich-text-editor .prose ul,
+.latex-rich-text-editor .prose ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.latex-rich-text-editor .prose li {
+  margin-bottom: 0.25rem;
+}
+
+.latex-rich-text-editor .prose code {
+  background-color: #f1f5f9;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: 'Courier New', monospace;
+}
+
+.latex-rich-text-editor .prose pre {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.latex-rich-text-editor .prose blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #6b7280;
+}
+
+/* LaTeX Content Display Styles */
+.latex-content-display .math-inline {
+  display: inline;
+  margin: 0 2px;
+}
+
+.latex-content-display .math-display {
+  display: block;
+  text-align: center;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.latex-content-display .katex {
+  font-size: 1.1em;
+}
+
+.latex-content-display .katex-display {
+  margin: 1rem 0;
+}
+
+.latex-content-display .katex-display .katex {
+  font-size: 1.2em;
+}
+
+/* Question display specific styles */
+.latex-content-display {
+  line-height: 1.7;
+}
+
+.latex-content-display h1,
+.latex-content-display h2,
+.latex-content-display h3,
+.latex-content-display h4,
+.latex-content-display h5,
+.latex-content-display h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.latex-content-display h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.latex-content-display h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.latex-content-display h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.latex-content-display p {
+  margin-bottom: 1rem;
+}
+
+.latex-content-display ul,
+.latex-content-display ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.latex-content-display li {
+  margin-bottom: 0.25rem;
+}
+
+.latex-content-display code {
+  background-color: #f1f5f9;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: 'Courier New', monospace;
+}
+
+.latex-content-display pre {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.latex-content-display blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #6b7280;
+}

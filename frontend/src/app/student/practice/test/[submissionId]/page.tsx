@@ -7,6 +7,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
+import LatexContentDisplay from '@/components/LatexContentDisplay';
 
 interface Question {
   id: string;
@@ -423,14 +424,9 @@ export default function PracticeTestPage() {
                       {/* Question Stem */}
                       <div className="mb-8">
                         <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                          <div 
-                            className="text-lg text-gray-900 leading-relaxed font-medium prose prose-lg max-w-none"
-                            dangerouslySetInnerHTML={{ 
-                              __html: currentQuestion.stem
-                                .replace(/<br\s*\/?>/gi, '<br>')
-                                .replace(/\n/g, '<br>')
-                            }}
-                          />
+                          <div className="text-lg text-gray-900 leading-relaxed font-medium">
+                            <LatexContentDisplay content={currentQuestion.stem} />
+                          </div>
                         </div>
                       </div>
 
@@ -478,14 +474,9 @@ export default function PracticeTestPage() {
                                 <span className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center text-xs font-bold text-gray-600 mr-3 group-hover:bg-blue-100 transition-colors">
                                   {String.fromCharCode(65 + index)}
                                 </span>
-                                <div 
-                                  className="text-gray-900 leading-relaxed font-medium prose prose-sm max-w-none"
-                                  dangerouslySetInnerHTML={{ 
-                                    __html: option.text
-                                      .replace(/<br\s*\/?>/gi, '<br>')
-                                      .replace(/\n/g, '<br>')
-                                  }}
-                                />
+                                <div className="text-gray-900 leading-relaxed font-medium">
+                                  <LatexContentDisplay content={option.text} />
+                                </div>
                               </div>
                             </label>
                           ))}

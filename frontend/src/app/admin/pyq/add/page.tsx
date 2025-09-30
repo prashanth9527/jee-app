@@ -6,7 +6,7 @@ import api from '@/lib/api';
 import Swal from 'sweetalert2';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
-import RichTextEditor from '@/components/RichTextEditor';
+import LatexRichTextEditor from '@/components/LatexRichTextEditor';
 
 interface Subject {
   id: string;
@@ -281,13 +281,13 @@ export default function AddPYQQuestionPage() {
                         Question Text <span className="text-red-500">*</span>
                       </label>
                       <div className={`${errors.stem ? 'border border-red-500 rounded-md' : ''}`}>
-                        <RichTextEditor
+                        <LatexRichTextEditor
                           value={formData.stem}
                           onChange={(content) => {
                             setFormData(prev => ({ ...prev, stem: content }));
                             if (errors.stem) setErrors(prev => ({ ...prev, stem: '' }));
                           }}
-                          placeholder="Enter the complete question text... (Supports rich text formatting and math equations)"
+                          placeholder="Enter the complete question text... (Supports LaTeX math equations with immediate preview)"
                           height={200}
                         />
                       </div>
@@ -406,20 +406,20 @@ export default function AddPYQQuestionPage() {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Explanation</label>
-                      <RichTextEditor
+                      <LatexRichTextEditor
                         value={formData.explanation}
                         onChange={(content) => setFormData(prev => ({ ...prev, explanation: content }))}
-                        placeholder="Provide a detailed explanation of the solution... (Supports rich text formatting and math equations)"
+                        placeholder="Provide a detailed explanation of the solution... (Supports LaTeX math equations with immediate preview)"
                         height={200}
                       />
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Tips & Formulas</label>
-                      <RichTextEditor
+                      <LatexRichTextEditor
                         value={formData.tip_formula}
                         onChange={(content) => setFormData(prev => ({ ...prev, tip_formula: content }))}
-                        placeholder="Enter helpful tips, formulas, or hints to solve this question... (Supports rich text formatting and math equations)"
+                        placeholder="Enter helpful tips, formulas, or hints to solve this question... (Supports LaTeX math equations with immediate preview)"
                         height={150}
                       />
                       <p className="mt-1 text-sm text-gray-500">
@@ -441,10 +441,10 @@ export default function AddPYQQuestionPage() {
                           </span>
                         </div>
                         <div className="flex-1">
-                          <RichTextEditor
+                          <LatexRichTextEditor
                             value={option.text}
                             onChange={(content) => handleOptionChange(index, 'text', content)}
-                            placeholder={`Option ${String.fromCharCode(65 + index)}... (Supports rich text formatting and math equations)`}
+                            placeholder={`Option ${String.fromCharCode(65 + index)}... (Supports LaTeX math equations with immediate preview)`}
                             height={150}
                           />
                         </div>

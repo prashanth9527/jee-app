@@ -1,0 +1,1211 @@
+{
+  "questions": [
+    {
+      "id": "Q1",
+      "stem": "In a reaction, $$\\text{OH} \\rightarrow \\text{COOCH}_3 \\rightarrow \\text{OH} \\rightarrow \\text{COOH}$$, reagents 'X' and 'Y' respectively are:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$(\\text{CH}_3\\text{CO})_2\\text{O}/\\text{H}^+$$ and $$\\text{CH}_3\\text{OH}/\\text{H}^+, \\Delta$$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$$(\\text{CH}_3\\text{CO})_2\\text{O}/\\text{H}^+$$ and $$(\\text{CH}_3\\text{CO})_2\\text{O}/\\text{H}^+$$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$$\\text{CH}_3\\text{OH}/\\text{H}^+, \\Delta$$ and $$\\text{CH}_3\\text{OH}/\\text{H}^+, \\Delta$$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$$\\text{CH}_3\\text{OH}/\\text{H}^+, \\Delta$$ and $$(\\text{CH}_3\\text{CO})_2\\text{O}/\\text{H}^+$$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The reaction involves esterification followed by hydrolysis. The correct reagents are acetic anhydride and methanol in acidic conditions.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Organic Chemistry",
+      "subtopic": "Reactions of Alcohols",
+      "yearAppeared": 2023,
+      "tags": [
+        "esterification",
+        "hydrolysis",
+        "organic-chemistry"
+      ],
+      "lesson": "Organic Chemistry",
+      "tip_formula": "Use acetic anhydride for esterification.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q2",
+      "stem": "The correct order of bond enthalpy (kJ mol$$^{-1}$$) is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$\\text{Si} - \\text{Si} > \\text{C} - \\text{C} > \\text{Sn} - \\text{Sn} > \\text{Ge} - \\text{Ge}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$$\\text{Si} - \\text{Si} > \\text{C} - \\text{C} > \\text{Ge} - \\text{Ge} > \\text{Sn} - \\text{Sn}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$$\\text{C} - \\text{C} > \\text{Si} - \\text{Si} > \\text{Sn} - \\text{Sn} > \\text{Ge} - \\text{Ge}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$$\\text{C} - \\text{C} > \\text{Si} - \\text{Si} > \\text{Ge} - \\text{Ge} > \\text{Sn} - \\text{Sn}$$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The bond enthalpy generally decreases down the group in the periodic table. Carbon-carbon bonds are stronger than silicon-silicon bonds.",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Periodic Trends",
+      "yearAppeared": 2023,
+      "tags": [
+        "bond-enthalpy",
+        "periodic-trends",
+        "inorganic-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Remember bond strength trends in the periodic table.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q3",
+      "stem": "All structures given below are of vitamin C. Most stable of them is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "Structure with H-bonding",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "Structure without H-bonding",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Another structure without H-bonding",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Yet another structure without H-bonding",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The most stable structure of vitamin C is stabilized by intramolecular hydrogen bonding.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Organic Chemistry",
+      "subtopic": "Structure and Stability",
+      "yearAppeared": 2023,
+      "tags": [
+        "vitamin-C",
+        "stability",
+        "organic-chemistry"
+      ],
+      "lesson": "Organic Chemistry",
+      "tip_formula": "Look for intramolecular hydrogen bonds for stability.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q4",
+      "stem": "The graph which represents the following reaction is: $$\\text{(C}_6\\text{H}_5)_3\\text{CCl} \\rightarrow \\text{(C}_6\\text{H}_5)_3\\text{COH}$$",
+      "options": [
+        {
+          "id": "A",
+          "text": "Rate vs. $$(\\text{C}_6\\text{H}_5)_3\\text{CCl}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Rate vs. $$\\text{OH}^-$$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Rate vs. $$(\\text{C}_6\\text{H}_5)_3\\text{CCl}$$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "Rate vs. Pyridine",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "This is an $$S_N1$$ reaction, so the rate depends only on the concentration of the alkyl halide.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Organic Chemistry",
+      "subtopic": "Reaction Mechanisms",
+      "yearAppeared": 2023,
+      "tags": [
+        "SN1-reaction",
+        "reaction-rate",
+        "organic-chemistry"
+      ],
+      "lesson": "Organic Chemistry",
+      "tip_formula": "For $$S_N1$$, rate depends on substrate concentration.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q5",
+      "stem": "The complex cation which has two isomers is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$[\\text{Co(H}_2\\text{O})_6]^{3+}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$$[\\text{Co(NH}_3)_5\\text{Cl}]^{2+}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$$[\\text{Co(NH}_3)_5\\text{NO}_2]^{2+}$$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$$[\\text{Co(NH}_3)_5\\text{Cl}]^{+}$$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The complex $$[\\text{Co(NH}_3)_5\\text{NO}_2]^{2+}$$ can form linkage isomers due to the ambidentate nature of $$\\text{NO}_2$$.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Coordination Compounds",
+      "yearAppeared": 2023,
+      "tags": [
+        "coordination-compounds",
+        "isomerism",
+        "inorganic-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Look for ambidentate ligands for isomerism.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q6",
+      "stem": "Given below are two statements: Statement I: Sulphanilic acid gives esterification test for carboxyl group. Statement II: Sulphanilic acid gives red colour in Lassigne’s test for extra element detection.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Statement I is correct but Statement II is incorrect.",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Both Statement I and Statement II are incorrect.",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Both Statement I and Statement II are correct.",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Statement I is incorrect but Statement II is correct.",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Sulphanilic acid does not show esterification test but gives a red color in Lassigne’s test due to the presence of sulfur and nitrogen.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Organic Chemistry",
+      "subtopic": "Functional Group Tests",
+      "yearAppeared": 2023,
+      "tags": [
+        "sulphanilic-acid",
+        "functional-group-tests",
+        "organic-chemistry"
+      ],
+      "lesson": "Organic Chemistry",
+      "tip_formula": "Remember specific tests for functional groups.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q7",
+      "stem": "Given below are two statements: Assertion (A): Gypsum is used for making fireproof wall boards. Reason (R): Gypsum is unstable at high temperatures.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "(A) is correct but (R) is not correct.",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "(A) is not correct but (R) is correct.",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A).",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Gypsum is used for fireproofing due to its ability to release water when heated, which helps in cooling, not because it is unstable.",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Uses of Compounds",
+      "yearAppeared": 2023,
+      "tags": [
+        "gypsum",
+        "fireproofing",
+        "inorganic-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Understand the properties of gypsum for fireproofing.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q8",
+      "stem": "Which element is not present in Nessler’s reagent?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Mercury",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Potassium",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Iodine",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Oxygen",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Nessler’s reagent is $$\\text{K}_2[\\text{HgI}_4]$$, which contains mercury, potassium, and iodine but not oxygen.",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Reagents",
+      "yearAppeared": 2023,
+      "tags": [
+        "nesslers-reagent",
+        "inorganic-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Memorize the composition of common reagents.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q9",
+      "stem": "Given below are two statements: Assertion (A): $$\\alpha$$-halocarboxylic acid on reaction with dil. $$\\text{NH}_3$$ gives good yield of $$\\alpha$$-amino carboxylic acid whereas the yield of amines is very low when prepared from alkyl halides. Reason (R): Amino acids exist in zwitter ion form in aqueous medium.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A).",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "(A) is correct but (R) is not correct.",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "(A) is not correct but (R) is correct.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The zwitterionic form of amino acids stabilizes them in solution, making the reaction with $$\\alpha$$-halocarboxylic acids more favorable.",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "topic": "Organic Chemistry",
+      "subtopic": "Amino Acids",
+      "yearAppeared": 2023,
+      "tags": [
+        "amino-acids",
+        "zwitterion",
+        "organic-chemistry"
+      ],
+      "lesson": "Organic Chemistry",
+      "tip_formula": "Understand the stability of zwitterions in reactions.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q10",
+      "stem": "The industrial activity held least responsible for global warming is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "Manufacturing of cement",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Steel manufacturing",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Electricity generation in thermal power plants",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Industrial production of urea",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Urea production consumes $$\\text{NH}_3$$ and $$\\text{CO}_2$$, thus contributing less to global warming compared to other industrial activities.",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "topic": "Environmental Chemistry",
+      "subtopic": "Industrial Impact",
+      "yearAppeared": 2023,
+      "tags": [
+        "global-warming",
+        "industrial-impact",
+        "environmental-chemistry"
+      ],
+      "lesson": "Environmental Chemistry",
+      "tip_formula": "Identify processes that consume greenhouse gases.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q11",
+      "stem": "The starting material for convenient preparation of deuterated hydrogen peroxide ($$\\text{D}_2\\text{O}_2$$) in laboratory is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$\\text{K}_2\\text{S}_2\\text{O}_8$$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "2-ethylanthraquinol",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$$\\text{BaO}_2$$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$$\\text{BaO}$$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The reaction $$\\text{K}_2\\text{S}_2\\text{O}_8 + 2\\text{D}_2\\text{O} \\rightarrow 2\\text{KDSO}_4 + \\text{D}_2\\text{O}_2$$ is used to prepare deuterated hydrogen peroxide.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Preparation of Compounds",
+      "yearAppeared": 2023,
+      "tags": [
+        "deuterated-compounds",
+        "inorganic-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Use $$\\text{K}_2\\text{S}_2\\text{O}_8$$ for deuterated $$\\text{H}_2\\text{O}_2$$.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q12",
+      "stem": "In the Freundlich adsorption isotherm, the value of $$\\frac{1}{n}$$ and $$\\log K$$ are respectively:",
+      "options": [
+        {
+          "id": "A",
+          "text": "0.3 and $$\\log 2.505$$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "0.3 and 0.7033",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3 and 2.505",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "3 and 0.7033",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The equation $$\\log \\left(\\frac{x}{m}\\right) = \\frac{1}{n} \\log P + \\log K$$ gives $$\\frac{1}{n} = 3$$ and $$\\log K = 2.505$$.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Physical Chemistry",
+      "subtopic": "Adsorption",
+      "yearAppeared": 2023,
+      "tags": [
+        "adsorption",
+        "freundlich-isotherm",
+        "physical-chemistry"
+      ],
+      "lesson": "Physical Chemistry",
+      "tip_formula": "Use Freundlich isotherm for adsorption calculations.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q13",
+      "stem": "Assertion (A): An aqueous solution of KOH when used for volumetric analysis, its concentration should be checked before use. Reason (R): On aging, KOH solution absorbs atmospheric $$\\text{CO}_2$$.",
+      "options": [
+        {
+          "id": "A",
+          "text": "(A) is not correct but (R) is correct",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "(A) is correct but (R) is not correct",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "KOH absorbs $$\\text{CO}_2$$ from the air, forming $$\\text{K}_2\\text{CO}_3$$, which changes its concentration.",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "topic": "Physical Chemistry",
+      "subtopic": "Volumetric Analysis",
+      "yearAppeared": 2023,
+      "tags": [
+        "volumetric-analysis",
+        "KOH",
+        "physical-chemistry"
+      ],
+      "lesson": "Physical Chemistry",
+      "tip_formula": "Check KOH concentration due to $$\\text{CO}_2$$ absorption.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q14",
+      "stem": "Which one of the following sets of ions represents a collection of isoelectronic species?",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$(\\text{Li}^+, \\text{Na}^+, \\text{Mg}^{2+}, \\text{Ca}^{2+})$$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$$(\\text{Ba}^{2+}, \\text{Sr}^{2+}, \\text{K}^+, \\text{Ca}^{2+})$$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$$(\\text{N}^{3-}, \\text{O}^{2-}, \\text{F}^-, \\text{S}^{2-})$$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$$(\\text{K}^+, \\text{Cl}^-, \\text{Ca}^{2+}, \\text{Sc}^{3+})$$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Isoelectronic species have the same number of electrons. The set $$\\text{K}^+, \\text{Cl}^-, \\text{Ca}^{2+}, \\text{Sc}^{3+}$$ all have 18 electrons.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Isoelectronic Species",
+      "yearAppeared": 2023,
+      "tags": [
+        "isoelectronic",
+        "inorganic-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Count electrons for isoelectronic species.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q15",
+      "stem": "The effect of addition of helium gas to the following reaction in equilibrium state is: $$\\text{PCl}_5(g) \\rightleftharpoons \\text{PCl}_3(g) + \\text{Cl}_2(g)$$",
+      "options": [
+        {
+          "id": "A",
+          "text": "The equilibrium will shift in the forward direction and more of $$\\text{Cl}_2$$ and $$\\text{PCl}_3$$ gases will be produced.",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "The equilibrium will go backward due to suppression of dissociation of $$\\text{PCl}_5$$.",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Helium will deactivate $$\\text{PCl}_5$$ and reaction will stop.",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Addition of helium will not affect the equilibrium.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Adding an inert gas at constant pressure increases the volume, shifting the equilibrium towards the side with more moles of gas.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Physical Chemistry",
+      "subtopic": "Chemical Equilibrium",
+      "yearAppeared": 2023,
+      "tags": [
+        "equilibrium",
+        "inert-gas",
+        "physical-chemistry"
+      ],
+      "lesson": "Physical Chemistry",
+      "tip_formula": "Inert gas affects equilibrium at constant pressure.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q16",
+      "stem": "For electron gain enthalpies of the elements denoted as $$\\Delta_{eg}H$$, the incorrect option is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "$$\\Delta_{eg}H (\\text{Cl}) < \\Delta_{eg}H (\\text{F})$$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$$\\Delta_{eg}H (\\text{Se}) < \\Delta_{eg}H (\\text{S})$$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$$\\Delta_{eg}H (\\text{I}) < \\Delta_{eg}H (\\text{At})$$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$$\\Delta_{eg}H (\\text{Te}) < \\Delta_{eg}H (\\text{Po})$$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The electron gain enthalpy of sulfur is more negative than that of selenium, making option B incorrect.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Periodic Trends",
+      "yearAppeared": 2023,
+      "tags": [
+        "electron-gain-enthalpy",
+        "periodic-trends",
+        "inorganic-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Compare electron gain enthalpies across periods.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q17",
+      "stem": "O–O bond length in $$\\text{H}_2\\text{O}_2$$ is X than the O–O bond length in $$\\text{F}_2\\text{O}_2$$. The O–H bond length in $$\\text{H}_2\\text{O}_2$$ is Y than that of the O–F bond in $$\\text{F}_2\\text{O}_2$$. Choose the correct option for X and Y from the given below.",
+      "options": [
+        {
+          "id": "A",
+          "text": "X – shorter, Y – shorter",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "X – shorter, Y – longer",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "X – longer, Y – longer",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "X – longer, Y – shorter",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The O–O bond in $$\\text{H}_2\\text{O}_2$$ is longer due to less s-character in the bond, and the O–H bond is shorter than the O–F bond due to the smaller size of hydrogen compared to fluorine.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Bond Lengths",
+      "yearAppeared": 2023,
+      "tags": [
+        "bond-length",
+        "inorganic-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Consider atomic size and bond character for bond lengths.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q18",
+      "stem": "0.3 g of ethane undergoes combustion at 27°C in a bomb calorimeter. The temperature of calorimeter system (including the water) is found to rise by 0.5°C. The heat evolved during combustion of ethane at constant pressure is ________kJ mol$$^{-1}$$.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1000",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "1006",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "1012",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "1020",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Using the formula $$\\Delta H = \\Delta U + \\Delta nRT$$, the heat evolved is calculated as 1006 kJ mol$$^{-1}$$.",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "topic": "Physical Chemistry",
+      "subtopic": "Thermochemistry",
+      "yearAppeared": 2023,
+      "tags": [
+        "combustion",
+        "thermochemistry",
+        "physical-chemistry"
+      ],
+      "lesson": "Physical Chemistry",
+      "tip_formula": "Use $$\\Delta H = \\Delta U + \\Delta nRT$$ for combustion calculations.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q19",
+      "stem": "Among following compounds, the number of those present in copper matte is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Copper matte contains $$\\text{Cu}_2\\text{S}$$ and $$\\text{FeS}$$, making the correct count 3.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Metallurgy",
+      "yearAppeared": 2023,
+      "tags": [
+        "copper-matte",
+        "metallurgy",
+        "inorganic-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Identify components of copper matte.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q20",
+      "stem": "Among the following, the number of tranquilizer/s is/are:",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Chlorodiazepoxide, Veronal, and Valium are tranquilizers, while Salvarsan is an antibiotic.",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "topic": "Organic Chemistry",
+      "subtopic": "Pharmaceutical Chemistry",
+      "yearAppeared": 2023,
+      "tags": [
+        "tranquilizers",
+        "pharmaceutical-chemistry",
+        "organic-chemistry"
+      ],
+      "lesson": "Organic Chemistry",
+      "tip_formula": "Differentiate between tranquilizers and antibiotics.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q21",
+      "stem": "The structures of major products A, B, and C in the following reaction sequence are:",
+      "options": [
+        {
+          "id": "A",
+          "text": "A = $$\\text{OH} \\text{CN} \\text{H}$$, B = $$\\text{HO} \\text{CHO} \\text{H}$$, C = $$\\text{HO} \\text{COOH} \\text{H}$$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "A = $$\\text{OSO}_3\\text{Na} \\text{H}$$, B = $$\\text{H} \\text{OH}$$, C = $$\\text{H} \\text{Cl}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "A = $$\\text{HO} \\text{SO}_3\\text{H} \\text{H}$$, B = $$\\text{OH}$$, C = $$\\text{HO} \\text{SO}_2\\text{Cl} \\text{H}$$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "A = $$\\text{HO} \\text{CN} \\text{H}$$, B = $$\\text{HO} \\text{NH}_2 \\text{H}$$, C = $$\\text{HO} \\text{COOH} \\text{H}$$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The reaction involves conversion of nitrile to amine and then to carboxylic acid using LiAlH4 and hydrolysis.",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "topic": "Organic Chemistry",
+      "subtopic": "Reaction Mechanisms",
+      "yearAppeared": 2023,
+      "tags": [
+        "reaction-sequence",
+        "organic-chemistry"
+      ],
+      "lesson": "Organic Chemistry",
+      "tip_formula": "Understand the conversion of nitriles to amines and acids.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q22",
+      "stem": "Given below are two statements: Assertion (A): $$\\text{Cu}^{2+}$$ in water is more stable than $$\\text{Cu}^+$$. Reason (R): Enthalpy of hydration for $$\\text{Cu}^{2+}$$ is much less than that of $$\\text{Cu}^+$$.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A).",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "(A) is correct but (R) is not correct.",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "(A) is not correct but (R) is correct.",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The stability of $$\\text{Cu}^{2+}$$ in aqueous solution is due to its higher hydration enthalpy compared to $$\\text{Cu}^+$$.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Coordination Chemistry",
+      "yearAppeared": 2023,
+      "tags": [
+        "hydration-enthalpy",
+        "coordination-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Consider hydration enthalpy for stability in solutions.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q23",
+      "stem": "The spin-only magnetic moment of $$[\\text{Mn(H}_2\\text{O})_6]^{2+}$$ complexes is _______ B.M.",
+      "options": [
+        {
+          "id": "A",
+          "text": "5.91",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "4.90",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "6.92",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "3.87",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The magnetic moment is calculated using $$\\mu = \\sqrt{n(n+2)}$$ where $$n$$ is the number of unpaired electrons. For $$\\text{Mn}^{2+}$$, $$n = 5$$.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Magnetic Properties",
+      "yearAppeared": 2023,
+      "tags": [
+        "magnetic-moment",
+        "inorganic-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Use $$\\mu = \\sqrt{n(n+2)}$$ for magnetic moment calculations.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q24",
+      "stem": "A metal M crystallizes into two lattices: face-centered cubic (fcc) and body-centered cubic (bcc) with unit cell edge lengths of 2.0 and 2.5 Å respectively. The ratio of densities of lattices fcc to bcc for the metal M is _______.",
+      "options": [
+        {
+          "id": "A",
+          "text": "4",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "1",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Density is calculated using $$d = \\frac{Z \\cdot M}{N_A \\cdot a^3}$$. For fcc, $$Z = 4$$ and for bcc, $$Z = 2$$.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Inorganic Chemistry",
+      "subtopic": "Solid State Chemistry",
+      "yearAppeared": 2023,
+      "tags": [
+        "density",
+        "solid-state-chemistry"
+      ],
+      "lesson": "Inorganic Chemistry",
+      "tip_formula": "Use $$d = \\frac{Z \\cdot M}{N_A \\cdot a^3}$$ for density calculations.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q25",
+      "stem": "The total number of asymmetric carbon atoms in testosterone is ______.",
+      "options": [
+        {
+          "id": "A",
+          "text": "6",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "5",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "4",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "3",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Testosterone has six asymmetric carbon atoms, which are chiral centers.",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "topic": "Organic Chemistry",
+      "subtopic": "Stereochemistry",
+      "yearAppeared": 2023,
+      "tags": [
+        "stereochemistry",
+        "organic-chemistry"
+      ],
+      "lesson": "Organic Chemistry",
+      "tip_formula": "Identify chiral centers for asymmetric carbon count.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q26",
+      "stem": "The conductivity of a solution when 1×10–5 M $$\\text{AgNO}_3$$ is added to 1 L of saturated solution of $$\\text{AgBr}$$ at 298 K is ______×10–8 S m–1.",
+      "options": [
+        {
+          "id": "A",
+          "text": "14",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "12",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "16",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "18",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Conductivity is calculated using the molar conductivities of ions and their concentrations.",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "topic": "Physical Chemistry",
+      "subtopic": "Electrochemistry",
+      "yearAppeared": 2023,
+      "tags": [
+        "conductivity",
+        "electrochemistry"
+      ],
+      "lesson": "Physical Chemistry",
+      "tip_formula": "Use molar conductivities for conductivity calculations.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q27",
+      "stem": "The molality of a 10% (v/v) solution of di-bromine solution in $$\\text{CCl}_4$$ is 'x'. x = ________ × 10–2 M.",
+      "options": [
+        {
+          "id": "A",
+          "text": "139",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "140",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "138",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "137",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Molality is calculated using the mass of solute and solvent, considering their densities.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Physical Chemistry",
+      "subtopic": "Solutions",
+      "yearAppeared": 2023,
+      "tags": [
+        "molality",
+        "solutions",
+        "physical-chemistry"
+      ],
+      "lesson": "Physical Chemistry",
+      "tip_formula": "Use density and volume for molality calculations.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q28",
+      "stem": "20% of acetic acid is dissociated when its 5 g is added to 500 mL of water. The depression in freezing point of such water is _______ × 10–3 °C.",
+      "options": [
+        {
+          "id": "A",
+          "text": "372",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "370",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "374",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "376",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The depression in freezing point is calculated using the formula $$\\Delta T_f = i K_f m$$ where $$i$$ is the van't Hoff factor.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Physical Chemistry",
+      "subtopic": "Colligative Properties",
+      "yearAppeared": 2023,
+      "tags": [
+        "freezing-point-depression",
+        "colligative-properties"
+      ],
+      "lesson": "Physical Chemistry",
+      "tip_formula": "Use $$\\Delta T_f = i K_f m$$ for freezing point depression.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q29",
+      "stem": "A reaction A → B is of zero order. Half-life of this reaction is 50 min. The time taken for the concentration of A to reduce to one-fourth of its initial value is _______ min.",
+      "options": [
+        {
+          "id": "A",
+          "text": "75",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "100",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "50",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "25",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "For a zero-order reaction, the time to reduce to one-fourth is calculated using the formula $$t = \\frac{3}{2} t_{1/2}$$.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Physical Chemistry",
+      "subtopic": "Chemical Kinetics",
+      "yearAppeared": 2023,
+      "tags": [
+        "zero-order-reaction",
+        "chemical-kinetics"
+      ],
+      "lesson": "Physical Chemistry",
+      "tip_formula": "Use $$t = \\frac{3}{2} t_{1/2}$$ for zero-order reactions.",
+      "isPreviousYear": true
+    },
+    {
+      "id": "Q30",
+      "stem": "The effect of addition of helium gas to the following reaction in equilibrium state is: $$\\text{PCl}_5(g) \\rightleftharpoons \\text{PCl}_3(g) + \\text{Cl}_2(g)$$",
+      "options": [
+        {
+          "id": "A",
+          "text": "The equilibrium will shift in the forward direction and more of $$\\text{Cl}_2$$ and $$\\text{PCl}_3$$ gases will be produced.",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "The equilibrium will go backward due to suppression of dissociation of $$\\text{PCl}_5$$.",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Helium will deactivate $$\\text{PCl}_5$$ and reaction will stop.",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Addition of helium will not affect the equilibrium.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Adding an inert gas at constant pressure increases the volume, shifting the equilibrium towards the side with more moles of gas.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "topic": "Physical Chemistry",
+      "subtopic": "Chemical Equilibrium",
+      "yearAppeared": 2023,
+      "tags": [
+        "equilibrium",
+        "inert-gas",
+        "physical-chemistry"
+      ],
+      "lesson": "Physical Chemistry",
+      "tip_formula": "Inert gas affects equilibrium at constant pressure.",
+      "isPreviousYear": true
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 30,
+    "subjects": [
+      "Chemistry"
+    ],
+    "topics": [
+      "Organic Chemistry",
+      "Inorganic Chemistry",
+      "Environmental Chemistry",
+      "Physical Chemistry"
+    ],
+    "difficultyDistribution": {
+      "easy": 7,
+      "medium": 19,
+      "hard": 4
+    },
+    "processingTime": 120,
+    "processingMethod": "chunked"
+  }
+}

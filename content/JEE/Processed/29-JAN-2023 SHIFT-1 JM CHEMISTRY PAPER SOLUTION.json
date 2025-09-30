@@ -1,0 +1,100 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "For certain chemical reaction $$X \\rightarrow Y$$, the rate of formation of product is plotted against time. Determine the correct statements: (A) Overall order of this reaction is one (B) Order of this reaction can’t be determined. (C) In region-I and III, the reaction is of first and zero order respectively (D) In region-II, the reaction is of first order (E) In region-II, the order of reaction is in the range of 0.1 to 0.9.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: (A) Over all order of this reaction is one",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Option B: (B) Order of this reaction can’t be determined",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "Option C: (C) In region-I and III, the reaction is of first and zero order respectively",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Option D: (D) In region-II, the reaction is of first order",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The correct option is (B) since only statement (B) indicates that the order cannot be directly determined from graphical data unless other kinetic data is provided.",
+      "tip_formula": "Order cannot be practically determined from graphs without specific rate laws or data.",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Kinetics",
+      "subtopic": "Reaction Order",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "reaction-kinetics",
+        "order",
+        "chemistry"
+      ]
+    },
+    {
+      "id": "q2",
+      "stem": "The sum of bridging carbonyls in $$W(CO)_6$$ and $$Mn_2(CO)_{10}$$ is ________.",
+      "options": [
+        {
+          "id": "A",
+          "text": "0",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "3",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In $$W(CO)_6$$ there are no bridging carbonyls and $$Mn_2(CO)_{10}$$ has no bridging COs, hence the sum is 0.",
+      "tip_formula": "Each metal-carbonyl complex needs to be evaluated individually for bridging COs.",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Coordination Compounds",
+      "subtopic": "Metal Carbonyls",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "coordination-compounds",
+        "carbonyl",
+        "metal-complexes"
+      ]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 2,
+    "subjects": [
+      "Chemistry"
+    ],
+    "topics": [
+      "Kinetics",
+      "Inorganic Chemistry"
+    ],
+    "difficultyDistribution": {
+      "easy": 1,
+      "medium": 1,
+      "hard": 0
+    },
+    "processingTime": 60
+  }
+}

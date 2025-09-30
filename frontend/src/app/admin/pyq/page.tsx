@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
 import ViewQuestionModal from '@/components/admin/ViewQuestionModal';
-import QuestionDisplay from '@/components/QuestionDisplay';
+import LatexContentDisplay from '@/components/LatexContentDisplay';
 import MathRenderer from '@/components/MathRenderer';
 
 interface Question {
@@ -448,7 +448,7 @@ export default function AdminPYQPage() {
                           </td>
                           <td className="px-6 py-4">
                             <div className="text-sm text-gray-900 max-w-md">
-                              <QuestionDisplay 
+                              <LatexContentDisplay 
                                 content={question.stem} 
                                 className="line-clamp-2"
                               />

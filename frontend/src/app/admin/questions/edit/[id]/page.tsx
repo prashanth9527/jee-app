@@ -6,7 +6,7 @@ import api from '@/lib/api';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
 import Swal from 'sweetalert2';
-import RichTextEditor from '@/components/RichTextEditor';
+import LatexRichTextEditor from '@/components/LatexRichTextEditor';
 
 interface Question {
 	id: string;
@@ -543,7 +543,7 @@ export default function EditQuestionPage() {
 										<span className="text-xs text-gray-500 ml-2">({stem.length}/1000)</span>
 									</label>
 									<div className={`${errors.stem ? 'border border-red-300 rounded-md' : ''}`}>
-										<RichTextEditor
+										<LatexRichTextEditor
 											value={stem}
 											onChange={(content) => {
 												setStem(content);
@@ -552,7 +552,7 @@ export default function EditQuestionPage() {
 													setErrors(prev => ({ ...prev, stem: '' }));
 												}
 											}}
-											placeholder="Enter the question text... (Supports rich text formatting and math equations)"
+											placeholder="Enter the question text... (Supports LaTeX math equations with immediate preview)"
 											height={200}
 										/>
 									</div>
@@ -560,7 +560,7 @@ export default function EditQuestionPage() {
 										<p className="mt-1 text-sm text-red-600">{errors.stem}</p>
 									)}
 									<div className="mt-2 text-xs text-gray-500">
-										💡 Tip: Use the toolbar for formatting, and click the Math button (∑) to insert equations
+										💡 Tip: Use the toolbar for formatting and LaTeX math equations. Toggle preview mode to see rendered equations
 									</div>
 								</div>
 								<div>
@@ -568,13 +568,13 @@ export default function EditQuestionPage() {
 										Explanation (Optional)
 										<span className="text-xs text-gray-500 ml-2">({explanation.length}/500)</span>
 									</label>
-									<RichTextEditor
+									<LatexRichTextEditor
 										value={explanation}
 										onChange={(content) => {
 											setExplanation(content);
 											setHasUnsavedChanges(true);
 										}}
-										placeholder="Enter detailed explanation for the answer... (Supports rich text formatting and math equations)"
+										placeholder="Enter detailed explanation for the answer... (Supports LaTeX math equations with immediate preview)"
 										height={200}
 									/>
 								</div>
@@ -586,17 +586,17 @@ export default function EditQuestionPage() {
 									Tips & Formulas (Optional)
 									<span className="text-xs text-gray-500 ml-2">({tipFormula.length}/300)</span>
 								</label>
-								<RichTextEditor
+								<LatexRichTextEditor
 									value={tipFormula}
 									onChange={(content) => {
 										setTipFormula(content);
 										setHasUnsavedChanges(true);
 									}}
-									placeholder="Enter helpful tips, formulas, or hints to solve this question... (Supports rich text formatting and math equations)"
+									placeholder="Enter helpful tips, formulas, or hints to solve this question... (Supports LaTeX math equations with immediate preview)"
 									height={150}
 								/>
 								<div className="mt-2 text-xs text-gray-500">
-									💡 Tip: Include key formulas, concepts, or solving strategies. Use the Math button (∑) for mathematical expressions
+									💡 Tip: Include key formulas, concepts, or solving strategies. Use LaTeX syntax for mathematical expressions
 								</div>
 							</div>
 
@@ -788,10 +788,10 @@ export default function EditQuestionPage() {
 												className="text-blue-600 focus:ring-blue-500"
 											/>
 											<div className="flex-1">
-												<RichTextEditor
+												<LatexRichTextEditor
 													value={option.text}
 													onChange={(content) => updateOption(index, 'text', content)}
-													placeholder={`Option ${index + 1}... (Supports rich text formatting and math equations)`}
+													placeholder={`Option ${index + 1}... (Supports LaTeX math equations with immediate preview)`}
 													height={150}
 												/>
 											</div>

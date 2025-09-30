@@ -6,6 +6,7 @@ import api from '@/lib/api';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
 import Swal from 'sweetalert2';
+import LatexContentDisplay from '@/components/LatexContentDisplay';
 
 interface Question {
 	id: string;
@@ -761,9 +762,13 @@ export default function QuestionsPage() {
 														className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
 													/>
 													<div className="flex-1">
-														<h3 className="text-lg font-medium text-gray-900 mb-2">{question.stem}</h3>
+														<div className="text-lg font-medium text-gray-900 mb-2">
+															<LatexContentDisplay content={question.stem} />
+														</div>
 														{question.explanation && (
-															<p className="text-sm text-gray-600 mb-2">{question.explanation}</p>
+															<div className="text-sm text-gray-600 mb-2">
+																<LatexContentDisplay content={question.explanation} />
+															</div>
 														)}
 														<div className="flex flex-wrap gap-2 mb-3">
 															{question.subject && (
@@ -815,7 +820,7 @@ export default function QuestionsPage() {
 																}`}>
 																	<span className="text-sm font-medium text-gray-600">{String.fromCharCode(65 + index)}.</span>
 																	<span className={`text-sm ${option.isCorrect ? 'text-green-700 font-medium' : 'text-gray-700'}`}>
-																		{option.text}
+																		<LatexContentDisplay content={option.text} />
 																	</span>
 																	{option.isCorrect && (
 																		<span className="text-green-600 text-xs font-medium">✓ Correct</span>

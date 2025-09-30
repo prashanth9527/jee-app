@@ -7,7 +7,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
-import { QuestionStem, QuestionExplanation, QuestionTips, QuestionOption } from '@/components/QuestionDisplay';
+import { LatexQuestionStem, LatexQuestionExplanation, LatexQuestionTips, LatexQuestionOption } from '@/components/LatexContentDisplay';
 import MathRenderer from '@/components/MathRenderer';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -484,11 +484,11 @@ export default function PYQPage() {
                           )}
                         </div>
                         
-                        <QuestionStem stem={question.stem} className="mb-4" />
+                        <LatexQuestionStem stem={question.stem} className="mb-4" />
                         
                         <div className="space-y-3">
                           {question.options.map((option, idx) => (
-                            <QuestionOption
+                            <LatexQuestionOption
                               key={option.id}
                               option={option}
                               index={idx}
@@ -501,14 +501,14 @@ export default function PYQPage() {
                         {question.explanation && (
                           <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
                             <p className="text-sm font-medium text-green-800 mb-2">📖 Explanation:</p>
-                            <QuestionExplanation explanation={question.explanation} />
+                            <LatexQuestionExplanation explanation={question.explanation} />
                           </div>
                         )}
 
                         {question.tip_formula && (
                           <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
                             <p className="text-sm font-medium text-yellow-800 mb-2">💡 Tips & Formulas:</p>
-                            <QuestionTips tipFormula={question.tip_formula} />
+                            <LatexQuestionTips tipFormula={question.tip_formula} />
                           </div>
                         )}
 

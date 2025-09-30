@@ -151,6 +151,8 @@ model Question {
   lessonId                String?
   topicId                 String?
   subtopicId              String?
+  status                  QuestionStatus                   @default(underreview)
+  pdfProcessorCacheId     String?
   createdAt               DateTime                         @default(now())
   updatedAt               DateTime                         @updatedAt
   createdById             String?
@@ -160,6 +162,7 @@ model Question {
   subject                 Subject?                         @relation(fields: [subjectId], references: [id])
   subtopic                Subtopic?                        @relation(fields: [subtopicId], references: [id])
   topic                   Topic?                           @relation(fields: [topicId], references: [id])
+  pdfProcessorCache       PDFProcessorCache?               @relation(fields: [pdfProcessorCacheId], references: [id])
   alternativeExplanations QuestionAlternativeExplanation[]
   options                 QuestionOption[]
   reports                 QuestionReport[]
@@ -973,4 +976,68 @@ enum BadgeType {
   TOP_PERFORMER
   CONTENT_EXPLORER
   QUIZ_MASTER
+}
+
+// PDF Processor Models
+model PDFProcessorCache {
+  id                String   @id @default(cuid())
+  fileName          String   @unique
+  filePath          String
+  fileSize          Int
+  chatGptFileId     String?  // ChatGPT file ID after upload
+  processingStatus  ProcessingStatus @default(PENDING)
+  systemPrompt      String?  @db.Text
+  userPrompt        String?  @db.Text
+  responseData      Json?    // ChatGPT response data
+  processedData     Json?    // Processed and validated JSON
+  outputFilePath    String?  // Path to saved JSON file
+  errorMessage      String?  @db.Text
+  processingTimeMs  Int?
+  retryCount        Int      @default(0)
+  lastProcessedAt   DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  logs              PDFProcessorLog[]
+  questions         Question[]
+
+  @@map("pdf_processor_cache")
+}
+
+model PDFProcessorLog {
+  id                String   @id @default(cuid())
+  cacheId           String
+  logType           LogType
+  message           String   @db.Text
+  data              Json?
+  processingTimeMs  Int?
+  createdAt         DateTime @default(now())
+  cache             PDFProcessorCache @relation(fields: [cacheId], references: [id], onDelete: Cascade)
+
+  @@map("pdf_processor_logs")
+}
+
+enum ProcessingStatus {
+  PENDING
+  UPLOADING
+  PROCESSING
+  COMPLETED
+  FAILED
+  RETRYING
+}
+
+enum LogType {
+  INFO
+  WARNING
+  ERROR
+  SUCCESS
+  API_CALL
+  FILE_UPLOAD
+  FILE_PROCESSING
+  VALIDATION
+}
+
+enum QuestionStatus {
+  approved
+  underreview
+  rejected
 }

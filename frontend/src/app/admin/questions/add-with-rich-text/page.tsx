@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Save, Eye, Calculator, BookOpen } from 'lucide-react';
-import RichTextEditor from '@/components/RichTextEditor';
+import LatexRichTextEditor from '@/components/LatexRichTextEditor';
 
 interface Subject {
   id: string;
@@ -351,7 +351,7 @@ export default function AddQuestionWithRichTextPage() {
               {/* Question Stem */}
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Question Stem *</h2>
-                <RichTextEditor
+                <LatexRichTextEditor
                   value={stem}
                   onChange={(content) => {
                     setStem(content);
@@ -360,7 +360,7 @@ export default function AddQuestionWithRichTextPage() {
                       setErrors(prev => ({ ...prev, stem: '' }));
                     }
                   }}
-                  placeholder="Enter the question text with math equations..."
+                  placeholder="Enter the question text with LaTeX math equations..."
                   height={300}
                 />
                 {errors.stem && (
@@ -390,7 +390,7 @@ export default function AddQuestionWithRichTextPage() {
                         </span>
                       </div>
                       <div className="flex-1">
-                        <RichTextEditor
+                        <LatexRichTextEditor
                           value={option}
                           onChange={(content) => handleOptionChange(index, content)}
                           placeholder={`Enter option ${String.fromCharCode(65 + index)}...`}
@@ -408,7 +408,7 @@ export default function AddQuestionWithRichTextPage() {
               {/* Explanation */}
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Explanation *</h2>
-                <RichTextEditor
+                <LatexRichTextEditor
                   value={explanation}
                   onChange={(content) => {
                     setExplanation(content);
@@ -428,7 +428,7 @@ export default function AddQuestionWithRichTextPage() {
               {/* Tips & Formulas */}
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Tips & Formulas</h2>
-                <RichTextEditor
+                <LatexRichTextEditor
                   value={tipFormula}
                   onChange={(content) => {
                     setTipFormula(content);

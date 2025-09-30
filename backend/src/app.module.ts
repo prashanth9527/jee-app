@@ -21,6 +21,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { ContactModule } from './contact/contact.module';
 import { LMSModule } from './lms/lms.module';
 import { BlogsModule } from './blogs/blogs.module';
+import { StaticFilesModule } from './static/static-files.module';
 import { PYQController } from './pyq.controller';
 
 
@@ -47,6 +48,7 @@ import { PYQController } from './pyq.controller';
     ContactModule,
     LMSModule,
     BlogsModule,
+    StaticFilesModule,
     
   ],
   controllers: [AppController, PYQController],

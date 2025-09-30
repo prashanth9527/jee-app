@@ -1,7 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import QuestionDisplay from '../QuestionDisplay';
+import LatexContentDisplay, { 
+  LatexQuestionStem, 
+  LatexQuestionExplanation, 
+  LatexQuestionTips, 
+  LatexQuestionOption 
+} from '../LatexContentDisplay';
 import MathRenderer from '../MathRenderer';
 
 interface Question {
@@ -174,7 +179,7 @@ export default function ViewQuestionModal({ question, isOpen, onClose }: ViewQue
                   </span>
                   Question
                 </h3>
-                <QuestionDisplay content={question.stem} />
+                <LatexQuestionStem stem={question.stem} />
               </div>
 
               {/* Options */}
@@ -214,7 +219,7 @@ export default function ViewQuestionModal({ question, isOpen, onClose }: ViewQue
                             {String.fromCharCode(65 + index)}
                           </span>
                           <div className="flex-1">
-                            <QuestionDisplay content={option.text} />
+                            <LatexContentDisplay content={option.text} />
                             {showAnswers && option.isCorrect && (
                               <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 ml-2">
                                 ✓ Correct
@@ -236,7 +241,7 @@ export default function ViewQuestionModal({ question, isOpen, onClose }: ViewQue
                     </span>
                     Explanation
                   </h3>
-                  <QuestionDisplay content={question.explanation || ''} />
+                  <LatexQuestionExplanation explanation={question.explanation || ''} />
                 </div>
               )}
 
@@ -249,7 +254,7 @@ export default function ViewQuestionModal({ question, isOpen, onClose }: ViewQue
                     </span>
                     Tips & Formulas
                   </h3>
-                  <QuestionDisplay content={question.tip_formula} />
+                  <LatexQuestionTips tipFormula={question.tip_formula} />
                 </div>
               )}
             </div>

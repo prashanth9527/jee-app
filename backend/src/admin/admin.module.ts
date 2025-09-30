@@ -15,6 +15,10 @@ import { SystemSettingsController } from './system-settings.controller';
 import { AdminSubscriptionsController } from './subscriptions.controller';
 import { SyllabusImportController } from './syllabus-import.controller';
 import { SyllabusImportService } from './syllabus-import.service';
+import { PDFProcessorController } from './pdf-processor.controller';
+import { PDFProcessorService } from './pdf-processor.service';
+import { PDFReviewController } from './pdf-review.controller';
+import { PDFReviewService } from './pdf-review.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { AwsModule } from '../aws/aws.module';
 
@@ -33,9 +37,11 @@ import { AwsModule } from '../aws/aws.module';
     AdminQuestionReportsController,
     SystemSettingsController,
     AdminSubscriptionsController,
-    SyllabusImportController
+    SyllabusImportController,
+    PDFProcessorController,
+    PDFReviewController
   ],
-  providers: [AdminAnalyticsService, SystemSettingsService, SyllabusImportService],
+  providers: [AdminAnalyticsService, SystemSettingsService, SyllabusImportService, PDFProcessorService, PDFReviewService],
   exports: [AdminAnalyticsService, SystemSettingsService],
 })
 export class AdminModule {}
