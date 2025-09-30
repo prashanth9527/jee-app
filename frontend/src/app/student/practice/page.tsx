@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
@@ -56,8 +56,9 @@ interface PracticeTestConfig {
   useAI: boolean; // Whether to use AI-generated questions
 }
 
-export default function PracticeTestPage() {
+function PracticeTestPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [lessons, setLessons] = useState<any[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -79,6 +80,21 @@ export default function PracticeTestPage() {
     fetchSubjects();
     fetchSubscriptionStatus();
   }, []);
+
+  // Handle subject parameter from URL
+  useEffect(() => {
+    if (searchParams) {
+      const subjectParam = searchParams.get('subject');
+      if (subjectParam && subjects.length > 0) {
+        // Find the subject by name
+        const subject = subjects.find(s => s.name.toLowerCase() === subjectParam.toLowerCase());
+        if (subject) {
+          setSelectedSubject(subject.id);
+          setConfig(prev => ({ ...prev, subjectId: subject.id }));
+        }
+      }
+    }
+  }, [searchParams, subjects]);
 
   useEffect(() => {
     if (selectedSubject) {
@@ -653,5 +669,20 @@ export default function PracticeTestPage() {
         </StudentLayout>
       </SubscriptionGuard>
     </ProtectedRoute>
+  );
+}
+
+export default function PracticeTestPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <PracticeTestPageContent />
+    </Suspense>
   );
 } 

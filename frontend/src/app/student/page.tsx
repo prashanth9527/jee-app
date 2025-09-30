@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
@@ -22,6 +23,7 @@ interface StudentStats {
 }
 
 export default function StudentDashboard() {
+  const router = useRouter();
   const [stats, setStats] = useState<StudentStats | null>(null);
   const [recentExams, setRecentExams] = useState<{ id: string; examPaper?: { title?: string; subjects?: string[] }; submittedAt: string; scorePercent?: number }[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,23 +54,27 @@ export default function StudentDashboard() {
       description: 'Practice mechanics, electricity, and more',
       icon: '⚡',
       color: 'bg-blue-500',
-      href: '/student/practice/physics',
+      subjectName: 'Physics',
     },
     {
       title: 'Chemistry',
       description: 'Master physical, organic, and inorganic chemistry',
       icon: '🧪',
       color: 'bg-green-500',
-      href: '/student/practice/chemistry',
+      subjectName: 'Chemistry',
     },
     {
       title: 'Mathematics',
       description: 'Solve algebra, calculus, and geometry problems',
       icon: '📐',
       color: 'bg-purple-500',
-      href: '/student/practice/mathematics',
+      subjectName: 'Mathematics',
     },
   ];
+
+  const handleSubjectClick = (subjectName: string) => {
+    router.push(`/student/practice?subject=${encodeURIComponent(subjectName)}`);
+  };
 
 
 
@@ -160,10 +166,10 @@ export default function StudentDashboard() {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Start Practicing</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {practiceOptions.map((option) => (
-                <Link
+                <button
                   key={option.title}
-                  href={option.href}
-                  className="block p-6 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-md transition-all"
+                  onClick={() => handleSubjectClick(option.subjectName)}
+                  className="block w-full p-6 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-md transition-all text-left"
                 >
                   <div className="flex items-center mb-4">
                     <div className={`p-3 rounded-lg ${option.color} text-white text-2xl`}>
@@ -178,7 +184,7 @@ export default function StudentDashboard() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           </div>
