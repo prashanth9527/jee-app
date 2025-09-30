@@ -6,6 +6,7 @@ import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
 import QuestionReportModal from '@/components/QuestionReportModal';
+import LatexContentDisplay from '@/components/LatexContentDisplay';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
 
@@ -426,7 +427,9 @@ export default function ExamPage() {
                       {question.tip_formula && (
                         <div className="bg-yellow-50 rounded-lg p-4 mb-4 border border-yellow-200">
                           <h4 className="font-semibold text-yellow-900 mb-2">💡 Tips & Formulas</h4>
-                          <p className="text-yellow-800">{question.tip_formula}</p>
+                          <div className="text-yellow-800">
+                            <LatexContentDisplay content={question.tip_formula} />
+                          </div>
                         </div>
                       )}
                       
@@ -437,7 +440,9 @@ export default function ExamPage() {
                           {question.explanation && (
                             <div className="bg-blue-50 rounded-lg p-4">
                               <h4 className="font-semibold text-blue-900 mb-2">Original Explanation</h4>
-                              <p className="text-blue-800">{question.explanation}</p>
+                              <div className="text-blue-800">
+                                <LatexContentDisplay content={question.explanation} />
+                              </div>
                             </div>
                           )}
 
@@ -455,7 +460,9 @@ export default function ExamPage() {
                                       {altExp.source === 'REPORT_APPROVED' ? 'Student Suggested' : 'Community'}
                                     </span>
                                   </div>
-                                  <p className="text-green-800">{altExp.explanation}</p>
+                                  <div className="text-green-800">
+                                    <LatexContentDisplay content={altExp.explanation} />
+                                  </div>
                                   <div className="mt-2 text-xs text-green-600">
                                     Added on {new Date(altExp.createdAt).toLocaleDateString()}
                                   </div>
@@ -584,7 +591,9 @@ export default function ExamPage() {
                       </div>
                     </div>
                     
-                    <p className="text-gray-900 text-lg mb-6">{currentQuestion.stem}</p>
+                    <div className="text-gray-900 text-lg mb-6">
+                      <LatexContentDisplay content={currentQuestion.stem} />
+                    </div>
                     
                     {/* Options */}
                     <div className="space-y-3">
@@ -614,7 +623,9 @@ export default function ExamPage() {
                               <div className="w-2 h-2 bg-white rounded-full"></div>
                             )}
                           </div>
-                          <span className="text-gray-900">{option.text}</span>
+                          <div className="text-gray-900">
+                            <LatexContentDisplay content={option.text} />
+                          </div>
                         </label>
                       ))}
                     </div>
