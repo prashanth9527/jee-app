@@ -12,9 +12,24 @@ api.interceptors.request.use(
 		const token = localStorage.getItem('token');
 		console.log('API Interceptor - Token exists:', !!token);
 		console.log('API Interceptor - Request URL:', config.url);
-		if (token) {
+		
+		// Don't send Authorization header for login-related endpoints
+		const isLoginEndpoint = config.url && (
+			config.url.includes('/auth/login') ||
+			config.url.includes('/auth/send-email-login-otp') ||
+			config.url.includes('/auth/send-login-otp') ||
+			config.url.includes('/auth/register') ||
+			config.url.includes('/auth/start-registration') ||
+			config.url.includes('/auth/complete-registration') ||
+			config.url.includes('/auth/resend-email-otp') ||
+			config.url.includes('/auth/forgot-password')
+		);
+		
+		if (token && !isLoginEndpoint) {
 			config.headers.Authorization = `Bearer ${token}`;
 			console.log('API Interceptor - Authorization header set');
+		} else if (isLoginEndpoint) {
+			console.log('API Interceptor - Skipping Authorization header for login endpoint');
 		} else {
 			console.log('API Interceptor - No token found');
 		}
