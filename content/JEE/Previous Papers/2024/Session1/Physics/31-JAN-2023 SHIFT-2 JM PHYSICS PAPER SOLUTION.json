@@ -1,0 +1,24 @@
+{
+  "questions": [],
+  "metadata": {
+    "totalQuestions": 0,
+    "subjects": [
+      "Physics"
+    ],
+    "topics": [],
+    "difficultyDistribution": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "processingTime": 0,
+    "sourceFile": "31-JAN-2023 SHIFT-2 JM PHYSICS PAPER SOLUTION.pdf",
+    "extractedAt": "2025-10-01T01:04:00.235Z",
+    "status": "empty_template",
+    "year": 2023,
+    "subject": "Physics",
+    "session": null,
+    "date": "20-23",
+    "shift": "Shift-2"
+  }
+}

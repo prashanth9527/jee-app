@@ -1,0 +1,24 @@
+{
+  "questions": [],
+  "metadata": {
+    "totalQuestions": 0,
+    "subjects": [
+      "Mathematics"
+    ],
+    "topics": [],
+    "difficultyDistribution": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "processingTime": 0,
+    "sourceFile": "2301-Mathematics Paper+With+Sol. Evening.pdf",
+    "extractedAt": "2025-10-01T01:04:00.868Z",
+    "status": "empty_template",
+    "year": 2301,
+    "subject": "Mathematics",
+    "session": "Evening",
+    "date": "23-01",
+    "shift": null
+  }
+}

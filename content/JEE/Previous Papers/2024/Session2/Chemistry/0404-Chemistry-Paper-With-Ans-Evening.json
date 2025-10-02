@@ -1,0 +1,24 @@
+{
+  "questions": [],
+  "metadata": {
+    "totalQuestions": 0,
+    "subjects": [
+      "Chemistry"
+    ],
+    "topics": [],
+    "difficultyDistribution": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "processingTime": 0,
+    "sourceFile": "0404-Chemistry-Paper-With-Ans-Evening.pdf",
+    "extractedAt": "2025-10-01T01:04:00.269Z",
+    "status": "empty_template",
+    "year": 404,
+    "subject": "Chemistry",
+    "session": "Evening",
+    "date": "04-04",
+    "shift": null
+  }
+}

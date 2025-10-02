@@ -24,12 +24,13 @@ export class PDFReviewController {
   @Get(':cacheId')
   async getQuestionsForReview(@Param('cacheId') cacheId: string) {
     try {
-      const questions = await this.pdfReviewService.getQuestionsForReview(cacheId);
+      const result = await this.pdfReviewService.getQuestionsForReview(cacheId);
       
       return {
         success: true,
-        data: questions,
-        total: questions.length
+        data: result.questions,
+        pdfInfo: result.pdfInfo,
+        total: result.questions.length
       };
     } catch (error) {
       throw new HttpException(

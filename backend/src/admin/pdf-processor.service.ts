@@ -168,15 +168,15 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     return { providers, available };
   }
 
-  async listPDFs(): Promise<Array<{ fileName: string; filePath: string; fileSize: number; status: string; importedAt?: Date }>> {
+  async listPDFs(): Promise<Array<{ fileName: string; filePath: string; fileSize: number; status: string; importedAt?: Date; importedQuestionCount?: number }>> {
     try {
-      const pdfFiles: Array<{ fileName: string; filePath: string; fileSize: number; status: string; importedAt?: Date }> = [];
+      const pdfFiles: Array<{ fileName: string; filePath: string; fileSize: number; status: string; importedAt?: Date; importedQuestionCount?: number }> = [];
       
       const scanDirectory = (dir: string, relativePath: string = '') => {
         const items = fs.readdirSync(dir);
         
         for (const item of items) {
-          const fullPath = path.join(dir, item);
+          const fullPath = path.resolve(dir, item); // Use path.resolve for absolute path
           const itemRelativePath = path.join(relativePath, item);
           const stat = fs.statSync(fullPath);
           
@@ -185,7 +185,7 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
           } else if (item.toLowerCase().endsWith('.pdf')) {
             pdfFiles.push({
               fileName: item,
-              filePath: itemRelativePath,
+              filePath: fullPath, // Store full absolute path
               fileSize: stat.size,
               status: 'PENDING'
             });
@@ -204,6 +204,16 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
         if (cache) {
           file.status = cache.processingStatus;
           file.importedAt = cache.importedAt || undefined;
+          
+          // Get count of imported questions if importedAt is set
+          if (file.importedAt) {
+            const importedCount = await this.prisma.question.count({
+              where: { pdfProcessorCacheId: cache.id }
+            });
+            file.importedQuestionCount = importedCount;
+          }
+          
+          console.log(`PDF ${file.fileName}: importedAt=${file.importedAt}, status=${file.status}, importedCount=${file.importedQuestionCount || 0}`);
         }
       }
 
@@ -569,28 +579,50 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     }
   }
 
-  async importProcessedJSON(fileName: string) {
+  async markAsCompleted(cacheId: string) {
     try {
-      // Find the processed file
       const cache = await this.prisma.pDFProcessorCache.findUnique({
-        where: { fileName }
+        where: { id: cacheId }
       });
 
       if (!cache) {
-        throw new BadRequestException('File not found in cache');
+        throw new BadRequestException('PDF cache not found');
       }
 
-      if (cache.processingStatus !== 'COMPLETED') {
-        throw new BadRequestException('File processing not completed');
+      const updatedCache = await this.prisma.pDFProcessorCache.update({
+        where: { id: cacheId },
+        data: { 
+          processingStatus: 'COMPLETED',
+          lastProcessedAt: new Date()
+        }
+      });
+
+      await this.logEvent(cacheId, 'SUCCESS', 'PDF processing marked as completed by admin');
+
+      return updatedCache;
+    } catch (error) {
+      this.logger.error('Error marking PDF as completed:', error);
+      throw error;
+    }
+  }
+
+  async importProcessedJSON(cacheId: string) {
+    try {
+      // Find the database record with JSON content using cache ID
+      const cache = await this.prisma.pDFProcessorCache.findUnique({
+        where: { id: cacheId }
+      });
+
+      if (!cache) {
+        throw new BadRequestException('Database record not found for this cache ID');
       }
 
-      if (!cache.outputFilePath) {
-        throw new BadRequestException('Output file path not found');
+      if (!cache.jsonContent) {
+        throw new BadRequestException('JSON content not found in database record');
       }
 
-      // Read the JSON file
-      const jsonContent = fs.readFileSync(cache.outputFilePath, 'utf-8');
-      const data = JSON.parse(jsonContent);
+      // Parse the JSON content from database
+      const data = JSON.parse(cache.jsonContent);
 
       if (!data.questions || !Array.isArray(data.questions)) {
         throw new BadRequestException('Invalid JSON format: questions array not found');
@@ -652,53 +684,49 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
           let subtopicId: string | undefined;
 
           // Handle lesson (required for proper hierarchy)
-          if (questionData.lesson) {
-            const lesson = await this.prisma.lesson.findFirst({
-              where: {
-                name: { equals: questionData.lesson, mode: 'insensitive' },
-                subjectId: subjectId
-              }
-            });
-
-            if (lesson) {
-              lessonId = lesson.id;
-            } else {
-              // Create new lesson
-              const newLesson = await this.prisma.lesson.create({
-                data: {
-                  name: questionData.lesson,
-                  subjectId: subjectId,
-                  order: 0
-                }
-              });
-              lessonId = newLesson.id;
+          let lessonName = questionData.lesson;
+          if (!lessonName || lessonName.trim() === '') {
+            lessonName = 'General';
+          }
+          
+          const lesson = await this.prisma.lesson.findFirst({
+            where: {
+              name: { equals: lessonName.trim(), mode: 'insensitive' },
+              subjectId: subjectId
             }
+          });
+
+          if (lesson) {
+            lessonId = lesson.id;
           } else {
-            // If no lesson specified, find or create a default one
-            let defaultLesson = await this.prisma.lesson.findFirst({
-              where: {
-                name: { equals: 'General', mode: 'insensitive' },
-                subjectId: subjectId
+            // Find the next available order number for this subject
+            const lastLesson = await this.prisma.lesson.findFirst({
+              where: { subjectId: subjectId },
+              orderBy: { order: 'desc' }
+            });
+            const nextOrder = lastLesson ? lastLesson.order + 1 : 0;
+            
+            // Create new lesson
+            const newLesson = await this.prisma.lesson.create({
+              data: {
+                name: lessonName.trim(),
+                subjectId: subjectId,
+                order: nextOrder
               }
             });
-
-            if (!defaultLesson) {
-              defaultLesson = await this.prisma.lesson.create({
-                data: {
-                  name: 'General',
-                  subjectId: subjectId,
-                  order: 0
-                }
-              });
-            }
-            lessonId = defaultLesson.id;
+            lessonId = newLesson.id;
           }
 
           // Handle topic (must be under a lesson)
           if (questionData.topic && lessonId) {
+            let topicName = questionData.topic;
+            if (!topicName || topicName.trim() === '') {
+              topicName = 'General';
+            }
+            
             const topic = await this.prisma.topic.findFirst({
               where: {
-                name: { equals: questionData.topic, mode: 'insensitive' },
+                name: { equals: topicName.trim(), mode: 'insensitive' },
                 lessonId: lessonId
               }
             });
@@ -706,12 +734,20 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
             if (topic) {
               topicId = topic.id;
             } else {
+              // Find the next available order number for this lesson
+              const lastTopic = await this.prisma.topic.findFirst({
+                where: { lessonId: lessonId },
+                orderBy: { order: 'desc' }
+              });
+              const nextOrder = lastTopic ? lastTopic.order + 1 : 0;
+              
               // Create new topic under the lesson
               const newTopic = await this.prisma.topic.create({
                 data: {
-                  name: questionData.topic,
+                  name: topicName.trim(),
                   subjectId: subjectId,
-                  lessonId: lessonId
+                  lessonId: lessonId,
+                  order: nextOrder
                 }
               });
               topicId = newTopic.id;
@@ -719,9 +755,14 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
 
             // Handle subtopic (must be under a topic)
             if (questionData.subtopic && topicId) {
+              let subtopicName = questionData.subtopic;
+              if (!subtopicName || subtopicName.trim() === '') {
+                subtopicName = 'General';
+              }
+              
               const subtopic = await this.prisma.subtopic.findFirst({
                 where: {
-                  name: { equals: questionData.subtopic, mode: 'insensitive' },
+                  name: { equals: subtopicName.trim(), mode: 'insensitive' },
                   topicId: topicId
                 }
               });
@@ -729,11 +770,19 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
               if (subtopic) {
                 subtopicId = subtopic.id;
               } else {
+                // Find the next available order number for this topic
+                const lastSubtopic = await this.prisma.subtopic.findFirst({
+                  where: { topicId: topicId },
+                  orderBy: { order: 'desc' }
+                });
+                const nextOrder = lastSubtopic ? lastSubtopic.order + 1 : 0;
+                
                 // Create new subtopic under the topic
                 const newSubtopic = await this.prisma.subtopic.create({
                   data: {
-                    name: questionData.subtopic,
-                    topicId: topicId
+                    name: subtopicName.trim(),
+                    topicId: topicId,
+                    order: nextOrder
                   }
                 });
                 subtopicId = newSubtopic.id;
@@ -758,6 +807,22 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
             }
           }
 
+          // Check for duplicate question based on stem, subject, topic, and subtopic
+          const existingQuestion = await this.prisma.question.findFirst({
+            where: {
+              stem: questionData.stem,
+              subjectId: subjectId,
+              topicId: topicId || null,
+              subtopicId: subtopicId || null
+            }
+          });
+
+          if (existingQuestion) {
+            // Question already exists with same stem, subject, topic, subtopic - skip it
+            skippedCount++;
+            continue;
+          }
+
           // Create the question
           const question = await this.prisma.question.create({
             data: {
@@ -769,8 +834,8 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
               isPreviousYear: questionData.isPreviousYear || false,
               isAIGenerated: true,
               aiPrompt: 'Imported from PDF processor',
-              // status: 'underreview', // Set status to underreview for review process
-              // pdfProcessorCacheId: cache.id, // Link to PDF processing cache
+              status: 'underreview', // Set status to underreview for review process
+              pdfProcessorCacheId: cache.id, // Link to PDF processing cache
               subjectId: subjectId,
               topicId: topicId || null,
               subtopicId: subtopicId || null,
@@ -819,6 +884,215 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     } catch (error) {
       this.logger.error('Error importing processed JSON:', error);
       throw error;
+    }
+  }
+
+  async getJsonStatus(fileName: string) {
+    try {
+      // Check if JSON file exists in the same directory as PDF
+      const pdfPath = this.findPDFPath(fileName);
+      if (!pdfPath) {
+        return {
+          hasJsonFile: false,
+          jsonContent: null,
+          questionCount: 0
+        };
+      }
+
+      const jsonFileName = fileName.replace('.pdf', '.json');
+      const jsonPath = path.join(path.dirname(pdfPath), jsonFileName);
+      
+      let hasJsonFile = false;
+      let jsonContent = null;
+      let questionCount = 0;
+
+      if (fs.existsSync(jsonPath)) {
+        hasJsonFile = true;
+        try {
+          const jsonData = fs.readFileSync(jsonPath, 'utf8');
+          const parsedData = JSON.parse(jsonData);
+          jsonContent = jsonData;
+          
+          // Count questions
+          if (parsedData.questions && Array.isArray(parsedData.questions)) {
+            questionCount = parsedData.questions.length;
+          }
+        } catch (error) {
+          this.logger.warn(`Error reading JSON file ${jsonPath}:`, error);
+        }
+      }
+
+      // Also check if there's cached JSON content in the database
+      const cache = await this.prisma.pDFProcessorCache.findUnique({
+        where: { fileName }
+      });
+
+      if (cache && cache.jsonContent) {
+        jsonContent = cache.jsonContent;
+        if (!hasJsonFile) {
+          hasJsonFile = true;
+        }
+        
+        // Parse and count questions from cached content
+        try {
+          const parsedData = JSON.parse(cache.jsonContent);
+          if (parsedData.questions && Array.isArray(parsedData.questions)) {
+            questionCount = parsedData.questions.length;
+          }
+        } catch (error) {
+          this.logger.warn(`Error parsing cached JSON content for ${fileName}:`, error);
+        }
+      }
+
+      return {
+        hasJsonFile,
+        jsonContent,
+        questionCount,
+        databaseId: cache?.id || null
+      };
+    } catch (error) {
+      this.logger.error('Error getting JSON status:', error);
+      throw error;
+    }
+  }
+
+  async saveJsonContent(fileName: string, jsonContent: string) {
+    try {
+      // Validate JSON content
+      let parsedData;
+      try {
+        parsedData = JSON.parse(jsonContent);
+      } catch (error) {
+        throw new BadRequestException('Invalid JSON format');
+      }
+
+      // Validate that it has questions array
+      if (!parsedData.questions || !Array.isArray(parsedData.questions)) {
+        throw new BadRequestException('JSON must contain a "questions" array');
+      }
+
+      // Find or create cache entry
+      let cache = await this.prisma.pDFProcessorCache.findUnique({
+        where: { fileName }
+      });
+
+      if (!cache) {
+        // Create new cache entry
+        const pdfPath = this.findPDFPath(fileName);
+        if (!pdfPath) {
+          throw new BadRequestException('PDF file not found');
+        }
+
+        const stats = fs.statSync(pdfPath);
+        cache = await this.prisma.pDFProcessorCache.create({
+          data: {
+            fileName,
+            filePath: pdfPath,
+            fileSize: stats.size,
+            processingStatus: 'PENDING',
+            jsonContent: jsonContent
+          }
+        });
+      } else {
+        // Update existing cache entry
+        cache = await this.prisma.pDFProcessorCache.update({
+          where: { fileName },
+          data: { jsonContent: jsonContent }
+        });
+      }
+
+      return {
+        cacheId: cache.id,
+        questionCount: parsedData.questions.length
+      };
+    } catch (error) {
+      this.logger.error('Error saving JSON content:', error);
+      throw error;
+    }
+  }
+
+  async uploadJsonToProcessed(fileName: string) {
+    try {
+      // Get the cache entry with JSON content
+      const cache = await this.prisma.pDFProcessorCache.findUnique({
+        where: { fileName }
+      });
+
+      if (!cache || !cache.jsonContent) {
+        throw new BadRequestException('No JSON content found for this file');
+      }
+
+      // Validate JSON content
+      let parsedData;
+      try {
+        parsedData = JSON.parse(cache.jsonContent);
+      } catch (error) {
+        throw new BadRequestException('Invalid JSON format in cache');
+      }
+
+      // Create processed directory if it doesn't exist
+      if (!fs.existsSync(this.processedDir)) {
+        fs.mkdirSync(this.processedDir, { recursive: true });
+      }
+
+      // Save JSON file to processed directory
+      const jsonFileName = fileName.replace('.pdf', '.json');
+      const outputPath = path.join(this.processedDir, jsonFileName);
+      
+      fs.writeFileSync(outputPath, cache.jsonContent, 'utf8');
+
+      // Update cache with processed data and output file path
+      const updatedCache = await this.prisma.pDFProcessorCache.update({
+        where: { fileName },
+        data: {
+          processedData: parsedData,
+          outputFilePath: outputPath,
+          processingStatus: 'COMPLETED',
+          lastProcessedAt: new Date()
+        }
+      });
+
+      // Log the upload
+      await this.logEvent(cache.id, 'SUCCESS', `JSON uploaded to Processed folder: ${jsonFileName}`, {
+        outputPath,
+        questionCount: parsedData.questions.length
+      });
+
+      return {
+        cacheId: cache.id,
+        outputPath,
+        questionCount: parsedData.questions.length
+      };
+    } catch (error) {
+      this.logger.error('Error uploading JSON to Processed folder:', error);
+      throw error;
+    }
+  }
+
+  private findPDFPath(fileName: string): string | null {
+    try {
+      const findInDirectory = (dir: string): string | null => {
+        if (!fs.existsSync(dir)) return null;
+        
+        const items = fs.readdirSync(dir);
+        for (const item of items) {
+          const fullPath = path.resolve(dir, item); // Use path.resolve for absolute path
+          const stat = fs.statSync(fullPath);
+          
+          if (stat.isDirectory()) {
+            const found = findInDirectory(fullPath);
+            if (found) return found;
+          } else if (item === fileName) {
+            return fullPath; // Return full absolute path
+          }
+        }
+        return null;
+      };
+
+      return findInDirectory(this.contentDir);
+    } catch (error) {
+      this.logger.error('Error finding PDF path:', error);
+      return null;
     }
   }
 }

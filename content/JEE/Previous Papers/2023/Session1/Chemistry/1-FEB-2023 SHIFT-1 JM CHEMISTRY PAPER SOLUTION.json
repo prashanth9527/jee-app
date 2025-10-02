@@ -1,0 +1,211 @@
+{
+    "questions": [
+      {
+        "id": "q31",
+        "stem": "Which of the following represents the lattice structure of A<sub>0.95</sub>O containing A<sup>2+</sup>, A<sup>3+</sup> and O<sup>2–</sup> ions?",
+        "options": [
+          {"id": "A", "text": "Structure A with cation vacancies", "isCorrect": true},
+          {"id": "B", "text": "Structure B with interstitial cations", "isCorrect": false},
+          {"id": "C", "text": "Structure C with anion vacancies", "isCorrect": false},
+          {"id": "D", "text": "Structure D with no defects", "isCorrect": false}
+        ],
+        "explanation": "In metal deficiency defect, 3 A<sup>2+</sup> ions are replaced by 2 A<sup>3+</sup> ions, creating one cation vacancy per pair of A<sup>3+</sup> ions to maintain electrical neutrality. Structure A correctly shows this cation vacancy pattern.",
+        "tip_formula": "Metal deficiency defect: 3A²⁺ → 2A³⁺ + vacancy",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Solid State Chemistry",
+        "topic": "Crystal Defects",
+        "subtopic": "Metal Deficiency Defect",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["crystal-defects", "metal-deficiency", "lattice-structure"]
+      },
+      {
+        "id": "q32",
+        "stem": "The correct representation in six membered pyranose form for the given sugar [X] is: CHO | HO-H | H-OH | H-OH | CH₂OH",
+        "options": [
+          {"id": "A", "text": "Haworth structure with OH groups at positions 1,2,3 axial", "isCorrect": false},
+          {"id": "B", "text": "Haworth structure with OH groups at positions 1,2 axial and 3 equatorial", "isCorrect": true},
+          {"id": "C", "text": "Haworth structure with all OH groups equatorial", "isCorrect": false},
+          {"id": "D", "text": "Haworth structure with OH groups at positions 1,3 axial and 2 equatorial", "isCorrect": false}
+        ],
+        "explanation": "The given sugar is D-mannose. In its pyranose form, the Haworth projection shows the anomeric OH at C1 in α-position (axial), OH at C2 axial, and OH at C3 equatorial, which matches structure B.",
+        "tip_formula": "Mannose pyranose: C1(α-axial), C2(axial), C3(equatorial)",
+        "difficulty": "HARD",
+        "subject": "Chemistry",
+        "lesson": "Organic Chemistry",
+        "topic": "Carbohydrates",
+        "subtopic": "Haworth Projections",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["carbohydrates", "haworth-structure", "pyranose", "mannose"]
+      },
+      {
+        "id": "q33",
+        "stem": "Highest oxidation state of Mn is exhibited in Mn₂O₇. The correct statements about Mn₂O₇ are: (A) Mn is tetrahedrally surrounded by oxygen atoms (B) Mn is octahedrally surrounded by oxygen atoms (C) Contains Mn-O-Mn bridge (D) Contains Mn-Mn bond",
+        "options": [
+          {"id": "A", "text": "A and C only", "isCorrect": true},
+          {"id": "B", "text": "A and D only", "isCorrect": false},
+          {"id": "C", "text": "B and D only", "isCorrect": false},
+          {"id": "D", "text": "B and C only", "isCorrect": false}
+        ],
+        "explanation": "In Mn₂O₇, each Mn atom is in +7 oxidation state and is tetrahedrally surrounded by oxygen atoms. The structure contains Mn-O-Mn bridges but no direct Mn-Mn bond.",
+        "tip_formula": "Mn₂O₇ structure: Tetrahedral MnO₄ units connected by Mn-O-Mn bridges",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Inorganic Chemistry",
+        "topic": "Transition Metals",
+        "subtopic": "Manganese Compounds",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["manganese", "oxidation-state", "coordination-chemistry"]
+      },
+      {
+        "id": "q34",
+        "stem": "Decreasing order of dehydration of the following alcohols is: (a) 1° alcohol (b) 2° alcohol with conjugation (c) 3° alcohol (d) 2° alcohol without conjugation",
+        "options": [
+          {"id": "A", "text": "a > d > b > c", "isCorrect": false},
+          {"id": "B", "text": "b > d > c > a", "isCorrect": true},
+          {"id": "C", "text": "b > a > d > c", "isCorrect": false},
+          {"id": "D", "text": "d > b > c > a", "isCorrect": false}
+        ],
+        "explanation": "Dehydration rate depends on carbocation stability. The 2° alcohol with conjugation (b) forms the most stable carbocation due to resonance. Next is 2° alcohol without conjugation (d), then 3° alcohol (c), and finally 1° alcohol (a) forms the least stable carbocation.",
+        "tip_formula": "Dehydration rate ∝ Carbocation stability",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Organic Chemistry",
+        "topic": "Alcohols",
+        "subtopic": "Dehydration Reactions",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["alcohols", "dehydration", "carbocation-stability"]
+      },
+      {
+        "id": "q35",
+        "stem": "Assertion A: Amongst He, Ne, Ar and Kr; 1 g of activated charcoal adsorbs more of Kr. Reason R: The critical volume Vc (cm³ mol⁻¹) and critical pressure Pc (atm) is highest for Krypton but the compressibility factor at critical point Zc is lowest for Krypton.",
+        "options": [
+          {"id": "A", "text": "A is true but R is false", "isCorrect": true},
+          {"id": "B", "text": "A is false but R is true", "isCorrect": false},
+          {"id": "C", "text": "Both A and R are true but R is NOT the correct explanation of A", "isCorrect": false},
+          {"id": "D", "text": "Both A and R are true and R is the correct explanation of A", "isCorrect": false}
+        ],
+        "explanation": "Assertion A is true because adsorption increases with molecular weight due to stronger van der Waals forces. Kr has highest molecular weight among given noble gases. Reason R is false because Zc = 3/8 for all real gases at critical point.",
+        "tip_formula": "Adsorption ∝ Molecular weight; Zc = 3/8 for all real gases",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Physical Chemistry",
+        "topic": "Surface Chemistry",
+        "subtopic": "Adsorption",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["adsorption", "noble-gases", "critical-constants"]
+      },
+      {
+        "id": "q36",
+        "stem": "In the following reaction, 'A' is: NH₂-CH₂-OH + EtO-C(=O)-C(=O)-OEt → A (Major product)",
+        "options": [
+          {"id": "A", "text": "NH-COOEt derivative", "isCorrect": false},
+          {"id": "B", "text": "Cyclic imide derivative", "isCorrect": true},
+          {"id": "C", "text": "NH₂-CH₂-COOEt derivative", "isCorrect": false},
+          {"id": "D", "text": "Ester-amide derivative", "isCorrect": false}
+        ],
+        "explanation": "The reaction involves nucleophilic attack by NH₂ group on carbonyl carbon, followed by intramolecular cyclization with the OH group, forming a stable cyclic imide structure.",
+        "tip_formula": "Intramolecular cyclization: NH₂ and OH groups react with dicarbonyl compound",
+        "difficulty": "HARD",
+        "subject": "Chemistry",
+        "lesson": "Organic Chemistry",
+        "topic": "Heterocyclic Compounds",
+        "subtopic": "Cyclization Reactions",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["heterocyclic", "cyclization", "nucleophilic-addition"]
+      },
+      {
+        "id": "q37",
+        "stem": "Match List I with List II: (A) Tranquilizers (B) Aspirin (C) Antibiotic (D) Antiseptic with (I) Anti blood clotting (II) Salvarsan (III) Antidepressant drugs (IV) Soframicine",
+        "options": [
+          {"id": "A", "text": "A-III, B-I, C-II, D-IV", "isCorrect": true},
+          {"id": "B", "text": "A-II, B-I, C-III, D-IV", "isCorrect": false},
+          {"id": "C", "text": "A-IV, B-II, C-I, D-III", "isCorrect": false},
+          {"id": "D", "text": "A-I, B-IV, C-II, D-III", "isCorrect": false}
+        ],
+        "explanation": "Tranquilizers are antidepressant drugs (III), Aspirin prevents blood clotting (I), Salvarsan is an antibiotic (II), and Soframicine is an antiseptic (IV).",
+        "tip_formula": "Drug classification: Tranquilizers→Antidepressant, Aspirin→Anticoagulant, Salvarsan→Antibiotic, Soframicine→Antiseptic",
+        "difficulty": "EASY",
+        "subject": "Chemistry",
+        "lesson": "Chemistry in Everyday Life",
+        "topic": "Drugs and Medicines",
+        "subtopic": "Drug Classification",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["drugs", "medicinal-chemistry", "classification"]
+      },
+      {
+        "id": "q38",
+        "stem": "Statement I: Chlorine can easily combine with oxygen to form oxides and the product has a tendency to explode. Statement II: Chemical reactivity of an element can be determined by its reaction with oxygen and halogens.",
+        "options": [
+          {"id": "A", "text": "Both the statements I and II are true", "isCorrect": true},
+          {"id": "B", "text": "Statement I is true but Statement II is false", "isCorrect": false},
+          {"id": "C", "text": "Statement I is false but Statement II is true", "isCorrect": false},
+          {"id": "D", "text": "Both the Statements I and II are false", "isCorrect": false}
+        ],
+        "explanation": "Statement I is true - chlorine oxides (Cl₂O, ClO₂, Cl₂O₆, Cl₂O₇) are highly reactive and explosive. Statement II is true - reaction with oxygen and halogens is a standard method to determine chemical reactivity of elements.",
+        "tip_formula": "Chlorine oxides: Cl₂O, ClO₂, Cl₂O₆, Cl₂O₇ - all explosive",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Inorganic Chemistry",
+        "topic": "p-Block Elements",
+        "subtopic": "Halogens",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["chlorine", "oxides", "chemical-reactivity"]
+      },
+      {
+        "id": "q39",
+        "stem": "Resonance in carbonate ion (CO₃²⁻) is represented by three structures. Which of the following is true?",
+        "options": [
+          {"id": "A", "text": "It is possible to identify each structure individually", "isCorrect": false},
+          {"id": "B", "text": "All these structures are in dynamic equilibrium", "isCorrect": false},
+          {"id": "C", "text": "Each structure exists for equal amount of time", "isCorrect": false},
+          {"id": "D", "text": "CO₃²⁻ has a single structure i.e., resonance hybrid", "isCorrect": true}
+        ],
+        "explanation": "Resonance structures are hypothetical, and the real structure is the resonance hybrid which is a weighted average of all contributing structures. The carbonate ion has a single, delocalized structure with bond lengths intermediate between single and double bonds.",
+        "tip_formula": "Resonance hybrid = Weighted average of all resonating structures",
+        "difficulty": "EASY",
+        "subject": "Chemistry",
+        "lesson": "Physical Chemistry",
+        "topic": "Chemical Bonding",
+        "subtopic": "Resonance",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["resonance", "carbonate-ion", "chemical-bonding"]
+      },
+      {
+        "id": "q40",
+        "stem": "Identify the incorrect option from the following reactions:",
+        "options": [
+          {"id": "A", "text": "Aromatic bromide + KOH(aq) → Phenol", "isCorrect": false},
+          {"id": "B", "text": "Aromatic bromide + KOH(alc) → Phenol", "isCorrect": true},
+          {"id": "C", "text": "Friedel-Crafts acylation with acetyl chloride", "isCorrect": false},
+          {"id": "D", "text": "Chlorobenzene → Phenol under high T,P", "isCorrect": false}
+        ],
+        "explanation": "Option B is incorrect because alcoholic KOH promotes elimination reactions (formation of alkynes from vicinal dihalides or dehydrohalogenation), not substitution to form phenols. Aqueous KOH is used for nucleophilic substitution to form phenols.",
+        "tip_formula": "KOH(aq) → Substitution; KOH(alc) → Elimination",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Organic Chemistry",
+        "topic": "Halogen Derivatives",
+        "subtopic": "Nucleophilic Substitution",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["nucleophilic-substitution", "elimination", "koh-reactions"]
+      }
+    ],
+    "metadata": {
+      "totalQuestions": 10,
+      "subjects": ["Chemistry"],
+      "topics": ["Solid State Chemistry", "Organic Chemistry", "Inorganic Chemistry", "Physical Chemistry", "Chemistry in Everyday Life"],
+      "difficultyDistribution": {"easy": 2, "medium": 6, "hard": 2},
+      "processingTime": 60
+    }
+  }

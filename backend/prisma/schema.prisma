@@ -128,6 +128,7 @@ model Subtopic {
   name        String
   description String?
   topicId     String
+  order       Int          @default(0)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   questions   Question[]
@@ -990,6 +991,7 @@ model PDFProcessorCache {
   userPrompt        String?  @db.Text
   responseData      Json?    // ChatGPT response data
   processedData     Json?    // Processed and validated JSON
+  jsonContent       String?  @db.Text // Manual JSON content entry
   outputFilePath    String?  // Path to saved JSON file
   errorMessage      String?  @db.Text
   processingTimeMs  Int?

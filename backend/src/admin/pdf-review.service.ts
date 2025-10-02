@@ -46,7 +46,14 @@ export class PDFReviewService {
         status: question.status || 'underreview'
       }));
 
-      return questionsWithStatus;
+      return {
+        questions: questionsWithStatus,
+        pdfInfo: {
+          fileName: cache.fileName,
+          filePath: cache.filePath,
+          fileSize: cache.fileSize
+        }
+      };
     } catch (error) {
       this.logger.error('Error getting questions for review:', error);
       throw error;

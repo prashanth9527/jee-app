@@ -1,0 +1,24 @@
+{
+  "questions": [],
+  "metadata": {
+    "totalQuestions": 0,
+    "subjects": [
+      "Mathematics"
+    ],
+    "topics": [],
+    "difficultyDistribution": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "processingTime": 0,
+    "sourceFile": "1004-Mathematics Paper Evening.pdf",
+    "extractedAt": "2025-10-01T01:03:59.016Z",
+    "status": "empty_template",
+    "year": 1004,
+    "subject": "Mathematics",
+    "session": "Evening",
+    "date": "10-04",
+    "shift": null
+  }
+}

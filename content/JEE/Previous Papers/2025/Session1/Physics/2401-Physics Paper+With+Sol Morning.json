@@ -1,0 +1,24 @@
+{
+  "questions": [],
+  "metadata": {
+    "totalQuestions": 0,
+    "subjects": [
+      "Physics"
+    ],
+    "topics": [],
+    "difficultyDistribution": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "processingTime": 0,
+    "sourceFile": "2401-Physics Paper+With+Sol Morning.pdf",
+    "extractedAt": "2025-10-01T01:04:01.062Z",
+    "status": "empty_template",
+    "year": 2401,
+    "subject": "Physics",
+    "session": "Morning",
+    "date": "24-01",
+    "shift": null
+  }
+}

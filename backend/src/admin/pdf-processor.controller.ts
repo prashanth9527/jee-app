@@ -281,10 +281,10 @@ export class PDFProcessorController {
     }
   }
 
-  @Post('import/:fileName')
-  async importProcessedJSON(@Param('fileName') fileName: string) {
+  @Post('import/:cacheId')
+  async importProcessedJSON(@Param('cacheId') cacheId: string) {
     try {
-      const result = await this.pdfProcessorService.importProcessedJSON(fileName);
+      const result = await this.pdfProcessorService.importProcessedJSON(cacheId);
       
       return {
         success: true,
@@ -318,6 +318,100 @@ export class PDFProcessorController {
         {
           success: false,
           message: 'Failed to reset retry count',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Post('mark-completed/:cacheId')
+  async markAsCompleted(@Param('cacheId') cacheId: string) {
+    try {
+      const result = await this.pdfProcessorService.markAsCompleted(cacheId);
+      
+      return {
+        success: true,
+        message: 'PDF processing marked as completed successfully',
+        data: result
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to mark PDF as completed',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get('json-status/:fileName')
+  async getJsonStatus(@Param('fileName') fileName: string) {
+    try {
+      const result = await this.pdfProcessorService.getJsonStatus(fileName);
+      
+      return {
+        success: true,
+        data: result
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to get JSON status',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Post('save-json/:fileName')
+  async saveJsonContent(
+    @Param('fileName') fileName: string,
+    @Body() body: { jsonContent: string }
+  ) {
+    try {
+      if (!body.jsonContent) {
+        throw new BadRequestException('jsonContent is required');
+      }
+
+      const result = await this.pdfProcessorService.saveJsonContent(fileName, body.jsonContent);
+      
+      return {
+        success: true,
+        message: 'JSON content saved successfully',
+        data: result
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to save JSON content',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Post('upload-json/:fileName')
+  async uploadJsonToProcessed(@Param('fileName') fileName: string) {
+    try {
+      const result = await this.pdfProcessorService.uploadJsonToProcessed(fileName);
+      
+      return {
+        success: true,
+        message: 'JSON uploaded to Processed folder successfully',
+        data: result
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to upload JSON to Processed folder',
           error: error.message
         },
         HttpStatus.INTERNAL_SERVER_ERROR

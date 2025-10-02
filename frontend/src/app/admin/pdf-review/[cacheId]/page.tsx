@@ -64,6 +64,12 @@ interface ReviewStats {
   completionPercentage: number;
 }
 
+interface PDFInfo {
+  fileName: string;
+  filePath: string;
+  fileSize: number;
+}
+
 export default function PDFReviewPage() {
   const params = useParams();
   const router = useRouter();
@@ -72,6 +78,7 @@ export default function PDFReviewPage() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [stats, setStats] = useState<ReviewStats | null>(null);
+  const [pdfInfo, setPdfInfo] = useState<PDFInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedQuestions, setSelectedQuestions] = useState<Set<string>>(new Set());
   const [isEditing, setIsEditing] = useState(false);
@@ -89,6 +96,7 @@ export default function PDFReviewPage() {
       const response = await api.get(`/admin/pdf-review/${cacheId}`);
       if (response.data.success) {
         setQuestions(response.data.data);
+        setPdfInfo(response.data.pdfInfo);
         setLoading(false);
       }
     } catch (error: any) {
@@ -133,6 +141,20 @@ export default function PDFReviewPage() {
       }
     } catch (error: any) {
       console.error('Error rejecting question:', error);
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
+  const markAsCompleted = async () => {
+    try {
+      const response = await api.post(`/admin/pdf-processor/mark-completed/${cacheId}`);
+      if (response.data.success) {
+        toast.success('PDF processing marked as completed successfully!');
+        // Optionally redirect back to PDF processor page
+        router.push('/admin/pdf-processor');
+      }
+    } catch (error: any) {
+      console.error('Error marking PDF as completed:', error);
       toast.error(`Error: ${error.response?.data?.message || error.message}`);
     }
   };
@@ -310,17 +332,35 @@ export default function PDFReviewPage() {
         <div className="flex h-screen bg-gray-50">
           {/* Left Sidebar - Question List */}
           <div className="w-1/3 bg-white border-r border-gray-200 flex flex-col">
+            {/* Breadcrumb Navigation */}
+            <div className="p-4 border-b border-gray-200 bg-gray-50">
+              <nav className="flex items-center space-x-2 text-sm">
+                <button
+                  onClick={() => router.push('/admin/pdf-processor')}
+                  className="text-blue-600 hover:text-blue-800 hover:underline"
+                >
+                  PDF Processor
+                </button>
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+                <span className="text-gray-600">Question Review</span>
+              </nav>
+            </div>
+
             {/* Header */}
             <div className="p-4 border-b border-gray-200">
               <div className="flex items-center justify-between mb-4">
                 <h1 className="text-xl font-bold text-gray-900">Question Review</h1>
                 <button
-                  onClick={() => router.back()}
-                  className="text-gray-500 hover:text-gray-700"
+                  onClick={() => router.push('/admin/pdf-processor')}
+                  className="text-gray-500 hover:text-gray-700 flex items-center space-x-1"
+                  title="Back to PDF Processor"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                   </svg>
+                  <span className="text-sm">Back to PDFs</span>
                 </button>
               </div>
 
@@ -458,6 +498,26 @@ export default function PDFReviewPage() {
           <div className="flex-1 flex flex-col">
             {currentQuestion && (
               <>
+                {/* Breadcrumb Navigation */}
+                <div className="bg-gray-50 border-b border-gray-200 p-3">
+                  <nav className="flex items-center space-x-2 text-sm">
+                    <button
+                      onClick={() => router.push('/admin/pdf-processor')}
+                      className="text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                      PDF Processor
+                    </button>
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                    <span className="text-gray-600">Question Review</span>
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                    <span className="text-gray-800 font-medium">Question {currentQuestionIndex + 1}</span>
+                  </nav>
+                </div>
+
                 {/* Question Header */}
                 <div className="bg-white border-b border-gray-200 p-4">
                   <div className="flex items-center justify-between">
@@ -482,6 +542,23 @@ export default function PDFReviewPage() {
                     <div className="flex space-x-2">
                       {!isEditing ? (
                         <>
+                          {pdfInfo && (
+                            <a
+                              href={`http://localhost:3001/static/pdf/${encodeURIComponent(pdfInfo.fileName)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 text-center"
+                              title="Open original PDF in new tab"
+                            >
+                              View PDF
+                            </a>
+                          )}
+                          <button
+                            onClick={markAsCompleted}
+                            className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 border border-orange-600"
+                          >
+                            Mark as completed
+                          </button>
                           <button
                             onClick={startEditing}
                             className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"

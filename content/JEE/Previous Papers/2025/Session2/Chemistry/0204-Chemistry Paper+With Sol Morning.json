@@ -1,0 +1,24 @@
+{
+  "questions": [],
+  "metadata": {
+    "totalQuestions": 0,
+    "subjects": [
+      "Chemistry"
+    ],
+    "topics": [],
+    "difficultyDistribution": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "processingTime": 0,
+    "sourceFile": "0204-Chemistry Paper+With Sol Morning.pdf",
+    "extractedAt": "2025-10-01T01:04:01.131Z",
+    "status": "empty_template",
+    "year": 204,
+    "subject": "Chemistry",
+    "session": "Morning",
+    "date": "02-04",
+    "shift": null
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "questions": [],
+  "metadata": {
+    "totalQuestions": 0,
+    "subjects": [
+      "Physics"
+    ],
+    "topics": [],
+    "difficultyDistribution": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "processingTime": 0,
+    "sourceFile": "0304-Physics Paper+With+Sol Evening.pdf",
+    "extractedAt": "2025-10-01T01:04:01.400Z",
+    "status": "empty_template",
+    "year": 304,
+    "subject": "Physics",
+    "session": "Evening",
+    "date": "03-04",
+    "shift": null
+  }
+}

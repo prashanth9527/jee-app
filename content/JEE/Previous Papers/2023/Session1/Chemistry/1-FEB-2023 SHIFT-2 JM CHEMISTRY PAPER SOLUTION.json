@@ -1,0 +1,375 @@
+{
+    "questions": [
+      {
+        "id": "q31",
+        "stem": "In a reaction, $$\\ce{OH-COOH ->[X] OH-COOCH3 ->[Y] COOH-COOH}$$, reagents 'X' and 'Y' respectively are:",
+        "options": [
+          {
+            "id": "A",
+            "text": "$$(\\ce{CH3CO})2\\ce{O/H+}$$ and $$\\ce{CH3OH/H+}$$, $$\\Delta$$",
+            "isCorrect": true
+          },
+          {
+            "id": "B",
+            "text": "$$(\\ce{CH3CO})2\\ce{O/H+}$$ and $$(\\ce{CH3CO})2\\ce{O/H+}$$",
+            "isCorrect": false
+          },
+          {
+            "id": "C",
+            "text": "$$\\ce{CH3OH/H+}$$, $$\\Delta$$ and $$\\ce{CH3OH/H+}$$, $$\\Delta$$",
+            "isCorrect": false
+          },
+          {
+            "id": "D",
+            "text": "$$\\ce{CH3OH/H+}$$, $$\\Delta$$ and $$(\\ce{CH3CO})2\\ce{O/H+}$$",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "The first step (X) involves protection of the phenolic OH group using acetic anhydride to form acetate ester. The second step (Y) involves esterification of the carboxylic acid group using methanol in acidic medium to form methyl ester.",
+        "tip_formula": "Phenol protection: $$(\\ce{CH3CO})2\\ce{O/H+}$$; Esterification: $$\\ce{CH3OH/H+}$$",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Organic Chemistry",
+        "topic": "Reaction Mechanisms",
+        "subtopic": "Protecting Groups and Esterification",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["esterification", "protecting-groups", "phenol", "carboxylic-acid"]
+      },
+      {
+        "id": "q34",
+        "stem": "The graph which represents the reaction $$(\\ce{C6H5})3\\ce{C-Cl} + \\ce{OH-} \\xrightarrow{\\text{Pyridine}} (\\ce{C6H5})3\\ce{C-OH}$$ is:",
+        "options": [
+          {
+            "id": "A",
+            "text": "Rate vs [alkyl halide] - linear increasing",
+            "isCorrect": false
+          },
+          {
+            "id": "B",
+            "text": "Rate vs [OH⁻] - linear increasing",
+            "isCorrect": false
+          },
+          {
+            "id": "C",
+            "text": "Rate vs [alkyl halide] - constant, independent of [OH⁻]",
+            "isCorrect": true
+          },
+          {
+            "id": "D",
+            "text": "Rate vs [Pyridine] - linear increasing",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "This is an SN1 reaction where the rate-determining step is the formation of the carbocation. The rate depends only on the concentration of the alkyl halide and is independent of the concentration of the nucleophile (OH⁻).",
+        "tip_formula": "SN1 rate law: Rate = k[alkyl halide]",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Organic Chemistry",
+        "topic": "Reaction Mechanisms",
+        "subtopic": "SN1 Reactions",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["sn1", "reaction-kinetics", "carbocation", "alkyl-halide"]
+      },
+      {
+        "id": "q35",
+        "stem": "In the reaction: Benzene + Cyclohexene + HF → X (Major product), 'X' is:",
+        "options": [
+          {
+            "id": "A",
+            "text": "Bicyclohexyl",
+            "isCorrect": true
+          },
+          {
+            "id": "B",
+            "text": "Cyclohexylbenzene",
+            "isCorrect": false
+          },
+          {
+            "id": "C",
+            "text": "Benzene sulfonic acid",
+            "isCorrect": false
+          },
+          {
+            "id": "D",
+            "text": "Cyclohexane",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "HF acts as a catalyst for the Friedel-Crafts alkylation where cyclohexene acts as the alkylating agent, leading to the formation of bicyclohexyl as the major product.",
+        "tip_formula": "Friedel-Crafts alkylation: $$\\ce{Ar-H + R-X ->[Lewis acid] Ar-R}$$",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Organic Chemistry",
+        "topic": "Reaction Mechanisms",
+        "subtopic": "Friedel-Crafts Alkylation",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["friedel-crafts", "alkylation", "benzene", "cyclohexene"]
+      },
+      {
+        "id": "q36",
+        "stem": "The complex cation which has two isomers is:",
+        "options": [
+          {
+            "id": "A",
+            "text": "$$[\\ce{Co(H2O)6}]^{3+}$$",
+            "isCorrect": false
+          },
+          {
+            "id": "B",
+            "text": "$$[\\ce{Co(NH3)5Cl}]^{2+}$$",
+            "isCorrect": false
+          },
+          {
+            "id": "C",
+            "text": "$$[\\ce{Co(NH3)5NO2}]^{2+}$$",
+            "isCorrect": true
+          },
+          {
+            "id": "D",
+            "text": "$$[\\ce{Co(NH3)5Cl}]^+$$",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "$$[\\ce{Co(NH3)5NO2}]^{2+}$$ exhibits linkage isomerism because NO₂⁻ is an ambidentate ligand that can coordinate through nitrogen (nitro) or oxygen (nitrito).",
+        "tip_formula": "Linkage isomerism: Ambidentate ligands like NO₂⁻, SCN⁻, CN⁻",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Inorganic Chemistry",
+        "topic": "Coordination Compounds",
+        "subtopic": "Isomerism in Complexes",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["coordination-compounds", "isomerism", "linkage-isomerism", "ambidentate-ligands"]
+      },
+      {
+        "id": "q37",
+        "stem": "Statement I: Sulphanilic acid gives esterification test for carboxyl group. Statement II: Sulphanilic acid gives red colour in Lassigne's test for extra element detection.",
+        "options": [
+          {
+            "id": "A",
+            "text": "Statement I is correct but Statement II is incorrect",
+            "isCorrect": false
+          },
+          {
+            "id": "B",
+            "text": "Both Statement I and Statement II are incorrect",
+            "isCorrect": false
+          },
+          {
+            "id": "C",
+            "text": "Both Statement I and Statement II are correct",
+            "isCorrect": false
+          },
+          {
+            "id": "D",
+            "text": "Statement I is incorrect but Statement II is correct",
+            "isCorrect": true
+          }
+        ],
+        "explanation": "Sulphanilic acid has -SO₃H group (sulfonic acid), not -COOH, so it doesn't give esterification test. However, it contains both sulfur and nitrogen, which gives red color in Lassigne's test.",
+        "tip_formula": "Sulphanilic acid: $$\\ce{H2N-C6H4-SO3H}$$",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Organic Chemistry",
+        "topic": "Qualitative Analysis",
+        "subtopic": "Functional Group Tests",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["functional-groups", "qualitative-analysis", "sulphanilic-acid", "lassigne-test"]
+      },
+      {
+        "id": "q38",
+        "stem": "Assertion (A): Gypsum is used for making fireproof wall boards. Reason (R): Gypsum is unstable at high temperatures.",
+        "options": [
+          {
+            "id": "A",
+            "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A)",
+            "isCorrect": true
+          },
+          {
+            "id": "B",
+            "text": "(A) is correct but (R) is not correct",
+            "isCorrect": false
+          },
+          {
+            "id": "C",
+            "text": "(A) is not correct but (R) is correct",
+            "isCorrect": false
+          },
+          {
+            "id": "D",
+            "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Gypsum is indeed used for fireproof wall boards, but this is because it contains water of crystallization that is released as steam when heated, cooling the material. Gypsum is actually stable up to about 150°C before it starts losing water.",
+        "tip_formula": "Gypsum: $$\\ce{CaSO4·2H2O}$$ → $$\\ce{CaSO4·1/2H2O}$$ at 150°C",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Inorganic Chemistry",
+        "topic": "s-Block Elements",
+        "subtopic": "Calcium Compounds",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["gypsum", "calcium-compounds", "fireproof-materials", "plaster-of-paris"]
+      },
+      {
+        "id": "q39",
+        "stem": "Which element is not present in Nessler's reagent?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Mercury",
+            "isCorrect": false
+          },
+          {
+            "id": "B",
+            "text": "Potassium",
+            "isCorrect": false
+          },
+          {
+            "id": "C",
+            "text": "Iodine",
+            "isCorrect": false
+          },
+          {
+            "id": "D",
+            "text": "Oxygen",
+            "isCorrect": true
+          }
+        ],
+        "explanation": "Nessler's reagent is $$\\ce{K2[HgI4]}$$ (potassium tetraiodomercurate(II)), which contains potassium, mercury, and iodine. Oxygen is not part of its chemical composition.",
+        "tip_formula": "Nessler's reagent: $$\\ce{K2[HgI4]}$$",
+        "difficulty": "EASY",
+        "subject": "Chemistry",
+        "lesson": "Inorganic Chemistry",
+        "topic": "Qualitative Analysis",
+        "subtopic": "Reagents and Tests",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["nesslers-reagent", "ammonia-test", "qualitative-analysis", "coordination-compounds"]
+      },
+      {
+        "id": "q40",
+        "stem": "Assertion (A): α-halocarboxylic acid on reaction with dil. NH₃ gives good yield of α-amino carboxylic acid whereas the yield of amines is very low when prepared from alkyl halides. Reason (R): Amino acids exist in zwitter ion form in aqueous medium.",
+        "options": [
+          {
+            "id": "A",
+            "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+            "isCorrect": false
+          },
+          {
+            "id": "B",
+            "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A)",
+            "isCorrect": true
+          },
+          {
+            "id": "C",
+            "text": "(A) is correct but (R) is not correct",
+            "isCorrect": false
+          },
+          {
+            "id": "D",
+            "text": "(A) is not correct but (R) is correct",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Both statements are correct. α-halocarboxylic acids give better yields due to the electron-withdrawing carboxyl group activating the halogen. Amino acids do exist as zwitterions, but this is not the reason for the difference in yields between the two reactions.",
+        "tip_formula": "α-halocarboxylic acid + NH₃ → α-amino acid",
+        "difficulty": "MEDIUM",
+        "subject": "Chemistry",
+        "lesson": "Organic Chemistry",
+        "topic": "Amines and Amino Acids",
+        "subtopic": "Preparation Methods",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["amino-acids", "halocarboxylic-acids", "zwitterion", "nucleophilic-substitution"]
+      },
+      {
+        "id": "q41",
+        "stem": "The industrial activity held least responsible for global warming is:",
+        "options": [
+          {
+            "id": "A",
+            "text": "manufacturing of cement",
+            "isCorrect": false
+          },
+          {
+            "id": "B",
+            "text": "steel manufacturing",
+            "isCorrect": false
+          },
+          {
+            "id": "C",
+            "text": "Electricity generation in thermal power plants",
+            "isCorrect": false
+          },
+          {
+            "id": "D",
+            "text": "Industrial production of urea",
+            "isCorrect": true
+          }
+        ],
+        "explanation": "Urea production consumes CO₂ in the reaction: $$\\ce{2NH3 + CO2 -> NH2CONH2 + H2O}$$, making it the least responsible for global warming among the given options.",
+        "tip_formula": "Urea production: $$\\ce{2NH3 + CO2 -> NH2CONH2 + H2O}$$",
+        "difficulty": "EASY",
+        "subject": "Chemistry",
+        "lesson": "Environmental Chemistry",
+        "topic": "Global Warming",
+        "subtopic": "Industrial Contributions",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["global-warming", "urea-production", "carbon-dioxide", "industrial-processes"]
+      },
+      {
+        "id": "q42",
+        "stem": "The structures of major products A, B and C in the reaction sequence: Aldehyde → [NaHSO₃, dil. HCl] A → [NaCN, H₂O] B → [LiAlH₄] C → [HCl/H₂O, Δ] are:",
+        "options": [
+          {
+            "id": "A",
+            "text": "A = cyanohydrin, B = aldehyde, C = carboxylic acid",
+            "isCorrect": false
+          },
+          {
+            "id": "B",
+            "text": "A = bisulfite adduct, B = alcohol, C = alkyl chloride",
+            "isCorrect": false
+          },
+          {
+            "id": "C",
+            "text": "A = sulfonic acid, B = alcohol, C = sulfonyl chloride",
+            "isCorrect": false
+          },
+          {
+            "id": "D",
+            "text": "A = cyanohydrin, B = amino alcohol, C = hydroxy acid",
+            "isCorrect": true
+          }
+        ],
+        "explanation": "The reaction sequence involves: 1) Formation of cyanohydrin (A), 2) Reduction to amino alcohol (B) with LiAlH₄, 3) Acid hydrolysis to hydroxy acid (C).",
+        "tip_formula": "Cyanohydrin formation: $$\\ce{RCHO + HCN -> RCH(OH)CN}$$",
+        "difficulty": "HARD",
+        "subject": "Chemistry",
+        "lesson": "Organic Chemistry",
+        "topic": "Reaction Sequences",
+        "subtopic": "Carbonyl Compounds",
+        "yearAppeared": 2023,
+        "isPreviousYear": true,
+        "tags": ["reaction-sequence", "cyanohydrin", "reduction", "hydrolysis"]
+      }
+    ],
+    "metadata": {
+      "totalQuestions": 10,
+      "subjects": ["Chemistry"],
+      "topics": ["Organic Chemistry", "Inorganic Chemistry", "Environmental Chemistry"],
+      "difficultyDistribution": {
+        "easy": 2,
+        "medium": 6,
+        "hard": 2
+      },
+      "processingTime": 75
+    }
+  }

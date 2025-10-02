@@ -6,6 +6,7 @@ import AdminLayout from '@/components/AdminLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import api from '@/lib/api';
 import { toast } from '@/lib/toast';
+import Swal from 'sweetalert2';
 
 interface PDFFile {
   fileName: string;
@@ -16,6 +17,19 @@ interface PDFFile {
   hasImportedQuestions?: boolean;
   cacheId?: string;
   importedAt?: string;
+  hasJsonFile?: boolean;
+  jsonContent?: string;
+  jsonQuestionCount?: number;
+  databaseId?: string;
+  importedQuestionCount?: number;
+}
+
+interface FolderNode {
+  name: string;
+  path: string;
+  children: FolderNode[];
+  fileCount: number;
+  isExpanded: boolean;
 }
 
 interface ProcessingStats {
@@ -27,10 +41,6 @@ interface ProcessingStats {
   retrying: number;
 }
 
-interface AIProviders {
-  providers: string[];
-  available: { [key: string]: boolean };
-}
 
 interface ProcessingStatus {
   id: string;
@@ -55,31 +65,267 @@ export default function PDFProcessorPage() {
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
-  const [customPrompt, setCustomPrompt] = useState('');
   const [statusDetails, setStatusDetails] = useState<ProcessingStatus | null>(null);
   const [showStatusModal, setShowStatusModal] = useState(false);
-  const [aiProviders, setAiProviders] = useState<AIProviders | null>(null);
-  const [selectedProvider, setSelectedProvider] = useState<string>('openai');
-  const [currentAIService, setCurrentAIService] = useState<string>('openai');
+  const [editingJson, setEditingJson] = useState<string | null>(null);
+  const [jsonContent, setJsonContent] = useState<string>('');
+  const [showJsonModal, setShowJsonModal] = useState(false);
+  const [showActionMenu, setShowActionMenu] = useState<string | null>(null);
+  const [folderTree, setFolderTree] = useState<FolderNode[]>([]);
+  const [selectedFolder, setSelectedFolder] = useState<string>('');
+  const [filteredPdfs, setFilteredPdfs] = useState<PDFFile[]>([]);
+  const [showFolderPanel, setShowFolderPanel] = useState<boolean>(true);
 
   useEffect(() => {
     fetchPDFs();
     fetchStats();
-    fetchAIProviders();
   }, []);
+
+  // Update filtered PDFs when selectedFolder or pdfs change
+  useEffect(() => {
+    if (selectedFolder === '') {
+      setFilteredPdfs(pdfs);
+    } else {
+      const basePath = 'content\\';
+      const filtered = pdfs.filter(pdf => {
+        const relativePath = pdf.filePath.includes(basePath) 
+          ? pdf.filePath.split(basePath)[1] 
+          : pdf.filePath;
+        return relativePath.startsWith(selectedFolder + '\\') || relativePath === selectedFolder;
+      });
+      setFilteredPdfs(filtered);
+    }
+  }, [selectedFolder, pdfs]);
+
+  // Close action menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (showActionMenu) {
+        const target = event.target as Element;
+        if (!target.closest('.action-menu-container')) {
+          setShowActionMenu(null);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showActionMenu]);
+
+  // Handle keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Toggle folder panel with Ctrl/Cmd + B
+      if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
+        event.preventDefault();
+        setShowFolderPanel(prev => !prev);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  // Build folder tree from PDF file paths
+  const buildFolderTree = (pdfs: PDFFile[]): FolderNode[] => {
+    const basePath = 'content\\';
+    const folderMap = new Map<string, FolderNode>();
+    
+    // First pass: create all folder nodes
+    pdfs.forEach(pdf => {
+      const relativePath = pdf.filePath.includes(basePath) 
+        ? pdf.filePath.split(basePath)[1] 
+        : pdf.filePath;
+      
+      const pathParts = relativePath.split('\\').filter(part => part && !part.endsWith('.pdf'));
+      
+      let fullPath = '';
+      pathParts.forEach((part, index) => {
+        fullPath = fullPath ? `${fullPath}\\${part}` : part;
+        
+        if (!folderMap.has(fullPath)) {
+          folderMap.set(fullPath, {
+            name: part,
+            path: fullPath,
+            children: [],
+            fileCount: 0,
+            isExpanded: index === 0 // Auto-expand first level (content subfolders)
+          });
+        }
+      });
+    });
+    
+    // Second pass: build parent-child relationships
+    const rootNodes: FolderNode[] = [];
+    
+    folderMap.forEach((node, path) => {
+      const pathParts = path.split('\\');
+      
+      if (pathParts.length === 1) {
+        // Root level node
+        rootNodes.push(node);
+      } else {
+        // Find parent
+        const parentPath = pathParts.slice(0, -1).join('\\');
+        const parent = folderMap.get(parentPath);
+        if (parent) {
+          parent.children.push(node);
+        }
+      }
+    });
+    
+    // Third pass: count files in each folder
+    const countFiles = (nodes: FolderNode[]): void => {
+      nodes.forEach(node => {
+        const filesInFolder = pdfs.filter(p => {
+          const pRelativePath = p.filePath.includes(basePath) 
+            ? p.filePath.split(basePath)[1] 
+            : p.filePath;
+          return pRelativePath.startsWith(node.path + '\\') || pRelativePath === node.path;
+        });
+        node.fileCount = filesInFolder.length;
+        
+        if (node.children.length > 0) {
+          countFiles(node.children);
+        }
+      });
+    };
+    
+    // Sort all levels
+    const sortNodes = (nodes: FolderNode[]): void => {
+      nodes.sort((a, b) => a.name.localeCompare(b.name));
+      nodes.forEach(node => {
+        if (node.children.length > 0) {
+          sortNodes(node.children);
+        }
+      });
+    };
+    
+    sortNodes(rootNodes);
+    countFiles(rootNodes);
+    
+    return rootNodes;
+  };
+
+  // Toggle folder expansion
+  const toggleFolder = (folderPath: string) => {
+    const updateTree = (nodes: FolderNode[]): FolderNode[] => {
+      return nodes.map(node => {
+        if (node.path === folderPath) {
+          return { ...node, isExpanded: !node.isExpanded };
+        }
+        if (node.children.length > 0) {
+          return { ...node, children: updateTree(node.children) };
+        }
+        return node;
+      });
+    };
+    
+    setFolderTree(updateTree(folderTree));
+  };
+
+  // Select folder for filtering
+  const selectFolder = (folderPath: string) => {
+    setSelectedFolder(folderPath);
+  };
+
+  // Render tree node recursively
+  const renderTreeNode = (node: FolderNode, level: number = 0) => {
+    const hasChildren = node.children.length > 0;
+    const isSelected = selectedFolder === node.path;
+    
+    return (
+      <div key={node.path}>
+        <div 
+          className={`flex items-center py-1 px-2 cursor-pointer hover:bg-gray-100 rounded ${
+            isSelected ? 'bg-blue-100 text-blue-800' : 'text-gray-700'
+          }`}
+          style={{ paddingLeft: `${level * 20 + 8}px` }}
+          onClick={() => selectFolder(node.path)}
+        >
+          {hasChildren && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFolder(node.path);
+              }}
+              className="mr-1 w-4 h-4 flex items-center justify-center text-gray-500 hover:text-gray-700"
+            >
+              {node.isExpanded ? (
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                </svg>
+              ) : (
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              )}
+            </button>
+          )}
+          {!hasChildren && <div className="w-4 mr-1"></div>}
+          
+          <svg className="w-4 h-4 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+          </svg>
+          
+          <span className="text-sm font-medium">{node.name}</span>
+          {node.fileCount > 0 && (
+            <span className="ml-2 text-xs text-gray-500">({node.fileCount})</span>
+          )}
+        </div>
+        
+        {hasChildren && node.isExpanded && (
+          <div>
+            {node.children.map(child => renderTreeNode(child, level + 1))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const fetchPDFs = async () => {
     try {
       const response = await api.get('/admin/pdf-processor/list');
       if (response.data.success) {
         const pdfs = response.data.data;
-        const currentAIService = response.data.currentAIService || 'openai';
-        setCurrentAIService(currentAIService);
-        setSelectedProvider(currentAIService);
         
-        // Fetch question counts and import status for completed files
+        // Fetch question counts, JSON status, and import status for all files
         const pdfsWithCounts = await Promise.all(
           pdfs.map(async (pdf: PDFFile) => {
+            let enhancedPdf = { ...pdf };
+            
+            // Check for JSON file existence and content
+            try {
+              const jsonResponse = await api.get(`/admin/pdf-processor/json-status/${pdf.fileName}`);
+              if (jsonResponse.data.success) {
+                const jsonData = jsonResponse.data.data;
+                enhancedPdf = {
+                  ...enhancedPdf,
+                  hasJsonFile: jsonData.hasJsonFile,
+                  jsonContent: jsonData.jsonContent,
+                  jsonQuestionCount: jsonData.questionCount,
+                  databaseId: jsonData.databaseId
+                };
+              }
+            } catch (error) {
+              console.warn(`Failed to check JSON status for ${pdf.fileName}:`, error);
+            }
+            
+            // Check if questions have been imported using importedAt field
+            const hasImportedQuestions = pdf.importedAt !== null && pdf.importedAt !== undefined;
+            
+            // Get cache ID for review page navigation
+            let cacheId = null;
+            if (hasImportedQuestions && enhancedPdf.databaseId) {
+              cacheId = enhancedPdf.databaseId;
+            }
+            
+            console.log(`PDF ${pdf.fileName}: importedAt=${pdf.importedAt}, hasImportedQuestions=${hasImportedQuestions}, databaseId=${enhancedPdf.databaseId}, importedQuestionCount=${pdf.importedQuestionCount}`);
+            
             if (pdf.status === 'COMPLETED') {
               try {
                 // Get question count
@@ -87,43 +333,35 @@ export default function PDFProcessorPage() {
                 if (countResponse.data.success) {
                   const questionCount = countResponse.data.data.questionCount;
                   
-                  // Check if questions have been imported by getting the cache ID and checking for questions
-                  try {
-                    const processedResponse = await api.get('/admin/pdf-processor/processed');
-                    if (processedResponse.data.success) {
-                      const processedPdfs = processedResponse.data.data;
-                      const matchingPdf = processedPdfs.find((p: any) => p.fileName === pdf.fileName);
-                      
-                      if (matchingPdf) {
-                        // Check if there are questions for this cache ID
-                        const statsResponse = await api.get(`/admin/pdf-review/stats/${matchingPdf.id}`);
-                        if (statsResponse.data.success) {
-                          const stats = statsResponse.data.data;
-                          console.log(`PDF ${pdf.fileName}: Found ${stats.total} questions, imported: ${stats.total > 0}`);
                           return { 
-                            ...pdf, 
+                    ...enhancedPdf, 
                             questionCount,
-                            hasImportedQuestions: stats.total > 0,
-                            cacheId: matchingPdf.id
-                          };
-                        }
-                      }
-                    }
-                  } catch (error) {
-                    console.warn(`Failed to check import status for ${pdf.fileName}:`, error);
-                  }
-                  
-                  return { ...pdf, questionCount, hasImportedQuestions: false };
+                    hasImportedQuestions,
+                    cacheId,
+                    importedQuestionCount: pdf.importedQuestionCount
+                  };
                 }
               } catch (error) {
                 console.warn(`Failed to get question count for ${pdf.fileName}:`, error);
               }
             }
-            return pdf;
+            
+            // Return with import status even if no question count available
+            return { 
+              ...enhancedPdf, 
+              hasImportedQuestions,
+              cacheId,
+              importedQuestionCount: pdf.importedQuestionCount
+            };
           })
         );
         
         setPdfs(pdfsWithCounts);
+        
+        // Build folder tree
+        const tree = buildFolderTree(pdfsWithCounts);
+        console.log('Built folder tree:', tree);
+        setFolderTree(tree);
       }
     } catch (error) {
       console.error('Error fetching PDFs:', error);
@@ -143,34 +381,17 @@ export default function PDFProcessorPage() {
     }
   };
 
-  const fetchAIProviders = async () => {
-    try {
-      const response = await api.get('/admin/pdf-processor/ai-providers');
-      if (response.data.success) {
-        setAiProviders(response.data.data);
-        // Set default provider to the first available one
-        const availableProviders = response.data.data.providers.filter((provider: string) => 
-          response.data.data.available[provider]
-        );
-        if (availableProviders.length > 0) {
-          setSelectedProvider(availableProviders[0]);
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching AI providers:', error);
-    }
-  };
 
   const processPDF = async (fileName: string, filePath?: string) => {
     setProcessing(fileName);
-    toast.loading(`Processing PDF with ${selectedProvider.toUpperCase()}...`, 'Please wait');
+    toast.loading('Processing PDF...', 'Please wait');
     
     try {
       const response = await api.post('/admin/pdf-processor/process', {
         fileName,
         filePath,
-        userPrompt: customPrompt || undefined,
-        aiProvider: selectedProvider
+        userPrompt: undefined,
+        aiProvider: 'openai' // Use default provider
       });
       
       if (response.data.success) {
@@ -191,10 +412,18 @@ export default function PDFProcessorPage() {
   const retryProcessing = async (fileName: string, currentStatus: string) => {
     // Show confirmation for completed files since it will overwrite existing data
     if (currentStatus === 'COMPLETED') {
-      const confirmed = window.confirm(
-        'This will reprocess the PDF and overwrite the existing processed data. Are you sure you want to continue?'
-      );
-      if (!confirmed) {
+      const result = await Swal.fire({
+        title: 'Confirm Reprocessing',
+        text: 'This will reprocess the PDF and overwrite the existing processed data. Are you sure you want to continue?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, reprocess it!',
+        cancelButtonText: 'Cancel'
+      });
+      
+      if (!result.isConfirmed) {
         return;
       }
     }
@@ -234,10 +463,18 @@ export default function PDFProcessorPage() {
   };
 
   const resetRetryCount = async (fileName: string) => {
-    const confirmed = window.confirm(
-      'This will reset the retry count and allow you to retry processing. Are you sure?'
-    );
-    if (!confirmed) {
+    const result = await Swal.fire({
+      title: 'Reset Retry Count',
+      text: 'This will reset the retry count and allow you to retry processing. Are you sure?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, reset it!',
+      cancelButtonText: 'Cancel'
+    });
+    
+    if (!result.isConfirmed) {
       return;
     }
 
@@ -285,34 +522,59 @@ export default function PDFProcessorPage() {
   };
 
   const importProcessedJSON = async (fileName: string) => {
-    // Find the PDF to get question count
+    // Find the PDF to get question count and cache ID
     const pdf = pdfs.find(p => p.fileName === fileName);
-    const questionCount = pdf?.questionCount;
+    const questionCount = pdf?.jsonQuestionCount;
+    const cacheId = pdf?.databaseId;
+    
+    if (!cacheId) {
+      toast.error('Database ID not found for this file');
+      return;
+    }
     
     // Show confirmation dialog
-    const confirmed = window.confirm(
-      `This will import ${questionCount ? `${questionCount} questions` : 'all questions'} from ${fileName} into the Question database with 'under review' status. After import, you can click the 'Review' button to approve/reject questions. Are you sure you want to continue?`
-    );
+    const result = await Swal.fire({
+      title: 'Import Questions',
+      html: `This will import <strong>${questionCount ? `${questionCount} questions` : 'all questions'}</strong> from <br><strong>${fileName}</strong><br><br>into the Question database with <strong>'under review'</strong> status.<br><br>After import, you can click the <strong>'Review'</strong> button to approve/reject questions.<br><br>Are you sure you want to continue?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, import them!',
+      cancelButtonText: 'Cancel',
+      width: '500px'
+    });
     
-    if (!confirmed) {
+    if (!result.isConfirmed) {
       return;
     }
 
     toast.loading('Importing questions...', 'Please wait');
     
     try {
-      const response = await api.post(`/admin/pdf-processor/import/${fileName}`);
+      const response = await api.post(`/admin/pdf-processor/import/${cacheId}`);
       
       if (response.data.success) {
         toast.close();
-        const { importedCount, skippedCount, totalQuestions, errors, cacheId } = response.data.data;
+        const { importedCount, skippedCount, totalQuestions, errors, cacheId: responseCacheId } = response.data.data;
         
-        let message = `Import completed! ${importedCount} questions imported successfully.`;
-        if (skippedCount > 0) {
-          message += ` ${skippedCount} questions were skipped.`;
+        let message;
+        if (importedCount === 0) {
+          message = `No new questions imported. ${skippedCount} questions were skipped (already exist in database).`;
+          if (errors && errors.length > 0) {
+            message += ` ${errors.length} questions had validation errors.`;
+          }
+          toast.warning(message);
+        } else {
+          message = `Import completed! ${importedCount} questions imported successfully.`;
+          if (skippedCount > 0) {
+            message += ` ${skippedCount} questions were skipped (already exist in database).`;
+          }
+          if (errors && errors.length > 0) {
+            message += ` ${errors.length} questions had validation errors.`;
+          }
+          toast.success(message);
         }
-        
-        toast.success(message);
         
         // Show detailed results if there were errors
         if (errors && errors.length > 0) {
@@ -325,13 +587,56 @@ export default function PDFProcessorPage() {
         // Refresh the PDF list to update the import status and show "Review" button
         fetchPDFs();
         
-        // Show option to go to review page
-        setTimeout(() => {
-          const goToReview = window.confirm(
-            `Questions imported successfully! Would you like to go to the review page now?`
-          );
-          if (goToReview && cacheId) {
-            router.push(`/admin/pdf-review/${cacheId}`);
+        // Show detailed import results and option to go to review page
+        setTimeout(async () => {
+          let resultText = '';
+          let icon = 'success';
+          let title = 'Import Results';
+          
+          if (importedCount === 0) {
+            title = 'No New Questions Imported';
+            icon = 'warning';
+            resultText = `No new questions were imported from this file.<br><br>`;
+            resultText += `📊 <strong>Import Statistics:</strong><br>`;
+            resultText += `❌ <strong>0</strong> questions imported<br>`;
+            resultText += `⚠️ <strong>${skippedCount}</strong> questions skipped (duplicates)<br>`;
+            resultText += `📝 <strong>${totalQuestions}</strong> total questions processed<br><br>`;
+            
+            if (errors && errors.length > 0) {
+              resultText += `⚠️ <strong>${errors.length}</strong> questions had validation errors<br><br>`;
+            }
+            
+            resultText += `All questions from this file already exist in the database.`;
+          } else {
+            resultText = `Import completed successfully!<br><br>`;
+            resultText += `📊 <strong>Import Statistics:</strong><br>`;
+            resultText += `✅ <strong>${importedCount}</strong> questions imported<br>`;
+            if (skippedCount > 0) {
+              resultText += `⚠️ <strong>${skippedCount}</strong> questions skipped (duplicates)<br>`;
+            }
+            resultText += `📝 <strong>${totalQuestions}</strong> total questions processed<br><br>`;
+            
+            if (errors && errors.length > 0) {
+              resultText += `⚠️ <strong>${errors.length}</strong> questions had validation errors<br><br>`;
+            }
+            
+            resultText += `Would you like to go to the review page to approve/reject the imported questions?`;
+          }
+
+          const result = await Swal.fire({
+            title: title,
+            html: resultText,
+            icon: icon as any,
+            showCancelButton: importedCount > 0,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, go to review!',
+            cancelButtonText: 'Stay here',
+            width: '500px'
+          });
+          
+          if (result.isConfirmed && responseCacheId && importedCount > 0) {
+            router.push(`/admin/pdf-review/${responseCacheId}`);
           }
         }, 2000); // Wait 2 seconds to show the success message
       }
@@ -340,6 +645,86 @@ export default function PDFProcessorPage() {
       toast.close();
       toast.error(`Error: ${error.response?.data?.message || error.message}`);
     }
+  };
+
+  const openJsonEditor = (fileName: string) => {
+    const pdf = pdfs.find(p => p.fileName === fileName);
+    setEditingJson(fileName);
+    setJsonContent(pdf?.jsonContent || '');
+    setShowJsonModal(true);
+  };
+
+  const saveJsonContent = async () => {
+    if (!editingJson || !jsonContent.trim()) {
+      toast.error('Please enter JSON content');
+      return;
+    }
+
+    toast.loading('Saving JSON content...', 'Please wait');
+    
+    try {
+      const response = await api.post(`/admin/pdf-processor/save-json/${editingJson}`, {
+        jsonContent: jsonContent.trim()
+      });
+      
+      if (response.data.success) {
+        toast.close();
+        toast.success('JSON content saved successfully!');
+        setShowJsonModal(false);
+        setEditingJson(null);
+        setJsonContent('');
+        fetchPDFs(); // Refresh the list
+      }
+    } catch (error: any) {
+      console.error('Error saving JSON content:', error);
+      toast.close();
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
+  const uploadJsonToProcessed = async (fileName: string) => {
+    const pdf = pdfs.find(p => p.fileName === fileName);
+    const questionCount = pdf?.jsonQuestionCount;
+    
+    const result = await Swal.fire({
+      title: 'Upload JSON to Processed',
+      html: `This will upload the JSON content to the <strong>Processed</strong> folder and save it to <strong>PDFProcessorCache</strong>.<br><br><strong>${questionCount ? `${questionCount} questions` : 'Questions'}</strong> will be available for import.<br><br>Continue?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, upload it!',
+      cancelButtonText: 'Cancel',
+      width: '450px'
+    });
+    
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    toast.loading('Uploading JSON to Processed folder...', 'Please wait');
+    
+    try {
+      const response = await api.post(`/admin/pdf-processor/upload-json/${fileName}`);
+      
+      if (response.data.success) {
+        toast.close();
+        toast.success('JSON uploaded to Processed folder successfully!');
+        fetchPDFs(); // Refresh the list
+      }
+    } catch (error: any) {
+      console.error('Error uploading JSON:', error);
+      toast.close();
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
+  const toggleActionMenu = (fileName: string) => {
+    setShowActionMenu(showActionMenu === fileName ? null : fileName);
+  };
+
+  const closeActionMenu = () => {
+    setShowActionMenu(null);
   };
 
   const getStatusColor = (status: string) => {
@@ -383,11 +768,82 @@ export default function PDFProcessorPage() {
   return (
     <ProtectedRoute requiredRole="ADMIN">
       <AdminLayout>
-        <div className="space-y-6">
+        <div className="flex space-x-6">
+          {/* Folder Tree Sidebar */}
+          {showFolderPanel && (
+            <div className="w-80 bg-white rounded-lg shadow transition-all duration-300 ease-in-out">
+              <div className="px-4 py-3 border-b border-gray-200 flex justify-between items-center">
+                <h3 className="text-lg font-semibold text-gray-900">Folder Structure</h3>
+                <button
+                  onClick={() => setShowFolderPanel(false)}
+                  className="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors"
+                  title="Hide folder panel (Ctrl+B)"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              {selectedFolder && (
+                <div className="px-4 py-2 border-b border-gray-200">
+                  <button
+                    onClick={() => setSelectedFolder('')}
+                    className="text-sm text-blue-600 hover:text-blue-800"
+                  >
+                    ← Show All Files
+                  </button>
+                </div>
+              )}
+              <div className="p-2 max-h-96 overflow-y-auto">
+                {folderTree.length > 0 ? (
+                  <div>
+                    {folderTree.map(node => renderTreeNode(node))}
+                  </div>
+                ) : (
+                  <div className="text-sm text-gray-500 text-center py-4">
+                    No folders found
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Main Content */}
+          <div className="flex-1 space-y-6">
           {/* Header */}
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">PDF Processor</h1>
-            <p className="text-gray-600">Process JEE Previous Year Papers using AI providers (OpenAI GPT-4o or DeepSeek)</p>
+            <div className="flex justify-between items-start">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">PDF Processor</h1>
+                <p className="text-gray-600">Process JEE Previous Year Papers using AI providers (OpenAI GPT-4o or DeepSeek)</p>
+              </div>
+              {!showFolderPanel && (
+                <button
+                  onClick={() => setShowFolderPanel(true)}
+                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  title="Show folder panel (Ctrl+B)"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z" />
+                  </svg>
+                  Show Folders
+                </button>
+              )}
+            </div>
+            {selectedFolder && (
+              <div className="mt-2">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                  📁 Filtered by: {selectedFolder}
+                  <button
+                    onClick={() => setSelectedFolder('')}
+                    className="ml-2 text-blue-600 hover:text-blue-800"
+                  >
+                    ✕
+                  </button>
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Stats Cards */}
@@ -420,67 +876,6 @@ export default function PDFProcessorPage() {
             </div>
           )}
 
-          {/* AI Provider and Custom Prompt Section */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">AI Provider & Processing Settings</h3>
-            <div className="space-y-4">
-              {/* AI Provider Selection */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  AI Provider
-                </label>
-                <div className="mb-2">
-                  <span className="text-sm text-blue-600 font-medium">
-                    Current Default: {currentAIService.toUpperCase()}
-                  </span>
-                  <span className="text-xs text-gray-500 ml-2">
-                    (Set via AI_SERVICE environment variable)
-                  </span>
-                </div>
-                <div className="flex space-x-4">
-                  {aiProviders?.providers.map((provider) => (
-                    <label key={provider} className="flex items-center">
-                      <input
-                        type="radio"
-                        name="aiProvider"
-                        value={provider}
-                        checked={selectedProvider === provider}
-                        onChange={(e) => setSelectedProvider(e.target.value)}
-                        disabled={!aiProviders.available[provider]}
-                        className="mr-2"
-                      />
-                      <span className={`text-sm ${aiProviders.available[provider] ? 'text-gray-900' : 'text-gray-400'}`}>
-                        {provider.toUpperCase()}
-                        {provider === currentAIService && ' (Default)'}
-                        {!aiProviders.available[provider] && ' (Not Available)'}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  {selectedProvider === 'openai' && 'Uses OpenAI GPT-4o with file upload and chunked processing'}
-                  {selectedProvider === 'deepseek' && 'Uses DeepSeek API with base64 PDF encoding and chunked processing'}
-                </div>
-              </div>
-
-              {/* Custom Prompt */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Instructions (Optional)
-                </label>
-                <textarea
-                  value={customPrompt}
-                  onChange={(e) => setCustomPrompt(e.target.value)}
-                  placeholder="Add any specific instructions for processing this PDF..."
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  rows={3}
-                />
-              </div>
-              <div className="text-sm text-gray-600">
-                <p><strong>Default System Prompt:</strong> Extracts JEE questions with LaTeX math formatting, 4 options per question, detailed explanations, and proper categorization.</p>
-              </div>
-            </div>
-          </div>
 
           {/* PDF List */}
           <div className="bg-white rounded-lg shadow">
@@ -491,14 +886,20 @@ export default function PDFProcessorPage() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-80">
                       File Name
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">
                       Size
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-28">
                       Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
+                      JSON Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
+                      Database ID
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Actions
@@ -506,10 +907,11 @@ export default function PDFProcessorPage() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {pdfs.map((pdf) => (
+                  {filteredPdfs.map((pdf) => (
                     <tr key={pdf.fileName} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4">
+                        <div className="max-w-full">
+                          <div className="text-sm font-medium text-gray-900 mb-1 break-words">
                           <a 
                             href={`http://localhost:3001/static/pdf/${encodeURIComponent(pdf.fileName)}`}
                             target="_blank"
@@ -520,7 +922,27 @@ export default function PDFProcessorPage() {
                             {pdf.fileName}
                           </a>
                         </div>
-                        <div className="text-sm text-gray-500">{pdf.filePath}</div>
+                          <div className="flex items-start space-x-2">
+                            <code className="flex-1 text-xs text-gray-500 break-all leading-tight">
+                              {pdf.filePath}
+                            </code>
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(pdf.filePath).then(() => {
+                                  toast.success('File path copied to clipboard!');
+                                }).catch(() => {
+                                  toast.error('Failed to copy file path');
+                                });
+                              }}
+                              className="flex-shrink-0 p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors"
+                              title="Copy file path to clipboard"
+                            >
+                              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {formatFileSize(pdf.fileSize)}
@@ -530,73 +952,208 @@ export default function PDFProcessorPage() {
                           {pdf.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                        {pdf.status === 'PENDING' && (
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm">
+                          {pdf.hasJsonFile ? (
+                            <div className="space-y-1">
+                              <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                JSON Available
+                              </span>
+                              {pdf.jsonQuestionCount && (
+                                <div className="text-xs text-gray-500">
+                                  {pdf.jsonQuestionCount} questions
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                              No JSON
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm">
+                          {pdf.databaseId ? (
+                            <div className="space-y-1">
+                              <code className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded font-mono">
+                                {pdf.databaseId}
+                              </code>
                           <button
-                            onClick={() => processPDF(pdf.fileName, pdf.filePath)}
-                            disabled={processing === pdf.fileName}
-                            className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                          >
-                            {processing === pdf.fileName ? 'Processing...' : 'Process'}
+                                onClick={() => {
+                                  navigator.clipboard.writeText(pdf.databaseId!).then(() => {
+                                    toast.success('Database ID copied to clipboard!');
+                                  }).catch(() => {
+                                    toast.error('Failed to copy database ID');
+                                  });
+                                }}
+                                className="flex items-center text-xs text-gray-500 hover:text-gray-700"
+                                title="Copy database ID"
+                              >
+                                <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                Copy
+                          </button>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-gray-400">Not in DB</span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div className="flex items-center space-x-2">
+                          {/* Primary Actions - Always Visible */}
+                          <div className="flex space-x-1">
+                            {/* Add/Edit JSON Button - Show based on database status */}
+                            {!pdf.databaseId ? (
+                            <button
+                                onClick={() => openJsonEditor(pdf.fileName)}
+                                className="bg-indigo-600 text-white px-3 py-1 rounded-md hover:bg-indigo-700 text-xs"
+                                title="Add JSON content manually"
+                              >
+                                Add JSON
+                            </button>
+                            ) : (
+                            <button
+                                onClick={() => openJsonEditor(pdf.fileName)}
+                                className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 text-xs"
+                                title="Edit JSON content"
+                              >
+                                Edit JSON
                           </button>
                         )}
                         
-                        {(pdf.status === 'FAILED' || pdf.status === 'COMPLETED') && (
-                          <>
+                            {/* Import/Preview Button - Show when content is in DB */}
+                            {pdf.databaseId && (
+                              pdf.hasImportedQuestions ? (
                             <button
-                              onClick={() => retryProcessing(pdf.fileName, pdf.status)}
-                              disabled={processing === pdf.fileName}
-                              className="bg-yellow-600 text-white px-3 py-1 rounded-md hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                              {processing === pdf.fileName ? 'Retrying...' : 'Retry'}
+                                onClick={async () => {
+                                  // Check if all JSON questions are imported
+                                  if (pdf.jsonQuestionCount && pdf.importedQuestionCount && 
+                                      pdf.jsonQuestionCount > pdf.importedQuestionCount) {
+                                    // Import remaining questions first
+                                    await importProcessedJSON(pdf.fileName);
+                                  }
+                                  // Then navigate to preview
+                                  router.push(`/admin/pdf-review/${pdf.cacheId}`);
+                                }}
+                                  className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 text-xs"
+                                title={pdf.importedQuestionCount ? `Preview ${pdf.importedQuestionCount} imported questions` : 'Preview questions'}
+                              >
+                                Preview{pdf.importedQuestionCount ? ` (${pdf.importedQuestionCount})` : ''}
                             </button>
+                            ) : (
                             <button
-                              onClick={() => resetRetryCount(pdf.fileName)}
-                              disabled={processing === pdf.fileName}
-                              className="bg-orange-600 text-white px-3 py-1 rounded-md hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                              title="Reset retry count if max attempts reached"
-                            >
-                              Reset Retry
+                                onClick={() => importProcessedJSON(pdf.fileName)}
+                                  className="bg-purple-600 text-white px-3 py-1 rounded-md hover:bg-purple-700 text-xs"
+                                  title={pdf.jsonQuestionCount ? `Import ${pdf.jsonQuestionCount} questions (duplicates will be skipped)` : 'Import questions'}
+                              >
+                                  Import{pdf.jsonQuestionCount ? ` (${pdf.jsonQuestionCount})` : ''}
                             </button>
-                          </>
+                              )
                         )}
                         
-                        {pdf.status === 'COMPLETED' && (
-                          <>
+                            {/* Write to File Button - Show when JSON content exists in DB */}
+                            {pdf.databaseId && pdf.jsonContent && (
                             <button
-                              onClick={() => downloadProcessed(pdf.fileName)}
-                              className="bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-700"
+                                onClick={() => uploadJsonToProcessed(pdf.fileName)}
+                                className="bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-700 text-xs"
+                                title="Write JSON to Processed folder"
                             >
-                              Download
+                                Write to File
                             </button>
-                            {pdf.importedAt ? (
+                            )}
+                          </div>
+
+                          {/* Hamburger Menu for Secondary Actions */}
+                          <div className="relative action-menu-container">
                               <button
-                                onClick={() => router.push(`/admin/pdf-review/${pdf.cacheId}`)}
-                                className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700"
-                                title={pdf.questionCount ? `Preview ${pdf.questionCount} questions` : 'Preview questions'}
-                              >
-                                Preview{pdf.questionCount ? ` (${pdf.questionCount})` : ''}
+                              onClick={() => toggleActionMenu(pdf.fileName)}
+                              className="p-1 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md"
+                              title="More actions"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                              </svg>
                               </button>
-                            ) : (
+
+                            {/* Dropdown Menu */}
+                            {showActionMenu === pdf.fileName && (
+                              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+                                <div className="py-1">
+                                  {/* Process Button */}
+                                  {pdf.status === 'PENDING' && (
                               <button
-                                onClick={() => importProcessedJSON(pdf.fileName)}
-                                className="bg-purple-600 text-white px-3 py-1 rounded-md hover:bg-purple-700"
-                                title={pdf.questionCount ? `Import ${pdf.questionCount} questions` : 'Import questions'}
-                              >
-                                Import{pdf.questionCount ? ` (${pdf.questionCount})` : ''}
+                                      onClick={() => {
+                                        processPDF(pdf.fileName, pdf.filePath);
+                                        closeActionMenu();
+                                      }}
+                                      disabled={processing === pdf.fileName}
+                                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                      {processing === pdf.fileName ? 'Processing...' : 'Process PDF'}
                               </button>
                             )}
-                          </>
-                        )}
-                        
+
+                                  {/* Retry Button */}
+                                  {(pdf.status === 'FAILED' || pdf.status === 'COMPLETED') && (
+                                    <button
+                                      onClick={() => {
+                                        retryProcessing(pdf.fileName, pdf.status);
+                                        closeActionMenu();
+                                      }}
+                                      disabled={processing === pdf.fileName}
+                                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                      {processing === pdf.fileName ? 'Retrying...' : 'Retry Processing'}
+                                    </button>
+                                  )}
+
+                                  {/* Reset Retry Button */}
+                                  {(pdf.status === 'FAILED' || pdf.status === 'COMPLETED') && (
+                                    <button
+                                      onClick={() => {
+                                        resetRetryCount(pdf.fileName);
+                                        closeActionMenu();
+                                      }}
+                                      disabled={processing === pdf.fileName}
+                                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                      Reset Retry Count
+                                    </button>
+                                  )}
+
+                                  {/* Download Button */}
+                                  {pdf.status === 'COMPLETED' && (
+                                    <button
+                                      onClick={() => {
+                                        downloadProcessed(pdf.fileName);
+                                        closeActionMenu();
+                                      }}
+                                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    >
+                                      Download JSON
+                                    </button>
+                                  )}
+
+                                  {/* View Status Button */}
                         {(pdf.status === 'FAILED' || pdf.status === 'COMPLETED' || pdf.status === 'PROCESSING' || pdf.status === 'UPLOADING' || pdf.status === 'RETRYING') && (
                           <button
-                            onClick={() => viewStatus(pdf.fileName)}
-                            className="bg-gray-600 text-white px-3 py-1 rounded-md hover:bg-gray-700"
+                                      onClick={() => {
+                                        viewStatus(pdf.fileName);
+                                        closeActionMenu();
+                                      }}
+                                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           >
                             View Status
                           </button>
                         )}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -677,6 +1234,211 @@ export default function PDFProcessorPage() {
               </div>
             </div>
           )}
+
+          {/* JSON Editor Modal */}
+          {showJsonModal && editingJson && (
+            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+              <div className="relative top-10 mx-auto p-5 border w-11/12 md:w-4/5 lg:w-3/4 shadow-lg rounded-md bg-white">
+                <div className="mt-3">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      JSON Content Editor: {editingJson}
+                    </h3>
+                    <button
+                      onClick={() => {
+                        setShowJsonModal(false);
+                        setEditingJson(null);
+                        setJsonContent('');
+                      }}
+                      className="text-gray-400 hover:text-gray-600"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {/* PDF File Path Display */}
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="text-sm font-medium text-gray-700">
+                          PDF File Path
+                        </label>
+                        <button
+                          onClick={() => {
+                            const promptText = `You are an expert JEE (Joint Entrance Examination) question analyzer. Your task is to extract and structure **all questions** from JEE previous year papers.
+
+CRITICAL: You MUST respond with ONLY valid JSON. Do not include any explanatory text, comments, or markdown formatting. Start your response with \`{\` and end with \`}\`.
+
+---
+
+## INSTRUCTIONS – CHUNKED PROCESSING (By Question Numbers)
+
+1. **QUESTION-NUMBER BASED**  
+   - Physics: Q1–Q30 (or 1. to 30.)  
+   - Chemistry: Q31–Q60 (or 31. to 60.)  
+   - Mathematics: Q61–Q90 (or 61. to 90.)  
+
+2. **STRICT COUNTING**  
+   - Each subject must have **exactly 30 questions**.  
+   - If fewer are found, continue until the block is complete.  
+
+3. **VALID QUESTION NUMBER FORMATS**  
+   - Accept \`Q1, Q2...\` OR \`1., 2., 3....\`.  
+
+---
+
+## CONTENT RULES
+
+- Each question must have exactly **4 options** (A–D or 1–4). If fewer are present, **generate realistic missing options**.  
+- Mark **exactly 1 option as correct**.  
+- Include a **detailed step-by-step explanation**.  
+- Add a **tip_formula** (formula, key concept, or shortcut).  
+- Classify \`difficulty\`: EASY, MEDIUM, or HARD.  
+- All mathematical and chemical formulas must use **LaTeX**: \`$$ ... $$\`.  
+- If a question/option/solution contains **figures, diagrams, molecular structures, resonance, or circuits**, represent them using **ASCII/text form** (e.g., bonds as \`C=C\`, resonance as \`↔\`, circuit as \`--/\/\/--\`).  
+- If ASCII is not possible, describe the figure **clearly in words** (e.g., *"Figure shows tetrahedral arrangement around carbon"*).  
+
+---
+
+## LESSON / TOPIC / SUBTOPIC CLASSIFICATION
+
+Use the **official JEE Main 2025 syllabus** to assign each question to a \`lesson\`, \`topic\`, and \`subtopic\`. Examples:  
+
+- **Physics (Units 1–20)** → Unit 2: *Kinematics* → Topic: *Projectile Motion* → Subtopic: *Range and Maximum Height*.  
+- **Chemistry (Units 1–20)** → Unit 12: *Coordination Compounds* → Topic: *Crystal Field Theory* → Subtopic: *d-orbital Splitting*.  
+- **Mathematics (Units 1–14)** → Unit 7: *Limit, Continuity & Differentiability* → Topic: *Applications of Derivatives* → Subtopic: *Maxima & Minima*.  
+
+Every question MUST include \`"lesson"\`, \`"topic"\`, and \`"subtopic"\` strictly from the syllabus.
+
+---
+
+## MISSING CONTENT RULES
+
+- **Generate missing options** if fewer than 4 are present.  
+- **Generate correct answer** if not marked.  
+- **Generate detailed explanation** if missing.  
+- Use JEE subject expertise to fill gaps.  
+
+---
+
+## VALIDATION RULES
+
+- \`"metadata.totalQuestions"\` must equal **90**.  
+- Ensure **30 per subject** (Physics, Chemistry, Mathematics).  
+- Ensure sequential numbering (no skips).  
+- Ensure every question has \`"lesson"\`, \`"topic"\`, \`"subtopic"\`.  
+
+---
+
+## OUTPUT JSON FORMAT
+
+{
+  "questions": [
+    {
+      "id": "Q31",
+      "stem": "Which of the following represents the lattice structure of A0.95O containing A2+, A3+ and O2– ions?",
+      "options": [
+        {"id": "A", "text": "Option A text", "isCorrect": false},
+        {"id": "B", "text": "Option B text", "isCorrect": false},
+        {"id": "C", "text": "Option C text", "isCorrect": true},
+        {"id": "D", "text": "Option D text", "isCorrect": false}
+      ],
+      "explanation": "Applying electrical neutrality principle: 3A²⁺ replaced by 2A³⁺ → one vacancy per pair of A³⁺.",
+      "tip_formula": "Charge neutrality condition: total positive charge = total negative charge",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Solid State",
+      "subtopic": "Defects in Crystals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": ["solid-state", "defects", "charge-neutrality"]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 90,
+    "subjects": ["Physics", "Chemistry", "Mathematics"],
+    "difficultyDistribution": {"easy": 30, "medium": 45, "hard": 15}
+  }
+}`;
+                            navigator.clipboard.writeText(promptText).then(() => {
+                              toast.success('Prompt copied to clipboard!');
+                            }).catch(() => {
+                              toast.error('Failed to copy prompt');
+                            });
+                          }}
+                          className="flex items-center space-x-1 px-3 py-1 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 hover:border-red-300 transition-colors"
+                          title="Copy AI prompt to clipboard"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                          <span>PROMPT</span>
+                        </button>
+                      </div>
+                      <div className="flex items-center space-x-2 p-3 bg-gray-50 border border-gray-300 rounded-md">
+                        <code className="flex-1 text-sm text-gray-800 font-mono break-all">
+                          {pdfs.find(p => p.fileName === editingJson)?.filePath || 'Path not found'}
+                        </code>
+                        <button
+                          onClick={() => {
+                            const filePath = pdfs.find(p => p.fileName === editingJson)?.filePath;
+                            if (filePath) {
+                              navigator.clipboard.writeText(filePath).then(() => {
+                                toast.success('File path copied to clipboard!');
+                              }).catch(() => {
+                                toast.error('Failed to copy file path');
+                              });
+                            }
+                          }}
+                          className="flex-shrink-0 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded-md transition-colors"
+                          title="Copy file path to clipboard"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        JSON Content (Paste your question data here)
+                      </label>
+                      <textarea
+                        value={jsonContent}
+                        onChange={(e) => setJsonContent(e.target.value)}
+                        placeholder="Paste your JSON content here..."
+                        className="w-full h-96 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                      />
+                    </div>
+                    
+                    <div className="flex justify-end space-x-3">
+                      <button
+                        onClick={() => {
+                          setShowJsonModal(false);
+                          setEditingJson(null);
+                          setJsonContent('');
+                        }}
+                        className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={saveJsonContent}
+                        className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                      >
+                        Save JSON Content
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          </div>
         </div>
       </AdminLayout>
     </ProtectedRoute>

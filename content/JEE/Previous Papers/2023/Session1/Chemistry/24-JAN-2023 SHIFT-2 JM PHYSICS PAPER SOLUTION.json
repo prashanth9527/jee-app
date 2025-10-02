@@ -1,0 +1,735 @@
+{
+    "questions": [
+        {
+            "id": "Q1",
+            "stem": "The electric potential at the centre of two concentric half rings of radii $R_1$ and $R_2$, having same linear charge density $\\lambda$ is",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$\\frac{\\lambda}{4\\epsilon_0}$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "$\\frac{\\lambda}{2\\epsilon_0}$",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "$\\frac{\\lambda}{\\epsilon_0}$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "$\\frac{2\\lambda}{\\epsilon_0}$",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Potential at centre due to each half ring is $V = \\frac{1}{4\\pi\\epsilon_0} \\frac{\\lambda \\cdot \\pi R}{R} = \\frac{\\lambda}{4\\epsilon_0}$. For two half rings with same $\\lambda$, total potential $V_{total} = \\frac{\\lambda}{4\\epsilon_0} + \\frac{\\lambda}{4\\epsilon_0} = \\frac{\\lambda}{2\\epsilon_0}$.",
+            "tip_formula": "Potential due to arc: $V = \\frac{1}{4\\pi\\epsilon_0} \\frac{\\lambda \\cdot \\text{length}}{R}$",
+            "difficulty": "MEDIUM",
+            "subject": "Physics",
+            "lesson": "Electromagnetism",
+            "topic": "Electrostatics",
+            "subtopic": "Electric Potential",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["electric-potential", "concentric-rings", "charge-density"]
+        },
+        {
+            "id": "Q2",
+            "stem": "Let $\\gamma_1$ be the ratio of molar specific heat at constant pressure and molar specific heat at constant volume of a monoatomic gas and $\\gamma_2$ be the similar ratio of diatomic gas. Considering the diatomic gas molecule as a rigid rotator, the ratio $\\frac{\\gamma_1}{\\gamma_2}$ is",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$\\frac{21}{25}$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "$\\frac{25}{21}$",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "$\\frac{35}{21}$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "$\\frac{21}{35}$",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "For monoatomic gas: $\\gamma_1 = \\frac{5}{3}$. For diatomic gas (rigid rotator): $\\gamma_2 = \\frac{7}{5}$. Therefore, $\\frac{\\gamma_1}{\\gamma_2} = \\frac{5/3}{7/5} = \\frac{25}{21}$.",
+            "tip_formula": "$\\gamma = \\frac{C_p}{C_v}$; Monoatomic: $\\gamma = \\frac{5}{3}$; Diatomic: $\\gamma = \\frac{7}{5}$",
+            "difficulty": "EASY",
+            "subject": "Physics",
+            "lesson": "Thermodynamics",
+            "topic": "Kinetic Theory of Gases",
+            "subtopic": "Specific Heats",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["specific-heat", "gamma-ratio", "monoatomic", "diatomic"]
+        },
+        {
+            "id": "Q3",
+            "stem": "An $\\alpha$-particle, a proton and an electron have the same kinetic energy. Which one of the following is correct in case of their De-Broglie wavelength:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$\\lambda_{\\alpha} > \\lambda_p > \\lambda_e$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "$\\lambda_{\\alpha} < \\lambda_p < \\lambda_e$",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "$\\lambda_{\\alpha} = \\lambda_p = \\lambda_e$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "$\\lambda_{\\alpha} > \\lambda_p < \\lambda_e$",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "De-Broglie wavelength $\\lambda = \\frac{h}{p} = \\frac{h}{\\sqrt{2mK}}$. For same kinetic energy $K$, $\\lambda \\propto \\frac{1}{\\sqrt{m}}$. Since $m_{\\alpha} > m_p > m_e$, therefore $\\lambda_{\\alpha} < \\lambda_p < \\lambda_e$.",
+            "tip_formula": "De-Broglie wavelength: $\\lambda = \\frac{h}{p} = \\frac{h}{\\sqrt{2mK}}$",
+            "difficulty": "EASY",
+            "subject": "Physics",
+            "lesson": "Modern Physics",
+            "topic": "Quantum Mechanics",
+            "subtopic": "De-Broglie Wavelength",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["de-broglie", "wavelength", "kinetic-energy", "particle-physics"]
+        },
+        {
+            "id": "Q4",
+            "stem": "If the distance of the earth from Sun is $1.5 \\times 10^6$ km. Then the distance of an imaginary planet from Sun, if its period of revolution is 2.83 years is:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$6 \\times 10^7$ km",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "$6 \\times 10^6$ km",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "$3 \\times 10^6$ km",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "$3 \\times 10^7$ km",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Using Kepler's third law: $T^2 \\propto R^3$. So $\\left(\\frac{T_1}{T_2}\\right)^2 = \\left(\\frac{R_1}{R_2}\\right)^3$. Given $T_1 = 1$ year, $T_2 = 2.83$ years, $R_1 = 1.5 \\times 10^6$ km. Then $\\left(\\frac{1}{2.83}\\right)^2 = \\left(\\frac{1.5 \\times 10^6}{R_2}\\right)^3$. Solving gives $R_2 = 3 \\times 10^6$ km.",
+            "tip_formula": "Kepler's third law: $T^2 \\propto R^3$",
+            "difficulty": "MEDIUM",
+            "subject": "Physics",
+            "lesson": "Mechanics",
+            "topic": "Gravitation",
+            "subtopic": "Kepler's Laws",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["kepler-laws", "orbital-mechanics", "planetary-motion"]
+        },
+        {
+            "id": "Q5",
+            "stem": "Match List I with List II",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "A-II, B-I, C-IV, D-III",
+                    "isCorrect": true
+                },
+                {
+                    "id": "B",
+                    "text": "A-IV, B-III, C-I, D-II",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "A-II, B-III, C-I, D-IV",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "A-I, B-III, C-II, D-IV",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "AM Broadcast: 540-1600 kHz (II), FM Broadcast: 88-108 MHz (I), Television: 54-890 MHz (IV), Satellite Communication: 3.7-4.2 GHz (III). Therefore A-II, B-I, C-IV, D-III.",
+            "tip_formula": "Frequency bands: AM (kHz), FM (MHz), TV (MHz), Satellite (GHz)",
+            "difficulty": "EASY",
+            "subject": "Physics",
+            "lesson": "Electromagnetism",
+            "topic": "Communication Systems",
+            "subtopic": "Frequency Bands",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["communication", "frequency-bands", "broadcast"]
+        },
+        {
+            "id": "Q6",
+            "stem": "The logic gate equivalent to the given circuit diagram is:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "OR",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "NAND",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "NOR",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "AND",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "From the truth table: Output is 1 for (0,0), (0,1), (1,0) and 0 for (1,1). This matches NAND gate truth table.",
+            "tip_formula": "NAND gate: Output = 0 only when all inputs = 1",
+            "difficulty": "EASY",
+            "subject": "Physics",
+            "lesson": "Modern Physics",
+            "topic": "Electronics",
+            "subtopic": "Logic Gates",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["logic-gates", "nand", "digital-electronics"]
+        },
+        {
+            "id": "Q7",
+            "stem": "A long solenoid is formed by winding 70 turns cm$^{-1}$. If 2.0 A current flows, then the magnetic field produced inside the solenoid is ______ ($\\mu_0 = 4\\pi \\times 10^{-7}$ TmA$^{-1}$)",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$1232 \\times 10^{-4}$ T",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "$176 \\times 10^{-4}$ T",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "$352 \\times 10^{-4}$ T",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "$88 \\times 10^{-4}$ T",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Magnetic field inside solenoid: $B = \\mu_0 n I = 4\\pi \\times 10^{-7} \\times 70 \\times 10^2 \\times 2 = 56\\pi \\times 10^{-4}$ T = $176 \\times 10^{-4}$ T.",
+            "tip_formula": "Solenoid magnetic field: $B = \\mu_0 n I$",
+            "difficulty": "EASY",
+            "subject": "Physics",
+            "lesson": "Electromagnetism",
+            "topic": "Magnetism",
+            "subtopic": "Magnetic Field of Solenoid",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["solenoid", "magnetic-field", "biot-savart"]
+        },
+        {
+            "id": "Q8",
+            "stem": "Given below are two statements: Statement I: Acceleration due to earth's gravity decreases as you go 'up' or 'down' from earth's surface. Statement II: Acceleration due to earth's gravity is same at a height 'h' and depth 'd' from earth's surface, if $h = d$. In the light of above statements, choose the most appropriate answer form the options given below",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "Statement I is incorrect but statement II is correct",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "Both Statement I and Statement II are incorrect",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "Statement I is correct but statement II is incorrect",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "Both Statement I and II are correct",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Statement I is correct: $g$ decreases both above and below earth's surface. Statement II is incorrect: At height $h$, $g_h = g(1 - 2h/R)$; at depth $d$, $g_d = g(1 - d/R)$. They are not equal when $h = d$.",
+            "tip_formula": "$g_h = g(1 - 2h/R)$, $g_d = g(1 - d/R)$",
+            "difficulty": "MEDIUM",
+            "subject": "Physics",
+            "lesson": "Mechanics",
+            "topic": "Gravitation",
+            "subtopic": "Variation of g",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["gravity", "variation-of-g", "earth-gravity"]
+        },
+        {
+            "id": "Q9",
+            "stem": "A metallic rod of length 'L' is rotated with an angular speed of '$\\omega$' normal to a uniform magnetic field 'B' about an axis passing through one end of rod as shown in figure. The induced emf will be:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$\\frac{1}{4} B L^2 \\omega$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "$\\frac{1}{4} B L \\omega$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "$\\frac{1}{2} B L^2 \\omega$",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "$\\frac{1}{2} B L \\omega^2$",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Induced emf in rotating rod: $\\epsilon = \\int B v dx = \\int_0^L B \\omega x dx = \\frac{1}{2} B \\omega L^2$.",
+            "tip_formula": "Induced emf in rotating rod: $\\epsilon = \\frac{1}{2} B \\omega L^2$",
+            "difficulty": "MEDIUM",
+            "subject": "Physics",
+            "lesson": "Electromagnetism",
+            "topic": "Electromagnetic Induction",
+            "subtopic": "Motional EMF",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["electromagnetic-induction", "motional-emf", "rotating-rod"]
+        },
+        {
+            "id": "Q10",
+            "stem": "When a beam of white light is allowed to pass through convex lens parallel to principal axis, the different colours of light converge at different point on the principle axis after refraction. This is called:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "Scattering",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "Chromatic aberration",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "Spherical aberration",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "Polarisation",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Chromatic aberration occurs due to dispersion - different wavelengths (colors) refract differently and focus at different points along the principal axis.",
+            "tip_formula": "Chromatic aberration arises from wavelength-dependent refractive index",
+            "difficulty": "EASY",
+            "subject": "Physics",
+            "lesson": "Optics",
+            "topic": "Lens Aberrations",
+            "subtopic": "Chromatic Aberration",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["optics", "lens-aberrations", "chromatic-aberration"]
+        },
+        {
+            "id": "Q11",
+            "stem": "The frequency ($\\nu$) of an oscillating liquid drop may depend upon radius (r) of the drop, density ($\\rho$) of liquid and the surface tension (s) of the liquid as: $\\nu = r^a \\rho^b s^c$. The values of a, b and c respectively are",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$-\\frac{3}{2}, -\\frac{1}{2}, \\frac{1}{2}$",
+                    "isCorrect": true
+                },
+                {
+                    "id": "B",
+                    "text": "$-\\frac{3}{2}, \\frac{1}{2}, -\\frac{1}{2}$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "$\\frac{3}{2}, -\\frac{1}{2}, \\frac{1}{2}$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "$\\frac{3}{2}, \\frac{1}{2}, -\\frac{1}{2}$",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Using dimensional analysis: $[\\nu] = T^{-1}$, $[r] = L$, $[\\rho] = ML^{-3}$, $[s] = MT^{-2}$. Equating dimensions: $M^0L^0T^{-1} = L^a (ML^{-3})^b (MT^{-2})^c$. Solving: b + c = 0, a - 3b = 0, -2c = -1. So c = 1/2, b = -1/2, a = -3/2.",
+            "tip_formula": "Dimensional analysis: $[\\nu] = [r]^a[\\rho]^b[s]^c$",
+            "difficulty": "HARD",
+            "subject": "Physics",
+            "lesson": "Mechanics",
+            "topic": "Oscillations",
+            "subtopic": "Dimensional Analysis",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["dimensional-analysis", "oscillations", "liquid-drop"]
+        },
+        {
+            "id": "Q12",
+            "stem": "A body of mass 200g is tied to a spring of spring constant 12.5 N/m, while the other end of spring is fixed at point O. If the body moves about O in a circular path on a smooth horizontal surface with constant angular speed 5 rad/s, then the ratio of extension in the spring to its natural length will be:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "1:2",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "1:1",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "2:3",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "2:5",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Centripetal force = Spring force: $m\\omega^2(L_0 + x) = kx$. Given m = 0.2 kg, k = 12.5 N/m, $\\omega$ = 5 rad/s. So $0.2 \\times 25(L_0 + x) = 12.5x$ ⇒ $5(L_0 + x) = 12.5x$ ⇒ $5L_0 = 7.5x$ ⇒ $x/L_0 = 2/3$.",
+            "tip_formula": "For circular motion with spring: $m\\omega^2(L_0 + x) = kx$",
+            "difficulty": "MEDIUM",
+            "subject": "Physics",
+            "lesson": "Mechanics",
+            "topic": "Oscillations",
+            "subtopic": "Spring Mass System",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["spring-mass", "circular-motion", "centripetal-force"]
+        },
+        {
+            "id": "Q13",
+            "stem": "A cell of emf 90 V is connected across series combination of two resistors each of 100Ω resistance. A voltmeter of resistance 400 Ω is used to measure the potential difference across each resistor. The reading of the voltmeter will be:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "40 V",
+                    "isCorrect": true
+                },
+                {
+                    "id": "B",
+                    "text": "45 V",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "80 V",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "90 V",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Equivalent resistance: $R_{eq} = \\frac{400 \\times 100}{500} + 100 = 180\\Omega$. Current $i = 90/180 = 0.5$ A. Voltmeter reading = current through parallel combination × 400Ω = $0.5 \\times \\frac{400}{500} \\times 100 = 40$ V.",
+            "tip_formula": "Voltmeter reading in parallel combination",
+            "difficulty": "MEDIUM",
+            "subject": "Physics",
+            "lesson": "Electromagnetism",
+            "topic": "Current Electricity",
+            "subtopic": "Measurement Instruments",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["voltmeter", "circuit-analysis", "resistance"]
+        },
+        {
+            "id": "Q14",
+            "stem": "The electric field and magnetic field components of an electromagnetic wave going through vacuum is described by $E_x = E_0 \\sin (kz - \\omega t)$ and $B_y = B_0 \\sin (kz - \\omega t)$. Then the correct relation between $E_0$ and $B_0$ is given by",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "$kE_0 = \\omega B_0$",
+                    "isCorrect": true
+                },
+                {
+                    "id": "B",
+                    "text": "$E_0 B_0 = \\omega k$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "$\\omega E_0 = kB_0$",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "$E_0 = kB_0$",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "For electromagnetic waves in vacuum: $c = \\frac{E_0}{B_0} = \\frac{\\omega}{k}$. Therefore $E_0 = \\frac{\\omega}{k}B_0$ ⇒ $kE_0 = \\omega B_0$.",
+            "tip_formula": "EM wave relation: $\\frac{E_0}{B_0} = c = \\frac{\\omega}{k}$",
+            "difficulty": "MEDIUM",
+            "subject": "Physics",
+            "lesson": "Electromagnetism",
+            "topic": "Electromagnetic Waves",
+            "subtopic": "Wave Properties",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["electromagnetic-waves", "wave-equation", "maxwell-equations"]
+        },
+        {
+            "id": "Q15",
+            "stem": "The velocity time graph of a body moving in a straight line is shown in figure. The ratio of displacement to distance travelled by the body in time 0 to 10s is",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "1:1",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "1:4",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "1:2",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "1:3",
+                    "isCorrect": true
+                }
+            ],
+            "explanation": "Displacement = net area under v-t graph = 16 - 8 + 16 - 8 = 16 m. Distance = total area = 16 + 8 + 16 + 8 = 48 m. Ratio = 16:48 = 1:3.",
+            "tip_formula": "Displacement = net area; Distance = total area under v-t graph",
+            "difficulty": "EASY",
+            "subject": "Physics",
+            "lesson": "Mechanics",
+            "topic": "Kinematics",
+            "subtopic": "Motion Graphs",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["velocity-time-graph", "displacement", "distance"]
+        },
+        {
+            "id": "Q16",
+            "stem": "Given below are two statements: one is labelled as Assertion A and the other is labelled as Reason R. Assertion A: Steel is used in the construction of buildings and bridges. Reason R: Steel is more elastic and its elastic limit is high. In the light of above statements, choose the most appropriate answer from the options given below",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "Both A and R are correct but R is NOT the correct explanation of A",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "A is not correct but R is correct",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "Both A and R are correct and R is the correct explanation of A",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "A is correct but R is not correct",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Both statements are correct. Steel's high elasticity and high elastic limit make it suitable for construction as it can withstand heavy loads without permanent deformation.",
+            "tip_formula": "Elastic limit: Maximum stress without permanent deformation",
+            "difficulty": "EASY",
+            "subject": "Physics",
+            "lesson": "Mechanics",
+            "topic": "Properties of Matter",
+            "subtopic": "Elasticity",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["elasticity", "steel-properties", "construction-materials"]
+        },
+        {
+            "id": "Q17",
+            "stem": "Given below are two statements: one is labelled as Assertion A and the other is labelled as Reason R. Assertion A: A pendulum clock when taken to Mount Everest becomes fast. Reason R: The value of g (acceleration due to gravity) is less at Mount Everest than its value on the surface of earth. In the light of the above statements, choose the most appropriate answer from the options given below",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "Both A and R are correct but R is NOT the correct explanation of A",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "Both A and R are correct and R is the correct explanation of A",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "A is not correct but R is correct",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "A is correct but R is not correct",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Reason R is correct: g decreases with altitude. But Assertion A is incorrect: $T \\propto 1/\\sqrt{g}$, so when g decreases, T increases, meaning clock slows down, not becomes fast.",
+            "tip_formula": "Pendulum time period: $T = 2\\pi\\sqrt{\\frac{L}{g}}$",
+            "difficulty": "MEDIUM",
+            "subject": "Physics",
+            "lesson": "Mechanics",
+            "topic": "Oscillations",
+            "subtopic": "Simple Pendulum",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["pendulum", "time-period", "gravity-variation"]
+        },
+        {
+            "id": "Q18",
+            "stem": "A photon is emitted in transition from n = 4 to n=1 level in hydrogen atom. The corresponding wavelength for this transition is (given, h = 4 × 10^{-15} eV s):",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "94.1 nm",
+                    "isCorrect": true
+                },
+                {
+                    "id": "B",
+                    "text": "941 nm",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "97.4 nm",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "99.3 nm",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Energy of photon: $E = 13.6(1 - 1/16) = 13.6 × 15/16 = 12.75$ eV. Wavelength $\\lambda = hc/E = (4×10^{-15} × 3×10^8)/12.75 = 94.1$ nm.",
+            "tip_formula": "Hydrogen spectrum: $\\frac{1}{\\lambda} = R(\\frac{1}{n_1^2} - \\frac{1}{n_2^2})$",
+            "difficulty": "MEDIUM",
+            "subject": "Physics",
+            "lesson": "Modern Physics",
+            "topic": "Atomic Physics",
+            "subtopic": "Hydrogen Spectrum",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["hydrogen-atom", "photon-energy", "wavelength"]
+        },
+        {
+            "id": "Q19",
+            "stem": "In an Isothermal change, the change in pressure and volume of a gas can be represented for three different temperature; $T_3 > T_2 > T_1$ as:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "Curves closer to origin for higher T",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "Straight lines through origin",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "Vertical lines",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "Curves farther from origin for higher T",
+                    "isCorrect": true
+                }
+            ],
+            "explanation": "For isothermal process: PV = constant (rectangular hyperbola). Higher temperature curves are farther from origin as PV = nRT increases with T.",
+            "tip_formula": "Isothermal process: PV = constant",
+            "difficulty": "EASY",
+            "subject": "Physics",
+            "lesson": "Thermodynamics",
+            "topic": "Thermodynamic Processes",
+            "subtopic": "Isothermal Process",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["isothermal", "pv-diagram", "gas-laws"]
+        },
+        {
+            "id": "Q20",
+            "stem": "If two vectors $\\vec{P} = \\hat{i} + 2m\\hat{j} + m\\hat{k}$ and $\\vec{Q} = 4\\hat{i} - 2\\hat{j} + m\\hat{k}$ are perpendicular to each other. Then, the value of $m$ will be:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "1",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "-1",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "-3",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "2",
+                    "isCorrect": true
+                }
+            ],
+            "explanation": "For perpendicular vectors: $\\vec{P} \\cdot \\vec{Q} = 0$. So $(1)(4) + (2m)(-2) + (m)(m) = 0$ ⇒ $4 - 4m + m^2 = 0$ ⇒ $(m - 2)^2 = 0$ ⇒ m = 2.",
+            "tip_formula": "Perpendicular vectors: $\\vec{A} \\cdot \\vec{B} = 0$",
+            "difficulty": "EASY",
+            "subject": "Physics",
+            "lesson": "Mechanics",
+            "topic": "Vectors",
+            "subtopic": "Dot Product",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["vectors", "dot-product", "perpendicular-vectors"]
+        }
+    ],
+    "metadata": {
+        "totalQuestions": 20,
+        "subjects": ["Physics"],
+        "topics": ["Electromagnetism", "Thermodynamics", "Modern Physics", "Mechanics", "Optics"],
+        "difficultyDistribution": {
+            "easy": 8,
+            "medium": 9,
+            "hard": 3
+        },
+        "processingTime": 60
+    }
+}

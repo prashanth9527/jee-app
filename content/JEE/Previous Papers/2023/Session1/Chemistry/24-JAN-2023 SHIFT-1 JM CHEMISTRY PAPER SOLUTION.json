@@ -1,0 +1,375 @@
+{
+    "questions": [
+        {
+            "id": "Q31",
+            "stem": "Compound (X) undergoes following sequence of reactions to give the Lactone (Y). Identify the correct structure of (Y).",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "Structure 1",
+                    "isCorrect": true
+                },
+                {
+                    "id": "B",
+                    "text": "Structure 2",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "Structure 3",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "Structure 4",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "The compound undergoes aldol condensation followed by cyanohydrin formation and acid hydrolysis to form the lactone. The correct structure shows a six-membered lactone ring with appropriate substituents.",
+            "tip_formula": "Aldol condensation → Cyanohydrin → Acid hydrolysis → Lactonization",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "lesson": "Organic Chemistry",
+            "topic": "Carbonyl Compounds",
+            "subtopic": "Aldol Condensation and Lactone Formation",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["aldol", "cyanohydrin", "lactone", "organic-reactions"]
+        },
+        {
+            "id": "Q32",
+            "stem": "Assertion A: Hydrolysis of an alkyl chloride is a slow reaction but in the presence of NaI, the rate of the hydrolysis increases. Reason R: I⁻ is a good nucleophile as well as a good leaving group. In the light of the above statements, choose the correct answer from the options given below.",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "A is false but R is true",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "A is true but R is false",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "Both A and R are true and R is the correct explanation of A",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "Both A and R are true but R is NOT the correct explanation of A",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Alkyl chlorides hydrolyze slowly due to poor nucleophilicity of water. I⁻ is a better nucleophile than Cl⁻ and can displace Cl⁻ to form alkyl iodide, which then hydrolyzes faster due to the better leaving ability of I⁻.",
+            "tip_formula": "Nucleophilicity order: I⁻ > Br⁻ > Cl⁻; Leaving ability: I⁻ > Br⁻ > Cl⁻",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "lesson": "Organic Chemistry",
+            "topic": "Haloalkanes",
+            "subtopic": "Nucleophilic Substitution",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["hydrolysis", "nucleophile", "leaving-group", "alkyl-halides"]
+        },
+        {
+            "id": "Q33",
+            "stem": "Order of Covalent bond: A. KF > KI; LiF > KF B. KF < KI; LiF > KF C. SnCl₄ > SnCl₂; CuCl > NaCl D. LiF > KF; CuCl < NaCl E. KF < KI; CuCl > NaCl. Which of the following options correctly identifies the true statements?",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "C, E only",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "B, C only",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "B, C, E only",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "A, B only",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "According to Fajan's rule, covalent character increases with smaller cation size, larger anion size, and higher charge on ions. B: KF < KI (true, larger anion), LiF > KF (true, smaller cation). C: SnCl₄ > SnCl₂ (true, higher charge), CuCl > NaCl (true, pseudo noble gas configuration). E: KF < KI (true), CuCl > NaCl (true).",
+            "tip_formula": "Fajan's Rule: Covalent character ∝ (Charge on cation × Charge on anion) / (Size of cation + Size of anion)",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "lesson": "Inorganic Chemistry",
+            "topic": "Chemical Bonding",
+            "subtopic": "Fajan's Rule",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["fajan-rule", "covalent-character", "ionic-compounds"]
+        },
+        {
+            "id": "Q34",
+            "stem": "Increasing order of stability of the resonance structures is:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "C, D, B, A",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "C, D, A, B",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "D, C, A, B",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "D, C, B, A",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "The correct order of stability is C < D < A < B. Structure C has charge separation and incomplete octet, D has charge separation but complete octet, A has less charge separation, B has no charge separation and complete octets.",
+            "tip_formula": "Resonance stability order: Complete octet > No charge separation > Less charge separation > More charge separation",
+            "difficulty": "HARD",
+            "subject": "Chemistry",
+            "lesson": "Organic Chemistry",
+            "topic": "Chemical Bonding",
+            "subtopic": "Resonance",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["resonance", "stability", "organic-chemistry"]
+        },
+        {
+            "id": "Q35",
+            "stem": "The magnetic moment of a transition metal compound has been calculated to be 3.87 B.M. The metal ion is",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "Cr²⁺",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "Mn²⁺",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "V²⁺",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "Ti²⁺",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "Magnetic moment μ = √[n(n+2)] B.M. For μ = 3.87, n(n+2) = 15, so n = 3. V²⁺ has electronic configuration [Ar] 3d³ with 3 unpaired electrons.",
+            "tip_formula": "Magnetic moment: μ = √[n(n+2)] B.M., where n = number of unpaired electrons",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "lesson": "Inorganic Chemistry",
+            "topic": "Coordination Compounds",
+            "subtopic": "Magnetic Properties",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["magnetic-moment", "transition-metals", "unpaired-electrons"]
+        },
+        {
+            "id": "Q36",
+            "stem": "Match List I with List II: List I (Furnace/Process) - A. Reverberatory furnace, B. Electrolytic cell, C. Blast furnace, D. Zone Refining furnace; List II (Application) - I. For semiconductors: Si, II. Hematite to Pig Iron, III. For reactive metal: Al, IV. Roasting of Copper",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "A – IV, B – II, C – I, D – III",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "A – I, B – IV, C – II, D – III",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "A – I, B – III, C – II, D – IV",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "A – IV, B – III, C – II, D – I",
+                    "isCorrect": true
+                }
+            ],
+            "explanation": "Reverberatory furnace is used for roasting of copper (A-IV). Electrolytic cell is used for reactive metals like aluminum (B-III). Blast furnace is used for hematite to pig iron (C-II). Zone refining furnace is used for semiconductors like silicon (D-I).",
+            "tip_formula": "Metallurgy processes: Reverberatory → Cu roasting; Electrolytic → Al extraction; Blast furnace → Fe production; Zone refining → Si purification",
+            "difficulty": "EASY",
+            "subject": "Chemistry",
+            "lesson": "Inorganic Chemistry",
+            "topic": "Metallurgy",
+            "subtopic": "Extraction Processes",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["metallurgy", "furnaces", "extraction", "purification"]
+        },
+        {
+            "id": "Q37",
+            "stem": "It is observed that characteristic X-ray spectra of elements show regularity. When frequency to the power 'n' i.e. νⁿ of X-rays emitted is plotted against atomic number 'Z', a straight line is obtained. The value of 'n' is",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "1",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "2",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "1/2",
+                    "isCorrect": true
+                },
+                {
+                    "id": "D",
+                    "text": "3",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "According to Moseley's law: √ν ∝ Z or ν ∝ Z². Therefore, when ν¹/² is plotted against Z, a straight line is obtained. So n = 1/2.",
+            "tip_formula": "Moseley's Law: √ν = a(Z - b) or ν ∝ Z²",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "lesson": "Physical Chemistry",
+            "topic": "Atomic Structure",
+            "subtopic": "X-ray Spectra",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["moseley-law", "x-ray", "atomic-number", "frequency"]
+        },
+        {
+            "id": "Q38",
+            "stem": "Which of the Phosphorus oxoacid can create silver mirror from AgNO₃ solution?",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "(HPO₃)ₙ",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "H₄P₂O₅",
+                    "isCorrect": true
+                },
+                {
+                    "id": "C",
+                    "text": "H₄P₂O₆",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "H₄P₂O₇",
+                    "isCorrect": false
+                }
+            ],
+            "explanation": "H₄P₂O₅ (hypophosphoric acid) contains P-H bonds which can reduce Ag⁺ to Ag, creating silver mirror. Other oxoacids lack P-H bonds.",
+            "tip_formula": "Only phosphorus oxoacids with P-H bonds can reduce Ag⁺ to Ag (Tollen's test)",
+            "difficulty": "MEDIUM",
+            "subject": "Chemistry",
+            "lesson": "Inorganic Chemistry",
+            "topic": "p-Block Elements",
+            "subtopic": "Phosphorus Compounds",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["phosphorus", "oxoacids", "silver-mirror", "reducing-agent"]
+        },
+        {
+            "id": "Q39",
+            "stem": "The primary and secondary valencies of cobalt respectively in [Co(NH₃)₅Cl]Cl₂ are:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "3 and 5",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "2 and 6",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "2 and 8",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "3 and 6",
+                    "isCorrect": true
+                }
+            ],
+            "explanation": "Primary valency = oxidation state = +3 (as 2Cl⁻ ions are outside coordination sphere). Secondary valency = coordination number = 6 (5 NH₃ + 1 Cl⁻ in coordination sphere).",
+            "tip_formula": "Primary valency = Oxidation state; Secondary valency = Coordination number",
+            "difficulty": "EASY",
+            "subject": "Chemistry",
+            "lesson": "Inorganic Chemistry",
+            "topic": "Coordination Compounds",
+            "subtopic": "Werner's Theory",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["coordination-compounds", "primary-valency", "secondary-valency", "werner-theory"]
+        },
+        {
+            "id": "Q40",
+            "stem": "An ammoniacal metal salt solution gives a brilliant red precipitate on addition of dimethylglyoxime. The metal ion is:",
+            "options": [
+                {
+                    "id": "A",
+                    "text": "Cu²⁺",
+                    "isCorrect": false
+                },
+                {
+                    "id": "B",
+                    "text": "Co²⁺",
+                    "isCorrect": false
+                },
+                {
+                    "id": "C",
+                    "text": "Fe²⁺",
+                    "isCorrect": false
+                },
+                {
+                    "id": "D",
+                    "text": "Ni²⁺",
+                    "isCorrect": true
+                }
+            ],
+            "explanation": "Ni²⁺ forms a brilliant red precipitate with dimethylglyoxime (DMG) in ammoniacal medium. The complex formed is [Ni(DMG)₂].",
+            "tip_formula": "Ni²⁺ + 2DMG → [Ni(DMG)₂] (rosy red precipitate)",
+            "difficulty": "EASY",
+            "subject": "Chemistry",
+            "lesson": "Inorganic Chemistry",
+            "topic": "Qualitative Analysis",
+            "subtopic": "Test for Cations",
+            "yearAppeared": 2023,
+            "isPreviousYear": true,
+            "tags": ["nickel", "dimethylglyoxime", "precipitate", "qualitative-analysis"]
+        }
+    ],
+    "metadata": {
+        "totalQuestions": 10,
+        "subjects": ["Chemistry"],
+        "topics": ["Organic Chemistry", "Inorganic Chemistry", "Physical Chemistry"],
+        "difficultyDistribution": {
+            "easy": 3,
+            "medium": 6,
+            "hard": 1
+        },
+        "processingTime": 60
+    }
+}

@@ -1,0 +1,24 @@
+{
+  "questions": [],
+  "metadata": {
+    "totalQuestions": 0,
+    "subjects": [
+      "Mathematics"
+    ],
+    "topics": [],
+    "difficultyDistribution": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "processingTime": 0,
+    "sourceFile": "1104-Mathematics Paper Morning.pdf",
+    "extractedAt": "2025-10-01T01:03:59.086Z",
+    "status": "empty_template",
+    "year": 1104,
+    "subject": "Mathematics",
+    "session": "Morning",
+    "date": "11-04",
+    "shift": null
+  }
+}
