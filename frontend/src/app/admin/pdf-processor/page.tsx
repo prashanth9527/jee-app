@@ -560,20 +560,20 @@ export default function PDFProcessorPage() {
         
         let message;
         if (importedCount === 0) {
-          message = `No new questions imported. ${skippedCount} questions were skipped (already exist in database).`;
+          message = `No new questions imported. ${skippedCount} questions were skipped (duplicates).`;
           if (errors && errors.length > 0) {
             message += ` ${errors.length} questions had validation errors.`;
           }
           toast.warning(message);
         } else {
           message = `Import completed! ${importedCount} questions imported successfully.`;
-          if (skippedCount > 0) {
-            message += ` ${skippedCount} questions were skipped (already exist in database).`;
-          }
+        if (skippedCount > 0) {
+            message += ` ${skippedCount} questions were skipped (duplicates).`;
+        }
           if (errors && errors.length > 0) {
             message += ` ${errors.length} questions had validation errors.`;
           }
-          toast.success(message);
+        toast.success(message);
         }
         
         // Show detailed results if there were errors
@@ -1028,16 +1028,7 @@ export default function PDFProcessorPage() {
                             {pdf.databaseId && (
                               pdf.hasImportedQuestions ? (
                             <button
-                                onClick={async () => {
-                                  // Check if all JSON questions are imported
-                                  if (pdf.jsonQuestionCount && pdf.importedQuestionCount && 
-                                      pdf.jsonQuestionCount > pdf.importedQuestionCount) {
-                                    // Import remaining questions first
-                                    await importProcessedJSON(pdf.fileName);
-                                  }
-                                  // Then navigate to preview
-                                  router.push(`/admin/pdf-review/${pdf.cacheId}`);
-                                }}
+                                onClick={() => router.push(`/admin/pdf-review/${pdf.cacheId}`)}
                                   className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 text-xs"
                                 title={pdf.importedQuestionCount ? `Preview ${pdf.importedQuestionCount} imported questions` : 'Preview questions'}
                               >
@@ -1047,7 +1038,7 @@ export default function PDFProcessorPage() {
                             <button
                                 onClick={() => importProcessedJSON(pdf.fileName)}
                                   className="bg-purple-600 text-white px-3 py-1 rounded-md hover:bg-purple-700 text-xs"
-                                  title={pdf.jsonQuestionCount ? `Import ${pdf.jsonQuestionCount} questions (duplicates will be skipped)` : 'Import questions'}
+                                  title={pdf.jsonQuestionCount ? `Import ${pdf.jsonQuestionCount} questions` : 'Import questions'}
                               >
                                   Import{pdf.jsonQuestionCount ? ` (${pdf.jsonQuestionCount})` : ''}
                             </button>
@@ -1261,123 +1252,9 @@ export default function PDFProcessorPage() {
                   <div className="space-y-4">
                     {/* PDF File Path Display */}
                     <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <label className="text-sm font-medium text-gray-700">
-                          PDF File Path
-                        </label>
-                        <button
-                          onClick={() => {
-                            const promptText = `You are an expert JEE (Joint Entrance Examination) question analyzer. Your task is to extract and structure **all questions** from JEE previous year papers.
-
-CRITICAL: You MUST respond with ONLY valid JSON. Do not include any explanatory text, comments, or markdown formatting. Start your response with \`{\` and end with \`}\`.
-
----
-
-## INSTRUCTIONS – CHUNKED PROCESSING (By Question Numbers)
-
-1. **QUESTION-NUMBER BASED**  
-   - Physics: Q1–Q30 (or 1. to 30.)  
-   - Chemistry: Q31–Q60 (or 31. to 60.)  
-   - Mathematics: Q61–Q90 (or 61. to 90.)  
-
-2. **STRICT COUNTING**  
-   - Each subject must have **exactly 30 questions**.  
-   - If fewer are found, continue until the block is complete.  
-
-3. **VALID QUESTION NUMBER FORMATS**  
-   - Accept \`Q1, Q2...\` OR \`1., 2., 3....\`.  
-
----
-
-## CONTENT RULES
-
-- Each question must have exactly **4 options** (A–D or 1–4). If fewer are present, **generate realistic missing options**.  
-- Mark **exactly 1 option as correct**.  
-- Include a **detailed step-by-step explanation**.  
-- Add a **tip_formula** (formula, key concept, or shortcut).  
-- Classify \`difficulty\`: EASY, MEDIUM, or HARD.  
-- All mathematical and chemical formulas must use **LaTeX**: \`$$ ... $$\`.  
-- If a question/option/solution contains **figures, diagrams, molecular structures, resonance, or circuits**, represent them using **ASCII/text form** (e.g., bonds as \`C=C\`, resonance as \`↔\`, circuit as \`--/\/\/--\`).  
-- If ASCII is not possible, describe the figure **clearly in words** (e.g., *"Figure shows tetrahedral arrangement around carbon"*).  
-
----
-
-## LESSON / TOPIC / SUBTOPIC CLASSIFICATION
-
-Use the **official JEE Main 2025 syllabus** to assign each question to a \`lesson\`, \`topic\`, and \`subtopic\`. Examples:  
-
-- **Physics (Units 1–20)** → Unit 2: *Kinematics* → Topic: *Projectile Motion* → Subtopic: *Range and Maximum Height*.  
-- **Chemistry (Units 1–20)** → Unit 12: *Coordination Compounds* → Topic: *Crystal Field Theory* → Subtopic: *d-orbital Splitting*.  
-- **Mathematics (Units 1–14)** → Unit 7: *Limit, Continuity & Differentiability* → Topic: *Applications of Derivatives* → Subtopic: *Maxima & Minima*.  
-
-Every question MUST include \`"lesson"\`, \`"topic"\`, and \`"subtopic"\` strictly from the syllabus.
-
----
-
-## MISSING CONTENT RULES
-
-- **Generate missing options** if fewer than 4 are present.  
-- **Generate correct answer** if not marked.  
-- **Generate detailed explanation** if missing.  
-- Use JEE subject expertise to fill gaps.  
-
----
-
-## VALIDATION RULES
-
-- \`"metadata.totalQuestions"\` must equal **90**.  
-- Ensure **30 per subject** (Physics, Chemistry, Mathematics).  
-- Ensure sequential numbering (no skips).  
-- Ensure every question has \`"lesson"\`, \`"topic"\`, \`"subtopic"\`.  
-
----
-
-## OUTPUT JSON FORMAT
-
-{
-  "questions": [
-    {
-      "id": "Q31",
-      "stem": "Which of the following represents the lattice structure of A0.95O containing A2+, A3+ and O2– ions?",
-      "options": [
-        {"id": "A", "text": "Option A text", "isCorrect": false},
-        {"id": "B", "text": "Option B text", "isCorrect": false},
-        {"id": "C", "text": "Option C text", "isCorrect": true},
-        {"id": "D", "text": "Option D text", "isCorrect": false}
-      ],
-      "explanation": "Applying electrical neutrality principle: 3A²⁺ replaced by 2A³⁺ → one vacancy per pair of A³⁺.",
-      "tip_formula": "Charge neutrality condition: total positive charge = total negative charge",
-      "difficulty": "MEDIUM",
-      "subject": "Chemistry",
-      "lesson": "Inorganic Chemistry",
-      "topic": "Solid State",
-      "subtopic": "Defects in Crystals",
-      "yearAppeared": 2023,
-      "isPreviousYear": true,
-      "tags": ["solid-state", "defects", "charge-neutrality"]
-    }
-  ],
-  "metadata": {
-    "totalQuestions": 90,
-    "subjects": ["Physics", "Chemistry", "Mathematics"],
-    "difficultyDistribution": {"easy": 30, "medium": 45, "hard": 15}
-  }
-}`;
-                            navigator.clipboard.writeText(promptText).then(() => {
-                              toast.success('Prompt copied to clipboard!');
-                            }).catch(() => {
-                              toast.error('Failed to copy prompt');
-                            });
-                          }}
-                          className="flex items-center space-x-1 px-3 py-1 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 hover:border-red-300 transition-colors"
-                          title="Copy AI prompt to clipboard"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                          </svg>
-                          <span>PROMPT</span>
-                        </button>
-                      </div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        PDF File Path
+                      </label>
                       <div className="flex items-center space-x-2 p-3 bg-gray-50 border border-gray-300 rounded-md">
                         <code className="flex-1 text-sm text-gray-800 font-mono break-all">
                           {pdfs.find(p => p.fileName === editingJson)?.filePath || 'Path not found'}

@@ -46,7 +46,7 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     return blocks.sort((a, b) => a.start - b.start);
   };
 
-  // Render LaTeX content to HTML
+  // Render LaTeX content to HTML with enhanced formatting
   const renderLatexContent = (content: string): string => {
     const blocks = parseLatexBlocks(content);
     let html = content;
@@ -71,6 +71,32 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
         // Keep original LaTeX if rendering fails
       }
     });
+    
+    // Enhanced markdown-like rendering
+    html = html
+      // Images first (before other processing)
+      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px; margin: 4px 0;" />')
+      // Headers
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+      // Bold and italic
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      // Strikethrough
+      .replace(/~~(.*?)~~/g, '<del>$1</del>')
+      // Code
+      .replace(/`(.*?)`/g, '<code>$1</code>')
+      // Links
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+      // Quotes
+      .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+      // Lists
+      .replace(/^\* (.*$)/gim, '<li>$1</li>')
+      .replace(/^- (.*$)/gim, '<li>$1</li>')
+      .replace(/^(\d+)\. (.*$)/gim, '<li>$2</li>')
+      // Line breaks
+      .replace(/\n/g, '<br>');
     
     return html;
   };

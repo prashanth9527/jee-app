@@ -93,6 +93,7 @@ export default function LatexRichTextEditor({
 
   // Render LaTeX content to HTML with enhanced formatting
   const renderLatexContent = useCallback((content: string): string => {
+    console.log('Rendering content:', content); // Debug log
     const blocks = parseLatexBlocks(content);
     let html = content;
     let offset = 0;
@@ -119,6 +120,11 @@ export default function LatexRichTextEditor({
     
     // Enhanced markdown-like rendering
     html = html
+      // Images first (before other processing)
+      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
+        console.log('Image match found:', { match, alt, src: src.substring(0, 50) + '...' }); // Debug log
+        return `<img src="${src}" alt="${alt}" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px; margin: 4px 0;" />`;
+      })
       // Headers
       .replace(/^### (.*$)/gim, '<h3>$1</h3>')
       .replace(/^## (.*$)/gim, '<h2>$1</h2>')
@@ -132,8 +138,6 @@ export default function LatexRichTextEditor({
       .replace(/`(.*?)`/g, '<code>$1</code>')
       // Links
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-      // Images
-      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width: 100%; height: auto;" />')
       // Quotes
       .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
       // Lists
@@ -241,7 +245,8 @@ export default function LatexRichTextEditor({
     const reader = new FileReader();
     reader.onload = (e) => {
       const imageUrl = e.target?.result as string;
-      insertText(`![Image](${imageUrl})`);
+      // Insert with proper alt text
+      insertText(`![${file.name || 'Image'}](${imageUrl})`);
     };
     reader.readAsDataURL(file);
   };
@@ -249,15 +254,24 @@ export default function LatexRichTextEditor({
   // Handle paste events
   const handlePaste = (e: React.ClipboardEvent) => {
     const items = e.clipboardData.items;
+    let hasImage = false;
+    
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
       if (item.type.indexOf('image') !== -1) {
         e.preventDefault();
+        hasImage = true;
         const file = item.getAsFile();
         if (file) {
           handleImageUpload(file);
         }
+        break; // Only handle the first image
       }
+    }
+    
+    // If no image was found, allow normal paste behavior
+    if (!hasImage) {
+      // Let the default paste behavior handle text
     }
   };
 
