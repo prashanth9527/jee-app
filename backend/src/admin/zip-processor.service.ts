@@ -250,12 +250,11 @@ export class ZipProcessorService {
           fs.mkdirSync(subfolderPath, { recursive: true });
         }
 
-        // Generate unique filename to avoid conflicts
-        const timestamp = Date.now();
+        // Use original filename as-is (no timestamp/no sanitization)
         const extension = path.extname(fileName);
         const baseName = path.basename(fileName, extension);
-        const uniqueFileName = `${baseName}_${timestamp}${extension}`;
-        const imageFilePath = path.join(subfolderPath, uniqueFileName);
+        const originalImageFileName = `${baseName}${extension}`;
+        const imageFilePath = path.join(subfolderPath, originalImageFileName);
 
         // Create write stream
         const writeStream = fs.createWriteStream(imageFilePath);

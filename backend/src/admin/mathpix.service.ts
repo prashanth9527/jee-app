@@ -1,9 +1,11 @@
 import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { AwsService } from '../aws/aws.service';
 import * as fs from 'fs';
 import * as path from 'path';
 import axios from 'axios';
 import * as yauzl from 'yauzl';
+import { Readable } from 'stream';
 
 export interface MathpixResponse {
   latex: string;
@@ -29,7 +31,10 @@ export class MathpixService {
   private readonly mathpixAppId = process.env.MATHPIX_APP_ID;
   private readonly mathpixAppKey = process.env.MATHPIX_APP_KEY;
 
-  constructor(private prisma: PrismaService) {
+  constructor(
+    private prisma: PrismaService,
+    private awsService: AwsService,
+  ) {
     if (!this.mathpixAppId || !this.mathpixAppKey) {
       this.logger.warn('Mathpix credentials not configured. Set MATHPIX_APP_ID and MATHPIX_APP_KEY environment variables.');
     }
@@ -96,26 +101,32 @@ export class MathpixService {
         });
 
         if (existingCache) {
-          // Update existing cache with LaTeX content if missing
-          if (!existingCache.latexContent) {
+          // Upload existing LaTeX file to AWS and get AWS URL
+          const awsLatexFilePath = await this.saveLatexToFile(fileName, existingLatexContent);
+          
+          // Update existing cache with LaTeX content and AWS URL if missing
+          if (!existingCache.latexContent || !existingCache.latexFilePath?.includes('s3.')) {
             await this.prisma.pDFProcessorCache.update({
               where: { id: existingCache.id },
               data: {
                 latexContent: this.sanitizeStringData(existingLatexContent),
-                latexFilePath: existingLatexFilePath
+                latexFilePath: awsLatexFilePath
               }
             });
-            this.logger.log(`✅ Updated cache with existing LaTeX content: ${fileName}`);
+            this.logger.log(`✅ Updated cache with existing LaTeX content and AWS URL: ${fileName}`);
           }
           
           return {
             success: true,
             cacheId: existingCache.id,
             latexContent: existingLatexContent,
-            latexFilePath: existingLatexFilePath,
+            latexFilePath: awsLatexFilePath,
             processingTimeMs: Date.now() - startTime
           };
         } else {
+          // Upload existing LaTeX file to AWS and get AWS URL
+          const awsLatexFilePath = await this.saveLatexToFile(fileName, existingLatexContent);
+          
           // Create new cache entry for existing LaTeX file
           const newCache = await this.prisma.pDFProcessorCache.create({
             data: {
@@ -124,7 +135,7 @@ export class MathpixService {
               fileSize: 0, // We don't have the file size here
               processingStatus: 'COMPLETED',
               latexContent: this.sanitizeStringData(existingLatexContent),
-              latexFilePath: existingLatexFilePath
+              latexFilePath: awsLatexFilePath
             }
           });
           
@@ -132,7 +143,7 @@ export class MathpixService {
             success: true,
             cacheId: newCache.id,
             latexContent: existingLatexContent,
-            latexFilePath: existingLatexFilePath,
+            latexFilePath: awsLatexFilePath,
             processingTimeMs: Date.now() - startTime
           };
         }
@@ -152,8 +163,16 @@ export class MathpixService {
         zipFilePath = result.zipFilePath;
         this.logger.log('📦 ZIP file saved, extracting LaTeX content...');
         
-        // Extract LaTeX content from ZIP file
-        const extractedContent = await this.extractLatexFromZipFile(zipFilePath, fileName);
+        // Determine local ZIP file path for extraction
+        let localZipFilePath = zipFilePath;
+        if (zipFilePath.includes('s3.') || zipFilePath.includes('amazonaws.com')) {
+          // If it's an AWS URL, construct the local path
+          const zipFileName = fileName.replace(/\.pdf$/i, '.zip');
+          localZipFilePath = path.join(process.cwd(), 'content', 'zip', zipFileName);
+        }
+        
+        // Extract LaTeX content from local ZIP file
+        const extractedContent = await this.extractLatexFromZipFile(localZipFilePath, fileName);
         if (extractedContent) {
           // Validate and clean LaTeX content
           const cleanedContent = this.validateAndCleanLatex(extractedContent);
@@ -312,23 +331,26 @@ export class MathpixService {
         // Read existing LaTeX content
         const existingLatexContent = fs.readFileSync(existingLatexFilePath, 'utf8');
         
-        // Update cache with existing LaTeX content if missing
-        if (!cache.latexContent) {
+        // Upload existing LaTeX file to AWS and get AWS URL
+        const awsLatexFilePath = await this.saveLatexToFile(cache.fileName, existingLatexContent);
+        
+        // Update cache with existing LaTeX content and AWS URL
+        if (!cache.latexContent || !cache.latexFilePath?.includes('s3.')) {
           await this.prisma.pDFProcessorCache.update({
             where: { id: cacheId },
             data: {
               latexContent: this.sanitizeStringData(existingLatexContent),
-              latexFilePath: existingLatexFilePath
+              latexFilePath: awsLatexFilePath
             }
           });
-          this.logger.log(`✅ Updated cache with existing LaTeX content: ${cache.fileName}`);
+          this.logger.log(`✅ Updated cache with existing LaTeX content and AWS URL: ${cache.fileName}`);
         }
         
         return {
           success: true,
           cacheId: cacheId,
           latexContent: existingLatexContent,
-          latexFilePath: existingLatexFilePath,
+          latexFilePath: awsLatexFilePath,
           processingTimeMs: Date.now() - startTime
         };
       }
@@ -351,8 +373,16 @@ export class MathpixService {
         zipFilePath = result.zipFilePath;
         this.logger.log('📦 ZIP file saved, extracting LaTeX content...');
         
-        // Extract LaTeX content from ZIP file
-        const extractedContent = await this.extractLatexFromZipFile(zipFilePath, cache.fileName);
+        // Determine local ZIP file path for extraction
+        let localZipFilePath = zipFilePath;
+        if (zipFilePath.includes('s3.') || zipFilePath.includes('amazonaws.com')) {
+          // If it's an AWS URL, construct the local path
+          const zipFileName = cache.fileName.replace(/\.pdf$/i, '.zip');
+          localZipFilePath = path.join(process.cwd(), 'content', 'zip', zipFileName);
+        }
+        
+        // Extract LaTeX content from local ZIP file
+        const extractedContent = await this.extractLatexFromZipFile(localZipFilePath, cache.fileName);
         if (extractedContent) {
           // Validate and clean LaTeX content
           const cleanedContent = this.validateAndCleanLatex(extractedContent);
@@ -701,6 +731,25 @@ export class MathpixService {
   }
 
   /**
+   * Get MIME type based on file extension
+   */
+  private getMimeType(fileName: string): string {
+    const ext = path.extname(fileName).toLowerCase();
+    const mimeTypes: { [key: string]: string } = {
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.png': 'image/png',
+      '.gif': 'image/gif',
+      '.bmp': 'image/bmp',
+      '.svg': 'image/svg+xml',
+      '.webp': 'image/webp',
+      '.tiff': 'image/tiff',
+      '.tif': 'image/tiff',
+    };
+    return mimeTypes[ext] || 'application/octet-stream';
+  }
+
+  /**
    * Save image from ZIP stream to content/images folder
    */
   private async saveImageFromZip(readStream: any, fileName: string, originalFileName?: string): Promise<void> {
@@ -723,12 +772,11 @@ export class MathpixService {
           fs.mkdirSync(subfolderPath, { recursive: true });
         }
 
-        // Generate unique filename to avoid conflicts
-        const timestamp = Date.now();
+        // Use original filename as-is (no timestamp/no sanitization)
         const extension = path.extname(fileName);
         const baseName = path.basename(fileName, extension);
-        const uniqueFileName = `${baseName}_${timestamp}${extension}`;
-        const imageFilePath = path.join(subfolderPath, uniqueFileName);
+        const originalImageFileName = `${baseName}${extension}`;
+        const imageFilePath = path.join(subfolderPath, originalImageFileName);
 
         // Create write stream
         const writeStream = fs.createWriteStream(imageFilePath);
@@ -736,8 +784,35 @@ export class MathpixService {
         // Pipe the read stream to write stream
         readStream.pipe(writeStream);
 
-        writeStream.on('finish', () => {
-          this.logger.log(`🖼️ Image saved to: ${imageFilePath}`);
+        writeStream.on('finish', async () => {
+          this.logger.log(`🖼️ Image saved locally to: ${imageFilePath}`);
+          
+          // Upload to AWS
+          try {
+            const fileBuffer = fs.readFileSync(imageFilePath);
+            const mockFile: Express.Multer.File = {
+              fieldname: 'file',
+              originalname: originalImageFileName,
+              encoding: '7bit',
+              mimetype: this.getMimeType(originalImageFileName),
+              buffer: fileBuffer,
+              size: fileBuffer.length,
+              stream: Readable.from(fileBuffer),
+              destination: '',
+              filename: originalImageFileName,
+              path: imageFilePath,
+            };
+
+            const awsUrl = await this.awsService.uploadFileWithCustomName(
+              mockFile,
+              `content/images/${subfolderName}`,
+              originalImageFileName
+            );
+            this.logger.log(`☁️ Image uploaded to AWS: ${awsUrl}`);
+          } catch (awsError) {
+            this.logger.error(`❌ Failed to upload image to AWS: ${awsError.message}`);
+          }
+          
           resolve();
         });
 
@@ -776,8 +851,33 @@ export class MathpixService {
       // Write ZIP file
       fs.writeFileSync(zipFilePath, zipBuffer);
 
-      this.logger.log(`📦 ZIP file saved to: ${zipFilePath}`);
-      return zipFilePath;
+      this.logger.log(`📦 ZIP file saved locally to: ${zipFilePath}`);
+
+      // Upload to AWS and return AWS URL
+      try {
+        const mockFile: Express.Multer.File = {
+          fieldname: 'file',
+          originalname: zipFileName,
+          encoding: '7bit',
+          mimetype: 'application/zip',
+          buffer: zipBuffer,
+          size: zipBuffer.length,
+          stream: Readable.from(zipBuffer),
+          destination: '',
+          filename: zipFileName,
+          path: zipFilePath,
+        };
+
+        const awsUrl = await this.awsService.uploadFileWithCustomName(mockFile, 'content/zip', zipFileName);
+        this.logger.log(`☁️ ZIP file uploaded to AWS: ${awsUrl}`);
+        
+        // Return AWS URL for serving
+        return awsUrl;
+      } catch (awsError) {
+        this.logger.error(`❌ Failed to upload ZIP file to AWS: ${awsError.message}`);
+        // Return local path as fallback
+        return zipFilePath;
+      }
 
     } catch (error) {
       this.logger.error('Error saving ZIP file:', error);
@@ -946,8 +1046,34 @@ export class MathpixService {
       // Write LaTeX content to file
       fs.writeFileSync(latexFilePath, latexContent, 'utf8');
 
-      this.logger.log(`LaTeX content saved to: ${latexFilePath}`);
-      return latexFilePath;
+      this.logger.log(`📄 LaTeX content saved locally to: ${latexFilePath}`);
+
+      // Upload to AWS
+      try {
+        const fileBuffer = Buffer.from(latexContent, 'utf8');
+        const mockFile: Express.Multer.File = {
+          fieldname: 'file',
+          originalname: latexFileName,
+          encoding: '7bit',
+          mimetype: 'text/plain',
+          buffer: fileBuffer,
+          size: fileBuffer.length,
+          stream: Readable.from(fileBuffer),
+          destination: '',
+          filename: latexFileName,
+          path: latexFilePath,
+        };
+
+        const awsUrl = await this.awsService.uploadFileWithCustomName(mockFile, 'content/latex', latexFileName);
+        this.logger.log(`☁️ LaTeX file uploaded to AWS: ${awsUrl}`);
+        
+        // Return AWS URL instead of local path
+        return awsUrl;
+      } catch (awsError) {
+        this.logger.error(`❌ Failed to upload LaTeX file to AWS: ${awsError.message}`);
+        // Return local path as fallback
+        return latexFilePath;
+      }
 
     } catch (error) {
       this.logger.error(`Failed to save LaTeX file:`, error);

@@ -1375,66 +1375,101 @@ export default function PDFProcessorPage() {
                       <button
                         onClick={() => {
                           const promptText = `You are an expert JEE (Joint Entrance Examination) question analyzer.  
-I will provide you with the full content of a \`.tex\` file containing ~90 JEE questions (Physics, Chemistry, Mathematics).  
+I will provide you the full content of a \`.tex\` file containing JEE Physics, Chemistry, and Mathematics questions with solutions.  
 
-Your task is to extract and structure ALL questions into JSON format.
-
-CRITICAL RULES:
-1. Respond with ONLY valid JSON. Do not include any explanation or markdown formatting. Start with \`{\` and end with \`}\`.
-2. The .tex file contains equations, options, answers, and solutions. Preserve LaTeX math code exactly as in the source (e.g., \`$$E=mc^2$$\`).
-3. If diagrams/figures are present, convert them into ASCII form if possible, else describe them in words.
-4. Accept question numbering as \`Q1, Q2…\` or \`1., 2., …\`.
-5. **Skip all promotional/branding content** (e.g., "Allen", "Coaching Institute", "Best of Luck", "Paper Solutions by XYZ", headers/footers, watermarks, page numbers, or motivational lines). Only keep actual question data.
+Your task is to **extract and structure ALL questions into JSON format**.
 
 ---
 
-### CHUNKED PROCESSING (STRICT BY QUESTION NUMBERS)
+### CRITICAL RULES
+1. Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start with \`{\` and end with \`}\`.  
+2. Preserve **LaTeX math code** exactly as in the source (e.g., \`$$E=mc^2$$\`).  
+3. If **image references** (\`\\includegraphics\`) are present:  
+   - Replace them with an HTML \`<img>\` tag.  
+   - Format:  
+     \`\`\`html
+     <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/FILENAME/IMAGE_FILE.EXT' />
+     \`\`\`  
+   - \`FILENAME\` = the \`.tex\` file's base name (without extension).  
+   - \`IMAGE_FILE\` = the original image filename from LaTeX (without extension).  
+   - \`EXT\` =  
+     - \`.png\` if the file name starts with \`smile-\`  
+     - \`.jpg\` otherwise  
+   - Example:  
+     File: \`1-FEB-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION.tex\`  
+     \`\`\`latex
+     \\includegraphics{2025_10_02_abc.png}
+     \`\`\`  
+     →  
+     \`\`\`json
+     "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/1-FEB-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/2025_10_02_abc.jpg' />"
+     \`\`\`  
+   - Example:  
+     File: \`smile-physics-paper.tex\`  
+     \`\`\`latex
+     \\includegraphics{diagram1}
+     \`\`\`  
+     →  
+     \`\`\`json
+     "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/smile-physics-paper/diagram1.png' />"
+     \`\`\`  
+4. Accept question numbering as \`Q1, Q2, …\` or \`1., 2., …\`.  
+5. **Skip all promotional/branding content** (e.g., "Allen", "Best of Luck", headers/footers, watermarks, motivational lines). Keep only actual question data.  
 
-- Physics: Q1–Q30  
-- Chemistry: Q31–Q60  
-- Mathematics: Q61–Q90  
-- Each subject must have exactly **30 questions**.  
+---
 
-If fewer appear in the \`.tex\`, generate realistic filler questions to complete the block.
+### CHUNKED PROCESSING
+- Physics: **Q1–Q30**  
+- Chemistry: **Q31–Q60**  
+- Mathematics: **Q61–Q90**  
+- Each subject must have **exactly 30 questions**.  
+- If fewer appear in the \`.tex\`, generate realistic filler questions to complete the block.  
 
 ---
 
 ### QUESTION CONTENT RULES
-
 For each question:
-- Must have exactly 4 options (A–D). If missing, generate plausible ones.  
-- Must have 1 correct option. If missing, infer based on reasoning.  
-- Provide a detailed step-by-step explanation.  
-- Add a \`tip_formula\` (formula, concept, shortcut).  
-- Classify difficulty as \`EASY\`, \`MEDIUM\`, or \`HARD\`.  
-- All chemical/mathematical formulas must remain in LaTeX.  
+- \`stem\`: must match the original question text from the \`.tex\`.  
+- \`options\`: must match exactly the four options from the \`.tex\`.  
+- \`isCorrect\`:  
+  - If the correct answer is explicitly given in the \`.tex\`, preserve it.  
+  - If missing, you may **generate the correct answer** as a subject expert.  
+- \`explanation\`:  
+  - If given in the file, preserve it.  
+  - If missing, **generate a step-by-step reasoning** as a subject expert.  
+- \`tip_formula\`:  
+  - If given in the file, preserve it.  
+  - If missing, **generate a key formula or shortcut**.  
+- \`difficulty\`: assign as \`EASY\`, \`MEDIUM\`, or \`HARD\`.  
+- Preserve all LaTeX math exactly.  
 
 ---
 
 ### CLASSIFICATION RULES
-
-Assign **lesson → topic → subtopic** strictly from the official JEE Main 2025 syllabus:
+Use the official **JEE Main 2025 syllabus**:
 - Physics (Units 1–20)  
 - Chemistry (Units 1–20)  
 - Mathematics (Units 1–14)  
 
+Assign: **lesson → topic → subtopic**.  
+
 ---
 
 ### OUTPUT JSON FORMAT
-
+\`\`\`json
 {
   "questions": [
     {
       "id": "Q31",
-      "stem": "Which of the following represents the lattice structure of A0.95O containing A2+, A3+ and O2– ions?",
+      "stem": "Which of the following represents the lattice structure of $\\\\mathrm{A}_{0.95} \\\\mathrm{O}$ containing $\\\\mathrm{A}^{2+}, \\\\mathrm{A}^{3+}$ and $\\\\mathrm{O}^{2-}$ ions?",
       "options": [
-        {"id": "A", "text": "Option A text", "isCorrect": false},
-        {"id": "B", "text": "Option B text", "isCorrect": false},
-        {"id": "C", "text": "Option C text", "isCorrect": true},
-        {"id": "D", "text": "Option D text", "isCorrect": false}
+        {"id": "A", "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/1-FEB-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/2025_10_02_8d455ea6d672c1411a66g-01.jpg' />", "isCorrect": false},
+        {"id": "B", "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/1-FEB-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/2025_10_02_8d455ea6d672c1411a66g-01(1).jpg' />", "isCorrect": false},
+        {"id": "C", "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/1-FEB-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/2025_10_02_8d455ea6d672c1411a66g-01(2).jpg' />", "isCorrect": true},
+        {"id": "D", "text": "Defect-free lattice", "isCorrect": false}
       ],
-      "explanation": "Applying electrical neutrality principle: 3A²⁺ replaced by 2A³⁺ → one vacancy per pair of A³⁺.",
-      "tip_formula": "Charge neutrality condition: total positive charge = total negative charge",
+      "explanation": "Applying charge neutrality: replacing 3 A²⁺ ions with 2 A³⁺ ions creates one cation vacancy. This explains the observed non-stoichiometry $A_{0.95}O$.",
+      "tip_formula": "Charge neutrality: $\\\\Sigma q_{+} = \\\\Sigma q_{-}$",
       "difficulty": "MEDIUM",
       "subject": "Chemistry",
       "lesson": "Inorganic Chemistry",
@@ -1451,13 +1486,13 @@ Assign **lesson → topic → subtopic** strictly from the official JEE Main 202
     "difficultyDistribution": {"easy": 30, "medium": 45, "hard": 15}
   }
 }
+\`\`\`
 
----
 
 ### FINAL INSTRUCTION
 
 Read the \`.tex\` file carefully and return **only the JSON output** in the schema above.  
-Ensure exactly 90 questions, numbered sequentially (Q1–Q90), with lesson/topic/subtopic classification.  
+Ensure exactly 30 questions, numbered sequentially (Q1–Q90), with lesson/topic/subtopic classification.  
 Ignore and skip any **branding, coaching names, promotional headers/footers, or unrelated text**.`;
 
                           navigator.clipboard.writeText(promptText).then(() => {
@@ -1580,7 +1615,15 @@ Ignore and skip any **branding, coaching names, promotional headers/footers, or 
                           <button
                             onClick={() => {
                               if (latexFilePath) {
-                                navigator.clipboard.writeText(latexFilePath).then(() => {
+                                // Extract local path from AWS URL or use as-is if it's already local
+                                let localPath = latexFilePath;
+                                if (latexFilePath.includes('s3.') || latexFilePath.includes('amazonaws.com')) {
+                                  // Extract filename from AWS URL and construct local path
+                                  const fileName = latexFilePath.split('/').pop();
+                                  localPath = `C:\\wamp64\\www\\nodejs\\jee-app\\backend\\content\\latex\\${fileName}`;
+                                }
+                                
+                                navigator.clipboard.writeText(localPath).then(() => {
                                   toast.success('LaTeX file path copied to clipboard!');
                                 }).catch(() => {
                                   toast.error('Failed to copy LaTeX file path');

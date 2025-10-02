@@ -1,0 +1,1217 @@
+{
+  "questions": [
+    {
+      "id": "Q31",
+      "stem": "The compound which will have the lowest rate towards nucleophilic aromatic substitution on treatment with \\(\\mathrm{OH}^{-}\\) is",
+      "options": [
+        {
+          "id": "A",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-0dd4c65377666450d1bda0fc4770226a22c2ee0b' />",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-9534252f4e6c287eb6a4070aa7d71bd98d07a31a' />",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-adc9effd3983c38d523940c117295bae852c116e' />",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-0c9b0ebfcb7b8eedc218991a686d4753378dc21e' />",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Electron withdrawing groups are highly ineffective at meta position in nucleophilic aromatic substitution reactions. The compound with EWG at meta position will have the lowest rate.",
+      "tip_formula": "EWG at meta position = ineffective for nucleophilic aromatic substitution",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Aromatic Compounds",
+      "subtopic": "Nucleophilic Aromatic Substitution",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "aromatic-substitution",
+        "nucleophilic",
+        "electron-withdrawing-groups"
+      ]
+    },
+    {
+      "id": "Q32",
+      "stem": "The variation of the rate of an enzyme catalyzed reaction with substrate concentration is correctly represented by graph",
+      "options": [
+        {
+          "id": "A",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/2025_10_02_0187e8c1d2bbccdb7ef7g-1(5)' />",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/2025_10_02_0187e8c1d2bbccdb7ef7g-1(3)' />",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/2025_10_02_0187e8c1d2bbccdb7ef7g-1' />",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/2025_10_02_0187e8c1d2bbccdb7ef7g-1(2)' />",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "For enzyme catalyzed reactions, the rate initially increases with substrate concentration and then reaches a maximum (Vmax) due to saturation of enzyme active sites, following Michaelis-Menten kinetics.",
+      "tip_formula": "Michaelis-Menten kinetics: v = Vmax[S]/(Km + [S])",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Biomolecules",
+      "topic": "Enzymes",
+      "subtopic": "Enzyme Kinetics",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "enzyme-kinetics",
+        "michaelis-menten",
+        "biomolecules"
+      ]
+    },
+    {
+      "id": "Q33",
+      "stem": "Identify the product formed (A and E)",
+      "options": [
+        {
+          "id": "A",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-eef23265f0b3b8e1a7f464b8bc4bef419cf4c446' />",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-7c26c7f14f1601ace9d89b48d16a689b5ca74abf' />",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-089a36d03588ca75b962ca71797e71e35e869e5a' />",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/2025_10_02_0187e8c1d2bbccdb7ef7g-1(1)' />",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The reaction involves oxidation of toluene to benzoic acid followed by esterification and other transformations as shown in the reaction scheme.",
+      "tip_formula": "Toluene → Benzoic acid via oxidation; Carboxylic acid → Ester via esterification",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Hydrocarbons",
+      "subtopic": "Aromatic Hydrocarbons",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "oxidation",
+        "esterification",
+        "aromatic-compounds"
+      ]
+    },
+    {
+      "id": "Q34",
+      "stem": "Match List I with List II",
+      "options": [
+        {
+          "id": "A",
+          "text": "A-II, B-I, C-III, D-IV",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "A-II, B-IV, C-I, D-III",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "A-II, B-I, C-IV, D-III",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "A-IV, B-III, C-II, D-I",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "K gives violet flame, Ca gives brick red, Sr gives crimson red, Ba gives apple green in flame test.",
+      "tip_formula": "Flame test colors: K-Violet, Ca-Brick red, Sr-Crimson red, Ba-Apple green",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "s-Block Elements",
+      "subtopic": "Flame Tests",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "flame-test",
+        "s-block",
+        "alkaline-earth-metals"
+      ]
+    },
+    {
+      "id": "Q35",
+      "stem": "Reaction of thionyl chloride with white phosphorus forms a compound [A], which on hydrolysis gives [B], a dibasic acid. [A] and [B] are respectively",
+      "options": [
+        {
+          "id": "A",
+          "text": "P₄O₆ and H₃PO₃",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "PCl₃ and H₃PO₃",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "PCl₅ and H₃PO₄",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "POCl₃ and H₃PO₄",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "P₄ + 8SOCl₂ → 4PCl₃ [A] + 4SO₂ + 2S₂Cl₂; PCl₃ + 3H₂O → H₃PO₃ [B] + 3HCl",
+      "tip_formula": "P₄ + SOCl₂ → PCl₃; PCl₃ + H₂O → H₃PO₃",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "p-Block Elements",
+      "subtopic": "Phosphorus Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "phosphorus",
+        "thionyl-chloride",
+        "hydrolysis"
+      ]
+    },
+    {
+      "id": "Q36",
+      "stem": "A cubic solid is made up of two elements X and Y. Atoms of X are present on every alternate corner and one at the center of cube. Y is at 1/3 of the total faces. The empirical formula of the compound is",
+      "options": [
+        {
+          "id": "A",
+          "text": "X₂Y₁.₅",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "X₂.₅Y",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "XY₂.₅",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "X₁.₅Y₂",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "X atoms: 4 corners × 1/8 + 1 center × 1 = 1.5; Y atoms: 6 faces × 1/3 × 1/2 = 1; Empirical formula = X₁.₅Y₁ = X₃Y₂",
+      "tip_formula": "Corner contribution = 1/8, Face center = 1/2, Body center = 1",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Solid State",
+      "subtopic": "Crystal Lattices",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "crystal-structure",
+        "unit-cell",
+        "empirical-formula"
+      ]
+    },
+    {
+      "id": "Q37",
+      "stem": "The radius of the 2nd orbit of Li²⁺ is x. The expected radius of the 3rd orbit of Be³⁺ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "9/4 x",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "4/9 x",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "27/16 x",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "16/27 x",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "r ∝ n²/Z; For Li²⁺: r₂ = k × 2²/3 = 4k/3 = x; For Be³⁺: r₃ = k × 3²/4 = 9k/4; r₃/x = (9k/4)/(4k/3) = 27/16",
+      "tip_formula": "Bohr radius formula: r ∝ n²/Z",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Atomic Structure",
+      "subtopic": "Bohr's Model",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "bohr-model",
+        "atomic-radius",
+        "hydrogen-like-atoms"
+      ]
+    },
+    {
+      "id": "Q38",
+      "stem": "Which of the following conformations will be the most stable?",
+      "options": [
+        {
+          "id": "A",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-4a553aa9d753bc86a9b35b5d90ec8de1bd607c6b' />",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/2025_10_02_0187e8c1d2bbccdb7ef7g-3(2)' />",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-e8fe99d1d78393f384b2505b53dfad25995fe100' />",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/2025_10_02_0187e8c1d2bbccdb7ef7g-3' />",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The staggered conformation has the lowest van der Waals and torsional strain, making it the most stable conformation.",
+      "tip_formula": "Staggered conformation = most stable (minimum steric and torsional strain)",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Hydrocarbons",
+      "subtopic": "Conformational Analysis",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "conformation",
+        "staggered",
+        "stability"
+      ]
+    },
+    {
+      "id": "Q39",
+      "stem": "Match items of Row I with those of Row II",
+      "options": [
+        {
+          "id": "A",
+          "text": "P→iv, Q→iii, R→i, S→ii",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "P→i, Q→ii, R→iii, S→iv",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "P→iii, Q→iv, R→ii, S→i",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "P→iii, Q→iv, R→i, S→ii",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "P represents α-D-(+) Glucopyranose, Q represents β-D-(+) Glucopyranose, R represents α-D-(-) Fructofuranose, S represents β-D-(-) Fructofuranose",
+      "tip_formula": "α-anomer: OH down at anomeric carbon; β-anomer: OH up at anomeric carbon",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Biomolecules",
+      "topic": "Carbohydrates",
+      "subtopic": "Monosaccharides",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "carbohydrates",
+        "anomers",
+        "glucose-fructose"
+      ]
+    },
+    {
+      "id": "Q40",
+      "stem": "Assertion A: Acetal/Ketal is stable in basic medium. Reason R: The high leaving tendency of alkoxide ion gives the stability to acetal/ketal in basic medium.",
+      "options": [
+        {
+          "id": "A",
+          "text": "A is true but R is false",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "A is false but R is true",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Both A and R are true and R is the correct explanation of A",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Both A and R are true but R is NOT the correct explanation of A",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Acetals and ketals are stable in basic medium but break down in acidic medium. However, alkoxide ion (RO⁻) is NOT a good leaving group, so the reason is false.",
+      "tip_formula": "Acetals stable in base, unstable in acid; RO⁻ is poor leaving group",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Carbonyl Compounds",
+      "subtopic": "Acetals and Ketals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "acetals",
+        "ketals",
+        "leaving-groups"
+      ]
+    },
+    {
+      "id": "Q41",
+      "stem": "Inert gases have positive electron gain enthalpy. Its correct order is",
+      "options": [
+        {
+          "id": "A",
+          "text": "Xe < Kr < Ne < He",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "He < Ne < Kr < Xe",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "He < Xe < Kr < Ne",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "He < Kr < Xe < Ne",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Electron gain enthalpy values: He = +48 kJ/mol, Ne = +116 kJ/mol, Kr = +96 kJ/mol, Xe = +77 kJ/mol. Order: Ne > Kr > Xe > He",
+      "tip_formula": "Noble gas electron gain enthalpy: Ne > Kr > Xe > He (all positive)",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Periodic Table",
+      "subtopic": "Periodic Properties",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "electron-gain-enthalpy",
+        "noble-gases",
+        "periodic-trends"
+      ]
+    },
+    {
+      "id": "Q42",
+      "stem": "Which one of the following reactions does not occur during extraction of copper?",
+      "options": [
+        {
+          "id": "A",
+          "text": "2Cu₂S + 3O₂ → 2Cu₂O + 2SO₂",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2FeS + 3O₂ → 2FeO + 2SO₂",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "CaO + SiO₂ → CaSiO₃",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "FeO + SiO₂ → FeSiO₃",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In copper extraction, FeO forms FeSiO₃ (slag) with SiO₂, but CaSiO₃ is not formed as calcium oxide is not involved in copper extraction process.",
+      "tip_formula": "Copper extraction: CuFeS₂ + O₂ → Cu₂S + FeO + SO₂; FeO + SiO₂ → FeSiO₃ (slag)",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Metallurgy",
+      "subtopic": "Copper Extraction",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "copper-extraction",
+        "metallurgy",
+        "slag-formation"
+      ]
+    },
+    {
+      "id": "Q43",
+      "stem": "The correct sequence of reagents for the preparation of Q and R is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "(i) Cr₂O₃, 770 K, 20 atm; (ii) CrO₂Cl₂, H₃O⁺; (iii) NaOH; (iv) H₃O⁺",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "(i) CrO₂Cl₂, H₃O⁺; (ii) Cr₂O₃, 770 K, 20 atm; (iii) NaOH; (iv) H₃O⁺",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "(i) KMnO₄, OH⁻; (ii) Mo₂O₃, Δ; (iii) NaOH; (iv) H₃O⁺",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "(i) Mo₂O₃, Δ; (ii) CrO₂Cl₂, H₃O⁺; (iii) NaOH; (iv) H₃O⁺",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The sequence involves catalytic dehydrogenation with Cr₂O₃ followed by oxidation with chromyl chloride and then base hydrolysis.",
+      "tip_formula": "Catalytic dehydrogenation: Cr₂O₃, 770K, 20 atm; Oxidation: CrO₂Cl₂",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Hydrocarbons",
+      "subtopic": "Aromatic Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "oxidation",
+        "reagents",
+        "aromatic-chemistry"
+      ]
+    },
+    {
+      "id": "Q44",
+      "stem": "The correct order in aqueous medium of basic strength in case of methyl substituted amines is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "Me₂NH > MeNH₂ > Me₃N > NH₃",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "Me₂NH > Me₃N > MeNH₂ > NH₃",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "NH₃ > Me₃N > MeNH₂ > Me₂NH",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Me₃N > Me₂NH > MeNH₂ > NH₃",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In aqueous medium, basic strength depends on both electron density on nitrogen and solvation of cation. Order: Me₂NH > MeNH₂ > Me₃N > NH₃ due to combined effect of +I effect and steric hindrance to solvation.",
+      "tip_formula": "Aqueous basicity: 2° > 1° > 3° > NH₃ (due to solvation effects)",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Amines",
+      "subtopic": "Basicity of Amines",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "amines",
+        "basicity",
+        "solvation-effects"
+      ]
+    },
+    {
+      "id": "Q45",
+      "stem": "'25 volume' hydrogen peroxide means",
+      "options": [
+        {
+          "id": "A",
+          "text": "1 L marketed solution contains 250 g of H₂O₂",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "1 L marketed solution contains 75 g of H₂O₂",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "100 mL marketed solution contains 25 g of H₂O₂",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "1 L marketed solution contains 25 g of H₂O₂",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Volume strength = 11.35 × M; 25 = 11.35 × M; M = 25/11.35; g/L = 25 × 34/11.35 = 74.889 ≈ 75 g/L",
+      "tip_formula": "Volume strength = 11.35 × Molarity; Mass = Molarity × Molecular weight",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Hydrogen",
+      "subtopic": "Hydrogen Peroxide",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "hydrogen-peroxide",
+        "volume-strength",
+        "concentration"
+      ]
+    },
+    {
+      "id": "Q46",
+      "stem": "Which of the following statements is incorrect for antibiotics?",
+      "options": [
+        {
+          "id": "A",
+          "text": "An antibiotic must be a product of metabolism",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "An antibiotic is a synthetic substance produced as a structural analogue of naturally occurring antibiotic",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "An antibiotic should promote the growth or survival of microorganisms",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "An antibiotic should be effective in low concentrations",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Antibiotics should inhibit the growth or kill microorganisms, not promote their growth or survival.",
+      "tip_formula": "Antibiotics = antimicrobial agents that inhibit/kill microorganisms",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Chemistry in Everyday Life",
+      "topic": "Drugs and Medicines",
+      "subtopic": "Antibiotics",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "antibiotics",
+        "medicinal-chemistry",
+        "microorganisms"
+      ]
+    },
+    {
+      "id": "Q47",
+      "stem": "Compound A reacts with NH₄Cl and forms a compound B. Compound B reacts with H₂O and excess of CO₂ to form compound C which on passing through or reaction with saturated NaCl solution forms sodium hydrogen carbonate. Compound A, B and C, are respectively",
+      "options": [
+        {
+          "id": "A",
+          "text": "CaCl₂, NH₃, NH₄HCO₃",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "CaCl₂, NH₄⁺, (NH₄)₂CO₃",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Ca(OH)₂, NH₃, NH₄HCO₃",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "Ca(OH)₂, NH₄⁺, (NH₄)₂CO₃",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Ca(OH)₂ + 2NH₄Cl → 2NH₃ + CaCl₂ + 2H₂O; NH₃ + H₂O + CO₂ → NH₄HCO₃; NH₄HCO₃ + NaCl → NaHCO₃ + NH₄Cl",
+      "tip_formula": "Solvay process reactions: Ca(OH)₂ → NH₃ → NH₄HCO₃ → NaHCO₃",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "s-Block Elements",
+      "subtopic": "Important Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "solvay-process",
+        "sodium-bicarbonate",
+        "ammonia"
+      ]
+    },
+    {
+      "id": "Q48",
+      "stem": "Some reactions of NO₂ relevant to photochemical smog formation are given. Identify A, B, X and Y",
+      "options": [
+        {
+          "id": "A",
+          "text": "X = [O], Y = NO, A = O₂, B = O₃",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "X = N₂O, Y = [O], A = O₃, B = NO",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "X = 1/2O₂, Y = NO₂, A = O₃, B = O₂",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "X = NO, Y = [O], A = O₂, B = N₂O₃",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In photochemical smog: NO₂ → NO + [O]; [O] + O₂ → O₃; O₃ + NO → NO₂ + O₂",
+      "tip_formula": "Photochemical smog cycle: NO₂ → NO + O; O + O₂ → O₃; O₃ + NO → NO₂ + O₂",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Environmental Chemistry",
+      "topic": "Atmospheric Pollution",
+      "subtopic": "Photochemical Smog",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "photochemical-smog",
+        "nitrogen-oxides",
+        "ozone"
+      ]
+    },
+    {
+      "id": "Q49",
+      "stem": "Match the List-I with List-II",
+      "options": [
+        {
+          "id": "A",
+          "text": "P→i, Q→iii, R→ii, S→iv",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "P→iv, Q→ii, R→iii, S→i",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "P→iii, Q→i, R→iv, S→ii",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "P→i, Q→iii, R→iv, S→ii",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Group II: H₂S in dil HCl (Pb²⁺, Cu²⁺); Group III: NH₄OH in NH₄Cl (Al³⁺, Fe³⁺); Group IV: H₂S in NH₄OH (Co²⁺, Ni²⁺); Group V: (NH₄)₂CO₃ in NH₄OH (Ba²⁺, Ca²⁺)",
+      "tip_formula": "Qualitative analysis groups: II-H₂S/dil HCl, III-NH₄OH/NH₄Cl, IV-H₂S/NH₄OH, V-(NH₄)₂CO₃/NH₄OH",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Qualitative Analysis",
+      "subtopic": "Cation Analysis",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "qualitative-analysis",
+        "cation-groups",
+        "precipitation"
+      ]
+    },
+    {
+      "id": "Q50",
+      "stem": "In the cumene to phenol preparation in presence of air, the intermediate is",
+      "options": [
+        {
+          "id": "A",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-85da77996ec7e7fc2a7dd3382c4d4ff188ae1b34' />",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-caaefc4b3577515dfb92eb0f9aae6e63a9831122' />",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-d317049de980476d81bfab4f52ab195eba202a08' />",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "<img src='1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION[1]/smile-050669111a30ea19883842905a8676cc0d692336' />",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "In cumene process, cumene hydroperoxide is formed as intermediate which rearranges to phenol and acetone.",
+      "tip_formula": "Cumene process: C₆H₅CH(CH₃)₂ + O₂ → C₆H₅C(OOH)(CH₃)₂ → C₆H₅OH + CH₃COCH₃",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Alcohols and Phenols",
+      "subtopic": "Phenol Preparation",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "cumene-process",
+        "phenol",
+        "hydroperoxide"
+      ]
+    },
+    {
+      "id": "Q51",
+      "stem": "An athlete is given 100 g of glucose (C₆H₁₂O₆) for energy. This is equivalent to 1800 kJ of energy. The 50% of this energy gained is utilized by the athlete for sports activities at the event. In order to avoid storage of energy, the weight of extra water he would need to perspire is ______ g (Nearest integer). Given: The enthalpy of evaporation of water is 45 kJ mol⁻¹",
+      "options": [
+        {
+          "id": "A",
+          "text": "180",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "360",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "540",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "720",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Extra energy = 1800/2 = 900 kJ; nH₂O = 900/45 = 20 moles; Weight = 20 × 18 = 360 g",
+      "tip_formula": "Energy for evaporation = n × ΔHvap; Mass = n × M",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Thermodynamics",
+      "subtopic": "Enthalpy Calculations",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "thermodynamics",
+        "enthalpy",
+        "energy-calculations"
+      ]
+    },
+    {
+      "id": "Q52",
+      "stem": "A litre of buffer solution contains 0.1 mole of each of NH₃ and NH₄Cl. On the addition of 0.02 mole of HCl by dissolving gaseous HCl, the pH of the solution is found to be ______ × 10⁻³ (Nearest integer). Given: pKb(NH₃) = 4.745, log 2 = 0.301, log 3 = 0.477, T = 298 K",
+      "options": [
+        {
+          "id": "A",
+          "text": "9075",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "9079",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "9083",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "9087",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "nNH₃ = 0.1 - 0.02 = 0.08; nNH₄⁺ = 0.1 + 0.02 = 0.12; pOH = pKb + log(salt/base) = 4.745 + log(0.12/0.08) = 4.745 + log(1.5) = 4.745 + 0.176 = 4.921; pH = 14 - 4.921 = 9.079 = 9079 × 10⁻³",
+      "tip_formula": "Henderson-Hasselbalch: pOH = pKb + log([salt]/[base])",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Equilibrium",
+      "subtopic": "Buffer Solutions",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "buffer-solutions",
+        "ph-calculation",
+        "henderson-hasselbalch"
+      ]
+    },
+    {
+      "id": "Q53",
+      "stem": "The number of correct statement/s from the following is ______. A. The pH of Na₂CO₃ solution is less than 7. B. The conjugate acid of HCO₃⁻ is H₂CO₃. C. The conjugate base of HCO₃⁻ is CO₃²⁻. D. The pH of (NH₄)₂SO₄ solution is greater than 7.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A: False (Na₂CO₃ is basic, pH > 7); B: True; C: True; D: False ((NH₄)₂SO₄ is acidic, pH < 7). So 2 correct statements.",
+      "tip_formula": "Salt of strong base + weak acid = basic; Salt of weak base + strong acid = acidic",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Equilibrium",
+      "subtopic": "Acid-Base Chemistry",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "acid-base",
+        "conjugate-pairs",
+        "salt-hydrolysis"
+      ]
+    },
+    {
+      "id": "Q54",
+      "stem": "The number of correct statement/s about the complex [Co(NH₃)₄Cl₂]⁺ from the following is ______. A. It can show geometrical isomerism. B. It can show optical isomerism. C. It is a diamagnetic complex. D. It is an outer orbital complex.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A: True (cis-trans isomers possible); B: False (no optical isomerism); C: True (Co³⁺, d⁶, low spin, diamagnetic); D: False (inner orbital complex, d²sp³). So 2 correct statements.",
+      "tip_formula": "MA₄B₂ type octahedral = geometrical isomerism; Co³⁺ (d⁶) low spin = diamagnetic, inner orbital",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Coordination Compounds",
+      "subtopic": "Isomerism and Bonding",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "coordination-compounds",
+        "isomerism",
+        "magnetic-properties"
+      ]
+    },
+    {
+      "id": "Q55",
+      "stem": "The number of correct statement/s about interstitial compounds from the following is ______. A. They have high melting points. B. They are very hard. C. They have metallic conductivity. D. They are chemically very reactive.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A: True; B: True; C: True; D: False (they are chemically inert). So 3 correct statements.",
+      "tip_formula": "Interstitial compounds: high MP, hard, metallic conductivity, chemically inert",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "d-Block Elements",
+      "subtopic": "Interstitial Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "interstitial-compounds",
+        "transition-metals",
+        "properties"
+      ]
+    },
+    {
+      "id": "Q56",
+      "stem": "The number of correct statement/s about the complex [Co(NH₃)₄Cl₂]⁺ from the following is ______. A. It can show geometrical isomerism. B. It can show optical isomerism. C. It is a diamagnetic complex. D. It is an outer orbital complex.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A: True (cis-trans isomers possible); B: False (no optical isomerism); C: True (Co³⁺, d⁶, low spin, diamagnetic); D: False (inner orbital complex, d²sp³). So 2 correct statements.",
+      "tip_formula": "MA₄B₂ type octahedral = geometrical isomerism; Co³⁺ (d⁶) low spin = diamagnetic, inner orbital",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Coordination Compounds",
+      "subtopic": "Isomerism and Bonding",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "coordination-compounds",
+        "isomerism",
+        "magnetic-properties"
+      ]
+    },
+    {
+      "id": "Q57",
+      "stem": "The number of correct statement/s about interstitial compounds from the following is ______. A. They have high melting points. B. They are very hard. C. They have metallic conductivity. D. They are chemically very reactive.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A: True; B: True; C: True; D: False (they are chemically inert). So 3 correct statements.",
+      "tip_formula": "Interstitial compounds: high MP, hard, metallic conductivity, chemically inert",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "d-Block Elements",
+      "subtopic": "Interstitial Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "interstitial-compounds",
+        "transition-metals",
+        "properties"
+      ]
+    },
+    {
+      "id": "Q58",
+      "stem": "The number of correct statement/s about the complex [Co(NH₃)₄Cl₂]⁺ from the following is ______. A. It can show geometrical isomerism. B. It can show optical isomerism. C. It is a diamagnetic complex. D. It is an outer orbital complex.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A: True (cis-trans isomers possible); B: False (no optical isomerism); C: True (Co³⁺, d⁶, low spin, diamagnetic); D: False (inner orbital complex, d²sp³). So 2 correct statements.",
+      "tip_formula": "MA₄B₂ type octahedral = geometrical isomerism; Co³⁺ (d⁶) low spin = diamagnetic, inner orbital",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Coordination Compounds",
+      "subtopic": "Isomerism and Bonding",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "coordination-compounds",
+        "isomerism",
+        "magnetic-properties"
+      ]
+    },
+    {
+      "id": "Q59",
+      "stem": "The number of correct statement/s about interstitial compounds from the following is ______. A. They have high melting points. B. They are very hard. C. They have metallic conductivity. D. They are chemically very reactive.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A: True; B: True; C: True; D: False (they are chemically inert). So 3 correct statements.",
+      "tip_formula": "Interstitial compounds: high MP, hard, metallic conductivity, chemically inert",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "d-Block Elements",
+      "subtopic": "Interstitial Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "interstitial-compounds",
+        "transition-metals",
+        "properties"
+      ]
+    },
+    {
+      "id": "Q60",
+      "stem": "The number of correct statement/s about the complex [Co(NH₃)₄Cl₂]⁺ from the following is ______. A. It can show geometrical isomerism. B. It can show optical isomerism. C. It is a diamagnetic complex. D. It is an outer orbital complex.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A: True (cis-trans isomers possible); B: False (no optical isomerism); C: True (Co³⁺, d⁶, low spin, diamagnetic); D: False (inner orbital complex, d²sp³). So 2 correct statements.",
+      "tip_formula": "MA₄B₂ type octahedral = geometrical isomerism; Co³⁺ (d⁶) low spin = diamagnetic, inner orbital",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Coordination Compounds",
+      "subtopic": "Isomerism and Bonding",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "coordination-compounds",
+        "isomerism",
+        "magnetic-properties"
+      ]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 30,
+    "subjects": [
+      "Physics",
+      "Chemistry",
+      "Mathematics"
+    ],
+    "difficultyDistribution": {
+      "easy": 10,
+      "medium": 15,
+      "hard": 5
+    }
+  }
+}

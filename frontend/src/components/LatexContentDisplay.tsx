@@ -23,9 +23,11 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     
     // Find inline math blocks
     while ((match = inlineRegex.exec(content)) !== null) {
+      // Unescape LaTeX content (convert \\ to \)
+      const unescapedLatex = match[1].replace(/\\\\/g, '\\');
       blocks.push({
         id: `inline-${match.index}`,
-        latex: match[1],
+        latex: unescapedLatex,
         start: match.index,
         end: match.index + match[0].length,
         type: 'inline'
@@ -34,9 +36,11 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     
     // Find display math blocks
     while ((match = displayRegex.exec(content)) !== null) {
+      // Unescape LaTeX content (convert \\ to \)
+      const unescapedLatex = match[1].replace(/\\\\/g, '\\');
       blocks.push({
         id: `display-${match.index}`,
-        latex: match[1],
+        latex: unescapedLatex,
         start: match.index,
         end: match.index + match[0].length,
         type: 'display'
@@ -57,7 +61,36 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
         const rendered = katex.renderToString(block.latex, {
           throwOnError: false,
           displayMode: block.type === 'display',
-          strict: false
+          strict: false,
+          trust: true,
+          macros: {
+            "\\xrightarrow": "\\stackrel{#1}{\\rightarrow}",
+            "\\xleftarrow": "\\stackrel{#1}{\\leftarrow}",
+            "\\xleftrightarrow": "\\stackrel{#1}{\\leftrightarrow}",
+            "\\xRightarrow": "\\stackrel{#1}{\\Rightarrow}",
+            "\\xLeftarrow": "\\stackrel{#1}{\\Leftarrow}",
+            "\\xLeftrightarrow": "\\stackrel{#1}{\\Leftrightarrow}",
+            "\\xhookrightarrow": "\\stackrel{#1}{\\hookrightarrow}",
+            "\\xhookleftarrow": "\\stackrel{#1}{\\hookleftarrow}",
+            "\\xrightharpoonup": "\\stackrel{#1}{\\rightharpoonup}",
+            "\\xrightharpoondown": "\\stackrel{#1}{\\rightharpoondown}",
+            "\\xleftharpoonup": "\\stackrel{#1}{\\leftharpoonup}",
+            "\\xleftharpoondown": "\\stackrel{#1}{\\leftharpoondown}",
+            "\\xrightleftharpoons": "\\stackrel{#1}{\\rightleftharpoons}",
+            "\\xleftrightharpoons": "\\stackrel{#1}{\\leftrightharpoons}",
+            "\\xmapsto": "\\stackrel{#1}{\\mapsto}",
+            "\\xlongequal": "\\stackrel{#1}{=}",
+            "\\xlongleftarrow": "\\stackrel{#1}{\\longleftarrow}",
+            "\\xlongrightarrow": "\\stackrel{#1}{\\longrightarrow}",
+            "\\xlongleftrightarrow": "\\stackrel{#1}{\\longleftrightarrow}",
+            "\\xLongleftarrow": "\\stackrel{#1}{\\Longleftarrow}",
+            "\\xLongrightarrow": "\\stackrel{#1}{\\Longrightarrow}",
+            "\\xLongleftrightarrow": "\\stackrel{#1}{\\Longleftrightarrow}",
+            "\\xlongmapsto": "\\stackrel{#1}{\\longmapsto}",
+            "\\substack": "\\begin{array}{c}#1\\end{array}",
+            "\\underset": "\\mathop{#2}\\limits_{#1}",
+            "\\overset": "\\mathop{#2}\\limits^{#1}"
+          }
         });
         
         const before = html.substring(0, block.start + offset);
@@ -67,7 +100,7 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
         html = before + replacement + after;
         offset += replacement.length - (block.end - block.start);
       } catch (error) {
-        console.warn('LaTeX rendering error:', error);
+        console.warn('LaTeX rendering error for:', block.latex, error);
         // Keep original LaTeX if rendering fails
       }
     });

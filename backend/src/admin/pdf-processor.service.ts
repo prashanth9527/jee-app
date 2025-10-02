@@ -1,7 +1,9 @@
 import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { AwsService } from '../aws/aws.service';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Readable } from 'stream';
 import { AIProviderFactory } from '../ai/ai-provider.factory';
 import { AIProviderType } from '../ai/ai-provider.interface';
 
@@ -149,7 +151,8 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
 
   constructor(
     private readonly prisma: PrismaService,
-    private readonly aiProviderFactory: AIProviderFactory
+    private readonly aiProviderFactory: AIProviderFactory,
+    private readonly awsService: AwsService
   ) {
     // Ensure processed directory exists
     if (!fs.existsSync(this.processedDir)) {
@@ -485,8 +488,34 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
       const formattedJson = JSON.stringify(JSON.parse(jsonContent), null, 2);
       fs.writeFileSync(jsonFilePath, formattedJson, 'utf8');
 
-      this.logger.log(`JSON content saved to: ${jsonFilePath}`);
-      return jsonFilePath;
+      this.logger.log(`📋 JSON content saved locally to: ${jsonFilePath}`);
+
+      // Upload to AWS and return AWS URL
+      try {
+        const fileBuffer = Buffer.from(formattedJson, 'utf8');
+        const mockFile: Express.Multer.File = {
+          fieldname: 'file',
+          originalname: jsonFileName,
+          encoding: '7bit',
+          mimetype: 'application/json',
+          buffer: fileBuffer,
+          size: fileBuffer.length,
+          stream: Readable.from(fileBuffer),
+          destination: '',
+          filename: jsonFileName,
+          path: jsonFilePath,
+        };
+
+        const awsUrl = await this.awsService.uploadFileWithCustomName(mockFile, 'content/processed', jsonFileName);
+        this.logger.log(`☁️ JSON file uploaded to AWS: ${awsUrl}`);
+        
+        // Return AWS URL for serving
+        return awsUrl;
+      } catch (awsError) {
+        this.logger.error(`❌ Failed to upload JSON file to AWS: ${awsError.message}`);
+        // Return local path as fallback
+        return jsonFilePath;
+      }
 
     } catch (error) {
       this.logger.error(`Failed to save JSON file:`, error);
@@ -975,6 +1004,10 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
         throw new BadRequestException('JSON must contain a "questions" array');
       }
 
+      // Convert local image paths to AWS URLs in JSON content
+      const processedJsonContent = this.convertImagePathsToAwsUrls(jsonContent, fileName);
+      const processedParsedData = JSON.parse(processedJsonContent);
+
       // Find or create cache entry
       let cache = await this.prisma.pDFProcessorCache.findUnique({
         where: { fileName }
@@ -994,23 +1027,23 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
             filePath: pdfPath,
             fileSize: stats.size,
             processingStatus: 'PENDING',
-            jsonContent: jsonContent
+            jsonContent: processedJsonContent
           }
         });
       } else {
         // Update existing cache entry
         cache = await this.prisma.pDFProcessorCache.update({
           where: { fileName },
-          data: { jsonContent: jsonContent }
+          data: { jsonContent: processedJsonContent }
         });
       }
 
       // Save JSON content to local file
-      const jsonFilePath = await this.saveJsonToFile(fileName, jsonContent);
+      const jsonFilePath = await this.saveJsonToFile(fileName, processedJsonContent);
 
       return {
         cacheId: cache.id,
-        questionCount: parsedData.questions.length,
+        questionCount: processedParsedData.questions.length,
         jsonFilePath: jsonFilePath
       };
     } catch (error) {
@@ -1119,6 +1152,50 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     } catch (error) {
       this.logger.error('Error marking PDF as completed:', error);
       throw new BadRequestException('Failed to mark PDF as completed');
+    }
+  }
+
+  /**
+   * Convert local image paths to AWS URLs in JSON content
+   */
+  private convertImagePathsToAwsUrls(jsonContent: string, fileName: string): string {
+    try {
+      // Extract base filename without extension
+      const baseFileName = fileName.replace(/\.pdf$/i, '');
+      
+      // Regular expression to match img tags with local paths
+      const imgTagRegex = /<img\s+src=['"]([^'"]+)['"][^>]*\/?>/gi;
+      
+      // Replace local image paths with AWS URLs
+      const processedContent = jsonContent.replace(imgTagRegex, (match, srcPath) => {
+        // Check if it's already an AWS URL
+        if (srcPath.includes('s3.') || srcPath.includes('amazonaws.com')) {
+          return match; // Return as-is if already AWS URL
+        }
+        
+        // Extract image filename from local path
+        // Handle different path formats:
+        // 1. "1759411848155-25-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION [1]/smile-0dd4c65377666450d1bda0fc4770226a22c2ee0b"
+        // 2. "filename/image.jpg"
+        let imageFileName = srcPath;
+        if (srcPath.includes('/')) {
+          imageFileName = srcPath.split('/').pop() || srcPath;
+        }
+        
+        // Construct AWS URL
+        const awsUrl = `https://rankora.s3.eu-north-1.amazonaws.com/content/images/${baseFileName}/${imageFileName}`;
+        
+        // Replace the src attribute
+        return match.replace(srcPath, awsUrl);
+      });
+      
+      this.logger.log(`✅ Converted local image paths to AWS URLs in JSON content for: ${fileName}`);
+      return processedContent;
+      
+    } catch (error) {
+      this.logger.error('Error converting image paths to AWS URLs:', error);
+      // Return original content if conversion fails
+      return jsonContent;
     }
   }
 }

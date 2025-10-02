@@ -46,6 +46,24 @@ export class AwsService {
     return `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${key}`;
   }
 
+  async uploadFileWithCustomName(file: Express.Multer.File, folder: string = 'uploads', customFileName?: string): Promise<string> {
+    const fileName = customFileName || file.originalname;
+    const key = `${folder}/${fileName}`;
+    
+    const command = new PutObjectCommand({
+      Bucket: this.bucketName,
+      Key: key,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+      ACL: undefined,
+    });
+
+    // This will automatically override existing files with the same key
+    await this.s3Client.send(command);
+    
+    return `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${key}`;
+  }
+
   async deleteFile(fileUrl: string): Promise<void> {
     if (!fileUrl || !fileUrl.includes('.amazonaws.com/')) {
       return;

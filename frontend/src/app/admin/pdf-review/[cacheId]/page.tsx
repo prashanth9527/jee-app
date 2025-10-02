@@ -456,7 +456,7 @@ export default function PDFReviewPage() {
                         </div>
                         <div className="text-sm text-gray-600 line-clamp-2">
                           <LatexContentDisplay 
-                            content={question.stem.substring(0, 100) + '...'} 
+                            content={question.stem} 
                             className="text-sm"
                           />
                         </div>
