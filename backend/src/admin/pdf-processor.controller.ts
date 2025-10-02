@@ -312,6 +312,53 @@ export class PDFProcessorController {
     }
   }
 
+  @Post('update-questions/:cacheId')
+  async updateQuestionsFromJson(
+    @Param('cacheId') cacheId: string,
+    @Body() body: { jsonContent: string }
+  ) {
+    try {
+      const result = await this.pdfProcessorService.updateQuestionsFromJson(cacheId, body.jsonContent);
+      
+      return {
+        success: true,
+        message: `Update completed: ${result.importedCount} new questions imported, ${result.updatedCount} questions updated, ${result.skippedCount} skipped`,
+        data: result
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to update questions from JSON',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Post('mark-completed/:cacheId')
+  async markAsCompleted(@Param('cacheId') cacheId: string) {
+    try {
+      const result = await this.pdfProcessorService.markAsCompleted(cacheId);
+      
+      return {
+        success: true,
+        message: 'File marked as completed successfully',
+        data: result
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to mark file as completed',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
   @Post('reset-retry/:fileName')
   async resetRetryCount(@Param('fileName') fileName: string) {
     try {

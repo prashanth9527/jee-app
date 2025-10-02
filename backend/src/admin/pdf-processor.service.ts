@@ -920,6 +920,357 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     }
   }
 
+  async updateQuestionsFromJson(cacheId: string, jsonContent: string) {
+    try {
+      // Find the database record using cache ID
+      const cache = await this.prisma.pDFProcessorCache.findUnique({
+        where: { id: cacheId }
+      });
+
+      if (!cache) {
+        throw new BadRequestException('Database record not found for this cache ID');
+      }
+
+      // Parse the JSON content
+      const data = JSON.parse(jsonContent);
+
+      if (!data.questions || !Array.isArray(data.questions)) {
+        throw new BadRequestException('Invalid JSON format: questions array not found');
+      }
+
+      let importedCount = 0;
+      let updatedCount = 0;
+      let skippedCount = 0;
+      const errors: string[] = [];
+
+      // Get JEE stream and subjects
+      const jeeStream = await this.prisma.stream.findUnique({
+        where: { code: 'JEE' }
+      });
+
+      if (!jeeStream) {
+        throw new BadRequestException('JEE stream not found in database');
+      }
+
+      const subjects = await this.prisma.subject.findMany({
+        where: { streamId: jeeStream.id }
+      });
+
+      const subjectMap = new Map(subjects.map(s => [s.name.toLowerCase(), s.id]));
+
+      // Process each question
+      for (const questionData of data.questions) {
+        try {
+          // Validate required fields
+          if (!questionData.stem || !questionData.options || !Array.isArray(questionData.options)) {
+            errors.push(`Question ${questionData.id}: Missing required fields`);
+            skippedCount++;
+            continue;
+          }
+
+          if (questionData.options.length !== 4) {
+            errors.push(`Question ${questionData.id}: Must have exactly 4 options`);
+            skippedCount++;
+            continue;
+          }
+
+          const correctOptions = questionData.options.filter((opt: any) => opt.isCorrect);
+          if (correctOptions.length !== 1) {
+            errors.push(`Question ${questionData.id}: Must have exactly one correct option`);
+            skippedCount++;
+            continue;
+          }
+
+          // Find subject
+          const subjectId = subjectMap.get(questionData.subject?.toLowerCase());
+          if (!subjectId) {
+            errors.push(`Question ${questionData.id}: Subject '${questionData.subject}' not found`);
+            skippedCount++;
+            continue;
+          }
+
+          // Find or create lesson, topic and subtopic following the hierarchy
+          let lessonId: string | undefined;
+          let topicId: string | undefined;
+          let subtopicId: string | undefined;
+
+          // Handle lesson (required for proper hierarchy)
+          let lessonName = questionData.lesson;
+          if (!lessonName || lessonName.trim() === '') {
+            lessonName = 'General';
+          }
+          
+          const lesson = await this.prisma.lesson.findFirst({
+            where: {
+              name: { equals: lessonName.trim(), mode: 'insensitive' },
+              subjectId: subjectId
+            }
+          });
+
+          if (lesson) {
+            lessonId = lesson.id;
+          } else {
+            // Find the next available order number for this subject
+            const lastLesson = await this.prisma.lesson.findFirst({
+              where: { subjectId: subjectId },
+              orderBy: { order: 'desc' }
+            });
+            const nextOrder = lastLesson ? lastLesson.order + 1 : 0;
+            
+            // Create new lesson
+            const newLesson = await this.prisma.lesson.create({
+              data: {
+                name: lessonName.trim(),
+                subjectId: subjectId,
+                order: nextOrder
+              }
+            });
+            lessonId = newLesson.id;
+          }
+
+          // Handle topic (must be under a lesson)
+          if (questionData.topic && lessonId) {
+            let topicName = questionData.topic;
+            if (!topicName || topicName.trim() === '') {
+              topicName = 'General';
+            }
+            
+            const topic = await this.prisma.topic.findFirst({
+              where: {
+                name: { equals: topicName.trim(), mode: 'insensitive' },
+                lessonId: lessonId
+              }
+            });
+
+            if (topic) {
+              topicId = topic.id;
+            } else {
+              // Find the next available order number for this lesson
+              const lastTopic = await this.prisma.topic.findFirst({
+                where: { lessonId: lessonId },
+                orderBy: { order: 'desc' }
+              });
+              const nextOrder = lastTopic ? lastTopic.order + 1 : 0;
+              
+              // Create new topic under the lesson
+              const newTopic = await this.prisma.topic.create({
+                data: {
+                  name: topicName.trim(),
+                  subjectId: subjectId,
+                  lessonId: lessonId,
+                  order: nextOrder
+                }
+              });
+              topicId = newTopic.id;
+            }
+
+            // Handle subtopic (must be under a topic)
+            if (questionData.subtopic && topicId) {
+              let subtopicName = questionData.subtopic;
+              if (!subtopicName || subtopicName.trim() === '') {
+                subtopicName = 'General';
+              }
+              
+              const subtopic = await this.prisma.subtopic.findFirst({
+                where: {
+                  name: { equals: subtopicName.trim(), mode: 'insensitive' },
+                  topicId: topicId
+                }
+              });
+
+              if (subtopic) {
+                subtopicId = subtopic.id;
+              } else {
+                // Find the next available order number for this topic
+                const lastSubtopic = await this.prisma.subtopic.findFirst({
+                  where: { topicId: topicId },
+                  orderBy: { order: 'desc' }
+                });
+                const nextOrder = lastSubtopic ? lastSubtopic.order + 1 : 0;
+                
+                // Create new subtopic under the topic
+                const newSubtopic = await this.prisma.subtopic.create({
+                  data: {
+                    name: subtopicName.trim(),
+                    topicId: topicId,
+                    order: nextOrder
+                  }
+                });
+                subtopicId = newSubtopic.id;
+              }
+            }
+          }
+
+          // Create or find tags
+          const tagIds: string[] = [];
+          if (questionData.tags && Array.isArray(questionData.tags)) {
+            for (const tagName of questionData.tags) {
+              let tag = await this.prisma.tag.findUnique({
+                where: { name: tagName }
+              });
+
+              if (!tag) {
+                tag = await this.prisma.tag.create({
+                  data: { name: tagName }
+                });
+              }
+              tagIds.push(tag.id);
+            }
+          }
+
+          // Check for existing question based on stem, subject, topic, and subtopic
+          const existingQuestion = await this.prisma.question.findFirst({
+            where: {
+              stem: questionData.stem,
+              subjectId: subjectId,
+              topicId: topicId || null,
+              subtopicId: subtopicId || null
+            },
+            include: {
+              options: true,
+              tags: true
+            }
+          });
+
+          if (existingQuestion) {
+            // Update existing question
+            await this.prisma.question.update({
+              where: { id: existingQuestion.id },
+              data: {
+                explanation: questionData.explanation || null,
+                tip_formula: questionData.tip_formula || null,
+                difficulty: questionData.difficulty || 'MEDIUM',
+                yearAppeared: questionData.yearAppeared || null,
+                isPreviousYear: questionData.isPreviousYear || false,
+                status: 'underreview', // Reset to underreview for re-review
+                pdfProcessorCacheId: cache.id, // Link to PDF processing cache
+                subjectId: subjectId,
+                topicId: topicId || null,
+                subtopicId: subtopicId || null,
+                options: {
+                  deleteMany: {}, // Delete existing options
+                  create: questionData.options.map((opt: any, index: number) => ({
+                    text: opt.text,
+                    isCorrect: opt.isCorrect,
+                    order: index
+                  }))
+                },
+                tags: {
+                  deleteMany: {}, // Delete existing tags
+                  create: tagIds.map(tagId => ({ tagId }))
+                }
+              }
+            });
+
+            updatedCount++;
+          } else {
+            // Create new question
+            await this.prisma.question.create({
+              data: {
+                stem: questionData.stem,
+                explanation: questionData.explanation || null,
+                tip_formula: questionData.tip_formula || null,
+                difficulty: questionData.difficulty || 'MEDIUM',
+                yearAppeared: questionData.yearAppeared || null,
+                isPreviousYear: questionData.isPreviousYear || false,
+                isAIGenerated: true,
+                aiPrompt: 'Updated from PDF processor',
+                status: 'underreview', // Set status to underreview for review process
+                pdfProcessorCacheId: cache.id, // Link to PDF processing cache
+                subjectId: subjectId,
+                topicId: topicId || null,
+                subtopicId: subtopicId || null,
+                options: {
+                  create: questionData.options.map((opt: any, index: number) => ({
+                    text: opt.text,
+                    isCorrect: opt.isCorrect,
+                    order: index
+                  }))
+                },
+                tags: {
+                  create: tagIds.map(tagId => ({ tagId }))
+                }
+              }
+            });
+
+            importedCount++;
+          }
+
+        } catch (error) {
+          errors.push(`Question ${questionData.id}: ${error.message}`);
+          skippedCount++;
+        }
+      }
+
+      // Log the update
+      await this.logEvent(cache.id, 'SUCCESS', `JSON update completed: ${importedCount} imported, ${updatedCount} updated, ${skippedCount} skipped`, {
+        importedCount,
+        updatedCount,
+        skippedCount,
+        errors: errors.slice(0, 10) // Log first 10 errors
+      });
+
+      // Update the cache to mark as imported
+      await this.prisma.pDFProcessorCache.update({
+        where: { id: cache.id },
+        data: { importedAt: new Date() }
+      });
+
+      return {
+        importedCount,
+        updatedCount,
+        skippedCount,
+        totalQuestions: data.questions.length,
+        errors: errors.slice(0, 20), // Return first 20 errors
+        cacheId: cache.id // Return cache ID for redirecting to review page
+      };
+
+    } catch (error) {
+      this.logger.error('Error updating questions from JSON:', error);
+      throw error;
+    }
+  }
+
+  async markAsCompleted(cacheId: string) {
+    try {
+      // Find the database record using cache ID
+      const cache = await this.prisma.pDFProcessorCache.findUnique({
+        where: { id: cacheId }
+      });
+
+      if (!cache) {
+        throw new BadRequestException('Database record not found for this cache ID');
+      }
+
+      // Update the processing status to COMPLETED
+      const updatedCache = await this.prisma.pDFProcessorCache.update({
+        where: { id: cacheId },
+        data: { 
+          processingStatus: 'COMPLETED',
+          lastProcessedAt: new Date()
+        }
+      });
+
+      // Log the status change
+      await this.logEvent(cacheId, 'SUCCESS', `File marked as completed: ${cache.fileName}`, {
+        previousStatus: cache.processingStatus,
+        newStatus: 'COMPLETED'
+      });
+
+      return {
+        cacheId: updatedCache.id,
+        fileName: updatedCache.fileName,
+        previousStatus: cache.processingStatus,
+        newStatus: 'COMPLETED',
+        updatedAt: updatedCache.lastProcessedAt
+      };
+
+    } catch (error) {
+      this.logger.error('Error marking file as completed:', error);
+      throw error;
+    }
+  }
+
   async getJsonStatus(fileName: string) {
     try {
       // Check if JSON file exists in the same directory as PDF

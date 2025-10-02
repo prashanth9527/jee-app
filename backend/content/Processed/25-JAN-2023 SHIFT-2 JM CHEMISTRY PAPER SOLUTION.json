@@ -1,0 +1,1011 @@
+{
+  "questions": [
+    {
+      "id": "Q31",
+      "stem": "Match List I with List II",
+      "options": [
+        {
+          "id": "1",
+          "text": "A-IV, B-I, C-II, D-III",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "A-IV, B-III, C-I, D-II",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "A-II, B-III, C-IV, D-I",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "A-IV, B-III, C-II, D-I",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Cobalt catalyst → Methanol production; Syn gas → Coal gasification (C(Red hot coke) + H₂O(g) → CO + H₂); Nickel catalyst → Water gas production; Brine solution → Production (aq. NaCl electrolysis gives H₂ at cathode and Cl₂ at anode)",
+      "tip_formula": "Catalyst applications: Co → CH₃OH, Ni → water gas, brine → H₂ + Cl₂",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Chemical Processes",
+      "subtopic": "Industrial Processes and Catalysts",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "catalysts",
+        "industrial-processes",
+        "matching"
+      ]
+    },
+    {
+      "id": "Q32",
+      "stem": "Given below are two statements: Statement I: In froth floatation method a rotating paddle agitates the mixture to drive air out of it. Statement II: Iron pyrites are generally avoided for extraction of iron due to environmental reasons.",
+      "options": [
+        {
+          "id": "1",
+          "text": "Both Statement I and Statement II are true",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "Statement I is false but Statement II is true",
+          "isCorrect": true
+        },
+        {
+          "id": "3",
+          "text": "Statement I is true but Statement II is false",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "Both Statement I and Statement II are false",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In froth floatation method, a rotating paddle draws in air and stirs the pulp (not drives air out). Iron pyrites are avoided due to environmental reasons as they produce SO₂ during processing.",
+      "tip_formula": "Froth floatation: paddle draws air IN, not drives air OUT",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Metallurgy",
+      "subtopic": "Concentration of Ores",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "metallurgy",
+        "froth-floatation",
+        "environmental-chemistry"
+      ]
+    },
+    {
+      "id": "Q33",
+      "stem": "Which of the following represents the correct order of metallic character of the given elements?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Si < Be < Mg < K",
+          "isCorrect": true
+        },
+        {
+          "id": "2",
+          "text": "Be < Si < Mg < K",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "K < Mg < Be < Si",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "Be < Si < K < Mg",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Metallic character increases down the group and decreases along the period. Order: Si (period 3, group 14) < Be (period 2, group 2) < Mg (period 3, group 2) < K (period 4, group 1)",
+      "tip_formula": "Metallic character: increases down group, decreases across period",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Periodic Table",
+      "subtopic": "Periodic Trends",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "periodic-table",
+        "metallic-character",
+        "periodic-trends"
+      ]
+    },
+    {
+      "id": "Q34",
+      "stem": "Given below are two statements, one is labelled as Assertion A and the other is labelled as Reason R. Assertion A: The alkali metals and their salts impart characteristic colour to reducing flame. Reason R: Alkali metals can be detected using flame tests.",
+      "options": [
+        {
+          "id": "1",
+          "text": "Both A and R are correct but R is NOT the correct explanation of A",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "A is correct but R is not correct",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "A is not correct but R is correct",
+          "isCorrect": true
+        },
+        {
+          "id": "4",
+          "text": "Both A and R are correct and R is the correct explanation of A",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The alkali metals and their salts impart characteristic colour to oxidizing flame (not reducing flame). However, alkali metals can indeed be detected using flame tests.",
+      "tip_formula": "Alkali metals → characteristic color in oxidizing flame",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "s-Block Elements",
+      "subtopic": "Alkali Metals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "alkali-metals",
+        "flame-test",
+        "assertion-reason"
+      ]
+    },
+    {
+      "id": "Q35",
+      "stem": "What is the mass ratio of ethylene glycol (C₂H₆O₂, molar mass = 62 g/mol) required for making 500 g of 0.25 molal aqueous solution and 250 mL of 0.25 molar aqueous solution?",
+      "options": [
+        {
+          "id": "1",
+          "text": "1:1",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "3:1",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "2:1",
+          "isCorrect": true
+        },
+        {
+          "id": "4",
+          "text": "1:2",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "For molal solution: 0.25 = W₁/62 × 1000/500 → W₁ = 7.75g; For molar solution: 0.25 = W₂/62 × 1000/250 → W₂ = 3.875g; Ratio W₁:W₂ = 7.75:3.875 = 2:1",
+      "tip_formula": "Molality = moles solute/kg solvent; Molarity = moles solute/L solution",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Solutions",
+      "subtopic": "Concentration Terms",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "solutions",
+        "molality",
+        "molarity",
+        "concentration"
+      ]
+    },
+    {
+      "id": "Q36",
+      "stem": "Statement I: Dipole moment is a vector quantity and by convention it is depicted by a small arrow with tail on the negative centre and head pointing towards the positive centre. Statement II: The crossed arrow of the dipole moment symbolizes the direction of the shift of charges in the molecules.",
+      "options": [
+        {
+          "id": "1",
+          "text": "Both Statement I and Statement II are correct",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "Statement I is incorrect but Statement II is correct",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "Both Statement I and Statement II are incorrect",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "Statement I is correct but Statement II is incorrect",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Statement I is correct - dipole moment is vector from negative to positive. Statement II is incorrect - the crossed arrow symbolizes direction of electron density shift, not charge shift.",
+      "tip_formula": "Dipole moment: vector from -ve to +ve; arrow shows electron density shift",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Chemical Bonding",
+      "subtopic": "Molecular Structure",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "chemical-bonding",
+        "dipole-moment",
+        "vector-quantity"
+      ]
+    },
+    {
+      "id": "Q37",
+      "stem": "Given below are two statements, one is labelled as Assertion A and the other is labelled as Reason R. Assertion A: Butylated hydroxyl anisole when added to butter increases its shelf life. Reason R: Butylated hydroxyl anisole is more reactive towards oxygen than food.",
+      "options": [
+        {
+          "id": "1",
+          "text": "Both A and R are correct and R is the correct explanation of A",
+          "isCorrect": true
+        },
+        {
+          "id": "2",
+          "text": "A is correct but R is not correct",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "A is not correct but R is correct",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "Both A and R are correct but R is NOT the correct explanation of A",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Butylated hydroxyl anisole is an antioxidant that prevents rancidity by reacting with oxygen before it can oxidize the food, thus increasing shelf life.",
+      "tip_formula": "Antioxidants: more reactive with O₂ than food components",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Chemistry in Everyday Life",
+      "topic": "Food Chemistry",
+      "subtopic": "Food Additives",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "food-chemistry",
+        "antioxidants",
+        "preservatives"
+      ]
+    },
+    {
+      "id": "Q38",
+      "stem": "A. Ammonium salts produce haze in atmosphere. B. Ozone gets produced when atmospheric oxygen reacts with chlorine radicals. C. Polychlorinated biphenyls act as cleansing solvents. D. 'Blue baby' syndrome occurs due to the presence of excess of sulphate ions in water.",
+      "options": [
+        {
+          "id": "1",
+          "text": "A, B and C only",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "B and C only",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "A and D only",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "A and C only",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A is correct - ammonium salts cause haze; B is incorrect - chlorine radicals destroy ozone (Cl• + O₃ → O₂ + ClO•); C is correct - PCBs are cleansing solvents; D is incorrect - blue baby syndrome due to nitrates, not sulphates",
+      "tip_formula": "Blue baby syndrome → nitrates; Ozone destruction → Cl• radicals",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Environmental Chemistry",
+      "topic": "Environmental Pollution",
+      "subtopic": "Water and Air Pollution",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "environmental-chemistry",
+        "pollution",
+        "ozone-depletion"
+      ]
+    },
+    {
+      "id": "Q39",
+      "stem": "Match List I with List II",
+      "options": [
+        {
+          "id": "1",
+          "text": "A-I, B-IV, C-II, D-III",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "A-III, B-II, C-I, D-IV",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "A-III, B-II, C-IV, D-I",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "A-III, B-IV, C-II, D-I",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Aniline (aromatic amine, weakest base) → pKb 9.38; Ethanamine (1° aliphatic amine) → pKb 3.29; N-Ethylethanamine (2° amine) → pKb 3.00; N,N-Diethylethanamine (3° amine) → pKb 3.25",
+      "tip_formula": "Basic strength: 2° amine > 3° amine > 1° amine > aromatic amine",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Amines",
+      "subtopic": "Basicity of Amines",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "amines",
+        "basicity",
+        "pkb-values",
+        "matching"
+      ]
+    },
+    {
+      "id": "Q40",
+      "stem": "Which one among the following metals is the weakest reducing agent?",
+      "options": [
+        {
+          "id": "1",
+          "text": "K",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "Rb",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "Na",
+          "isCorrect": true
+        },
+        {
+          "id": "4",
+          "text": "Li",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Sodium has the lowest oxidation potential among alkali metals, making it the weakest reducing agent in this group.",
+      "tip_formula": "Reducing power ∝ oxidation potential",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Electrochemistry",
+      "subtopic": "Electrochemical Series",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "electrochemistry",
+        "reducing-agents",
+        "alkali-metals"
+      ]
+    },
+    {
+      "id": "Q41",
+      "stem": "Match List I with List II",
+      "options": [
+        {
+          "id": "1",
+          "text": "A-III, B-IV, C-I, D-II",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "A-IV, B-III, C-I, D-II",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "A-II, B-III, C-I, D-IV",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "A-III, B-I, C-IV, D-II",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A: Propanamine and N-Methylethanamine are functional isomers (1° vs 2° amine); B: Hexan-2-one and Hexan-3-one are metamers; C: Ethanamide and Hydroxyethanimine are tautomers; D: o-nitrophenol and p-nitrophenol are positional isomers",
+      "tip_formula": "Isomer types: functional, metamer, tautomer, positional",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Isomerism",
+      "subtopic": "Structural Isomerism",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "isomerism",
+        "structural-isomers",
+        "matching"
+      ]
+    },
+    {
+      "id": "Q42",
+      "stem": "Match List I with List II",
+      "options": [
+        {
+          "id": "1",
+          "text": "A-III, B-II, C-IV, D-I",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "A-III, B-IV, C-II, D-I",
+          "isCorrect": true
+        },
+        {
+          "id": "3",
+          "text": "A-III, B-IV, C-I, D-II",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "A-III, B-I, C-IV, D-II",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Glyptal → Paints and Lacquers; Neoprene → Gaskets; Acrilan → Synthetic wool; LDP → Flexible pipes",
+      "tip_formula": "Polymer applications: Glyptal-paints, Neoprene-gaskets, Acrilan-wool, LDP-pipes",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Chemistry in Everyday Life",
+      "topic": "Polymers",
+      "subtopic": "Polymer Applications",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "polymers",
+        "applications",
+        "matching"
+      ]
+    },
+    {
+      "id": "Q43",
+      "stem": "Given below are two statements, one is labelled as Assertion A and the other is labelled as Reason R. Assertion A: Carbon forms two important oxides - CO and CO₂. CO is neutral whereas CO₂ is acidic in nature. Reason R: CO₂ can combine with water in a limited way to form carbonic acid, while CO is sparingly soluble in water.",
+      "options": [
+        {
+          "id": "1",
+          "text": "Both A and R are correct but R is NOT the correct explanation of A",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "Both A and R are correct and R is the correct explanation of A",
+          "isCorrect": true
+        },
+        {
+          "id": "3",
+          "text": "A is not correct but R is correct",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "A is correct but R is not correct",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "CO₂ is acidic as it forms carbonic acid with water, while CO is neutral and sparingly soluble in water. Reason correctly explains why CO₂ is acidic and CO is neutral.",
+      "tip_formula": "Acidic oxide: forms acid with water; CO₂ + H₂O → H₂CO₃",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "p-Block Elements",
+      "subtopic": "Carbon Family",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "carbon-oxides",
+        "acidic-oxide",
+        "neutral-oxide"
+      ]
+    },
+    {
+      "id": "Q44",
+      "stem": "Potassium dichromate acts as a strong oxidizing agent in acidic solution. During this process, the oxidation state changes from",
+      "options": [
+        {
+          "id": "1",
+          "text": "+3 to +1",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "+6 to +3",
+          "isCorrect": true
+        },
+        {
+          "id": "3",
+          "text": "+2 to +1",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "+6 to +2",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In acidic medium: Cr₂O₇²⁻ + 14H⁺ + 6e⁻ → 2Cr³⁺ + 7H₂O; Oxidation state changes from +6 (in Cr₂O₇²⁻) to +3 (in Cr³⁺)",
+      "tip_formula": "Cr₂O₇²⁻ + 14H⁺ + 6e⁻ → 2Cr³⁺ + 7H₂O; Cr: +6 → +3",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "d-Block Elements",
+      "subtopic": "Chromium Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "oxidation-state",
+        "dichromate",
+        "oxidizing-agent"
+      ]
+    },
+    {
+      "id": "Q45",
+      "stem": "When the hydrogen ion concentration [H⁺] changes by a factor of 1000, the value of pH of the solution ______.",
+      "options": [
+        {
+          "id": "1",
+          "text": "increases by 1000 units",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "decreases by 3 units",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "decreases by 2 units",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "increases by 2 units",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Δ[H⁺] = 1000 = 10³; ΔpH = -log(Δ[H⁺]) = -log(10³) = -3; So pH decreases by 3 units (if [H⁺] increases) or increases by 3 units (if [H⁺] decreases)",
+      "tip_formula": "ΔpH = -log(Δ[H⁺])",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Equilibrium",
+      "subtopic": "Ionic Equilibrium",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "ph-calculation",
+        "hydrogen-ion",
+        "logarithm"
+      ]
+    },
+    {
+      "id": "Q46",
+      "stem": "Match List I with List II",
+      "options": [
+        {
+          "id": "1",
+          "text": "A-IV, B-I, C-III, D-II",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "A-III, B-II, C-I, D-IV",
+          "isCorrect": true
+        },
+        {
+          "id": "3",
+          "text": "A-III, B-I, C-II, D-IV",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "A-II, B-III, C-IV, D-I",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Based on crystal field splitting and ligand strength: [CoCl(NH₃)₅]²⁺ → 535 nm; [Co(NH₃)₆]³⁺ → 475 nm; [Co(CN)₆]³⁻ → 310 nm; [Cu(H₂O)₄]²⁺ → 600 nm",
+      "tip_formula": "E = hc/λ; Δ(CFSE) ∝ 1/λ ∝ ligand strength",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Coordination Compounds",
+      "subtopic": "Crystal Field Theory",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "coordination-compounds",
+        "wavelength",
+        "cft",
+        "matching"
+      ]
+    },
+    {
+      "id": "Q47",
+      "stem": "Find out the major product from the following reaction.",
+      "options": [
+        {
+          "id": "1",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/25-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-b52a67b07ad8b0c47926166ddd43393ceb60bca5.png' />",
+          "isCorrect": true
+        },
+        {
+          "id": "2",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/25-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-1d76d220c7d8c26135eacb16462e81bcdcdd0bb8.png' />",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/25-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-fde8014a79cc3fa0fe8145a0918e8ba9b8a19f71.png' />",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/25-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-e28d885466d1d4c7c74cad363dc66636072597e4.png' />",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The reaction gives the thermodynamically controlled product (more substituted alkene) under the given conditions.",
+      "tip_formula": "Thermodynamic control → more stable product",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Hydrocarbons",
+      "subtopic": "Alkenes",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "organic-reactions",
+        "elimination",
+        "thermodynamic-control"
+      ]
+    },
+    {
+      "id": "Q48",
+      "stem": "'A' in the given reaction is",
+      "options": [
+        {
+          "id": "1",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/25-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-ca999ca5d2f377916f45b85dacf310e937155aae.png' />",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/25-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-5eaf716ed5495fc376f24834fc22b20fa4cf6822.png' />",
+          "isCorrect": true
+        },
+        {
+          "id": "3",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/25-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-de100e24985157a82e0948270526d30116475531.png' />",
+          "isCorrect": false
+        },
+        {
+          "id": "4",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/25-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-02b79727535de71b20b632ba5801c5ee9f376212.png' />",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The reaction involves specific organic transformation leading to the given product structure.",
+      "tip_formula": "Follow reaction mechanism to identify intermediate",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Organic Reactions",
+      "subtopic": "Reaction Mechanisms",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "organic-reactions",
+        "reaction-mechanism",
+        "intermediates"
+      ]
+    },
+    {
+      "id": "Q49",
+      "stem": "The isomeric deuterated bromide with molecular formula C₄H₈DBr having two chiral carbon atoms is",
+      "options": [
+        {
+          "id": "1",
+          "text": "2-Bromo-1-deuterobutane",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "2-Bromo-2-deuterobutane",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "2-Bromo-3-deuterobutane",
+          "isCorrect": true
+        },
+        {
+          "id": "4",
+          "text": "2-Bromo-1-deutero-2-methylpropane",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "2-Bromo-3-deuterobutane has two chiral centers: C-2 (with Br) and C-3 (with D), making it optically active with two chiral carbons.",
+      "tip_formula": "Chiral center: carbon with 4 different substituents",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Stereochemistry",
+      "subtopic": "Chirality",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "stereochemistry",
+        "chirality",
+        "deuterium-compounds"
+      ]
+    },
+    {
+      "id": "Q50",
+      "stem": "A chloride salt solution acidified with dil. HNO₃ gives a curdy white precipitate, [A], on addition of AgNO₃. [A] on treatment with NH₄OH gives a clear solution, B.",
+      "options": [
+        {
+          "id": "1",
+          "text": "H[AgCl₃] & [Ag(NH₃)₂]Cl",
+          "isCorrect": false
+        },
+        {
+          "id": "2",
+          "text": "H[AgCl₃] & (NH₄)[Ag(OH)₂]",
+          "isCorrect": false
+        },
+        {
+          "id": "3",
+          "text": "AgCl & [Ag(NH₃)₂]Cl",
+          "isCorrect": true
+        },
+        {
+          "id": "4",
+          "text": "AgCl & (NH₄)[Ag(OH)₂]",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A is AgCl (curdy white precipitate); B is [Ag(NH₃)₂]Cl (diammine silver(I) chloride complex soluble in NH₄OH)",
+      "tip_formula": "Ag⁺ + Cl⁻ → AgCl; AgCl + 2NH₃ → [Ag(NH₃)₂]⁺ + Cl⁻",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Qualitative Analysis",
+      "subtopic": "Anion Analysis",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "qualitative-analysis",
+        "chloride-test",
+        "complex-formation"
+      ]
+    },
+    {
+      "id": "Q51",
+      "stem": "The number of given orbitals which have electron density along the axis is ______. pₓ, p_y, p_z, d_xy, d_yz, d_xz, d_z², d_x²-y²",
+      "options": [],
+      "explanation": "Orbitals with electron density along axis: pₓ, p_y, p_z, d_z², d_x²-y² (total 5 orbitals)",
+      "tip_formula": "Axial orbitals: pₓ, p_y, p_z, d_z², d_x²-y²",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Atomic Structure",
+      "subtopic": "Atomic Orbitals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "atomic-orbitals",
+        "electron-density",
+        "axial-orbitals"
+      ]
+    },
+    {
+      "id": "Q52",
+      "stem": "Number of compounds giving (i) red colouration with ceric ammonium nitrate and also (ii) positive iodoform test from the following is ______.",
+      "options": [],
+      "explanation": "Compounds with -OH group give red color with ceric ammonium nitrate; compounds with CH₃CO- or CH₃CH(OH)- groups give positive iodoform test. Three compounds satisfy both conditions.",
+      "tip_formula": "Ceric ammonium nitrate: tests -OH; Iodoform test: tests CH₃CO- or CH₃CH(OH)-",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Qualitative Analysis",
+      "subtopic": "Functional Group Tests",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "organic-tests",
+        "functional-groups",
+        "ceric-nitrate",
+        "iodoform-test"
+      ]
+    },
+    {
+      "id": "Q53",
+      "stem": "The number of pairs of the solution having the same value of the osmotic pressure from the following is ______. (Assume 100% ionization) A. 0.500 M C₂H₅OH(aq) and 0.25 M KBr(aq) B. 0.100 M K₄[Fe(CN)₆](aq) and 0.100 M FeSO₄(NH₄)₂SO₄(aq) C. 0.05 M K₄[Fe(CN)₆](aq) and 0.25 M NaCl(aq) D. 0.15 M NaCl(aq) and 0.1 M BaCl₂(aq) E. 0.02 M KCl.MgCl₂.6H₂O(aq) and 0.05 M KCl(aq)",
+      "options": [],
+      "explanation": "π = iCRT; π ∝ iC; Pairs A, B, D, E have same iC values (same osmotic pressure)",
+      "tip_formula": "π = iCRT; i = van't Hoff factor",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Solutions",
+      "subtopic": "Colligative Properties",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "osmotic-pressure",
+        "colligative-properties",
+        "vant-hoff-factor"
+      ]
+    },
+    {
+      "id": "Q54",
+      "stem": "28.0 L of CO₂ is produced on complete combustion of 16.8 L gaseous mixture of ethene and methane at 25°C and 1 atm. Heat evolved during the combustion process is ______ kJ. (Given: ΔH_C(CH₄) = -900 kJ mol⁻¹, ΔH_C(C₂H₄) = -1400 kJ mol⁻¹)",
+      "options": [],
+      "explanation": "Let x L CH₄, (16.8-x) L C₂H₄; CO₂ from CH₄ = x L, from C₂H₄ = 2(16.8-x) L; Total CO₂ = x + 33.6 - 2x = 33.6 - x = 28; x = 5.6 L CH₄, 11.2 L C₂H₄; Heat = (5.6/22.4)×900 + (11.2/22.4)×1400 = 225 + 700 = 925 kJ",
+      "tip_formula": "Heat evolved = Σ(n × ΔH_C)",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Thermodynamics",
+      "subtopic": "Enthalpy of Combustion",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "thermodynamics",
+        "combustion",
+        "enthalpy",
+        "gas-mixtures"
+      ]
+    },
+    {
+      "id": "Q55",
+      "stem": "The number of correct statement/s from the following is ______. A. The coagulation power of Al³⁺ is more than Na⁺. B. Lyophilic sol can be coagulated by adding an electrolyte. C. The flocculation value of As₂S₃ sol is more than that of Al₂O₃.xH₂O sol. D. The smaller the flocculation value, the higher will be the coagulation power.",
+      "options": [],
+      "explanation": "A: True (Al³⁺ > Na⁺); B: False (lyophilic sols are stable); C: True (As₂S₃ is negative sol, needs less electrolyte); D: True (small flocculation value = high coagulation power)",
+      "tip_formula": "Coagulation power ∝ 1/flocculation value",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Surface Chemistry",
+      "subtopic": "Colloids",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "surface-chemistry",
+        "colloids",
+        "coagulation",
+        "flocculation"
+      ]
+    },
+    {
+      "id": "Q56",
+      "stem": "The number of correct statement/s about the following reaction sequence is ______.",
+      "options": [],
+      "explanation": "Analyzing the reaction sequence step by step to identify correct statements about products and mechanisms.",
+      "tip_formula": "Follow reaction mechanism carefully",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Organic Reactions",
+      "subtopic": "Reaction Mechanisms",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "organic-reactions",
+        "reaction-sequence",
+        "mechanism"
+      ]
+    },
+    {
+      "id": "Q57",
+      "stem": "The total number of compound/s which on reaction with alkaline KMnO₄ gives benzoic acid is ______.",
+      "options": [],
+      "explanation": "Compounds with benzylic position or directly attached to benzene ring that can be oxidized to -COOH group will give benzoic acid with alkaline KMnO₄.",
+      "tip_formula": "Alkaline KMnO₄ oxidizes alkyl side chains to -COOH",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Oxidation Reactions",
+      "subtopic": "Alkaline KMnO₄ Oxidation",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "oxidation",
+        "potassium-permanganate",
+        "benzoic-acid"
+      ]
+    },
+    {
+      "id": "Q58",
+      "stem": "The number of correct statement/s from the following is ______. A. Be and Al exhibit diagonal relationship. B. BeO is amphoteric whereas Al₂O₃ is acidic. C. Chlorides of both Be and Al are soluble in organic solvents. D. Be and Al both form polymeric hydrides.",
+      "options": [],
+      "explanation": "A: True; B: False (both are amphoteric); C: True (both form covalent chlorides); D: True (both form polymeric hydrides)",
+      "tip_formula": "Diagonal relationship: Be-Al, Li-Mg, B-Si",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Periodic Table",
+      "subtopic": "Diagonal Relationship",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "diagonal-relationship",
+        "beryllium",
+        "aluminum"
+      ]
+    },
+    {
+      "id": "Q59",
+      "stem": "The number of compounds from the following which will not produce orange red precipitate with 2,4-DNP reagent is ______.",
+      "options": [],
+      "explanation": "2,4-DNP test is for carbonyl compounds (aldehydes and ketones). Compounds without carbonyl groups won't give this test.",
+      "tip_formula": "2,4-DNP test: for aldehydes and ketones",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Qualitative Analysis",
+      "subtopic": "Carbonyl Tests",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "carbonyl-compounds",
+        "2-4-dnp-test",
+        "qualitative-analysis"
+      ]
+    },
+    {
+      "id": "Q60",
+      "stem": "The number of correct statement/s from the following is ______. A. The boiling point of the noble gases increases with increase in atomic number. B. The compounds of xenon are highly explosive. C. Helium is used in diving apparatus. D. Radon is obtained as a decay product of ²²⁶Ra.",
+      "options": [],
+      "explanation": "A: True (increasing London forces); B: False (Xe compounds are stable); C: True (mixed with O₂ for divers); D: True (²²⁶Ra → ²²²Rn + α)",
+      "tip_formula": "Noble gases: boiling point increases down group",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "p-Block Elements",
+      "subtopic": "Noble Gases",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "noble-gases",
+        "xenon-compounds",
+        "helium"
+      ]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 30,
+    "subjects": [
+      "Chemistry"
+    ],
+    "difficultyDistribution": {
+      "easy": 4,
+      "medium": 14,
+      "hard": 12
+    }
+  }
+}

@@ -1,0 +1,1227 @@
+{
+  "questions": [
+    {
+      "id": "Q31",
+      "stem": "For 1 mol of gas, the plot of pV vs p is shown below. p is the pressure and V is the volume of the gas. <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/2025_10_02_b63a859e04b52614bdbfg-1.jpg' /> What is the value of compressibility factor at point A?",
+      "options": [
+        {
+          "id": "A",
+          "text": "$1-\\frac{\\mathrm{a}}{\\text { RTV }}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$1+\\frac{b}{V}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$1-\\frac{b}{V}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$1+\\frac{\\mathrm{a}}{\\text { RTV }}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "For 1 mole of real gas: $\\mathrm{PV}=\\mathrm{ZRT}$. From graph PV for real gas is less than PV for ideal gas at point A, so $\\mathrm{Z}<1$. The compressibility factor is given by $\\mathrm{Z}=1-\\frac{\\mathrm{a}}{\\mathrm{V}_{\\mathrm{m}} \\mathrm{RT}}$.",
+      "tip_formula": "$Z = \\frac{PV}{RT}$ for real gases",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "States of Matter",
+      "subtopic": "Real Gases and Compressibility Factor",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "compressibility-factor",
+        "real-gases",
+        "van-der-waals-equation"
+      ]
+    },
+    {
+      "id": "Q32",
+      "stem": "The shortest wavelength of hydrogen atom in Lyman series is $\\lambda$. The longest wavelength in Balmer series of $\\mathrm{He}^{+}$ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{5}{9 \\lambda}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{9 \\lambda}{5}$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{36 \\lambda}{5}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{5 \\lambda}{9}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "For H: $\\frac{1}{\\lambda}=\\mathrm{R}_{\\mathrm{H}} \\times 1^{2}\\left(\\frac{1}{1^{2}}-\\frac{1}{\\infty^{2}}\\right)$ gives $\\frac{1}{\\lambda}=\\mathrm{R}_{\\mathrm{H}}$. For $\\mathrm{He}^{+}$: $\\frac{1}{\\lambda_{\\mathrm{He}^{+}}}=\\mathrm{R}_{\\mathrm{H}} \\times 2^{2} \\times\\left(\\frac{1}{4}-\\frac{1}{9}\\right) = \\mathrm{R}_{\\mathrm{H}} \\times 4 \\times \\frac{5}{36} = \\mathrm{R}_{\\mathrm{H}} \\times \\frac{5}{9}$. Dividing: $\\frac{\\lambda}{\\lambda \\mathrm{He}^{+}}=\\frac{9}{5}$, so $\\lambda_{\\mathrm{He}^{+}}=\\lambda \\times \\frac{9}{5}$.",
+      "tip_formula": "$\\frac{1}{\\lambda} = RZ^2\\left(\\frac{1}{n_1^2} - \\frac{1}{n_2^2}\\right)$",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Atomic Structure",
+      "subtopic": "Hydrogen Spectrum",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "atomic-spectra",
+        "lyman-series",
+        "balmer-series",
+        "he+-ion"
+      ]
+    },
+    {
+      "id": "Q33",
+      "stem": "Which of the following salt solutions would coagulate the colloid solution formed when $\\mathrm{FeCl}_{3}$ is added to NaOH solution, at the fastest rate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "10 mL of $0.2 \\mathrm{~mol} \\mathrm{dm}^{-3} \\mathrm{AlCl}_{3}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "10 mL of $0.1 \\mathrm{~mol} \\mathrm{dm}^{-3} \\mathrm{Na}_{2} \\mathrm{SO}_{4}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "10 mL of $0.1 \\mathrm{~mol} \\mathrm{dm}^{-3} \\mathrm{Ca}_{3}\\left(\\mathrm{PO}_{4}\\right)_{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "10 mL of $0.15 \\mathrm{~mol} \\mathrm{dm}^{-3} \\mathrm{CaCl}_{2}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "When $\\mathrm{FeCl}_{3}$ is added to NaOH, it forms $\\mathrm{Fe(OH)}_3$ sol which is positively charged. For coagulation of positively charged sol, anions are effective. According to Hardy-Schulze rule, greater the valency of the coagulating ion, greater is its coagulating power. $\\mathrm{AlCl}_{3}$ provides $\\mathrm{Al}^{3+}$ ions which have the highest coagulating power among the given options.",
+      "tip_formula": "Hardy-Schulze rule: Coagulating power ∝ (Valency of coagulating ion)",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Surface Chemistry",
+      "subtopic": "Colloids and Coagulation",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "colloids",
+        "coagulation",
+        "hardy-schulze-rule"
+      ]
+    },
+    {
+      "id": "Q34",
+      "stem": "The bond dissociation energy is highest for",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{Cl}_{2}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{I}_{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{Br}_{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{F}_{2}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Bond energy of $\\mathrm{F}_{2}$ is less than $\\mathrm{Cl}_{2}$ due to lone pair-lone pair repulsions in the small fluorine atom. The bond energy order is $\\mathrm{Cl}_{2}>\\mathrm{Br}_{2}>\\mathrm{F}_{2}>\\mathrm{I}_{2}$.",
+      "tip_formula": "Bond energy order: Cl₂ > Br₂ > F₂ > I₂",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Chemical Bonding",
+      "subtopic": "Bond Parameters",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "bond-dissociation-energy",
+        "halogens",
+        "interhalogen-compounds"
+      ]
+    },
+    {
+      "id": "Q35",
+      "stem": "The reaction representing the Mond process for metal refining is _______",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{Ni}+4 \\mathrm{CO} \\xrightarrow{\\Delta} \\mathrm{Ni}(\\mathrm{CO})_{4}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$2 \\mathrm{~K}\\left[\\mathrm{Au}(\\mathrm{CN})_{2}\\right]+\\mathrm{Zn} \\xrightarrow{\\Delta} \\mathrm{K}_{2}\\left[\\mathrm{Zn}(\\mathrm{CN})_{4}\\right]+2 \\mathrm{Au}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{Zr}+2 \\mathrm{I}_{2} \\xrightarrow{\\Delta} \\mathrm{Zr} \\mathrm{I}_{4}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{ZnO}+\\mathrm{C} \\xrightarrow{\\Delta} \\mathrm{Zn}+\\mathrm{CO}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Mond's process is used for refining nickel and uses the reaction: $\\mathrm{Ni}+4 \\mathrm{CO} \\rightarrow\\left[\\mathrm{Ni}(\\mathrm{CO})_{4}\\right]$.",
+      "tip_formula": "Mond process: Ni + 4CO → Ni(CO)₄ (volatile)",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Metallurgy",
+      "subtopic": "Refining of Metals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "metallurgy",
+        "mond-process",
+        "nickel-refining"
+      ]
+    },
+    {
+      "id": "Q36",
+      "stem": "Which of the given compounds can enhance the efficiency of hydrogen storage tank?",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{Li} / \\mathrm{P}_{4}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{SiH}_{4}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{NaNi}_{5}$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "Di-isobutylaluminium hydride",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\mathrm{NaNi}_{5}$ is used in hydrogen storage tanks as it forms interstitial hydrides that can absorb and release hydrogen efficiently.",
+      "tip_formula": "Interstitial hydrides for H₂ storage",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Hydrogen",
+      "subtopic": "Hydrides",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "hydrogen-storage",
+        "interstitial-hydrides",
+        "nani5"
+      ]
+    },
+    {
+      "id": "Q37",
+      "stem": "The correct order of hydration enthalpies is (A) $\\mathrm{K}^{+}$ (B) $\\mathrm{Rb}^{+}$ (C) $\\mathrm{Mg}^{2+}$ (D) $\\mathrm{Cs}^{+}$ (E) $\\mathrm{Ca}^{2+}$",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{C}>\\mathrm{A}>\\mathrm{E}>\\mathrm{B}>\\mathrm{D}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{E}>\\mathrm{C}>\\mathrm{A}>\\mathrm{B}>\\mathrm{D}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{C}>\\mathrm{E}>\\mathrm{A}>\\mathrm{D}>\\mathrm{B}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{C}>\\mathrm{E}>\\mathrm{A}>\\mathrm{B}>\\mathrm{D}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Hydration enthalpies: (i) For alkali metal ions: $\\mathrm{K}^{+}>\\mathrm{Rb}^{+}>\\mathrm{Cs}^{+}$: (A)>(B)>(D) (ii) For alkaline earth metal ions: $\\mathrm{Mg}^{+2}>\\mathrm{Ca}^{+2}$: (C)>(E). Also, divalent ions have higher hydration enthalpy than monovalent ions. So the correct order is (C) > (E) > (A) > (B) > (D).",
+      "tip_formula": "Hydration enthalpy ∝ Charge/Radius",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Thermodynamics",
+      "subtopic": "Hydration Enthalpy",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "hydration-enthalpy",
+        "ionic-radii",
+        "charge-density"
+      ]
+    },
+    {
+      "id": "Q38",
+      "stem": "The magnetic behaviour of $\\mathrm{Li}_{2} \\mathrm{O}$, $\\mathrm{Na}_{2} \\mathrm{O}_{2}$ and $\\mathrm{KO}_{2}$, respectively, are",
+      "options": [
+        {
+          "id": "A",
+          "text": "diamagnetic, paramagnetic and diamagnetic",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "paramagnetic, paramagnetic and diamagnetic",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "paramagnetic, diamagnetic and paramagnetic",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "diamagnetic, diamagnetic and paramagnetic",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "$\\mathrm{Li}_{2} \\mathrm{O} \\rightarrow \\mathrm{O}^{2-}$ (all electrons paired, diamagnetic), $\\mathrm{Na}_{2} \\mathrm{O}_{2} \\rightarrow \\mathrm{O}_{2}^{2-}$ (all electrons paired, diamagnetic), $\\mathrm{KO}_{2} \\rightarrow \\mathrm{O}_{2}^{-}$ (one unpaired electron, paramagnetic).",
+      "tip_formula": "O²⁻: diamagnetic, O₂²⁻: diamagnetic, O₂⁻: paramagnetic",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "s-Block Elements",
+      "subtopic": "Oxides and Peroxides",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "magnetic-properties",
+        "peroxides",
+        "superoxides",
+        "alkali-metals"
+      ]
+    },
+    {
+      "id": "Q39",
+      "stem": "\"A\" obtained by Ostwald's method involving air oxidation of $\\mathrm{NH}_{3}$, upon further air oxidation produces \"B\". \"B\" on hydration forms an oxoacid of Nitrogen along with evolution of \"A\". The oxoacid also produces \"A\" and gives positive brown ring test",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{NO}_{2}$, $\\mathrm{N}_{2} \\mathrm{O}_{5}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{NO}_{2}$, $\\mathrm{N}_{2} \\mathrm{O}_{4}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{NO}$, $\\mathrm{NO}_{2}$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{N}_{2} \\mathrm{O}_{3}$, $\\mathrm{NO}_{2}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Ostwald's process: $4 \\mathrm{NH}_{3}+5 \\mathrm{O}_{2} \\xrightarrow{\\Delta} 4 \\mathrm{NO}+6 \\mathrm{H}_{2} \\mathrm{O}$ (A = NO). Further oxidation: $2 \\mathrm{NO}+\\mathrm{O}_{2} \\longrightarrow 2 \\mathrm{NO}_{2}$ (B = NO₂). Hydration of NO₂: $3\\mathrm{NO}_{2} + \\mathrm{H}_{2}\\mathrm{O} \\longrightarrow 2\\mathrm{HNO}_{3} + \\mathrm{NO}$ (forms oxoacid HNO₃ and evolves A = NO). HNO₃ gives positive brown ring test for nitrate ions.",
+      "tip_formula": "Ostwald process: NH₃ → NO → NO₂ → HNO₃",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "p-Block Elements",
+      "subtopic": "Nitrogen and Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "ostwald-process",
+        "nitric-acid",
+        "nitrogen-oxides",
+        "brown-ring-test"
+      ]
+    },
+    {
+      "id": "Q40",
+      "stem": "The standard electrode potential ($\\mathrm{M}^{3+} / \\mathrm{M}^{2+}$) for V, Cr, Mn & Co are $-0.26 \\mathrm{~V},-0.41 \\mathrm{~V},+1.57 \\mathrm{~V}$ and +1.97 V, respectively. The metal ions which can liberate $\\mathrm{H}_{2}$ from a dilute acid are",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{V}^{2+}$ and $\\mathrm{Mn}^{2+}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{Cr}^{2+}$ and $\\mathrm{CO}^{2+}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{V}^{2+}$ and $\\mathrm{Cr}^{2+}$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{Mn}^{2+}$ and $\\mathrm{Co}^{2+}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Metal cations with negative value of reduction potential ($\\mathrm{M}^{+3} / \\mathrm{M}^{+2}$) or with positive value of oxidation potential ($\\mathrm{M}^{+2} / \\mathrm{M}^{+3}$) will liberate H₂ as they can reduce H⁺ ions. V²⁺ (-0.26 V) and Cr²⁺ (-0.41 V) have negative reduction potentials, so they can liberate H₂ from dilute acid.",
+      "tip_formula": "If E°(M³⁺/M²⁺) < 0, then M²⁺ can reduce H⁺ to H₂",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Electrochemistry",
+      "subtopic": "Electrode Potentials",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "electrode-potential",
+        "hydrogen-liberation",
+        "transition-metals"
+      ]
+    },
+    {
+      "id": "Q41",
+      "stem": "Correct statement about smog is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{NO}_{2}$ is present in classical smog",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Both $\\mathrm{NO}_{2}$ and $\\mathrm{SO}_{2}$ are present in classical smog",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Photochemical smog has high concentration of oxidizing agents",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "Classical smog also has high concentration of oxidizing agents",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Photochemical smog has high concentration of oxidizing agents like ozone, PAN, etc. NO₂ is produced from NO and O₃ in the presence of sunlight. Classical smog contains smoke, fog and SO₂ and is known as reducing smog.",
+      "tip_formula": "Photochemical smog = oxidizing, Classical smog = reducing",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Environmental Chemistry",
+      "topic": "Atmospheric Pollution",
+      "subtopic": "Smog",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "smog",
+        "photochemical-smog",
+        "classical-smog",
+        "environmental-chemistry"
+      ]
+    },
+    {
+      "id": "Q42",
+      "stem": "Chiral complex from the following is: Here en = ethylene diamine <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/2025_10_02_b63a859e04b52614bdbfg-2.jpg' />",
+      "options": [
+        {
+          "id": "A",
+          "text": "cis $-\\left[\\mathrm{PtCl}_{2}(\\mathrm{en})_{2}\\right]^{2+}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "trans $-\\left[\\mathrm{PtCl}_{2}(\\mathrm{en})_{2}\\right]^{2+}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "cis - $\\left[\\mathrm{PtCl}_{2}\\left(\\mathrm{NH}_{3}\\right)_{2}\\right]$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "trans $-\\left[\\mathrm{Co}\\left(\\mathrm{NH}_{3}\\right)_{4} \\mathrm{Cl}_{2}\\right]^{+}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The cis form of $[\\mathrm{PtCl}_{2}(\\mathrm{en})_{2}]^{2+}$ is chiral because it lacks a plane of symmetry and cannot be superimposed on its mirror image. The trans form and other options have planes of symmetry.",
+      "tip_formula": "Cis-[M(bidentate)₂X₂] type complexes are often chiral",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Coordination Compounds",
+      "subtopic": "Isomerism in Coordination Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "chirality",
+        "coordination-compounds",
+        "geometrical-isomerism"
+      ]
+    },
+    {
+      "id": "Q43",
+      "stem": "Identify the correct order for the given property for following compounds (A) Boiling Point: <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/smile-7f501c0d5913705987ed7177d6b9de20035962b9.png' /> (B) Density: <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/smile-73fda6bef08487dc922f226df2dd2d00f7335c85.png' /> (C) Boiling Point: <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/smile-c15ba54d0836d1d3988a03ac444b2ecb5a8d3d71.png' /> (D) Density: <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/smile-b941bdf20b3a43ab9f28192bb25beaeefc373d5d.png' /> <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/smile-884c72ed68930c4eab8496f2e20c1081595dfda6.png' /> <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/smile-e15bfce31e8f18499c04dadd8f2134503fa76faf.png' /> (E) Boiling Point: <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/2025_10_02_b63a859e04b52614bdbfg-3(1).jpg' />",
+      "options": [
+        {
+          "id": "A",
+          "text": "(B), (C) and (D) only",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "(A), (C) and (E) only",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "(A), (C) and (D) only",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "(A), (B) and (E) only",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Boiling point of alkyl halides increases with increase in size, mass of halogen atom and size of alkyl group. Boiling point of isomeric alkyl halides decreases with increase in branching. Density increases with increase in atomic mass of halogen atom. Based on these principles, (A), (C) and (E) show the correct orders.",
+      "tip_formula": "BP ∝ molecular mass, density ∝ atomic mass of halogen",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Haloalkanes and Haloarenes",
+      "subtopic": "Physical Properties",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "boiling-point",
+        "density",
+        "alkyl-halides",
+        "physical-properties"
+      ]
+    },
+    {
+      "id": "Q44",
+      "stem": "The increasing order of $\\mathrm{pK}_{\\mathrm{a}}$ for the following phenols is (1) 2,4-Dinitrophenol (2) 4-Nitrophenol (3) 2,4,5-Trimethylphenol (4) Phenol (5) 3-Chlorophenol",
+      "options": [
+        {
+          "id": "A",
+          "text": "(1) < (2) < (5) < (4) < (3)",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "(1) < (5) < (2) < (4) < (3)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "(3) < (4) < (5) < (2) < (1)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "(3) < (4) < (2) < (5) < (1)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Higher acidity means lower pKa. Electron withdrawing groups (-NO₂, -Cl) increase acidity, while electron donating groups (-CH₃) decrease acidity. 2,4-dinitrophenol (strong -I and -M effect) is most acidic, followed by 4-nitrophenol (-I and -M), then 3-chlorophenol (-I effect only), then phenol, and 2,4,5-trimethylphenol (+I effect) is least acidic.",
+      "tip_formula": "pKa ∝ 1/acidity, EWG increases acidity, EDG decreases acidity",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Alcohols, Phenols and Ethers",
+      "subtopic": "Acidity of Phenols",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "acidity",
+        "phenols",
+        "substituent-effects",
+        "pka"
+      ]
+    },
+    {
+      "id": "Q45",
+      "stem": "Match List I with List II",
+      "options": [
+        {
+          "id": "A",
+          "text": "(A) - III, (B) - IV, (C) - II, (D) - I",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "(A) - II, (B) - IV, (C) - I, (D) - III",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "(A) - III, (B) - IV, (C) - I, (D) - II",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "(A) - II, (B) - I, (C) - III, (D) - IV",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Hoffmann degradation uses Br₂/NaOH, Clemenson reduction uses Zn-Hg/HCl, Cannizaro reaction uses conc. KOH/Δ, Reimer-Tiemann reaction uses CHCl₃, NaOH/H₃O⁺.",
+      "tip_formula": "Hoffmann: Br₂/NaOH, Clemenson: Zn-Hg/HCl, Cannizaro: conc. KOH, Reimer-Tiemann: CHCl₃/NaOH",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Named Reactions",
+      "subtopic": "Reagents and Conditions",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "named-reactions",
+        "reagents",
+        "organic-reactions"
+      ]
+    },
+    {
+      "id": "Q46",
+      "stem": "The major product 'P' for the following sequence of reactions is: <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/2025_10_02_b63a859e04b52614bdbfg-3(3).jpg' />",
+      "options": [
+        {
+          "id": "A",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/smile-541c62fc928ead77bbc693a77c8a92dc3145bc5d.png' />",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/smile-25a17a5c6b296987ecbae8c9827c4d2138fe807c.png' />",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/2025_10_02_b63a859e04b52614bdbfg-3.jpg' />",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/smile-a605706018c7e5d1da75b64be99138593794a9e6.png' />",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The reaction sequence involves nitration followed by reduction and diazotization, then Sandmeyer reaction to introduce -CN group, followed by hydrolysis to carboxylic acid and finally esterification.",
+      "tip_formula": "Sequence: Nitration → Reduction → Diazotization → Sandmeyer (CN) → Hydrolysis → Esterification",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Reaction Mechanisms",
+      "subtopic": "Multi-step Synthesis",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "multi-step-synthesis",
+        "diazotization",
+        "sandmeyer-reaction",
+        "esterification"
+      ]
+    },
+    {
+      "id": "Q47",
+      "stem": "During the borax bead test with $\\mathrm{CuSO}_{4}$, a blue green colour of the bead was observed in oxidising flame due to the formation of",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{Cu}_{3} \\mathrm{~B}_{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Cu",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{Cu}\\left(\\mathrm{BO}_{2}\\right)_{2}$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "CuO",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\mathrm{CuSO}_{4} \\xrightarrow{\\Delta} \\mathrm{CuO}+\\mathrm{SO}_{3}$, then $\\mathrm{CuO}+\\mathrm{B}_{2} \\mathrm{O}_{3} \\rightarrow \\mathrm{Cu}\\left(\\mathrm{BO}_{2}\\right)_{2}$. The blue green colour is due to formation of copper metaborate.",
+      "tip_formula": "Borax bead test: Metal salt + B₂O₃ → Metal metaborate",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Qualitative Analysis",
+      "subtopic": "Borax Bead Test",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "borax-bead-test",
+        "copper-compounds",
+        "qualitative-analysis"
+      ]
+    },
+    {
+      "id": "Q48",
+      "stem": "Match List I with List II",
+      "options": [
+        {
+          "id": "A",
+          "text": "(A) - III, (B) - I, (C) - II, (D) - IV",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "(A) - IV, (B) - I, (C) - III, (D) - II",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "(A) - III, (B) - II, (C) - I, (D) - IV",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "(A) - IV, (B) - III, (C) - I, (D) - II",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Toluene gives benzoic acid with KMnO₄, m-xylene gives isophthalic acid, n-propylbenzene gives benzoic acid, and ethylbenzene gives benzoic acid.",
+      "tip_formula": "KMnO₄ oxidation: Alkyl side chain → -COOH",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Hydrocarbons",
+      "subtopic": "Oxidation of Aromatic Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "oxidation",
+        "aromatic-compounds",
+        "kmno4-oxidation"
+      ]
+    },
+    {
+      "id": "Q49",
+      "stem": "Identify the correct statement about the given compound: <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-1 JM CHEMISTRY PAPER SOLUTION/2025_10_02_b63a859e04b52614bdbfg-4.jpg' />",
+      "options": [
+        {
+          "id": "A",
+          "text": "It has 2 chiral centers",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "It is optically active",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "It has plane of symmetry",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "It has center of symmetry",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The compound has a plane of symmetry passing through the central carbon and bisecting the molecule, making it meso compound and optically inactive despite having two chiral centers.",
+      "tip_formula": "Meso compounds have plane of symmetry and are optically inactive",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Stereochemistry",
+      "subtopic": "Meso Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "stereochemistry",
+        "meso-compounds",
+        "chirality",
+        "symmetry"
+      ]
+    },
+    {
+      "id": "Q50",
+      "stem": "The correct order of basic strength in aqueous medium is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{Et}_{3} \\mathrm{~N}>\\mathrm{Et}_{2} \\mathrm{NH}>\\mathrm{EtNH}_{2}>\\mathrm{NH}_{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{Et}_{2} \\mathrm{NH}>\\mathrm{Et}_{3} \\mathrm{~N}>\\mathrm{EtNH}_{2}>\\mathrm{NH}_{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{EtNH}_{2}>\\mathrm{Et}_{2} \\mathrm{NH}>\\mathrm{Et}_{3} \\mathrm{~N}>\\mathrm{NH}_{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{Et}_{2} \\mathrm{NH}>\\mathrm{EtNH}_{2}>\\mathrm{Et}_{3} \\mathrm{~N}>\\mathrm{NH}_{3}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "In aqueous medium, basic strength order is: $\\mathrm{Et}_{2} \\mathrm{NH}>\\mathrm{EtNH}_{2}>\\mathrm{Et}_{3} \\mathrm{~N}>\\mathrm{NH}_{3}$ due to combined effect of +I effect and solvation effect.",
+      "tip_formula": "Aqueous basicity: 2° > 1° > 3° > NH₃ (due to steric and solvation effects)",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Amines",
+      "subtopic": "Basicity of Amines",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "basicity",
+        "amines",
+        "solvation-effect",
+        "steric-effect"
+      ]
+    },
+    {
+      "id": "Q51",
+      "stem": "The correct order of $\\mathrm{pK}_{\\mathrm{a}}$ values for the given compounds is (A) Benzoic acid (B) 4-Methoxybenzoic acid (C) 4-Nitrobenzoic acid (D) 4-Aminobenzoic acid",
+      "options": [
+        {
+          "id": "A",
+          "text": "(C) < (A) < (B) < (D)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "(C) < (A) < (D) < (B)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "(D) < (B) < (A) < (C)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "(C) < (A) < (B) < (D)",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Lower pKa means higher acidity. Electron withdrawing groups increase acidity (lower pKa), electron donating groups decrease acidity (higher pKa). Order: 4-NO₂ (EWG) < benzoic acid < 4-OCH₃ (EDG) < 4-NH₂ (strong EDG).",
+      "tip_formula": "Acidity: EWG substituents > H > EDG substituents",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Carboxylic Acids",
+      "subtopic": "Acidity of Carboxylic Acids",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "acidity",
+        "carboxylic-acids",
+        "substituent-effects",
+        "pka"
+      ]
+    },
+    {
+      "id": "Q52",
+      "stem": "The correct order of dipole moment is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{CH}_{3} \\mathrm{Cl}>\\mathrm{CH}_{3} \\mathrm{~F}>\\mathrm{CH}_{3} \\mathrm{Br}>\\mathrm{CH}_{3} \\mathrm{I}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{CH}_{3} \\mathrm{~F}>\\mathrm{CH}_{3} \\mathrm{Cl}>\\mathrm{CH}_{3} \\mathrm{Br}>\\mathrm{CH}_{3} \\mathrm{I}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{CH}_{3} \\mathrm{Cl}>\\mathrm{CH}_{3} \\mathrm{~F}>\\mathrm{CH}_{3} \\mathrm{I}>\\mathrm{CH}_{3} \\mathrm{Br}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{CH}_{3} \\mathrm{Cl}>\\mathrm{CH}_{3} \\mathrm{~F}>\\mathrm{CH}_{3} \\mathrm{Br}>\\mathrm{CH}_{3} \\mathrm{I}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Dipole moment depends on both electronegativity difference and bond length. The order is: $\\mathrm{CH}_{3} \\mathrm{Cl}(1.87 \\mathrm{D})>\\mathrm{CH}_{3} \\mathrm{~F}(1.85 \\mathrm{D})>\\mathrm{CH}_{3} \\mathrm{Br}(1.81 \\mathrm{D})>\\mathrm{CH}_{3} \\mathrm{I}(1.62 \\mathrm{D})$.",
+      "tip_formula": "Dipole moment ∝ (electronegativity difference) × (bond length)",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Chemical Bonding",
+      "subtopic": "Dipole Moment",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "dipole-moment",
+        "alkyl-halides",
+        "electronegativity"
+      ]
+    },
+    {
+      "id": "Q53",
+      "stem": "The correct order of bond angle is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{NH}_{3}>\\mathrm{PH}_{3}>\\mathrm{AsH}_{3}>\\mathrm{SbH}_{3}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{SbH}_{3}>\\mathrm{AsH}_{3}>\\mathrm{PH}_{3}>\\mathrm{NH}_{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{NH}_{3}>\\mathrm{SbH}_{3}>\\mathrm{AsH}_{3}>\\mathrm{PH}_{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{PH}_{3}>\\mathrm{NH}_{3}>\\mathrm{AsH}_{3}>\\mathrm{SbH}_{3}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Bond angle decreases down the group due to decrease in bond pair-bond pair repulsion as the size of central atom increases. Order: $\\mathrm{NH}_{3}(107°) > \\mathrm{PH}_{3}(93.5°) > \\mathrm{AsH}_{3}(91.8°) > \\mathrm{SbH}_{3}(91.3°)$.",
+      "tip_formula": "Bond angle decreases down the group in pnictogen hydrides",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "p-Block Elements",
+      "subtopic": "Group 15 Elements",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "bond-angle",
+        "pnictogen-hydrides",
+        "vsepr-theory"
+      ]
+    },
+    {
+      "id": "Q54",
+      "stem": "The correct order of first ionization enthalpy is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{Li}>\\mathrm{Na}>\\mathrm{K}>\\mathrm{Cs}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{Na}>\\mathrm{Li}>\\mathrm{K}>\\mathrm{Cs}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{K}>\\mathrm{Na}>\\mathrm{Li}>\\mathrm{Cs}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{Cs}>\\mathrm{K}>\\mathrm{Na}>\\mathrm{Li}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Ionization enthalpy decreases down the group in alkali metals due to increasing atomic size and shielding effect. Order: $\\mathrm{Li}>\\mathrm{Na}>\\mathrm{K}>\\mathrm{Rb}>\\mathrm{Cs}$.",
+      "tip_formula": "IE decreases down the group in alkali metals",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "s-Block Elements",
+      "subtopic": "Alkali Metals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "ionization-enthalpy",
+        "alkali-metals",
+        "periodic-trends"
+      ]
+    },
+    {
+      "id": "Q55",
+      "stem": "The correct order of electron gain enthalpy is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{S}>\\mathrm{O}>\\mathrm{Se}>\\mathrm{Te}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{O}>\\mathrm{S}>\\mathrm{Se}>\\mathrm{Te}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{Te}>\\mathrm{Se}>\\mathrm{S}>\\mathrm{O}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{S}>\\mathrm{Se}>\\mathrm{O}>\\mathrm{Te}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Electron gain enthalpy becomes less negative down the group, but O has lower electron gain enthalpy than S due to small size and electron-electron repulsion in the compact 2p orbital. Order: $\\mathrm{S}>\\mathrm{Se}>\\mathrm{O}>\\mathrm{Te}$.",
+      "tip_formula": "Electron gain enthalpy: S > Se > O > Te",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Periodic Table",
+      "subtopic": "Periodic Trends",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "electron-gain-enthalpy",
+        "chalcogens",
+        "periodic-trends"
+      ]
+    },
+    {
+      "id": "Q56",
+      "stem": "The correct order of ionic radii is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{Na}^{+}>\\mathrm{Mg}^{2+}>\\mathrm{Al}^{3+}>\\mathrm{O}^{2-}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{O}^{2-}>\\mathrm{Na}^{+}>\\mathrm{Mg}^{2+}>\\mathrm{Al}^{3+}$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{Al}^{3+}>\\mathrm{Mg}^{2+}>\\mathrm{Na}^{+}>\\mathrm{O}^{2-}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{Mg}^{2+}>\\mathrm{Na}^{+}>\\mathrm{O}^{2-}>\\mathrm{Al}^{3+}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "For isoelectronic species, ionic radius decreases with increase in nuclear charge. Order: $\\mathrm{O}^{2-}(1.40Å) > \\mathrm{Na}^{+}(1.02Å) > \\mathrm{Mg}^{2+}(0.72Å) > \\mathrm{Al}^{3+}(0.535Å)$.",
+      "tip_formula": "For isoelectronic species: radius ∝ 1/nuclear charge",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Periodic Table",
+      "subtopic": "Ionic Radii",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "ionic-radii",
+        "isoelectronic-species",
+        "periodic-trends"
+      ]
+    },
+    {
+      "id": "Q57",
+      "stem": "The correct order of stability of carbocations is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{CH}_{3}^{+}<\\mathrm{CH}_{3} \\mathrm{CH}_{2}^{+}<(\\mathrm{CH}_{3})_{2} \\mathrm{CH}^{+}<(\\mathrm{CH}_{3})_{3} \\mathrm{C}^{+}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$(\\mathrm{CH}_{3})_{3} \\mathrm{C}^{+}<(\\mathrm{CH}_{3})_{2} \\mathrm{CH}^{+}<\\mathrm{CH}_{3} \\mathrm{CH}_{2}^{+}<\\mathrm{CH}_{3}^{+}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{CH}_{3} \\mathrm{CH}_{2}^{+}<\\mathrm{CH}_{3}^{+}<(\\mathrm{CH}_{3})_{2} \\mathrm{CH}^{+}<(\\mathrm{CH}_{3})_{3} \\mathrm{C}^{+}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$(\\mathrm{CH}_{3})_{2} \\mathrm{CH}^{+}<\\mathrm{CH}_{3} \\mathrm{CH}_{2}^{+}<\\mathrm{CH}_{3}^{+}<(\\mathrm{CH}_{3})_{3} \\mathrm{C}^{+}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Stability of carbocations increases with increasing number of alkyl groups due to +I effect and hyperconjugation. Order: methyl < primary < secondary < tertiary.",
+      "tip_formula": "Carbocation stability: 3° > 2° > 1° > methyl",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Reaction Intermediates",
+      "subtopic": "Carbocations",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "carbocations",
+        "stability",
+        "hyperconjugation"
+      ]
+    },
+    {
+      "id": "Q58",
+      "stem": "The correct order of stability of free radicals is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{CH}_{3} \\cdot<(\\mathrm{CH}_{3})_{3} \\mathrm{C} \\cdot<(\\mathrm{CH}_{3})_{2} \\mathrm{CH} \\cdot<\\mathrm{CH}_{3} \\mathrm{CH}_{2} \\cdot$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{CH}_{3} \\cdot<\\mathrm{CH}_{3} \\mathrm{CH}_{2} \\cdot<(\\mathrm{CH}_{3})_{2} \\mathrm{CH} \\cdot<(\\mathrm{CH}_{3})_{3} \\mathrm{C} \\cdot$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$(\\mathrm{CH}_{3})_{3} \\mathrm{C} \\cdot<(\\mathrm{CH}_{3})_{2} \\mathrm{CH} \\cdot<\\mathrm{CH}_{3} \\mathrm{CH}_{2} \\cdot<\\mathrm{CH}_{3} \\cdot$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{CH}_{3} \\mathrm{CH}_{2} \\cdot<\\mathrm{CH}_{3} \\cdot<(\\mathrm{CH}_{3})_{2} \\mathrm{CH} \\cdot<(\\mathrm{CH}_{3})_{3} \\mathrm{C} \\cdot$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Stability of free radicals increases with increasing number of alkyl groups due to hyperconjugation. Order: methyl < primary < secondary < tertiary.",
+      "tip_formula": "Free radical stability: 3° > 2° > 1° > methyl",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Reaction Intermediates",
+      "subtopic": "Free Radicals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "free-radicals",
+        "stability",
+        "hyperconjugation"
+      ]
+    },
+    {
+      "id": "Q59",
+      "stem": "The correct order of boiling point is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{H}_{2} \\mathrm{O}>\\mathrm{H}_{2} \\mathrm{Te}>\\mathrm{H}_{2} \\mathrm{Se}>\\mathrm{H}_{2} \\mathrm{S}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{H}_{2} \\mathrm{Te}>\\mathrm{H}_{2} \\mathrm{Se}>\\mathrm{H}_{2} \\mathrm{S}>\\mathrm{H}_{2} \\mathrm{O}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{H}_{2} \\mathrm{O}>\\mathrm{H}_{2} \\mathrm{S}>\\mathrm{H}_{2} \\mathrm{Se}>\\mathrm{H}_{2} \\mathrm{Te}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{H}_{2} \\mathrm{S}>\\mathrm{H}_{2} \\mathrm{Se}>\\mathrm{H}_{2} \\mathrm{Te}>\\mathrm{H}_{2} \\mathrm{O}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Water has exceptionally high boiling point due to extensive hydrogen bonding. For other hydrides, boiling point increases with molecular mass. Order: $\\mathrm{H}_{2} \\mathrm{O}(100°C) > \\mathrm{H}_{2} \\mathrm{Te}(-2°C) > \\mathrm{H}_{2} \\mathrm{Se}(-41°C) > \\mathrm{H}_{2} \\mathrm{S}(-60°C)$.",
+      "tip_formula": "H₂O has anomalous high BP due to H-bonding",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "States of Matter",
+      "subtopic": "Intermolecular Forces",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "boiling-point",
+        "hydrogen-bonding",
+        "chalcogen-hydrides"
+      ]
+    },
+    {
+      "id": "Q60",
+      "stem": "The correct order of melting point is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{NaF}>\\mathrm{NaCl}>\\mathrm{NaBr}>\\mathrm{NaI}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{NaI}>\\mathrm{NaBr}>\\mathrm{NaCl}>\\mathrm{NaF}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{NaCl}>\\mathrm{NaF}>\\mathrm{NaBr}>\\mathrm{NaI}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{NaBr}>\\mathrm{NaI}>\\mathrm{NaCl}>\\mathrm{NaF}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Melting point of ionic compounds decreases with increase in size of anion due to decrease in lattice energy. Order: $\\mathrm{NaF}(993°C) > \\mathrm{NaCl}(801°C) > \\mathrm{NaBr}(747°C) > \\mathrm{NaI}(660°C)$.",
+      "tip_formula": "Lattice energy ∝ 1/(r⁺ + r⁻), MP ∝ lattice energy",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Chemical Bonding",
+      "subtopic": "Ionic Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "melting-point",
+        "ionic-compounds",
+        "lattice-energy"
+      ]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 90,
+    "subjects": [
+      "Physics",
+      "Chemistry",
+      "Mathematics"
+    ],
+    "difficultyDistribution": {
+      "easy": 30,
+      "medium": 45,
+      "hard": 15
+    }
+  }
+}

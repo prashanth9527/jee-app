@@ -81,6 +81,7 @@ export default function PDFProcessorPage() {
   const [showLatexModal, setShowLatexModal] = useState(false);
   const [latexContent, setLatexContent] = useState<string>('');
   const [latexFilePath, setLatexFilePath] = useState<string>('');
+  const [currentStatus, setCurrentStatus] = useState<string>('');
 
   useEffect(() => {
     fetchPDFs();
@@ -661,6 +662,9 @@ export default function PDFProcessorPage() {
     // Use LaTeX file path directly from PDF list (now includes latexFilePath)
     setLatexFilePath(pdf?.latexFilePath || '');
     
+    // Set current status
+    setCurrentStatus(pdf?.status || 'Unknown');
+    
     setShowJsonModal(true);
   };
 
@@ -694,6 +698,153 @@ export default function PDFProcessorPage() {
       console.error('Error saving JSON content:', error);
       toast.close();
       toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
+  const updateQuestionsFromJson = async () => {
+    if (!editingJson || !jsonContent.trim()) {
+      toast.error('Please enter JSON content');
+      return;
+    }
+
+    // Find the PDF to get cache ID
+    const pdf = pdfs.find(p => p.fileName === editingJson);
+    const cacheId = pdf?.databaseId;
+    
+    if (!cacheId) {
+      toast.error('Database ID not found for this file');
+      return;
+    }
+
+    // Parse JSON to get question count
+    let questionCount = 0;
+    try {
+      const parsedJson = JSON.parse(jsonContent.trim());
+      questionCount = parsedJson.questions?.length || 0;
+    } catch (error) {
+      toast.error('Invalid JSON format');
+      return;
+    }
+
+    // Show confirmation dialog
+    const result = await Swal.fire({
+      title: 'Update Questions',
+      html: `This will update <strong>${questionCount} questions</strong> from <br><strong>${editingJson}</strong><br><br>This will insert new questions or update existing ones in the Question database with <strong>'under review'</strong> status.<br><br>Are you sure you want to continue?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, update them!',
+      cancelButtonText: 'Cancel',
+      width: '500px'
+    });
+    
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    toast.loading('Updating questions...', 'Please wait');
+    
+    try {
+      const response = await api.post(`/admin/pdf-processor/update-questions/${cacheId}`, {
+        jsonContent: jsonContent.trim()
+      });
+      
+      if (response.data.success) {
+        toast.close();
+        const { importedCount, updatedCount, skippedCount, totalQuestions, errors } = response.data.data;
+        
+        let message;
+        if (importedCount === 0 && updatedCount === 0) {
+          message = `No questions updated. ${skippedCount} questions were skipped (duplicates).`;
+          if (errors && errors.length > 0) {
+            message += ` ${errors.length} questions had validation errors.`;
+          }
+          toast.warning(message);
+        } else {
+          message = `Update completed! ${importedCount} new questions imported, ${updatedCount} questions updated.`;
+          if (skippedCount > 0) {
+            message += ` ${skippedCount} questions were skipped (duplicates).`;
+          }
+          if (errors && errors.length > 0) {
+            message += ` ${errors.length} questions had validation errors.`;
+          }
+          toast.success(message);
+        }
+        
+        // Refresh the PDF list to show updated data
+        await fetchPDFs();
+        
+        // Close the modal
+        setShowJsonModal(false);
+        setEditingJson(null);
+        setJsonContent('');
+        setLatexFilePath('');
+      } else {
+        toast.close();
+        toast.error(response.data.message || 'Failed to update questions');
+      }
+    } catch (error: any) {
+      toast.close();
+      console.error('Error updating questions:', error);
+      toast.error(error.response?.data?.message || 'Failed to update questions');
+    }
+  };
+
+  const markAsCompleted = async () => {
+    if (!editingJson) {
+      toast.error('No file selected');
+      return;
+    }
+
+    // Find the PDF to get cache ID
+    const pdf = pdfs.find(p => p.fileName === editingJson);
+    const cacheId = pdf?.databaseId;
+    
+    if (!cacheId) {
+      toast.error('Database ID not found for this file');
+      return;
+    }
+
+    // Show confirmation dialog
+    const result = await Swal.fire({
+      title: 'Mark as Completed',
+      html: `Are you sure you want to mark <strong>${editingJson}</strong> as completed?<br><br>This will update the processing status to <strong>'COMPLETED'</strong>.`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#10b981',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, mark as completed!',
+      cancelButtonText: 'Cancel',
+      width: '400px'
+    });
+    
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    toast.loading('Updating status...', 'Please wait');
+    
+    try {
+      const response = await api.post(`/admin/pdf-processor/mark-completed/${cacheId}`);
+      
+      if (response.data.success) {
+        toast.close();
+        toast.success('File marked as completed successfully!');
+        
+        // Update the current status
+        setCurrentStatus('COMPLETED');
+        
+        // Refresh the PDF list to show updated data
+        await fetchPDFs();
+      } else {
+        toast.close();
+        toast.error(response.data.message || 'Failed to mark as completed');
+      }
+    } catch (error: any) {
+      toast.close();
+      console.error('Error marking as completed:', error);
+      toast.error(error.response?.data?.message || 'Failed to mark as completed');
     }
   };
 
@@ -1367,9 +1518,23 @@ export default function PDFProcessorPage() {
               <div className="relative top-10 mx-auto p-5 border w-11/12 md:w-4/5 lg:w-3/4 shadow-lg rounded-md bg-white">
                 <div className="mt-3">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      JSON Content Editor: {editingJson}
-                    </h3>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        JSON Content Editor: {editingJson}
+                      </h3>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <span className="text-sm text-gray-600">Status:</span>
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                          currentStatus === 'COMPLETED' ? 'bg-green-100 text-green-800' :
+                          currentStatus === 'PROCESSING' ? 'bg-blue-100 text-blue-800' :
+                          currentStatus === 'FAILED' ? 'bg-red-100 text-red-800' :
+                          currentStatus === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {currentStatus}
+                        </span>
+                      </div>
+                    </div>
                     <div className="flex items-center space-x-2">
                       {/* View PDF Button */}
                       <button
@@ -1554,6 +1719,20 @@ Ignore and skip any **branding, coaching names, promotional headers/footers, or 
                         View LaTeX
                       </button>
                       
+                      {/* Mark as Completed Button */}
+                      <button
+                        onClick={markAsCompleted}
+                        disabled={currentStatus === 'COMPLETED'}
+                        className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+                          currentStatus === 'COMPLETED' 
+                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                            : 'text-white bg-green-600 hover:bg-green-700'
+                        }`}
+                        title={currentStatus === 'COMPLETED' ? 'Already completed' : 'Mark this file as completed'}
+                      >
+                        Mark as completed
+                      </button>
+                      
                       {/* Close Button */}
                       <button
                         onClick={() => {
@@ -1664,6 +1843,12 @@ Ignore and skip any **branding, coaching names, promotional headers/footers, or 
                         className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
                       >
                         Cancel
+                      </button>
+                      <button
+                        onClick={updateQuestionsFromJson}
+                        className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+                      >
+                        Update Questions
                       </button>
                       <button
                         onClick={saveJsonContent}
