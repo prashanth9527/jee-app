@@ -17,6 +17,8 @@ export interface MathpixProcessResult {
   latexFilePath?: string;
   error?: string;
   processingTimeMs?: number;
+  cacheId?: string;
+  message?: string;
 }
 
 @Injectable()
@@ -73,6 +75,67 @@ export class MathpixService {
       // Check if PDF file exists
       if (!fs.existsSync(filePath)) {
         throw new BadRequestException('PDF file not found on disk');
+      }
+
+      // Check if LaTeX file already exists in content/latex folder
+      const latexFileName = fileName.replace('.pdf', '.tex');
+      const existingLatexFilePath = path.join(process.cwd(), 'content', 'latex', latexFileName);
+      
+      if (fs.existsSync(existingLatexFilePath)) {
+        this.logger.log(`✅ LaTeX file already exists: ${latexFileName}`);
+        
+        // Read existing LaTeX content
+        const existingLatexContent = fs.readFileSync(existingLatexFilePath, 'utf8');
+        
+        // Check if we have a cache entry for this file
+        const existingCache = await this.prisma.pDFProcessorCache.findFirst({
+          where: {
+            filePath: filePath,
+            fileName: fileName
+          }
+        });
+
+        if (existingCache) {
+          // Update existing cache with LaTeX content if missing
+          if (!existingCache.latexContent) {
+            await this.prisma.pDFProcessorCache.update({
+              where: { id: existingCache.id },
+              data: {
+                latexContent: this.sanitizeStringData(existingLatexContent),
+                latexFilePath: existingLatexFilePath
+              }
+            });
+            this.logger.log(`✅ Updated cache with existing LaTeX content: ${fileName}`);
+          }
+          
+          return {
+            success: true,
+            cacheId: existingCache.id,
+            latexContent: existingLatexContent,
+            latexFilePath: existingLatexFilePath,
+            processingTimeMs: Date.now() - startTime
+          };
+        } else {
+          // Create new cache entry for existing LaTeX file
+          const newCache = await this.prisma.pDFProcessorCache.create({
+            data: {
+              fileName: this.sanitizeStringData(fileName),
+              filePath: this.sanitizeStringData(filePath),
+              fileSize: 0, // We don't have the file size here
+              processingStatus: 'COMPLETED',
+              latexContent: this.sanitizeStringData(existingLatexContent),
+              latexFilePath: existingLatexFilePath
+            }
+          });
+          
+          return {
+            success: true,
+            cacheId: newCache.id,
+            latexContent: existingLatexContent,
+            latexFilePath: existingLatexFilePath,
+            processingTimeMs: Date.now() - startTime
+          };
+        }
       }
 
       this.logger.log(`Processing PDF with Mathpix: ${fileName}`);
@@ -237,6 +300,37 @@ export class MathpixService {
 
       if (!fs.existsSync(cache.filePath)) {
         throw new BadRequestException('PDF file not found on disk');
+      }
+
+      // Check if LaTeX file already exists in content/latex folder
+      const latexFileName = cache.fileName.replace('.pdf', '.tex');
+      const existingLatexFilePath = path.join(process.cwd(), 'content', 'latex', latexFileName);
+      
+      if (fs.existsSync(existingLatexFilePath)) {
+        this.logger.log(`✅ LaTeX file already exists: ${latexFileName}`);
+        
+        // Read existing LaTeX content
+        const existingLatexContent = fs.readFileSync(existingLatexFilePath, 'utf8');
+        
+        // Update cache with existing LaTeX content if missing
+        if (!cache.latexContent) {
+          await this.prisma.pDFProcessorCache.update({
+            where: { id: cacheId },
+            data: {
+              latexContent: this.sanitizeStringData(existingLatexContent),
+              latexFilePath: existingLatexFilePath
+            }
+          });
+          this.logger.log(`✅ Updated cache with existing LaTeX content: ${cache.fileName}`);
+        }
+        
+        return {
+          success: true,
+          cacheId: cacheId,
+          latexContent: existingLatexContent,
+          latexFilePath: existingLatexFilePath,
+          processingTimeMs: Date.now() - startTime
+        };
       }
 
       this.logger.log(`Processing PDF with Mathpix: ${cache.fileName}`);
