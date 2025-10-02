@@ -168,9 +168,9 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     return { providers, available };
   }
 
-  async listPDFs(): Promise<Array<{ fileName: string; filePath: string; fileSize: number; status: string; importedAt?: Date; importedQuestionCount?: number }>> {
+  async listPDFs(): Promise<Array<{ fileName: string; filePath: string; fileSize: number; status: string; importedAt?: Date; importedQuestionCount?: number; cacheId?: string; latexFilePath?: string; hasLatexContent?: boolean }>> {
     try {
-      const pdfFiles: Array<{ fileName: string; filePath: string; fileSize: number; status: string; importedAt?: Date; importedQuestionCount?: number }> = [];
+      const pdfFiles: Array<{ fileName: string; filePath: string; fileSize: number; status: string; importedAt?: Date; importedQuestionCount?: number; cacheId?: string; latexFilePath?: string; hasLatexContent?: boolean }> = [];
       
       const scanDirectory = (dir: string, relativePath: string = '') => {
         const items = fs.readdirSync(dir);
@@ -204,6 +204,9 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
         if (cache) {
           file.status = cache.processingStatus;
           file.importedAt = cache.importedAt || undefined;
+          file.cacheId = cache.id;
+          file.latexFilePath = cache.latexFilePath || undefined;
+          file.hasLatexContent = !!cache.latexContent;
           
           // Get count of imported questions if importedAt is set
           if (file.importedAt) {
@@ -213,7 +216,7 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
             file.importedQuestionCount = importedCount;
           }
           
-          console.log(`PDF ${file.fileName}: importedAt=${file.importedAt}, status=${file.status}, importedCount=${file.importedQuestionCount || 0}`);
+          console.log(`PDF ${file.fileName}: importedAt=${file.importedAt}, status=${file.status}, importedCount=${file.importedQuestionCount || 0}, latexFilePath=${file.latexFilePath}`);
         }
       }
 
@@ -463,6 +466,34 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     return cache;
   }
 
+  /**
+   * Save JSON content to local file
+   */
+  private async saveJsonToFile(fileName: string, jsonContent: string): Promise<string> {
+    try {
+      // Create processed directory if it doesn't exist
+      const processedDir = path.join(process.cwd(), 'content', 'Processed');
+      if (!fs.existsSync(processedDir)) {
+        fs.mkdirSync(processedDir, { recursive: true });
+      }
+
+      // Generate JSON file name (replace .pdf with .json)
+      const jsonFileName = fileName.replace(/\.pdf$/i, '.json');
+      const jsonFilePath = path.join(processedDir, jsonFileName);
+
+      // Write JSON content to file with proper formatting
+      const formattedJson = JSON.stringify(JSON.parse(jsonContent), null, 2);
+      fs.writeFileSync(jsonFilePath, formattedJson, 'utf8');
+
+      this.logger.log(`JSON content saved to: ${jsonFilePath}`);
+      return jsonFilePath;
+
+    } catch (error) {
+      this.logger.error(`Failed to save JSON file:`, error);
+      throw new Error(`Failed to save JSON file: ${error.message}`);
+    }
+  }
+
   async getProcessedFiles() {
     return this.prisma.pDFProcessorCache.findMany({
       where: { processingStatus: 'COMPLETED' },
@@ -575,33 +606,6 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
       return updatedCache;
     } catch (error) {
       console.error(`Error resetting retry count for ${fileName}:`, error);
-      throw error;
-    }
-  }
-
-  async markAsCompleted(cacheId: string) {
-    try {
-      const cache = await this.prisma.pDFProcessorCache.findUnique({
-        where: { id: cacheId }
-      });
-
-      if (!cache) {
-        throw new BadRequestException('PDF cache not found');
-      }
-
-      const updatedCache = await this.prisma.pDFProcessorCache.update({
-        where: { id: cacheId },
-        data: { 
-          processingStatus: 'COMPLETED',
-          lastProcessedAt: new Date()
-        }
-      });
-
-      await this.logEvent(cacheId, 'SUCCESS', 'PDF processing marked as completed by admin');
-
-      return updatedCache;
-    } catch (error) {
-      this.logger.error('Error marking PDF as completed:', error);
       throw error;
     }
   }
@@ -1001,9 +1005,13 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
         });
       }
 
+      // Save JSON content to local file
+      const jsonFilePath = await this.saveJsonToFile(fileName, jsonContent);
+
       return {
         cacheId: cache.id,
-        questionCount: parsedData.questions.length
+        questionCount: parsedData.questions.length,
+        jsonFilePath: jsonFilePath
       };
     } catch (error) {
       this.logger.error('Error saving JSON content:', error);
@@ -1093,6 +1101,24 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     } catch (error) {
       this.logger.error('Error finding PDF path:', error);
       return null;
+    }
+  }
+
+  async markPDFAsCompleted(cacheId: string) {
+    try {
+      const updatedCache = await this.prisma.pDFProcessorCache.update({
+        where: { id: cacheId },
+        data: { 
+          processingStatus: 'COMPLETED',
+          lastProcessedAt: new Date()
+        }
+      });
+
+      this.logger.log(`PDF cache ${cacheId} marked as completed`);
+      return updatedCache;
+    } catch (error) {
+      this.logger.error('Error marking PDF as completed:', error);
+      throw new BadRequestException('Failed to mark PDF as completed');
     }
   }
 }

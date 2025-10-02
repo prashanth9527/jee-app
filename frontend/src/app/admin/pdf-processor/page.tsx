@@ -22,6 +22,9 @@ interface PDFFile {
   jsonQuestionCount?: number;
   databaseId?: string;
   importedQuestionCount?: number;
+  hasLatexContent?: boolean;
+  latexFilePath?: string;
+  latexContent?: string;
 }
 
 interface FolderNode {
@@ -75,6 +78,9 @@ export default function PDFProcessorPage() {
   const [selectedFolder, setSelectedFolder] = useState<string>('');
   const [filteredPdfs, setFilteredPdfs] = useState<PDFFile[]>([]);
   const [showFolderPanel, setShowFolderPanel] = useState<boolean>(true);
+  const [showLatexModal, setShowLatexModal] = useState(false);
+  const [latexContent, setLatexContent] = useState<string>('');
+  const [latexFilePath, setLatexFilePath] = useState<string>('');
 
   useEffect(() => {
     fetchPDFs();
@@ -647,10 +653,14 @@ export default function PDFProcessorPage() {
     }
   };
 
-  const openJsonEditor = (fileName: string) => {
+  const openJsonEditor = async (fileName: string) => {
     const pdf = pdfs.find(p => p.fileName === fileName);
     setEditingJson(fileName);
     setJsonContent(pdf?.jsonContent || '');
+    
+    // Use LaTeX file path directly from PDF list (now includes latexFilePath)
+    setLatexFilePath(pdf?.latexFilePath || '');
+    
     setShowJsonModal(true);
   };
 
@@ -669,10 +679,15 @@ export default function PDFProcessorPage() {
       
       if (response.data.success) {
         toast.close();
-        toast.success('JSON content saved successfully!');
+        const { questionCount, jsonFilePath } = response.data.data;
+        toast.success(
+          `JSON content saved successfully!`,
+          `${questionCount} questions saved to database and file`
+        );
         setShowJsonModal(false);
         setEditingJson(null);
         setJsonContent('');
+        setLatexFilePath('');
         fetchPDFs(); // Refresh the list
       }
     } catch (error: any) {
@@ -718,6 +733,91 @@ export default function PDFProcessorPage() {
       toast.error(`Error: ${error.response?.data?.message || error.message}`);
     }
   };
+
+  const processWithMathpix = async (fileName: string) => {
+    const pdf = pdfs.find(p => p.fileName === fileName);
+    if (!pdf) {
+      toast.error('PDF not found');
+      return;
+    }
+
+    const result = await Swal.fire({
+      title: 'Process with Mathpix',
+      text: `This will process "${pdf.fileName}" with Mathpix to extract LaTeX content. This may take a few minutes. Continue?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Process',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: '#f97316', // Orange color to match Mathpix button
+    });
+
+    if (!result.isConfirmed) return;
+
+    toast.loading('Processing PDF with Mathpix...', 'Please wait');
+
+    try {
+      const response = await api.post(`/admin/pdf-processor/process-mathpix-file/${fileName}`);
+      
+      if (response.data.success) {
+        const { latexContent, latexFilePath, processingTimeMs } = response.data.data;
+        
+        toast.success(
+          `Mathpix processing completed successfully!`,
+          `LaTeX content extracted in ${Math.round(processingTimeMs / 1000)}s`
+        );
+
+        // Refresh the PDF list to show updated status
+        await fetchPDFs();
+
+        // Show success details
+        Swal.fire({
+          title: 'Processing Complete!',
+          html: `
+            <div class="text-left">
+              <p><strong>File:</strong> ${pdf.fileName}</p>
+              <p><strong>Processing Time:</strong> ${Math.round(processingTimeMs / 1000)}s</p>
+              <p><strong>LaTeX Content Length:</strong> ${latexContent?.length || 0} characters</p>
+              <p><strong>LaTeX File Path:</strong> ${latexFilePath || 'Not saved'}</p>
+            </div>
+          `,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+
+      } else {
+        toast.error(`Mathpix processing failed: ${response.data.message}`);
+      }
+
+    } catch (error: any) {
+      console.error('Mathpix processing error:', error);
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
+  const viewLatexContent = async (cacheId: string) => {
+    try {
+      const response = await api.get(`/admin/pdf-processor/latex-content/${cacheId}`);
+      
+      if (response.data.success) {
+        const { latexContent, latexFilePath } = response.data.data;
+        
+        if (latexContent) {
+          setLatexContent(latexContent);
+          setLatexFilePath(latexFilePath || '');
+          setShowLatexModal(true);
+        } else {
+          toast.error('No LaTeX content found for this PDF');
+        }
+      } else {
+        toast.error('Failed to load LaTeX content');
+      }
+
+    } catch (error: any) {
+      console.error('Error loading LaTeX content:', error);
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
 
   const toggleActionMenu = (fileName: string) => {
     setShowActionMenu(showActionMenu === fileName ? null : fileName);
@@ -1055,6 +1155,28 @@ export default function PDFProcessorPage() {
                                 Write to File
                             </button>
                             )}
+
+                            {/* Process Mathpix Button - Show for all PDFs with cacheId */}
+                            {!pdf.hasLatexContent && (
+                            <button
+                                onClick={() => processWithMathpix(pdf.fileName)}
+                                className="bg-orange-600 text-white px-3 py-1 rounded-md hover:bg-orange-700 text-xs"
+                                title="Process PDF with Mathpix to extract LaTeX"
+                            >
+                                Process Mathpix
+                            </button>
+                            )}
+
+                            {/* View LaTeX Button - Show only if LaTeX content exists */}
+                            {pdf.databaseId && pdf.hasLatexContent && (
+                            <button
+                                onClick={() => viewLatexContent(pdf.databaseId!)}
+                                className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 text-xs"
+                                title="View extracted LaTeX content"
+                            >
+                                View LaTeX
+                            </button>
+                            )}
                           </div>
 
                           {/* Hamburger Menu for Secondary Actions */}
@@ -1125,6 +1247,19 @@ export default function PDFProcessorPage() {
                                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     >
                                       Download JSON
+                                    </button>
+                                  )}
+
+                                  {/* View LaTeX Button */}
+                                  {pdf.cacheId && (
+                                    <button
+                                      onClick={() => {
+                                        viewLatexContent(pdf.cacheId!);
+                                        closeActionMenu();
+                                      }}
+                                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    >
+                                      View LaTeX Content
                                     </button>
                                   )}
 
@@ -1235,18 +1370,170 @@ export default function PDFProcessorPage() {
                     <h3 className="text-lg font-semibold text-gray-900">
                       JSON Content Editor: {editingJson}
                     </h3>
-                    <button
-                      onClick={() => {
-                        setShowJsonModal(false);
-                        setEditingJson(null);
-                        setJsonContent('');
-                      }}
-                      className="text-gray-400 hover:text-gray-600"
-                    >
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
+                    <div className="flex items-center space-x-2">
+                      {/* View PDF Button */}
+                      <button
+                        onClick={() => {
+                          const promptText = `You are an expert JEE (Joint Entrance Examination) question analyzer.  
+I will provide you with the full content of a \`.tex\` file containing ~90 JEE questions (Physics, Chemistry, Mathematics).  
+
+Your task is to extract and structure ALL questions into JSON format.
+
+CRITICAL RULES:
+1. Respond with ONLY valid JSON. Do not include any explanation or markdown formatting. Start with \`{\` and end with \`}\`.
+2. The .tex file contains equations, options, answers, and solutions. Preserve LaTeX math code exactly as in the source (e.g., \`$$E=mc^2$$\`).
+3. If diagrams/figures are present, convert them into ASCII form if possible, else describe them in words.
+4. Accept question numbering as \`Q1, Q2…\` or \`1., 2., …\`.
+5. **Skip all promotional/branding content** (e.g., "Allen", "Coaching Institute", "Best of Luck", "Paper Solutions by XYZ", headers/footers, watermarks, page numbers, or motivational lines). Only keep actual question data.
+
+---
+
+### CHUNKED PROCESSING (STRICT BY QUESTION NUMBERS)
+
+- Physics: Q1–Q30  
+- Chemistry: Q31–Q60  
+- Mathematics: Q61–Q90  
+- Each subject must have exactly **30 questions**.  
+
+If fewer appear in the \`.tex\`, generate realistic filler questions to complete the block.
+
+---
+
+### QUESTION CONTENT RULES
+
+For each question:
+- Must have exactly 4 options (A–D). If missing, generate plausible ones.  
+- Must have 1 correct option. If missing, infer based on reasoning.  
+- Provide a detailed step-by-step explanation.  
+- Add a \`tip_formula\` (formula, concept, shortcut).  
+- Classify difficulty as \`EASY\`, \`MEDIUM\`, or \`HARD\`.  
+- All chemical/mathematical formulas must remain in LaTeX.  
+
+---
+
+### CLASSIFICATION RULES
+
+Assign **lesson → topic → subtopic** strictly from the official JEE Main 2025 syllabus:
+- Physics (Units 1–20)  
+- Chemistry (Units 1–20)  
+- Mathematics (Units 1–14)  
+
+---
+
+### OUTPUT JSON FORMAT
+
+{
+  "questions": [
+    {
+      "id": "Q31",
+      "stem": "Which of the following represents the lattice structure of A0.95O containing A2+, A3+ and O2– ions?",
+      "options": [
+        {"id": "A", "text": "Option A text", "isCorrect": false},
+        {"id": "B", "text": "Option B text", "isCorrect": false},
+        {"id": "C", "text": "Option C text", "isCorrect": true},
+        {"id": "D", "text": "Option D text", "isCorrect": false}
+      ],
+      "explanation": "Applying electrical neutrality principle: 3A²⁺ replaced by 2A³⁺ → one vacancy per pair of A³⁺.",
+      "tip_formula": "Charge neutrality condition: total positive charge = total negative charge",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Solid State",
+      "subtopic": "Defects in Crystals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": ["solid-state", "defects", "charge-neutrality"]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 90,
+    "subjects": ["Physics", "Chemistry", "Mathematics"],
+    "difficultyDistribution": {"easy": 30, "medium": 45, "hard": 15}
+  }
+}
+
+---
+
+### FINAL INSTRUCTION
+
+Read the \`.tex\` file carefully and return **only the JSON output** in the schema above.  
+Ensure exactly 90 questions, numbered sequentially (Q1–Q90), with lesson/topic/subtopic classification.  
+Ignore and skip any **branding, coaching names, promotional headers/footers, or unrelated text**.`;
+
+                          navigator.clipboard.writeText(promptText).then(() => {
+                            toast.success('Prompt copied to clipboard!');
+                          }).catch(() => {
+                            toast.error('Failed to copy prompt');
+                          });
+                        }}
+                        className="px-3 py-1 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 transition-colors"
+                        title="Copy AI prompt to clipboard"
+                      >
+                        Copy Prompt
+                      </button>
+                      <button
+                        onClick={() => {
+                          const pdf = pdfs.find(p => p.fileName === editingJson);
+                          if (pdf?.filePath) {
+                            try {
+                              // Extract just the filename from the full path
+                              const fileName = pdf.filePath.split(/[\\/]/).pop();
+                              const fileUrl = `http://localhost:3001/static/pdf/${fileName}`;
+                              console.log('Opening PDF URL:', fileUrl);
+                              window.open(fileUrl, '_blank');
+                            } catch (error) {
+                              console.error('Error opening PDF:', error);
+                              toast.error('Failed to open PDF file');
+                            }
+                          } else {
+                            toast.error('PDF file not found');
+                          }
+                        }}
+                        className="px-3 py-1 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
+                        title="Open PDF file in new window"
+                      >
+                        View PDF
+                      </button>
+                      
+                      {/* View LaTeX Button */}
+                      <button
+                        onClick={() => {
+                          if (latexFilePath) {
+                            try {
+                              // Convert LaTeX file path to static URL
+                              const fileName = latexFilePath.split(/[\\/]/).pop();
+                              const fileUrl = `http://localhost:3001/static/latex/${fileName}`;
+                              console.log('Opening LaTeX URL:', fileUrl);
+                              window.open(fileUrl, '_blank');
+                            } catch (error) {
+                              console.error('Error opening LaTeX file:', error);
+                              toast.error('Failed to open LaTeX file');
+                            }
+                          } else {
+                            toast.error('LaTeX file not found - Process with Mathpix first');
+                          }
+                        }}
+                        className="px-3 py-1 text-sm font-medium text-green-600 bg-green-50 border border-green-200 rounded-md hover:bg-green-100 transition-colors"
+                        title="Open LaTeX file in new window"
+                      >
+                        View LaTeX
+                      </button>
+                      
+                      {/* Close Button */}
+                      <button
+                        onClick={() => {
+                          setShowJsonModal(false);
+                          setEditingJson(null);
+                          setJsonContent('');
+                          setLatexFilePath('');
+                        }}
+                        className="text-gray-400 hover:text-gray-600"
+                      >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                   
                   <div className="space-y-4">
@@ -1280,6 +1567,37 @@ export default function PDFProcessorPage() {
                       </div>
                     </div>
                     
+                    {/* LaTeX File Path Display */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        LaTeX File Path
+                      </label>
+                      <div className="flex items-center space-x-2 p-3 bg-gray-50 border border-gray-300 rounded-md">
+                        <code className="flex-1 text-sm text-gray-800 font-mono break-all">
+                          {latexFilePath || 'No LaTeX file path available - Process with Mathpix first'}
+                        </code>
+                        {latexFilePath && (
+                          <button
+                            onClick={() => {
+                              if (latexFilePath) {
+                                navigator.clipboard.writeText(latexFilePath).then(() => {
+                                  toast.success('LaTeX file path copied to clipboard!');
+                                }).catch(() => {
+                                  toast.error('Failed to copy LaTeX file path');
+                                });
+                              }
+                            }}
+                            className="flex-shrink-0 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded-md transition-colors"
+                            title="Copy LaTeX file path to clipboard"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         JSON Content (Paste your question data here)
@@ -1298,6 +1616,7 @@ export default function PDFProcessorPage() {
                           setShowJsonModal(false);
                           setEditingJson(null);
                           setJsonContent('');
+                          setLatexFilePath('');
                         }}
                         className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
                       >
@@ -1310,6 +1629,78 @@ export default function PDFProcessorPage() {
                         Save JSON Content
                       </button>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* LaTeX Content Modal */}
+          {showLatexModal && (
+            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+              <div className="relative top-10 mx-auto p-5 border w-11/12 md:w-4/5 lg:w-3/4 shadow-lg rounded-md bg-white">
+                <div className="mt-3">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      LaTeX Content Viewer
+                    </h3>
+                    <button
+                      onClick={() => {
+                        setShowLatexModal(false);
+                        setLatexContent('');
+                        setLatexFilePath('');
+                      }}
+                      className="text-gray-400 hover:text-gray-600"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  <div className="mb-4">
+                    {latexFilePath && (
+                      <p className="text-sm text-gray-600 mb-2">
+                        <strong>File Path:</strong> {latexFilePath}
+                      </p>
+                    )}
+                    <p className="text-sm text-gray-600 mb-4">
+                      <strong>Content Length:</strong> {latexContent.length} characters
+                    </p>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      LaTeX Content:
+                    </label>
+                    <textarea
+                      value={latexContent}
+                      readOnly
+                      className="w-full h-96 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm bg-gray-50"
+                      placeholder="No LaTeX content available..."
+                    />
+                  </div>
+                  
+                  <div className="flex justify-end space-x-3">
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(latexContent);
+                        toast.success('LaTeX content copied to clipboard!');
+                      }}
+                      className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                    >
+                      Copy to Clipboard
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowLatexModal(false);
+                        setLatexContent('');
+                        setLatexFilePath('');
+                      }}
+                      className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                    >
+                      Close
+                    </button>
                   </div>
                 </div>
               </div>

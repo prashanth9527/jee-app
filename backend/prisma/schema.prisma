@@ -993,6 +993,9 @@ model PDFProcessorCache {
   processedData     Json?    // Processed and validated JSON
   jsonContent       String?  @db.Text // Manual JSON content entry
   outputFilePath    String?  // Path to saved JSON file
+  latexContent      String?  @db.Text // LaTeX content from Mathpix processing
+  latexFilePath     String?  // Path to saved LaTeX file
+  zipFilePath       String?  // Path to saved ZIP file from Mathpix
   errorMessage      String?  @db.Text
   processingTimeMs  Int?
   retryCount        Int      @default(0)

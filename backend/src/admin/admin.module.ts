@@ -24,6 +24,8 @@ import { AwsModule } from '../aws/aws.module';
 import { AIProviderFactory } from '../ai/ai-provider.factory';
 import { OpenAIService } from '../ai/openai.service';
 import { DeepSeekService } from '../ai/deepseek.service';
+import { MathpixService } from './mathpix.service';
+import { ZipProcessorService } from './zip-processor.service';
 
 @Module({
   imports: [PrismaModule, AwsModule],
@@ -50,6 +52,8 @@ import { DeepSeekService } from '../ai/deepseek.service';
     SyllabusImportService, 
     PDFProcessorService, 
     PDFReviewService,
+    MathpixService,
+    ZipProcessorService,
     AIProviderFactory,
     OpenAIService,
     DeepSeekService

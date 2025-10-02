@@ -64,12 +64,6 @@ interface ReviewStats {
   completionPercentage: number;
 }
 
-interface PDFInfo {
-  fileName: string;
-  filePath: string;
-  fileSize: number;
-}
-
 export default function PDFReviewPage() {
   const params = useParams();
   const router = useRouter();
@@ -78,11 +72,11 @@ export default function PDFReviewPage() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [stats, setStats] = useState<ReviewStats | null>(null);
-  const [pdfInfo, setPdfInfo] = useState<PDFInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedQuestions, setSelectedQuestions] = useState<Set<string>>(new Set());
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<Partial<Omit<Question, 'tags'>> & { tags?: string[] }>({});
+  const [pdfData, setPdfData] = useState<{ fileName: string; filePath: string; latexFilePath?: string } | null>(null);
 
   useEffect(() => {
     if (cacheId) {
@@ -96,7 +90,10 @@ export default function PDFReviewPage() {
       const response = await api.get(`/admin/pdf-review/${cacheId}`);
       if (response.data.success) {
         setQuestions(response.data.data);
-        setPdfInfo(response.data.pdfInfo);
+        // Set PDF data from the response
+        if (response.data.pdfCache) {
+          setPdfData(response.data.pdfCache);
+        }
         setLoading(false);
       }
     } catch (error: any) {
@@ -116,6 +113,7 @@ export default function PDFReviewPage() {
       console.error('Error fetching stats:', error);
     }
   };
+
 
   const approveQuestion = async (questionId: string) => {
     try {
@@ -141,20 +139,6 @@ export default function PDFReviewPage() {
       }
     } catch (error: any) {
       console.error('Error rejecting question:', error);
-      toast.error(`Error: ${error.response?.data?.message || error.message}`);
-    }
-  };
-
-  const markAsCompleted = async () => {
-    try {
-      const response = await api.post(`/admin/pdf-processor/mark-completed/${cacheId}`);
-      if (response.data.success) {
-        toast.success('PDF processing marked as completed successfully!');
-        // Optionally redirect back to PDF processor page
-        router.push('/admin/pdf-processor');
-      }
-    } catch (error: any) {
-      console.error('Error marking PDF as completed:', error);
       toast.error(`Error: ${error.response?.data?.message || error.message}`);
     }
   };
@@ -198,7 +182,7 @@ export default function PDFReviewPage() {
     try {
       const response = await api.post(`/admin/pdf-review/approve-all/${cacheId}`);
       if (response.data.success) {
-        toast.success(`${response.data.data.approvedCount} questions approved successfully!`);
+        toast.success(`${response.data.data.approvedCount} questions approved successfully! PDF marked as completed.`);
         fetchQuestions();
         fetchStats();
       }
@@ -542,23 +526,68 @@ export default function PDFReviewPage() {
                     <div className="flex space-x-2">
                       {!isEditing ? (
                         <>
-                          {pdfInfo && (
-                            <a
-                              href={`http://localhost:3001/static/pdf/${encodeURIComponent(pdfInfo.fileName)}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 text-center"
-                              title="Open original PDF in new tab"
-                            >
-                              View PDF
-                            </a>
-                          )}
+                          {/* Mark as Completed Button */}
                           <button
-                            onClick={markAsCompleted}
-                            className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 border border-orange-600"
+                            onClick={async () => {
+                              try {
+                                const response = await api.put(`/admin/pdf-processor/mark-completed/${cacheId}`);
+                                if (response.data.success) {
+                                  toast.success('PDF marked as completed successfully!');
+                                }
+                              } catch (error: any) {
+                                console.error('Error marking PDF as completed:', error);
+                                toast.error(`Error: ${error.response?.data?.message || error.message}`);
+                              }
+                            }}
+                            className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 border border-purple-500"
+                            title="Mark PDF processing as completed"
                           >
                             Mark as completed
                           </button>
+                          
+                          {/* View PDF Button */}
+                          {pdfData?.filePath && (
+                            <button
+                              onClick={() => {
+                                try {
+                                  // Extract just the filename from the full path
+                                  const fileName = pdfData.filePath.split(/[\\/]/).pop();
+                                  const fileUrl = `http://localhost:3001/static/pdf/${fileName}`;
+                                  console.log('Opening PDF URL:', fileUrl);
+                                  window.open(fileUrl, '_blank');
+                                } catch (error) {
+                                  console.error('Error opening PDF:', error);
+                                  toast.error('Failed to open PDF file');
+                                }
+                              }}
+                              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 border border-red-500"
+                              title="Open PDF file in new window"
+                            >
+                              View PDF
+                            </button>
+                          )}
+                          
+                          {/* View LaTeX Button */}
+                          {pdfData?.latexFilePath && (
+                            <button
+                              onClick={() => {
+                                try {
+                                  const fileName = pdfData.latexFilePath!.split(/[\\/]/).pop();
+                                  const fileUrl = `http://localhost:3001/static/latex/${fileName}`;
+                                  console.log('Opening LaTeX URL:', fileUrl);
+                                  window.open(fileUrl, '_blank');
+                                } catch (error) {
+                                  console.error('Error opening LaTeX file:', error);
+                                  toast.error('Failed to open LaTeX file');
+                                }
+                              }}
+                              className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 border border-orange-500"
+                              title="Open LaTeX file in new window"
+                            >
+                              View LaTeX
+                            </button>
+                          )}
+                          
                           <button
                             onClick={startEditing}
                             className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"

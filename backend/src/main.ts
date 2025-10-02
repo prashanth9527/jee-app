@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 // Disable SSL certificate verification in development
 if (process.env.NODE_ENV !== 'production') {
@@ -8,7 +10,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create<NestExpressApplication>(AppModule);
 	
 	// Configure CORS based on environment
 	// Enable CORS
@@ -26,6 +28,22 @@ async function bootstrap() {
 	  });
 	
 	app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
+	
+	// Serve PDF files
+	app.useStaticAssets(join(__dirname, '..', 'content'), {
+		prefix: '/static/pdf/',
+	});
+	
+	// Serve LaTeX files
+	app.useStaticAssets(join(__dirname, '..', 'content', 'latex'), {
+		prefix: '/static/latex/',
+	});
+	
+	// Serve processed JSON files
+	app.useStaticAssets(join(__dirname, '..', 'content', 'Processed'), {
+		prefix: '/static/processed/',
+	});
+	
 	const port = process.env.PORT || 3001;
 	await app.listen(port as number);
 	// eslint-disable-next-line no-console

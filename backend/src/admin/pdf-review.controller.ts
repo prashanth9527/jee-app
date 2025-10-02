@@ -29,7 +29,7 @@ export class PDFReviewController {
       return {
         success: true,
         data: result.questions,
-        pdfInfo: result.pdfInfo,
+        pdfCache: result.pdfCache,
         total: result.questions.length
       };
     } catch (error) {

@@ -1,11 +1,15 @@
 import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { PDFProcessorService } from './pdf-processor.service';
 
 @Injectable()
 export class PDFReviewService {
   private readonly logger = new Logger(PDFReviewService.name);
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly pdfProcessorService: PDFProcessorService
+  ) {}
 
   async getQuestionsForReview(cacheId: string) {
     try {
@@ -48,10 +52,10 @@ export class PDFReviewService {
 
       return {
         questions: questionsWithStatus,
-        pdfInfo: {
+        pdfCache: {
           fileName: cache.fileName,
           filePath: cache.filePath,
-          fileSize: cache.fileSize
+          latexFilePath: cache.latexFilePath
         }
       };
     } catch (error) {
@@ -197,6 +201,10 @@ export class PDFReviewService {
       });
 
       this.logger.log(`Approved all ${result.count} questions for cache ${cacheId}`);
+      
+      // Mark PDF cache as completed
+      await this.pdfProcessorService.markPDFAsCompleted(cacheId);
+      
       return {
         approvedCount: result.count,
         cacheId: cacheId

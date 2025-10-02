@@ -11,20 +11,7 @@ import {
   Calculator as SquareRoot,
   Calculator as Function,
   Sigma,
-  Divide,
-  Link,
-  Image,
-  Type,
-  Palette,
-  AlignLeft,
-  AlignCenter,
-  AlignRight,
-  AlignJustify,
-  Heading1,
-  Heading2,
-  Heading3,
-  Strikethrough,
-  Quote
+  Divide
 } from 'lucide-react';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
@@ -91,9 +78,8 @@ export default function LatexRichTextEditor({
     return blocks.sort((a, b) => a.start - b.start);
   }, []);
 
-  // Render LaTeX content to HTML with enhanced formatting
+  // Render LaTeX content to HTML
   const renderLatexContent = useCallback((content: string): string => {
-    console.log('Rendering content:', content); // Debug log
     const blocks = parseLatexBlocks(content);
     let html = content;
     let offset = 0;
@@ -117,35 +103,6 @@ export default function LatexRichTextEditor({
         // Keep original LaTeX if rendering fails
       }
     });
-    
-    // Enhanced markdown-like rendering
-    html = html
-      // Images first (before other processing)
-      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
-        console.log('Image match found:', { match, alt, src: src.substring(0, 50) + '...' }); // Debug log
-        return `<img src="${src}" alt="${alt}" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px; margin: 4px 0;" />`;
-      })
-      // Headers
-      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-      // Bold and italic
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      // Strikethrough
-      .replace(/~~(.*?)~~/g, '<del>$1</del>')
-      // Code
-      .replace(/`(.*?)`/g, '<code>$1</code>')
-      // Links
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-      // Quotes
-      .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
-      // Lists
-      .replace(/^\* (.*$)/gim, '<li>$1</li>')
-      .replace(/^- (.*$)/gim, '<li>$1</li>')
-      .replace(/^(\d+)\. (.*$)/gim, '<li>$2</li>')
-      // Line breaks
-      .replace(/\n/g, '<br>');
     
     return html;
   }, [parseLatexBlocks]);
@@ -200,23 +157,8 @@ export default function LatexRichTextEditor({
       case 'underline':
         formattedText = `<u>${selectedText}</u>`;
         break;
-      case 'strikethrough':
-        formattedText = `~~${selectedText}~~`;
-        break;
       case 'code':
         formattedText = `\`${selectedText}\``;
-        break;
-      case 'h1':
-        formattedText = `# ${selectedText}`;
-        break;
-      case 'h2':
-        formattedText = `## ${selectedText}`;
-        break;
-      case 'h3':
-        formattedText = `### ${selectedText}`;
-        break;
-      case 'quote':
-        formattedText = `> ${selectedText}`;
         break;
       default:
         formattedText = selectedText;
@@ -228,69 +170,6 @@ export default function LatexRichTextEditor({
     setTimeout(() => {
       textarea.focus();
       textarea.setSelectionRange(start + formattedText.length, start + formattedText.length);
-    }, 0);
-  };
-
-  // Insert link
-  const insertLink = () => {
-    const url = prompt('Enter URL:');
-    if (url) {
-      const text = prompt('Enter link text (optional):') || url;
-      insertText(`[${text}](${url})`);
-    }
-  };
-
-  // Handle image upload/paste
-  const handleImageUpload = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const imageUrl = e.target?.result as string;
-      // Insert with proper alt text
-      insertText(`![${file.name || 'Image'}](${imageUrl})`);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  // Handle paste events
-  const handlePaste = (e: React.ClipboardEvent) => {
-    const items = e.clipboardData.items;
-    let hasImage = false;
-    
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      if (item.type.indexOf('image') !== -1) {
-        e.preventDefault();
-        hasImage = true;
-        const file = item.getAsFile();
-        if (file) {
-          handleImageUpload(file);
-        }
-        break; // Only handle the first image
-      }
-    }
-    
-    // If no image was found, allow normal paste behavior
-    if (!hasImage) {
-      // Let the default paste behavior handle text
-    }
-  };
-
-  // Insert color
-  const insertColor = (color: string) => {
-    if (!textareaRef.current) return;
-    
-    const textarea = textareaRef.current;
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = value.substring(start, end);
-    
-    const coloredText = `<span style="color: ${color}">${selectedText}</span>`;
-    const newValue = value.substring(0, start) + coloredText + value.substring(end);
-    onChange(newValue);
-    
-    setTimeout(() => {
-      textarea.focus();
-      textarea.setSelectionRange(start + coloredText.length, start + coloredText.length);
     }, 0);
   };
 
@@ -348,92 +227,12 @@ export default function LatexRichTextEditor({
           <Underline className="h-4 w-4" />
         </button>
         <button
-          onClick={() => formatText('strikethrough')}
-          className="p-1 hover:bg-gray-200 rounded"
-          title="Strikethrough"
-        >
-          <Strikethrough className="h-4 w-4" />
-        </button>
-        <button
           onClick={() => formatText('code')}
           className="p-1 hover:bg-gray-200 rounded"
           title="Code"
         >
           <Code className="h-4 w-4" />
         </button>
-      </div>
-
-      {/* Headings */}
-      <div className="flex items-center gap-1 border-r border-gray-300 pr-2">
-        <button
-          onClick={() => formatText('h1')}
-          className="p-1 hover:bg-gray-200 rounded"
-          title="Heading 1"
-        >
-          <Heading1 className="h-4 w-4" />
-        </button>
-        <button
-          onClick={() => formatText('h2')}
-          className="p-1 hover:bg-gray-200 rounded"
-          title="Heading 2"
-        >
-          <Heading2 className="h-4 w-4" />
-        </button>
-        <button
-          onClick={() => formatText('h3')}
-          className="p-1 hover:bg-gray-200 rounded"
-          title="Heading 3"
-        >
-          <Heading3 className="h-4 w-4" />
-        </button>
-        <button
-          onClick={() => formatText('quote')}
-          className="p-1 hover:bg-gray-200 rounded"
-          title="Quote"
-        >
-          <Quote className="h-4 w-4" />
-        </button>
-      </div>
-
-      {/* Links and Media */}
-      <div className="flex items-center gap-1 border-r border-gray-300 pr-2">
-        <button
-          onClick={insertLink}
-          className="p-1 hover:bg-gray-200 rounded"
-          title="Insert Link"
-        >
-          <Link className="h-4 w-4" />
-        </button>
-        <label className="p-1 hover:bg-gray-200 rounded cursor-pointer" title="Insert Image">
-          <Image className="h-4 w-4" />
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                handleImageUpload(file);
-              }
-            }}
-          />
-        </label>
-      </div>
-
-      {/* Colors */}
-      <div className="flex items-center gap-1 border-r border-gray-300 pr-2">
-        <div className="flex items-center gap-1">
-          <span className="text-xs text-gray-600">Color:</span>
-          {['#000000', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FFA500'].map(color => (
-            <button
-              key={color}
-              onClick={() => insertColor(color)}
-              className="w-4 h-4 rounded border border-gray-300 hover:scale-110 transition-transform"
-              style={{ backgroundColor: color }}
-              title={`Color: ${color}`}
-            />
-          ))}
-        </div>
       </div>
 
       {/* Lists */}
@@ -596,7 +395,6 @@ export default function LatexRichTextEditor({
             ref={textareaRef}
             value={value}
             onChange={handleTextChange}
-            onPaste={handlePaste}
             placeholder={placeholder}
             disabled={disabled}
             className="w-full p-4 border-0 resize-none focus:outline-none font-mono text-sm"
