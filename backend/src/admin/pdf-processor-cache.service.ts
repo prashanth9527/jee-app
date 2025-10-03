@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { ProcessingStatus } from '@prisma/client';
 import * as fs from 'fs';
 import * as path from 'path';
+import { MathpixService } from './mathpix.service';
 
 export interface FindAllOptions {
   page: number;
@@ -27,7 +28,10 @@ export interface CacheStats {
 export class PDFProcessorCacheService {
   private readonly logger = new Logger(PDFProcessorCacheService.name);
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mathpixService: MathpixService
+  ) {}
 
   async findAll(options: FindAllOptions) {
     const { page, limit, status, search, sortBy, sortOrder } = options;
@@ -406,6 +410,40 @@ export class PDFProcessorCacheService {
       };
     } catch (error) {
       this.logger.error('Error deleting questions by cache ID:', error);
+      throw error;
+    }
+  }
+
+  async processWithMathpix(id: string) {
+    try {
+      this.logger.log(`Starting Mathpix processing for cache ID: ${id}`);
+      
+      // Find the record by ID
+      const record = await this.prisma.pDFProcessorCache.findUnique({
+        where: { id }
+      });
+
+      if (!record) {
+        throw new Error(`Record not found for ID: ${id}`);
+      }
+
+      // Get the full file path
+      const rootDir = path.join(__dirname, '../../../..');
+      const fullFilePath = path.join(rootDir, record.filePath);
+
+      // Check if PDF file exists
+      if (!fs.existsSync(fullFilePath)) {
+        throw new Error(`PDF file not found: ${fullFilePath}`);
+      }
+
+      // Process with Mathpix using the existing service
+      const result = await this.mathpixService.processPdfWithMathpixByFileName(record.fileName, fullFilePath);
+      
+      this.logger.log(`Mathpix processing completed for cache ID: ${id}, success: ${result.success}`);
+      
+      return result;
+    } catch (error) {
+      this.logger.error('Error processing with Mathpix:', error);
       throw error;
     }
   }

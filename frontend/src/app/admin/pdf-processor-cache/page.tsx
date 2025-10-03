@@ -178,7 +178,7 @@ export default function PDFProcessorCachePage() {
     toast.loading('Processing PDF with Mathpix...', 'Please wait');
 
     try {
-      const response = await api.post(`/admin/pdf-processor/process-mathpix-file/${fileName}`);
+      const response = await api.post(`/admin/pdf-processor-cache/${record.id}/process-mathpix`);
       
       if (response.data.success) {
         toast.success('PDF processed with Mathpix successfully');

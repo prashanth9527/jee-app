@@ -112,6 +112,27 @@ export class PDFProcessorCacheController {
     }
   }
 
+  @Post(':id/process-mathpix')
+  async processWithMathpix(@Param('id') id: string) {
+    try {
+      const result = await this.pdfProcessorCacheService.processWithMathpix(id);
+      return {
+        success: result.success,
+        message: result.success ? 'PDF processed with Mathpix successfully' : 'Mathpix processing failed',
+        data: result
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to process PDF with Mathpix',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
   @Post(':id/import-questions')
   async importQuestions(@Param('id') id: string) {
     try {
