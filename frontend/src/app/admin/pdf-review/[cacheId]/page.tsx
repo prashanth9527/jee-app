@@ -76,7 +76,7 @@ export default function PDFReviewPage() {
   const [selectedQuestions, setSelectedQuestions] = useState<Set<string>>(new Set());
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<Partial<Omit<Question, 'tags'>> & { tags?: string[] }>({});
-  const [pdfData, setPdfData] = useState<{ fileName: string; filePath: string; latexFilePath?: string } | null>(null);
+  const [pdfData, setPdfData] = useState<{ fileName: string; filePath: string; latexFilePath?: string; processingStatus?: string } | null>(null);
 
   useEffect(() => {
     if (cacheId) {
@@ -320,7 +320,7 @@ export default function PDFReviewPage() {
             <div className="p-4 border-b border-gray-200 bg-gray-50">
               <nav className="flex items-center space-x-2 text-sm">
                 <button
-                  onClick={() => router.push('/admin/pdf-processor')}
+                  onClick={() => router.push('/admin/pdf-processor-cache')}
                   className="text-blue-600 hover:text-blue-800 hover:underline"
                 >
                   PDF Processor
@@ -337,7 +337,7 @@ export default function PDFReviewPage() {
               <div className="flex items-center justify-between mb-4">
                 <h1 className="text-xl font-bold text-gray-900">Question Review</h1>
                 <button
-                  onClick={() => router.push('/admin/pdf-processor')}
+                  onClick={() => router.push('/admin/pdf-processor-cache')}
                   className="text-gray-500 hover:text-gray-700 flex items-center space-x-1"
                   title="Back to PDF Processor"
                 >
@@ -486,7 +486,7 @@ export default function PDFReviewPage() {
                 <div className="bg-gray-50 border-b border-gray-200 p-3">
                   <nav className="flex items-center space-x-2 text-sm">
                     <button
-                      onClick={() => router.push('/admin/pdf-processor')}
+                      onClick={() => router.push('/admin/pdf-processor-cache')}
                       className="text-blue-600 hover:text-blue-800 hover:underline"
                     >
                       PDF Processor
@@ -533,16 +533,23 @@ export default function PDFReviewPage() {
                                 const response = await api.put(`/admin/pdf-processor/mark-completed/${cacheId}`);
                                 if (response.data.success) {
                                   toast.success('PDF marked as completed successfully!');
+                                  // Update the PDF data to reflect the new status
+                                  setPdfData(prev => prev ? { ...prev, processingStatus: 'COMPLETED' } : null);
                                 }
                               } catch (error: any) {
                                 console.error('Error marking PDF as completed:', error);
                                 toast.error(`Error: ${error.response?.data?.message || error.message}`);
                               }
                             }}
-                            className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 border border-purple-500"
-                            title="Mark PDF processing as completed"
+                            disabled={pdfData?.processingStatus === 'COMPLETED'}
+                            className={`px-4 py-2 rounded-md border ${
+                              pdfData?.processingStatus === 'COMPLETED'
+                                ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+                                : 'bg-purple-600 text-white hover:bg-purple-700 border-purple-500'
+                            }`}
+                            title={pdfData?.processingStatus === 'COMPLETED' ? 'PDF processing already completed' : 'Mark PDF processing as completed'}
                           >
-                            Mark as completed
+                            {pdfData?.processingStatus === 'COMPLETED' ? 'Already Completed' : 'Mark as completed'}
                           </button>
                           
                           {/* View PDF Button */}

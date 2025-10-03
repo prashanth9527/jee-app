@@ -17,6 +17,8 @@ import { SyllabusImportController } from './syllabus-import.controller';
 import { SyllabusImportService } from './syllabus-import.service';
 import { PDFProcessorController } from './pdf-processor.controller';
 import { PDFProcessorService } from './pdf-processor.service';
+import { PDFProcessorCacheController } from './pdf-processor-cache.controller';
+import { PDFProcessorCacheService } from './pdf-processor-cache.service';
 import { PDFReviewController } from './pdf-review.controller';
 import { PDFReviewService } from './pdf-review.service';
 import { PrismaModule } from '../prisma/prisma.module';
@@ -44,6 +46,7 @@ import { ZipProcessorService } from './zip-processor.service';
     AdminSubscriptionsController,
     SyllabusImportController,
     PDFProcessorController,
+    PDFProcessorCacheController,
     PDFReviewController
   ],
   providers: [
@@ -51,6 +54,7 @@ import { ZipProcessorService } from './zip-processor.service';
     SystemSettingsService, 
     SyllabusImportService, 
     PDFProcessorService, 
+    PDFProcessorCacheService,
     PDFReviewService,
     MathpixService,
     ZipProcessorService,

@@ -1,0 +1,1007 @@
+{
+  "questions": [
+    {
+      "id": "Q61",
+      "stem": "The statement \\(\\mathrm{B} \\Rightarrow((\\sim \\mathrm{A}) \\vee \\mathrm{B})\\) is equivalent to :",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(\\mathrm{B} \\Rightarrow(\\mathrm{A} \\Rightarrow \\mathrm{B})\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "\\(A \\Rightarrow(A \\Leftrightarrow B)\\)",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "\\(\\mathrm{A} \\Rightarrow((\\sim \\mathrm{A}) \\Rightarrow \\mathrm{B})\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(\\mathrm{B} \\Rightarrow((\\sim \\mathrm{A}) \\Rightarrow \\mathrm{B})\\)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The truth table shows that \\(\\mathrm{B} \\Rightarrow((\\sim \\mathrm{A}) \\vee \\mathrm{B})\\) is a tautology (always true). Among the options, only \\(A \\Rightarrow(A \\Leftrightarrow B)\\) is also a tautology, making them equivalent.",
+      "tip_formula": "Truth table analysis shows both statements are tautologies",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Mathematical Reasoning",
+      "topic": "Logical Operations",
+      "subtopic": "Logical Equivalence",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "logic",
+        "tautology",
+        "logical-equivalence"
+      ]
+    },
+    {
+      "id": "Q62",
+      "stem": "Shortest distance between the lines \\(\\frac{x-1}{2}=\\frac{y+8}{-7}=\\frac{z-4}{5}\\) and \\(\\frac{x-1}{2}=\\frac{y-2}{1}=\\frac{z-6}{-3}\\) is",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(2 \\sqrt{3}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "\\(4 \\sqrt{3}\\)",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "\\(3 \\sqrt{3}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(5 \\sqrt{3}\\)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Using the formula for shortest distance between skew lines: \\(d = \\frac{|(\\vec{a}-\\vec{b}) \\cdot (\\vec{p} \\times \\vec{q})|}{|\\vec{p} \\times \\vec{q}|}\\). Here \\(\\vec{a} = \\hat{i}-8\\hat{j}+4\\hat{k}\\), \\(\\vec{b} = \\hat{i}+2\\hat{j}+6\\hat{k}\\), \\(\\vec{p} = 2\\hat{i}-7\\hat{j}+5\\hat{k}\\), \\(\\vec{q} = 2\\hat{i}+\\hat{j}-3\\hat{k}\\). \\(\\vec{p} \\times \\vec{q} = 16(\\hat{i}+\\hat{j}+\\hat{k})\\), so distance = \\(\\left|\\frac{(-10\\hat{j}-2\\hat{k}) \\cdot 16(\\hat{i}+\\hat{j}+\\hat{k})}{16\\sqrt{3}}\\right| = 4\\sqrt{3}\\).",
+      "tip_formula": "Shortest distance between skew lines = \\(\\frac{|(\\vec{a}-\\vec{b}) \\cdot (\\vec{p} \\times \\vec{q})|}{|\\vec{p} \\times \\vec{q}|}\\)",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Three Dimensional Geometry",
+      "topic": "Straight Lines in Space",
+      "subtopic": "Distance Between Skew Lines",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "3d-geometry",
+        "skew-lines",
+        "shortest-distance"
+      ]
+    },
+    {
+      "id": "Q63",
+      "stem": "If \\(\\vec{a}=\\hat{i}+2 \\hat{k}, \\vec{b}=\\hat{i}+\\hat{j}+\\hat{k}, \\vec{c}=7 \\hat{i}-3 \\hat{k}+4 \\hat{k}\\), \\(\\overrightarrow{\\mathrm{r}} \\times \\overrightarrow{\\mathrm{b}}+\\overrightarrow{\\mathrm{b}} \\times \\overrightarrow{\\mathrm{c}}=\\overrightarrow{0}\\) and \\(\\overrightarrow{\\mathrm{r}} . \\overrightarrow{\\mathrm{a}}=0\\) then \\(\\overrightarrow{\\mathrm{r}} . \\overrightarrow{\\mathrm{c}}\\) is equal to:",
+      "options": [
+        {
+          "id": "A",
+          "text": "34",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "12",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "36",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "30",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "From \\(\\vec{r} \\times \\vec{b} + \\vec{b} \\times \\vec{c} = \\vec{0}\\), we get \\((\\vec{r}-\\vec{c}) \\times \\vec{b} = \\vec{0}\\), so \\(\\vec{r} = \\vec{c} + \\lambda\\vec{b}\\). Using \\(\\vec{r} \\cdot \\vec{a} = 0\\), we find \\(\\lambda = -\\frac{\\vec{c} \\cdot \\vec{a}}{\\vec{b} \\cdot \\vec{a}} = -\\frac{15}{3} = -5\\). Then \\(\\vec{r} \\cdot \\vec{c} = |\\vec{c}|^2 - \\frac{\\vec{c} \\cdot \\vec{a}}{\\vec{b} \\cdot \\vec{a}}(\\vec{b} \\cdot \\vec{c}) = 74 - \\frac{15}{3} \\times 8 = 74 - 40 = 34\\).",
+      "tip_formula": "If \\((\\vec{r}-\\vec{c}) \\times \\vec{b} = \\vec{0}\\), then \\(\\vec{r} = \\vec{c} + \\lambda\\vec{b}\\)",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Vector Algebra",
+      "topic": "Vector Products",
+      "subtopic": "Cross Product Properties",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "vectors",
+        "cross-product",
+        "dot-product"
+      ]
+    },
+    {
+      "id": "Q64",
+      "stem": "Let \\(S=\\left\\{w_{1}, w_{2}, \\ldots.\\right\\}\\) be the sample space associated to a random experiment. Let \\(\\mathrm{P}\\left(\\mathrm{w}_{\\mathrm{n}}\\right)=\\frac{\\mathrm{P}\\left(\\mathrm{w}_{\\mathrm{n}-1}\\right)}{2}, n \\geq 2\\). Let \\(\\mathrm{A}=\\{2 \\mathrm{k}+3 \\ell ; \\mathrm{k}, \\ell \\in \\mathrm{N}\\}\\) and \\(\\mathrm{B}=\\left\\{\\mathrm{w}_{\\mathrm{n}} ; \\mathrm{n} \\in \\mathrm{A}\\right\\}\\). Then \\(\\mathrm{P}(\\mathrm{B})\\) is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(\\frac{3}{32}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "\\(\\frac{3}{64}\\)",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "\\(\\frac{1}{16}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(\\frac{1}{32}\\)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Let \\(P(w_1) = \\lambda\\), then \\(P(w_n) = \\frac{\\lambda}{2^{n-1}}\\). Since \\(\\sum P(w_k) = 1\\), we get \\(\\lambda = \\frac{1}{2}\\), so \\(P(w_n) = \\frac{1}{2^n}\\). Set A contains all natural numbers except 1, 2, 3, 4, 6. So \\(P(B) = 1 - [P(w_1)+P(w_2)+P(w_3)+P(w_4)+P(w_6)] = 1 - [\\frac{1}{2}+\\frac{1}{4}+\\frac{1}{8}+\\frac{1}{16}+\\frac{1}{64}] = \\frac{3}{64}\\).",
+      "tip_formula": "Geometric probability distribution: \\(P(w_n) = \\frac{1}{2^n}\\)",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Probability",
+      "topic": "Probability Distributions",
+      "subtopic": "Geometric Distribution",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "probability",
+        "geometric-distribution",
+        "sample-space"
+      ]
+    },
+    {
+      "id": "Q65",
+      "stem": "The value of the integral \\(\\int_{1}^{2}\\left(\\frac{t^{4}+1}{t^{6}+1}\\right) d t\\) is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(\\tan ^{-1} \\frac{1}{2}+\\frac{1}{3} \\tan ^{-1} 8-\\frac{\\pi}{3}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "\\(\\tan ^{-1} 2-\\frac{1}{3} \\tan ^{-1} 8+\\frac{\\pi}{3}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "\\(\\tan ^{-1} 2+\\frac{1}{3} \\tan ^{-1} 8-\\frac{\\pi}{3}\\)",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "\\(\\tan ^{-1} \\frac{1}{2}-\\frac{1}{3} \\tan ^{-1} 8+\\frac{\\pi}{3}\\)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Rewrite the integrand: \\(\\frac{t^4+1}{t^6+1} = \\frac{1}{t^2+1} + \\frac{t^2}{t^6+1}\\). Then \\(I = \\int_{1}^{2}\\frac{1}{t^2+1}dt + \\frac{1}{3}\\int_{1}^{2}\\frac{3t^2}{(t^3)^2+1}dt = [\\tan^{-1}t]_1^2 + \\frac{1}{3}[\\tan^{-1}(t^3)]_1^2 = (\\tan^{-1}2 - \\tan^{-1}1) + \\frac{1}{3}(\\tan^{-1}8 - \\tan^{-1}1) = \\tan^{-1}2 + \\frac{1}{3}\\tan^{-1}8 - \\frac{\\pi}{3}\\).",
+      "tip_formula": "\\(\\frac{t^4+1}{t^6+1} = \\frac{1}{t^2+1} + \\frac{t^2}{t^6+1}\\)",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Integral Calculus",
+      "topic": "Definite Integrals",
+      "subtopic": "Integration Techniques",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "definite-integrals",
+        "integration-techniques",
+        "inverse-trigonometric"
+      ]
+    },
+    {
+      "id": "Q66",
+      "stem": "Let K be the sum of the coefficients of the odd powers of x in the expansion of \\((1+\\mathrm{x})^{99}\\). Let a be the middle term in the expansion of \\(\\left(2+\\frac{1}{\\sqrt{2}}\\right)^{200}\\). If \\(\\frac{{ }^{200} \\mathrm{C}_{99} \\mathrm{~K}}{\\mathrm{a}}=\\frac{2^{\\ell} \\mathrm{m}}{\\mathrm{n}}\\), where m and n are odd numbers, then the ordered pair \\((\\square, \\mathrm{n})\\) is equal to :",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\((50,51)\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "\\((51,99)\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "\\((50,101)\\)",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "\\((51,101)\\)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "K = sum of coefficients of odd powers in \\((1+x)^{99}\\) = \\(2^{98}\\). Middle term of \\(\\left(2+\\frac{1}{\\sqrt{2}}\\right)^{200}\\) is \\(T_{101} = {}^{200}C_{100} \\cdot 2^{100} \\cdot \\left(\\frac{1}{\\sqrt{2}}\\right)^{100} = {}^{200}C_{100} \\cdot 2^{50}\\). Then \\(\\frac{{}^{200}C_{99} \\cdot 2^{98}}{{}^{200}C_{100} \\cdot 2^{50}} = \\frac{100}{101} \\cdot 2^{48} = \\frac{25}{101} \\cdot 2^{50}\\). So \\((\\ell, n) = (50, 101)\\).",
+      "tip_formula": "Sum of coefficients of odd powers in \\((1+x)^n = 2^{n-1}\\)",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Binomial Theorem",
+      "topic": "Binomial Expansion",
+      "subtopic": "Coefficients and Middle Terms",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "binomial-theorem",
+        "coefficients",
+        "middle-term"
+      ]
+    },
+    {
+      "id": "Q67",
+      "stem": "Let \\(f\\) and \\(g\\) be twice differentiable functions on \\(R\\) such that<br>\\(\\mathrm{f}^{\\prime \\prime}(\\mathrm{x})=\\mathrm{g}^{\\prime \\prime}(\\mathrm{x})+6 \\mathrm{x}\\)<br>\\(\\mathrm{f}^{\\prime}(1)=4 \\mathrm{~g}^{\\prime}(1)-3=9\\)<br>\\(\\mathrm{f}(2)=3 \\mathrm{~g}(2)=12\\)<br>Then which of the following is NOT true ?",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(\\mathrm{g}(-2)-\\mathrm{f}(-2)=20\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "If \\(-1<\\mathrm{x}<2\\), then \\(|\\mathrm{f}(\\mathrm{x})-\\mathrm{g}(\\mathrm{x})|<8\\)",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "\\(\\left|\\mathrm{f}^{\\prime}(\\mathrm{x})-\\mathrm{g}^{\\prime}(\\mathrm{x})\\right|<6 \\Rightarrow-1<\\mathrm{x}<1\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "There exists \\(x_{0} \\in\\left(1, \\frac{3}{2}\\right)\\) such that \\(f\\left(x_{0}\\right)=g\\left(x_{0}\\right)\\)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Integrating \\(f''(x) = g''(x) + 6x\\) gives \\(f'(x) = g'(x) + 3x^2 + 3\\). Using initial conditions, we get \\(f(x) = g(x) + x^3 + 3x - 6\\). Then: (1) \\(g(-2)-f(-2) = 20\\) is true; (2) For \\(-1<x<2\\), \\(|f(x)-g(x)| = |x^3+3x-6|\\) ranges from -10 to 8, so statement is false; (3) \\(|f'(x)-g'(x)| = |3x^2+3| < 6 \\Rightarrow -1<x<1\\) is true; (4) By Intermediate Value Theorem, there exists \\(x_0 \\in (1,1.5)\\) where \\(f(x_0)=g(x_0)\\).",
+      "tip_formula": "\\(f(x) = g(x) + x^3 + 3x - 6\\)",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Differential Calculus",
+      "topic": "Applications of Derivatives",
+      "subtopic": "Functional Equations",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "differential-equations",
+        "functional-equations",
+        "intermediate-value-theorem"
+      ]
+    },
+    {
+      "id": "Q68",
+      "stem": "The set of all values of \\(t \\in \\mathbb{R}\\), for which the matrix \\(\\left[\\begin{array}{ccc}e^{t} & e^{-t}(\\sin t-2 \\cos t) & e^{-t}(-2 \\sin t-\\cos t) \\\\ e^{t} & e^{-t}(2 \\sin t+\\cos t) & e^{-t}(\\sin t-2 \\cos t) \\\\ e^{t} & e^{-t} \\cos t & e^{-t} \\sin t\\end{array}\\right]\\) is invertible, is",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(\\left\\{(2 \\mathrm{k}+1) \\frac{\\pi}{2}, \\mathrm{k} \\in \\mathbb{Z}\\right\\}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "\\(\\left\\{\\mathrm{k} \\pi+\\frac{\\pi}{4}, \\mathrm{k} \\in \\mathbb{Z}\\right\\}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "\\(\\{\\mathrm{k} \\pi, \\mathrm{k} \\in \\mathbb{Z}\\}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(\\mathbb{R}\\)",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The determinant simplifies to \\(e^{-t} \\times 6 \\neq 0\\) for all \\(t \\in \\mathbb{R}\\). Therefore, the matrix is invertible for all real values of t.",
+      "tip_formula": "Determinant = \\(6e^{-t} \\neq 0\\) for all \\(t \\in \\mathbb{R}\\)",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Matrices",
+      "topic": "Determinants",
+      "subtopic": "Matrix Invertibility",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "matrices",
+        "determinants",
+        "invertible-matrices"
+      ]
+    },
+    {
+      "id": "Q69",
+      "stem": "The area of the region \\(A=\\left\\{(x, y):|\\cos x-\\sin x| \\leq y \\leq \\sin x, 0 \\leq x \\leq \\frac{\\pi}{2}\\right\\}\\)",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(1-\\frac{3}{\\sqrt{2}}+\\frac{4}{\\sqrt{5}}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "\\(\\sqrt{5}+2 \\sqrt{2}-4.5\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "\\(\\frac{3}{\\sqrt{5}}-\\frac{3}{\\sqrt{2}}+1\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(\\sqrt{5}-2 \\sqrt{2}+1\\)",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The area is given by \\(\\int_{\\psi}^{\\pi/2}(\\sin x - |\\cos x-\\sin x|)dx\\), where \\(\\psi = \\tan^{-1}\\frac{1}{2}\\). Splitting at \\(x=\\pi/4\\) and evaluating gives area = \\(\\sqrt{5}-2\\sqrt{2}+1\\).",
+      "tip_formula": "Area = \\(\\int_{\\psi}^{\\pi/4}(2\\sin x-\\cos x)dx + \\int_{\\pi/4}^{\\pi/2}\\cos x dx\\)",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Integral Calculus",
+      "topic": "Area Under Curves",
+      "subtopic": "Area Between Curves",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "area-between-curves",
+        "definite-integrals",
+        "trigonometric-functions"
+      ]
+    },
+    {
+      "id": "Q70",
+      "stem": "The set of all values of \\(\\lambda\\) for which the equation \\(\\cos ^{2} 2 x-2 \\sin ^{4} x-2 \\cos ^{2} x=\\lambda\\)",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\([-2,-1]\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "\\(\\left[-2,-\\frac{3}{2}\\right]\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "\\(\\left[-1,-\\frac{1}{2}\\right]\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(\\left[-\\frac{3}{2},-1\\right]\\)",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Simplifying: \\(\\lambda = \\cos^2 2x - 2\\sin^4 x - 2\\cos^2 x = 2\\cos^4 x - 2\\cos^2 x - 1 = 2[(\\cos^2 x-\\frac{1}{2})^2-\\frac{3}{4}]\\). Maximum value is -1 (when \\(\\cos^2 x = 0,1\\)) and minimum is \\(-\\frac{3}{2}\\) (when \\(\\cos^2 x = \\frac{1}{2}\\)).",
+      "tip_formula": "\\(\\lambda = 2[(\\cos^2 x-\\frac{1}{2})^2-\\frac{3}{4}]\\)",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Trigonometry",
+      "topic": "Trigonometric Equations",
+      "subtopic": "Range of Trigonometric Expressions",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "trigonometry",
+        "range",
+        "cosine-function"
+      ]
+    },
+    {
+      "id": "Q71",
+      "stem": "The letters of the word OUGHT are written in all possible ways and these words are arranged as in a dictionary, in a series. Then the serial number of the word TOUGH is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "89",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "84",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "86",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "79",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Alphabetical order: G, H, O, T, U. Words before TOUGH: starting with G (4! = 24), H (24), O (24), TG (3! = 6), TH (6), TOG (2! = 2), TOH (2! = 2). Total = 24+24+24+6+6+2+2 = 88. So TOUGH is 89th.",
+      "tip_formula": "Dictionary order counting: sum permutations of preceding letters",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Permutations and Combinations",
+      "topic": "Permutations",
+      "subtopic": "Dictionary Order",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "permutations",
+        "dictionary-order",
+        "counting"
+      ]
+    },
+    {
+      "id": "Q72",
+      "stem": "The plane \\(2 x-y+z=4\\) intersects the line segment joining the points \\(\\mathrm{A}(\\mathrm{a},-2,4)\\) and \\(\\mathrm{B}(2, \\mathrm{~b},-3)\\) at the point C in the ratio \\(2: 1\\) and the distance of the point C from the origin is \\(\\sqrt{5}\\). If \\(\\mathrm{ab}<0\\) and P is the point \\((\\mathrm{a}-\\mathrm{b}, \\mathrm{b}, 2 \\mathrm{~b}-\\mathrm{a})\\) then \\(\\mathrm{CP}^{2}\\) is equal to:",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(\\frac{17}{3}\\)",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "\\(\\frac{16}{3}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "\\(\\frac{73}{3}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(\\frac{97}{3}\\)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "C divides AB in ratio 2:1, so \\(C = \\left(\\frac{a+4}{3}, \\frac{2b-2}{3}, \\frac{-2}{3}\\right)\\). C lies on plane ⇒ \\(a-b=2\\). Distance OC = \\(\\sqrt{5}\\) gives \\(b=-1, a=1\\). Then \\(C = \\left(\\frac{5}{3}, -\\frac{4}{3}, -\\frac{2}{3}\\right)\\), \\(P = (2,-1,-3)\\), so \\(CP^2 = \\frac{17}{3}\\).",
+      "tip_formula": "Section formula: \\(C = \\left(\\frac{a+4}{3}, \\frac{2b-2}{3}, \\frac{-2}{3}\\right)\\)",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Three Dimensional Geometry",
+      "topic": "Coordinates and Geometry",
+      "subtopic": "Section Formula and Distance",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "3d-geometry",
+        "section-formula",
+        "distance-formula"
+      ]
+    },
+    {
+      "id": "Q73",
+      "stem": "Let \\(\\vec{a}=4 \\hat{i}+3 \\hat{j}\\) and \\(\\vec{b}=3 \\hat{i}-4 \\hat{j}+5 \\hat{k}\\) and \\(\\vec{c}\\) is a vector such that \\(\\vec{c} \\cdot(\\vec{a} \\times \\vec{b})+25=0, \\vec{c} \\cdot(\\hat{i}+\\hat{j}+\\hat{k})=4\\) and projection of \\(\\overrightarrow{\\mathrm{c}}\\) on \\(\\overrightarrow{\\mathrm{a}}\\) is 1 , then the projection of \\(\\vec{c}\\) on \\(\\vec{b}\\) equals:",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(\\frac{5}{\\sqrt{2}}\\)",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "\\(\\frac{1}{5}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "\\(\\frac{1}{\\sqrt{2}}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(\\frac{3}{\\sqrt{2}}\\)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "\\(\\vec{a} \\times \\vec{b} = 15\\hat{i}-20\\hat{j}-25\\hat{k}\\). Let \\(\\vec{c} = x\\hat{i}+y\\hat{j}+z\\hat{k}\\). Conditions: \\(15x-20y-25z = -25\\), \\(x+y+z=4\\), and projection on \\(\\vec{a}\\) is 1 ⇒ \\(4x+3y=5\\). Solving gives \\(\\vec{c} = 2\\hat{i}-\\hat{j}+3\\hat{k}\\). Projection on \\(\\vec{b}\\) = \\(\\frac{\\vec{c}\\cdot\\vec{b}}{|\\vec{b}|} = \\frac{25}{5\\sqrt{2}} = \\frac{5}{\\sqrt{2}}\\).",
+      "tip_formula": "Projection of \\(\\vec{c}\\) on \\(\\vec{b}\\) = \\(\\frac{\\vec{c}\\cdot\\vec{b}}{|\\vec{b}|}\\)",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Vector Algebra",
+      "topic": "Vector Operations",
+      "subtopic": "Projection of Vectors",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "vectors",
+        "projection",
+        "dot-product"
+      ]
+    },
+    {
+      "id": "Q74",
+      "stem": "If the lines \\(\\frac{x-1}{1}=\\frac{y-2}{2}=\\frac{z+3}{1}\\) and \\(\\frac{x-a}{2}=\\frac{y+2}{3}=\\frac{z-3}{1}\\) intersects at the point \\(P\\), then the distance of the point P from the plane \\(\\mathrm{z}=\\mathrm{a}\\) is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "16",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "28",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "10",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "22",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Parametric points: \\((\\lambda+1, 2\\lambda+2, \\lambda-3)\\) and \\((2\\mu+a, 3\\mu-2, \\mu+3)\\). Equating z-coordinates: \\(\\lambda = \\mu+6\\). Equating y-coordinates: \\(2\\lambda+2 = 3\\mu-2\\) gives \\(\\lambda=22, \\mu=16\\). So \\(P=(23,46,19)\\), \\(a=-9\\). Distance from plane \\(z=-9\\) is 28.",
+      "tip_formula": "Distance from plane \\(z=a\\) is \\(|z_P-a|\\)",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Three Dimensional Geometry",
+      "topic": "Straight Lines in Space",
+      "subtopic": "Intersection of Lines",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "3d-geometry",
+        "line-intersection",
+        "distance-from-plane"
+      ]
+    },
+    {
+      "id": "Q75",
+      "stem": "The value of the integral \\(\\int_{1 / 2}^{2} \\frac{\\tan ^{-1} x}{x} d x\\) is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(\\pi \\log _{e} 2\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "\\(\\frac{1}{2} \\log _{\\mathrm{e}} 2\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "\\(\\frac{\\pi}{4} \\log _{e} 2\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(\\frac{\\pi}{2} \\log _{e} 2\\)",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Let \\(I = \\int_{1/2}^{2} \\frac{\\tan^{-1}x}{x}dx\\). Substitute \\(x = 1/t\\), get \\(I = \\int_{1/2}^{2} \\frac{\\cot^{-1}x}{x}dx\\). Adding: \\(2I = \\int_{1/2}^{2} \\frac{\\tan^{-1}x+\\cot^{-1}x}{x}dx = \\frac{\\pi}{2}\\int_{1/2}^{2}\\frac{dx}{x} = \\frac{\\pi}{2}(\\ln 2 - \\ln(1/2)) = \\pi\\ln 2\\). So \\(I = \\frac{\\pi}{2}\\ln 2\\).",
+      "tip_formula": "\\(\\tan^{-1}x + \\cot^{-1}x = \\frac{\\pi}{2}\\)",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Integral Calculus",
+      "topic": "Definite Integrals",
+      "subtopic": "Properties of Definite Integrals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "definite-integrals",
+        "inverse-trigonometric",
+        "integration-properties"
+      ]
+    },
+    {
+      "id": "Q76",
+      "stem": "If the tangent at a point P on the parabola \\(\\mathrm{y}^{2}=3 \\mathrm{x}\\) is parallel to the line \\(x+2 y=1\\) and the tangents at the points \\(Q\\) and \\(R\\) on the ellipse \\(\\frac{x^{2}}{4}+\\frac{y^{2}}{1}=1\\) are perpendicular to the line \\(\\mathrm{x}-\\mathrm{y}=2\\), then the area of the triangle PQR is:",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(\\frac{9}{\\sqrt{5}}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "\\(5 \\sqrt{3}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "\\(\\frac{3}{2} \\sqrt{5}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(3 \\sqrt{5}\\)",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "For parabola: slope = \\(-\\frac{1}{2}\\), so \\(y_1 = -3\\), \\(P=(3,-3)\\). For ellipse: slope = -1 (perpendicular to x-y=2), so points \\(Q=\\left(\\frac{4}{\\sqrt{5}}, \\frac{1}{\\sqrt{5}}\\right)\\), \\(R=\\left(-\\frac{4}{\\sqrt{5}}, -\\frac{1}{\\sqrt{5}}\\right)\\). Area of triangle PQR = \\(3\\sqrt{5}\\).",
+      "tip_formula": "Area of triangle using determinant formula",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Coordinate Geometry",
+      "topic": "Conic Sections",
+      "subtopic": "Tangents to Conics",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "conic-sections",
+        "tangents",
+        "area-of-triangle"
+      ]
+    },
+    {
+      "id": "Q77",
+      "stem": "Let \\(y=y(x)\\) be the solution of the differential equation \\(x \\log _{e} x \\frac{d y}{d x}+y=x^{2} \\log _{e} x,(x>1)\\). If \\(y(2)=2\\), then \\(y(e)\\) is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "\\(\\frac{4+e^{2}}{4}\\)",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "\\(\\frac{1+\\mathrm{e}^{2}}{4}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "\\(\\frac{2+\\mathrm{e}^{2}}{2}\\)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "\\(\\frac{1+\\mathrm{e}^{2}}{2}\\)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Linear differential equation: \\(\\frac{dy}{dx} + \\frac{y}{x\\ln x} = x\\). Integrating factor = \\(|\\ln x|\\). Solution: \\(y|\\ln x| = |\\ln x|\\frac{x^2}{2} - \\frac{x^2}{4} + c\\). Using y(2)=2 gives c=1. Then \\(y(e) = 1 + \\frac{e^2}{4}\\).",
+      "tip_formula": "Integrating factor = \\(e^{\\int \\frac{1}{x\\ln x}dx} = |\\ln x|\\)",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Differential Equations",
+      "topic": "First Order Differential Equations",
+      "subtopic": "Linear Equations",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "differential-equations",
+        "linear-equations",
+        "integrating-factor"
+      ]
+    },
+    {
+      "id": "Q78",
+      "stem": "The number of 3 digit numbers, that are divisible by either 3 or 4 but not divisible by 48 , is",
+      "options": [
+        {
+          "id": "A",
+          "text": "472",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "432",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "507",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "400",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Total 3-digit numbers = 900. Divisible by 3: 300, by 4: 225, by both (12): 75. So divisible by 3 or 4 = 300+225-75 = 450. Divisible by 48: 18 numbers (144,192,...,960). So required = 450-18 = 432.",
+      "tip_formula": "Inclusion-exclusion principle",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Permutations and Combinations",
+      "topic": "Number Theory",
+      "subtopic": "Divisibility",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "divisibility",
+        "inclusion-exclusion",
+        "counting"
+      ]
+    },
+    {
+      "id": "Q79",
+      "stem": "Let \\(R\\) be a relation defined on \\(N\\) as a \\(R b\\) is \\(2 \\mathrm{a}+3 \\mathrm{~b}\\) is a multiple of \\(5, \\mathrm{a}, \\mathrm{b} \\in \\mathbb{N}\\). Then R is",
+      "options": [
+        {
+          "id": "A",
+          "text": "not reflexive",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "transitive but not symmetric",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "symmetric but not transitive",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "an equivalence relation",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Reflexive: \\(2a+3a=5a\\) is multiple of 5. Symmetric: If \\(2a+3b=5\\alpha\\), then \\(2b+3a=5(a+b-\\alpha)\\). Transitive: If \\(2a+3b=5\\alpha\\) and \\(2b+3c=5\\beta\\), then \\(2a+3c=5(\\alpha+\\beta-b)\\). So R is equivalence relation.",
+      "tip_formula": "Check reflexivity, symmetry, and transitivity",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Relations and Functions",
+      "topic": "Relations",
+      "subtopic": "Equivalence Relations",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "relations",
+        "equivalence-relation",
+        "modular-arithmetic"
+      ]
+    },
+    {
+      "id": "Q80",
+      "stem": "Consider a function \\(\\mathrm{f}: \\mathbb{N} \\rightarrow \\mathbb{R}\\), satisfying \\(f(1)+2 f(2)+3 f(3)+\\ldots+x f(x)=x(x+1) f(x) ; x \\geq 2\\) with \\(f(1)=1\\). Then \\(\\frac{1}{f(2022)}+\\frac{1}{f(2028)}\\) is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "8200",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "8000",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "8400",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "8100",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "From the given relation, we get \\(f(x) = \\frac{1}{2x}\\) for \\(x \\geq 2\\). So \\(f(2022) = \\frac{1}{4044}\\), \\(f(2028) = \\frac{1}{4056}\\). Then \\(\\frac{1}{f(2022)}+\\frac{1}{f(2028)} = 4044+4056 = 8100\\).",
+      "tip_formula": "\\(f(x) = \\frac{1}{2x}\\) for \\(x \\geq 2\\)",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Functions",
+      "topic": "Functional Equations",
+      "subtopic": "Recursive Definitions",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "functional-equations",
+        "recursive-functions",
+        "sequence-and-series"
+      ]
+    },
+    {
+      "id": "Q81",
+      "stem": "The total number of 4-digit numbers whose greatest common divisor with 54 is 2 , is ______.",
+      "options": [],
+      "explanation": "Numbers should be divisible by 2 but not by 3. Total 4-digit numbers divisible by 2: 4500. Divisible by 6: 1500. So required = 4500-1500 = 3000.",
+      "tip_formula": "Numbers with gcd(n,54)=2 ⇔ n divisible by 2 but not by 3",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Number Theory",
+      "topic": "Divisibility",
+      "subtopic": "Greatest Common Divisor",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "number-theory",
+        "gcd",
+        "divisibility"
+      ]
+    },
+    {
+      "id": "Q82",
+      "stem": "A triangle is formed by the tangents at the point \\((2,2)\\) on the curves \\(y^{2}=2 x\\) and \\(x^{2}+y^{2}=4 x\\), and the line \\(\\mathrm{x}+\\mathrm{y}+2=0\\). If r is the radius of its circumcircle, then \\(\\mathrm{r}^{2}\\) is equal to ______.",
+      "options": [],
+      "explanation": "Tangents: \\(T_1: x-2y+2=0\\), \\(T_2: y=2\\), and \\(L_3: x+y+2=0\\). Sides: PQ=\\(\\sqrt{20}\\), QR=\\(\\sqrt{8}\\), RP=6. Area = 6. Circumradius \\(r = \\frac{abc}{4\\Delta} = \\sqrt{10}\\), so \\(r^2=10\\).",
+      "tip_formula": "Circumradius \\(r = \\frac{abc}{4\\Delta}\\)",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Coordinate Geometry",
+      "topic": "Circles",
+      "subtopic": "Circumcircle",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "coordinate-geometry",
+        "circumcircle",
+        "tangents"
+      ]
+    },
+    {
+      "id": "Q83",
+      "stem": "A circle with centre \\((2,3)\\) and radius 4 intersects the line \\(\\mathrm{x}+\\mathrm{y}=3\\) at the points P and Q . If the tangents at P and Q intersect at the point \\(\\mathrm{S}(\\alpha, \\beta)\\), then \\(4 \\alpha-7 \\beta\\) is equal to ______.",
+      "options": [],
+      "explanation": "The chord of contact from S is the polar of S w.r.t. the circle. Given chord is x+y-3=0. Comparing coefficients gives \\(\\alpha=-6, \\beta=-5\\). Then \\(4\\alpha-7\\beta = 11\\).",
+      "tip_formula": "Chord of contact from \\((\\alpha,\\beta)\\) is the polar of the point",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Coordinate Geometry",
+      "topic": "Circles",
+      "subtopic": "Chord of Contact",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "circles",
+        "chord-of-contact",
+        "polar"
+      ]
+    },
+    {
+      "id": "Q84",
+      "stem": "Let \\(\\mathrm{a}_{1}=\\mathrm{b}_{1}=1\\) and \\(\\mathrm{a}_{\\mathrm{n}}=\\mathrm{a}_{\\mathrm{n}-1}+(\\mathrm{n}-1), \\mathrm{b}_{\\mathrm{n}}=\\mathrm{b}_{\\mathrm{n}-1}+ \\mathrm{a}_{\\mathrm{n}-1}, \\forall \\mathrm{n} \\geq 2\\). If \\(\\mathrm{S}=\\sum_{\\mathrm{n}=1}^{10} \\frac{\\mathrm{~b}_{\\mathrm{n}}}{2^{\\mathrm{n}}}\\) and \\(\\mathrm{T}=\\sum_{\\mathrm{n}=1}^{8} \\frac{\\mathrm{n}}{2^{\\mathrm{n}-1}}\\), then \\(2^{7}(2 \\mathrm{~S}-\\mathrm{T})\\) is equal to ______.",
+      "options": [],
+      "explanation": "Solving the recurrences: \\(a_n = 1 + \\frac{(n-1)n}{2}\\), so \\(a_9=37\\). \\(b_n\\) is sum of \\(a_k\\), so \\(b_{10}=130\\). After algebraic manipulation, \\(2^7(2S-T)=461\\).",
+      "tip_formula": "Recursive sequences and generating functions",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Sequences and Series",
+      "topic": "Recursive Sequences",
+      "subtopic": "Summation of Series",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "sequences",
+        "recursion",
+        "series-summation"
+      ]
+    },
+    {
+      "id": "Q85",
+      "stem": "If the equation of the normal to the curve \\(\\mathrm{y}=\\frac{\\mathrm{x}-\\mathrm{a}}{(\\mathrm{x}+\\mathrm{b})(\\mathrm{x}-2)}\\) at the point \\((1,-3)\\) is \\(\\mathrm{x}-4 \\mathrm{y}=13\\), then the value of \\(\\mathrm{a}+\\mathrm{b}\\) is equal to ______.",
+      "options": [],
+      "explanation": "Point (1,-3) lies on curve ⇒ \\(1-a = 3(1+b)\\). Slope of normal = 1/4 ⇒ derivative at (1,-3) = -4. Solving gives b=-3, a=7, so a+b=4.",
+      "tip_formula": "Slope of normal = -1/(slope of tangent)",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Differential Calculus",
+      "topic": "Applications of Derivatives",
+      "subtopic": "Normals to Curves",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "derivatives",
+        "normals",
+        "curve-analysis"
+      ]
+    },
+    {
+      "id": "Q86",
+      "stem": "Let A be a symmetric matrix such that \\(|\\mathrm{A}|=2\\) and \\(\\left[\\begin{array}{cc}2 & 1 \\\\ 3 & \\frac{3}{2}\\end{array}\\right] \\mathrm{A}=\\left[\\begin{array}{cc}1 & 2 \\\\ \\alpha & \\beta\\end{array}\\right]\\). If the sum of the diagonal elements of A is s , then \\(\\frac{\\beta \\mathrm{s}}{\\alpha^{2}}\\) is equal to ______.",
+      "options": [],
+      "explanation": "Let \\(A = \\begin{bmatrix}a & b \\\\ b & c\\end{bmatrix}\\). From matrix equation: 2a+b=1, 2b+c=2, 3a+1.5b=α, 3b+1.5c=β. Also ac-b²=2. Solving gives a=3/4, b=-1/2, c=3, so s=15/4, α=3/2, β=3. Then \\(\\frac{\\beta s}{\\alpha^2}=5\\).",
+      "tip_formula": "Symmetric matrix properties and determinant",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Matrices",
+      "topic": "Matrix Algebra",
+      "subtopic": "Symmetric Matrices",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "matrices",
+        "symmetric-matrices",
+        "determinants"
+      ]
+    },
+    {
+      "id": "Q87",
+      "stem": "Let \\(\\left\\{a_{k}\\right\\}\\) and \\(\\left\\{b_{k}\\right\\}, k \\in \\mathbb{N}\\), be two G.P.s with common ratio \\(r_{1}\\) and \\(r_{2}\\) respectively such that \\(\\mathrm{a}_{1}=\\mathrm{b}_{1}=4\\) and \\(\\mathrm{r}_{1}<\\mathrm{r}_{2}\\). Let \\(\\mathrm{c}_{\\mathrm{k}}=\\mathrm{a}_{\\mathrm{k}}+\\mathrm{b}_{\\mathrm{k}}, \\mathrm{k} \\in \\mathbb{N}\\). If \\(\\mathrm{c}_{2}=5\\) and \\(\\mathrm{c}_{3}=\\frac{13}{4}\\) then \\(\\sum_{\\mathrm{k}=1}^{\\infty} \\mathrm{c}_{\\mathrm{k}}-(12 \\mathrm{a}_{6}+8 \\mathrm{~b}_{4})\\) is equal to ______.",
+      "options": [],
+      "explanation": "From c₂ and c₃: r₁+r₂=5/4, r₁²+r₂²=13/16 ⇒ r₁r₂=3/8. So r₁=1/2, r₂=3/4. Then \\(\\sum c_k = \\frac{4}{1-1/2} + \\frac{4}{1-3/4} = 8+16=24\\). \\(12a_6+8b_4 = 12\\cdot4\\cdot(1/2)^5 + 8\\cdot4\\cdot(3/4)^3 = 1.5+13.5=15\\). Difference = 9.",
+      "tip_formula": "Sum of infinite GP = \\(\\frac{a}{1-r}\\)",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Sequences and Series",
+      "topic": "Geometric Progressions",
+      "subtopic": "Sum of Series",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "geometric-progression",
+        "series-summation",
+        "infinite-series"
+      ]
+    },
+    {
+      "id": "Q88",
+      "stem": "Let \\(X=\\{11,12,13, \\ldots \\ldots, 40,41\\}\\) and \\(Y=\\{61,62,63, \\ldots ., 90,91\\}\\) be the two sets of observations. If \\(\\bar{x}\\) and \\(\\bar{y}\\) are their respective means and \\(\\sigma^{2}\\) is the variance of all the observations in \\(\\mathrm{X} \\cup \\mathrm{Y}\\), then \\(\\left|\\bar{x}+\\bar{y}-\\sigma^{2}\\right|\\) is equal to ______.",
+      "options": [],
+      "explanation": "\\(\\bar{x}=26\\), \\(\\bar{y}=76\\), combined mean μ=51. Variance σ² = \\(\\frac{1}{62}[\\sum(x_i-51)^2+\\sum(y_i-51)^2] = \\frac{2\\times21855}{62}=705\\). Then \\(|26+76-705|=603\\).",
+      "tip_formula": "Variance = \\(\\frac{1}{n}\\sum(x_i-\\mu)^2\\)",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Statistics",
+      "topic": "Measures of Dispersion",
+      "subtopic": "Variance",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "statistics",
+        "variance",
+        "mean"
+      ]
+    },
+    {
+      "id": "Q89",
+      "stem": "Let \\(\\alpha=8-14 \\mathrm{i}, \\mathrm{A}=\\left\\{\\mathrm{z} \\in \\mathbb{C}: \\frac{\\alpha \\mathrm{z}-\\bar{\\alpha} \\overline{\\mathrm{z}}}{\\mathrm{z}^{2}-(\\overline{\\mathrm{z}})^{2}-112 \\mathrm{i}}=1\\right\\}\\) and \\(B=\\{z \\in \\mathbb{C}:|z+3 i|=4\\}\\). Then \\(\\sum_{z \\in A \\cap B}(\\operatorname{Re} z-\\operatorname{Im} z)\\) is equal to ______.",
+      "options": [],
+      "explanation": "Set A: (x-4)(y+7)=0 ⇒ x=4 or y=-7. Set B: circle centered at (0,-3) with radius 4. Intersection: (4,-3) and (0,-7). Sum = (4-(-3))+(0-(-7))=7+7=14.",
+      "tip_formula": "Complex number z=x+iy, then Re(z)=x, Im(z)=y",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Complex Numbers",
+      "topic": "Geometry of Complex Numbers",
+      "subtopic": "Loci in Complex Plane",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "complex-numbers",
+        "geometry",
+        "loci"
+      ]
+    },
+    {
+      "id": "Q90",
+      "stem": "Let \\(\\alpha_{1}, \\alpha_{2}, \\ldots, \\alpha_{7}\\) be the roots of the equation \\(x^{7}+ 3 x^{5}-13 x^{3}-15 x=0\\) and \\(\\left|\\alpha_{1}\\right| \\geq\\left|\\alpha_{2}\\right| \\geq \\ldots . \\geq\\left|\\alpha_{7}\\right|\\). Then \\(\\alpha_{1} \\alpha_{2}-\\alpha_{3} \\alpha_{4}+\\alpha_{5} \\alpha_{6}\\) is equal to ______.",
+      "options": [],
+      "explanation": "Equation factors as x(x²-3)(x²+1)(x²+5)=0. Roots: 0, ±√3, ±i, ±√5i. In order of decreasing modulus: √5i, -√5i, √3i, -√3, i, -i, 0. Then α₁α₂-α₃α₄+α₅α₆ = 5-(-3)+1=9.",
+      "tip_formula": "Product of complex conjugate roots is square of modulus",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Complex Numbers",
+      "topic": "Roots of Equations",
+      "subtopic": "Modulus of Complex Roots",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "complex-numbers",
+        "roots",
+        "modulus"
+      ]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 90,
+    "subjects": [
+      "Physics",
+      "Chemistry",
+      "Mathematics"
+    ],
+    "difficultyDistribution": {
+      "easy": 10,
+      "medium": 45,
+      "hard": 35
+    }
+  }
+}

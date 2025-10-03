@@ -135,11 +135,13 @@ export default function LatexEditorDemoPage() {
   };
 
   const loadSampleContent = () => {
-    const sampleContent = `# Sample JEE Question with LaTeX Math
+    const sampleContent = `# Enhanced JEE Question with Rich Content
 
 ## Problem Statement
 
 Consider the function $f(x) = x^3 - 3x^2 + 2x$. Find the critical points and determine the nature of each critical point.
+
+> **Note:** This problem demonstrates the use of <span style="color: #e74c3c">**critical point analysis**</span> in calculus.
 
 ## Solution
 
@@ -171,6 +173,8 @@ $$\\text{Displacement} = \\int_0^3 v(t) dt = \\int_0^3 (3t^2 - 12t + 9) dt$$
 
 $$= \\left[ t^3 - 6t^2 + 9t \\right]_0^3 = 27 - 54 + 27 = 0 \\text{ m}$$
 
+> **Key Insight:** The particle returns to its starting position after 3 seconds.
+
 ## Chemistry Example
 
 Calculate the pH of a 0.1 M solution of acetic acid ($K_a = 1.8 \\times 10^{-5}$).
@@ -193,7 +197,22 @@ $$\\nabla \\times \\vec{F} = \\begin{vmatrix} \\hat{i} & \\hat{j} & \\hat{k} \\\
 
 ### Complex Numbers
 $$e^{i\\pi} + 1 = 0$$
-$$z = r(\\cos\\theta + i\\sin\\theta) = re^{i\\theta}$$`;
+$$z = r(\\cos\\theta + i\\sin\\theta) = re^{i\\theta}$$
+
+## Enhanced Features Demo
+
+This editor now supports:
+
+1. **Text Styling**: <span style="color: #3498db">Colored text</span>, ~~strikethrough~~, and <mark>highlighted text</mark>
+2. **Links**: [Visit our website](https://example.com) for more resources
+3. **Images**: ![Sample Image](https://via.placeholder.com/300x200?text=Sample+Image)
+4. **Code blocks**: \`inline code\` and formatted code
+5. **Lists**: 
+   - Bullet points
+   - Numbered lists
+   - Nested items
+
+**Try the fullscreen mode** for a distraction-free editing experience!`;
     setContent(sampleContent);
   };
 
@@ -262,9 +281,17 @@ $$z = r(\\cos\\theta + i\\sin\\theta) = re^{i\\theta}$$`;
                 <LatexRichTextEditor
                   value={content}
                   onChange={setContent}
-                  placeholder="Start typing your JEE content here... Use the toolbar buttons to insert LaTeX math expressions!"
+                  placeholder="Start typing your JEE content here... Use the toolbar buttons to insert LaTeX math expressions, images, links, and more!"
                   height={600}
                   className="border border-gray-200 rounded-lg"
+                  onImageUpload={async (file) => {
+                    // Mock image upload - in real implementation, upload to your server
+                    return new Promise((resolve) => {
+                      const reader = new FileReader();
+                      reader.onload = () => resolve(reader.result as string);
+                      reader.readAsDataURL(file);
+                    });
+                  }}
                 />
               </div>
 
@@ -274,7 +301,7 @@ $$z = r(\\cos\\theta + i\\sin\\theta) = re^{i\\theta}$$`;
                   <Zap className="h-5 w-5" />
                   Key Features
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div className="p-4 border border-gray-200 rounded-lg">
                     <h4 className="font-medium text-gray-800 mb-2">Immediate Preview</h4>
                     <p className="text-sm text-gray-600">LaTeX expressions are rendered instantly as you type, with no need for external plugins.</p>
@@ -286,6 +313,22 @@ $$z = r(\\cos\\theta + i\\sin\\theta) = re^{i\\theta}$$`;
                   <div className="p-4 border border-gray-200 rounded-lg">
                     <h4 className="font-medium text-gray-800 mb-2">Dual Mode</h4>
                     <p className="text-sm text-gray-600">Switch between edit mode and preview mode for better content creation experience.</p>
+                  </div>
+                  <div className="p-4 border border-gray-200 rounded-lg">
+                    <h4 className="font-medium text-gray-800 mb-2">Image Support</h4>
+                    <p className="text-sm text-gray-600">Insert images via URL or upload files directly with alt text support.</p>
+                  </div>
+                  <div className="p-4 border border-gray-200 rounded-lg">
+                    <h4 className="font-medium text-gray-800 mb-2">Link Insertion</h4>
+                    <p className="text-sm text-gray-600">Add hyperlinks with custom text and URLs for enhanced content.</p>
+                  </div>
+                  <div className="p-4 border border-gray-200 rounded-lg">
+                    <h4 className="font-medium text-gray-800 mb-2">Text Styling</h4>
+                    <p className="text-sm text-gray-600">Color picker, strikethrough, highlight, and advanced text formatting options.</p>
+                  </div>
+                  <div className="p-4 border border-gray-200 rounded-lg">
+                    <h4 className="font-medium text-gray-800 mb-2">Fullscreen Mode</h4>
+                    <p className="text-sm text-gray-600">Distraction-free editing experience with fullscreen mode for focused content creation.</p>
                   </div>
                   <div className="p-4 border border-gray-200 rounded-lg">
                     <h4 className="font-medium text-gray-800 mb-2">JEE Optimized</h4>

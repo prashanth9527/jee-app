@@ -11,7 +11,17 @@ import {
   Calculator as SquareRoot,
   Calculator as Function,
   Sigma,
-  Divide
+  Divide,
+  Image,
+  Link,
+  Palette,
+  Strikethrough,
+  Highlighter,
+  Maximize,
+  Minimize,
+  X,
+  Check,
+  Upload
 } from 'lucide-react';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
@@ -23,6 +33,7 @@ interface LatexRichTextEditorProps {
   height?: number;
   disabled?: boolean;
   className?: string;
+  onImageUpload?: (file: File) => Promise<string>; // Optional image upload handler
 }
 
 interface MathBlock {
@@ -39,11 +50,22 @@ export default function LatexRichTextEditor({
   placeholder = "Enter your content here...",
   height = 400,
   disabled = false,
-  className = ""
+  className = "",
+  onImageUpload
 }: LatexRichTextEditorProps) {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showLinkDialog, setShowLinkDialog] = useState(false);
+  const [showImageDialog, setShowImageDialog] = useState(false);
+  const [linkUrl, setLinkUrl] = useState('');
+  const [linkText, setLinkText] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [imageAlt, setImageAlt] = useState('');
+  const [selectedColor, setSelectedColor] = useState('#000000');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Parse LaTeX blocks from content
   const parseLatexBlocks = useCallback((content: string): MathBlock[] => {
@@ -78,10 +100,12 @@ export default function LatexRichTextEditor({
     return blocks.sort((a, b) => a.start - b.start);
   }, []);
 
-  // Render LaTeX content to HTML
+  // Render markdown and LaTeX content to HTML
   const renderLatexContent = useCallback((content: string): string => {
-    const blocks = parseLatexBlocks(content);
     let html = content;
+    
+    // First, render LaTeX blocks
+    const blocks = parseLatexBlocks(content);
     let offset = 0;
     
     blocks.forEach(block => {
@@ -104,13 +128,81 @@ export default function LatexRichTextEditor({
       }
     });
     
+    // Then render markdown formatting
+    html = renderMarkdown(html);
+    
     return html;
   }, [parseLatexBlocks]);
+
+  // Render markdown formatting
+  const renderMarkdown = (text: string): string => {
+    let html = text;
+    
+    // Skip processing if content already contains HTML tags (to avoid double processing)
+    if (/<[^>]+>/.test(html)) {
+      // Only process line breaks for HTML content
+      html = html.replace(/\n/g, '<br>');
+      return html;
+    }
+    
+    // Process in order of specificity to avoid conflicts
+    
+    // Images: ![alt](url) - process first to avoid conflicts with links
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full h-auto rounded-lg my-2" />');
+    
+    // Links: [text](url) - process after images
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">$1</a>');
+    
+    // Inline code: `code` - process before other formatting to avoid conflicts
+    html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">$1</code>');
+    
+    // Strikethrough: ~~text~~ - process before bold/italic
+    html = html.replace(/~~([^~]+)~~/g, '<del>$1</del>');
+    
+    // Bold: **text** or __text__ - process before italic
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+    
+    // Italic: *text* or _text_ - process after bold, but avoid conflicts
+    // Use a more compatible approach without lookbehind
+    html = html.replace(/\b\*([^*\n]+)\*\b/g, '<em>$1</em>');
+    html = html.replace(/\b_([^_\n]+)_\b/g, '<em>$1</em>');
+    
+    // Line breaks - convert to <br> tags
+    html = html.replace(/\n/g, '<br>');
+    
+    return html;
+  };
 
   // Handle text change
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value;
     onChange(newValue);
+  };
+
+  // Handle paste events for images
+  const handlePaste = async (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    const items = e.clipboardData?.items;
+    if (!items || !onImageUpload) return;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.type.indexOf('image') !== -1) {
+        e.preventDefault();
+        const file = item.getAsFile();
+        if (file) {
+          try {
+            const uploadedUrl = await onImageUpload(file);
+            const imageMarkup = `![Pasted Image](${uploadedUrl})`;
+            insertText(imageMarkup);
+          } catch (error) {
+            console.error('Image paste failed:', error);
+            alert('Image paste failed. Please try again.');
+          }
+        }
+        break;
+      }
+    }
   };
 
   // Insert text at cursor position
@@ -157,8 +249,17 @@ export default function LatexRichTextEditor({
       case 'underline':
         formattedText = `<u>${selectedText}</u>`;
         break;
+      case 'strikethrough':
+        formattedText = `~~${selectedText}~~`;
+        break;
+      case 'highlight':
+        formattedText = `<mark>${selectedText}</mark>`;
+        break;
       case 'code':
         formattedText = `\`${selectedText}\``;
+        break;
+      case 'color':
+        formattedText = `<span style="color: ${selectedColor}">${selectedText}</span>`;
         break;
       default:
         formattedText = selectedText;
@@ -171,6 +272,52 @@ export default function LatexRichTextEditor({
       textarea.focus();
       textarea.setSelectionRange(start + formattedText.length, start + formattedText.length);
     }, 0);
+  };
+
+  // Insert link
+  const insertLink = () => {
+    if (!linkUrl || !linkText) return;
+    
+    const linkMarkup = `[${linkText}](${linkUrl})`;
+    insertText(linkMarkup);
+    
+    // Reset dialog state
+    setShowLinkDialog(false);
+    setLinkUrl('');
+    setLinkText('');
+  };
+
+  // Insert image
+  const insertImage = () => {
+    if (!imageUrl) return;
+    
+    const imageMarkup = `![${imageAlt}](${imageUrl})`;
+    insertText(imageMarkup);
+    
+    // Reset dialog state
+    setShowImageDialog(false);
+    setImageUrl('');
+    setImageAlt('');
+  };
+
+  // Handle file upload
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !onImageUpload) return;
+
+    try {
+      const uploadedUrl = await onImageUpload(file);
+      setImageUrl(uploadedUrl);
+      setShowImageDialog(true);
+    } catch (error) {
+      console.error('Image upload failed:', error);
+      alert('Image upload failed. Please try again.');
+    }
+  };
+
+  // Toggle fullscreen
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
   };
 
   // Common LaTeX templates
@@ -227,12 +374,84 @@ export default function LatexRichTextEditor({
           <Underline className="h-4 w-4" />
         </button>
         <button
+          onClick={() => formatText('strikethrough')}
+          className="p-1 hover:bg-gray-200 rounded"
+          title="Strikethrough"
+        >
+          <Strikethrough className="h-4 w-4" />
+        </button>
+        <button
+          onClick={() => formatText('highlight')}
+          className="p-1 hover:bg-gray-200 rounded"
+          title="Highlight"
+        >
+          <Highlighter className="h-4 w-4" />
+        </button>
+        <button
           onClick={() => formatText('code')}
           className="p-1 hover:bg-gray-200 rounded"
           title="Code"
         >
           <Code className="h-4 w-4" />
         </button>
+      </div>
+
+      {/* Color and Media */}
+      <div className="flex items-center gap-1 border-r border-gray-300 pr-2">
+        <div className="relative">
+          <button
+            onClick={() => setShowColorPicker(!showColorPicker)}
+            className="p-1 hover:bg-gray-200 rounded"
+            title="Text Color"
+          >
+            <Palette className="h-4 w-4" />
+          </button>
+          {showColorPicker && (
+            <div className="absolute top-8 left-0 z-50 bg-white border border-gray-300 rounded-lg shadow-lg p-3">
+              <div className="flex items-center gap-2 mb-2">
+                <input
+                  type="color"
+                  value={selectedColor}
+                  onChange={(e) => setSelectedColor(e.target.value)}
+                  className="w-8 h-8 border border-gray-300 rounded cursor-pointer"
+                />
+                <button
+                  onClick={() => {
+                    formatText('color');
+                    setShowColorPicker(false);
+                  }}
+                  className="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600"
+                >
+                  Apply
+                </button>
+              </div>
+              <div className="text-xs text-gray-500">Select text and apply color</div>
+            </div>
+          )}
+        </div>
+        <button
+          onClick={() => setShowImageDialog(true)}
+          className="p-1 hover:bg-gray-200 rounded"
+          title="Insert Image"
+        >
+          <Image className="h-4 w-4" />
+        </button>
+        <button
+          onClick={() => setShowLinkDialog(true)}
+          className="p-1 hover:bg-gray-200 rounded"
+          title="Insert Link"
+        >
+          <Link className="h-4 w-4" />
+        </button>
+        {onImageUpload && (
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="p-1 hover:bg-gray-200 rounded"
+            title="Upload Image (or paste from clipboard)"
+          >
+            <Upload className="h-4 w-4" />
+          </button>
+        )}
       </div>
 
       {/* Lists */}
@@ -372,47 +591,182 @@ export default function LatexRichTextEditor({
         >
           {isPreviewMode ? 'Edit' : 'Preview'}
         </button>
+        <button
+          onClick={toggleFullscreen}
+          className="p-1 hover:bg-gray-200 rounded"
+          title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+        >
+          {isFullscreen ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
+        </button>
       </div>
     </div>
   );
 
   return (
-    <div className={`latex-rich-text-editor border border-gray-300 rounded-lg ${className}`}>
-      <Toolbar />
-      
-      <div className="relative">
-        {isPreviewMode ? (
+    <>
+      <div className={`latex-rich-text-editor border border-gray-300 rounded-lg ${className} ${isFullscreen ? 'fixed inset-0 z-50 bg-white' : ''}`}>
+        <Toolbar />
+        
+        <div className="relative">
+          {isPreviewMode ? (
           <div
             ref={previewRef}
-            className="p-4 min-h-[200px] prose max-w-none"
-            style={{ height: `${height}px`, overflowY: 'auto' }}
+            className="p-4 min-h-[200px] prose max-w-none prose-headings:text-gray-900 prose-strong:text-gray-900 prose-em:text-gray-700 prose-code:bg-gray-100 prose-code:text-gray-800"
+            style={{ height: isFullscreen ? 'calc(100vh - 120px)' : `${height}px`, overflowY: 'auto' }}
             dangerouslySetInnerHTML={{ 
               __html: renderLatexContent(value) || `<p class="text-gray-400">${placeholder}</p>`
             }}
           />
-        ) : (
-          <textarea
-            ref={textareaRef}
-            value={value}
-            onChange={handleTextChange}
-            placeholder={placeholder}
-            disabled={disabled}
-            className="w-full p-4 border-0 resize-none focus:outline-none font-mono text-sm"
-            style={{ height: `${height}px` }}
-          />
-        )}
-      </div>
-      
-      {/* Status bar */}
-      <div className="flex items-center justify-between px-4 py-2 text-xs text-gray-500 bg-gray-50 border-t border-gray-200">
-        <div>
-          {isPreviewMode ? 'Preview Mode' : 'Edit Mode'} • 
-          LaTeX blocks: {parseLatexBlocks(value).length}
+          ) : (
+            <textarea
+              ref={textareaRef}
+              value={value}
+              onChange={handleTextChange}
+              onPaste={handlePaste}
+              placeholder={placeholder}
+              disabled={disabled}
+              className="w-full p-4 border-0 resize-none focus:outline-none font-mono text-sm"
+              style={{ height: isFullscreen ? 'calc(100vh - 120px)' : `${height}px` }}
+            />
+          )}
         </div>
-        <div>
-          Characters: {value.length}
+        
+        {/* Status bar */}
+        <div className="flex items-center justify-between px-4 py-2 text-xs text-gray-500 bg-gray-50 border-t border-gray-200">
+          <div>
+            {isPreviewMode ? 'Preview Mode' : 'Edit Mode'} • 
+            LaTeX blocks: {parseLatexBlocks(value).length}
+          </div>
+          <div>
+            Characters: {value.length}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Hidden file input for image upload */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileUpload}
+        className="hidden"
+      />
+
+      {/* Link Dialog */}
+      {showLinkDialog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 w-96 max-w-md mx-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Insert Link</h3>
+              <button
+                onClick={() => setShowLinkDialog(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Link Text
+                </label>
+                <input
+                  type="text"
+                  value={linkText}
+                  onChange={(e) => setLinkText(e.target.value)}
+                  placeholder="Enter link text"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  URL
+                </label>
+                <input
+                  type="url"
+                  value={linkUrl}
+                  onChange={(e) => setLinkUrl(e.target.value)}
+                  placeholder="https://example.com"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2 mt-6">
+              <button
+                onClick={() => setShowLinkDialog(false)}
+                className="px-4 py-2 text-gray-600 hover:text-gray-800"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={insertLink}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center gap-2"
+              >
+                <Check className="h-4 w-4" />
+                Insert Link
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Image Dialog */}
+      {showImageDialog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 w-96 max-w-md mx-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Insert Image</h3>
+              <button
+                onClick={() => setShowImageDialog(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Image URL
+                </label>
+                <input
+                  type="url"
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+                  placeholder="https://example.com/image.jpg"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Alt Text
+                </label>
+                <input
+                  type="text"
+                  value={imageAlt}
+                  onChange={(e) => setImageAlt(e.target.value)}
+                  placeholder="Describe the image"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2 mt-6">
+              <button
+                onClick={() => setShowImageDialog(false)}
+                className="px-4 py-2 text-gray-600 hover:text-gray-800"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={insertImage}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center gap-2"
+              >
+                <Check className="h-4 w-4" />
+                Insert Image
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

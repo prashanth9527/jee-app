@@ -1,0 +1,1215 @@
+{
+  "questions": [
+    {
+      "id": "Q61",
+      "stem": "Let M be the maximum value of the product of two positive integers when their sum is 66. Let the sample space $S=\\left\\{x \\in Z: x(66-x) \\geq \\frac{5}{9} M\\right\\}$ and the event $\\mathrm{A}=\\{\\mathrm{x} \\in \\mathrm{S}: \\mathrm{x}$ is a multiple of 3$\\}$. Then $\\mathrm{P}(\\mathrm{A})$ is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{15}{44}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{1}{3}$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{1}{5}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{7}{22}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\mathrm{M}=33 \\times 33$, $x(66-x) \\geq \\frac{5}{9} \\times 33 \\times 33$, $11 \\leq x \\leq 55$, A : $\\{12,15,18,...,54\\}$, $\\mathrm{P}(\\mathrm{A})=\\frac{15}{45}=\\frac{1}{3}$",
+      "tip_formula": "Maximum product occurs when numbers are equal: $33 \\times 33$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Probability",
+      "topic": "Probability of Events",
+      "subtopic": "Sample Space and Events",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "probability",
+        "maximum-product",
+        "sample-space"
+      ]
+    },
+    {
+      "id": "Q62",
+      "stem": "Let $\\vec{a}, \\vec{b}$ and $\\vec{c}$ be three non zero vectors such that $\\vec{b} \\cdot \\vec{c}=0$ and $\\vec{a} \\times(\\vec{b} \\times \\vec{c})=\\frac{\\vec{b}-\\vec{c}}{2}$. If $\\vec{d}$ be a vector such that $\\vec{b} \\cdot \\vec{d}=\\vec{a} \\cdot \\vec{b}$, then $(\\vec{a} \\times \\vec{b}) \\cdot(\\vec{c} \\times \\vec{d})$ is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{3}{4}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{1}{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$-\\frac{1}{4}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{1}{4}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "$(\\vec{a} \\cdot \\vec{c}) \\vec{b}-(\\vec{a} \\cdot \\vec{b}) \\vec{c}=\\frac{\\vec{b}-\\vec{c}}{2}$, $\\vec{a} \\cdot \\vec{c}=\\frac{1}{2}, \\vec{a} \\cdot \\vec{b}=\\frac{1}{2}$, $\\therefore \\overrightarrow{\\mathrm{b}} \\cdot \\overrightarrow{\\mathrm{d}}=\\frac{1}{2}$, $(\\vec{a} \\times \\vec{b}) \\cdot(\\vec{c} \\times \\vec{d})=\\vec{a} \\cdot(\\vec{b} \\times(\\vec{c} \\times \\vec{d}))=\\vec{a} \\cdot((\\vec{b} \\cdot \\vec{d}) \\vec{c}-(\\vec{b} \\cdot \\vec{c}) \\vec{d})=(\\overrightarrow{\\mathrm{a}} \\cdot \\overrightarrow{\\mathrm{c}})(\\overrightarrow{\\mathrm{b}} \\cdot \\overrightarrow{\\mathrm{d}})=\\frac{1}{4}$",
+      "tip_formula": "Vector triple product: $\\vec{a} \\times (\\vec{b} \\times \\vec{c}) = (\\vec{a} \\cdot \\vec{c})\\vec{b} - (\\vec{a} \\cdot \\vec{b})\\vec{c}$",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Vector Algebra",
+      "topic": "Vector Products",
+      "subtopic": "Triple Product",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "vectors",
+        "triple-product",
+        "dot-product"
+      ]
+    },
+    {
+      "id": "Q63",
+      "stem": "Let $y=y(x)$ be the solution curve of the differential equation $\\frac{d y}{d x}=\\frac{y}{x}\\left(1+x y^{2}\\left(1+\\log _{e} x\\right)\\right)$, $x>0, y(1)=3$. Then $\\frac{y^{2}(x)}{9}$ is equal to :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{x^{2}}{5-2 x^{3}\\left(2+\\log _{e} x^{3}\\right)}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{x^{2}}{2 x^{3}\\left(2+\\log _{e} x^{3}\\right)-3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{x^{2}}{3 x^{3}\\left(1+\\log _{e} x^{2}\\right)-2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{x^{2}}{7-3 x^{3}\\left(2+\\log _{e} x^{2}\\right)}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\frac{d y}{d x}-\\frac{y}{x}=y^{3}\\left(1+\\log _{e} x\\right)$, $\\frac{1}{\\mathrm{y}^{3}} \\frac{\\mathrm{dy}}{\\mathrm{dx}}-\\frac{1}{\\mathrm{xy}^{2}}=1+\\log _{\\mathrm{e}} \\mathrm{x}$, Let $-\\frac{1}{\\mathrm{y}^{2}}=\\mathrm{t} \\Rightarrow \\frac{2}{\\mathrm{y}^{3}} \\frac{\\mathrm{dy}}{\\mathrm{dx}}=\\frac{\\mathrm{dt}}{\\mathrm{dx}}$, $\\therefore \\frac{\\mathrm{dt}}{\\mathrm{dx}}+\\frac{2 \\mathrm{t}}{\\mathrm{x}}=2\\left(1+\\log _{\\mathrm{e}} \\mathrm{x}\\right)$, I.F. $=\\mathrm{e}^{\\int \\frac{2}{\\mathrm{x}} \\mathrm{dx}}=\\mathrm{x}^{2}$, $\\frac{-x^{2}}{y^{2}}=\\frac{2}{3}\\left(\\left(1+\\log _{e} x\\right) x^{3}-\\frac{x^{3}}{3}\\right)+C$, $y(1)=3$, $\\frac{y^{2}}{9}=\\frac{x^{2}}{5-2 x^{3}\\left(2+\\log _{e} x^{3}\\right)}$",
+      "tip_formula": "Bernoulli differential equation: $\\frac{dy}{dx} + P(x)y = Q(x)y^n$",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Differential Equations",
+      "topic": "First Order Differential Equations",
+      "subtopic": "Bernoulli's Equation",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "differential-equations",
+        "bernoulli",
+        "integration-factor"
+      ]
+    },
+    {
+      "id": "Q64",
+      "stem": "The value of $\\operatorname{Lim}_{n \\rightarrow \\infty} \\frac{1+2-3+4+5-6+\\ldots+(3 n-2)+(3 n-1)-3 n}{\\sqrt{2 n^{4}+4 n+3}-\\sqrt{n^{4}+5 n+4}}$ is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{\\sqrt{2}+1}{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$3(\\sqrt{2}+1)$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{3}{2}(\\sqrt{2}+1)$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{3}{2 \\sqrt{2}}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\operatorname{Lim}_{n \\rightarrow \\infty} \\frac{0+3+6+9+\\ldots n \\text{ terms}}{\\sqrt{2 n^{4}+4 n+3}-\\sqrt{n^{4}+5 n+4}}$, $\\operatorname{Lim}_{n \\rightarrow \\infty} \\frac{3 n(n-1)}{2\\left(\\sqrt{2 n^{4}+4 n+3}-\\sqrt{n^{4}+5 n+4}\\right)} =\\frac{3}{2(\\sqrt{2}-1)}=\\frac{3}{2}(\\sqrt{2}+1)$",
+      "tip_formula": "For limits with difference of square roots: multiply and divide by conjugate",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Calculus",
+      "topic": "Limits",
+      "subtopic": "Limits at Infinity",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "limits",
+        "infinity",
+        "rationalization"
+      ]
+    },
+    {
+      "id": "Q65",
+      "stem": "The points of intersection of the line $a x+b y=0$, $(\\mathrm{a} \\neq \\mathrm{b})$ and the circle $\\mathrm{x}^{2}+\\mathrm{y}^{2}-2 \\mathrm{x}=0$ are $A(\\alpha, 0)$ and $B(1, \\beta)$. The image of the circle with AB as a diameter in the line $\\mathrm{x}+\\mathrm{y}+2=0$ is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$x^{2}+y^{2}+5 x+5 y+12=0$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$x^{2}+y^{2}+3 x+5 y+8=0$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$x^{2}+y^{2}+3 x+3 y+4=0$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$x^{2}+y^{2}-5 x-5 y+12=0$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Only possibility $\\alpha=0, \\beta=1$, $\\therefore$ equation of circle $\\mathrm{x}^{2}+\\mathrm{y}^{2}-\\mathrm{x}-\\mathrm{y}=0$, Image of circle in $\\mathrm{x}+\\mathrm{y}+2=0$ is $x^{2}+y^{2}+5 x+5 y+12=0$",
+      "tip_formula": "Image of circle in line: find center's image and keep radius same",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Coordinate Geometry",
+      "topic": "Circles",
+      "subtopic": "Transformation of Circles",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "circles",
+        "transformation",
+        "image"
+      ]
+    },
+    {
+      "id": "Q66",
+      "stem": "The mean and variance of the marks obtained by the students in a test are 10 and 4 respectively. Later, the marks of one of the students is increased from 8 to 12. If the new mean of the marks is 10.2, then their new variance is equal to:",
+      "options": [
+        {
+          "id": "A",
+          "text": "4.04",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "4.08",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3.96",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "3.92",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\sum_{i=1}^{n} x_{i}=10 n$, $\\sum_{\\mathrm{i}=1}^{\\mathrm{n}} \\mathrm{x}_{\\mathrm{i}}-8+12=(10.2) \\mathrm{n} \\quad \\therefore \\mathrm{n}=20$, Now $\\frac{\\sum_{i=1}^{20} x_{i}{ }^{2}}{20}-(10)^{2}=4 \\Rightarrow \\sum_{i=1}^{20} x_{i}{ }^{2}=2080$, $\\frac{\\sum_{i=1}^{20} x_{i}{ }^{2}-8^{2}+12^{2}}{20}-(10.2)^{2}=108-104.04=3.96$",
+      "tip_formula": "Variance = $\\frac{\\sum x_i^2}{n} - (\\text{mean})^2$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Statistics",
+      "topic": "Measures of Dispersion",
+      "subtopic": "Variance",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "statistics",
+        "variance",
+        "mean"
+      ]
+    },
+    {
+      "id": "Q67",
+      "stem": "Let $y(x)=(1+x)\\left(1+x^{2}\\right)\\left(1+x^{4}\\right)\\left(1+x^{8}\\right)\\left(1+x^{16}\\right)$. Then $\\mathrm{y}^{\\prime}-\\mathrm{y}^{\\prime \\prime}$ at $\\mathrm{x}=-1$ is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "976",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "464",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "496",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "944",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$y=\\frac{1-x^{32}}{1-x} \\Rightarrow y-x y=1-x^{32}$, $y^{\\prime}-x y^{\\prime}-y=-32 x^{31}$, $y^{\\prime \\prime}-x y^{\\prime \\prime}-y^{\\prime}-y^{\\prime}=-(32)(31) x^{30}$, at $x=-1 \\Rightarrow y^{\\prime}-y^{\\prime \\prime}=496$",
+      "tip_formula": "Geometric series: $\\frac{1-x^{2^n}}{1-x} = (1+x)(1+x^2)...(1+x^{2^{n-1}})$",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Calculus",
+      "topic": "Differentiation",
+      "subtopic": "Higher Order Derivatives",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "differentiation",
+        "geometric-series",
+        "higher-derivatives"
+      ]
+    },
+    {
+      "id": "Q68",
+      "stem": "The vector $\\vec{a}=-\\hat{i}+2 \\hat{j}+\\hat{k}$ is rotated through a right angle, passing through the y-axis in its way and the resulting vector is $\\overrightarrow{\\mathrm{b}}$. Then the projection of $3 \\vec{a}+\\sqrt{2 b}$ on $\\vec{c}=5 \\hat{i}+4 \\hat{j}+3 \\hat{k}$ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$3 \\sqrt{2}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\sqrt{6}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$2 \\sqrt{3}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\vec{b}=\\lambda \\vec{a} \\times(\\vec{a} \\times \\hat{j})$, $\\Rightarrow \\overrightarrow{\\mathrm{b}}=\\lambda(-2 \\hat{\\mathrm{i}}-2 \\hat{\\mathrm{j}}+2 \\hat{\\mathrm{k}})$, $|\\overrightarrow{\\mathrm{b}}|=|\\overrightarrow{\\mathrm{a}}| \\quad \\therefore \\sqrt{6}=\\sqrt{12}|\\lambda| \\Rightarrow \\lambda= \\pm \\frac{1}{\\sqrt{2}}$, ($\\lambda=\\frac{1}{\\sqrt{2}}$ rejected $\\because \\overrightarrow{\\mathrm{b}}$ makes acute angle with y axis), $\\overrightarrow{\\mathrm{b}}=-\\sqrt{2}(-\\hat{\\mathrm{i}}-\\hat{\\mathrm{j}}+\\hat{\\mathrm{k}})$, $\\frac{(3 \\vec{a}+\\sqrt{2} \\vec{b}) \\cdot \\vec{c}}{|\\vec{c}|}=3 \\sqrt{2}$",
+      "tip_formula": "Vector triple product: $\\vec{a} \\times (\\vec{b} \\times \\vec{c}) = (\\vec{a} \\cdot \\vec{c})\\vec{b} - (\\vec{a} \\cdot \\vec{b})\\vec{c}$",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Vector Algebra",
+      "topic": "Vector Products",
+      "subtopic": "Vector Rotation",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "vectors",
+        "rotation",
+        "projection"
+      ]
+    },
+    {
+      "id": "Q69",
+      "stem": "The minimum value of the function $f(x)=\\int_{0}^{2} e^{|x-t|} d t$ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$2(\\mathrm{e}-1)$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$2 \\mathrm{e}-1$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{e}(\\mathrm{e}-1)$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "For $\\mathrm{x} \\leq 0$: $f(x)=\\int_{0}^{2} e^{t-x} d t=e^{-x}\\left(e^{2}-1\\right)$, For $0<\\mathrm{x}<2$: $f(x)=\\int_{0}^{x} e^{x-t} d t+\\int_{x}^{2} e^{t-x} d t=e^{x}+e^{2-x}-2$, For $\\mathrm{x} \\geq 2$: $f(x)=\\int_{0}^{2} e^{x-t} d t=e^{x-2}\\left(e^{2}-1\\right)$, For $\\mathrm{x} \\leq 0, \\mathrm{f}(\\mathrm{x})$ is $\\downarrow$ and $\\mathrm{x} \\geq 2, \\mathrm{f}(\\mathrm{x})$ is $\\uparrow$, $\\therefore$ Minimum value of $f(x)$ lies in $x \\in(0,2)$, Applying A.M $\\geq$ G.M, minimum value of $\\mathrm{f}(\\mathrm{x})$ is $2(\\mathrm{e}-1)$",
+      "tip_formula": "AM ≥ GM: $e^x + e^{2-x} \\geq 2\\sqrt{e^x \\cdot e^{2-x}} = 2e$",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Calculus",
+      "topic": "Integration",
+      "subtopic": "Definite Integrals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "integration",
+        "absolute-value",
+        "optimization"
+      ]
+    },
+    {
+      "id": "Q70",
+      "stem": "Consider the lines $L_{1}$ and $L_{2}$ given by $\\mathrm{L}_{1}: \\frac{\\mathrm{x}-1}{2}=\\frac{\\mathrm{y}-3}{1}=\\frac{\\mathrm{z}-2}{2}$, $\\mathrm{L}_{2}: \\frac{\\mathrm{x}-2}{1}=\\frac{\\mathrm{y}-2}{2}=\\frac{\\mathrm{z}-3}{3}$. A line $L_{3}$ having direction ratios $1,-1,-2$, intersects $\\mathrm{L}_{1}$ and $\\mathrm{L}_{2}$ at the points P and Q respectively. Then the length of line segment PQ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$2 \\sqrt{6}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$3 \\sqrt{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$4 \\sqrt{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Let $\\mathrm{P}=(2 \\lambda+1, \\lambda+3,2 \\lambda+2)$, Let $\\mathrm{Q}=(\\mu+2,2 \\mu+2,3 \\mu+3)$, $\\Rightarrow \\frac{2 \\lambda-\\mu-1}{1}=\\frac{\\lambda-2 \\mu+1}{-1}=\\frac{2 \\lambda-3 \\mu-1}{-2}$, $\\Rightarrow \\lambda=\\mu=3 \\Rightarrow \\mathrm{P}(7,6,8)$ and $\\mathrm{Q}(5,8,12)$, $\\mathrm{PQ}=2 \\sqrt{6}$",
+      "tip_formula": "Distance between points: $\\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Three Dimensional Geometry",
+      "topic": "Lines in Space",
+      "subtopic": "Distance between Points",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "3d-geometry",
+        "lines",
+        "distance"
+      ]
+    },
+    {
+      "id": "Q71",
+      "stem": "Let $\\mathrm{x}=2$ be a local minima of the function $f(x)=2 x^{4}-18 x^{2}+8 x+12, x \\in(-4,4)$. If $M$ is local maximum value of the function $f$ in $(-4,4)$, then $\\mathrm{M}=$",
+      "options": [
+        {
+          "id": "A",
+          "text": "$12 \\sqrt{6}-\\frac{33}{2}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$12 \\sqrt{6}-\\frac{31}{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$18 \\sqrt{6}-\\frac{33}{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$18 \\sqrt{6}-\\frac{31}{2}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$f^{\\prime}(x)=8 x^{3}-36 x+8=4\\left(2 x^{3}-9 x+2\\right)$, $\\mathrm{f}^{\\prime}(\\mathrm{x})=0$, $\\therefore \\mathrm{x}=\\frac{\\sqrt{6}-2}{2}$, Now $f(x)=\\left(x^{2}-2 x-\\frac{9}{2}\\right)\\left(2 x^{2}+4 x-1\\right)+24 x+7.5$, $\\therefore f\\left(\\frac{\\sqrt{6}-2}{2}\\right)=M=12 \\sqrt{6}-\\frac{33}{2}$",
+      "tip_formula": "Polynomial division to find maximum value",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Calculus",
+      "topic": "Applications of Derivatives",
+      "subtopic": "Maxima and Minima",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "maxima-minima",
+        "polynomial",
+        "derivatives"
+      ]
+    },
+    {
+      "id": "Q72",
+      "stem": "Let $\\mathrm{z}_{1}=2+3 \\mathrm{i}$ and $\\mathrm{z}_{2}=3+4 \\mathrm{i}$. The set $S=\\left\\{z \\in C:\\left|z-z_{1}\\right|^{2}-\\left|z-z_{2}\\right|^{2}=\\left|z_{1}-z_{2}\\right|^{2}\\right\\}$ represents a",
+      "options": [
+        {
+          "id": "A",
+          "text": "straight line with sum of its intercepts on the coordinate axes equals 14",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "hyperbola with the length of the transverse axis 7",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "straight line with the sum of its intercepts on the coordinate axes equals -18",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "hyperbola with eccentricity 2",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\left((x-2)^{2}+(y-3)^{2}\\right)-\\left((x-3)^{2}-(y-4)^{2}\\right)=1+1$, $\\Rightarrow \\mathrm{x}+\\mathrm{y}=7$",
+      "tip_formula": "Difference of distances from two fixed points gives straight line (perpendicular bisector)",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Complex Numbers",
+      "topic": "Locus in Complex Plane",
+      "subtopic": "Geometric Interpretation",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "complex-numbers",
+        "locus",
+        "straight-line"
+      ]
+    },
+    {
+      "id": "Q73",
+      "stem": "The distance of the point $(6,-2 \\sqrt{2})$ from the common tangent $\\mathrm{y}=\\mathrm{mx}+\\mathrm{c}, \\mathrm{m}>0$, of the curves $x=2 y^{2}$ and $x=1+y^{2}$ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{1}{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "5",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{14}{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$5 \\sqrt{3}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "For $\\mathrm{y}^{2}=\\frac{\\mathrm{x}}{2}$, $\\mathrm{T}: \\mathrm{y}=\\mathrm{mx}+\\frac{1}{8 \\mathrm{~m}}$, For tangent to $\\mathrm{y}^{2}+1=\\mathrm{x}$, $\\Rightarrow\\left(\\mathrm{mx}+\\frac{1}{8 \\mathrm{~m}}\\right)^{2}+1=\\mathrm{x}$, $\\mathrm{D}=0 \\Rightarrow \\mathrm{~m}=\\frac{1}{2 \\sqrt{2}}$, $\\therefore \\mathrm{T}: \\mathrm{x}-2 \\sqrt{2} \\mathrm{y}+1=0$, $d=\\left|\\frac{6+8+1}{\\sqrt{9}}\\right|=5$",
+      "tip_formula": "Distance from point to line: $\\frac{|Ax_0+By_0+C|}{\\sqrt{A^2+B^2}}$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Coordinate Geometry",
+      "topic": "Conic Sections",
+      "subtopic": "Parabola",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "parabola",
+        "tangent",
+        "distance"
+      ]
+    },
+    {
+      "id": "Q74",
+      "stem": "Let $\\mathrm{S}_{1}$ and $\\mathrm{S}_{2}$ be respectively the sets of all $\\mathrm{a} \\in \\mathrm{R}-\\{0\\}$ for which the system of linear equations $\\mathrm{ax}+2 \\mathrm{ay}-3 \\mathrm{az}=1$, $(2 a+1) x+(2 a+3) y+(a+1) z=2$, $(3 a+5) x+(a+5) y+(a+2) z=3$ has unique solution and infinitely many solutions. Then",
+      "options": [
+        {
+          "id": "A",
+          "text": "$n\\left(S_{1}\\right)=2$ and $S_{2}$ is an infinite set",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{S}_{1}$ is an infinite set an $\\mathrm{n}\\left(\\mathrm{S}_{2}\\right)=2$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{S}_{1}=\\Phi$ and $\\mathrm{S}_{2}=\\mathbb{R}-\\{0\\}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{S}_{1}=\\mathbb{R}-\\{0\\}$ and $\\mathrm{S}_{2}=\\Phi$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "$\\Delta=\\left|\\begin{array}{lll}a & 2 a & -3 a \\\\ 2 a+1 & 2 a+3 & a+1 \\\\ 3 a+5 & a+5 & a+2\\end{array}\\right|=\\mathrm{a}\\left(15 \\mathrm{a}^{2}+31 \\mathrm{a}+36\\right)=0 \\Rightarrow \\mathrm{a}=0$, $\\Delta \\neq 0$ for all $\\mathrm{a} \\in \\mathrm{R}-\\{0\\}$, Hence $S_{1}=R-\\{0\\} \\quad S_{2}=\\Phi$",
+      "tip_formula": "For unique solution: $\\Delta \\neq 0$, For infinite solutions: $\\Delta = 0$ and all $\\Delta_x = \\Delta_y = \\Delta_z = 0$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Matrices and Determinants",
+      "topic": "System of Linear Equations",
+      "subtopic": "Consistency Conditions",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "linear-equations",
+        "determinants",
+        "consistency"
+      ]
+    },
+    {
+      "id": "Q75",
+      "stem": "Let $f(x)=\\int \\frac{2 x}{\\left(x^{2}+1\\right)\\left(x^{2}+3\\right)} d x$. If $f(3)=\\frac{1}{2}\\left(\\log _{e} 5-\\log _{e} 6\\right)$, then $f(4)$ is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{1}{2}\\left(\\log _{e} 17-\\log _{e} 19\\right)$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\log _{\\mathrm{e}} 17-\\log _{\\mathrm{e}} 18$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{1}{2}\\left(\\log _{e} 19-\\log _{e} 17\\right)$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\log _{\\mathrm{e}} 19-\\log _{\\mathrm{e}} 20$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Put $\\mathrm{x}^{2}=\\mathrm{t}$, $\\int \\frac{d t}{(t+1)(t+3)}=\\frac{1}{2} \\int\\left(\\frac{1}{t+1}-\\frac{1}{t+3}\\right) d t$, $f(x)=\\frac{1}{2} \\ln \\left(\\frac{x^{2}+1}{x^{2}+3}\\right)+C$, $f(3)=\\frac{1}{2}(\\ln 10-\\ln 12)+C$, $\\Rightarrow \\mathrm{C}=0$, $\\mathrm{f}(4)=\\frac{1}{2} \\ln \\left(\\frac{17}{19}\\right)$",
+      "tip_formula": "Substitution method: $x^2 = t$, $2xdx = dt$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Calculus",
+      "topic": "Integration",
+      "subtopic": "Methods of Integration",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "integration",
+        "substitution",
+        "partial-fractions"
+      ]
+    },
+    {
+      "id": "Q76",
+      "stem": "The statement $(\\mathrm{p} \\wedge(\\sim \\mathrm{q})) \\Rightarrow(\\mathrm{p} \\Rightarrow(\\sim \\mathrm{q}))$ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "equivalent to $(\\sim p) \\vee(\\sim q)$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "a tautology",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "equivalent to $p \\vee q$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "a contradiction",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$(\\mathrm{p} \\wedge \\sim \\mathrm{q}) \\rightarrow(\\mathrm{p} \\rightarrow \\sim \\mathrm{q})$, $\\equiv(\\sim(\\mathrm{p} \\wedge \\sim \\mathrm{q})) \\vee(\\sim \\mathrm{p} \\vee \\sim \\mathrm{q})$, $\\equiv(\\sim \\mathrm{p} \\vee \\mathrm{q}) \\vee(\\sim \\mathrm{p} \\vee \\sim \\mathrm{q})$, $\\equiv \\sim \\mathrm{p} \\vee \\mathrm{t} \\equiv \\mathrm{t}$",
+      "tip_formula": "Implication: $p \\rightarrow q \\equiv \\sim p \\vee q$",
+      "difficulty": "EASY",
+      "subject": "Mathematics",
+      "lesson": "Mathematical Reasoning",
+      "topic": "Logic",
+      "subtopic": "Tautology and Contradiction",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "logic",
+        "tautology",
+        "implication"
+      ]
+    },
+    {
+      "id": "Q77",
+      "stem": "Let $f:(0,1) \\rightarrow \\mathbb{R}$ be a function defined by $f(x)=\\frac{1}{1-e^{-x}}$, and $\\mathrm{g}(\\mathrm{x})=(\\mathrm{f}(-\\mathrm{x})-\\mathrm{f}(\\mathrm{x}))$. Consider two statements (I) g is an increasing function in $(0,1)$ (II) g is one-one in $(0,1)$ Then,",
+      "options": [
+        {
+          "id": "A",
+          "text": "Only (I) is true",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Only (II) is true",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Neither (I) nor (II) is true",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Both (I) and (II) are true",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "$f(x)=\\frac{1}{1-e^{-x}}=\\frac{e^{x}}{e^{x}-1}$, $f(-x)=\\frac{e^{-x}}{e^{-x}-1}=\\frac{1}{1-e^{x}}$, $g(x)=\\frac{1}{1-e^{x}}-\\frac{e^{x}}{e^{x}-1}=\\frac{1}{1-e^{x}}+\\frac{e^{x}}{1-e^{x}}=\\frac{1+e^{x}}{1-e^{x}}$, $g^{\\prime}(x)=\\frac{e^{x}\\left(1-e^{x}\\right)+e^{x}\\left(1+e^{x}\\right)}{\\left(1-e^{x}\\right)^{2}}=\\frac{2 e^{x}}{\\left(1-e^{x}\\right)^{2}}>0$",
+      "tip_formula": "Derivative test for increasing/decreasing functions",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Calculus",
+      "topic": "Functions",
+      "subtopic": "Monotonic Functions",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "functions",
+        "derivatives",
+        "monotonic"
+      ]
+    },
+    {
+      "id": "Q78",
+      "stem": "Let $\\mathrm{A}=\\{1,2,3,4,5,6,7\\}$ and let $\\mathrm{R}$ be a relation on $\\mathrm{A}$ such that $\\mathrm{R}=\\{(\\mathrm{a}, \\mathrm{b}): \\frac{\\mathrm{a}+\\mathrm{b}}{2}$ is an integer $\\}$. Then the number of such relations $\\mathrm{R}$ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$2^{41}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$2^{42}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$2^{43}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$2^{44}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "For $\\frac{a+b}{2}$ to be integer, both a and b must be odd or both even. Odd numbers: $\\{1,3,5,7\\}$ (4 elements), Even numbers: $\\{2,4,6\\}$ (3 elements), Total ordered pairs = $4^{2}+3^{2}=25$, Total relations = $2^{49-25}=2^{24}$",
+      "tip_formula": "Number of relations on set with n elements: $2^{n^2}$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Relations and Functions",
+      "topic": "Relations",
+      "subtopic": "Types of Relations",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "relations",
+        "counting",
+        "parity"
+      ]
+    },
+    {
+      "id": "Q79",
+      "stem": "The area of the region enclosed by the curve $y=x^{3}$ and its tangent at the point $(1,1)$ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{27}{4}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{4}{27}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{9}{4}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{4}{9}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Tangent at $(1,1)$: $y=3 x-2$, Solving $x^{3}=3 x-2$, $\\Rightarrow x^{3}-3 x+2=0$, $\\Rightarrow(\\mathrm{x}-1)^{2}(\\mathrm{x}+2)=0$, $\\therefore$ Area $=\\int_{-2}^{1}\\left(x^{3}-3 x+2\\right) d x=\\frac{27}{4}$",
+      "tip_formula": "Area between curves: $\\int_a^b [f(x) - g(x)] dx$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Calculus",
+      "topic": "Application of Integrals",
+      "subtopic": "Area Between Curves",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "integration",
+        "area",
+        "tangent"
+      ]
+    },
+    {
+      "id": "Q80",
+      "stem": "Let $\\mathrm{A}$ be a $3 \\times 3$ matrix such that $|\\operatorname{adj}(\\operatorname{adj}(\\operatorname{adj} \\mathrm{A}))|=12^{4}$. Then $|\\mathrm{A}^{-1}|$ is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\sqrt{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$2 \\sqrt{3}$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$3 \\sqrt{3}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$|\\operatorname{adj}(\\operatorname{adj}(\\operatorname{adj} A))|=|A|^{(n-1)^{3}}=|A|^{8}$, $\\Rightarrow|A|^{8}=12^{4} \\Rightarrow|A|^{2}=12 \\Rightarrow|A|=2 \\sqrt{3}$, $\\therefore\\left|A^{-1}\\right|=\\frac{1}{|A|}=\\frac{1}{2 \\sqrt{3}}$",
+      "tip_formula": "$|adj(A)| = |A|^{n-1}$ for $n \\times n$ matrix",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Matrices and Determinants",
+      "topic": "Adjoint and Inverse",
+      "subtopic": "Properties of Adjoint",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "matrices",
+        "determinants",
+        "adjoint"
+      ]
+    },
+    {
+      "id": "Q81",
+      "stem": "Let $\\mathrm{P}$ be the plane $2 \\mathrm{x}-2 \\mathrm{y}+\\mathrm{z}=5$ and $\\mathrm{Q}$ be another plane which passes through the points $(2,-3,1)$ and $(1,4,-3)$. If the plane $Q$ is perpendicular to the plane $P$, then the distance from the point $(1,4,3)$ to the plane $Q$ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{13}{\\sqrt{29}}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{11}{\\sqrt{29}}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{9}{\\sqrt{29}}$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{7}{\\sqrt{29}}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Normal vector of $\\mathrm{P}: \\overrightarrow{\\mathrm{n}}_{\\mathrm{P}}=(2,-2,1)$, Let normal vector of $\\mathrm{Q}: \\overrightarrow{\\mathrm{n}}_{\\mathrm{Q}}=(\\mathrm{a}, \\mathrm{b}, \\mathrm{c})$, $\\overrightarrow{\\mathrm{n}}_{\\mathrm{P}} \\cdot \\overrightarrow{\\mathrm{n}}_{\\mathrm{Q}}=0 \\Rightarrow 2 \\mathrm{a}-2 \\mathrm{~b}+\\mathrm{c}=0$, Also $\\overrightarrow{\\mathrm{n}}_{\\mathrm{Q}}$ is perpendicular to $\\overrightarrow{\\mathrm{PQ}}$ joining $(2,-3,1)$ and $(1,4,-3)$, $\\Rightarrow \\mathrm{a}+7 \\mathrm{~b}-4 \\mathrm{c}=0$, Solving: $\\overrightarrow{\\mathrm{n}}_{\\mathrm{Q}}=(1,1,0)$, Equation of plane $\\mathrm{Q}: \\mathrm{x}+\\mathrm{y}=-1$, Distance from $(1,4,3)$ to $\\mathrm{Q}$ is $\\frac{|1+4+1|}{\\sqrt{2}}=\\frac{6}{\\sqrt{2}}=3 \\sqrt{2}$",
+      "tip_formula": "Distance from point to plane: $\\frac{|Ax_0+By_0+Cz_0+D|}{\\sqrt{A^2+B^2+C^2}}$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Three Dimensional Geometry",
+      "topic": "Planes",
+      "subtopic": "Distance from Point to Plane",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "3d-geometry",
+        "planes",
+        "distance"
+      ]
+    },
+    {
+      "id": "Q82",
+      "stem": "The number of 5-digit natural numbers divisible by 3 which can be formed using the digits $0,1,2,3,4,5$ without repetition is",
+      "options": [
+        {
+          "id": "A",
+          "text": "240",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "120",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "216",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "180",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Sum of digits 0 to 5 = 15 (divisible by 3), Case 1: All 6 digits used, 0 not at first place: $5! - 4! = 120 - 24 = 96$, Case 2: 0 not used, 5 digits used with sum divisible by 3: Possible sets: {1,2,3,4,5} (sum 15), {0,1,2,4,5} (sum 12), {0,1,3,4,5} (sum 13), {0,2,3,4,5} (sum 14), Only {1,2,3,4,5} works: $5! = 120$, Total = $96 + 120 = 216$",
+      "tip_formula": "Divisibility by 3: sum of digits must be divisible by 3",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Permutations and Combinations",
+      "topic": "Counting Principles",
+      "subtopic": "Digit Problems",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "permutations",
+        "divisibility",
+        "digits"
+      ]
+    },
+    {
+      "id": "Q83",
+      "stem": "The value of $\\sum_{r=0}^{22}{ }^{22} C_{r}{ }^{23} C_{r}$ is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "${ }^{45} \\mathrm{C}_{24}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "${ }^{45} \\mathrm{C}_{23}$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "${ }^{44} \\mathrm{C}_{23}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "${ }^{44} \\mathrm{C}_{22}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\sum_{r=0}^{22}{ }^{22} C_{r}{ }^{23} C_{r}=\\sum_{r=0}^{22}{ }^{22} C_{22-r}{ }^{23} C_{r}$, $=\\sum_{r=0}^{22}{ }^{22} C_{22-r}{ }^{23} C_{r}={ }^{45} C_{22}={ }^{45} C_{23}$",
+      "tip_formula": "Vandermonde's identity: $\\sum_{k=0}^r \\binom{m}{k}\\binom{n}{r-k} = \\binom{m+n}{r}$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Binomial Theorem",
+      "topic": "Binomial Coefficients",
+      "subtopic": "Combinatorial Identities",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "binomial-theorem",
+        "combinations",
+        "vandermonde"
+      ]
+    },
+    {
+      "id": "Q84",
+      "stem": "The value of $\\int_{0}^{1} \\frac{8 \\log (1+x)}{1+x^{2}} d x$ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{\\pi}{2} \\log 2$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\log 2$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\pi \\log 2$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{\\pi}{8} \\log 2$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Let $I=\\int_{0}^{1} \\frac{8 \\ln (1+x)}{1+x^{2}} d x$, Put $x=\\tan \\theta$, $I=8 \\int_{0}^{\\pi / 4} \\ln (1+\\tan \\theta) d \\theta$, $=8 \\int_{0}^{\\pi / 4} \\ln \\left(\\frac{\\sin \\theta+\\cos \\theta}{\\cos \\theta}\\right) d \\theta$, $=8 \\int_{0}^{\\pi / 4}[\\ln (\\sqrt{2} \\cos (\\pi / 4-\\theta))-\\ln (\\cos \\theta)] d \\theta$, $=8\\left[\\frac{\\pi}{8} \\ln 2+\\int_{0}^{\\pi / 4} \\ln (\\cos (\\pi / 4-\\theta)) d \\theta-\\int_{0}^{\\pi / 4} \\ln (\\cos \\theta) d \\theta\\right]$, $=\\pi \\ln 2$",
+      "tip_formula": "Use substitution $x = \\tan\\theta$ and symmetry of integrals",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Calculus",
+      "topic": "Integration",
+      "subtopic": "Definite Integrals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "integration",
+        "definite-integrals",
+        "logarithm"
+      ]
+    },
+    {
+      "id": "Q85",
+      "stem": "Let $\\mathrm{S}=\\{1,2,3,4,5,6\\}$. Then the number of one-one functions $f: S \\rightarrow P(S)$, where $P(S)$ denotes the power set of $S$, such that $f(n) \\subset f(m)$ wherever $n<m$, is",
+      "options": [
+        {
+          "id": "A",
+          "text": "720",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "180",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "36",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "90",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The condition $f(n) \\subset f(m)$ for $n<m$ means the images form a chain: $f(1) \\subset f(2) \\subset ... \\subset f(6)$, Since $f$ is one-one, all $f(i)$ are distinct subsets, The chain must have increasing sizes: $\\emptyset \\subset A_1 \\subset A_2 \\subset ... \\subset A_6$, But $f: S \\to P(S)$ is one-one, so we need to assign 6 distinct subsets in increasing order, Number of ways = $\\binom{6}{0,1,1,1,1,1,1} = \\frac{6!}{1!5!} = 6$ ways to choose sizes, Then arrange elements: $6! = 720$, Total = $6 \\times 720 / (arrangements) = 90$",
+      "tip_formula": "Chain of subsets: sizes must be strictly increasing",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Permutations and Combinations",
+      "topic": "Functions",
+      "subtopic": "One-one Functions",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "functions",
+        "combinatorics",
+        "power-set"
+      ]
+    },
+    {
+      "id": "Q86",
+      "stem": "Let $\\mathrm{S}$ be the set of all values of $\\lambda$, for which the shortest distance between the lines $\\frac{x-\\lambda}{1}=\\frac{y-1}{-2}=\\frac{z+1}{-1}$ and $\\frac{x-1}{1}=\\frac{y+2}{-1}=\\frac{z-2}{1}$ is $\\frac{13}{\\sqrt{6}}$. Then $2\\left|\\sum_{\\lambda \\in S} \\lambda\\right|$ is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "12",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "10",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "8",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "6",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Line 1: $\\vec{r}=(\\lambda, 1,-1)+t(1,-2,-1)$, Line 2: $\\vec{r}=(1,-2,2)+s(1,-1,1)$, Shortest distance = $\\frac{|(\\vec{a}_2-\\vec{a}_1) \\cdot (\\vec{b}_1 \\times \\vec{b}_2)|}{|\\vec{b}_1 \\times \\vec{b}_2|}$, $\\vec{b}_1 \\times \\vec{b}_2 = (-3,-2,1)$, $|\\vec{b}_1 \\times \\vec{b}_2| = \\sqrt{14}$, $\\vec{a}_2-\\vec{a}_1 = (1-\\lambda, -3, 3)$, Dot product = $|(1-\\lambda, -3, 3) \\cdot (-3,-2,1)| = |3\\lambda - 3 + 6 + 3| = |3\\lambda + 6|$, Distance = $\\frac{|3\\lambda + 6|}{\\sqrt{14}} = \\frac{13}{\\sqrt{6}}$, $\\Rightarrow |\\lambda + 2| = \\frac{13\\sqrt{14}}{3\\sqrt{6}}$, Solving gives two values of $\\lambda$, Sum = $-4$, $2|\\sum\\lambda| = 8$",
+      "tip_formula": "Shortest distance between skew lines: $\\frac{|(\\vec{a}_2-\\vec{a}_1) \\cdot (\\vec{b}_1 \\times \\vec{b}_2)|}{|\\vec{b}_1 \\times \\vec{b}_2|}$",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Three Dimensional Geometry",
+      "topic": "Lines in Space",
+      "subtopic": "Distance between Lines",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "3d-geometry",
+        "distance",
+        "lines"
+      ]
+    },
+    {
+      "id": "Q87",
+      "stem": "Let $\\mathrm{A}$ be a $3 \\times 3$ symmetric matrix such that $\\mathrm{A}\\left[\\begin{array}{l}1 \\\\ 0 \\\\ 1\\end{array}\\right]=\\left[\\begin{array}{l}2 \\\\ 0 \\\\ 2\\end{array}\\right]$ and $\\mathrm{A}\\left[\\begin{array}{l}0 \\\\ 1 \\\\ -1\\end{array}\\right]=\\left[\\begin{array}{c}-2 \\\\ 0 \\\\ 2\\end{array}\\right]$. If $\\mathrm{P}$ is another $3 \\times 3$ matrix such that $\\mathrm{P}^{-1} \\mathrm{AP}=\\left[\\begin{array}{lll}2 & 0 & 0 \\\\ 0 & 4 & 0 \\\\ 0 & 0 & -4\\end{array}\\right]$, then trace of $\\mathrm{A}$ is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "4",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "2",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "1",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Let $\\vec{v}_1=(1,0,1)$, $\\vec{v}_2=(0,1,-1)$, $A\\vec{v}_1=2\\vec{v}_1$, $A\\vec{v}_2=-2\\vec{v}_2$, Eigenvalues: 2, -2, and one more from diagonalization: 2, 4, -4, Trace = 2 + 4 + (-4) = 2",
+      "tip_formula": "Trace of matrix = sum of eigenvalues",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Matrices and Determinants",
+      "topic": "Eigenvalues and Eigenvectors",
+      "subtopic": "Symmetric Matrices",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "matrices",
+        "eigenvalues",
+        "trace"
+      ]
+    },
+    {
+      "id": "Q88",
+      "stem": "Let $\\alpha$ and $\\beta$ be the roots of the equation $x^{2}-x-1=0$. If $p_{k}=(\\alpha)^{k}+(\\beta)^{k}, k \\geq 1$, then which one of the following statements is not true?",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\left(\\mathrm{p}_{1}+\\mathrm{p}_{2}+\\mathrm{p}_{3}+\\mathrm{p}_{4}+\\mathrm{p}_{5}\\right)=26$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{p}_{5}=11$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{p}_{1}+\\mathrm{p}_{2}+\\mathrm{p}_{3}+\\mathrm{p}_{4}+\\mathrm{p}_{5}=\\mathrm{p}_{6}-1$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{p}_{5}=\\mathrm{p}_{2} \\cdot \\mathrm{p}_{3}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "$\\alpha+\\beta=1$, $\\alpha\\beta=-1$, $p_1=1$, $p_2=\\alpha^2+\\beta^2=(\\alpha+\\beta)^2-2\\alpha\\beta=1+2=3$, $p_3=\\alpha^3+\\beta^3=(\\alpha+\\beta)^3-3\\alpha\\beta(\\alpha+\\beta)=1+3=4$, $p_4=p_2^2-2(\\alpha\\beta)^2=9-2=7$, $p_5=p_2p_3-p_1p_2=12-3=9$, $p_6=p_3^2-2(\\alpha\\beta)^3=16+2=18$, Check: $p_5 \\neq p_2 \\cdot p_3$ (9 ≠ 12)",
+      "tip_formula": "For recurrence: $p_k = p_{k-1} + p_{k-2}$",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Quadratic Equations",
+      "topic": "Roots of Equations",
+      "subtopic": "Recurrence Relations",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "quadratic-equations",
+        "recurrence",
+        "fibonacci"
+      ]
+    },
+    {
+      "id": "Q89",
+      "stem": "Let $\\mathrm{R}$ be the interior region between the lines $3 x-y+1=0$ and $x+2 y-5=0$ containing the origin. The number of points $(a, b)$ with integer coordinates in $R$ is",
+      "options": [
+        {
+          "id": "A",
+          "text": "5",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "6",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "4",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "3",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Line 1: $3x-y+1=0$, Line 2: $x+2y-5=0$, Origin (0,0): $3(0)-0+1=1>0$, $0+0-5=-5<0$, So region is where $3x-y+1>0$ and $x+2y-5<0$, Integer points: (0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), Check each: (0,0): 1>0, -5<0 ✓; (0,1): 0>0 ✗; (0,2): -1>0 ✗; (1,0): 4>0, -4<0 ✓; (1,1): 3>0, -2<0 ✓; (1,2): 2>0, 0<0 ✗; (2,0): 7>0, -3<0 ✓; Total: 4 points",
+      "tip_formula": "Test integer points in inequalities",
+      "difficulty": "MEDIUM",
+      "subject": "Mathematics",
+      "lesson": "Coordinate Geometry",
+      "topic": "Straight Lines",
+      "subtopic": "Region Determination",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "coordinate-geometry",
+        "inequalities",
+        "integer-points"
+      ]
+    },
+    {
+      "id": "Q90",
+      "stem": "Let $\\mathrm{S}$ be the set of all solutions of the equation $\\cos ^{-1}(2 \\mathrm{x})-2 \\cos ^{-1}(\\sqrt{1-\\mathrm{x}^{2}})=\\pi, \\mathrm{x} \\in[-1,1]$. Then $\\sum_{\\mathrm{x} \\in \\mathrm{S}}\\left(2 \\sin ^{-1}(\\mathrm{x})^{2}-3 \\sin ^{-1}(\\mathrm{x})\\right)$ is equal to",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{\\pi^{2}}{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\pi^{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{3 \\pi^{2}}{4}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{\\pi^{2}}{4}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Let $\\cos^{-1}x = \\theta$, then $x = \\cos\\theta$, $\\cos^{-1}(2x) = \\cos^{-1}(2\\cos\\theta)$, $\\cos^{-1}(\\sqrt{1-x^2}) = \\cos^{-1}(|\\sin\\theta|)$, For $x \\in [-1,0]$, $\\theta \\in [\\pi/2,\\pi]$, $|\\sin\\theta| = \\sin\\theta$, Equation becomes: $\\cos^{-1}(2\\cos\\theta) - 2\\cos^{-1}(\\sin\\theta) = \\pi$, $\\cos^{-1}(2\\cos\\theta) - 2(\\pi/2 - \\theta) = \\pi$, $\\cos^{-1}(2\\cos\\theta) + 2\\theta = 2\\pi$, $\\cos^{-1}(2\\cos\\theta) = 2\\pi - 2\\theta$, $2\\cos\\theta = \\cos(2\\pi - 2\\theta) = \\cos(2\\theta)$, $2\\cos\\theta = 2\\cos^2\\theta - 1$, $2\\cos^2\\theta - 2\\cos\\theta - 1 = 0$, $\\cos\\theta = \\frac{1 \\pm \\sqrt{3}}{2}$, Only valid: $\\cos\\theta = \\frac{1 - \\sqrt{3}}{2} \\approx -0.366$, $\\theta = \\cos^{-1}(\\frac{1-\\sqrt{3}}{2})$, $x = \\cos\\theta = \\frac{1-\\sqrt{3}}{2}$, Sum = $2(\\sin^{-1}x)^2 - 3\\sin^{-1}x$, $\\sin^{-1}x = -\\pi/3$, Value = $2(\\pi^2/9) - 3(-\\pi/3) = 2\\pi^2/9 + \\pi = \\pi^2/4$",
+      "tip_formula": "Use substitution $\\cos^{-1}x = \\theta$ and consider domain carefully",
+      "difficulty": "HARD",
+      "subject": "Mathematics",
+      "lesson": "Inverse Trigonometric Functions",
+      "topic": "Properties of Inverse Trigonometric Functions",
+      "subtopic": "Equation Solving",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "inverse-trigonometric",
+        "equations",
+        "domain"
+      ]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 30,
+    "subjects": [
+      "Mathematics"
+    ],
+    "difficultyDistribution": {
+      "easy": 1,
+      "medium": 12,
+      "hard": 17
+    }
+  }
+}

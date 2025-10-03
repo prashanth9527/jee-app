@@ -1271,6 +1271,49 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     }
   }
 
+  async approveAllQuestions(cacheId: string) {
+    try {
+      // Find the database record using cache ID
+      const cache = await this.prisma.pDFProcessorCache.findUnique({
+        where: { id: cacheId }
+      });
+
+      if (!cache) {
+        throw new BadRequestException('Database record not found for this cache ID');
+      }
+
+      // Update all questions with the given cacheId from 'underreview' to 'approved'
+      const result = await this.prisma.question.updateMany({
+        where: {
+          pdfProcessorCacheId: cacheId,
+          status: 'underreview'
+        },
+        data: {
+          status: 'approved'
+        }
+      });
+
+      // Log the approval action
+      await this.logEvent(cacheId, 'SUCCESS', `Approved ${result.count} questions for file: ${cache.fileName}`, {
+        approvedCount: result.count,
+        cacheId: cacheId
+      });
+
+      this.logger.log(`Approved ${result.count} questions for PDFProcessorCache ${cacheId}`);
+
+      return {
+        cacheId: cacheId,
+        fileName: cache.fileName,
+        approvedCount: result.count,
+        message: `Successfully approved ${result.count} questions`
+      };
+
+    } catch (error) {
+      this.logger.error('Error approving questions:', error);
+      throw error;
+    }
+  }
+
   async getJsonStatus(fileName: string) {
     try {
       // Check if JSON file exists in the same directory as PDF

@@ -1,0 +1,1216 @@
+{
+  "questions": [
+    {
+      "id": "Q31",
+      "stem": "Given below are two statements: Statement I : The decrease in first ionization enthalpy from B to Al is much larger than that from Al to Ga . Statement II: The d orbitals in Ga are completely filled. In the light of the above statements, choose the most appropriate answer from the options given below (1) Statement I is incorrect but statement II is correct. (2) Both the statements I and II are correct (3) Statement I is correct but statement II is incorrect (4) Both the statements I and II are incorrect",
+      "options": [
+        {
+          "id": "A",
+          "text": "Statement I is incorrect but statement II is correct.",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Both the statements I and II are correct",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "Statement I is correct but statement II is incorrect",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Both the statements I and II are incorrect",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The first ionization energies (as in NCERT) are as follows: B : 801 kJ/mol, Al : 577 kJ/mol, Ga : 579 kJ/mol. Ga : [Ar] 3d¹⁰ 4s² 4p¹. The decrease from B to Al is 224 kJ/mol while from Al to Ga is only 2 kJ/mol, making Statement I correct. Statement II is also correct as Ga has completely filled d orbitals.",
+      "tip_formula": "Ionization energy trend in p-block: B(801) → Al(577) → Ga(579) kJ/mol",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Periodic Table",
+      "subtopic": "Ionization Energy Trends",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "ionization-energy",
+        "periodic-trends",
+        "p-block"
+      ]
+    },
+    {
+      "id": "Q32",
+      "stem": "Correct order of spin only magnetic moment of the following complex ions is: (Given At. No. Fe: 26, Co:27) (1) [FeF₆]³⁻ > [CoF₆]³⁻ > [Co(C₂O₄)₃]³⁻ (2) [Co(C₂O₄)₃]³⁻ > [CoF₆]³⁻ > [FeF₆]³⁻ (3) [FeF₆]³⁻ > [Co(C₂O₄)₃]³⁻ > [CoF₆]³⁻ (4) [CoF₆]³⁻ > [FeF₆]³⁻ > [Co(C₂O₄)₃]³⁻",
+      "options": [
+        {
+          "id": "A",
+          "text": "[FeF₆]³⁻ > [CoF₆]³⁻ > [Co(C₂O₄)₃]³⁻",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "[Co(C₂O₄)₃]³⁻ > [CoF₆]³⁻ > [FeF₆]³⁻",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "[FeF₆]³⁻ > [Co(C₂O₄)₃]³⁻ > [CoF₆]³⁻",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "[CoF₆]³⁻ > [FeF₆]³⁻ > [Co(C₂O₄)₃]³⁻",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "[FeF₆]³⁻: Fe³⁺ = 3d⁵, weak field ligand, Δ₀ < P, unpaired e⁻ = 5, μ = √35 BM. [CoF₆]³⁻: Co³⁺ = 3d⁶, weak field ligand, Δ₀ < P, unpaired e⁻ = 4, μ = √24 BM. [Co(C₂O₄)₃]³⁻: Co³⁺ = 3d⁶, strong field ligand, Δ₀ > P, unpaired e⁻ = 0, μ = 0 BM.",
+      "tip_formula": "μ = √[n(n+2)] BM where n = number of unpaired electrons",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Coordination Compounds",
+      "subtopic": "Magnetic Properties",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "coordination-compounds",
+        "magnetic-moment",
+        "crystal-field-theory"
+      ]
+    },
+    {
+      "id": "Q33",
+      "stem": "Match List-I and List-II. List-I: A. Osmosis, B. Reverse osmosis, C. Electro osmosis, D. Electrophoresis. List-II: I. Solvent molecules pass through semi permeable membrane towards solvent side., II. Movement of charged colloidal particles under the influence of applied electric potential towards oppositely charged electrodes., III. Solvent molecules pass through semi permeable membrane towards solution side., IV. Dispersion medium moves in an electric field.",
+      "options": [
+        {
+          "id": "A",
+          "text": "A-I, B-III, C-IV, D-II",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "A-III, B-I, C-IV, D-II",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "A-III, B-I, C-II, D-IV",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "A-I, B-III, C-II, D-IV",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A. Osmosis: Solvent molecules pass through semi permeable membrane towards solution side (III). B. Reverse osmosis: Solvent molecules pass through semi permeable membrane towards solvent side (I). C. Electro osmosis: Dispersion medium moves in an electric field (IV). D. Electrophoresis: Movement of charged colloidal particles under the influence of applied electric potential towards oppositely charged electrodes (II).",
+      "tip_formula": "",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Surface Chemistry",
+      "subtopic": "Colloidal Properties",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "colloids",
+        "membrane-processes",
+        "electrokinetic-phenomena"
+      ]
+    },
+    {
+      "id": "Q34",
+      "stem": "The set of correct statements is: (i) Manganese exhibits +7 oxidation state in its oxide. (ii) Ruthenium and Osmium exhibit +8 oxidation in their oxides. (iii) Sc shows +4 oxidation state which is oxidizing in nature. (iv) Cr shows oxidising nature in +6 oxidation state.",
+      "options": [
+        {
+          "id": "A",
+          "text": "(ii) and (iii)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "(i), (ii) and (iv)",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "(i) and (iii)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "(ii), (iii) and (iv)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "(i) Manganese exhibits +7 oxidation state in its oxide (Mn₂O₇) - correct. (ii) Ru & Os form RuO₄ & OsO₄ oxide in +8 oxidation state - correct. (iii) Sc does not show +4 oxidation state - incorrect. (iv) Cr in +6 oxidation state acts as oxidizing agent - correct.",
+      "tip_formula": "",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "d and f Block Elements",
+      "subtopic": "Oxidation States",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "oxidation-states",
+        "transition-elements",
+        "lanthanides"
+      ]
+    },
+    {
+      "id": "Q35",
+      "stem": "Match List-I and List-II. List-I: A. Elastomeric polymer, B. Fibre polymer, C. Thermosetting polymer, D. Thermoplastic polymer. List-II: I. Urea formaldehyde resin, II. Polystyrene, III. Polyester, IV. Neoprene.",
+      "options": [
+        {
+          "id": "A",
+          "text": "A-II, B-III, C-I, D-IV",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "A-II, B-I, C-IV, D-III",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "A-IV, B-III, C-I, D-II",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "A-IV, B-I, C-III, D-II",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Neoprene: Elastomer (A-IV). Polyester: Fibre (B-III). Polystyrene: Thermoplastic (D-II). Urea-Formaldehyde Resin: Thermosetting polymer (C-I).",
+      "tip_formula": "",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Polymers",
+      "subtopic": "Polymer Classification",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "polymers",
+        "classification",
+        "applications"
+      ]
+    },
+    {
+      "id": "Q36",
+      "stem": "An indicator 'X' is used for studying the effect of variation in concentration of iodide on the rate of reaction of iodide ion with H₂O₂ at room temp. The indicator 'X' forms blue colored complex with compound 'A' present in the solution. The indicator 'X' and compound 'A' respectively are",
+      "options": [
+        {
+          "id": "A",
+          "text": "Starch and iodine",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "Methyl orange and H₂O₂",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Starch and H₂O₂",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Methyl orange and iodine",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "I⁻ + H₂O₂ → I₂ + H₂O. The iodine (A) formed reacts with starch (indicator X) to form blue colored complex.",
+      "tip_formula": "I⁻ + H₂O₂ → I₂ + H₂O; I₂ + Starch → Blue complex",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Chemical Kinetics",
+      "subtopic": "Indicators in Kinetics",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "chemical-kinetics",
+        "indicators",
+        "iodine-test"
+      ]
+    },
+    {
+      "id": "Q37",
+      "stem": "A doctor prescribed the drug Equanil to a patient. The patient was likely to have symptoms of which disease?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Stomach ulcers",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Hyperacidity",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Anxiety and stress",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Depression and hypertension",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Equanil is a tranquilizer used for treating depression and hypertension.",
+      "tip_formula": "",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Chemistry in Everyday Life",
+      "topic": "Drugs and Medicines",
+      "subtopic": "Tranquilizers",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "medicinal-chemistry",
+        "drugs",
+        "tranquilizers"
+      ]
+    },
+    {
+      "id": "Q38",
+      "stem": "Find out the major product for the following reaction.",
+      "options": [
+        {
+          "id": "A",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-c2a412fd58950b128156397bef4ca7acc1afb52f.png' />",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-5e3d4f9abd7021b74eeaac6f429cb0425d48e502.png' />",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-5bd24081a2402285606228620327e28b25506094.png' />",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-069aac64524912ea321917ca6531a33cdf94dab4.png' />",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The reaction involves electrophilic aromatic substitution where the -OH group activates the ortho and para positions. Due to steric hindrance and directing effects, the major product is formed at the para position.",
+      "tip_formula": "",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Aromatic Compounds",
+      "subtopic": "Electrophilic Substitution",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "aromatic-compounds",
+        "electrophilic-substitution",
+        "directing-effects"
+      ]
+    },
+    {
+      "id": "Q39",
+      "stem": "The one giving maximum number of isomeric alkenes on dehydrohalogenation reaction is (excluding rearrangement)",
+      "options": [
+        {
+          "id": "A",
+          "text": "1-Bromo-2-methylbutane",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2-Bromopropane",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "2-Bromopentane",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "2-Bromo-3,3-dimethylpentane",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "2-Bromopentane gives maximum number of isomeric alkenes: C-C-C-C=C, C-C-C=C-C (cis & trans isomers).",
+      "tip_formula": "Saytzeff's rule: More substituted alkene is major product",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Haloalkanes",
+      "subtopic": "Dehydrohalogenation",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "haloalkanes",
+        "elimination",
+        "alkene-isomerism"
+      ]
+    },
+    {
+      "id": "Q40",
+      "stem": "When a hydrocarbon A undergoes combustion in the presence of air, it requires 9.5 equivalents of oxygen and produces 3 equivalents of water. What is the molecular formula of A?",
+      "options": [
+        {
+          "id": "A",
+          "text": "C₈H₆",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "C₉H₉",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "C₆H₆",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "C₉H₆",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "CₓHᵧ + (x + y/4)O₂ → xCO₂ + y/2 H₂O. Given: x + y/4 = 9.5 and y/2 = 3. Solving: y = 6, x = 8. Therefore molecular formula is C₈H₆.",
+      "tip_formula": "CₓHᵧ + (x + y/4)O₂ → xCO₂ + y/2 H₂O",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Hydrocarbons",
+      "subtopic": "Combustion Analysis",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "combustion",
+        "hydrocarbons",
+        "molecular-formula"
+      ]
+    },
+    {
+      "id": "Q41",
+      "stem": "Find out the major products from the following reaction sequence.",
+      "options": [
+        {
+          "id": "A",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-94e3b3092ec3d071e1554b2598290be3bc581073.png' /><img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-ba3d8c81b4d70e34ba71924f339723275cbf5ecd.png' />",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-14f70836d113413a93496c3908b18ac0cb261aab.png' /><img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-dcde5cba7d57816b31f54c26a7f71ba0a8903242.png' />",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-628ac770507c43d501bc89784fcd3bd997f109d3.png' />",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-41280cd0991fafbb5aa2bd449f1e05acdfa932a1.png' /><img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/29-JAN-2023 SHIFT-2 JM CHEMISTRY PAPER SOLUTION/smile-b25ec32f25149bb0d7bd95a0ca7b6cb596ef96f5.png' />",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The reaction sequence involves Friedel-Crafts acylation followed by Clemmensen reduction, giving the major products as shown in option B.",
+      "tip_formula": "",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Aromatic Compounds",
+      "subtopic": "Friedel-Crafts Reaction",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "aromatic-compounds",
+        "friedel-crafts",
+        "reduction"
+      ]
+    },
+    {
+      "id": "Q42",
+      "stem": "According to MO theory the bond orders for O₂²⁻, CO and NO⁺ respectively, are",
+      "options": [
+        {
+          "id": "A",
+          "text": "1, 3 and 3",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "1, 3 and 2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "1, 2 and 3",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "2, 3 and 3",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "O₂²⁻ bond order = 1, CO bond order = 3, NO⁺ bond order = 3 according to molecular orbital theory.",
+      "tip_formula": "Bond order = ½ (Nb - Na)",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Chemical Bonding",
+      "subtopic": "Molecular Orbital Theory",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "molecular-orbitals",
+        "bond-order",
+        "diatomic-molecules"
+      ]
+    },
+    {
+      "id": "Q43",
+      "stem": "A solution of CrO₅ in amyl alcohol has a....colour",
+      "options": [
+        {
+          "id": "A",
+          "text": "Green",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Orange-Red",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Yellow",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Blue",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A solution of CrO₅ in amyl alcohol has a blue colour.",
+      "tip_formula": "",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "d and f Block Elements",
+      "subtopic": "Chromium Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "chromium",
+        "coordination-compounds",
+        "color"
+      ]
+    },
+    {
+      "id": "Q44",
+      "stem": "The concentration of dissolved Oxygen in water for growth of fish should be more than X ppm and Biochemical Oxygen Demand in clean water should be less than Y ppm. X and Y in ppm are, respectively.",
+      "options": [
+        {
+          "id": "A",
+          "text": "X=6, Y=5",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "X=4, Y=6",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "X=4, Y=5",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "X=6, Y=2",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The growth of fish gets inhibited if the concentration of dissolved Oxygen in water is less than 6 ppm and Biochemical Oxygen demand in clean water should be less than 5 ppm.",
+      "tip_formula": "",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Environmental Chemistry",
+      "topic": "Water Pollution",
+      "subtopic": "Dissolved Oxygen and BOD",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "environmental-chemistry",
+        "water-quality",
+        "bod"
+      ]
+    },
+    {
+      "id": "Q45",
+      "stem": "Reaction of propanamide with Br₂/KOH(aq) produces :",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ethylnitrile",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Propylamine",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Propanenitrile",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Ethylamine",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Propanamide undergoes Hofmann bromamide degradation with Br₂/KOH to give ethylamine with loss of one carbon atom.",
+      "tip_formula": "R-CONH₂ + Br₂ + 4KOH → R-NH₂ + 2KBr + K₂CO₃ + 2H₂O",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Amines",
+      "subtopic": "Hofmann Degradation",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "amides",
+        "hofmann-degradation",
+        "amines"
+      ]
+    },
+    {
+      "id": "Q46",
+      "stem": "Following tetrapeptide can be represented as (F, L, D, Y, I, Q, P are one letter codes for amino acids)",
+      "options": [
+        {
+          "id": "A",
+          "text": "FIQY",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "FLDY",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "YQLF",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "PLDY",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Hydrolysis of the given tetrapeptide gives: Phenylalanine (F), Leucine (L), Aspartic acid (D), Tyrosine (Y). Therefore the sequence is FLDY.",
+      "tip_formula": "",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Biomolecules",
+      "topic": "Amino Acids and Proteins",
+      "subtopic": "Peptide Structure",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "proteins",
+        "peptides",
+        "amino-acids"
+      ]
+    },
+    {
+      "id": "Q47",
+      "stem": "Which of the following relations are correct? (A) ΔU = q + pΔV (B) ΔG = ΔH - TΔS (C) ΔS = q_rev/T (D) ΔH = ΔU - ΔnRT",
+      "options": [
+        {
+          "id": "A",
+          "text": "C and D only",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "B and C only",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "A and B only",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "B and D only",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "(B) ΔG = ΔH - TΔS is correct at constant temperature. (C) ΔS = q_rev/T is correct by definition. (A) should be ΔU = Q - PΔV for constant pressure. (D) should be ΔH = ΔU + ΔnRT.",
+      "tip_formula": "ΔG = ΔH - TΔS; ΔS = q_rev/T; ΔH = ΔU + ΔnRT",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Thermodynamics",
+      "subtopic": "Thermodynamic Relations",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "thermodynamics",
+        "free-energy",
+        "entropy"
+      ]
+    },
+    {
+      "id": "Q48",
+      "stem": "The major component of which of the following ore is sulphide based mineral?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Calamine",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Siderite",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Sphalerite",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "Malachite",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Calamine: ZnCO₃, Siderite: FeCO₃, Sphalerite: ZnS, Malachite: CuCO₃.Cu(OH)₂. Only Sphalerite is sulphide based.",
+      "tip_formula": "",
+      "difficulty": "EASY",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Metallurgy",
+      "subtopic": "Ores and Minerals",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "metallurgy",
+        "ores",
+        "minerals"
+      ]
+    },
+    {
+      "id": "Q49",
+      "stem": "Given below are two statements: Statement I : Nickel is being used as the catalyst for producing syn gas and edible fats. Statement II : Silicon forms both electron rich and electron deficient hydrides. In the light of the above statements, choose the most appropriate answer from the options given below:",
+      "options": [
+        {
+          "id": "A",
+          "text": "Both the statements I and II are correct",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Statement I is incorrect but statement II is correct",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Both the statements I and II are incorrect",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Statement I is correct but statement II is incorrect",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Statement-I is correct: Ni is used in hydrogenation of unsaturated fat to make edible fats and in production of syn gas. Statement-II is false as hydride of Silicon is electron precise & neither electron deficient nor electron rich.",
+      "tip_formula": "",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "p-Block Elements",
+      "subtopic": "Silicon Hydrides",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "catalysis",
+        "silanes",
+        "hydrogenation"
+      ]
+    },
+    {
+      "id": "Q50",
+      "stem": "Match List I with List II. List I: A. van't Hoff factor, i; B. k_f; C. Solutions with same osmotic pressure; D. Azeotropes. List II: I. Cryoscopic constant; II. Isotonic solutions; III. Normal molar mass/Abnormal molar mass; IV. Solutions with same composition of vapour above it",
+      "options": [
+        {
+          "id": "A",
+          "text": "A-III, B-I, C-II, D-IV",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "A-III, B-II, C-I, D-IV",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "A-III, B-I, C-IV, D-II",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "A-I, B-III, C-II, D-IV",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A. van't Hoff factor, i = Normal molar mass/Abnormal molar mass (III). B. k_f = Cryoscopic constant (I). C. Solutions with same osmotic pressure are isotonic solutions (II). D. Azeotropes are solutions with same composition of vapour above them (IV).",
+      "tip_formula": "i = Normal molar mass/Abnormal molar mass",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Solutions",
+      "subtopic": "Colligative Properties",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "colligative-properties",
+        "vant-hoff",
+        "osmotic-pressure"
+      ]
+    },
+    {
+      "id": "Q51",
+      "stem": "On heating, LiNO₃ gives how many compounds among the following? Li₂O, N₂, O₂, LiNO₂, NO₂",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "2LiNO₃ → Li₂O + 2NO₂ + ½O₂. Hence three products: Li₂O, NO₂ and O₂.",
+      "tip_formula": "2LiNO₃ → Li₂O + 2NO₂ + ½O₂",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "s-Block Elements",
+      "subtopic": "Alkali Metal Compounds",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "alkali-metals",
+        "nitrates",
+        "thermal-decomposition"
+      ]
+    },
+    {
+      "id": "Q52",
+      "stem": "At 298 K, N₂(g) + 3H₂(g) ⇌ 2NH₃(g), K₁ = 4 × 10⁵; N₂(g) + O₂(g) ⇌ 2NO(g), K₂ = 1.6 × 10¹²; H₂(g) + ½O₂(g) ⇌ H₂O(g), K₃ = 1.0 × 10⁻¹³. Based on above equilibria, the equilibrium constant of the reaction, 2NH₃(g) + ⁵/₂O₂(g) ⇌ 2NO(g) + 3H₂O(g) is ______ × 10⁻³³ (Nearest integer)",
+      "options": [
+        {
+          "id": "A",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "4",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "5",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "K_eq = (K₂ × K₃³)/K₁ = (1.6 × 10¹² × (10⁻¹³)³)/(4 × 10⁵) = (1.6/4) × 10⁻³² = 4 × 10⁻³³",
+      "tip_formula": "K_eq = (K₂ × K₃³)/K₁",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Chemical Equilibrium",
+      "subtopic": "Equilibrium Constant Relations",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "chemical-equilibrium",
+        "equilibrium-constant",
+        "reaction-combination"
+      ]
+    },
+    {
+      "id": "Q53",
+      "stem": "For conversion of compound A → B, the rate constant of the reaction was found to be 4.6 × 10⁻⁵ L mol⁻¹ s⁻¹. The order of the reaction is ______.",
+      "options": [
+        {
+          "id": "A",
+          "text": "0",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "2",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "3",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Unit of rate constant is (conc.)¹⁻ⁿ time⁻¹. Given unit: L mol⁻¹ s⁻¹ = (mol/L)⁻¹ s⁻¹. So 1-n = -1 ⇒ n = 2.",
+      "tip_formula": "For nth order reaction: k = (conc.)¹⁻ⁿ time⁻¹",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Chemical Kinetics",
+      "subtopic": "Order of Reaction",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "chemical-kinetics",
+        "reaction-order",
+        "rate-constant"
+      ]
+    },
+    {
+      "id": "Q54",
+      "stem": "The number of correct statement/s from the following is ______. A. In the metallurgy of gold, the metal is leached with a dilute solution of NaCN. B. Zone refining is based on the principle that impurities are more soluble in molten metal than in solid metal. C. In the froth floatation process, the sulphide ore is concentrated by using pine oil. D. Bauxite ore is concentrated by chemical separation method.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A. Correct - Gold is leached with dilute NaCN solution. B. Correct - Zone refining principle. C. Correct - Pine oil is used as froth stabilizer. D. Incorrect - Bauxite is concentrated by chemical method (Baeyer's process), not chemical separation method.",
+      "tip_formula": "",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "Metallurgy",
+      "subtopic": "Extraction Processes",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "metallurgy",
+        "extraction",
+        "concentration"
+      ]
+    },
+    {
+      "id": "Q55",
+      "stem": "The number of correct statement/s from the following is ______. A. The coagulation power of Al³⁺ is more than Na⁺. B. The flocculation value of arsenious sulphide sol is less than that of ferric hydroxide sol. C. The gold numbers of gelatin and starch are 0.01 and 25 respectively. D. Micelles are macromolecular colloids.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A. Correct - Higher charge has more coagulation power. B. Incorrect - Flocculation value is inversely proportional to coagulation power. As₂S₃ is negatively charged, so Al³⁺ has high coagulation power and low flocculation value. C. Correct - Gelatin has lower gold number than starch. D. Incorrect - Micelles are associated colloids, not macromolecular colloids.",
+      "tip_formula": "Hardy-Schulze rule: Coagulation power ∝ Charge of ion",
+      "difficulty": "HARD",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Surface Chemistry",
+      "subtopic": "Colloids and Coagulation",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "colloids",
+        "coagulation",
+        "gold-number"
+      ]
+    },
+    {
+      "id": "Q56",
+      "stem": "The number of correct statement/s from the following is ______. A. The boiling point of ethanol is less than that of dimethyl ether. B. The C-O-H bond angle in alcohols is slightly less than the tetrahedral angle. C. Phenol is more acidic than ethanol. D. o-Nitrophenol is more volatile than p-nitrophenol.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A. Incorrect - Ethanol has higher boiling point due to H-bonding. B. Correct - Due to lone pair repulsion. C. Correct - Phenoxide ion is resonance stabilized. D. Correct - o-nitrophenol has intramolecular H-bonding making it more volatile.",
+      "tip_formula": "",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Organic Chemistry",
+      "topic": "Alcohols, Phenols and Ethers",
+      "subtopic": "Properties and Reactions",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "alcohols",
+        "phenols",
+        "acidity",
+        "hydrogen-bonding"
+      ]
+    },
+    {
+      "id": "Q57",
+      "stem": "The number of correct statement/s from the following is ______. A. The lanthanoid contraction is responsible for the similar atomic radii of Zr and Hf. B. The actinoids show more number of oxidation states than lanthanoids. C. Ce⁴⁺ is used as an oxidizing agent in volumetric analysis. D. All lanthanoids are highly dense metals.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A. Correct - Due to lanthanoid contraction, Zr and Hf have similar radii. B. Correct - Actinoids show more oxidation states. C. Correct - Ce⁴⁺ is used as oxidizing agent. D. Incorrect - Not all lanthanoids are highly dense.",
+      "tip_formula": "",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Inorganic Chemistry",
+      "topic": "d and f Block Elements",
+      "subtopic": "Lanthanoids and Actinoids",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "lanthanoids",
+        "actinoids",
+        "lanthanoid-contraction"
+      ]
+    },
+    {
+      "id": "Q58",
+      "stem": "The number of correct statement/s from the following is ______. A. The zwitter ionic form of glycine exists at pH = 6.1. B. The isoelectric point of histidine is 7.6. C. At pH = 2, glycine exists as H₃N⁺-CH₂-COOH. D. At pH = 10, glycine exists as H₂N-CH₂-COO⁻.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A. Correct - pI of glycine is 6.1 where zwitter ion exists. B. Correct - Isoelectric point of histidine is 7.6. C. Correct - At pH = 2 (< pKa₁), cationic form exists. D. Correct - At pH = 10 (> pKa₂), anionic form exists.",
+      "tip_formula": "For amino acids: pH < pI → cationic; pH > pI → anionic; pH = pI → zwitterion",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Biomolecules",
+      "topic": "Amino Acids and Proteins",
+      "subtopic": "Acid-Base Properties",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "amino-acids",
+        "isoelectric-point",
+        "zwitterion"
+      ]
+    },
+    {
+      "id": "Q59",
+      "stem": "The number of correct statement/s from the following is ______. A. The coordination number of each atom in body centered cubic structure is 8. B. A void surrounded by 4 spheres is called tetrahedral void. C. An atom at the edge center is shared by 2 unit cells. D. In hcp and ccp, 74% space is occupied.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A. Correct - BCC has coordination number 8. B. Correct - Tetrahedral void surrounded by 4 spheres. C. Incorrect - Edge center atom is shared by 4 unit cells. D. Correct - Both hcp and ccp have 74% packing efficiency.",
+      "tip_formula": "BCC: CN = 8; FCC/HCP: CN = 12, packing efficiency = 74%",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Solid State",
+      "subtopic": "Crystal Structures",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "crystal-structures",
+        "coordination-number",
+        "packing-efficiency"
+      ]
+    },
+    {
+      "id": "Q60",
+      "stem": "The number of correct statement/s from the following is ______. A. The standard electrode potential (E°) for the half cell Cl₂ | Cl⁻ is independent of the concentration of KCl. B. The cell potential becomes zero at equilibrium. C. The absolute value of the electrode potential cannot be determined. D. Electrode potential depends upon the concentration of the electrolyte.",
+      "options": [
+        {
+          "id": "A",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "4",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A. Incorrect - E° is standard value at 1M concentration. B. Correct - At equilibrium, E_cell = 0. C. Correct - Absolute electrode potential cannot be determined. D. Correct - Electrode potential depends on concentration via Nernst equation.",
+      "tip_formula": "E_cell = E°_cell - (RT/nF)lnQ",
+      "difficulty": "MEDIUM",
+      "subject": "Chemistry",
+      "lesson": "Physical Chemistry",
+      "topic": "Electrochemistry",
+      "subtopic": "Electrode Potential",
+      "yearAppeared": 2023,
+      "isPreviousYear": true,
+      "tags": [
+        "electrochemistry",
+        "electrode-potential",
+        "nernst-equation"
+      ]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 30,
+    "subjects": [
+      "Chemistry"
+    ],
+    "difficultyDistribution": {
+      "easy": 8,
+      "medium": 16,
+      "hard": 6
+    }
+  }
+}

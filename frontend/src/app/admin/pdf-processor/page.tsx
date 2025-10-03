@@ -863,6 +863,112 @@ export default function PDFProcessorPage() {
     window.open(reviewUrl, '_blank');
   };
 
+  const refreshModalData = async () => {
+    if (!editingJson) {
+      toast.error('No file selected');
+      return;
+    }
+
+    toast.loading('Refreshing data...', 'Please wait');
+
+    try {
+      // Refresh the PDF list to get latest data
+      await fetchPDFs();
+      
+      // Find the updated PDF data
+      const updatedPdf = pdfs.find(p => p.fileName === editingJson);
+      
+      if (updatedPdf) {
+        // Update the current status
+        setCurrentStatus(updatedPdf.status);
+        
+        // Update LaTeX file path if available
+        if (updatedPdf.latexFilePath) {
+          setLatexFilePath(updatedPdf.latexFilePath);
+        }
+        
+        // Update JSON content if available
+        if (updatedPdf.jsonContent) {
+          setJsonContent(updatedPdf.jsonContent);
+        }
+        
+        toast.success('Data refreshed successfully!');
+      } else {
+        toast.error('File not found in updated data');
+      }
+    } catch (error: any) {
+      console.error('Error refreshing modal data:', error);
+      toast.error(`Error refreshing data: ${error.message}`);
+    }
+  };
+
+  const approveAllQuestions = async () => {
+    if (!editingJson) {
+      toast.error('No file selected');
+      return;
+    }
+
+    // Find the PDF to get cache ID
+    const pdf = pdfs.find(p => p.fileName === editingJson);
+    const cacheId = pdf?.databaseId;
+    
+    if (!cacheId) {
+      toast.error('Database ID not found for this file');
+      return;
+    }
+
+    // Show confirmation dialog
+    const result = await Swal.fire({
+      title: 'Approve All Questions',
+      html: `This will approve <strong>all questions</strong> for <br><strong>${editingJson}</strong><br><br>This action will change the status from <strong>'under review'</strong> to <strong>'approved'</strong> for all questions associated with this file.<br><br>Are you sure you want to continue?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#16a34a', // Green color
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, approve all!',
+      cancelButtonText: 'Cancel',
+      width: '500px'
+    });
+
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    toast.loading('Approving questions...', 'Please wait');
+
+    try {
+      const response = await api.post(`/admin/pdf-processor/approve-all/${cacheId}`);
+      
+      if (response.data.success) {
+        const { approvedCount, fileName } = response.data.data;
+        
+        toast.success(`Successfully approved ${approvedCount} questions!`);
+        
+        // Refresh the PDF list to show updated status
+        await fetchPDFs();
+        
+        // Show success details
+        Swal.fire({
+          title: 'Questions Approved!',
+          html: `
+            <div class="text-left">
+              <p><strong>File:</strong> ${fileName}</p>
+              <p><strong>Questions Approved:</strong> ${approvedCount}</p>
+              <p><strong>Status:</strong> All questions are now approved</p>
+            </div>
+          `,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      } else {
+        toast.error(`Failed to approve questions: ${response.data.message}`);
+      }
+    } catch (error: any) {
+      console.error('Error approving questions:', error);
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
   const uploadJsonToProcessed = async (fileName: string) => {
     const pdf = pdfs.find(p => p.fileName === fileName);
     const questionCount = pdf?.jsonQuestionCount;
@@ -900,7 +1006,7 @@ export default function PDFProcessorPage() {
     }
   };
 
-  const processWithMathpix = async (fileName: string) => {
+  const processWithMathpix = async (fileName: string, keepModalOpen: boolean = false) => {
     const pdf = pdfs.find(p => p.fileName === fileName);
     if (!pdf) {
       toast.error('PDF not found');
@@ -935,20 +1041,26 @@ export default function PDFProcessorPage() {
         // Refresh the PDF list to show updated status
         await fetchPDFs();
 
-        // Show success details
-        Swal.fire({
-          title: 'Processing Complete!',
-          html: `
-            <div class="text-left">
-              <p><strong>File:</strong> ${pdf.fileName}</p>
-              <p><strong>Processing Time:</strong> ${Math.round(processingTimeMs / 1000)}s</p>
-              <p><strong>LaTeX Content Length:</strong> ${latexContent?.length || 0} characters</p>
-              <p><strong>LaTeX File Path:</strong> ${latexFilePath || 'Not saved'}</p>
-            </div>
-          `,
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
+        // If called from modal, show a simpler success message and don't show detailed dialog
+        if (keepModalOpen) {
+          // Just show a brief success message without the detailed dialog
+          toast.success('LaTeX content extracted successfully! You can now view it in the LaTeX file path field.');
+        } else {
+          // Show success details dialog (original behavior for main table)
+          Swal.fire({
+            title: 'Processing Complete!',
+            html: `
+              <div class="text-left">
+                <p><strong>File:</strong> ${pdf.fileName}</p>
+                <p><strong>Processing Time:</strong> ${Math.round(processingTimeMs / 1000)}s</p>
+                <p><strong>LaTeX Content Length:</strong> ${latexContent?.length || 0} characters</p>
+                <p><strong>LaTeX File Path:</strong> ${latexFilePath || 'Not saved'}</p>
+              </div>
+            `,
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        }
 
       } else {
         toast.error(`Mathpix processing failed: ${response.data.message}`);
@@ -1567,7 +1679,7 @@ Your task is to **extract and structure ALL questions into JSON format**.
    - ❌ Do not fabricate or invent any question text or options.  
    - ✅ Use the same wording, LaTeX math, and image references as in the file.  
 3. Preserve **LaTeX math code** exactly as in the source (e.g., \`$$E=mc^2$$\`).  
-4. If **image references** (\`\\includegraphics\`) are present:  
+4. **Do not skip ANY image references.** Every \`\\includegraphics\` in the \`.tex\` must be included in the JSON.   
    - Replace them with an HTML \`<img>\` tag.  
    - Format:  
      \`\`\`html
@@ -1678,7 +1790,8 @@ Ensure exactly 30 questions, numbered sequentially (Q1–Q90), with lesson/topic
 Ignore and skip any **branding, coaching names, promotional headers/footers, or unrelated text**.  
 Preserve **exactly the questions, options, and correct answers** from the \`.tex\` file.  
    - ❌ Do not fabricate or invent any question text or options.  
-   - ✅ Use the same wording, LaTeX math, and image references as in the file.`;
+   - ✅ Use the same wording, LaTeX math, and image references as in the file.  
+**Do not skip ANY image references.** Every \`\\includegraphics\` in the \`.tex\` must be included in the JSON.`;
 
                           navigator.clipboard.writeText(promptText).then(() => {
                             toast.success('Prompt copied to clipboard!');
@@ -1751,6 +1864,15 @@ Preserve **exactly the questions, options, and correct answers** from the \`.tex
                         title={currentStatus === 'COMPLETED' ? 'Already completed' : 'Mark this file as completed'}
                       >
                         Mark as completed
+                      </button>
+                      
+                      {/* Refresh Button */}
+                      <button
+                        onClick={refreshModalData}
+                        className="px-3 py-1 text-sm font-medium text-white bg-blue-600 border border-blue-200 rounded-md hover:bg-blue-700 transition-colors"
+                        title="Refresh modal data with latest changes"
+                      >
+                        Refresh
                       </button>
                       
                       {/* Close Button */}
@@ -1853,6 +1975,27 @@ Preserve **exactly the questions, options, and correct answers** from the \`.tex
                     </div>
                     
                     <div className="flex justify-end space-x-3">
+                      <button
+                        onClick={() => processWithMathpix(editingJson!, true)}
+                        className="px-4 py-2 text-sm font-medium text-white bg-orange-600 rounded-md hover:bg-orange-700"
+                        title="Process PDF with Mathpix to extract LaTeX"
+                      >
+                        Process Mathpix
+                      </button>
+                      <button
+                        onClick={() => importProcessedJSON(editingJson!)}
+                        className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700"
+                        title="Import questions from JSON content to database"
+                      >
+                        Import
+                      </button>
+                      <button
+                        onClick={approveAllQuestions}
+                        className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
+                        title="Approve all questions for this file"
+                      >
+                        Approve All
+                      </button>
                       <button
                         onClick={previewQuestions}
                         className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"

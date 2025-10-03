@@ -359,6 +359,28 @@ export class PDFProcessorController {
     }
   }
 
+  @Post('approve-all/:cacheId')
+  async approveAllQuestions(@Param('cacheId') cacheId: string) {
+    try {
+      const result = await this.pdfProcessorService.approveAllQuestions(cacheId);
+      
+      return {
+        success: true,
+        message: 'All questions approved successfully',
+        data: result
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to approve questions',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
   @Post('reset-retry/:fileName')
   async resetRetryCount(@Param('fileName') fileName: string) {
     try {
