@@ -684,15 +684,10 @@ export default function PDFProcessorPage() {
       if (response.data.success) {
         toast.close();
         const { questionCount, jsonFilePath } = response.data.data;
-        toast.success(
-          `JSON content saved successfully!`,
-          `${questionCount} questions saved to database and file`
-        );
-        setShowJsonModal(false);
-        setEditingJson(null);
-        setJsonContent('');
-        setLatexFilePath('');
-        fetchPDFs(); // Refresh the list
+        toast.success('JSON updated', 'JSON content saved successfully!');
+        
+        // Keep modal open and refresh the PDF list
+        fetchPDFs();
       }
     } catch (error: any) {
       console.error('Error saving JSON content:', error);
@@ -846,6 +841,26 @@ export default function PDFProcessorPage() {
       console.error('Error marking as completed:', error);
       toast.error(error.response?.data?.message || 'Failed to mark as completed');
     }
+  };
+
+  const previewQuestions = () => {
+    if (!editingJson) {
+      toast.error('No file selected');
+      return;
+    }
+
+    // Find the PDF to get cache ID
+    const pdf = pdfs.find(p => p.fileName === editingJson);
+    const cacheId = pdf?.databaseId;
+    
+    if (!cacheId) {
+      toast.error('Database ID not found for this file');
+      return;
+    }
+
+    // Open the questions review page in a new window
+    const reviewUrl = `/admin/pdf-review/${cacheId}`;
+    window.open(reviewUrl, '_blank');
   };
 
   const uploadJsonToProcessed = async (fileName: string) => {
@@ -1548,8 +1563,11 @@ Your task is to **extract and structure ALL questions into JSON format**.
 
 ### CRITICAL RULES
 1. Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start with \`{\` and end with \`}\`.  
-2. Preserve **LaTeX math code** exactly as in the source (e.g., \`$$E=mc^2$$\`).  
-3. If **image references** (\`\\includegraphics\`) are present:  
+2. Preserve **exactly the questions, options, and correct answers** from the \`.tex\` file.  
+   - ❌ Do not fabricate or invent any question text or options.  
+   - ✅ Use the same wording, LaTeX math, and image references as in the file.  
+3. Preserve **LaTeX math code** exactly as in the source (e.g., \`$$E=mc^2$$\`).  
+4. If **image references** (\`\\includegraphics\`) are present:  
    - Replace them with an HTML \`<img>\` tag.  
    - Format:  
      \`\`\`html
@@ -1578,8 +1596,8 @@ Your task is to **extract and structure ALL questions into JSON format**.
      \`\`\`json
      "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/smile-physics-paper/diagram1.png' />"
      \`\`\`  
-4. Accept question numbering as \`Q1, Q2, …\` or \`1., 2., …\`.  
-5. **Skip all promotional/branding content** (e.g., "Allen", "Best of Luck", headers/footers, watermarks, motivational lines). Keep only actual question data.  
+5. Accept question numbering as \`Q1, Q2, …\` or \`1., 2., …\`.  
+6. **Skip all promotional/branding content** (e.g., "Allen", "Best of Luck", headers/footers, watermarks, motivational lines). Keep only actual question data.  
 
 ---
 
@@ -1653,12 +1671,14 @@ Assign: **lesson → topic → subtopic**.
 }
 \`\`\`
 
-
 ### FINAL INSTRUCTION
 
 Read the \`.tex\` file carefully and return **only the JSON output** in the schema above.  
 Ensure exactly 30 questions, numbered sequentially (Q1–Q90), with lesson/topic/subtopic classification.  
-Ignore and skip any **branding, coaching names, promotional headers/footers, or unrelated text**.`;
+Ignore and skip any **branding, coaching names, promotional headers/footers, or unrelated text**.  
+Preserve **exactly the questions, options, and correct answers** from the \`.tex\` file.  
+   - ❌ Do not fabricate or invent any question text or options.  
+   - ✅ Use the same wording, LaTeX math, and image references as in the file.`;
 
                           navigator.clipboard.writeText(promptText).then(() => {
                             toast.success('Prompt copied to clipboard!');
@@ -1833,6 +1853,12 @@ Ignore and skip any **branding, coaching names, promotional headers/footers, or 
                     </div>
                     
                     <div className="flex justify-end space-x-3">
+                      <button
+                        onClick={previewQuestions}
+                        className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+                      >
+                        Preview
+                      </button>
                       <button
                         onClick={() => {
                           setShowJsonModal(false);

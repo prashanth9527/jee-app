@@ -1,6 +1,3 @@
-/* Import KaTeX CSS */
-@import 'katex/dist/katex.min.css';
-
 /* Math rendering styles */
 .question-content {
   line-height: 1.6;
@@ -31,54 +28,28 @@
   font-style: italic;
 }
 
-/* KaTeX styling */
-.katex {
-  font-size: 1em;
-  line-height: 1.2;
+/* MathJax styling */
+.MathJax {
+  display: inline-block !important;
 }
 
-.katex-display {
-  margin: 1rem 0;
-  text-align: center;
+.MathJax_Display {
+  margin: 0.5rem 0 !important;
+  text-align: center !important;
 }
 
 /* Ensure math content is selectable */
-.question-content .katex {
+.question-content .MathJax {
   user-select: text;
 }
 
 /* Math in options */
-.question-content .katex svg {
+.question-content .MathJax svg {
   vertical-align: middle;
 }
 
-/* LaTeX content display */
-.latex-content-display {
-  line-height: 1.6;
-}
-
-.latex-content-display .katex {
-  font-size: 1em;
-}
-
-.latex-content-display .katex-display {
-  margin: 0.5rem 0;
-  text-align: center;
-}
-
-/* Math inline styling */
-.math-inline {
-  display: inline;
-}
-
-.math-display {
-  display: block;
-  text-align: center;
-  margin: 0.5rem 0;
-}
-
 /* Loading state for math */
-.question-content .katex-loading {
+.question-content .MathJax_Processing {
   background-color: rgba(59, 130, 246, 0.1);
   border-radius: 0.25rem;
   padding: 0.125rem 0.25rem;
@@ -96,15 +67,11 @@
 
 /* Responsive math */
 @media (max-width: 640px) {
-  .question-content .katex-display {
+  .question-content .MathJax_Display {
     font-size: 0.9em;
   }
   
-  .question-content .katex {
-    font-size: 0.95em;
-  }
-  
-  .latex-content-display .katex {
+  .question-content .MathJax {
     font-size: 0.95em;
   }
 }
