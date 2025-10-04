@@ -559,7 +559,7 @@ export default function PDFReviewPage() {
                                 try {
                                   // Extract just the filename from the full path
                                   const fileName = pdfData.filePath.split(/[\\/]/).pop();
-                                  const fileUrl = `http://localhost:3001/static/pdf/${fileName}`;
+                                  const fileUrl = `${process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001'}/static/pdf/${fileName}`;
                                   console.log('Opening PDF URL:', fileUrl);
                                   window.open(fileUrl, '_blank');
                                 } catch (error) {
@@ -580,7 +580,7 @@ export default function PDFReviewPage() {
                               onClick={() => {
                                 try {
                                   const fileName = pdfData.latexFilePath!.split(/[\\/]/).pop();
-                                  const fileUrl = `http://localhost:3001/static/latex/${fileName}`;
+                                  const fileUrl = `${process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001'}/static/latex/${fileName}`;
                                   console.log('Opening LaTeX URL:', fileUrl);
                                   window.open(fileUrl, '_blank');
                                 } catch (error) {
