@@ -17,7 +17,7 @@ async function bootstrap() {
 	app.enableCors({
 		origin: [
 			'https://rankora.in',
-			'https://wwww.rankora.in',     // production frontend URL
+			'https://www.rankora.in',     // production frontend URL
 			'http://localhost:3000',  // local development frontend
 			'http://localhost:3001',  // local development frontend (alternative port)
 			'http://127.0.0.1:3000',  // local development frontend
@@ -50,7 +50,7 @@ async function bootstrap() {
 	console.log(`API listening on http://localhost:${port}`);
 	console.log('CORS configured for origins:', [
 		'https://rankora.in',
-		'https://wwww.rankora.in',
+		'https://www.rankora.in',
 		'http://localhost:3000',
 		'http://localhost:3001',
 		'http://127.0.0.1:3000',

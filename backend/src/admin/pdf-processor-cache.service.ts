@@ -415,8 +415,13 @@ export class PDFProcessorCacheService {
   }
 
   async processWithMathpix(id: string) {
-    // try {
+    try {
       this.logger.log(`Starting Mathpix processing for cache ID: ${id}`);
+      
+      // Check if Mathpix is configured
+      if (!this.mathpixService.isConfigured()) {
+        throw new Error('Mathpix API credentials not configured. Please set MATHPIX_APP_ID and MATHPIX_APP_KEY environment variables.');
+      }
       
       // Find the record by ID
       const record = await this.prisma.pDFProcessorCache.findUnique({
@@ -429,13 +434,28 @@ export class PDFProcessorCacheService {
 
       // Get the full file path
       const rootDir = path.join(__dirname, '../../../..');
-      const fullFilePath = path.join(rootDir, record.filePath.replace(/\\/g, '/'));
+      const fullFilePath = path.join(rootDir, record.filePath.replace(/\\/g, path.sep));
 
-      this.logger.log(`fullFilePath: ${fullFilePath}`);
+      this.logger.log(`Root directory: ${rootDir}`);
+      this.logger.log(`Record file path: ${record.filePath}`);
+      this.logger.log(`Full file path: ${fullFilePath}`);
+      this.logger.log(`File exists: ${fs.existsSync(fullFilePath)}`);
 
       // Check if PDF file exists
       if (!fs.existsSync(fullFilePath)) {
-        throw new Error(`PDF file not found: ${fullFilePath}`);
+        // Try alternative path construction
+        const altFilePath = path.join(process.cwd(), record.filePath);
+        this.logger.log(`Alternative file path: ${altFilePath}`);
+        this.logger.log(`Alternative file exists: ${fs.existsSync(altFilePath)}`);
+        
+        if (fs.existsSync(altFilePath)) {
+          this.logger.log(`Using alternative file path: ${altFilePath}`);
+          const result = await this.mathpixService.processPdfWithMathpixByFileName(record.fileName, altFilePath);
+          this.logger.log(`Mathpix processing completed for cache ID: ${id}, success: ${result.success}`);
+          return result;
+        }
+        
+        throw new Error(`PDF file not found: ${fullFilePath} or ${altFilePath}`);
       }
 
       // Process with Mathpix using the existing service
@@ -444,9 +464,9 @@ export class PDFProcessorCacheService {
       this.logger.log(`Mathpix processing completed for cache ID: ${id}, success: ${result.success}`);
       
       return result;
-    // } catch (error) {
-    //   this.logger.error('Error processing with Mathpix:', error);
-    //   throw error;
-    // }
+    } catch (error) {
+      this.logger.error('Error processing with Mathpix:', error);
+      throw error;
+    }
   }
 }
