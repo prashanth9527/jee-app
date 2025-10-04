@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { Request, Response, NextFunction } from 'express';
 
 // Disable SSL certificate verification in development
 if (process.env.NODE_ENV !== 'production') {
@@ -23,11 +24,24 @@ async function bootstrap() {
 			'http://127.0.0.1:3000',  // local development frontend
 			'http://127.0.0.1:3001',  // local development frontend (alternative port)
 		],
-		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+		methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
 		credentials: true,            // if you send cookies or auth headers
+		allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+		exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+		preflightContinue: false,
+		optionsSuccessStatus: 200
 	  });
 	
 	app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
+	
+	// Add CORS debugging middleware
+	app.use((req: Request, res: Response, next: NextFunction) => {
+		console.log('CORS Debug - Origin:', req.headers.origin);
+		console.log('CORS Debug - Method:', req.method);
+		console.log('CORS Debug - URL:', req.url);
+		console.log('CORS Debug - Headers:', req.headers);
+		next();
+	});
 	
 	// Serve PDF files
 	app.useStaticAssets(join(__dirname, '..', 'content'), {
