@@ -112,16 +112,37 @@ export class PDFProcessorCacheController {
     }
   }
 
+  @Get(':id/test-cors')
+  async testCors(@Param('id') id: string) {
+    return {
+      success: true,
+      message: 'CORS test successful',
+      data: { id, timestamp: new Date().toISOString() }
+    };
+  }
+
+  @Post(':id/test-post-cors')
+  async testPostCors(@Param('id') id: string) {
+    return {
+      success: true,
+      message: 'POST CORS test successful',
+      data: { id, timestamp: new Date().toISOString() }
+    };
+  }
+
   @Post(':id/process-mathpix')
   async processWithMathpix(@Param('id') id: string) {
     try {
+      console.log(`[Controller] Starting Mathpix processing for ID: ${id}`);
       const result = await this.pdfProcessorCacheService.processWithMathpix(id);
+      console.log(`[Controller] Mathpix processing completed for ID: ${id}, success: ${result.success}`);
       return {
         success: result.success,
         message: result.success ? 'PDF processed with Mathpix successfully' : 'Mathpix processing failed',
         data: result
       };
     } catch (error) {
+      console.error(`[Controller] Error processing Mathpix for ID: ${id}:`, error);
       throw new HttpException(
         {
           success: false,

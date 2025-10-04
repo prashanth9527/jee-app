@@ -4,6 +4,7 @@ import { ProcessingStatus } from '@prisma/client';
 import * as fs from 'fs';
 import * as path from 'path';
 import { MathpixService } from './mathpix.service';
+import { PDFProcessorService } from './pdf-processor.service';
 
 export interface FindAllOptions {
   page: number;
@@ -30,7 +31,8 @@ export class PDFProcessorCacheService {
 
   constructor(
     private readonly prisma: PrismaService,
-    private readonly mathpixService: MathpixService
+    private readonly mathpixService: MathpixService,
+    private readonly pdfProcessorService: PDFProcessorService
   ) {}
 
   async findAll(options: FindAllOptions) {
@@ -420,8 +422,11 @@ export class PDFProcessorCacheService {
       
       // Check if Mathpix is configured
       if (!this.mathpixService.isConfigured()) {
+        this.logger.error('Mathpix API credentials not configured');
         throw new Error('Mathpix API credentials not configured. Please set MATHPIX_APP_ID and MATHPIX_APP_KEY environment variables.');
       }
+      
+      this.logger.log('Mathpix API credentials are configured');
       
       // Find the record by ID
       const record = await this.prisma.pDFProcessorCache.findUnique({
@@ -432,34 +437,42 @@ export class PDFProcessorCacheService {
         throw new Error(`Record not found for ID: ${id}`);
       }
 
-      // Get the full file path
-      const rootDir = path.join(__dirname, '../../../..');
-      const fullFilePath = path.join(rootDir, record.filePath.replace(/\\/g, path.sep));
-
-      this.logger.log(`Root directory: ${rootDir}`);
-      this.logger.log(`Record file path: ${record.filePath}`);
-      this.logger.log(`Full file path: ${fullFilePath}`);
-      this.logger.log(`File exists: ${fs.existsSync(fullFilePath)}`);
-
-      // Check if PDF file exists
-      if (!fs.existsSync(fullFilePath)) {
-        // Try alternative path construction
-        const altFilePath = path.join(process.cwd(), record.filePath);
-        this.logger.log(`Alternative file path: ${altFilePath}`);
-        this.logger.log(`Alternative file exists: ${fs.existsSync(altFilePath)}`);
+      // Use the same approach as the working PDF processor
+      // First, try to get the file path from the PDF list (like the working implementation)
+      const pdfs = await this.pdfProcessorService.listPDFs();
+      const pdf = pdfs.find(p => p.fileName === record.fileName);
+      
+      let filePath = record.filePath; // fallback to database path
+      
+      if (pdf && pdf.filePath) {
+        filePath = pdf.filePath;
+        this.logger.log(`Using file path from PDF list: ${filePath}`);
+      } else {
+        this.logger.log(`Using file path from database: ${filePath}`);
         
-        if (fs.existsSync(altFilePath)) {
-          this.logger.log(`Using alternative file path: ${altFilePath}`);
-          const result = await this.mathpixService.processPdfWithMathpixByFileName(record.fileName, altFilePath);
-          this.logger.log(`Mathpix processing completed for cache ID: ${id}, success: ${result.success}`);
-          return result;
+        // If database path doesn't work, try to construct it like the working implementation
+        if (!fs.existsSync(filePath)) {
+          const contentDir = path.join(process.cwd(), 'content');
+          const constructedPath = path.join(contentDir, record.fileName);
+          this.logger.log(`Trying constructed path: ${constructedPath}`);
+          
+          if (fs.existsSync(constructedPath)) {
+            filePath = constructedPath;
+            this.logger.log(`Using constructed file path: ${filePath}`);
+          }
         }
-        
-        throw new Error(`PDF file not found: ${fullFilePath} or ${altFilePath}`);
       }
 
-      // Process with Mathpix using the existing service
-      const result = await this.mathpixService.processPdfWithMathpixByFileName(record.fileName, fullFilePath);
+      this.logger.log(`Final file path: ${filePath}`);
+      this.logger.log(`File exists: ${fs.existsSync(filePath)}`);
+
+      // Check if PDF file exists
+      if (!fs.existsSync(filePath)) {
+        throw new Error(`PDF file not found: ${filePath}`);
+      }
+
+      // Process with Mathpix using the existing service (same as working implementation)
+      const result = await this.mathpixService.processPdfWithMathpixByFileName(record.fileName, filePath);
       
       this.logger.log(`Mathpix processing completed for cache ID: ${id}, success: ${result.success}`);
       
