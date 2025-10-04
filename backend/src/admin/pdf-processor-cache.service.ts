@@ -415,7 +415,7 @@ export class PDFProcessorCacheService {
   }
 
   async processWithMathpix(id: string) {
-    try {
+    // try {
       this.logger.log(`Starting Mathpix processing for cache ID: ${id}`);
       
       // Find the record by ID
@@ -429,7 +429,9 @@ export class PDFProcessorCacheService {
 
       // Get the full file path
       const rootDir = path.join(__dirname, '../../../..');
-      const fullFilePath = path.join(rootDir, record.filePath);
+      const fullFilePath = path.join(rootDir, record.filePath.replace(/\\/g, '/'));
+
+      this.logger.log(`fullFilePath: ${fullFilePath}`);
 
       // Check if PDF file exists
       if (!fs.existsSync(fullFilePath)) {
@@ -442,9 +444,9 @@ export class PDFProcessorCacheService {
       this.logger.log(`Mathpix processing completed for cache ID: ${id}, success: ${result.success}`);
       
       return result;
-    } catch (error) {
-      this.logger.error('Error processing with Mathpix:', error);
-      throw error;
-    }
+    // } catch (error) {
+    //   this.logger.error('Error processing with Mathpix:', error);
+    //   throw error;
+    // }
   }
 }
