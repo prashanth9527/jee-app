@@ -179,7 +179,8 @@ export default function PDFProcessorCachePage() {
 
     try {
       const response = await api.post(`/admin/pdf-processor-cache/${record.id}/process-mathpix`);
-      
+
+      console.log('response', response);
       if (response.data.success) {
         toast.success('PDF processed with Mathpix successfully');
         fetchRecords();
