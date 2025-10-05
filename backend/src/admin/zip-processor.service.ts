@@ -242,7 +242,8 @@ export class ZipProcessorService {
         // Create subfolder with the same name as the original file (without extension)
         let subfolderName = 'default';
         if (originalFileName) {
-          subfolderName = path.basename(originalFileName, path.extname(originalFileName));
+          const originalBaseName = path.basename(originalFileName, path.extname(originalFileName));
+          subfolderName = this.sanitizeFileName(originalBaseName);
         }
         
         const subfolderPath = path.join(imagesDir, subfolderName);
@@ -250,11 +251,9 @@ export class ZipProcessorService {
           fs.mkdirSync(subfolderPath, { recursive: true });
         }
 
-        // Use original filename as-is (no timestamp/no sanitization)
-        const extension = path.extname(fileName);
-        const baseName = path.basename(fileName, extension);
-        const originalImageFileName = `${baseName}${extension}`;
-        const imageFilePath = path.join(subfolderPath, originalImageFileName);
+        // Sanitize the image filename to remove special characters and spaces
+        const sanitizedImageFileName = this.sanitizeFileName(fileName);
+        const imageFilePath = path.join(subfolderPath, sanitizedImageFileName);
 
         // Create write stream
         const writeStream = fs.createWriteStream(imageFilePath);
@@ -319,6 +318,48 @@ export class ZipProcessorService {
   }
 
   /**
+   * Sanitize filename to remove special characters, spaces, and ensure URL-safe naming
+   */
+  private sanitizeFileName(fileName: string): string {
+    if (!fileName) return fileName;
+    
+    try {
+      // Get the extension first
+      const extension = path.extname(fileName);
+      const baseName = path.basename(fileName, extension);
+      
+      // Sanitize the base name:
+      // 1. Replace spaces with underscores
+      // 2. Remove or replace special characters that can cause URL issues
+      // 3. Keep only alphanumeric characters, underscores, and hyphens
+      let sanitizedBaseName = baseName
+        .replace(/\s+/g, '_')                    // Replace spaces with underscores
+        .replace(/[^a-zA-Z0-9_-]/g, '_')         // Replace special chars with underscores
+        .replace(/_+/g, '_')                     // Replace multiple underscores with single
+        .replace(/^_|_$/g, '')                   // Remove leading/trailing underscores
+        .toLowerCase();                          // Convert to lowercase for consistency
+      
+      // Ensure the filename is not empty
+      if (!sanitizedBaseName) {
+        sanitizedBaseName = 'sanitized_file';
+      }
+      
+      // Limit filename length to prevent issues
+      if (sanitizedBaseName.length > 100) {
+        sanitizedBaseName = sanitizedBaseName.substring(0, 100);
+      }
+      
+      const sanitizedFileName = sanitizedBaseName + extension;
+      this.logger.log(`📝 Sanitized filename: "${fileName}" -> "${sanitizedFileName}"`);
+      
+      return sanitizedFileName;
+    } catch (error) {
+      this.logger.warn('Failed to sanitize filename:', error);
+      return fileName;
+    }
+  }
+
+  /**
    * Save LaTeX content to file
    */
   private async saveLatexToFile(fileName: string, latexContent: string): Promise<string> {
@@ -329,8 +370,9 @@ export class ZipProcessorService {
         fs.mkdirSync(latexDir, { recursive: true });
       }
 
-      // Generate LaTeX file name (replace .pdf with .tex)
-      const latexFileName = fileName.replace(/\.pdf$/i, '.tex');
+      // Generate LaTeX file name (replace .pdf with .tex) and sanitize it
+      const originalLatexFileName = fileName.replace(/\.pdf$/i, '.tex');
+      const latexFileName = this.sanitizeFileName(originalLatexFileName);
       const latexFilePath = path.join(latexDir, latexFileName);
 
       // Write LaTeX content to file

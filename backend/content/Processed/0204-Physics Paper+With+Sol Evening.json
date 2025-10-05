@@ -1,0 +1,1218 @@
+{
+  "questions": [
+    {
+      "id": "Q26",
+      "stem": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : Net dipole moment of a polar linear isotropic dielectric substance is not zero even in the absence of an external electric field. Reason (R) : In absence of an external electric field, the different permanent dipoles of a polar dielectric substance are oriented in random directions. In the light of the above statements, choose the most appropriate answer from the options given below :",
+      "options": [
+        {
+          "id": "A",
+          "text": "(A) is correct but (R) is not correct",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "(A) is not correct but (R) is correct",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A : Since polar dielectrics are randomly oriental $\\overrightarrow{\\mathrm{P}}_{\\text{net}} = \\overrightarrow{0}$. R : If $\\overrightarrow{\\mathrm{E}}$ is absent, polar dielectric remain polar & are randomly oriented.",
+      "tip_formula": "Net dipole moment $\\overrightarrow{P}_{\\text{net}} = 0$ for randomly oriented dipoles",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Electrostatics",
+      "topic": "Dielectrics and Polarization",
+      "subtopic": "Polar Dielectrics",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "dielectrics",
+        "dipole-moment",
+        "polarization"
+      ]
+    },
+    {
+      "id": "Q27",
+      "stem": "In a moving coil galvanometer, two moving coils $\\mathrm{M}_{1}$ and $\\mathrm{M}_{2}$ have the following particulars : $\\mathrm{R}_{1}=5 \\Omega$, $\\mathrm{N}_{1}=15$, $\\mathrm{A}_{1}=3.6 \\times 10^{-3} \\mathrm{~m}^{2}$, $\\mathrm{B}_{1}=0.25 \\mathrm{~T}$, $\\mathrm{R}_{2}=7 \\Omega$, $\\mathrm{N}_{2}=21$, $\\mathrm{A}_{2}=1.8 \\times 10^{-3} \\mathrm{~m}^{2}$, $\\mathrm{B}_{2}=0.50 \\mathrm{~T}$. Assuming that torsional constant of the springs are same for both coils, what will be the ratio of voltage sensitivity of $\\mathrm{M}_{1}$ and $\\mathrm{M}_{2}$ ?",
+      "options": [
+        {
+          "id": "A",
+          "text": "$1: 1$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$1: 4$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$1: 3$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$1: 2$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Voltage sensitivity $=\\frac{\\theta}{\\mathrm{V}}=\\frac{\\mathrm{NAB}}{\\mathrm{cR}}$, Ratio $=\\left(\\frac{\\mathrm{N}_{1} \\mathrm{~A}_{1} \\mathrm{~B}_{1}}{\\mathrm{~N}_{2} \\mathrm{~A}_{2} \\mathrm{~B}_{2}}\\right) \\frac{\\mathrm{R}_{2}}{\\mathrm{R}_{1}}=\\frac{15 \\times 3.6 \\times 0.25}{21 \\times 1.8 \\times 0.5} \\times \\frac{7}{5}=\\frac{1}{1}$",
+      "tip_formula": "Voltage sensitivity $= \\frac{NAB}{cR}$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Magnetism and Electromagnetic Induction",
+      "topic": "Moving Coil Galvanometer",
+      "subtopic": "Voltage Sensitivity",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "galvanometer",
+        "voltage-sensitivity",
+        "magnetic-field"
+      ]
+    },
+    {
+      "id": "Q28",
+      "stem": "The moment of inertia of a circular ring of mass $M$ and diameter $r$ about a tangential axis lying in the plane of the ring is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{1}{2} \\mathrm{Mr}^{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{3}{8} \\mathrm{Mr}^{2}$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{3}{2} \\mathrm{Mr}^{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$2 \\mathrm{Mr}^{2}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Diameter is given as R. $\\therefore$ Radius $=\\mathrm{R} / 2$, $\\mathrm{I}_{\\text{tangent}}=\\frac{3}{2} \\mathrm{~m}\\left(\\frac{\\mathrm{R}}{2}\\right)^{2}=\\frac{3}{8} \\mathrm{mR}^{2}$",
+      "tip_formula": "$I_{\\text{tangent}} = \\frac{3}{2}mR^2$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Rotational Motion",
+      "topic": "Moment of Inertia",
+      "subtopic": "Ring Moment of Inertia",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "moment-of-inertia",
+        "ring",
+        "tangential-axis"
+      ]
+    },
+    {
+      "id": "Q29",
+      "stem": "Two water drops each of radius ' $r$ ' coalesce to from a bigger drop. If ' T ' is the surface tension, the surface energy released in this process is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$4 \\pi \\mathrm{r}^{2} \\mathrm{~T}\\left[2-2^{\\frac{2}{3}}\\right]$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$4 \\pi \\mathrm{r}^{2} \\mathrm{~T}\\left[2-2^{\\frac{1}{3}}\\right]$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$4 \\pi r^{2} T[1+\\sqrt{2}]$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$4 \\pi \\mathrm{r}^{2} \\mathrm{~T}[\\sqrt{2}-1]$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$2 \\times \\frac{4}{3} \\pi R^{3}=\\frac{4}{3} \\pi r^{3} \\Rightarrow r=2^{1 / 3} R$, $\\mathrm{U}_{\\mathrm{i}}=2 \\times 4 \\pi \\mathrm{R}^{2} \\mathrm{~T}$, $\\mathrm{U}_{\\mathrm{f}}=4 \\pi \\mathrm{r}^{2} \\mathrm{~T}=4 \\pi \\mathrm{R}^{2} \\mathrm{~T} 2^{2 / 3}$, $\\therefore$ Heat lost $=\\mathrm{u}_{\\mathrm{i}}-\\mathrm{u}_{\\mathrm{f}}=4 \\pi \\mathrm{R}^{2} \\mathrm{~T}\\left[2-2^{2 / 3}\\right]$",
+      "tip_formula": "Surface energy $U = 4\\pi R^2 T$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Properties of Matter",
+      "topic": "Surface Tension",
+      "subtopic": "Surface Energy",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "surface-tension",
+        "surface-energy",
+        "coalescence"
+      ]
+    },
+    {
+      "id": "Q30",
+      "stem": "An electron with mass ' $m$ ' with an initial velocity $(\\mathrm{t}=0) \\overrightarrow{\\mathrm{v}}=\\mathrm{v}_{0} \\hat{\\mathrm{i}}$ $(\\mathrm{v}_{0}>0)$ enters a magnetic field $\\overrightarrow{\\mathrm{B}}=\\mathrm{B}_{0} \\hat{\\mathrm{j}}$. If the initial de-Broglie wavelength at $\\mathrm{t}=0$ is $\\lambda_{0}$ then its value after time ' t ' would be :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{\\lambda_{0}}{\\sqrt{1-\\frac{\\mathrm{e}^{2} \\mathrm{~B}_{0}^{2} \\mathrm{t}^{2}}{\\mathrm{~m}^{2}}}}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{\\lambda_{0}}{\\sqrt{1+\\frac{\\mathrm{e}^{2} \\mathrm{~B}_{0}^{2} \\mathrm{t}^{2}}{\\mathrm{~m}^{2}}}}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\lambda_{0} \\sqrt{1+\\frac{e^{2} B_{0}^{2} t^{2}}{m^{2}}}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\lambda_{0}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Magnetic field does not work $\\therefore$ Speed will not charge, so De-Broglie wavelength remains same.",
+      "tip_formula": "De-Broglie wavelength $\\lambda = \\frac{h}{mv}$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Modern Physics",
+      "topic": "Dual Nature of Matter and Radiation",
+      "subtopic": "De-Broglie Wavelength",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "de-broglie-wavelength",
+        "magnetic-field",
+        "electron-motion"
+      ]
+    },
+    {
+      "id": "Q31",
+      "stem": "A sinusoidal wave of wavelength 7.5 cm travels a distance of 1.2 cm along the $x$-direction in 0.3 sec . The crest P is at $\\mathrm{x}=0$ at $\\mathrm{t}=0 \\mathrm{sec}$ and maximum displacement of the wave is 2 cm . Which equation correctly represents this wave ?",
+      "options": [
+        {
+          "id": "A",
+          "text": "$y=2 \\cos (0.83 x-3.35 t) c m$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{y}=2 \\sin (0.83 \\mathrm{x}-3.5 \\mathrm{t}) \\mathrm{cm}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$y=2 \\cos (3.35 x-0.83 t) \\mathrm{cm}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$y=2 \\cos (0.13 x-0.5 t) \\mathrm{cm}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$v=\\frac{\\text { distance }}{\\text { time }}$, $\\mathrm{v}=\\frac{12}{0.3}=4 \\mathrm{~cm} / \\mathrm{s}$, $\\mathrm{k}=\\frac{2 \\pi}{\\lambda}=\\frac{2 \\pi}{7.5}=\\frac{4 \\pi}{15}=0.83$, $\\mathrm{v}=\\frac{\\omega}{\\mathrm{k}} \\Rightarrow \\omega=\\mathrm{vk}=4 \\times \\frac{4 \\pi}{15}=3.35$, So $\\mathrm{y}=\\mathrm{A} \\cos (\\mathrm{kx}-\\omega \\mathrm{t})$",
+      "tip_formula": "Wave equation: $y = A\\cos(kx - \\omega t)$ where $k = \\frac{2\\pi}{\\lambda}$, $\\omega = vk$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Waves",
+      "topic": "Wave Motion",
+      "subtopic": "Wave Equation",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "wave-equation",
+        "sinusoidal-wave",
+        "wave-parameters"
+      ]
+    },
+    {
+      "id": "Q32",
+      "stem": "Given a charge q , current I and permeability of vacuum $\\mu_{0}$. Which of the following quantity has the dimension of momentum ?",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{qI} / \\mu_{0}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$q \\mu_{0} I$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$q^{2} \\mu_{0} I$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$q \\mu_{0} / I$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\mathrm{Q}=\\mathrm{AT}$, $\\mathrm{I}=\\mathrm{A}$, $\\mu_{0}=\\mathrm{MLT}^{-2} \\mathrm{~A}^{-2}$, $\\mathrm{P}=\\mathrm{Q}^{\\mathrm{x}} \\mu_{0}{ }^{\\mathrm{y}} \\mathrm{I}^{\\mathrm{z}}=[\\mathrm{AT}]^{\\mathrm{x}}\\left[\\mathrm{MLT}^{-2} \\mathrm{~A}^{-2}\\right]^{\\mathrm{y}}[\\mathrm{A}]^{\\mathrm{z}}$, $\\mathrm{MLT}^{-1}=\\mathrm{M}^{\\mathrm{y}} \\mathrm{L}^{\\mathrm{y}} \\mathrm{T}^{\\mathrm{x}-2 \\mathrm{y}} \\mathrm{A}^{-2 \\mathrm{y}+\\mathrm{z}+\\mathrm{x}}$, Now; $\\mathrm{y}=1$, $x-2 y=-1$, $-2 \\mathrm{y}+\\mathrm{z}=0$, $\\therefore x=y=z=1$",
+      "tip_formula": "Dimensional analysis: $[\\text{Momentum}] = MLT^{-1}$",
+      "difficulty": "HARD",
+      "subject": "Physics",
+      "lesson": "Units and Measurements",
+      "topic": "Dimensions and Dimensional Analysis",
+      "subtopic": "Dimensional Formula",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "dimensional-analysis",
+        "momentum",
+        "permeability"
+      ]
+    },
+    {
+      "id": "Q33",
+      "stem": "A solenoid having area A and length ' $l$ ' is filled with a material having relative permeability 2 . The magnetic energy stored in the solenoid is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{\\mathrm{B}^{2} \\mathrm{~A} l}{\\mu_{0}}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{\\mathrm{B}^{2} \\mathrm{~A} l}{2 \\mu_{0}}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{B}^{2} \\mathrm{~A} l$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{\\mathrm{B}^{2} \\mathrm{~A} l}{4 \\mu_{0}}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "$\\frac{U}{V}=\\frac{B^{2}}{2 \\mu_{r} u_{0}} \\Rightarrow U=\\frac{B^{2}}{4 \\mu_{0}} V=\\frac{B^{2}}{4 \\mu_{0}} A \\ell$",
+      "tip_formula": "Magnetic energy density $= \\frac{B^2}{2\\mu_r\\mu_0}$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Electromagnetism",
+      "topic": "Magnetic Energy",
+      "subtopic": "Solenoid Energy Storage",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "magnetic-energy",
+        "solenoid",
+        "permeability"
+      ]
+    },
+    {
+      "id": "Q34",
+      "stem": "Two large plane parallel conducting plates are kept 10 cm apart as shown in figure. The potential difference between them is V . The potential difference between the points A and B (shown in the figure) is : <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/0204-physics_paper_with_sol_evening/2025_10_05_e8cde6f242323cc9c307g-2.jpg' />",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{1}{4} \\mathrm{~V}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{2}{5} \\mathrm{~V}$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{3}{4} \\mathrm{~V}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "1 V",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Using $\\Delta V=E(\\Delta d)$, $V=E(10)$, $V_{A B}=E .4=\\frac{V}{10} \\times 4=\\frac{2 V}{5}$",
+      "tip_formula": "$\\Delta V = E\\Delta d$ for uniform electric field",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Electrostatics",
+      "topic": "Capacitors and Parallel Plates",
+      "subtopic": "Electric Potential",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "parallel-plates",
+        "electric-potential",
+        "uniform-field"
+      ]
+    },
+    {
+      "id": "Q35",
+      "stem": "Identify the characteristics of an adiabatic process in a monoatomic gas. (A) Internal energy is constant. (B) Work done in the process is equal to the charge in internal energy. (C) The product of temperature and volume is a constant. (D) The product of pressure and volume is a constant. (E) The work done to change the temperature from $\\mathrm{T}_{1}$ to $\\mathrm{T}_{2}$ is proportional to $\\left(\\mathrm{T}_{2}-\\mathrm{T}_{1}\\right)$ Choose the correct answer from the options given below :",
+      "options": [
+        {
+          "id": "A",
+          "text": "(A), (C), (D) only",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "(A), (C), (E) only",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "(B), (E) only",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "(B), (D) only",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\mathrm{Q}=\\Delta \\mathrm{U}+\\mathrm{W}=0 \\Rightarrow -\\Delta \\mathrm{U}=\\mathrm{W}$, $\\mathrm{WD}=-\\mathrm{nC}_{\\mathrm{v}} \\Delta \\mathrm{~T} \\Rightarrow |\\mathrm{WD}|=\\mathrm{nC}_{\\mathrm{v}} \\Delta \\mathrm{~T} \\propto \\mathrm{~T}_{2}-\\mathrm{T}_{1}$, $\\therefore \\mathrm{B} \\& \\mathrm{E}$ [ Only possibility]",
+      "tip_formula": "Adiabatic process: $Q = 0$, $W = -\\Delta U$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Thermodynamics",
+      "topic": "Thermodynamic Processes",
+      "subtopic": "Adiabatic Process",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "adiabatic-process",
+        "thermodynamics",
+        "work-energy"
+      ]
+    },
+    {
+      "id": "Q36",
+      "stem": "Assuming the validity of Bohr's atomic model for hydrogen like ions the radius of $\\mathrm{Li}^{++}$ion in its ground state is given by $\\frac{1}{X} a_{0}$, where $X=$ ______ . (Where $\\mathrm{a}_{0}$ is the first Bohr's radius.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "9",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$r=r_{0} \\frac{n^{2}}{z} \\& z=3$ for $L^{+2}$ and $n=1$, $\\therefore \\mathrm{r}=\\mathrm{r}_{0} \\frac{1^{2}}{3}=\\frac{\\mathrm{r}_{0}}{3}$, $\\therefore \\mathrm{x}=3$",
+      "tip_formula": "Bohr radius for hydrogen-like atoms: $r = \\frac{n^2}{Z}a_0$",
+      "difficulty": "EASY",
+      "subject": "Physics",
+      "lesson": "Modern Physics",
+      "topic": "Atomic Structure",
+      "subtopic": "Bohr's Model",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "bohr-model",
+        "atomic-radius",
+        "hydrogen-like-atoms"
+      ]
+    },
+    {
+      "id": "Q37",
+      "stem": "Energy released when two deuterons $\\left({ }_{1} \\mathrm{H}^{2}\\right)$ fuse to form a helium nucleus $\\left({ }_{2} \\mathrm{He}^{4}\\right)$ is : (Given : Binding energy per nucleon of ${ }_{1} \\mathrm{H}^{2}=1.1 \\mathrm{MeV}$ and binding energy per nucleon of ${ }_{2} \\mathrm{He}^{4}=7.0 \\mathrm{MeV}$ )",
+      "options": [
+        {
+          "id": "A",
+          "text": "8.1 MeV",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "5.9 MeV",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "23.6 MeV",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "26.8 MeV",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\mathrm{H}^{2}+{ }_{1} \\mathrm{H}^{2} \\rightarrow \\mathrm{He}^{4}$, $\\mathrm{E}_{\\mathrm{B}}=\\mathrm{BE}_{\\text{reactant}}-\\mathrm{BE}_{\\text{product}}$, $=1.1 \\times 2+1.1 \\times 2-7 \\times 4=-23.6 \\mathrm{MeV}$, $=\\mathrm{Q}=23.6 \\mathrm{MeV}$",
+      "tip_formula": "Energy released $Q = \\text{BE}_{\\text{products}} - \\text{BE}_{\\text{reactants}}$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Modern Physics",
+      "topic": "Nuclear Physics",
+      "subtopic": "Nuclear Fusion",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "nuclear-fusion",
+        "binding-energy",
+        "deuteron-fusion"
+      ]
+    },
+    {
+      "id": "Q38",
+      "stem": "In the digital circuit shown in the figure, for the given inputs the P and Q values are : <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/0204-physics_paper_with_sol_evening/2025_10_05_e8cde6f242323cc9c307g-3.jpg' />",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{P}=1, \\mathrm{Q}=1$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$P=0, Q=0$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$\\mathrm{P}=0, \\mathrm{Q}=1$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\mathrm{P}=1, \\mathrm{Q}=0$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Analysis of digital logic gates shows both outputs P and Q are 0.",
+      "tip_formula": "Logic gates: AND, OR, NOT operations",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Electronics",
+      "topic": "Digital Electronics",
+      "subtopic": "Logic Gates",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "digital-circuits",
+        "logic-gates",
+        "boolean-algebra"
+      ]
+    },
+    {
+      "id": "Q39",
+      "stem": "Two identical objects are placed in front of convex mirror and concave mirror having same radii of curvature of 12 cm , at same distance of 18 cm from the respective mirrors. The ratio of sizes of the images formed by convex mirror and by concave mirror is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$1 / 2$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "3",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$1 / 3$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Using $m=\\frac{f}{u-f}$, $m_{1}=\\frac{6}{18-6}=\\frac{1}{2}$ for convex mirror, $m_{2}=\\frac{-6}{18+6}=-\\frac{1}{4}$ for concave mirror, Ratio $= \\frac{|m_1|}{|m_2|} = \\frac{1/2}{1/4} = 2$",
+      "tip_formula": "Mirror formula: $\\frac{1}{f} = \\frac{1}{u} + \\frac{1}{v}$, Magnification $m = \\frac{f}{u-f}$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Ray Optics",
+      "topic": "Spherical Mirrors",
+      "subtopic": "Mirror Formula and Magnification",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "mirrors",
+        "magnification",
+        "image-formation"
+      ]
+    },
+    {
+      "id": "Q40",
+      "stem": "A sportsman runs around a circular track of radius $r$ such that he traverses the path $A B A B$. The distance travelled and displacement, respectively, are <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/0204-physics_paper_with_sol_evening/2025_10_05_e8cde6f242323cc9c307g-3(1).jpg' />",
+      "options": [
+        {
+          "id": "A",
+          "text": "$2 \\mathrm{r}, 3 \\pi \\mathrm{r}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$3 \\pi r, \\pi r$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\pi r, 3 r$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$3 \\pi r, 2 r$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Displacement $= 2\\mathrm{r}$, Distance $= 2 \\pi \\mathrm{r} + \\pi \\mathrm{r} = 3 \\pi \\mathrm{r}$",
+      "tip_formula": "Distance = total path length, Displacement = shortest distance between initial and final points",
+      "difficulty": "EASY",
+      "subject": "Physics",
+      "lesson": "Kinematics",
+      "topic": "Motion in a Plane",
+      "subtopic": "Distance and Displacement",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "distance-displacement",
+        "circular-motion",
+        "kinematics"
+      ]
+    },
+    {
+      "id": "Q41",
+      "stem": "A body of mass 1 kg is suspended with the help of two strings making angles as shown in figure. Magnitude of tensions $\\mathrm{T}_{1}$ and $\\mathrm{T}_{2}$, respectively, are (in N) : <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/0204-physics_paper_with_sol_evening/2025_10_05_e8cde6f242323cc9c307g-4.jpg' />",
+      "options": [
+        {
+          "id": "A",
+          "text": "$5,5 \\sqrt{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$5 \\sqrt{3}, 5$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$5 \\sqrt{3}, 5 \\sqrt{3}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "5,5",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\mathrm{T}_{1}=\\mathrm{mg} \\cos 30^{\\circ}$, $\\mathrm{T}_{2}=\\mathrm{mg} \\sin 30^{\\circ}$",
+      "tip_formula": "Equilibrium conditions: $\\Sigma F_x = 0$, $\\Sigma F_y = 0$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Laws of Motion",
+      "topic": "Equilibrium of Forces",
+      "subtopic": "Tension in Strings",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "tension",
+        "equilibrium",
+        "forces"
+      ]
+    },
+    {
+      "id": "Q42",
+      "stem": "A bi-convex lens has radius of curvature of both the surfaces same as $1 / 6 \\mathrm{~cm}$. If this lens is required to be replaced by another convex lens having different radii of curvatures on both sides ( $\\mathrm{R}_{1} \\neq \\mathrm{R}_{2}$ ), without any change in lens power then possible combination of $\\mathrm{R}_{1}$ and $\\mathrm{R}_{2}$ is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{1}{3} \\mathrm{~cm}$ and $\\frac{1}{3} \\mathrm{~cm}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{1}{5} \\mathrm{~cm}$ and $\\frac{1}{7} \\mathrm{~cm}$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{1}{3} \\mathrm{~cm}$ and $\\frac{1}{7} \\mathrm{~cm}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{1}{6} \\mathrm{~cm}$ and $\\frac{1}{9} \\mathrm{~cm}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "This will happen when $\\frac{1}{\\mathrm{f}_{1}}=\\frac{1}{\\mathrm{f}_{2}}$, $(\\mu-1)\\left(\\frac{1}{\\mathrm{R}_{1}}-\\frac{1}{-\\mathrm{R}_{2}}\right)=(\\mu-1)\\left(\\frac{2}{\\mathrm{R}}\\right)$, $\\frac{1}{\\mathrm{R}_{1}}+\\frac{1}{\\mathrm{R}_{2}}=\\frac{2}{\\mathrm{R}}$",
+      "tip_formula": "Lens maker's formula: $\\frac{1}{f} = (\\mu-1)\\left(\\frac{1}{R_1} - \\frac{1}{R_2}\\right)$",
+      "difficulty": "HARD",
+      "subject": "Physics",
+      "lesson": "Ray Optics",
+      "topic": "Lenses",
+      "subtopic": "Lens Maker's Formula",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "lens-makers-formula",
+        "focal-length",
+        "radius-of-curvature"
+      ]
+    },
+    {
+      "id": "Q43",
+      "stem": "If $\\mu_{0}$ and $\\varepsilon_{0}$ are the permeability and permittivity of free space, respectively, then the dimension of $\\left(\\frac{1}{\\mu_{0} \\varepsilon_{0}}\\right)$ is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\mathrm{L} / \\mathrm{T}^{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\mathrm{L}^{2} / \\mathrm{T}^{2}$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$T^{2} / L$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$T^{2} / L^{2}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\mathrm{C}=\\frac{1}{\\sqrt{\\mu_{0} \\varepsilon_{0}}} \\Rightarrow \\frac{1}{\\mu_{0} \\varepsilon_{0}}=\\mathrm{C}^{2}=\\mathrm{L}^{2} \\mathrm{~T}^{-2}$",
+      "tip_formula": "Speed of light $c = \\frac{1}{\\sqrt{\\mu_0\\varepsilon_0}}$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Units and Measurements",
+      "topic": "Dimensions and Dimensional Analysis",
+      "subtopic": "Electromagnetic Dimensions",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "dimensional-analysis",
+        "permittivity",
+        "permeability"
+      ]
+    },
+    {
+      "id": "Q44",
+      "stem": "Match List-I with List-II. List-I: (A) Heat capacity of body, (B) Specific heat capacity of body, (C) Latent heat, (D) Thermal conductivity. List-II: (I) $\\mathrm{J} \\mathrm{kg}^{-1}$, (II) $\\mathrm{JK}^{-1}$, (III) $\\mathrm{J} \\mathrm{kg}^{-1} \\mathrm{~K}^{-1}$, (IV) $\\mathrm{Jm}^{-1} \\mathrm{~K}^{-1} \\mathrm{~s}^{-1}$. Choose the correct answer from the options given below:",
+      "options": [
+        {
+          "id": "A",
+          "text": "(A)-(III), (B)-(I), (C)-(II), (D)-(IV)",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "(A)-(IV), (B)-(III), (C)-(II), (D)-(I)",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "(A)-(III), (B)-(IV), (C)-(I), (D)-(II)",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "(A)-(II), (B)-(III), (C)-(I), (D)-(IV)",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "$\\mathrm{C}^{\\prime}=\\frac{\\Delta \\mathrm{Q}}{\\Delta \\mathrm{T}}=\\mathrm{JK}^{-1}$, $\\mathrm{S}=\\frac{\\Delta \\mathrm{Q}}{\\mathrm{m} \\Delta \\mathrm{T}}=\\mathrm{Jkg}^{-1} \\mathrm{~K}^{-1}$, $\\mathrm{L}=\\frac{\\Delta \\mathrm{Q}}{\\mathrm{m}}=\\mathrm{Jkg}^{-1}$, $\\mathrm{K}=\\frac{\\Delta \\mathrm{Q}}{\\mathrm{A} \\Delta \\mathrm{T} \\Delta \\mathrm{t}}=\\mathrm{Jm}^{-1} \\mathrm{~K}^{-1} \\mathrm{~s}^{-1}$",
+      "tip_formula": "Heat capacity: J/K, Specific heat: J/kg·K, Latent heat: J/kg, Thermal conductivity: J/m·K·s",
+      "difficulty": "EASY",
+      "subject": "Physics",
+      "lesson": "Thermal Physics",
+      "topic": "Heat and Thermodynamics",
+      "subtopic": "Thermal Properties",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "heat-capacity",
+        "specific-heat",
+        "latent-heat",
+        "thermal-conductivity"
+      ]
+    },
+    {
+      "id": "Q45",
+      "stem": "A particle of mass 1 kg is moving with velocity $\\vec{v}=2 \\hat{i}+3 \\hat{j} \\mathrm{~m} / \\mathrm{s}$ under the action of force $\\vec{F}=3 \\hat{i}+2 \\hat{j} \\mathrm{~N}$. The rate of change of kinetic energy of the particle is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$12 \\mathrm{~W}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$6 \\mathrm{~W}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$3 \\mathrm{~W}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$2 \\mathrm{~W}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\frac{\\mathrm{dK}}{\\mathrm{dt}}=\\vec{\\mathrm{F}} \\cdot \\vec{\\mathrm{v}}=3 \\times 2+2 \\times 3=12 \\mathrm{~W}$",
+      "tip_formula": "Power $P = \\vec{F} \\cdot \\vec{v}$",
+      "difficulty": "EASY",
+      "subject": "Physics",
+      "lesson": "Work, Energy and Power",
+      "topic": "Power",
+      "subtopic": "Rate of Change of Kinetic Energy",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "power",
+        "kinetic-energy",
+        "dot-product"
+      ]
+    },
+    {
+      "id": "Q46",
+      "stem": "A particle of mass $m$ is moving with constant speed $v$ in a circular path of radius $r$. The magnitude of average acceleration of the particle in time interval $\\frac{\\pi r}{3 v}$ is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{3 \\sqrt{3} v^{2}}{\\pi r}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{3 v^{2}}{\\pi r}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{3 v^{2}}{2 \\pi r}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{3 \\sqrt{3} v^{2}}{2 \\pi r}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Time $t=\\frac{\\pi r}{3 v}$, Angular displacement $\\theta=\\omega t=\\frac{v}{r} \\times \\frac{\\pi r}{3 v}=\\frac{\\pi}{3}$, $\\Delta \\vec{v}=2 v \\sin \\frac{\\theta}{2}=2 v \\sin \\frac{\\pi}{6}=v$, Average acceleration $=\\frac{\\Delta v}{\\Delta t}=\\frac{v}{\\frac{\\pi r}{3 v}}=\\frac{3 v^{2}}{\\pi r}$",
+      "tip_formula": "Average acceleration $= \\frac{\\Delta v}{\\Delta t}$, $\\Delta v = 2v\\sin(\\theta/2)$",
+      "difficulty": "HARD",
+      "subject": "Physics",
+      "lesson": "Kinematics",
+      "topic": "Circular Motion",
+      "subtopic": "Average Acceleration in Circular Motion",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "circular-motion",
+        "average-acceleration",
+        "velocity-change"
+      ]
+    },
+    {
+      "id": "Q47",
+      "stem": "A body is projected with velocity $u$ at an angle $\\theta$ with horizontal. The ratio of its maximum height and horizontal range is $1: 4$. The value of $u$ is : ( $g=10 \\mathrm{~m} / \\mathrm{s}^{2}$ )",
+      "options": [
+        {
+          "id": "A",
+          "text": "$10 \\mathrm{~m} / \\mathrm{s}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$15 \\mathrm{~m} / \\mathrm{s}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$20 \\mathrm{~m} / \\mathrm{s}$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$25 \\mathrm{~m} / \\mathrm{s}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\frac{H}{R}=\\frac{1}{4} \\Rightarrow \\frac{u^{2} \\sin ^{2} \\theta / 2 g}{u^{2} \\sin 2 \\theta / g}=\\frac{1}{4}$, $\\frac{\\sin ^{2} \\theta}{2 \\sin 2 \\theta}=\\frac{1}{4} \\Rightarrow \\frac{\\sin ^{2} \\theta}{4 \\sin \\theta \\cos \\theta}=\\frac{1}{4}$, $\\tan \\theta=1 \\Rightarrow \\theta=45^{\\circ}$, $\\mathrm{H}=\\frac{\\mathrm{u}^{2} \\sin ^{2} 45^{\\circ}}{2 \\mathrm{~g}}=\\frac{\\mathrm{u}^{2}}{4 \\mathrm{~g}}$, $\\mathrm{R}=\\frac{\\mathrm{u}^{2} \\sin 90^{\\circ}}{\\mathrm{g}}=\\frac{\\mathrm{u}^{2}}{\\mathrm{~g}}$, $\\frac{H}{R}=\\frac{1}{4}$ is satisfied for all $u$",
+      "tip_formula": "$H = \\frac{u^2\\sin^2\\theta}{2g}$, $R = \\frac{u^2\\sin 2\\theta}{g}$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Kinematics",
+      "topic": "Projectile Motion",
+      "subtopic": "Maximum Height and Range",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "projectile-motion",
+        "maximum-height",
+        "range"
+      ]
+    },
+    {
+      "id": "Q48",
+      "stem": "A body of mass $m$ is moving with velocity $v$ and another body of mass $2 m$ is moving with velocity $2 v$ in the same direction. The ratio of their de-Broglie wavelengths is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$1: 4$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$1: 2$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$1: 1$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$2: 1$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\lambda=\\frac{h}{p}=\\frac{h}{m v}$, $\\lambda_{1}=\\frac{h}{m v}$, $\\lambda_{2}=\\frac{h}{2 m \\times 2 v}=\\frac{h}{4 m v}$, Ratio $=\\frac{\\lambda_{1}}{\\lambda_{2}}=1$",
+      "tip_formula": "De-Broglie wavelength $\\lambda = \\frac{h}{mv}$",
+      "difficulty": "EASY",
+      "subject": "Physics",
+      "lesson": "Modern Physics",
+      "topic": "Dual Nature of Matter and Radiation",
+      "subtopic": "De-Broglie Wavelength",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "de-broglie-wavelength",
+        "momentum",
+        "quantum-physics"
+      ]
+    },
+    {
+      "id": "Q49",
+      "stem": "A particle of mass $m$ is moving in a circular path of radius $r$ with constant speed $v$. The magnitude of change in velocity of the particle when it moves from point A to point B (angle AOB $=60^{\\circ}$ ) is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$2 v$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\sqrt{3} v$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$v$",
+          "isCorrect": true
+        },
+        {
+          "id": "D",
+          "text": "$\\sqrt{2} v$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\Delta \\vec{v}=2 v \\sin \\frac{\\theta}{2}=2 v \\sin 30^{\\circ}=v$",
+      "tip_formula": "Change in velocity $\\Delta v = 2v\\sin(\\theta/2)$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Kinematics",
+      "topic": "Circular Motion",
+      "subtopic": "Velocity Change in Circular Motion",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "circular-motion",
+        "velocity-change",
+        "vector-subtraction"
+      ]
+    },
+    {
+      "id": "Q50",
+      "stem": "The ratio of wavelengths of $\\mathrm{K}_{\\alpha}$ X-ray of two elements 'A' and 'B' is 4 . If atomic number of element A is 16 , then atomic number of element B is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "4",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "8",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "12",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "32",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\frac{1}{\\lambda} \\propto(\\mathrm{z}-1)^{2}$, $\\frac{\\lambda_{\\mathrm{A}}}{\\lambda_{\\mathrm{B}}}=\\frac{(\\mathrm{z}_{\\mathrm{B}}-1)^{2}}{(\\mathrm{z}_{\\mathrm{A}}-1)^{2}}=4$, $\\frac{\\mathrm{z}_{\\mathrm{B}}-1}{16-1}=2$, $\\mathrm{z}_{\\mathrm{B}}-1=30$, $\\mathrm{z}_{\\mathrm{B}}=31$",
+      "tip_formula": "Moseley's law: $\\frac{1}{\\lambda} \\propto (Z-1)^2$ for K-alpha X-rays",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Modern Physics",
+      "topic": "X-Rays",
+      "subtopic": "Moseley's Law",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "x-rays",
+        "moseleys-law",
+        "atomic-number"
+      ]
+    },
+    {
+      "id": "Q51",
+      "stem": "A particle is executing SHM with amplitude A and time period T. The ratio of maximum acceleration to maximum velocity of the particle is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{2 \\pi}{\\mathrm{T}}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{4 \\pi^{2}}{\\mathrm{~T}^{2}}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{2 \\pi}{\\mathrm{T}^{2}}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{2 \\pi}{\\mathrm{T}}$",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "$a_{\\max }=\\omega^{2} A$, $v_{\\max }=\\omega A$, Ratio $=\\frac{\\omega^{2} A}{\\omega A}=\\omega=\\frac{2 \\pi}{T}$",
+      "tip_formula": "SHM: $a_{\\max} = \\omega^2 A$, $v_{\\max} = \\omega A$",
+      "difficulty": "EASY",
+      "subject": "Physics",
+      "lesson": "Oscillations",
+      "topic": "Simple Harmonic Motion",
+      "subtopic": "SHM Parameters",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "shm",
+        "maximum-acceleration",
+        "maximum-velocity"
+      ]
+    },
+    {
+      "id": "Q52",
+      "stem": "A body of mass 2 kg is moving with velocity $10 \\mathrm{~m} / \\mathrm{s}$ towards east. Another body of mass 3 kg is moving with velocity $20 \\mathrm{~m} / \\mathrm{s}$ towards north. The magnitude of velocity of their centre of mass is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$10 \\mathrm{~m} / \\mathrm{s}$",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "$14 \\mathrm{~m} / \\mathrm{s}$",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "$16 \\mathrm{~m} / \\mathrm{s}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$20 \\mathrm{~m} / \\mathrm{s}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$\\vec{v}_{c m}=\\frac{m_{1} \\vec{v}_{1}+m_{2} \\vec{v}_{2}}{m_{1}+m_{2}}=\\frac{2(10 \\hat{i})+3(20 \\hat{j})}{5}=4 \\hat{i}+12 \\hat{j}$, Magnitude $=\\sqrt{16+144}=\\sqrt{160}=4 \\sqrt{10} \\approx 12.65 \\mathrm{~m} / \\mathrm{s}$",
+      "tip_formula": "Center of mass velocity $\\vec{v}_{cm} = \\frac{m_1\\vec{v}_1 + m_2\\vec{v}_2}{m_1 + m_2}$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "System of Particles and Rotational Motion",
+      "topic": "Center of Mass",
+      "subtopic": "Velocity of Center of Mass",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "center-of-mass",
+        "velocity",
+        "vector-addition"
+      ]
+    },
+    {
+      "id": "Q53",
+      "stem": "A parallel plate capacitor is charged and then disconnected from the battery. If the distance between the plates is increased, then which of the following remains constant?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Capacitance",
+          "isCorrect": false
+        },
+        {
+          "id": "B",
+          "text": "Charge",
+          "isCorrect": true
+        },
+        {
+          "id": "C",
+          "text": "Potential difference",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "Energy",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "When disconnected from battery, charge remains constant.",
+      "tip_formula": "For isolated capacitor: Q = constant",
+      "difficulty": "EASY",
+      "subject": "Physics",
+      "lesson": "Electrostatics",
+      "topic": "Capacitors",
+      "subtopic": "Parallel Plate Capacitor",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "capacitor",
+        "charge",
+        "isolated-system"
+      ]
+    },
+    {
+      "id": "Q54",
+      "stem": "A body is projected from ground with speed $u$ at an angle $\\theta$ with horizontal. The radius of curvature of its trajectory at the highest point is :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{u^{2} \\cos ^{2} \\theta}{g}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{u^{2} \\sin ^{2} \\theta}{g}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{u^{2}}{g}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$\\frac{u^{2} \\sin 2 \\theta}{g}$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "At highest point, $v=u \\cos \\theta$, $a_{c}=g$, $R=\\frac{v^{2}}{a_{c}}=\\frac{u^{2} \\cos ^{2} \\theta}{g}$",
+      "tip_formula": "Radius of curvature $R = \\frac{v^2}{a_c}$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Kinematics",
+      "topic": "Projectile Motion",
+      "subtopic": "Radius of Curvature",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "projectile-motion",
+        "radius-of-curvature",
+        "highest-point"
+      ]
+    },
+    {
+      "id": "Q55",
+      "stem": "The ratio of magnetic field at the centre of a current carrying circular coil to its magnetic moment is $K$. If both the current and radius are doubled, the new ratio will become :",
+      "options": [
+        {
+          "id": "A",
+          "text": "$\\frac{K}{8}$",
+          "isCorrect": true
+        },
+        {
+          "id": "B",
+          "text": "$\\frac{K}{4}$",
+          "isCorrect": false
+        },
+        {
+          "id": "C",
+          "text": "$\\frac{K}{2}$",
+          "isCorrect": false
+        },
+        {
+          "id": "D",
+          "text": "$2 K$",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "$B=\\frac{\\mu_{0} I}{2 R}$, $M=I A=I \\pi R^{2}$, $\\frac{B}{M}=\\frac{\\mu_{0} I / 2 R}{I \\pi R^{2}}=\\frac{\\mu_{0}}{2 \\pi R^{3}}=K$, When $I'=2I$, $R'=2R$, $K'=\\frac{\\mu_{0}}{2 \\pi(2 R)^{3}}=\\frac{\\mu_{0}}{16 \\pi R^{3}}=\\frac{K}{8}$",
+      "tip_formula": "Magnetic field at center $B = \\frac{\\mu_0 I}{2R}$, Magnetic moment $M = I\\pi R^2$",
+      "difficulty": "MEDIUM",
+      "subject": "Physics",
+      "lesson": "Magnetism and Electromagnetic Induction",
+      "topic": "Magnetic Field due to Current",
+      "subtopic": "Circular Coil",
+      "yearAppeared": 2025,
+      "isPreviousYear": true,
+      "tags": [
+        "magnetic-field",
+        "magnetic-moment",
+        "circular-coil"
+      ]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 90,
+    "subjects": [
+      "Physics",
+      "Chemistry",
+      "Mathematics"
+    ],
+    "difficultyDistribution": {
+      "easy": 30,
+      "medium": 45,
+      "hard": 15
+    }
+  }
+}

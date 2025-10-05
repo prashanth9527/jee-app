@@ -186,8 +186,12 @@ export default function PDFProcessorCachePage() {
       console.log('response', response);
       if (response.data.success) {
         toast.success('PDF processed with Mathpix successfully');
-        fetchRecords();
-        fetchStats();
+        console.log('Processing result:', response.data.data);
+        // Add a small delay to ensure database is fully updated
+        setTimeout(() => {
+          fetchRecords();
+          fetchStats();
+        }, 1000);
       } else {
         toast.error(response.data.message || 'Mathpix processing failed');
       }

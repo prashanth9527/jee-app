@@ -17,6 +17,7 @@ export interface MathpixProcessResult {
   success: boolean;
   latexContent?: string;
   latexFilePath?: string;
+  zipFilePath?: string;
   error?: string;
   processingTimeMs?: number;
   cacheId?: string;
@@ -63,6 +64,48 @@ export class MathpixService {
       this.logger.warn('Error sanitizing string data, using fallback:', error.message);
       // Fallback: return a safe string representation
       return data.replace(/[^\x20-\x7E]/g, '?').trim();
+    }
+  }
+
+  /**
+   * Sanitize filename to remove special characters, spaces, and ensure URL-safe naming
+   */
+  private sanitizeFileName(fileName: string): string {
+    if (!fileName) return fileName;
+    
+    try {
+      // Get the extension first
+      const extension = path.extname(fileName);
+      const baseName = path.basename(fileName, extension);
+      
+      // Sanitize the base name:
+      // 1. Replace spaces with underscores
+      // 2. Remove or replace special characters that can cause URL issues
+      // 3. Keep only alphanumeric characters, underscores, and hyphens
+      let sanitizedBaseName = baseName
+        .replace(/\s+/g, '_')                    // Replace spaces with underscores
+        .replace(/[^a-zA-Z0-9_-]/g, '_')         // Replace special chars with underscores
+        .replace(/_+/g, '_')                     // Replace multiple underscores with single
+        .replace(/^_|_$/g, '')                   // Remove leading/trailing underscores
+        .toLowerCase();                          // Convert to lowercase for consistency
+      
+      // Ensure the filename is not empty
+      if (!sanitizedBaseName) {
+        sanitizedBaseName = 'sanitized_file';
+      }
+      
+      // Limit filename length to prevent issues
+      if (sanitizedBaseName.length > 100) {
+        sanitizedBaseName = sanitizedBaseName.substring(0, 100);
+      }
+      
+      const sanitizedFileName = sanitizedBaseName + extension;
+      this.logger.log(`📝 Sanitized filename: "${fileName}" -> "${sanitizedFileName}"`);
+      
+      return sanitizedFileName;
+    } catch (error) {
+      this.logger.warn('Failed to sanitize filename:', error);
+      return fileName;
     }
   }
 
@@ -127,9 +170,16 @@ export class MathpixService {
           // Upload existing LaTeX file to AWS and get AWS URL
           const awsLatexFilePath = await this.saveLatexToFile(fileName, existingLatexContent);
           
-          // Create new cache entry for existing LaTeX file
-          const newCache = await this.prisma.pDFProcessorCache.create({
-            data: {
+          // Create or update cache entry for existing LaTeX file
+          const newCache = await this.prisma.pDFProcessorCache.upsert({
+            where: { fileName: this.sanitizeStringData(fileName) },
+            update: {
+              latexContent: this.sanitizeStringData(existingLatexContent),
+              latexFilePath: awsLatexFilePath,
+              processingStatus: 'COMPLETED',
+              lastProcessedAt: new Date()
+            },
+            create: {
               fileName: this.sanitizeStringData(fileName),
               filePath: this.sanitizeStringData(filePath),
               fileSize: 0, // We don't have the file size here
@@ -166,8 +216,9 @@ export class MathpixService {
         // Determine local ZIP file path for extraction
         let localZipFilePath = zipFilePath;
         if (zipFilePath.includes('s3.') || zipFilePath.includes('amazonaws.com')) {
-          // If it's an AWS URL, construct the local path
-          const zipFileName = fileName.replace(/\.pdf$/i, '.zip');
+          // If it's an AWS URL, construct the local path with sanitized filename
+          const originalZipFileName = fileName.replace(/\.pdf$/i, '.zip');
+          const zipFileName = this.sanitizeFileName(originalZipFileName);
           localZipFilePath = path.join(process.cwd(), 'content', 'zip', zipFileName);
         }
         
@@ -186,7 +237,7 @@ export class MathpixService {
         latexFilePath = await this.saveLatexToFile(fileName, latexContent);
       }
 
-      // Find or create cache record
+      // Find or create cache record using original filename
       let cache = await this.prisma.pDFProcessorCache.findUnique({
         where: { fileName: fileName }
       });
@@ -195,8 +246,17 @@ export class MathpixService {
         // Create new cache record
         const fileStats = fs.statSync(filePath);
         try {
-          cache = await this.prisma.pDFProcessorCache.create({
-            data: {
+          cache = await this.prisma.pDFProcessorCache.upsert({
+            where: { fileName: this.sanitizeStringData(fileName) },
+            update: {
+              latexContent: latexContent,
+              latexFilePath: this.sanitizeStringData(latexFilePath),
+              zipFilePath: this.sanitizeStringData(zipFilePath),
+              processingStatus: 'PENDING',
+              lastProcessedAt: new Date(),
+              processingTimeMs: Date.now() - startTime
+            },
+            create: {
               fileName: this.sanitizeStringData(fileName),
               filePath: this.sanitizeStringData(filePath),
               fileSize: fileStats.size,
@@ -212,8 +272,17 @@ export class MathpixService {
           this.logger.error('Database error creating cache record:', dbError);
           // If it's still a UTF8 error, try with more aggressive sanitization
           if (dbError.message.includes('UTF8') || dbError.message.includes('byte sequence')) {
-            cache = await this.prisma.pDFProcessorCache.create({
-            data: {
+            cache = await this.prisma.pDFProcessorCache.upsert({
+            where: { fileName: this.sanitizeStringData(fileName).substring(0, 255) },
+            update: {
+              latexContent: latexContent.substring(0, 10000), // Limit content size
+              latexFilePath: this.sanitizeStringData(latexFilePath).substring(0, 500),
+              zipFilePath: this.sanitizeStringData(zipFilePath).substring(0, 500),
+              processingStatus: 'PENDING',
+              lastProcessedAt: new Date(),
+              processingTimeMs: Date.now() - startTime
+            },
+            create: {
               fileName: this.sanitizeStringData(fileName).substring(0, 255), // Limit length
               filePath: this.sanitizeStringData(filePath).substring(0, 500),
               fileSize: fileStats.size,
@@ -263,11 +332,13 @@ export class MathpixService {
       }
 
       this.logger.log(`Mathpix processing completed for ${fileName} in ${Date.now() - startTime}ms`);
+      this.logger.log(`Returning zipFilePath: ${zipFilePath}`);
 
       return {
         success: true,
         latexContent: latexContent,
         latexFilePath: latexFilePath,
+        zipFilePath: zipFilePath,
         processingTimeMs: Date.now() - startTime
       };
 
@@ -376,8 +447,9 @@ export class MathpixService {
         // Determine local ZIP file path for extraction
         let localZipFilePath = zipFilePath;
         if (zipFilePath.includes('s3.') || zipFilePath.includes('amazonaws.com')) {
-          // If it's an AWS URL, construct the local path
-          const zipFileName = cache.fileName.replace(/\.pdf$/i, '.zip');
+          // If it's an AWS URL, construct the local path with sanitized filename
+          const originalZipFileName = cache.fileName.replace(/\.pdf$/i, '.zip');
+          const zipFileName = this.sanitizeFileName(originalZipFileName);
           localZipFilePath = path.join(process.cwd(), 'content', 'zip', zipFileName);
         }
         
@@ -764,7 +836,8 @@ export class MathpixService {
         // Create subfolder with the same name as the original file (without extension)
         let subfolderName = 'default';
         if (originalFileName) {
-          subfolderName = path.basename(originalFileName, path.extname(originalFileName));
+          const originalBaseName = path.basename(originalFileName, path.extname(originalFileName));
+          subfolderName = this.sanitizeFileName(originalBaseName);
         }
         
         const subfolderPath = path.join(imagesDir, subfolderName);
@@ -772,11 +845,9 @@ export class MathpixService {
           fs.mkdirSync(subfolderPath, { recursive: true });
         }
 
-        // Use original filename as-is (no timestamp/no sanitization)
-        const extension = path.extname(fileName);
-        const baseName = path.basename(fileName, extension);
-        const originalImageFileName = `${baseName}${extension}`;
-        const imageFilePath = path.join(subfolderPath, originalImageFileName);
+        // Sanitize the image filename to remove special characters and spaces
+        const sanitizedImageFileName = this.sanitizeFileName(fileName);
+        const imageFilePath = path.join(subfolderPath, sanitizedImageFileName);
 
         // Create write stream
         const writeStream = fs.createWriteStream(imageFilePath);
@@ -792,21 +863,21 @@ export class MathpixService {
             const fileBuffer = fs.readFileSync(imageFilePath);
             const mockFile: Express.Multer.File = {
               fieldname: 'file',
-              originalname: originalImageFileName,
+              originalname: sanitizedImageFileName,
               encoding: '7bit',
-              mimetype: this.getMimeType(originalImageFileName),
+              mimetype: this.getMimeType(sanitizedImageFileName),
               buffer: fileBuffer,
               size: fileBuffer.length,
               stream: Readable.from(fileBuffer),
               destination: '',
-              filename: originalImageFileName,
+              filename: sanitizedImageFileName,
               path: imageFilePath,
             };
 
             const awsUrl = await this.awsService.uploadFileWithCustomName(
               mockFile,
               `content/images/${subfolderName}`,
-              originalImageFileName
+              sanitizedImageFileName
             );
             this.logger.log(`☁️ Image uploaded to AWS: ${awsUrl}`);
           } catch (awsError) {
@@ -844,8 +915,9 @@ export class MathpixService {
         fs.mkdirSync(zipDir, { recursive: true });
       }
 
-      // Generate ZIP file name (replace .pdf with .zip)
-      const zipFileName = fileName.replace(/\.pdf$/i, '.zip');
+      // Generate ZIP file name (replace .pdf with .zip) and sanitize it
+      const originalZipFileName = fileName.replace(/\.pdf$/i, '.zip');
+      const zipFileName = this.sanitizeFileName(originalZipFileName);
       const zipFilePath = path.join(zipDir, zipFileName);
 
       // Write ZIP file
@@ -1039,8 +1111,9 @@ export class MathpixService {
         fs.mkdirSync(latexDir, { recursive: true });
       }
 
-      // Generate LaTeX file name (replace .pdf with .tex)
-      const latexFileName = fileName.replace(/\.pdf$/i, '.tex');
+      // Generate LaTeX file name (replace .pdf with .tex) and sanitize it
+      const originalLatexFileName = fileName.replace(/\.pdf$/i, '.tex');
+      const latexFileName = this.sanitizeFileName(originalLatexFileName);
       const latexFilePath = path.join(latexDir, latexFileName);
 
       // Write LaTeX content to file
