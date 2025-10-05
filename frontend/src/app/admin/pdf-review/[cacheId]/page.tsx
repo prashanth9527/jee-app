@@ -76,7 +76,7 @@ export default function PDFReviewPage() {
   const [selectedQuestions, setSelectedQuestions] = useState<Set<string>>(new Set());
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<Partial<Omit<Question, 'tags'>> & { tags?: string[] }>({});
-  const [pdfData, setPdfData] = useState<{ fileName: string; filePath: string; latexFilePath?: string; processingStatus?: string } | null>(null);
+  const [pdfData, setPdfData] = useState<{ fileName: string; filePath: string; latexFilePath?: string; processingStatus?: string; recordType?: 'pyq' | 'question' | 'lms' } | null>(null);
 
   useEffect(() => {
     if (cacheId) {

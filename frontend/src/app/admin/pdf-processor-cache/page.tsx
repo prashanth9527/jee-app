@@ -12,6 +12,7 @@ interface PDFProcessorCacheRecord {
   fileName: string;
   filePath: string;
   fileSize: number;
+  recordType: 'pyq' | 'question' | 'lms';
   chatGptFileId?: string;
   processingStatus: string;
   systemPrompt?: string;
@@ -75,6 +76,7 @@ export default function PDFProcessorCachePage() {
   // Filters
   const [filters, setFilters] = useState({
     status: '',
+    recordType: '',
     search: '',
     sortBy: 'createdAt',
     sortOrder: 'desc'
@@ -98,6 +100,7 @@ export default function PDFProcessorCachePage() {
       });
 
       if (filters.status) params.append('status', filters.status);
+      if (filters.recordType) params.append('recordType', filters.recordType);
       if (filters.search) params.append('search', filters.search);
 
       const response = await api.get(`/admin/pdf-processor-cache?${params}`);
@@ -646,6 +649,20 @@ export default function PDFProcessorCachePage() {
                 </select>
               </div>
 
+              <div className="flex-1 min-w-[150px]">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Record Type</label>
+                <select
+                  value={filters.recordType}
+                  onChange={(e) => handleFilterChange('recordType', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">ALL</option>
+                  <option value="pyq">PYQ</option>
+                  <option value="question">Question</option>
+                  <option value="lms">LMS</option>
+                </select>
+              </div>
+
               <div className="flex-1 min-w-[200px]">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
                 <input
@@ -741,6 +758,9 @@ export default function PDFProcessorCachePage() {
                       File Name
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Type
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       ID & Status
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -789,6 +809,16 @@ export default function PDFProcessorCachePage() {
                           </button>
                           )}
                         </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          record.recordType === 'pyq' ? 'bg-blue-100 text-blue-800' :
+                          record.recordType === 'question' ? 'bg-green-100 text-green-800' :
+                          record.recordType === 'lms' ? 'bg-purple-100 text-purple-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {record.recordType?.toUpperCase() || 'PYQ'}
+                        </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="space-y-2">
@@ -1266,7 +1296,9 @@ Use single dollar signs $ ... $ for all LaTeX math expressions.`;
                             onClick={() => {
                               const latexPath = records.find(r => r.fileName === editingJson)?.latexFilePath;
                               if (latexPath) {
-                                navigator.clipboard.writeText(latexPath).then(() => {
+                                // Ensure the URL is properly encoded before copying
+                                const encodedPath = encodeURI(latexPath);
+                                navigator.clipboard.writeText(encodedPath).then(() => {
                                   toast.success('LaTeX file path copied to clipboard!');
                                 }).catch(() => {
                                   toast.error('Failed to copy LaTeX file path');

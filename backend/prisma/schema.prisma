@@ -985,6 +985,7 @@ model PDFProcessorCache {
   fileName          String   @unique
   filePath          String
   fileSize          Int
+  recordType        RecordType @default(pyq)
   chatGptFileId     String?  // ChatGPT file ID after upload
   processingStatus  ProcessingStatus @default(PENDING)
   systemPrompt      String?  @db.Text
@@ -1046,4 +1047,10 @@ enum QuestionStatus {
   approved
   underreview
   rejected
+}
+
+enum RecordType {
+  pyq
+  question
+  lms
 }

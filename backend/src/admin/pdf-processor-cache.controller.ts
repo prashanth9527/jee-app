@@ -27,6 +27,7 @@ export class PDFProcessorCacheController {
     @Query('page') page: string = '1',
     @Query('limit') limit: string = '10',
     @Query('status') status?: string,
+    @Query('recordType') recordType?: string,
     @Query('search') search?: string,
     @Query('sortBy') sortBy: string = 'createdAt',
     @Query('sortOrder') sortOrder: string = 'desc'
@@ -40,6 +41,7 @@ export class PDFProcessorCacheController {
         page: pageNum,
         limit: limitNum,
         status,
+        recordType,
         search,
         sortBy,
         sortOrder: sortOrderValue

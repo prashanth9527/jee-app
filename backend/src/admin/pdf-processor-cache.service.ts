@@ -10,6 +10,7 @@ export interface FindAllOptions {
   page: number;
   limit: number;
   status?: string;
+  recordType?: string;
   search?: string;
   sortBy: string;
   sortOrder: 'asc' | 'desc';
@@ -36,7 +37,7 @@ export class PDFProcessorCacheService {
   ) {}
 
   async findAll(options: FindAllOptions) {
-    const { page, limit, status, search, sortBy, sortOrder } = options;
+    const { page, limit, status, recordType, search, sortBy, sortOrder } = options;
     const skip = (page - 1) * limit;
 
     // Build where clause
@@ -44,6 +45,10 @@ export class PDFProcessorCacheService {
 
     if (status && status !== 'all') {
       where.processingStatus = status.toUpperCase() as ProcessingStatus;
+    }
+
+    if (recordType && recordType !== 'all') {
+      where.recordType = recordType.toLowerCase();
     }
 
     if (search) {
