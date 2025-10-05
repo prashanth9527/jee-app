@@ -1296,22 +1296,37 @@ Use single dollar signs $ ... $ for all LaTeX math expressions.`;
                             onClick={() => {
                               const latexPath = records.find(r => r.fileName === editingJson)?.latexFilePath;
                               if (latexPath) {
-                                // Ensure the URL is properly encoded before copying
-                                const encodedPath = encodeURIComponent(latexPath);
-                                navigator.clipboard.writeText(encodedPath).then(() => {
-                                  toast.success('LaTeX file path copied to clipboard!');
-                                }).catch(() => {
-                                  toast.error('Failed to copy LaTeX file path');
-                                });
+                                try {
+                                  // Split into base and filename parts
+                                  const lastSlashIndex = latexPath.lastIndexOf('/');
+                                  const baseUrl = latexPath.substring(0, lastSlashIndex + 1);
+                                  const fileName = latexPath.substring(lastSlashIndex + 1);
+
+                                  // Encode only the filename (handles +, spaces, etc.)
+                                  const encodedPath = baseUrl + encodeURIComponent(fileName);
+
+                                  // Copy to clipboard
+                                  navigator.clipboard.writeText(encodedPath)
+                                    .then(() => toast.success('LaTeX file path copied to clipboard!'))
+                                    .catch(() => toast.error('Failed to copy LaTeX file path'));
+                                } catch (err) {
+                                  toast.error('Error encoding LaTeX file path');
+                                }
                               }
                             }}
                             className="flex-shrink-0 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded-md transition-colors"
                             title="Copy LaTeX file path to clipboard"
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                              />
                             </svg>
                           </button>
+
                         </div>
                       </div>
                     )}
