@@ -40,7 +40,7 @@ export default function ShareButtons({ title, url, description }: ShareButtonsPr
   const copyToClipboard = async () => {
     try {
       // Ensure the URL is properly encoded before copying
-      const encodedUrl = encodeURI(url);
+      const encodedUrl = encodeURIComponent(url);
       await navigator.clipboard.writeText(encodedUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
