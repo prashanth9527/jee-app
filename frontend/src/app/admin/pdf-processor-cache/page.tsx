@@ -1297,7 +1297,7 @@ Use single dollar signs $ ... $ for all LaTeX math expressions.`;
                               const latexPath = records.find(r => r.fileName === editingJson)?.latexFilePath;
                               if (latexPath) {
                                 // Ensure the URL is properly encoded before copying
-                                const encodedPath = encodeURI(latexPath);
+                                const encodedPath = encodeURIComponent(latexPath);
                                 navigator.clipboard.writeText(encodedPath).then(() => {
                                   toast.success('LaTeX file path copied to clipboard!');
                                 }).catch(() => {
