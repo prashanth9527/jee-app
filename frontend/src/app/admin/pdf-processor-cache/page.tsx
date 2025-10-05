@@ -223,9 +223,8 @@ export default function PDFProcessorCachePage() {
     // Extract the relative path from the full file path
     // Convert Windows path to URL format and encode the filename
     const encodedFileName = encodeURIComponent(fileName);
-    // Use dynamic host instead of hardcoded localhost:3001
-    const baseUrl = window.location.origin.replace(':3000', ':3001'); // Replace frontend port with backend port
-    const pdfUrl = `${baseUrl}/static/pdf/${encodedFileName}`;
+    const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+    const pdfUrl = `${apiBase}/static/pdf/${encodedFileName}`;
     window.open(pdfUrl, '_blank');
   };
 
@@ -1202,9 +1201,8 @@ Use single dollar signs $ ... $ for all LaTeX math expressions.`;
                           if (record?.filePath) {
                             try {
                               const encodedFileName = encodeURIComponent(record.fileName);
-                              // Use dynamic host instead of hardcoded localhost:3001
-                              const baseUrl = window.location.origin.replace(':3000', ':3001'); // Replace frontend port with backend port
-                              const fileUrl = `${baseUrl}/static/pdf/${encodedFileName}`;
+                              const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+                              const fileUrl = `${apiBase}/static/pdf/${encodedFileName}`;
                               window.open(fileUrl, '_blank');
                             } catch (error) {
                               console.error('Error opening PDF:', error);

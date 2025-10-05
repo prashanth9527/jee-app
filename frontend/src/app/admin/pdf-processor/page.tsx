@@ -1291,7 +1291,7 @@ export default function PDFProcessorPage() {
                         <div className="max-w-full">
                           <div className="text-sm font-medium text-gray-900 mb-1 break-words">
                           <a 
-                            href={`http://localhost:3001/static/pdf/${encodeURIComponent(pdf.fileName)}`}
+                            href={`${process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001'}/static/pdf/${encodeURIComponent(pdf.fileName)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:text-blue-800 hover:underline cursor-pointer"
@@ -1811,7 +1811,8 @@ Preserve **exactly the questions, options, and correct answers** from the \`.tex
                             try {
                               // Extract just the filename from the full path
                               const fileName = pdf.filePath.split(/[\\/]/).pop();
-                              const fileUrl = `http://localhost:3001/static/pdf/${fileName}`;
+                              const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+                              const fileUrl = `${apiBase}/static/pdf/${fileName}`;
                               console.log('Opening PDF URL:', fileUrl);
                               window.open(fileUrl, '_blank');
                             } catch (error) {
@@ -1835,7 +1836,8 @@ Preserve **exactly the questions, options, and correct answers** from the \`.tex
                             try {
                               // Convert LaTeX file path to static URL
                               const fileName = latexFilePath.split(/[\\/]/).pop();
-                              const fileUrl = `http://localhost:3001/static/latex/${fileName}`;
+                              const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+                              const fileUrl = `${apiBase}/static/latex/${fileName}`;
                               console.log('Opening LaTeX URL:', fileUrl);
                               window.open(fileUrl, '_blank');
                             } catch (error) {

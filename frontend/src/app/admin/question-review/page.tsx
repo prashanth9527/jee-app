@@ -219,7 +219,7 @@ export default function QuestionReviewPage() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">
                             <a 
-                              href={`http://localhost:3001/static/pdf/${encodeURIComponent(pdf.fileName)}`}
+                              href={`${process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001'}/static/pdf/${encodeURIComponent(pdf.fileName)}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:text-blue-800 hover:underline cursor-pointer"
