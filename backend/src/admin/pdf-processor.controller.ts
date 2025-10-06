@@ -543,26 +543,6 @@ export class PDFProcessorController {
     }
   }
 
-  @Get('mathpix-config')
-  async getMathpixConfig() {
-    try {
-      const config = this.mathpixService.getBackgroundProcessingConfig();
-      return {
-        success: true,
-        data: config
-      };
-    } catch (error) {
-      throw new HttpException(
-        {
-          success: false,
-          message: 'Failed to get Mathpix configuration',
-          error: error.message
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
-  }
-
   @Get('latex-content/:cacheId')
   async getLatexContent(@Param('cacheId') cacheId: string) {
     try {
