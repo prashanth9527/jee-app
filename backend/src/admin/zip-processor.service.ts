@@ -251,9 +251,10 @@ export class ZipProcessorService {
           fs.mkdirSync(subfolderPath, { recursive: true });
         }
 
-        // Sanitize the image filename to remove special characters and spaces
-        const sanitizedImageFileName = this.sanitizeFileName(fileName);
-        const imageFilePath = path.join(subfolderPath, sanitizedImageFileName);
+        // Keep the original image filename from ZIP file (no sanitization)
+        // Extract only the filename from the path to avoid nested directory issues
+        const originalImageFileName = path.basename(fileName);
+        const imageFilePath = path.join(subfolderPath, originalImageFileName);
 
         // Create write stream
         const writeStream = fs.createWriteStream(imageFilePath);

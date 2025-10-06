@@ -543,6 +543,32 @@ export class PDFProcessorController {
     }
   }
 
+  @Get('mathpix-config')
+  async getMathpixConfig() {
+    try {
+      const isConfigured = this.mathpixService.isConfigured();
+      const backgroundConfig = this.mathpixService.getBackgroundProcessingConfig();
+      
+      return {
+        success: true,
+        data: {
+          isConfigured,
+          ...backgroundConfig,
+          message: isConfigured ? 'Mathpix is configured' : 'Mathpix credentials not configured'
+        }
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to get Mathpix configuration',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
   @Get('latex-content/:cacheId')
   async getLatexContent(@Param('cacheId') cacheId: string) {
     try {
@@ -564,29 +590,6 @@ export class PDFProcessorController {
     }
   }
 
-  @Get('mathpix-config')
-  async getMathpixConfig() {
-    try {
-      const isConfigured = this.mathpixService.isConfigured();
-      
-      return {
-        success: true,
-        data: { 
-          isConfigured,
-          message: isConfigured ? 'Mathpix is configured' : 'Mathpix credentials not configured'
-        }
-      };
-    } catch (error) {
-      throw new HttpException(
-        {
-          success: false,
-          message: 'Failed to get Mathpix configuration',
-          error: error.message
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
-  }
 
   @Get('serve-file/:fileName')
   async serveFile(@Param('fileName') fileName: string, @Res() res: Response) {

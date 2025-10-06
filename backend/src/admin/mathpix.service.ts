@@ -855,8 +855,10 @@ export class MathpixService {
           fs.mkdirSync(subfolderPath, { recursive: true });
         }
 
-        // Keep original image filename (don't sanitize to preserve original names)
-        const imageFilePath = path.join(subfolderPath, fileName);
+        // Keep the original image filename from ZIP file (no sanitization)
+        // Extract only the filename from the path to avoid nested directory issues
+        const originalImageFileName = path.basename(fileName);
+        const imageFilePath = path.join(subfolderPath, originalImageFileName);
 
         // Create write stream
         const writeStream = fs.createWriteStream(imageFilePath);
@@ -872,21 +874,21 @@ export class MathpixService {
             const fileBuffer = fs.readFileSync(imageFilePath);
             const mockFile: Express.Multer.File = {
               fieldname: 'file',
-              originalname: fileName,
+              originalname: originalImageFileName,
               encoding: '7bit',
-              mimetype: this.getMimeType(fileName),
+              mimetype: this.getMimeType(originalImageFileName),
               buffer: fileBuffer,
               size: fileBuffer.length,
               stream: Readable.from(fileBuffer),
               destination: '',
-              filename: fileName,
+              filename: originalImageFileName,
               path: imageFilePath,
             };
 
             const awsUrl = await this.awsService.uploadFileWithCustomName(
               mockFile,
               `content/images/${subfolderName}`,
-              fileName
+              originalImageFileName
             );
             this.logger.log(`☁️ Image uploaded to AWS: ${awsUrl}`);
           } catch (awsError) {
