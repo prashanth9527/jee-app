@@ -83,6 +83,7 @@ export default function PDFProcessorCachePage() {
   });
   const [searchInput, setSearchInput] = useState('');
   const [syncing, setSyncing] = useState(false);
+  const [ignoreBackground, setIgnoreBackground] = useState(true);
 
   useEffect(() => {
     fetchRecords();
@@ -167,21 +168,52 @@ export default function PDFProcessorCachePage() {
 
     const result = await Swal.fire({
       title: 'Process with Mathpix',
-      text: `This will process "${record.fileName}" with Mathpix to extract LaTeX content. This may take a few minutes. Continue?`,
+      html: `
+        <div>
+          <p>This will process "${record.fileName}" with Mathpix to extract LaTeX content. This may take a few minutes.</p>
+          <div style="margin-top: 15px;">
+            <label style="display: flex; align-items: center; gap: 8px;">
+              <input type="checkbox" id="ignoreBackground" ${ignoreBackground ? 'checked' : ''} style="margin: 0;">
+              <span>Ignore page backgrounds (skip_recrop)</span>
+            </label>
+            <small style="color: #666; margin-top: 5px; display: block;">
+              This helps Mathpix focus on text content and ignore decorative backgrounds
+            </small>
+          </div>
+        </div>
+      `,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Yes, Process',
       cancelButtonText: 'Cancel',
       confirmButtonColor: '#f97316', // Orange color to match Mathpix button
+      preConfirm: () => {
+        const checkbox = document.getElementById('ignoreBackground') as HTMLInputElement;
+        return { ignoreBackground: checkbox.checked };
+      }
     });
 
     if (!result.isConfirmed) return;
+
+    const backgroundOption = result.value?.ignoreBackground ?? ignoreBackground;
+    setIgnoreBackground(backgroundOption);
 
     setProcessing(fileName);
     toast.loading('Processing PDF with Mathpix...', 'Please wait');
 
     try {
-      const response = await api.post(`/admin/pdf-processor-cache/${record.id}/process-mathpix`);
+      // Use the new endpoint with options if background processing is different from default
+      const endpoint = backgroundOption 
+        ? `/admin/pdf-processor/process-mathpix-file-with-options/${fileName}`
+        : `/admin/pdf-processor-cache/${record.id}/process-mathpix`;
+      
+      const requestData = backgroundOption 
+        ? { skipRecrop: backgroundOption }
+        : undefined;
+
+      const response = backgroundOption
+        ? await api.post(endpoint, requestData)
+        : await api.post(endpoint);
 
       console.log('response', response);
       if (response.data.success) {
@@ -552,6 +584,24 @@ export default function PDFProcessorCachePage() {
             <div>
               <h1 className="text-2xl font-bold text-gray-900">PDF Processor Cache</h1>
               <p className="text-gray-600">Manage PDF processing cache records</p>
+              <div className="mt-2 flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-gray-500">Background Processing:</span>
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                    ignoreBackground 
+                      ? 'bg-orange-100 text-orange-800' 
+                      : 'bg-gray-100 text-gray-800'
+                  }`}>
+                    {ignoreBackground ? 'Ignore Backgrounds' : 'Process All Content'}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setIgnoreBackground(!ignoreBackground)}
+                  className="text-sm text-blue-600 hover:text-blue-800 underline"
+                >
+                  Toggle Setting
+                </button>
+              </div>
             </div>
             <button
               onClick={handleSyncFiles}

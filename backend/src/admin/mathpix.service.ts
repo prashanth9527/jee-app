@@ -31,6 +31,9 @@ export class MathpixService {
   private readonly mathpixUploadUrl = 'https://api.mathpix.com/v3/pdf';
   private readonly mathpixAppId = process.env.MATHPIX_APP_ID;
   private readonly mathpixAppKey = process.env.MATHPIX_APP_KEY;
+  
+  // Configuration for background processing
+  private readonly ignoreBackground = process.env.MATHPIX_IGNORE_BACKGROUND === 'true' || true; // Default to true
 
   constructor(
     private prisma: PrismaService,
@@ -201,8 +204,8 @@ export class MathpixService {
 
       this.logger.log(`Processing PDF with Mathpix: ${fileName}`);
 
-      // Process PDF using the complete workflow
-      const result = await this.processPDFComplete(filePath);
+      // Process PDF using the complete workflow with background ignore option
+      const result = await this.processPDFComplete(filePath, { skipRecrop: this.ignoreBackground });
       
       let latexContent = '';
       let latexFilePath = '';
@@ -432,8 +435,8 @@ export class MathpixService {
       const pdfBuffer = fs.readFileSync(cache.filePath);
       const base64Pdf = pdfBuffer.toString('base64');
 
-      // Process PDF using the complete workflow
-      const result = await this.processPDFComplete(cache.filePath);
+      // Process PDF using the complete workflow with background ignore option
+      const result = await this.processPDFComplete(cache.filePath, { skipRecrop: this.ignoreBackground });
       
       let latexContent = '';
       let latexFilePath = '';
@@ -545,7 +548,7 @@ export class MathpixService {
   /**
    * Upload PDF to Mathpix and get pdf_id
    */
-  private async uploadPDF(pdfPath: string): Promise<{ pdf_id: string; status: string }> {
+  private async uploadPDF(pdfPath: string, options?: { skipRecrop?: boolean }): Promise<{ pdf_id: string; status: string }> {
     try {
       const pdfBuffer = fs.readFileSync(pdfPath);
       
@@ -556,11 +559,18 @@ export class MathpixService {
         filename: path.basename(pdfPath),
         contentType: 'application/pdf'
       });
+
+      // Add Mathpix processing options to ignore background
+      if (options?.skipRecrop) {
+        form.append('skip_recrop', 'true');
+        this.logger.log('🎯 Background processing: skip_recrop enabled to ignore page backgrounds');
+      }
       
       this.logger.log('🔑 Using Mathpix credentials:', {
         appId: this.mathpixAppId ? 'Set' : 'Not set',
         appKey: this.mathpixAppKey ? 'Set' : 'Not set',
-        baseUrl: this.mathpixBaseUrl
+        baseUrl: this.mathpixBaseUrl,
+        skipRecrop: options?.skipRecrop || false
       });
 
       const response = await axios.post(this.mathpixUploadUrl, form, {
@@ -1066,13 +1076,13 @@ export class MathpixService {
   /**
    * Complete PDF processing workflow
    */
-  private async processPDFComplete(pdfPath: string): Promise<{ content: string; zipFilePath?: string }> {
+  private async processPDFComplete(pdfPath: string, options?: { skipRecrop?: boolean }): Promise<{ content: string; zipFilePath?: string }> {
     try {
       this.logger.log('🚀 Starting complete PDF processing workflow...');
       
       // Step 1: Upload PDF
       this.logger.log('📤 Uploading PDF to Mathpix...');
-      const uploadResult = await this.uploadPDF(pdfPath);
+      const uploadResult = await this.uploadPDF(pdfPath, options);
       const pdfId = uploadResult.pdf_id;
       
       // Step 2: Wait for processing
@@ -1235,6 +1245,149 @@ export class MathpixService {
    */
   isConfigured(): boolean {
     return !!(this.mathpixAppId && this.mathpixAppKey);
+  }
+
+  /**
+   * Get current background processing configuration
+   */
+  getBackgroundProcessingConfig(): { ignoreBackground: boolean } {
+    return {
+      ignoreBackground: this.ignoreBackground
+    };
+  }
+
+  /**
+   * Process PDF with custom background processing options
+   */
+  async processPdfWithMathpixByFileNameWithOptions(
+    fileName: string, 
+    filePath: string, 
+    options?: { skipRecrop?: boolean }
+  ): Promise<MathpixProcessResult> {
+    const startTime = Date.now();
+    
+    try {
+      this.logger.log(`Processing PDF with Mathpix (custom options): ${fileName}`);
+      
+      // Use custom options or fall back to default configuration
+      const processingOptions = {
+        skipRecrop: options?.skipRecrop ?? this.ignoreBackground
+      };
+
+      // Process PDF using the complete workflow with custom options
+      const result = await this.processPDFComplete(filePath, processingOptions);
+      
+      let latexContent = '';
+      let latexFilePath = '';
+      let zipFilePath = '';
+
+      if (result.zipFilePath) {
+        // ZIP file was saved, now extract LaTeX content immediately
+        zipFilePath = result.zipFilePath;
+        this.logger.log('📦 ZIP file saved, extracting LaTeX content...');
+        
+        // Determine local ZIP file path for extraction
+        let localZipFilePath = zipFilePath;
+        if (zipFilePath.includes('s3.') || zipFilePath.includes('amazonaws.com')) {
+          // If it's an AWS URL, construct the local path with sanitized filename
+          const originalZipFileName = fileName.replace(/\.pdf$/i, '.zip');
+          const zipFileName = this.sanitizeFileName(originalZipFileName);
+          localZipFilePath = path.join(process.cwd(), 'content', 'zip', zipFileName);
+        }
+        
+        // Extract LaTeX content from local ZIP file
+        const extractedContent = await this.extractLatexFromZipFile(localZipFilePath, fileName);
+        if (extractedContent) {
+          // Validate and clean LaTeX content
+          const cleanedContent = this.validateAndCleanLatex(extractedContent);
+          latexContent = this.sanitizeStringData(cleanedContent);
+          latexFilePath = await this.saveLatexToFile(fileName, latexContent);
+          this.logger.log('✅ LaTeX content extracted, cleaned, and saved to latex folder');
+        }
+      } else if (result.content) {
+        // Regular text content
+        latexContent = this.sanitizeStringData(result.content);
+        latexFilePath = await this.saveLatexToFile(fileName, latexContent);
+      }
+
+      // Update or create cache record
+      let cache = await this.prisma.pDFProcessorCache.findUnique({
+        where: { fileName: fileName }
+      });
+
+      if (!cache) {
+        // Create new cache record
+        const fileStats = fs.statSync(filePath);
+        try {
+          cache = await this.prisma.pDFProcessorCache.upsert({
+            where: { fileName: this.sanitizeStringData(fileName) },
+            update: {
+              latexContent: latexContent,
+              latexFilePath: this.sanitizeStringData(latexFilePath),
+              zipFilePath: this.sanitizeStringData(zipFilePath),
+              processingStatus: 'COMPLETED',
+              lastProcessedAt: new Date(),
+              processingTimeMs: Date.now() - startTime
+            },
+            create: {
+              fileName: this.sanitizeStringData(fileName),
+              filePath: this.sanitizeStringData(filePath),
+              fileSize: fileStats.size,
+              processingStatus: 'COMPLETED',
+              latexContent: latexContent,
+              latexFilePath: this.sanitizeStringData(latexFilePath),
+              zipFilePath: this.sanitizeStringData(zipFilePath),
+              lastProcessedAt: new Date(),
+              processingTimeMs: Date.now() - startTime
+            }
+          });
+        } catch (dbError) {
+          this.logger.error('Database error creating cache record:', dbError);
+          // Continue without database update
+        }
+      } else {
+        // Update existing cache record
+        try {
+          cache = await this.prisma.pDFProcessorCache.update({
+            where: { id: cache.id },
+            data: {
+              latexContent: latexContent,
+              latexFilePath: this.sanitizeStringData(latexFilePath),
+              zipFilePath: this.sanitizeStringData(zipFilePath),
+              processingStatus: 'COMPLETED',
+              lastProcessedAt: new Date(),
+              processingTimeMs: Date.now() - startTime
+            }
+          });
+        } catch (dbError) {
+          this.logger.error('Database error updating cache record:', dbError);
+          // Continue without database update
+        }
+      }
+
+      const processingTime = Date.now() - startTime;
+      this.logger.log(`✅ PDF processing completed in ${processingTime}ms`);
+
+      return {
+        success: true,
+        latexContent: latexContent,
+        latexFilePath: latexFilePath,
+        zipFilePath: zipFilePath,
+        processingTimeMs: processingTime,
+        cacheId: cache?.id,
+        message: 'PDF processed successfully with custom background options'
+      };
+
+    } catch (error) {
+      const processingTime = Date.now() - startTime;
+      this.logger.error('❌ PDF processing failed:', error);
+      
+      return {
+        success: false,
+        error: error.message,
+        processingTimeMs: processingTime
+      };
+    }
   }
 
   /**

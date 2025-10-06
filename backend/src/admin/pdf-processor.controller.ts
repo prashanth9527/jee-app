@@ -506,6 +506,63 @@ export class PDFProcessorController {
     }
   }
 
+  @Post('process-mathpix-file-with-options/:fileName')
+  async processFileWithMathpixOptions(
+    @Param('fileName') fileName: string,
+    @Body() options: { skipRecrop?: boolean }
+  ) {
+    try {
+      // Get the file path from the PDF list
+      const pdfs = await this.pdfProcessorService.listPDFs();
+      const pdf = pdfs.find(p => p.fileName === fileName);
+      
+      if (!pdf) {
+        throw new BadRequestException('PDF file not found');
+      }
+
+      const result = await this.mathpixService.processPdfWithMathpixByFileNameWithOptions(
+        fileName, 
+        pdf.filePath, 
+        options
+      );
+      
+      return {
+        success: result.success,
+        message: result.success ? 'PDF processed with Mathpix successfully' : 'Mathpix processing failed',
+        data: result
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to process PDF with Mathpix',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get('mathpix-config')
+  async getMathpixConfig() {
+    try {
+      const config = this.mathpixService.getBackgroundProcessingConfig();
+      return {
+        success: true,
+        data: config
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to get Mathpix configuration',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
   @Get('latex-content/:cacheId')
   async getLatexContent(@Param('cacheId') cacheId: string) {
     try {
