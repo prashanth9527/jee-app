@@ -51,4 +51,21 @@ export class AdminAnalyticsController {
   async getContentPerformanceMetrics() {
     return this.analyticsService.getContentPerformanceMetrics();
   }
+
+  @Get('recent-activities')
+  async getRecentActivities() {
+    return this.analyticsService.getRecentActivities();
+  }
+
+  @Get('monthly-users')
+  async getMonthlyUsersData(@Query('months') months?: string) {
+    const monthsNumber = months ? parseInt(months) : 12;
+    return this.analyticsService.getMonthlyUsersData(monthsNumber);
+  }
+
+  @Get('revenue')
+  async getRevenueData(@Query('months') months?: string) {
+    const monthsNumber = months ? parseInt(months) : 12;
+    return this.analyticsService.getRevenueData(monthsNumber);
+  }
 }

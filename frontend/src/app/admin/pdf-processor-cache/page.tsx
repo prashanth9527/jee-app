@@ -1115,9 +1115,14 @@ Your task is to **extract and structure ALL questions into JSON format**.
 1. Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start with \`{\` and end with \`}\`.  
 2. Preserve **exactly the questions, options, and correct answers** from the \`.tex\` file.  
    - ❌ Do not fabricate or invent any question text or options.  
-   - ✅ Use the same wording, LaTeX math, and image references as in the file.  
-3. All mathematical and chemical formulas must use LaTeX: $ ... $ (single dollar signs for inline math).
-4. **Do not skip ANY image references.** Every \`\\includegraphics\` in the \`.tex\` must be included in the JSON.   
+   - ✅ Only include content explicitly present in the provided \`.tex\` file.
+3. **If the \`.tex\` file has fewer than 90 questions, output only those that appear.**
+   - Do NOT generate filler or fake questions for missing ones.
+4. All mathematical and chemical formulas must use LaTeX: $ ... $ (single dollar signs for inline math).
+  **Preserve exactly the question text, math, and options** as they appear in the \`.tex\` file.
+   - Keep all LaTeX math enclosed in single dollar signs \`$ ... $\`.
+   - Preserve symbols, fractions, and expressions exactly.
+5. **Do not skip ANY image references.** Every \`\\includegraphics\` in the \`.tex\` must be included in the JSON.   
    - Replace them with an HTML \`<img>\` tag.  
    - Format:  
      \`\`\`html
@@ -1146,8 +1151,8 @@ Your task is to **extract and structure ALL questions into JSON format**.
      \`\`\`json
      "text": "<img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/smile-physics-paper/diagram1.png' />"
      \`\`\`  
-5. Accept question numbering as \`Q1, Q2, …\` or \`1., 2., …\`.  
-6. **Skip all promotional/branding content** (e.g., "Allen", "Best of Luck", headers/footers, watermarks, motivational lines). Keep only actual question data.  
+6. Accept question numbering as \`Q1, Q2, …\` or \`1., 2., …\`.  
+7. **Skip all promotional/branding content** (e.g., "Allen", "Best of Luck", headers/footers, watermarks, motivational lines). Keep only actual question data.  
 
 ---
 
@@ -1156,7 +1161,7 @@ Your task is to **extract and structure ALL questions into JSON format**.
 - Chemistry: **Q31–Q60**  
 - Mathematics: **Q61–Q90**  
 - Each subject must have **exactly 30 questions**.  
-- If fewer appear in the \`.tex\`, generate realistic filler questions to complete the block.  
+- If fewer appear in the \`.tex\`, do not generate realistic filler questions to complete the block.  
 
 ---
 
@@ -1221,6 +1226,19 @@ Assign: **lesson → topic → subtopic**.
 }
 \`\`\`
 
+### IMPORTANT ANTI-FABRICATION RULES
+Only output questions explicitly detected in the .tex file.
+If something cannot be confidently extracted, omit it.
+Do NOT make up question text, options, or correct answers.
+If the .tex includes fewer than 30 questions per subject, your output will have fewer entries.
+Every extracted question must have originated verbatim from the .tex file content.
+
+### CLASSIFICATION
+For each extracted question, identify the appropriate:
+subject (Physics, Chemistry, Mathematics)
+lesson, topic, and subtopic based on JEE Main 2025 syllabus.
+Do not guess if unclear — mark "lesson": "Unknown" etc. if uncertain.
+
 ### FINAL INSTRUCTION
 
 Read the \`.tex\` file carefully and return **only the JSON output** in the schema above.  
@@ -1230,7 +1248,10 @@ Preserve **exactly the questions, options, and correct answers** from the \`.tex
    - ❌ Do not fabricate or invent any question text or options.  
    - ✅ Use the same wording, LaTeX math, and image references as in the file.  
 **Do not skip ANY image references.** Every \`\\includegraphics\` in the \`.tex\` must be included in the JSON.  
-Use single dollar signs $ ... $ for all LaTeX math expressions.`;
+Use single dollar signs $ ... $ for all LaTeX math expressions.
+Read the .tex file carefully.
+Return only valid JSON, faithfully representing every question that truly exists in the source file.
+Do not generate or hallucinate new data under any circumstances.`;
 
                           navigator.clipboard.writeText(promptText).then(() => {
                             toast.success('Prompt copied to clipboard!');

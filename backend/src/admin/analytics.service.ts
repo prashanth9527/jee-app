@@ -10,6 +10,20 @@ export interface DashboardStats {
   totalBadgesEarned: number;
   activeUsers: number;
   completionRate: number;
+  // Additional stats for comprehensive dashboard
+  totalSubjects: number;
+  totalTopics: number;
+  totalSubtopics: number;
+  totalTags: number;
+  totalExamPapers: number;
+  totalSubmissions: number;
+  activeSubscriptions: number;
+  totalPlans: number;
+  // Growth metrics
+  userGrowthPercentage: number;
+  questionGrowthPercentage: number;
+  submissionGrowthPercentage: number;
+  subscriptionGrowthPercentage: number;
 }
 
 export interface UserGrowthData {
@@ -61,6 +75,9 @@ export class AdminAnalyticsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getDashboardStats(): Promise<DashboardStats> {
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const sixtyDaysAgo = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000);
+
     const [
       totalUsers,
       totalStudents,
@@ -69,7 +86,24 @@ export class AdminAnalyticsService {
       totalQuestions,
       totalBadgesEarned,
       activeUsers,
-      lessonProgressData
+      lessonProgressData,
+      totalSubjects,
+      totalTopics,
+      totalSubtopics,
+      totalTags,
+      totalExamPapers,
+      totalSubmissions,
+      activeSubscriptions,
+      totalPlans,
+      // Growth data
+      usersLastMonth,
+      questionsLastMonth,
+      submissionsLastMonth,
+      subscriptionsLastMonth,
+      usersPreviousMonth,
+      questionsPreviousMonth,
+      submissionsPreviousMonth,
+      subscriptionsPreviousMonth
     ] = await Promise.all([
       this.prisma.user.count(),
       this.prisma.user.count({ where: { role: 'STUDENT' } }),
@@ -86,12 +120,68 @@ export class AdminAnalyticsService {
       }),
       this.prisma.lessonProgress.findMany({
         select: { status: true }
+      }),
+      this.prisma.subject.count(),
+      this.prisma.topic.count(),
+      this.prisma.subtopic.count(),
+      this.prisma.tag.count(),
+      this.prisma.examPaper.count(),
+      this.prisma.examSubmission.count(),
+      this.prisma.subscription.count({ where: { status: 'ACTIVE' } }),
+      this.prisma.plan.count(),
+      // Growth data - last 30 days
+      this.prisma.user.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
+      this.prisma.question.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
+      this.prisma.examSubmission.count({ where: { startedAt: { gte: thirtyDaysAgo } } }),
+      this.prisma.subscription.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
+      // Growth data - previous 30 days
+      this.prisma.user.count({ 
+        where: { 
+          createdAt: { 
+            gte: sixtyDaysAgo, 
+            lt: thirtyDaysAgo 
+          } 
+        } 
+      }),
+      this.prisma.question.count({ 
+        where: { 
+          createdAt: { 
+            gte: sixtyDaysAgo, 
+            lt: thirtyDaysAgo 
+          } 
+        } 
+      }),
+      this.prisma.examSubmission.count({ 
+        where: { 
+          startedAt: { 
+            gte: sixtyDaysAgo, 
+            lt: thirtyDaysAgo 
+          } 
+        } 
+      }),
+      this.prisma.subscription.count({ 
+        where: { 
+          createdAt: { 
+            gte: sixtyDaysAgo, 
+            lt: thirtyDaysAgo 
+          } 
+        } 
       })
     ]);
 
     const totalProgressRecords = lessonProgressData.length;
     const completedRecords = lessonProgressData.filter(p => p.status === 'COMPLETED').length;
     const completionRate = totalProgressRecords > 0 ? (completedRecords / totalProgressRecords) * 100 : 0;
+
+    // Calculate growth percentages
+    const userGrowthPercentage = usersPreviousMonth > 0 ? 
+      Math.round(((usersLastMonth - usersPreviousMonth) / usersPreviousMonth) * 100) : 0;
+    const questionGrowthPercentage = questionsPreviousMonth > 0 ? 
+      Math.round(((questionsLastMonth - questionsPreviousMonth) / questionsPreviousMonth) * 100) : 0;
+    const submissionGrowthPercentage = submissionsPreviousMonth > 0 ? 
+      Math.round(((submissionsLastMonth - submissionsPreviousMonth) / submissionsPreviousMonth) * 100) : 0;
+    const subscriptionGrowthPercentage = subscriptionsPreviousMonth > 0 ? 
+      Math.round(((subscriptionsLastMonth - subscriptionsPreviousMonth) / subscriptionsPreviousMonth) * 100) : 0;
 
     return {
       totalUsers,
@@ -101,7 +191,19 @@ export class AdminAnalyticsService {
       totalQuestions,
       totalBadgesEarned,
       activeUsers,
-      completionRate: Math.round(completionRate * 100) / 100
+      completionRate: Math.round(completionRate * 100) / 100,
+      totalSubjects,
+      totalTopics,
+      totalSubtopics,
+      totalTags,
+      totalExamPapers,
+      totalSubmissions,
+      activeSubscriptions,
+      totalPlans,
+      userGrowthPercentage,
+      questionGrowthPercentage,
+      submissionGrowthPercentage,
+      subscriptionGrowthPercentage
     };
   }
 
@@ -471,5 +573,226 @@ export class AdminAnalyticsService {
         }))
       }
     };
+  }
+
+  async getRecentActivities() {
+    const [
+      recentQuestions,
+      recentSubmissions,
+      recentSubscriptions,
+      recentUsers
+    ] = await Promise.all([
+      this.prisma.question.findMany({
+        take: 5,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          subject: true,
+          createdBy: {
+            select: { fullName: true }
+          }
+        }
+      }),
+      this.prisma.examSubmission.findMany({
+        take: 5,
+        orderBy: { startedAt: 'desc' },
+        include: {
+          user: {
+            select: { fullName: true }
+          },
+          examPaper: {
+            select: { title: true }
+          }
+        }
+      }),
+      this.prisma.subscription.findMany({
+        take: 5,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          user: {
+            select: { fullName: true }
+          },
+          plan: {
+            select: { name: true }
+          }
+        }
+      }),
+      this.prisma.user.findMany({
+        take: 5,
+        where: { role: 'STUDENT' },
+        orderBy: { createdAt: 'desc' },
+        select: { id: true, fullName: true, createdAt: true }
+      })
+    ]);
+
+    const activities: any[] = [];
+
+    // Add recent questions
+    recentQuestions.forEach(question => {
+      activities.push({
+        id: `question-${question.id}`,
+        type: 'question',
+        message: `New question added to ${question.subject?.name || 'Unknown Subject'}`,
+        time: question.createdAt,
+        icon: '📝',
+        details: {
+          questionId: question.id,
+          subject: question.subject?.name,
+          createdBy: question.createdBy?.fullName
+        }
+      });
+    });
+
+    // Add recent submissions
+    recentSubmissions.forEach(submission => {
+      activities.push({
+        id: `submission-${submission.id}`,
+        type: 'submission',
+        message: `Student completed ${submission.examPaper?.title || 'exam'}`,
+        time: submission.startedAt,
+        icon: '✅',
+        details: {
+          submissionId: submission.id,
+          examPaper: submission.examPaper?.title,
+          student: submission.user?.fullName,
+          score: submission.scorePercent
+        }
+      });
+    });
+
+    // Add recent subscriptions
+    recentSubscriptions.forEach(subscription => {
+      activities.push({
+        id: `subscription-${subscription.id}`,
+        type: 'subscription',
+        message: `New subscription plan created: ${subscription.plan?.name || 'Unknown Plan'}`,
+        time: subscription.createdAt,
+        icon: '💳',
+        details: {
+          subscriptionId: subscription.id,
+          plan: subscription.plan?.name,
+          user: subscription.user?.fullName
+        }
+      });
+    });
+
+    // Add recent user registrations
+    recentUsers.forEach(user => {
+      activities.push({
+        id: `user-${user.id}`,
+        type: 'user',
+        message: 'User registered for trial',
+        time: user.createdAt,
+        icon: '👤',
+        details: {
+          userId: user.id,
+          userName: user.fullName
+        }
+      });
+    });
+
+    // Sort by time and return top 10
+    return activities
+      .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
+      .slice(0, 10)
+      .map(activity => ({
+        ...activity,
+        timeAgo: this.getTimeAgo(activity.time)
+      }));
+  }
+
+  private getTimeAgo(date: Date): string {
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} seconds ago`;
+    } else if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    } else if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    } else {
+      const days = Math.floor(diffInSeconds / 86400);
+      return `${days} day${days > 1 ? 's' : ''} ago`;
+    }
+  }
+
+  async getMonthlyUsersData(months: number = 12) {
+    const data = [];
+    const now = new Date();
+    
+    for (let i = months - 1; i >= 0; i--) {
+      const startDate = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const endDate = new Date(now.getFullYear(), now.getMonth() - i + 1, 0, 23, 59, 59);
+      
+      const userCount = await this.prisma.user.count({
+        where: {
+          createdAt: {
+            gte: startDate,
+            lte: endDate
+          }
+        }
+      });
+
+      data.push({
+        month: startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+        users: userCount,
+        date: startDate.toISOString()
+      });
+    }
+
+    return data;
+  }
+
+  async getRevenueData(months: number = 12) {
+    const data = [];
+    const now = new Date();
+    
+    for (let i = months - 1; i >= 0; i--) {
+      const startDate = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const endDate = new Date(now.getFullYear(), now.getMonth() - i + 1, 0, 23, 59, 59);
+      
+      // Get completed payment orders for this month
+      const revenueData = await this.prisma.paymentOrder.aggregate({
+        where: {
+          status: 'COMPLETED',
+          createdAt: {
+            gte: startDate,
+            lte: endDate
+          }
+        },
+        _sum: {
+          amount: true
+        },
+        _count: {
+          id: true
+        }
+      });
+
+      // Get subscription data for this month
+      const subscriptionData = await this.prisma.subscription.aggregate({
+        where: {
+          status: 'ACTIVE',
+          createdAt: {
+            gte: startDate,
+            lte: endDate
+          }
+        },
+        _count: {
+          id: true
+        }
+      });
+
+      data.push({
+        month: startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+        revenue: revenueData._sum.amount || 0,
+        transactions: revenueData._count.id || 0,
+        newSubscriptions: subscriptionData._count.id || 0,
+        date: startDate.toISOString()
+      });
+    }
+
+    return data;
   }
 }
