@@ -863,7 +863,7 @@ export default function PDFProcessorCachePage() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex flex-wrap gap-2">
                           {/* Edit JSON Button - Purple (only show if Mathpix processed) */}
-                          {record.zipFilePath && (
+                          {record.latexFilePath && (
                             <button
                               onClick={() => openJsonEditor(record.fileName)}
                               className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors"
@@ -877,7 +877,7 @@ export default function PDFProcessorCachePage() {
                           )}
 
                           {/* Mathpix Processing Button */}
-                          {!record.zipFilePath ? (
+                          {!record.latexFilePath ? (
                             <button
                               onClick={() => processWithMathpix(record.fileName)}
                               disabled={processing === record.fileName}
