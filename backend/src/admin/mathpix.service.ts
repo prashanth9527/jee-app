@@ -855,9 +855,8 @@ export class MathpixService {
           fs.mkdirSync(subfolderPath, { recursive: true });
         }
 
-        // Sanitize the image filename to remove special characters and spaces
-        const sanitizedImageFileName = this.sanitizeFileName(fileName);
-        const imageFilePath = path.join(subfolderPath, sanitizedImageFileName);
+        // Keep original image filename (don't sanitize to preserve original names)
+        const imageFilePath = path.join(subfolderPath, fileName);
 
         // Create write stream
         const writeStream = fs.createWriteStream(imageFilePath);
@@ -873,21 +872,21 @@ export class MathpixService {
             const fileBuffer = fs.readFileSync(imageFilePath);
             const mockFile: Express.Multer.File = {
               fieldname: 'file',
-              originalname: sanitizedImageFileName,
+              originalname: fileName,
               encoding: '7bit',
-              mimetype: this.getMimeType(sanitizedImageFileName),
+              mimetype: this.getMimeType(fileName),
               buffer: fileBuffer,
               size: fileBuffer.length,
               stream: Readable.from(fileBuffer),
               destination: '',
-              filename: sanitizedImageFileName,
+              filename: fileName,
               path: imageFilePath,
             };
 
             const awsUrl = await this.awsService.uploadFileWithCustomName(
               mockFile,
               `content/images/${subfolderName}`,
-              sanitizedImageFileName
+              fileName
             );
             this.logger.log(`☁️ Image uploaded to AWS: ${awsUrl}`);
           } catch (awsError) {

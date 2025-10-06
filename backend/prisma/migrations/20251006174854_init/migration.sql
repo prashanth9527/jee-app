@@ -79,6 +79,9 @@ CREATE TYPE "public"."LogType" AS ENUM ('INFO', 'WARNING', 'ERROR', 'SUCCESS', '
 -- CreateEnum
 CREATE TYPE "public"."QuestionStatus" AS ENUM ('approved', 'underreview', 'rejected');
 
+-- CreateEnum
+CREATE TYPE "public"."RecordType" AS ENUM ('pyq', 'question', 'lms');
+
 -- CreateTable
 CREATE TABLE "public"."User" (
     "id" TEXT NOT NULL,
@@ -801,6 +804,7 @@ CREATE TABLE "public"."pdf_processor_cache" (
     "fileName" TEXT NOT NULL,
     "filePath" TEXT NOT NULL,
     "fileSize" INTEGER NOT NULL,
+    "recordType" "public"."RecordType" NOT NULL DEFAULT 'pyq',
     "chatGptFileId" TEXT,
     "processingStatus" "public"."ProcessingStatus" NOT NULL DEFAULT 'PENDING',
     "systemPrompt" TEXT,
