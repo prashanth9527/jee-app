@@ -69,7 +69,8 @@ export default function MyAIQuestionsPage() {
   const fetchSubjects = async () => {
     try {
       const response = await api.get('/student/subjects');
-      setSubjects(response.data.subjects || []);
+      // The API returns an array of subjects directly, not nested in a 'subjects' property
+      setSubjects(response?.data || response || []);
     } catch (error) {
       console.error('Error fetching subjects:', error);
       setSubjects([]); // Ensure subjects is always an array
