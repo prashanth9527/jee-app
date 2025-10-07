@@ -137,7 +137,7 @@ function PracticeTestPageContent() {
 
   const fetchLessons = async (subjectId: string) => {
     try {
-      const response = await api.get(`/lms/subjects/${subjectId}/lessons`);
+      const response = await api.get(`/student/lessons?subjectId=${subjectId}`);
       setLessons(response.data);
     } catch (error) {
       console.error('Error fetching lessons:', error);

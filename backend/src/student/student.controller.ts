@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, Req, UseGuards, ForbiddenException, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, Req, UseGuards, ForbiddenException, NotFoundException, HttpException, BadRequestException } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -820,5 +820,44 @@ export class StudentController {
 				count: d._count.difficulty
 			}))
 		};
+	}
+
+	@Get('lessons')
+	async getLessons(@Req() req: any, @Query('subjectId') subjectId?: string) {
+		const userId = req.user.id;
+		
+		// Get user's stream
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: { streamId: true }
+		});
+
+		if (!user?.streamId) {
+			throw new ForbiddenException('No stream assigned to user');
+		}
+
+		const where: any = {
+			subject: {
+				streamId: user.streamId
+			}
+		};
+
+		if (subjectId) {
+			where.subjectId = subjectId;
+		}
+
+		return this.prisma.lesson.findMany({
+			where,
+			orderBy: { order: 'asc' },
+			select: {
+				id: true,
+				name: true,
+				description: true,
+				order: true,
+				_count: {
+					select: { questions: true }
+				}
+			}
+		});
 	}
 } 
