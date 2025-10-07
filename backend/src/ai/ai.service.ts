@@ -351,4 +351,309 @@ export class AiService {
       throw new Error(`Failed to generate blog outline: ${error.message}`);
     }
   }
+
+  async generateQuestionsWithTips(request: {
+    subject: string;
+    topic?: string;
+    subtopic?: string;
+    difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+    questionCount: number;
+    subjectId: string;
+    topicId?: string;
+    subtopicId?: string;
+  }): Promise<{
+    questions: Array<{
+      question: string;
+      options: Array<{ text: string; isCorrect: boolean }>;
+      explanation: string;
+      difficulty: string;
+      tip_formula?: string;
+    }>;
+  }> {
+    if (!this.openaiApiKey) {
+      throw new Error('OpenAI API key not configured');
+    }
+
+    const prompt = this.buildQuestionGenerationPrompt(request);
+
+    try {
+      const response = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.openaiApiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content: `You are an expert JEE (Joint Entrance Examination) question generator. Your task is to create high-quality, educational questions that test students' understanding of concepts.
+
+CRITICAL REQUIREMENTS:
+1. Generate exactly ${request.questionCount} questions
+2. Each question must have exactly 4 options (A, B, C, D)
+3. Mark exactly ONE option as correct (isCorrect: true)
+4. Provide detailed explanations for each answer
+5. Include relevant tips/formulas for each question
+6. Ensure questions are appropriate for ${request.difficulty} difficulty level
+7. Make questions relevant to JEE preparation standards
+8. Use proper mathematical notation with LaTeX when needed ($$...$$)
+9. Ensure questions test conceptual understanding, not just memorization
+
+RESPONSE FORMAT:
+You MUST respond with ONLY valid JSON in this exact structure:
+{
+  "questions": [
+    {
+      "question": "Question text with LaTeX math if needed: $$\\frac{d}{dx}[x^2] = ?$$",
+      "options": [
+        {"text": "Option A with LaTeX: $$2x$$", "isCorrect": true},
+        {"text": "Option B with LaTeX: $$x^2$$", "isCorrect": false},
+        {"text": "Option C with LaTeX: $$2x^2$$", "isCorrect": false},
+        {"text": "Option D with LaTeX: $$x$$", "isCorrect": false}
+      ],
+      "explanation": "Detailed step-by-step explanation with LaTeX: $$\\frac{d}{dx}[x^2] = 2x$$. This is because...",
+      "difficulty": "${request.difficulty}",
+      "tip_formula": "Key formula or tip: $$\\frac{d}{dx}[x^n] = nx^{n-1}$$"
+    }
+  ]
+}
+
+Do not include any text outside the JSON structure.`
+            },
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          max_tokens: 4000,
+          temperature: 0.7,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`OpenAI API error: ${errorData.error?.message || 'Unknown error'}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices[0]?.message?.content;
+
+      if (!content) {
+        throw new Error('No content generated from OpenAI');
+      }
+
+      // Parse the JSON response
+      try {
+        const parsedContent = JSON.parse(content);
+        
+        // Validate the response structure
+        if (!parsedContent.questions || !Array.isArray(parsedContent.questions)) {
+          throw new Error('Invalid response structure: missing questions array');
+        }
+
+        // Ensure we have the requested number of questions
+        if (parsedContent.questions.length !== request.questionCount) {
+          console.warn(`Generated ${parsedContent.questions.length} questions, requested ${request.questionCount}`);
+        }
+
+        // Validate each question
+        for (const question of parsedContent.questions) {
+          if (!question.question || !question.options || !question.explanation) {
+            throw new Error('Invalid question structure: missing required fields');
+          }
+          if (!Array.isArray(question.options) || question.options.length !== 4) {
+            throw new Error('Invalid question structure: must have exactly 4 options');
+          }
+          const correctOptions = question.options.filter((opt: any) => opt.isCorrect);
+          if (correctOptions.length !== 1) {
+            throw new Error('Invalid question structure: must have exactly 1 correct option');
+          }
+        }
+
+        return parsedContent;
+      } catch (parseError) {
+        console.error('Error parsing AI response:', parseError);
+        console.error('Raw response:', content);
+        throw new Error(`Failed to parse AI response: ${parseError.message}`);
+      }
+    } catch (error) {
+      console.error('Error generating questions with AI:', error);
+      throw new Error(`Failed to generate questions: ${error.message}`);
+    }
+  }
+
+  private buildQuestionGenerationPrompt(request: {
+    subject: string;
+    topic?: string;
+    subtopic?: string;
+    difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+    questionCount: number;
+  }): string {
+    const topicContext = request.topic ? ` - ${request.topic}` : '';
+    const subtopicContext = request.subtopic ? ` - ${request.subtopic}` : '';
+    
+    const difficultyGuidelines = {
+      'EASY': 'Basic concepts, straightforward applications, single-step problems',
+      'MEDIUM': 'Moderate complexity, multi-step problems, concept integration',
+      'HARD': 'Advanced concepts, complex problem-solving, multiple concept integration'
+    };
+
+    return `Generate ${request.questionCount} high-quality JEE practice questions for:
+
+Subject: ${request.subject}${topicContext}${subtopicContext}
+Difficulty Level: ${request.difficulty}
+Difficulty Guidelines: ${difficultyGuidelines[request.difficulty]}
+
+QUESTION REQUIREMENTS:
+1. Create questions that test conceptual understanding
+2. Include mathematical problems with proper LaTeX formatting
+3. Ensure questions are relevant to JEE syllabus
+4. Make options plausible but with only one correct answer
+5. Provide comprehensive explanations
+6. Include relevant formulas and tips
+7. Vary question types (calculation, conceptual, application)
+8. Ensure questions are original and educational
+
+TOPIC FOCUS:
+${request.topic ? `Primary Topic: ${request.topic}` : 'General subject knowledge'}
+${request.subtopic ? `Specific Subtopic: ${request.subtopic}` : ''}
+
+Generate questions that would help students prepare for JEE Main and Advanced exams.`;
+  }
+
+  async generateExplanationWithTips(
+    questionStem: string,
+    correctAnswer: string,
+    userAnswer?: string,
+    tipFormula?: string
+  ): Promise<{
+    explanation: string;
+    tips: string[];
+    commonMistakes: string[];
+    relatedConcepts: string[];
+  }> {
+    if (!this.openaiApiKey) {
+      throw new Error('OpenAI API key not configured');
+    }
+
+    const prompt = this.buildExplanationPrompt(questionStem, correctAnswer, userAnswer, tipFormula);
+
+    try {
+      const response = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.openaiApiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content: `You are an expert JEE tutor providing detailed explanations for practice questions. Your task is to help students understand not just the correct answer, but the reasoning behind it.
+
+CRITICAL REQUIREMENTS:
+1. Provide step-by-step explanations that are clear and educational
+2. Include relevant formulas and mathematical concepts
+3. Explain why the correct answer is right
+4. If user provided an incorrect answer, explain why it's wrong
+5. Include helpful tips and shortcuts
+6. Mention common mistakes students make
+7. Suggest related concepts for further study
+8. Use proper LaTeX formatting for mathematical expressions ($$...$$)
+9. Make explanations suitable for JEE preparation level
+
+RESPONSE FORMAT:
+You MUST respond with ONLY valid JSON in this exact structure:
+{
+  "explanation": "Detailed step-by-step explanation with LaTeX math: $$\\frac{d}{dx}[x^2] = 2x$$. This is because...",
+  "tips": ["Tip 1: Always check your work", "Tip 2: Remember the formula $$\\frac{d}{dx}[x^n] = nx^{n-1}$$"],
+  "commonMistakes": ["Mistake 1: Forgetting to apply chain rule", "Mistake 2: Sign errors"],
+  "relatedConcepts": ["Related concept 1", "Related concept 2"]
+}
+
+Do not include any text outside the JSON structure.`
+            },
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          max_tokens: 2000,
+          temperature: 0.7,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`OpenAI API error: ${errorData.error?.message || 'Unknown error'}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices[0]?.message?.content;
+
+      if (!content) {
+        throw new Error('No content generated from OpenAI');
+      }
+
+      // Parse the JSON response
+      try {
+        const parsedContent = JSON.parse(content);
+        
+        // Validate the response structure
+        if (!parsedContent.explanation) {
+          throw new Error('Invalid response structure: missing explanation');
+        }
+
+        return {
+          explanation: parsedContent.explanation || 'Explanation not available',
+          tips: parsedContent.tips || [],
+          commonMistakes: parsedContent.commonMistakes || [],
+          relatedConcepts: parsedContent.relatedConcepts || []
+        };
+      } catch (parseError) {
+        console.error('Error parsing AI explanation response:', parseError);
+        console.error('Raw response:', content);
+        throw new Error(`Failed to parse AI response: ${parseError.message}`);
+      }
+    } catch (error) {
+      console.error('Error generating AI explanation:', error);
+      throw new Error(`Failed to generate explanation: ${error.message}`);
+    }
+  }
+
+  private buildExplanationPrompt(
+    questionStem: string,
+    correctAnswer: string,
+    userAnswer?: string,
+    tipFormula?: string
+  ): string {
+    let prompt = `Provide a comprehensive explanation for this JEE practice question:
+
+QUESTION: ${questionStem}
+
+CORRECT ANSWER: ${correctAnswer}`;
+
+    if (userAnswer) {
+      prompt += `\n\nUSER'S ANSWER: ${userAnswer}`;
+    }
+
+    if (tipFormula) {
+      prompt += `\n\nRELEVANT FORMULA/TIP: ${tipFormula}`;
+    }
+
+    prompt += `\n\nPlease provide:
+1. A detailed step-by-step explanation of how to solve this question
+2. Why the correct answer is the right choice
+3. If the user provided an answer, explain why it's correct or incorrect
+4. Helpful tips and shortcuts for similar problems
+5. Common mistakes students make with this type of question
+6. Related concepts that would help understand this topic better
+
+Make the explanation educational and suitable for JEE preparation level.`;
+
+    return prompt;
+  }
 } 

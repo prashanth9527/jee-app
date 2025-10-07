@@ -268,22 +268,7 @@ export class ExamsService {
 		}) : null;
 
 		// Generate AI questions with tips integration
-		// TODO: Implement AI question generation
-		// const aiQuestions = await this.aiService.generateQuestionsWithTips({
-		const aiQuestions = {
-			questions: [{
-				question: `Sample question for ${subject?.name}${topic ? ` - ${topic.name}` : ''}${subtopic ? ` - ${subtopic.name}` : ''}`,
-				options: [
-					{ text: 'Option A', isCorrect: true },
-					{ text: 'Option B', isCorrect: false },
-					{ text: 'Option C', isCorrect: false },
-					{ text: 'Option D', isCorrect: false }
-				],
-				explanation: 'Sample explanation',
-				difficulty: request.difficulty
-			}]
-		};
-		/*await this.aiService.generateQuestionsWithTips({
+		const aiQuestions = await this.aiService.generateQuestionsWithTips({
 			subject: subject?.name || 'General',
 			topic: topic?.name,
 			subtopic: subtopic?.name,
@@ -292,7 +277,7 @@ export class ExamsService {
 			subjectId: request.subjectId,
 			topicId: request.topicId,
 			subtopicId: request.subtopicId
-		});*/
+		});
 
 		// Save AI questions to database
 		const savedQuestions = [];
@@ -301,8 +286,8 @@ export class ExamsService {
 				data: {
 					stem: aiQuestion.question,
 					explanation: aiQuestion.explanation,
-					tip_formula: null,
-					difficulty: aiQuestion.difficulty,
+					tip_formula: aiQuestion.tip_formula || null,
+					difficulty: aiQuestion.difficulty as 'EASY' | 'MEDIUM' | 'HARD',
 					subjectId: request.subjectId,
 					topicId: request.topicId,
 					subtopicId: request.subtopicId,
@@ -348,11 +333,11 @@ export class ExamsService {
 	}
 
 	async generateAIExplanation(questionId: string, userId: string, userAnswer?: string) {
-		// TODO: Implement AI access validation
-		// const aiAccess = await this.aiService.validateSubscription(userId);
-		// if (!aiAccess.hasAIAccess) {
-		// 	throw new Error('AI explanations require AI-enabled subscription');
-		// }
+		// Check AI usage limits
+		const aiUsage = await this.subscriptionValidation.validateAiUsage(userId);
+		if (!aiUsage.canUseAi) {
+			throw new ForbiddenException(aiUsage.message);
+		}
 
 		// Get question details
 		const question = await this.prisma.question.findUnique({
@@ -361,6 +346,15 @@ export class ExamsService {
 				options: {
 					where: { isCorrect: true },
 					take: 1
+				},
+				subject: {
+					select: { name: true }
+				},
+				topic: {
+					select: { name: true }
+				},
+				subtopic: {
+					select: { name: true }
 				}
 			}
 		});
@@ -371,19 +365,34 @@ export class ExamsService {
 
 		const correctAnswer = question.options[0]?.text || '';
 		
-		// TODO: Implement AI explanation generation
-		// const explanation = await this.aiService.generateExplanationWithTips(
-		// 	question.stem,
-		// 	correctAnswer,
-		// 	userAnswer,
-		// 	question.tip_formula || undefined
-		// );
-		const explanation = `Sample AI explanation for the question: "${question.stem}". The correct answer is: ${correctAnswer}. ${userAnswer ? `Your answer was: ${userAnswer}.` : ''}`;
+		// Generate AI explanation with tips
+		const aiExplanation = await this.aiService.generateExplanationWithTips(
+			question.stem,
+			correctAnswer,
+			userAnswer,
+			question.tip_formula || undefined
+		);
+
+		// Increment AI usage for explanation generation
+		await this.subscriptionValidation.incrementAiUsage(userId);
 
 		return {
 			questionId,
-			explanation,
-			isAIGenerated: true
+			question: {
+				stem: question.stem,
+				subject: question.subject?.name,
+				topic: question.topic?.name,
+				subtopic: question.subtopic?.name,
+				difficulty: question.difficulty
+			},
+			correctAnswer,
+			userAnswer,
+			explanation: aiExplanation.explanation,
+			tips: aiExplanation.tips,
+			commonMistakes: aiExplanation.commonMistakes,
+			relatedConcepts: aiExplanation.relatedConcepts,
+			isAIGenerated: true,
+			generatedAt: new Date()
 		};
 	}
 
