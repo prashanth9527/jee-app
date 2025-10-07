@@ -1242,6 +1242,19 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
         throw new BadRequestException('Database record not found for this cache ID');
       }
 
+      // Check if already completed
+      if (cache.processingStatus === 'COMPLETED') {
+        this.logger.log(`File ${cache.fileName} is already marked as completed`);
+        return {
+          cacheId: cache.id,
+          fileName: cache.fileName,
+          previousStatus: cache.processingStatus,
+          newStatus: 'COMPLETED',
+          message: 'File was already marked as completed',
+          updatedAt: cache.lastProcessedAt
+        };
+      }
+
       // Update the processing status to COMPLETED
       const updatedCache = await this.prisma.pDFProcessorCache.update({
         where: { id: cacheId },

@@ -535,6 +535,8 @@ export default function PDFReviewPage() {
                                   toast.success('PDF marked as completed successfully!');
                                   // Update the PDF data to reflect the new status
                                   setPdfData(prev => prev ? { ...prev, processingStatus: 'COMPLETED' } : null);
+                                  // Refresh the page data to ensure consistency
+                                  await fetchQuestions();
                                 }
                               } catch (error: any) {
                                 console.error('Error marking PDF as completed:', error);
@@ -542,10 +544,10 @@ export default function PDFReviewPage() {
                               }
                             }}
                             disabled={pdfData?.processingStatus === 'COMPLETED'}
-                            className={`px-4 py-2 rounded-md border ${
+                            className={`px-4 py-2 rounded-md border transition-all duration-200 ${
                               pdfData?.processingStatus === 'COMPLETED'
-                                ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
-                                : 'bg-purple-600 text-white hover:bg-purple-700 border-purple-500'
+                                ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed opacity-60'
+                                : 'bg-purple-600 text-white hover:bg-purple-700 border-purple-500 hover:shadow-md'
                             }`}
                             title={pdfData?.processingStatus === 'COMPLETED' ? 'PDF processing already completed' : 'Mark PDF processing as completed'}
                           >

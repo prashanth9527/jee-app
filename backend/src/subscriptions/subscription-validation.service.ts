@@ -57,6 +57,7 @@ export class SubscriptionValidationService {
     if (user.subscriptions.length > 0) {
       const subscription = user.subscriptions[0];
       const subscriptionEndsAt = (subscription as any).endDate || (subscription as any).endsAt;
+      const planType = subscription.plan?.planType || 'MANUAL'; // Use actual plan type from database
 
       if (subscriptionEndsAt && subscriptionEndsAt > now) {
         daysRemaining = Math.ceil((subscriptionEndsAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
@@ -66,7 +67,7 @@ export class SubscriptionValidationService {
           subscriptionEndsAt: subscriptionEndsAt || undefined,
           daysRemaining,
           needsSubscription: false,
-          planType: 'MANUAL', // Default plan type
+          planType: planType as 'MANUAL' | 'AI_ENABLED',
           message: `Active subscription - ${daysRemaining} days remaining`,
         };
       } else {
@@ -77,6 +78,7 @@ export class SubscriptionValidationService {
           subscriptionEndsAt: subscriptionEndsAt || undefined,
           daysRemaining: 0,
           needsSubscription: true,
+          planType: planType as 'MANUAL' | 'AI_ENABLED',
           message: 'Subscription has expired',
         };
       }
