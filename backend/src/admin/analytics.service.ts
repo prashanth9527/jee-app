@@ -132,7 +132,7 @@ export class AdminAnalyticsService {
       // Growth data - last 30 days
       this.prisma.user.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
       this.prisma.question.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
-      this.prisma.examSubmission.count({ where: { startedAt: { gte: thirtyDaysAgo } } }),
+      this.prisma.examSubmission.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
       this.prisma.subscription.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
       // Growth data - previous 30 days
       this.prisma.user.count({ 
@@ -153,7 +153,7 @@ export class AdminAnalyticsService {
       }),
       this.prisma.examSubmission.count({ 
         where: { 
-          startedAt: { 
+          createdAt: { 
             gte: sixtyDaysAgo, 
             lt: thirtyDaysAgo 
           } 
@@ -594,7 +594,7 @@ export class AdminAnalyticsService {
       }),
       this.prisma.examSubmission.findMany({
         take: 5,
-        orderBy: { startedAt: 'desc' },
+        orderBy: { createdAt: 'desc' },
         include: {
           user: {
             select: { fullName: true }
@@ -620,11 +620,11 @@ export class AdminAnalyticsService {
         take: 5,
         where: { role: 'STUDENT' },
         orderBy: { createdAt: 'desc' },
-        select: { id: true, fullName: true, createdAt: true }
+        select: { fullName: true, createdAt: true }
       })
     ]);
 
-    const activities: any[] = [];
+    const activities = [];
 
     // Add recent questions
     recentQuestions.forEach(question => {
@@ -648,7 +648,7 @@ export class AdminAnalyticsService {
         id: `submission-${submission.id}`,
         type: 'submission',
         message: `Student completed ${submission.examPaper?.title || 'exam'}`,
-        time: submission.startedAt,
+        time: submission.createdAt,
         icon: '✅',
         details: {
           submissionId: submission.id,
@@ -716,83 +716,5 @@ export class AdminAnalyticsService {
       const days = Math.floor(diffInSeconds / 86400);
       return `${days} day${days > 1 ? 's' : ''} ago`;
     }
-  }
-
-  async getMonthlyUsersData(months: number = 12) {
-    const data = [];
-    const now = new Date();
-    
-    for (let i = months - 1; i >= 0; i--) {
-      const startDate = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const endDate = new Date(now.getFullYear(), now.getMonth() - i + 1, 0, 23, 59, 59);
-      
-      const userCount = await this.prisma.user.count({
-        where: {
-          createdAt: {
-            gte: startDate,
-            lte: endDate
-          }
-        }
-      });
-
-      data.push({
-        month: startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-        users: userCount,
-        date: startDate.toISOString()
-      });
-    }
-
-    return data;
-  }
-
-  async getRevenueData(months: number = 12) {
-    const data = [];
-    const now = new Date();
-    
-    for (let i = months - 1; i >= 0; i--) {
-      const startDate = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const endDate = new Date(now.getFullYear(), now.getMonth() - i + 1, 0, 23, 59, 59);
-      
-      // Get completed payment orders for this month
-      const revenueData = await this.prisma.paymentOrder.aggregate({
-        where: {
-          status: 'COMPLETED',
-          createdAt: {
-            gte: startDate,
-            lte: endDate
-          }
-        },
-        _sum: {
-          amount: true
-        },
-        _count: {
-          id: true
-        }
-      });
-
-      // Get subscription data for this month
-      const subscriptionData = await this.prisma.subscription.aggregate({
-        where: {
-          status: 'ACTIVE',
-          createdAt: {
-            gte: startDate,
-            lte: endDate
-          }
-        },
-        _count: {
-          id: true
-        }
-      });
-
-      data.push({
-        month: startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-        revenue: revenueData._sum.amount || 0,
-        transactions: revenueData._count.id || 0,
-        newSubscriptions: subscriptionData._count.id || 0,
-        date: startDate.toISOString()
-      });
-    }
-
-    return data;
   }
 }
