@@ -132,7 +132,7 @@ export class AdminAnalyticsService {
       // Growth data - last 30 days
       this.prisma.user.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
       this.prisma.question.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
-      this.prisma.examSubmission.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
+      this.prisma.examSubmission.count({ where: { startedAt: { gte: thirtyDaysAgo } } }),
       this.prisma.subscription.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
       // Growth data - previous 30 days
       this.prisma.user.count({ 
@@ -153,7 +153,7 @@ export class AdminAnalyticsService {
       }),
       this.prisma.examSubmission.count({ 
         where: { 
-          createdAt: { 
+          startedAt: { 
             gte: sixtyDaysAgo, 
             lt: thirtyDaysAgo 
           } 
@@ -594,7 +594,7 @@ export class AdminAnalyticsService {
       }),
       this.prisma.examSubmission.findMany({
         take: 5,
-        orderBy: { createdAt: 'desc' },
+        orderBy: { startedAt: 'desc' },
         include: {
           user: {
             select: { fullName: true }
@@ -620,11 +620,11 @@ export class AdminAnalyticsService {
         take: 5,
         where: { role: 'STUDENT' },
         orderBy: { createdAt: 'desc' },
-        select: { fullName: true, createdAt: true }
+        select: { id: true, fullName: true, createdAt: true }
       })
     ]);
 
-    const activities = [];
+    const activities: any[] = [];
 
     // Add recent questions
     recentQuestions.forEach(question => {
@@ -648,7 +648,7 @@ export class AdminAnalyticsService {
         id: `submission-${submission.id}`,
         type: 'submission',
         message: `Student completed ${submission.examPaper?.title || 'exam'}`,
-        time: submission.createdAt,
+        time: submission.startedAt,
         icon: '✅',
         details: {
           submissionId: submission.id,
@@ -698,6 +698,88 @@ export class AdminAnalyticsService {
         ...activity,
         timeAgo: this.getTimeAgo(activity.time)
       }));
+  }
+
+  async getMonthlyUsersData(monthsNumber: number = 12): Promise<UserGrowthData[]> {
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setMonth(endDate.getMonth() - monthsNumber);
+
+    const monthlyData: UserGrowthData[] = [];
+    
+    for (let i = 0; i < monthsNumber; i++) {
+      const monthStart = new Date(startDate);
+      monthStart.setMonth(startDate.getMonth() + i);
+      const monthEnd = new Date(monthStart);
+      monthEnd.setMonth(monthStart.getMonth() + 1);
+
+      const [newUsers, totalUsers] = await Promise.all([
+        this.prisma.user.count({
+          where: {
+            createdAt: {
+              gte: monthStart,
+              lt: monthEnd
+            }
+          }
+        }),
+        this.prisma.user.count({
+          where: {
+            createdAt: {
+              lt: monthEnd
+            }
+          }
+        })
+      ]);
+
+      monthlyData.push({
+        date: monthStart.toISOString().substring(0, 7), // YYYY-MM format
+        newUsers,
+        totalUsers
+      });
+    }
+
+    return monthlyData;
+  }
+
+  async getRevenueData(monthsNumber: number = 12): Promise<any[]> {
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setMonth(endDate.getMonth() - monthsNumber);
+
+    const monthlyData: any[] = [];
+    
+    for (let i = 0; i < monthsNumber; i++) {
+      const monthStart = new Date(startDate);
+      monthStart.setMonth(startDate.getMonth() + i);
+      const monthEnd = new Date(monthStart);
+      monthEnd.setMonth(monthStart.getMonth() + 1);
+
+      const subscriptions = await this.prisma.subscription.findMany({
+        where: {
+          createdAt: {
+            gte: monthStart,
+            lt: monthEnd
+          },
+          status: 'ACTIVE'
+        },
+        include: {
+          plan: {
+            select: {
+              priceCents: true
+            }
+          }
+        }
+      });
+
+      const totalRevenue = subscriptions.reduce((sum, sub) => sum + (sub.plan.priceCents || 0), 0);
+
+      monthlyData.push({
+        date: monthStart.toISOString().substring(0, 7), // YYYY-MM format
+        revenue: totalRevenue / 100 // Convert cents to dollars
+      });
+    }
+
+    return monthlyData;
   }
 
   private getTimeAgo(date: Date): string {

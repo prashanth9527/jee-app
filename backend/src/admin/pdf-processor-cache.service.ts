@@ -326,11 +326,161 @@ export class PDFProcessorCacheService {
         throw new Error('Invalid JSON structure: questions array not found');
       }
 
+      if (questionsData.questions.length === 0) {
+        this.logger.warn('No questions found in JSON data');
+        return {
+          importedCount: 0,
+          totalQuestions: 0
+        };
+      }
+
       let importedCount = 0;
 
       // Import each question
       for (const questionData of questionsData.questions) {
         try {
+          // Validate required fields
+          if (!questionData.stem || questionData.stem.trim() === '') {
+            this.logger.warn('Skipping question with empty stem');
+            continue;
+          }
+
+          this.logger.log(`Processing question: ${questionData.stem?.substring(0, 50)}...`);
+          
+          let subjectId: string | null = null;
+          let lessonId: string | null = null;
+          let topicId: string | null = null;
+          let subtopicId: string | null = null;
+
+          // Handle Subject (must belong to a Stream)
+          if (questionData.subject) {
+            this.logger.log(`Processing subject: ${questionData.subject}`);
+            // First, ensure we have a default stream for JEE
+            const defaultStream = await this.prisma.stream.upsert({
+              where: { code: 'JEE' },
+              update: {},
+              create: {
+                name: 'JEE (Joint Entrance Examination)',
+                code: 'JEE',
+                description: 'Joint Entrance Examination preparation'
+              }
+            });
+
+            // Create or find subject
+            const subject = await this.prisma.subject.upsert({
+              where: {
+                streamId_name: {
+                  streamId: defaultStream.id,
+                  name: questionData.subject
+                }
+              },
+              update: {},
+              create: {
+                name: questionData.subject,
+                streamId: defaultStream.id
+              }
+            });
+            subjectId = subject.id;
+          }
+
+          // Handle Lesson (optional, but if provided, must be under a subject)
+          if (questionData.lesson && subjectId) {
+            this.logger.log(`Processing lesson: ${questionData.lesson}`);
+            const lesson = await this.prisma.lesson.findFirst({
+              where: {
+                name: questionData.lesson,
+                subjectId: subjectId
+              }
+            });
+
+            if (lesson) {
+              lessonId = lesson.id;
+            } else {
+              // Find the next available order number for this subject
+              const lastLesson = await this.prisma.lesson.findFirst({
+                where: { subjectId: subjectId },
+                orderBy: { order: 'desc' }
+              });
+              const nextOrder = lastLesson ? lastLesson.order + 1 : 0;
+              
+              // Create new lesson
+              const newLesson = await this.prisma.lesson.create({
+                data: {
+                  name: questionData.lesson.trim(),
+                  subjectId: subjectId,
+                  order: nextOrder
+                }
+              });
+              lessonId = newLesson.id;
+            }
+          }
+
+          // Handle Topic (optional, but if provided, must be under a lesson)
+          if (questionData.topic && lessonId && subjectId) {
+            this.logger.log(`Processing topic: ${questionData.topic}`);
+            const topic = await this.prisma.topic.findFirst({
+              where: {
+                name: questionData.topic,
+                lessonId: lessonId,
+                subjectId: subjectId
+              }
+            });
+
+            if (topic) {
+              topicId = topic.id;
+            } else {
+              // Find the next available order number for this lesson
+              const lastTopic = await this.prisma.topic.findFirst({
+                where: { lessonId: lessonId },
+                orderBy: { order: 'desc' }
+              });
+              const nextOrder = lastTopic ? lastTopic.order + 1 : 0;
+              
+              // Create new topic
+              const newTopic = await this.prisma.topic.create({
+                data: {
+                  name: questionData.topic.trim(),
+                  lessonId: lessonId,
+                  subjectId: subjectId,
+                  order: nextOrder
+                }
+              });
+              topicId = newTopic.id;
+            }
+          }
+
+          // Handle Subtopic (optional, but if provided, must be under a topic)
+          if (questionData.subtopic && topicId) {
+            this.logger.log(`Processing subtopic: ${questionData.subtopic}`);
+            const subtopic = await this.prisma.subtopic.findFirst({
+              where: {
+                name: questionData.subtopic,
+                topicId: topicId
+              }
+            });
+
+            if (subtopic) {
+              subtopicId = subtopic.id;
+            } else {
+              // Find the next available order number for this topic
+              const lastSubtopic = await this.prisma.subtopic.findFirst({
+                where: { topicId: topicId },
+                orderBy: { order: 'desc' }
+              });
+              const nextOrder = lastSubtopic ? lastSubtopic.order + 1 : 0;
+              
+              // Create new subtopic
+              const newSubtopic = await this.prisma.subtopic.create({
+                data: {
+                  name: questionData.subtopic.trim(),
+                  topicId: topicId,
+                  order: nextOrder
+                }
+              });
+              subtopicId = newSubtopic.id;
+            }
+          }
+          
           // Create question in database
           const question = await this.prisma.question.create({
             data: {
@@ -340,6 +490,10 @@ export class PDFProcessorCacheService {
               difficulty: questionData.difficulty || 'MEDIUM',
               yearAppeared: questionData.yearAppeared || new Date().getFullYear(),
               isPreviousYear: questionData.isPreviousYear || false,
+              subjectId: subjectId,
+              lessonId: lessonId,
+              topicId: topicId,
+              subtopicId: subtopicId,
               pdfProcessorCacheId: record.id
             }
           });
@@ -360,8 +514,10 @@ export class PDFProcessorCacheService {
           }
 
           importedCount++;
+          this.logger.log(`Successfully imported question with hierarchy: Subject=${subjectId}, Lesson=${lessonId}, Topic=${topicId}, Subtopic=${subtopicId}`);
         } catch (error) {
-          this.logger.error(`Error importing question ${questionData.id}:`, error);
+          this.logger.error(`Error importing question ${questionData.id || 'unknown'}:`, error);
+          this.logger.error(`Question data:`, JSON.stringify(questionData, null, 2));
           // Continue with other questions even if one fails
         }
       }
