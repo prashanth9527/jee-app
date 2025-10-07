@@ -455,6 +455,8 @@ Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start
       const data = await response.json();
       const content = data.choices[0]?.message?.content;
 
+      console.log('GPT:', content)
+
       if (!content) {
         throw new Error('No content generated from OpenAI');
       }
