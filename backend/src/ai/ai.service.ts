@@ -400,27 +400,42 @@ CRITICAL REQUIREMENTS:
 7. Make questions relevant to JEE preparation standards
 8. Use proper mathematical notation with LaTeX when needed ($$...$$)
 9. Ensure questions test conceptual understanding, not just memorization
+10. Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start with '{' and end with '}'.
+11. All mathematical and chemical formulas must use LaTeX: $ ... $ (single dollar signs for inline math). 
 
 RESPONSE FORMAT:
-You MUST respond with ONLY valid JSON in this exact structure:
+You MUST respond with ONLY valid JSON in this exact structure. Pay special attention to proper JSON escaping:
+
+IMPORTANT JSON ESCAPING RULES:
+- Use double backslashes for LaTeX: \\\\frac instead of \\frac
+- Escape quotes inside strings: \\" instead of "
+- No line breaks inside strings (use \\n for newlines)
+- Ensure all strings are properly quoted
+
 {
   "questions": [
     {
-      "question": "Question text with LaTeX math if needed: $$\\frac{d}{dx}[x^2] = ?$$",
+      "question": "Question text with properly escaped LaTeX: $$\\\\frac{d}{dx}[x^2] = ?$$",
       "options": [
         {"text": "Option A with LaTeX: $$2x$$", "isCorrect": true},
         {"text": "Option B with LaTeX: $$x^2$$", "isCorrect": false},
         {"text": "Option C with LaTeX: $$2x^2$$", "isCorrect": false},
         {"text": "Option D with LaTeX: $$x$$", "isCorrect": false}
       ],
-      "explanation": "Detailed step-by-step explanation with LaTeX: $$\\frac{d}{dx}[x^2] = 2x$$. This is because...",
+      "explanation": "Detailed explanation with properly escaped LaTeX: $$\\\\frac{d}{dx}[x^2] = 2x$$. This is because...",
       "difficulty": "${request.difficulty}",
-      "tip_formula": "Key formula or tip: $$\\frac{d}{dx}[x^n] = nx^{n-1}$$"
+      "tip_formula": "Key formula: $$\\\\frac{d}{dx}[x^n] = nx^{n-1}$$"
     }
   ]
 }
 
-Do not include any text outside the JSON structure.`
+CRITICAL: Test your JSON before responding. Ensure it's valid JSON that can be parsed without errors.
+Do not include any text outside the JSON structure.
+
+### FINAL INSTRUCTION
+Use single dollar signs $ ... $ for all LaTeX math expressions.
+Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start with '{' and end with '}'.
+`
             },
             {
               role: 'user',
@@ -444,9 +459,22 @@ Do not include any text outside the JSON structure.`
         throw new Error('No content generated from OpenAI');
       }
 
-      // Parse the JSON response
+      // Parse the JSON response with improved error handling
       try {
-        const parsedContent = JSON.parse(content);
+        // Clean the response content to handle common JSON issues
+        let cleanedContent = content.trim();
+        
+        // Remove any markdown code blocks if present
+        if (cleanedContent.startsWith('```json')) {
+          cleanedContent = cleanedContent.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+        } else if (cleanedContent.startsWith('```')) {
+          cleanedContent = cleanedContent.replace(/^```\s*/, '').replace(/\s*```$/, '');
+        }
+
+        // Try to fix common JSON escaping issues
+        cleanedContent = this.fixJsonEscaping(cleanedContent);
+
+        const parsedContent = JSON.parse(cleanedContent);
         
         // Validate the response structure
         if (!parsedContent.questions || !Array.isArray(parsedContent.questions)) {
@@ -458,24 +486,56 @@ Do not include any text outside the JSON structure.`
           console.warn(`Generated ${parsedContent.questions.length} questions, requested ${request.questionCount}`);
         }
 
-        // Validate each question
+        // Validate and clean each question
+        const cleanedQuestions = [];
         for (const question of parsedContent.questions) {
           if (!question.question || !question.options || !question.explanation) {
-            throw new Error('Invalid question structure: missing required fields');
+            console.warn('Skipping invalid question structure:', question);
+            continue;
           }
           if (!Array.isArray(question.options) || question.options.length !== 4) {
-            throw new Error('Invalid question structure: must have exactly 4 options');
+            console.warn('Skipping question with invalid options:', question);
+            continue;
           }
           const correctOptions = question.options.filter((opt: any) => opt.isCorrect);
           if (correctOptions.length !== 1) {
-            throw new Error('Invalid question structure: must have exactly 1 correct option');
+            console.warn('Skipping question with invalid correct options:', question);
+            continue;
           }
+
+          // Clean the question content
+          cleanedQuestions.push({
+            question: this.cleanTextContent(question.question),
+            options: question.options.map((opt: any) => ({
+              text: this.cleanTextContent(opt.text),
+              isCorrect: opt.isCorrect
+            })),
+            explanation: this.cleanTextContent(question.explanation),
+            difficulty: question.difficulty || request.difficulty,
+            tip_formula: question.tip_formula ? this.cleanTextContent(question.tip_formula) : undefined
+          });
         }
 
-        return parsedContent;
+        if (cleanedQuestions.length === 0) {
+          throw new Error('No valid questions could be parsed from AI response');
+        }
+
+        return { questions: cleanedQuestions };
       } catch (parseError) {
         console.error('Error parsing AI response:', parseError);
         console.error('Raw response:', content);
+        
+        // Fallback: try to extract questions using regex if JSON parsing fails
+        try {
+          const fallbackQuestions = this.extractQuestionsFromText(content, request.questionCount);
+          if (fallbackQuestions.length > 0) {
+            console.log(`Using fallback extraction: found ${fallbackQuestions.length} questions`);
+            return { questions: fallbackQuestions };
+          }
+        } catch (fallbackError) {
+          console.error('Fallback extraction also failed:', fallbackError);
+        }
+        
         throw new Error(`Failed to parse AI response: ${parseError.message}`);
       }
     } catch (error) {
@@ -655,5 +715,91 @@ CORRECT ANSWER: ${correctAnswer}`;
 Make the explanation educational and suitable for JEE preparation level.`;
 
     return prompt;
+  }
+
+  private fixJsonEscaping(content: string): string {
+    // Fix common JSON escaping issues
+    let fixed = content;
+    
+    // Fix unescaped backslashes in LaTeX (common issue)
+    // Replace single backslashes with double backslashes, but be careful with already escaped ones
+    fixed = fixed.replace(/(?<!\\)\\(?!\\)/g, '\\\\');
+    
+    // Fix unescaped quotes in LaTeX expressions
+    fixed = fixed.replace(/\\\\([^"]*)"([^"]*)\\\\/g, '\\\\$1\\"$2\\\\');
+    
+    // Fix other common escaping issues
+    fixed = fixed.replace(/\n/g, '\\n');
+    fixed = fixed.replace(/\r/g, '\\r');
+    fixed = fixed.replace(/\t/g, '\\t');
+    
+    return fixed;
+  }
+
+  private cleanTextContent(text: string): string {
+    if (!text) return '';
+    
+    // Remove any null characters or other problematic characters
+    let cleaned = text.replace(/\0/g, '');
+    
+    // Fix common LaTeX escaping issues
+    cleaned = cleaned.replace(/\\\\/g, '\\');
+    
+    // Ensure proper LaTeX formatting
+    cleaned = cleaned.replace(/\$\$([^$]+)\$\$/g, (match, content) => {
+      // Clean the LaTeX content
+      const cleanContent = content.trim().replace(/\\/g, '\\\\');
+      return `$$${cleanContent}$$`;
+    });
+    
+    return cleaned.trim();
+  }
+
+  private extractQuestionsFromText(content: string, expectedCount: number): any[] {
+    // Fallback method to extract questions when JSON parsing fails
+    const questions = [];
+    
+    try {
+      // Try to find question patterns in the text
+      const questionMatches = content.match(/"question":\s*"([^"]+)"/g);
+      const optionMatches = content.match(/"options":\s*\[([^\]]+)\]/g);
+      const explanationMatches = content.match(/"explanation":\s*"([^"]+)"/g);
+      
+      if (questionMatches && optionMatches && explanationMatches) {
+        const minLength = Math.min(questionMatches.length, optionMatches.length, explanationMatches.length);
+        
+        for (let i = 0; i < Math.min(minLength, expectedCount); i++) {
+          try {
+            const questionText = questionMatches[i].match(/"question":\s*"([^"]+)"/)?.[1] || '';
+            const explanationText = explanationMatches[i].match(/"explanation":\s*"([^"]+)"/)?.[1] || '';
+            
+            // Create basic options (this is a fallback, so we'll create generic options)
+            const options = [
+              { text: 'Option A', isCorrect: true },
+              { text: 'Option B', isCorrect: false },
+              { text: 'Option C', isCorrect: false },
+              { text: 'Option D', isCorrect: false }
+            ];
+            
+            if (questionText && explanationText) {
+              questions.push({
+                question: this.cleanTextContent(questionText),
+                options: options,
+                explanation: this.cleanTextContent(explanationText),
+                difficulty: 'MEDIUM',
+                tip_formula: undefined
+              });
+            }
+          } catch (itemError) {
+            console.warn('Error processing fallback question item:', itemError);
+            continue;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error in fallback extraction:', error);
+    }
+    
+    return questions;
   }
 } 
