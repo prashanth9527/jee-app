@@ -44,6 +44,7 @@ export class AISuggestionsService {
   private readonly logger = new Logger(AISuggestionsService.name);
   private readonly openaiApiKey: string;
   private readonly openaiBaseUrl: string;
+  private readonly openaiModel: string;
 
   constructor(
     private configService: ConfigService,
@@ -51,6 +52,7 @@ export class AISuggestionsService {
   ) {
     this.openaiApiKey = this.configService.get<string>('OPENAI_API_KEY') || '';
     this.openaiBaseUrl = this.configService.get<string>('OPENAI_BASE_URL') || 'https://api.openai.com/v1';
+    this.openaiModel = this.configService.get<string>('OPENAI_MODEL') || 'gpt-3.5-turbo';
   }
 
   async generatePersonalizedSuggestions(request: SuggestionRequest): Promise<AISuggestion[]> {
@@ -187,7 +189,8 @@ Focus on providing practical, achievable suggestions that will help the student 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: this.openaiModel,
+
         messages: [
           {
             role: 'system',

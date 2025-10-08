@@ -76,6 +76,7 @@ export class ContentGenerationService {
   private readonly logger = new Logger(ContentGenerationService.name);
   private readonly openaiApiKey: string;
   private readonly openaiBaseUrl: string;
+  private readonly openaiModel: string;
 
   constructor(
     private readonly prisma: PrismaService,
@@ -83,6 +84,7 @@ export class ContentGenerationService {
   ) {
     this.openaiApiKey = this.configService.get<string>('OPENAI_API_KEY') || '';
     this.openaiBaseUrl = this.configService.get<string>('OPENAI_BASE_URL') || 'https://api.openai.com/v1';
+    this.openaiModel = this.configService.get<string>('OPENAI_MODEL') || 'gpt-3.5-turbo';
   }
 
   async generateLessonSummary(lessonId: string): Promise<AILessonSummary> {
@@ -517,7 +519,7 @@ export class ContentGenerationService {
           'Authorization': `Bearer ${this.openaiApiKey}`,
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: this.openaiModel,
           messages: [
             {
               role: 'system',

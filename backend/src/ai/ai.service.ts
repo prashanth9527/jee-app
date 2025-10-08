@@ -5,10 +5,12 @@ import { ConfigService } from '@nestjs/config';
 export class AiService {
   private readonly openaiApiKey: string;
   private readonly openaiBaseUrl: string;
+  private readonly openaiModel: string;
 
   constructor(private configService: ConfigService) {
     this.openaiApiKey = this.configService.get<string>('OPENAI_API_KEY') || '';
     this.openaiBaseUrl = this.configService.get<string>('OPENAI_BASE_URL') || 'https://api.openai.com/v1';
+    this.openaiModel = this.configService.get<string>('OPENAI_MODEL') || 'gpt-3.5-turbo';
   }
 
   async generateBlogContent(prompt: string): Promise<string> {
@@ -24,7 +26,7 @@ export class AiService {
           'Authorization': `Bearer ${this.openaiApiKey}`,
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: this.openaiModel,
           messages: [
             {
               role: 'system',
@@ -207,7 +209,7 @@ export class AiService {
         'Authorization': `Bearer ${this.openaiApiKey}`,
       },
       body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: this.openaiModel,
         messages: [
           {
             role: 'user',
@@ -322,7 +324,7 @@ export class AiService {
           'Authorization': `Bearer ${this.openaiApiKey}`,
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: this.openaiModel,
           messages: [
             {
               role: 'user',
@@ -384,7 +386,8 @@ export class AiService {
           'Authorization': `Bearer ${this.openaiApiKey}`,
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: this.openaiModel,
+
           messages: [
             {
               role: 'system',
@@ -610,7 +613,7 @@ Generate questions that would help students prepare for JEE Main and Advanced ex
           'Authorization': `Bearer ${this.openaiApiKey}`,
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: this.openaiModel,
           messages: [
             {
               role: 'system',
