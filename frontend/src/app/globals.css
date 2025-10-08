@@ -1,8 +1,70 @@
 @import "tailwindcss";
 
+/* Override system dark mode preference completely */
+@media (prefers-color-scheme: dark) {
+  :root:not(.dark) {
+    color-scheme: light !important;
+  }
+}
+
+/* Force light mode on all elements when dark class is NOT present */
+:root:not(.dark) {
+  color-scheme: light;
+}
+
+:root:not(.dark) body {
+  background-color: rgb(249, 250, 251) !important; /* Softer gray instead of pure white */
+  color: rgb(17, 24, 39) !important;
+}
+
+:root:not(.dark) [class*="bg-gray-50"] {
+  background-color: rgb(249, 250, 251) !important;
+}
+
+:root:not(.dark) [class*="bg-gray-800"],
+:root:not(.dark) [class*="bg-gray-900"] {
+  background-color: rgb(255, 255, 255) !important; /* Cards/sidebar stay white for contrast */
+}
+
+:root:not(.dark) [class*="bg-white"] {
+  background-color: rgb(255, 255, 255) !important;
+}
+
+:root:not(.dark) [class*="text-gray-100"],
+:root:not(.dark) [class*="text-gray-200"],
+:root:not(.dark) [class*="text-gray-300"] {
+  color: rgb(55, 65, 81) !important; /* Darker text for better readability */
+}
+
+/* Force dark mode when dark class IS present */
+:root.dark body {
+  background-color: rgb(17, 24, 39) !important; /* gray-900 */
+  color: rgb(243, 244, 246) !important; /* gray-100 - better contrast */
+}
+
+:root.dark [class*="bg-gray-50"] {
+  background-color: rgb(31, 41, 55) !important; /* gray-800 */
+}
+
+:root.dark [class*="bg-white"] {
+  background-color: rgb(31, 41, 55) !important; /* gray-800 */
+}
+
+:root.dark [class*="text-gray-900"],
+:root.dark [class*="text-gray-800"],
+:root.dark [class*="text-gray-700"] {
+  color: rgb(243, 244, 246) !important; /* Ensure dark text becomes light in dark mode */
+}
+
+:root.dark [class*="text-gray-600"] {
+  color: rgb(209, 213, 219) !important; /* gray-300 */
+}
+
+:root.dark [class*="text-gray-500"] {
+  color: rgb(156, 163, 175) !important; /* gray-400 */
+}
+
 body {
-  background: #ffffff;
-  color: #1f2937;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -21,22 +83,7 @@ textarea:focus {
   outline-offset: 2px;
 }
 
-/* Simple, clean text styles */
-.text-gray-600 {
-  color: #4b5563;
-}
-
-.text-gray-700 {
-  color: #374151;
-}
-
-.text-gray-800 {
-  color: #1f2937;
-}
-
-.text-gray-900 {
-  color: #111827;
-}
+/* Removed hardcoded text color classes - using Tailwind's built-in classes instead */
 
 /* Better loading states */
 .loading-spinner {

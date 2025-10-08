@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSystemSettings } from '@/contexts/SystemSettingsContext';
+import { ThemeToggle } from '@/contexts/ThemeContext';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -367,14 +368,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 bg-white shadow-lg border-r border-gray-200 transform transition-all duration-300 ease-in-out lg:translate-x-0 lg:relative lg:inset-auto ${
+      <div className={`fixed inset-y-0 left-0 z-50 bg-white dark:bg-gray-800 shadow-lg border-r border-gray-200 dark:border-gray-700 transform transition-all duration-300 ease-in-out lg:translate-x-0 lg:relative lg:inset-auto ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       } ${sidebarCollapsed ? 'w-16' : 'w-64'}`}>
         
         {/* Sidebar Header */}
-        <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
+        <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700">
           {!sidebarCollapsed && (
             <div className="flex items-center space-x-2">
               {systemSettings?.logoUrl && !logoError ? (
@@ -385,7 +386,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   onError={() => setLogoError(true)}
                 />
               ) : null}
-              <h1 className="text-xl font-bold text-gray-900 truncate drop-shadow-sm">
+              <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 truncate drop-shadow-sm">
                 {systemSettings?.siteTitle || 'JEE App'} Admin
               </h1>
             </div>
@@ -511,7 +512,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       {/* Main Content */}
       <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-0'}`}>
         {/* Top Navigation */}
-        <div className="sticky top-0 z-40 bg-white shadow-sm border-b border-gray-200">
+        <div className="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
             <button
               onClick={() => setSidebarOpen(true)}
@@ -523,9 +524,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             </button>
             
             <div className="flex items-center space-x-4">
-              <div className="text-sm text-gray-700">
-                Welcome, <span className="font-bold text-gray-900">{user?.fullName || 'Admin'}</span>
+              <div className="text-sm text-gray-700 dark:text-gray-300">
+                Welcome, <span className="font-bold text-gray-900 dark:text-gray-100">{user?.fullName || 'Admin'}</span>
               </div>
+              <ThemeToggle />
             </div>
             
             {/* User Profile Dropdown - Positioned on the right */}

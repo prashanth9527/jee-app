@@ -35,14 +35,30 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (!mounted) return;
 
     const root = document.documentElement;
+    const body = document.body;
     
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-    
-    localStorage.setItem('theme', theme);
+    // Use requestAnimationFrame to ensure DOM is ready
+    requestAnimationFrame(() => {
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        body.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+        body.classList.remove('dark');
+        
+        // Force remove dark class if it's still there
+        setTimeout(() => {
+          if (root.classList.contains('dark')) {
+            root.classList.remove('dark');
+          }
+          if (body.classList.contains('dark')) {
+            body.classList.remove('dark');
+          }
+        }, 10);
+      }
+      
+      localStorage.setItem('theme', theme);
+    });
   }, [theme, mounted]);
 
   const toggleTheme = () => {

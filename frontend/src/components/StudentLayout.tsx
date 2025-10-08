@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSystemSettings } from '@/contexts/SystemSettingsContext';
+import { ThemeToggle } from '@/contexts/ThemeContext';
 import api from '@/lib/api';
 
 interface StudentLayoutProps {
@@ -384,14 +385,14 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 bg-white shadow-xl border-r border-gray-200 transform transition-all duration-300 ease-in-out lg:translate-x-0 lg:relative lg:inset-auto flex flex-col ${
+      <div className={`fixed inset-y-0 left-0 z-50 bg-white dark:bg-gray-800 shadow-xl border-r border-gray-200 dark:border-gray-700 transform transition-all duration-300 ease-in-out lg:translate-x-0 lg:relative lg:inset-auto flex flex-col ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       } ${sidebarCollapsed ? 'w-16' : 'w-64'}`}>
         
         {/* Sidebar Header */}
-        <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 bg-white flex-shrink-0">
+        <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex-shrink-0">
           {!sidebarCollapsed && (
             <div className="flex items-center space-x-2">
               {systemSettings?.logoUrl && !logoError ? (
@@ -402,7 +403,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                   onError={() => setLogoError(true)}
                 />
               ) : null}
-              <h1 className="text-xl font-bold text-gray-900 truncate drop-shadow-sm">
+              <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 truncate drop-shadow-sm">
                 {systemSettings?.siteTitle || 'JEE App'}
               </h1>
             </div>
@@ -528,7 +529,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
       {/* Main Content */}
       <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-0'}`}>
         {/* Top Navigation */}
-        <div className="sticky top-0 z-40 bg-white shadow-sm border-b border-gray-200">
+        <div className="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
             <button
               onClick={() => setSidebarOpen(true)}
@@ -540,8 +541,8 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
             </button>
             
             <div className="flex items-center space-x-6">
-              <div className="text-sm font-semibold text-gray-800">
-                Welcome, <span className="font-bold text-gray-900">{user?.fullName || 'Student'}</span>
+              <div className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                Welcome, <span className="font-bold text-gray-900 dark:text-gray-100">{user?.fullName || 'Student'}</span>
                 {user?.stream && (
                   <span className="ml-2 text-xs text-gray-600">
                     • {user.stream.name}
@@ -569,6 +570,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                   </>
                 )}
               </div>
+              <ThemeToggle />
             </div>
             
             {/* User Profile Dropdown - Positioned on the right */}
@@ -669,7 +671,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
         </div>
 
         {/* Page Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-gray-50">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-gray-50 dark:bg-gray-900">
           {children}
         </main>
       </div>
