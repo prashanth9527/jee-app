@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { ThemeToggle } from '@/contexts/ThemeContext';
 import { getDashboardUrl } from '@/utils/dashboardUtils';
 
 interface SystemSettings {
@@ -23,7 +24,7 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
 
 
   return (
-    <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
+    <nav className="bg-white dark:bg-gray-800 shadow-sm fixed w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Brand/Logo */}
@@ -59,19 +60,19 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <Link href="#features" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              <Link href="#features" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 Features
               </Link>
-              <Link href="#subjects" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              <Link href="#subjects" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 Subjects
               </Link>
-              <Link href="#testimonials" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              <Link href="#testimonials" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 Success Stories
               </Link>
-              <Link href="#pricing" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              <Link href="#pricing" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 Pricing
               </Link>
-              <Link href="/blogs" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              <Link href="/blogs" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 Blogs
               </Link>
             </div>
@@ -96,14 +97,15 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
               </div>
             ) : (
               <div className="flex items-center space-x-4">
-                <Link href="/pyq-bank" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+                <Link href="/pyq-bank" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                   PYQ Bank
                 </Link>
-                <Link href="/login" className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+                <Link href="/login" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                   Login
                 </Link>
               </div>
             )}
+            <ThemeToggle />
           </div>
 
           {/* Mobile menu button */}
@@ -133,10 +135,10 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
             />
             
             {/* Mobile Menu Panel */}
-            <div className="fixed inset-y-0 right-0 w-80 max-w-[85vw] bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out">
+            <div className="fixed inset-y-0 right-0 w-80 max-w-[85vw] bg-white dark:bg-gray-800 shadow-xl z-50 transform transition-transform duration-300 ease-in-out">
               <div className="flex flex-col h-full">
                 {/* Mobile Menu Header */}
-                <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-orange-50 to-red-50">
+                <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/30 dark:to-red-900/30">
                   <div className="flex items-center space-x-3">
                     {systemSettings?.logoUrl && !logoError ? (
                       <img 
@@ -153,7 +155,7 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
                         </span>
                       </div>
                     )}
-                    <span className="text-lg font-bold text-gray-900">
+                    <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
                       {systemSettings?.siteTitle || 'JEE App'}
                     </span>
                   </div>

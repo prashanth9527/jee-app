@@ -46,12 +46,12 @@ export default function PYQPage() {
   const years = [2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Previous Year Questions Bank</h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Previous Year Questions Bank</h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Access 15,000+ authentic JEE Main & Advanced questions from the last 10 years. 
             Practice with real exam questions and boost your confidence.
           </p>
@@ -59,37 +59,37 @@ export default function PYQPage() {
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
             <BookOpen className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-gray-900">{stats.totalQuestions.toLocaleString()}</div>
-            <div className="text-sm text-gray-600">Questions</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{stats.totalQuestions.toLocaleString()}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-300">Questions</div>
           </div>
           
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
             <Clock className="w-8 h-8 text-green-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-gray-900">{stats.totalYears}</div>
-            <div className="text-sm text-gray-600">Years</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{stats.totalYears}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-300">Years</div>
           </div>
           
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
             <Users className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-gray-900">{stats.totalStudents.toLocaleString()}</div>
-            <div className="text-sm text-gray-600">Students</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{stats.totalStudents.toLocaleString()}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-300">Students</div>
           </div>
           
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
             <TrendingUp className="w-8 h-8 text-orange-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-gray-900">{stats.successRate}%</div>
-            <div className="text-sm text-gray-600">Success Rate</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{stats.successRate}%</div>
+            <div className="text-sm text-gray-600 dark:text-gray-300">Success Rate</div>
           </div>
         </div>
 
         {/* Login Prompt */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+        <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">Ready to Start Practicing?</h3>
-              <p className="text-blue-800">
+              <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-2">Ready to Start Practicing?</h3>
+              <p className="text-blue-800 dark:text-blue-300">
                 Sign in to access our complete PYQ bank with detailed solutions, 
                 performance analytics, and personalized recommendations.
               </p>

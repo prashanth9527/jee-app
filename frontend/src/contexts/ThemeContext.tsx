@@ -84,6 +84,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (context === undefined) {
+    // Return default values during SSR instead of throwing
+    if (typeof window === 'undefined') {
+      return {
+        theme: 'light' as Theme,
+        toggleTheme: () => {},
+        setTheme: () => {},
+      };
+    }
     throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;
@@ -100,29 +108,30 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
 
   if (!mounted) {
     return (
-      <div className={`h-6 w-11 bg-gray-200 rounded-full ${className}`} />
+      <div className={`h-5 w-9 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse ${className}`} />
     );
   }
 
   return (
     <button
       onClick={toggleTheme}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 ${
+      className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 shadow-sm hover:shadow-md ${
         theme === 'dark' 
-          ? 'bg-orange-600' 
-          : 'bg-gray-200 dark:bg-gray-700'
+          ? 'bg-slate-700 hover:bg-slate-600' 
+          : 'bg-gray-300 hover:bg-gray-400'
       } ${className}`}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
       <span
-        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
-          theme === 'dark' ? 'translate-x-6' : 'translate-x-1'
+        className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow-sm transition-transform duration-200 ${
+          theme === 'dark' ? 'translate-x-4.5' : 'translate-x-0.5'
         }`}
       />
       
       {/* Sun icon */}
       <svg
-        className={`absolute left-1 top-1 h-3 w-3 text-yellow-500 transition-opacity duration-200 ${
+        className={`absolute left-0.5 top-0.5 h-4 w-4 text-yellow-400 transition-opacity duration-200 pointer-events-none ${
           theme === 'dark' ? 'opacity-0' : 'opacity-100'
         }`}
         fill="currentColor"
@@ -133,7 +142,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       
       {/* Moon icon */}
       <svg
-        className={`absolute right-1 top-1 h-3 w-3 text-gray-300 transition-opacity duration-200 ${
+        className={`absolute right-0.5 top-0.5 h-4 w-4 text-slate-200 transition-opacity duration-200 pointer-events-none ${
           theme === 'dark' ? 'opacity-100' : 'opacity-0'
         }`}
         fill="currentColor"

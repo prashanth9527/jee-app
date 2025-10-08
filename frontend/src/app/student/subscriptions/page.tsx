@@ -185,13 +185,13 @@ export default function SubscriptionsPage() {
         <div className="space-y-6">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">🚀 Unlock Your JEE Success</h1>
-            <p className="text-lg text-gray-600 mb-4">Choose a plan to unlock unlimited access to JEE practice tests</p>
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 border border-blue-200">
-              <p className="text-blue-800 font-semibold text-lg">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">🚀 Unlock Your JEE Success</h1>
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-4">Choose a plan to unlock unlimited access to JEE practice tests</p>
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900 rounded-lg p-6 border border-blue-200 dark:border-blue-700">
+              <p className="text-blue-800 dark:text-blue-200 font-semibold text-lg">
                 💡 "Success is the sum of small efforts repeated day in and day out" - Robert Collier
               </p>
-              <p className="text-blue-600 mt-2">
+              <p className="text-blue-600 dark:text-blue-300 mt-2">
                 Your journey to IIT starts with consistent practice. Let's make it happen! 🎯
               </p>
             </div>
@@ -199,11 +199,11 @@ export default function SubscriptionsPage() {
 
           {/* Current Status */}
           {subscriptionStatus && (
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Current Status</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Current Status</h2>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 dark:text-gray-300">
                     {subscriptionStatus.isOnTrial ? 'Trial period - 2 days remaining' : subscriptionStatus.message}
                   </p>
                   {subscriptionStatus.daysRemaining > 0 && (
@@ -214,17 +214,17 @@ export default function SubscriptionsPage() {
                 </div>
                 <div className="flex items-center space-x-2">
                   {subscriptionStatus.isOnTrial && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
                       Trial
                     </span>
                   )}
                   {subscriptionStatus.hasValidSubscription && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
                       Active
                     </span>
                   )}
                   {subscriptionStatus.needsSubscription && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">
                       Expired
                     </span>
                   )}
@@ -235,7 +235,7 @@ export default function SubscriptionsPage() {
 
           {/* Trial Expired Message */}
           {subscriptionStatus?.needsSubscription && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+            <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -243,8 +243,8 @@ export default function SubscriptionsPage() {
                   </svg>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-semibold text-red-800">Trial Period Expired</h3>
-                  <p className="text-red-700 mt-1">
+                  <h3 className="text-lg font-semibold text-red-800 dark:text-red-200">Trial Period Expired</h3>
+                  <p className="text-red-700 dark:text-red-300 mt-1">
                     Your 2-day free trial has ended. To continue accessing all features of JEE Master, please choose a subscription plan below.
                   </p>
                 </div>
@@ -267,8 +267,8 @@ export default function SubscriptionsPage() {
               return (
                 <div key={plan.id} className={`rounded-lg shadow-lg overflow-hidden relative transition-all duration-300 hover:shadow-xl cursor-pointer mb-8 flex flex-col ${
                   isRecommended 
-                    ? 'bg-gradient-to-br from-orange-50 to-red-50 ring-4 ring-orange-500 shadow-2xl border-2 border-orange-300' 
-                    : 'bg-white hover:ring-2 hover:ring-blue-500 hover:border-blue-300 hover:bg-blue-50'
+                    ? 'bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/40 dark:to-red-900/40 ring-4 ring-orange-500 shadow-2xl border-2 border-orange-300 dark:border-orange-600' 
+                    : 'bg-white dark:bg-gray-800 hover:ring-2 hover:ring-blue-500 hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/30'
                 }`}>
                   {isRecommended && (
                     <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 z-30">
@@ -282,33 +282,33 @@ export default function SubscriptionsPage() {
                   )}
                   <div className={`p-8 flex flex-col flex-grow ${isRecommended ? 'pt-20' : ''}`}>
                   <div className="text-center flex-grow">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
                       {isRecommended && <span className="text-orange-500 mr-2">🔥</span>}
                       {plan.planType === 'AI_ENABLED' ? 'AI Enabled Plan' : 'Manual Plan'}
                       {isRecommended && <span className="text-orange-500 ml-2">🔥</span>}
                     </h3>
                     <div className="mb-4">
-                      <span className="text-4xl font-bold text-gray-900">
+                      <span className="text-4xl font-bold text-gray-900 dark:text-gray-100">
                         {formatPrice(plan.priceCents, plan.currency)}
                       </span>
-                      <span className="text-gray-600 text-lg">/{getIntervalText(plan.interval)}</span>
+                      <span className="text-gray-600 dark:text-gray-300 text-lg">/{getIntervalText(plan.interval)}</span>
                     </div>
                     
                     {/* Price per day */}
                     <div className="mb-3">
-                      <span className="text-lg font-semibold text-green-600">
+                      <span className="text-lg font-semibold text-green-600 dark:text-green-400">
                         Just {getPricePerDay(plan.priceCents, plan.interval)}/day
                       </span>
                     </div>
                     
                     {/* Encouraging message */}
                     <div className="mb-4">
-                      <p className="text-sm font-medium text-green-600 bg-red-100 border-2 border-red-300 px-4 py-2 rounded-lg inline-block shadow-md font-bold">
+                      <p className="text-sm font-medium text-green-600 dark:text-green-400 bg-red-100 dark:bg-red-900/50 border-2 border-red-300 dark:border-red-700 px-4 py-2 rounded-lg inline-block shadow-md font-bold">
                         {getEncouragingMessage(plan.priceCents, plan.interval)}
                       </p>
                     </div>
                     
-                    <p className="text-gray-600 mb-6">
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">
                       {plan.planType === 'AI_ENABLED' 
                         ? 'Access to AI-generated questions and explanations'
                         : 'Access to practice tests with database questions'
@@ -317,25 +317,25 @@ export default function SubscriptionsPage() {
                   </div>
 
                   <div className="space-y-3 mb-6 flex-grow">
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                       <svg className="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       Unlimited practice tests
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                       <svg className="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       Detailed performance analytics
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                       <svg className="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       All subjects and topics
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                       <svg className="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
@@ -397,12 +397,12 @@ export default function SubscriptionsPage() {
           </div>
 
           {/* Features Comparison */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">What's Included</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">What's Included</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="font-medium text-gray-900 mb-3">Practice Tests</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
+                <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Practice Tests</h3>
+                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <li>• Unlimited practice tests</li>
                   <li>• Subject-wise tests (Physics, Chemistry, Mathematics)</li>
                   <li>• Topic-wise practice</li>
@@ -411,8 +411,8 @@ export default function SubscriptionsPage() {
                 </ul>
               </div>
               <div>
-                <h3 className="font-medium text-gray-900 mb-3">Analytics & Progress</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
+                <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Analytics & Progress</h3>
+                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <li>• Detailed performance analytics</li>
                   <li>• Progress tracking by subject</li>
                   <li>• Weak area identification</li>
@@ -424,14 +424,14 @@ export default function SubscriptionsPage() {
           </div>
 
           {/* Payment Security */}
-          <div className="bg-blue-50 rounded-lg p-6">
+          <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-6">
             <div className="flex items-center">
               <svg className="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
               <div>
-                <h3 className="text-sm font-medium text-blue-900">Secure Payment</h3>
-                <p className="text-sm text-blue-700">
+                <h3 className="text-sm font-medium text-blue-900 dark:text-blue-200">Secure Payment</h3>
+                <p className="text-sm text-blue-700 dark:text-blue-300">
                   All payments are processed securely through Stripe. Your payment information is never stored on our servers.
                 </p>
               </div>

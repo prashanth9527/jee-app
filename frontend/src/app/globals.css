@@ -64,6 +64,90 @@
   color: rgb(156, 163, 175) !important; /* gray-400 */
 }
 
+/* Improve card and content visibility in dark mode */
+:root.dark [class*="bg-blue-50"] {
+  background-color: rgb(30, 58, 138) !important; /* blue-900 */
+}
+
+:root.dark [class*="bg-red-50"] {
+  background-color: rgb(127, 29, 29) !important; /* red-900 */
+}
+
+:root.dark [class*="bg-green-50"] {
+  background-color: rgb(20, 83, 45) !important; /* green-900 */
+}
+
+:root.dark [class*="bg-yellow-50"] {
+  background-color: rgb(120, 53, 15) !important; /* yellow-900 */
+}
+
+:root.dark [class*="bg-orange-50"] {
+  background-color: rgb(124, 45, 18) !important; /* orange-900 */
+}
+
+:root.dark [class*="text-blue-600"],
+:root.dark [class*="text-blue-700"],
+:root.dark [class*="text-blue-800"] {
+  color: rgb(147, 197, 253) !important; /* blue-300 */
+}
+
+:root.dark [class*="text-red-600"],
+:root.dark [class*="text-red-700"],
+:root.dark [class*="text-red-800"] {
+  color: rgb(252, 165, 165) !important; /* red-300 */
+}
+
+:root.dark [class*="text-green-600"],
+:root.dark [class*="text-green-700"] {
+  color: rgb(134, 239, 172) !important; /* green-300 */
+}
+
+:root.dark [class*="text-orange-600"],
+:root.dark [class*="text-orange-700"] {
+  color: rgb(253, 186, 116) !important; /* orange-300 */
+}
+
+/* Improve border visibility in dark mode */
+:root.dark [class*="border-gray-200"],
+:root.dark [class*="border-gray-300"] {
+  border-color: rgb(55, 65, 81) !important; /* gray-700 */
+}
+
+:root.dark [class*="border-blue-200"] {
+  border-color: rgb(30, 58, 138) !important; /* blue-900 */
+}
+
+:root.dark [class*="border-red-200"] {
+  border-color: rgb(127, 29, 29) !important; /* red-900 */
+}
+
+/* Improve navigation and header text visibility in dark mode */
+:root.dark nav [class*="text-gray"],
+:root.dark header [class*="text-gray"] {
+  color: rgb(229, 231, 235) !important; /* gray-200 */
+}
+
+:root.dark nav a,
+:root.dark header a {
+  color: rgb(229, 231, 235) !important; /* gray-200 */
+}
+
+:root.dark nav a:hover,
+:root.dark header a:hover {
+  color: rgb(251, 146, 60) !important; /* orange-400 */
+}
+
+/* Improve banner and hero section text in dark mode */
+:root.dark h1,
+:root.dark h2,
+:root.dark h3 {
+  color: rgb(243, 244, 246) !important; /* gray-100 */
+}
+
+:root.dark p {
+  color: rgb(209, 213, 219) !important; /* gray-300 */
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
