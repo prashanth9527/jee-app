@@ -205,11 +205,11 @@ export default function LoginPage() {
 				}
 				}}
 			/>
-			<div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-				<div className="max-w-md w-full space-y-8">
+			<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+				<div className="max-w-6xl w-full">
 					{/* Header */}
-					<div className="text-center">
-						<div className="flex justify-center items-center mb-8">
+					<div className="text-center mb-8">
+						<div className="flex justify-center items-center mb-6">
 							<DynamicLogo 
 								systemSettings={systemSettings} 
 								size="lg"
@@ -217,25 +217,27 @@ export default function LoginPage() {
 								className="justify-center"
 							/>
 						</div>
-						<h2 className="text-3xl font-bold text-gray-900">
+						<h2 className="text-3xl font-bold text-gray-900 dark:text-white">
 							Welcome back
 						</h2>
-						<p className="mt-2 text-sm text-gray-600">
+						<p className="mt-2 text-sm text-gray-700 dark:text-gray-100">
 							Sign in to continue your JEE preparation
 						</p>
 					</div>
 
-				{/* Login Form */}
-				<div className="bg-white rounded-xl shadow-2xl p-8 border border-gray-200">
+					{/* Main Content - Side by Side Layout */}
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+						{/* Left Side - Login Form */}
+						<div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-200 dark:border-gray-700">
 					{/* Login Method Toggle */}
-					<div className="flex mb-6 bg-gray-100 rounded-lg p-1">
+							<div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
 						<button
 							type="button"
 							onClick={() => switchLoginMethod('email')}
 							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
 								loginMethod === 'email'
-									? 'bg-white text-orange-600 shadow-sm'
-									: 'text-gray-600 hover:text-gray-900'
+											? 'bg-white dark:bg-gray-600 text-orange-600 dark:text-orange-400 shadow-sm'
+											: 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
 							}`}
 						>
 							Email & Password
@@ -245,8 +247,8 @@ export default function LoginPage() {
 							onClick={() => switchLoginMethod('phone')}
 							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
 								loginMethod === 'phone'
-									? 'bg-white text-orange-600 shadow-sm'
-									: 'text-gray-600 hover:text-gray-900'
+											? 'bg-white dark:bg-gray-600 text-orange-600 dark:text-orange-400 shadow-sm'
+											: 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
 							}`}
 						>
 							Phone OTP
@@ -256,8 +258,8 @@ export default function LoginPage() {
 							onClick={() => switchLoginMethod('emailCode')}
 							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
 								loginMethod === 'emailCode'
-									? 'bg-white text-orange-600 shadow-sm'
-									: 'text-gray-600 hover:text-gray-900'
+											? 'bg-white dark:bg-gray-600 text-orange-600 dark:text-orange-400 shadow-sm'
+											: 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
 							}`}
 						>
 							Email Code
@@ -269,7 +271,7 @@ export default function LoginPage() {
 							<>
 								{/* Email */}
 								<div>
-									<label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
+											<label htmlFor="email" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
 										Email Address
 									</label>
 									<input
@@ -278,7 +280,7 @@ export default function LoginPage() {
 										type="email"
 										autoComplete="email"
 										required
-										className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
+												className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
 										placeholder="Enter your email"
 										value={email}
 										onChange={e => setEmail(e.target.value)}
@@ -287,7 +289,7 @@ export default function LoginPage() {
 
 								{/* Password */}
 								<div>
-									<label htmlFor="password" className="block text-sm font-semibold text-gray-900 mb-2">
+											<label htmlFor="password" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
 										Password
 									</label>
 									<div className="relative">
@@ -297,14 +299,14 @@ export default function LoginPage() {
 											type={showPassword ? "text" : "password"}
 											autoComplete="current-password"
 											required
-											className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors pr-12 text-gray-900 bg-white"
+													className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors pr-12 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
 											placeholder="Enter your password"
 											value={password}
 											onChange={e => setPassword(e.target.value)}
 										/>
 										<button
 											type="button"
-											className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-600 hover:text-gray-800"
+													className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
 											onClick={() => setShowPassword(!showPassword)}
 										>
 											{showPassword ? (
@@ -327,7 +329,7 @@ export default function LoginPage() {
 							<>
 								{/* Phone Number */}
 								<div>
-									<label htmlFor="phone" className="block text-sm font-semibold text-gray-900 mb-2">
+											<label htmlFor="phone" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
 										Phone Number
 									</label>
 									<input
@@ -336,7 +338,7 @@ export default function LoginPage() {
 										type="tel"
 										autoComplete="tel"
 										required
-										className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
+												className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
 										placeholder="Enter your phone number"
 										value={phone}
 										onChange={e => setPhone(e.target.value)}
@@ -347,7 +349,7 @@ export default function LoginPage() {
 								{/* OTP Code */}
 								{otpSent && (
 									<div>
-										<label htmlFor="otpCode" className="block text-sm font-semibold text-gray-900 mb-2">
+												<label htmlFor="otpCode" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
 											OTP Code
 										</label>
 										<input
@@ -355,25 +357,25 @@ export default function LoginPage() {
 											name="otpCode"
 											type="text"
 											required
-											className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
+													className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
 											placeholder="Enter 6-digit OTP"
 											value={otpCode}
 											onChange={e => setOtpCode(e.target.value)}
 											maxLength={6}
 										/>
-										<p className="mt-2 text-sm text-gray-600">
-											OTP sent to {phone}. Didn't receive?{' '}
-											<button
-												type="button"
-												onClick={() => {
-													setOtpSent(false);
-													setOtpCode('');
-												}}
-												className="text-orange-600 hover:text-orange-500 font-medium"
-											>
-												Resend
-											</button>
-										</p>
+												<p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+													OTP sent to {phone}. Didn't receive?{' '}
+													<button
+														type="button"
+														onClick={() => {
+															setOtpSent(false);
+															setOtpCode('');
+														}}
+														className="text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 font-medium"
+													>
+														Resend
+													</button>
+												</p>
 									</div>
 								)}
 							</>
@@ -383,7 +385,7 @@ export default function LoginPage() {
 							<>
 								{/* Email for Code */}
 								<div>
-									<label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
+											<label htmlFor="email" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
 										Email Address
 									</label>
 									<input
@@ -392,7 +394,7 @@ export default function LoginPage() {
 										type="email"
 										autoComplete="email"
 										required
-										className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
+												className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
 										placeholder="Enter your email"
 										value={email}
 										onChange={e => setEmail(e.target.value)}
@@ -403,33 +405,33 @@ export default function LoginPage() {
 								{/* Email OTP Code */}
 								{emailOtpSent && (
 									<div>
-										<label htmlFor="otpCode" className="block text-sm font-semibold text-gray-900 mb-2">
+												<label htmlFor="otpCode" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
 											Verification Code
 										</label>
-										<input
-											id="otpCode"
-											name="otpCode"
-											type="text"
-											required
-											className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 bg-white"
-											placeholder="Enter 6-digit code"
-											value={otpCode}
-											onChange={e => setOtpCode(e.target.value)}
-											maxLength={6}
-										/>
-										<p className="mt-2 text-sm text-gray-600">
-											Code sent to {email}. Didn't receive?{' '}
-											<button
-												type="button"
-												onClick={() => {
-													setEmailOtpSent(false);
-													setOtpCode('');
-												}}
-												className="text-orange-600 hover:text-orange-500 font-medium"
-											>
-												Resend
-											</button>
-										</p>
+												<input
+													id="otpCode"
+													name="otpCode"
+													type="text"
+													required
+													className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
+													placeholder="Enter 6-digit code"
+													value={otpCode}
+													onChange={e => setOtpCode(e.target.value)}
+													maxLength={6}
+												/>
+												<p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+													Code sent to {email}. Didn't receive?{' '}
+													<button
+														type="button"
+														onClick={() => {
+															setEmailOtpSent(false);
+															setOtpCode('');
+														}}
+														className="text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 font-medium"
+													>
+														Resend
+													</button>
+												</p>
 									</div>
 								)}
 							</>
@@ -443,15 +445,15 @@ export default function LoginPage() {
 										id="remember-me"
 										name="remember-me"
 										type="checkbox"
-										className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+												className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 dark:border-gray-600 rounded"
 									/>
-									<label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 font-medium">
+											<label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-100 font-medium">
 										Remember me
 									</label>
 								</div>
 
 								<div className="text-sm">
-									<Link href="/forgot-password" className="font-semibold text-orange-600 hover:text-orange-500 transition-colors">
+											<Link href="/forgot-password" className="font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 transition-colors">
 										Forgot your password?
 									</Link>
 								</div>
@@ -460,8 +462,8 @@ export default function LoginPage() {
 
 						{/* Error Message */}
 						{error && (
-							<div className="p-4 bg-red-50 border border-red-300 rounded-lg">
-								<p className="text-red-900 text-sm font-semibold">{error}</p>
+									<div className="p-4 bg-red-50 dark:bg-red-900 border border-red-300 dark:border-red-700 rounded-lg">
+										<p className="text-red-900 dark:text-red-100 text-sm font-semibold">{error}</p>
 							</div>
 						)}
 
@@ -487,100 +489,92 @@ export default function LoginPage() {
 						</button>
 			</form>
 
-					{/* Register Link */}
-					<div className="mt-6 text-center">
-						<p className="text-sm text-gray-700">
-							Don&apos;t have an account?{' '}
-							<Link href="/register" className="font-semibold text-orange-600 hover:text-orange-500 transition-colors">
-								Create one here
-							</Link>
-						</p>
-					</div>
+							{/* Register Link */}
+							<div className="mt-6 text-center">
+								<p className="text-sm text-gray-800 dark:text-gray-300">
+									Don&apos;t have an account?{' '}
+									<Link href="/register" className="font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 transition-colors">
+										Create one here
+									</Link>
+								</p>
+							</div>
 				</div>
 
-				{/* Divider */}
-				<div className="relative">
-					<div className="absolute inset-0 flex items-center">
-						<div className="w-full border-t-2 border-gradient-to-r from-orange-200 via-blue-200 to-orange-200"></div>
-					</div>
-					<div className="relative flex justify-center text-sm">
-						<span className="px-4 py-2 bg-gradient-to-r from-orange-50 to-blue-50 text-gray-700 font-semibold rounded-full border border-gray-200 shadow-sm">
-							✨ Or continue with
-						</span>
-					</div>
-				</div>
-
-				{/* Google Sign-In */}
-				<div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-2xl p-8 border-2 border-blue-100 hover:border-blue-200 transition-all duration-300 transform hover:scale-[1.02]">
-					<div className="text-center mb-4">
-						<h3 className="text-lg font-bold text-gray-800 mb-2">Quick & Secure Login</h3>
-						<p className="text-sm text-gray-600">Sign in with your Google account</p>
-					</div>
+						{/* Right Side - Social Login & Features */}
+						<div className="space-y-6">
+							{/* Google Sign-In */}
+							<div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900 dark:to-indigo-900 rounded-2xl shadow-2xl p-8 border-2 border-blue-100 dark:border-blue-800 hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-300 transform hover:scale-[1.02]">
+								<div className="text-center mb-4">
+									<h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Quick & Secure Login</h3>
+									<p className="text-sm text-gray-900 dark:text-white">Sign in with your Google account</p>
+								</div>
 					<GoogleSignInButton
 						onSuccess={handleGoogleSuccess}
 						onError={handleGoogleError}
 						disabled={loading}
 					/>
-					<div className="mt-4 text-center">
-						<p className="text-xs text-gray-500">
-							🔒 Your data is protected with Google's security
-						</p>
+								<div className="mt-4 text-center">
+									<p className="text-xs text-gray-800 dark:text-white">
+										🔒 Your data is protected with Google's security
+									</p>
+								</div>
+				</div>
+
+							{/* Quick Access Info */}
+							<div className="bg-orange-50 dark:bg-orange-900 rounded-xl p-6 border border-orange-200 dark:border-orange-800">
+								<h3 className="text-sm font-semibold text-orange-900 dark:text-white mb-4 text-center">Quick Access</h3>
+								<div className="grid grid-cols-3 gap-4 text-xs">
+									<div className="text-center">
+										<div className="w-12 h-12 bg-orange-100 dark:bg-orange-800 border border-orange-300 dark:border-orange-700 rounded-full flex items-center justify-center mx-auto mb-2">
+											<span className="text-orange-600 dark:text-orange-200 text-xl">👨‍🎓</span>
+										</div>
+										<div className="font-bold text-gray-900 dark:text-white text-sm">Students</div>
+										<div className="text-gray-900 dark:text-white">Practice & Learn</div>
+									</div>
+									<div className="text-center">
+										<div className="w-12 h-12 bg-orange-100 dark:bg-orange-800 border border-orange-300 dark:border-orange-700 rounded-full flex items-center justify-center mx-auto mb-2">
+											<span className="text-orange-600 dark:text-orange-200 text-xl">👨‍🏫</span>
+										</div>
+										<div className="font-bold text-gray-900 dark:text-white text-sm">Experts</div>
+										<div className="text-gray-900 dark:text-white">Create Content</div>
+									</div>
+									<div className="text-center">
+										<div className="w-12 h-12 bg-orange-100 dark:bg-orange-800 border border-orange-300 dark:border-orange-700 rounded-full flex items-center justify-center mx-auto mb-2">
+											<span className="text-orange-600 dark:text-orange-200 text-xl">⚙️</span>
+										</div>
+										<div className="font-bold text-gray-900 dark:text-white text-sm">Admins</div>
+										<div className="text-gray-900 dark:text-white">Manage Platform</div>
+									</div>
+								</div>
+							</div>
+
+							{/* Features Preview */}
+							<div className="text-center">
+								<p className="text-sm text-gray-900 dark:text-white mb-4 font-medium">Join thousands of successful JEE aspirants</p>
+								<div className="flex justify-center space-x-6 text-sm">
+									<div className="flex items-center">
+										<div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
+										<span className="text-gray-900 dark:text-white font-semibold">50K+ Questions</span>
+									</div>
+									<div className="flex items-center">
+										<div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+										<span className="text-gray-900 dark:text-white font-semibold">AI-Powered</span>
+									</div>
+									<div className="flex items-center">
+										<div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
+										<span className="text-gray-900 dark:text-white font-semibold">25K+ Students</span>
+									</div>
+								</div>
+							</div>
 					</div>
 				</div>
 
-				{/* Quick Access Info */}
-				<div className="bg-orange-50 rounded-xl p-6 border border-orange-200">
-					<h3 className="text-sm font-semibold text-orange-900 mb-4 text-center">Quick Access</h3>
-					<div className="grid grid-cols-3 gap-4 text-xs">
-						<div className="text-center">
-							<div className="w-12 h-12 bg-orange-100 border border-orange-300 rounded-full flex items-center justify-center mx-auto mb-2">
-								<span className="text-orange-600 text-xl">👨‍🎓</span>
-							</div>
-							<div className="font-bold text-gray-900 text-sm">Students</div>
-							<div className="text-gray-700">Practice & Learn</div>
-						</div>
-						<div className="text-center">
-							<div className="w-12 h-12 bg-orange-100 border border-orange-300 rounded-full flex items-center justify-center mx-auto mb-2">
-								<span className="text-orange-600 text-xl">👨‍🏫</span>
-							</div>
-							<div className="font-bold text-gray-900 text-sm">Experts</div>
-							<div className="text-gray-700">Create Content</div>
-						</div>
-						<div className="text-center">
-							<div className="w-12 h-12 bg-orange-100 border border-orange-300 rounded-full flex items-center justify-center mx-auto mb-2">
-								<span className="text-orange-600 text-xl">⚙️</span>
-							</div>
-							<div className="font-bold text-gray-900 text-sm">Admins</div>
-							<div className="text-gray-700">Manage Platform</div>
-						</div>
+					{/* Back to Home */}
+					<div className="text-center mt-8">
+						<Link href="/" className="text-sm text-gray-900 dark:text-white font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+							← Back to homepage
+						</Link>
 					</div>
-				</div>
-
-				{/* Features Preview */}
-				<div className="text-center">
-					<p className="text-sm text-gray-600 mb-4 font-medium">Join thousands of successful JEE aspirants</p>
-					<div className="flex justify-center space-x-6 text-sm">
-						<div className="flex items-center">
-							<div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
-							<span className="text-gray-900 font-semibold">50K+ Questions</span>
-						</div>
-						<div className="flex items-center">
-							<div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
-							<span className="text-gray-900 font-semibold">AI-Powered</span>
-						</div>
-						<div className="flex items-center">
-							<div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
-							<span className="text-gray-900 font-semibold">25K+ Students</span>
-						</div>
-					</div>
-				</div>
-
-				{/* Back to Home */}
-				<div className="text-center">
-					<Link href="/" className="text-sm text-gray-800 font-medium hover:text-orange-600 transition-colors">
-						← Back to homepage
-					</Link>
-				</div>
 				</div>
 		</div>
 		</>

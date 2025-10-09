@@ -286,14 +286,14 @@ function DefaultHomePage() {
       </section>
 
       {/* Stats Section */}
-      <section id="features" className="py-16 bg-white">
+      <section id="features" className="py-16 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-3xl mb-2">{stat.icon}</div>
-                <div className="text-3xl font-bold text-gray-900">{stat.number}</div>
-                <div className="text-gray-600">{stat.label}</div>
+                <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{stat.number}</div>
+                <div className="text-gray-600 dark:text-gray-300">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -301,70 +301,70 @@ function DefaultHomePage() {
       </section>
 
       {/* AI Features Section */}
-      <section id="ai-features" className="py-20 bg-gray-50">
+      <section id="ai-features" className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
               AI-Powered Learning Experience
             </h2>
-            <p className="mt-4 text-lg text-gray-600">
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
               Revolutionary artificial intelligence that transforms how you learn and prepare for JEE
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="text-4xl mb-4">🤖</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Smart AI Tutor</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Smart AI Tutor</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Personal AI tutor that adapts to your learning style and provides 24/7 guidance with personalized explanations.
               </p>
-              <div className="text-sm text-orange-600 font-medium">Always Available</div>
+              <div className="text-sm text-orange-600 dark:text-orange-400 font-medium">Always Available</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="text-4xl mb-4">📊</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Intelligent Analytics</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Intelligent Analytics</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Advanced performance tracking with detailed insights on your strengths, weaknesses, and learning progress.
               </p>
-              <div className="text-sm text-orange-600 font-medium">Real-time Insights</div>
+              <div className="text-sm text-orange-600 dark:text-orange-400 font-medium">Real-time Insights</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="text-4xl mb-4">🎯</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Adaptive Practice</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Adaptive Practice</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 AI generates personalized practice questions that adapt to your skill level and focus on improvement areas.
               </p>
-              <div className="text-sm text-orange-600 font-medium">Personalized Content</div>
+              <div className="text-sm text-orange-600 dark:text-orange-400 font-medium">Personalized Content</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="text-4xl mb-4">⚡</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Instant AI Feedback</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Instant AI Feedback</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Get immediate, detailed explanations for every question with AI-powered solution analysis and tips.
               </p>
-              <div className="text-sm text-orange-600 font-medium">Instant Results</div>
+              <div className="text-sm text-orange-600 dark:text-orange-400 font-medium">Instant Results</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="text-4xl mb-4">🧠</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Smart Recommendations</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Smart Recommendations</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 AI analyzes your performance and suggests the optimal study path and resources for maximum success.
               </p>
-              <div className="text-sm text-orange-600 font-medium">Optimized Learning</div>
+              <div className="text-sm text-orange-600 dark:text-orange-400 font-medium">Optimized Learning</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="text-4xl mb-4">📈</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Success Prediction</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Success Prediction</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Advanced AI models predict your exam performance and suggest targeted improvements for better results.
               </p>
-              <div className="text-sm text-orange-600 font-medium">Future Ready</div>
+              <div className="text-sm text-orange-600 dark:text-orange-400 font-medium">Future Ready</div>
             </div>
           </div>
 
