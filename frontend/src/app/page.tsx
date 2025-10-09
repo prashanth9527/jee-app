@@ -93,6 +93,7 @@ export default function HomePage() {
 function DefaultHomePage() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentFeature, setCurrentFeature] = useState(0);
+  const [currentPyq, setCurrentPyq] = useState(0);
   const { systemSettings, loading: settingsLoading } = useSystemSettings();
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [plans, setPlans] = useState<Plan[]>([]);
@@ -143,6 +144,34 @@ function DefaultHomePage() {
     }
   ];
 
+  const pyqSlides = [
+    {
+      title: "Previous Year Questions",
+      description: "Extensive collection of JEE Main & Advanced questions from past 15+ years with detailed solutions and tips.",
+      icon: "📚"
+    },
+    {
+      title: "JEE Main Papers",
+      description: "Complete collection of JEE Main papers from 2019-2024 with detailed solutions and performance analysis.",
+      icon: "📝"
+    },
+    {
+      title: "JEE Advanced Papers",
+      description: "Comprehensive JEE Advanced papers with step-by-step solutions and expert tips for complex problems.",
+      icon: "🎯"
+    },
+    {
+      title: "Subject-wise PYQs",
+      description: "Organized by subjects - Physics, Chemistry, Mathematics with topic-wise question distribution.",
+      icon: "📖"
+    },
+    {
+      title: "Difficulty Analysis",
+      description: "Questions categorized by difficulty levels with detailed explanations and time management tips.",
+      icon: "⚡"
+    }
+  ];
+
   const stats = [
     { number: "50,000+", label: "Practice Questions", icon: "📝" },
     { number: "25,000+", label: "Active Students", icon: "👨‍🎓" },
@@ -184,6 +213,13 @@ function DefaultHomePage() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentPyq((prev) => (prev + 1) % pyqSlides.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
   const formatPrice = (priceCents: number) => {
     return `₹${(priceCents / 100).toLocaleString()}`;
   };
@@ -214,7 +250,7 @@ function DefaultHomePage() {
       <HeaderHome systemSettings={systemSettings || undefined} />
 
       {/* Hero Section with Feature Carousel */}
-      <section className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50">
+      <section className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50 dark:bg-[rgb(31,41,55)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
@@ -250,31 +286,38 @@ function DefaultHomePage() {
                   <div className="bg-white rounded-lg p-6 text-gray-900">
                     <div className="flex items-center mb-4">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                        <span className="text-2xl">📚</span>
+                        <span className="text-2xl">{pyqSlides[currentPyq].icon}</span>
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold">Previous Year Questions</h3>
+                        <h3 className="text-lg font-semibold">{pyqSlides[currentPyq].title}</h3>
                       </div>
                     </div>
                     <p className="text-gray-600">
-                      Extensive collection of JEE Main & Advanced questions from past 15+ years with detailed solutions and tips.
+                      {pyqSlides[currentPyq].description}
                     </p>
                   </div>
                 </div>
                 <div className="absolute top-4 right-4 flex space-x-2">
-                  <button className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all">
-                    <span className="text-white">‹</span>
+                  <button 
+                    onClick={() => setCurrentPyq((prev) => prev === 0 ? pyqSlides.length - 1 : prev - 1)}
+                    className="w-8 h-8 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center transition-all border border-white border-opacity-30"
+                  >
+                    <span className="text-gray-900 dark:text-gray-100 font-bold text-lg">‹</span>
                   </button>
-                  <button className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all">
-                    <span className="text-white">›</span>
+                  <button 
+                    onClick={() => setCurrentPyq((prev) => (prev + 1) % pyqSlides.length)}
+                    className="w-8 h-8 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center transition-all border border-white border-opacity-30"
+                  >
+                    <span className="text-gray-900 dark:text-gray-100 font-bold text-lg">›</span>
                   </button>
                 </div>
                 <div className="flex justify-center mt-4 space-x-2">
-                  {[1, 2, 3, 4, 5].map((dot) => (
-                    <div
-                      key={dot}
-                      className={`w-2 h-2 rounded-full ${
-                        dot === 1 ? 'bg-orange-500' : 'bg-gray-300'
+                  {pyqSlides.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentPyq(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        index === currentPyq ? 'bg-orange-500' : 'bg-gray-300'
                       }`}
                     />
                   ))}
@@ -300,8 +343,49 @@ function DefaultHomePage() {
         </div>
       </section>
 
+      {/* Feature Carousel Section */}
+      <section id="feature-carousel" className="py-20 bg-gray-50 dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
+              Key Features
+            </h2>
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+              Discover the powerful features that make our platform unique
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-8 relative">
+              <div className="text-center">
+                <div className="text-6xl mb-4">{appFeatures[currentFeature].icon}</div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                  {appFeatures[currentFeature].title}
+                </h3>
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                  {appFeatures[currentFeature].description}
+                </p>
+              </div>
+              
+              {/* Feature Navigation */}
+              <div className="flex justify-center mt-6 space-x-2">
+                {appFeatures.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentFeature(index)}
+                    className={`w-3 h-3 rounded-full transition-all ${
+                      index === currentFeature ? 'bg-orange-500' : 'bg-gray-300'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* AI Features Section */}
-      <section id="ai-features" className="py-20 bg-gray-50 dark:bg-gray-800">
+      <section id="ai-features" className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
@@ -389,7 +473,7 @@ function DefaultHomePage() {
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="bg-gray-50 rounded-lg p-8">
+            <div className="bg-gray-50 rounded-lg p-8 relative">
               <div className="text-center">
                 <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
                   {testimonials[currentTestimonial].avatar}
@@ -403,6 +487,19 @@ function DefaultHomePage() {
                 <div className="text-orange-600">
                   {testimonials[currentTestimonial].score}
                 </div>
+              </div>
+              
+              {/* Testimonial Navigation */}
+              <div className="flex justify-center mt-6 space-x-2">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentTestimonial(index)}
+                    className={`w-3 h-3 rounded-full transition-all ${
+                      index === currentTestimonial ? 'bg-orange-500' : 'bg-gray-300'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>
