@@ -1450,7 +1450,7 @@ Do not generate or hallucinate new data under any circumstances.`;
                           </button>
 
                           {/* Process ChatGPT Button */}
-                          <button
+                          {/* <button
                             onClick={processWithChatGPT}
                             disabled={processing === editingJson}
                             className="px-3 py-1 text-sm font-medium text-white bg-red-600 border border-red-200 rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -1467,7 +1467,7 @@ Do not generate or hallucinate new data under any circumstances.`;
                             ) : (
                               'Process ChatGPT'
                             )}
-                          </button>
+                          </button> */}
 
                         </div>
                       </div>
