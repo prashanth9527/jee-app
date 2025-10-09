@@ -250,7 +250,7 @@ function DefaultHomePage() {
       <HeaderHome systemSettings={systemSettings || undefined} />
 
       {/* Hero Section with Feature Carousel */}
-      <section className="pt-20 pb-16 bg-gradient-to-br from-orange-50 via-white to-red-50 dark:bg-[rgb(31,41,55)] dark:bg-gradient-to-br dark:from-[rgb(31,41,55)] dark:via-[rgb(31,41,55)] dark:to-[rgb(31,41,55)]">
+      <section className="pt-20 pb-16 hero-gradient dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
             <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
