@@ -5,6 +5,7 @@ import {
   Delete,
   Param, 
   Query, 
+  Body,
   UseGuards,
   HttpException,
   HttpStatus
@@ -170,6 +171,35 @@ export class PDFProcessorCacheController {
         {
           success: false,
           message: 'Failed to import questions from JSON',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Post(':id/process-chatgpt')
+  async processWithChatGPT(@Param('id') id: string, @Body() body: { latexFilePath: string }) {
+    try {
+      console.log(`[Controller] Starting ChatGPT processing for ID: ${id}`);
+      const result = await this.pdfProcessorCacheService.processWithChatGPT(id, body.latexFilePath);
+      console.log(`[Controller] ChatGPT processing completed for ID: ${id}, success: ${result.success}`);
+      return {
+        success: result.success,
+        message: result.success ? 'LaTeX file processed with ChatGPT successfully' : 'ChatGPT processing failed',
+        jsonContent: result.jsonContent,
+        questionsCount: result.questionsCount,
+        chunksProcessed: result.chunksProcessed,
+        totalChunks: result.totalChunks,
+        metadata: result.metadata,
+        data: result
+      };
+    } catch (error) {
+      console.error(`[Controller] Error processing with ChatGPT for ID: ${id}:`, error);
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to process LaTeX file with ChatGPT',
           error: error.message
         },
         HttpStatus.INTERNAL_SERVER_ERROR

@@ -157,13 +157,15 @@ model Question {
   createdAt               DateTime                         @default(now())
   updatedAt               DateTime                         @updatedAt
   createdById             String?
+  formulaid               String?
   answers                 ExamAnswer[]
   createdBy               User?                            @relation("QuestionCreator", fields: [createdById], references: [id])
   lesson                  Lesson?                          @relation(fields: [lessonId], references: [id])
+  pdfProcessorCache       PDFProcessorCache?               @relation(fields: [pdfProcessorCacheId], references: [id])
   subject                 Subject?                         @relation(fields: [subjectId], references: [id])
   subtopic                Subtopic?                        @relation(fields: [subtopicId], references: [id])
   topic                   Topic?                           @relation(fields: [topicId], references: [id])
-  pdfProcessorCache       PDFProcessorCache?               @relation(fields: [pdfProcessorCacheId], references: [id])
+  formulas                Formula?                         @relation(fields: [formulaid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "question_formulas_fk")
   alternativeExplanations QuestionAlternativeExplanation[]
   options                 QuestionOption[]
   reports                 QuestionReport[]
@@ -484,17 +486,18 @@ model Bookmark {
 }
 
 model Formula {
-  id          String   @id @default(cuid())
+  id          String     @id @default(cuid())
   title       String
   formula     String
   description String?
   subject     String?
-  tags        String[] @default([])
+  tags        String[]   @default([])
   topicId     String?
   subtopicId  String?
-  targetRole  UserRole @default(STUDENT)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  targetRole  UserRole   @default(STUDENT)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  Question    Question[]
 
   @@map("formulas")
 }
@@ -800,6 +803,49 @@ model WebhookLog {
   @@map("webhook_logs")
 }
 
+model PDFProcessorCache {
+  id               String            @id @default(cuid())
+  fileName         String            @unique
+  filePath         String
+  fileSize         Int
+  recordType       RecordType        @default(pyq)
+  chatGptFileId    String?
+  processingStatus ProcessingStatus  @default(PENDING)
+  systemPrompt     String?
+  userPrompt       String?
+  responseData     Json?
+  processedData    Json?
+  jsonContent      String?
+  outputFilePath   String?
+  latexContent     String?
+  latexFilePath    String?
+  zipFilePath      String?
+  errorMessage     String?
+  processingTimeMs Int?
+  retryCount       Int               @default(0)
+  lastProcessedAt  DateTime?
+  importedAt       DateTime?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  questions        Question[]
+  logs             PDFProcessorLog[]
+
+  @@map("pdf_processor_cache")
+}
+
+model PDFProcessorLog {
+  id               String            @id @default(cuid())
+  cacheId          String
+  logType          LogType
+  message          String
+  data             Json?
+  processingTimeMs Int?
+  createdAt        DateTime          @default(now())
+  cache            PDFProcessorCache @relation(fields: [cacheId], references: [id], onDelete: Cascade)
+
+  @@map("pdf_processor_logs")
+}
+
 enum UserRole {
   ADMIN
   STUDENT
@@ -977,50 +1023,6 @@ enum BadgeType {
   TOP_PERFORMER
   CONTENT_EXPLORER
   QUIZ_MASTER
-}
-
-// PDF Processor Models
-model PDFProcessorCache {
-  id                String   @id @default(cuid())
-  fileName          String   @unique
-  filePath          String
-  fileSize          Int
-  recordType        RecordType @default(pyq)
-  chatGptFileId     String?  // ChatGPT file ID after upload
-  processingStatus  ProcessingStatus @default(PENDING)
-  systemPrompt      String?  @db.Text
-  userPrompt        String?  @db.Text
-  responseData      Json?    // ChatGPT response data
-  processedData     Json?    // Processed and validated JSON
-  jsonContent       String?  @db.Text // Manual JSON content entry
-  outputFilePath    String?  // Path to saved JSON file
-  latexContent      String?  @db.Text // LaTeX content from Mathpix processing
-  latexFilePath     String?  // Path to saved LaTeX file
-  zipFilePath       String?  // Path to saved ZIP file from Mathpix
-  errorMessage      String?  @db.Text
-  processingTimeMs  Int?
-  retryCount        Int      @default(0)
-  lastProcessedAt   DateTime?
-  importedAt        DateTime?  // Track when questions were imported to database
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  logs              PDFProcessorLog[]
-  questions         Question[]
-
-  @@map("pdf_processor_cache")
-}
-
-model PDFProcessorLog {
-  id                String   @id @default(cuid())
-  cacheId           String
-  logType           LogType
-  message           String   @db.Text
-  data              Json?
-  processingTimeMs  Int?
-  createdAt         DateTime @default(now())
-  cache             PDFProcessorCache @relation(fields: [cacheId], references: [id], onDelete: Cascade)
-
-  @@map("pdf_processor_logs")
 }
 
 enum ProcessingStatus {

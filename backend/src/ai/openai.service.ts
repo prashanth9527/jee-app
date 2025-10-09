@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AIProvider, AIProviderConfig } from './ai-provider.interface';
 import { OpenAI } from 'openai';
 import * as fs from 'fs';
@@ -9,10 +10,10 @@ export class OpenAIService implements AIProvider {
   private readonly config: AIProviderConfig;
   private readonly openai?: OpenAI;
 
-  constructor() {
+  constructor(private configService: ConfigService) {
     this.config = {
-      apiKey: process.env.OPENAI_API_KEY,
-      model: 'gpt-4o'
+      apiKey: this.configService.get<string>('OPENAI_API_KEY'),
+      model: this.configService.get<string>('OPENAI_MODEL') || 'gpt-4o'
     };
 
     if (this.config.apiKey) {
@@ -23,6 +24,8 @@ export class OpenAIService implements AIProvider {
 
     if (!this.config.apiKey) {
       this.logger.warn('OpenAI API key not found in environment variables');
+    } else {
+      this.logger.log(`OpenAI API key loaded: ${this.config.apiKey.substring(0, 10)}...`);
     }
   }
 
@@ -144,4 +147,94 @@ export class OpenAIService implements AIProvider {
       throw new Error(`OpenAI processing failed: ${error.message}`);
     }
   }
+
+  async processLatexContent(latexContent: string, systemPrompt: string): Promise<any> {
+    try {
+      if (!this.openai) {
+        throw new Error('OpenAI client not initialized - API key missing');
+      }
+
+      this.logger.log('Starting real-time streaming LaTeX processing...');
+
+      // Use Chat Completions API with streaming
+      const stream = await this.openai.chat.completions.create({
+        model: this.config.model || 'gpt-4o',
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: latexContent }
+        ],
+        temperature: 0.1,
+        stream: true
+      });
+
+      let output = "";
+      let questionCount = 0;
+      
+      this.logger.log('Streaming response from OpenAI...');
+
+      for await (const chunk of stream) {
+        if (chunk.choices[0]?.delta?.content) {
+          const delta = chunk.choices[0].delta.content;
+          output += delta;
+          
+          // Count questions as they stream (rough estimate)
+          if (delta.includes('"id":') && delta.includes('"Q')) {
+            questionCount++;
+          }
+          
+          // Log progress every 1000 characters
+          if (output.length % 1000 === 0) {
+            this.logger.log(`Streamed ${output.length} characters, ~${questionCount} questions detected`);
+          }
+        }
+      }
+
+      this.logger.log(`Streaming completed. Total output: ${output.length} characters`);
+
+      // Parse the final JSON response
+      let jsonResponse;
+      try {
+        // Clean up the output to ensure it's valid JSON
+        const cleanedOutput = output.trim();
+        
+        // Try to find the JSON part if there's extra text
+        const jsonStart = cleanedOutput.indexOf('{');
+        const jsonEnd = cleanedOutput.lastIndexOf('}');
+        
+        if (jsonStart !== -1 && jsonEnd !== -1 && jsonEnd > jsonStart) {
+          const jsonString = cleanedOutput.substring(jsonStart, jsonEnd + 1);
+          jsonResponse = JSON.parse(jsonString);
+        } else {
+          jsonResponse = JSON.parse(cleanedOutput);
+        }
+        
+        this.logger.log(`Successfully parsed JSON response with ${jsonResponse.questions?.length || 0} questions`);
+        
+        return {
+          questions: jsonResponse.questions || [],
+          metadata: {
+            totalQuestions: jsonResponse.questions?.length || 0,
+            processedChunks: 1,
+            totalChunks: 1,
+            subjects: [...new Set((jsonResponse.questions || []).map((q: any) => q.subject))],
+            difficultyDistribution: {
+              easy: (jsonResponse.questions || []).filter((q: any) => q.difficulty === 'EASY').length,
+              medium: (jsonResponse.questions || []).filter((q: any) => q.difficulty === 'MEDIUM').length,
+              hard: (jsonResponse.questions || []).filter((q: any) => q.difficulty === 'HARD').length
+            }
+          }
+        };
+        
+      } catch (parseError) {
+        this.logger.error('Failed to parse JSON response:', parseError);
+        this.logger.error('Raw output (first 500 chars):', output.substring(0, 500));
+        throw new Error('Invalid JSON response from OpenAI streaming');
+      }
+
+    } catch (error) {
+      this.logger.error('Error processing LaTeX content with streaming:', error);
+      throw new Error(`OpenAI LaTeX streaming processing failed: ${error.message}`);
+    }
+  }
+
 }

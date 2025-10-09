@@ -3,6 +3,7 @@ export interface AIProvider {
   processPDF(filePath: string, systemPrompt: string, userPrompt?: string): Promise<any>;
   uploadFile(filePath: string): Promise<{ id: string }>;
   processWithChunkedApproach?(filePath: string, systemPrompt: string, userPrompt?: string): Promise<any>;
+  processLatexContent?(latexContent: string, systemPrompt: string): Promise<any>;
 }
 
 export interface AIProviderConfig {

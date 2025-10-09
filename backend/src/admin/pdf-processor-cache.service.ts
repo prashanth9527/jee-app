@@ -481,6 +481,38 @@ export class PDFProcessorCacheService {
             }
           }
           
+          // Handle Formula - create/find in Formula table if tip_formula exists
+          let formulaId: string | null = null;
+          if (questionData.tip_formula && questionData.tip_formula.trim() !== '') {
+            this.logger.log(`Processing formula: ${questionData.tip_formula.substring(0, 50)}...`);
+            
+             // Check if formula already exists (by content and subject)
+             const existingFormula = await this.prisma.formula.findFirst({
+               where: {
+                 formula: questionData.tip_formula,
+                 subject: subjectId
+               }
+             });
+
+            if (existingFormula) {
+              formulaId = existingFormula.id;
+              this.logger.log(`Using existing formula ID: ${formulaId}`);
+            } else {
+               // Create new formula
+               const newFormula = await this.prisma.formula.create({
+                 data: {
+                   title: questionData.tip_formula.substring(0, 100), // Use first 100 chars as title
+                   formula: questionData.tip_formula,
+                   subject: subjectId,
+                   topicId: topicId,
+                   subtopicId: subtopicId
+                 }
+               });
+              formulaId = newFormula.id;
+              this.logger.log(`Created new formula with ID: ${formulaId}`);
+            }
+          }
+
           // Create question in database
           const question = await this.prisma.question.create({
             data: {
@@ -494,6 +526,7 @@ export class PDFProcessorCacheService {
               lessonId: lessonId,
               topicId: topicId,
               subtopicId: subtopicId,
+               formulaid: formulaId, // Link to Formula table
               pdfProcessorCacheId: record.id
             }
           });
@@ -640,6 +673,44 @@ export class PDFProcessorCacheService {
       return result;
     } catch (error) {
       this.logger.error('Error processing with Mathpix:', error);
+      throw error;
+    }
+  }
+
+  async processWithChatGPT(id: string, latexFilePath: string) {
+    try {
+      this.logger.log(`Starting ChatGPT processing for cache ID: ${id}`);
+      
+      // Find the record by ID
+      const record = await this.prisma.pDFProcessorCache.findUnique({
+        where: { id }
+      });
+
+      if (!record) {
+        throw new Error(`Record not found for ID: ${id}`);
+      }
+
+      // Check if LaTeX file path is provided
+      if (!latexFilePath) {
+        throw new Error('LaTeX file path is required');
+      }
+
+      // Download the LaTeX file content
+      this.logger.log(`Downloading LaTeX file from: ${latexFilePath}`);
+      const response = await fetch(latexFilePath);
+      if (!response.ok) {
+        throw new Error(`Failed to download LaTeX file: ${response.statusText}`);
+      }
+      const latexContent = await response.text();
+
+      // Use the existing PDF processor service to process with ChatGPT
+      const result = await this.pdfProcessorService.processLatexWithChatGPT(latexContent, record.fileName);
+      
+      this.logger.log(`ChatGPT processing completed for cache ID: ${id}, success: ${result.success}`);
+      
+      return result;
+    } catch (error) {
+      this.logger.error('Error processing with ChatGPT:', error);
       throw error;
     }
   }

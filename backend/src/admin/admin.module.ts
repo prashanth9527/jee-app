@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AdminAnalyticsService } from './analytics.service';
 import { AdminAnalyticsController } from './analytics.controller';
 import { SystemSettingsService } from './system-settings.service';
@@ -30,7 +31,7 @@ import { MathpixService } from './mathpix.service';
 import { ZipProcessorService } from './zip-processor.service';
 
 @Module({
-  imports: [PrismaModule, AwsModule],
+  imports: [PrismaModule, AwsModule, ConfigModule],
   controllers: [
     AdminAnalyticsController,
     AdminSubjectsController,
