@@ -217,7 +217,7 @@ export default function LoginPage() {
 								className="justify-center"
 							/>
 						</div>
-						<h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+						<h2 className="text-3xl font-bold text-gray-900 dark:ttext-gray-100">
 							Welcome back
 						</h2>
 						<p className="mt-2 text-sm text-gray-700 dark:text-gray-100">
@@ -237,7 +237,7 @@ export default function LoginPage() {
 							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
 								loginMethod === 'email'
 											? 'bg-white dark:bg-gray-600 text-orange-600 dark:text-orange-400 shadow-sm'
-											: 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
+											: 'font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 transition-colors'
 							}`}
 						>
 							Email & Password
@@ -248,7 +248,7 @@ export default function LoginPage() {
 							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
 								loginMethod === 'phone'
 											? 'bg-white dark:bg-gray-600 text-orange-600 dark:text-orange-400 shadow-sm'
-											: 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
+											: 'font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 transition-colors'
 							}`}
 						>
 							Phone OTP
@@ -259,7 +259,7 @@ export default function LoginPage() {
 							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
 								loginMethod === 'emailCode'
 											? 'bg-white dark:bg-gray-600 text-orange-600 dark:text-orange-400 shadow-sm'
-											: 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
+											: 'font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 transition-colors'
 							}`}
 						>
 							Email Code
@@ -550,19 +550,19 @@ export default function LoginPage() {
 
 							{/* Features Preview */}
 							<div className="text-center">
-								<p className="text-sm text-gray-900 dark:text-white mb-4 font-medium">Join thousands of successful JEE aspirants</p>
+								<p className="text-sm text-gray-900 dark:text-gray-100 mb-4 font-medium">Join thousands of successful JEE aspirants</p>
 								<div className="flex justify-center space-x-6 text-sm">
 									<div className="flex items-center">
 										<div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
-										<span className="text-gray-900 dark:text-white font-semibold">50K+ Questions</span>
+										<span className="text-gray-900 dark:text-gray-100 font-semibold">50K+ Questions</span>
 									</div>
 									<div className="flex items-center">
 										<div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
-										<span className="text-gray-900 dark:text-white font-semibold">AI-Powered</span>
+										<span className="text-gray-900 dark:text-gray-100 font-semibold">AI-Powered</span>
 									</div>
 									<div className="flex items-center">
 										<div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
-										<span className="text-gray-900 dark:text-white font-semibold">25K+ Students</span>
+										<span className="text-gray-900 dark:text-gray-100 font-semibold">25K+ Students</span>
 									</div>
 								</div>
 							</div>
@@ -571,7 +571,7 @@ export default function LoginPage() {
 
 					{/* Back to Home */}
 					<div className="text-center mt-8">
-						<Link href="/" className="text-sm text-gray-900 dark:text-white font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+						<Link href="/" className="text-sm text-gray-900 dark:text-gray-100 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
 							← Back to homepage
 						</Link>
 					</div>
