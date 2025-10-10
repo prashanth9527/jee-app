@@ -23,6 +23,10 @@ export class AdminQuestionsController {
 		@Query('lessonId') lessonId?: string,
 		@Query('topicId') topicId?: string,
 		@Query('subtopicId') subtopicId?: string,
+		@Query('subjectIds') subjectIds?: string,
+		@Query('lessonIds') lessonIds?: string,
+		@Query('topicIds') topicIds?: string,
+		@Query('subtopicIds') subtopicIds?: string,
 		@Query('difficulty') difficulty?: string
 	) {
 		const currentPage = parseInt(page || '1');
@@ -32,10 +36,30 @@ export class AdminQuestionsController {
 		// Build where clause
 		const where: any = {};
 		
+		// Support both single ID and multiple IDs
 		if (subjectId) where.subjectId = subjectId;
 		if (lessonId) where.lessonId = lessonId;
 		if (topicId) where.topicId = topicId;
 		if (subtopicId) where.subtopicId = subtopicId;
+		
+		// Support multiple IDs (comma-separated)
+		if (subjectIds) {
+			const ids = subjectIds.split(',').filter(id => id.trim());
+			if (ids.length > 0) where.subjectId = { in: ids };
+		}
+		if (lessonIds) {
+			const ids = lessonIds.split(',').filter(id => id.trim());
+			if (ids.length > 0) where.lessonId = { in: ids };
+		}
+		if (topicIds) {
+			const ids = topicIds.split(',').filter(id => id.trim());
+			if (ids.length > 0) where.topicId = { in: ids };
+		}
+		if (subtopicIds) {
+			const ids = subtopicIds.split(',').filter(id => id.trim());
+			if (ids.length > 0) where.subtopicId = { in: ids };
+		}
+		
 		if (difficulty) where.difficulty = difficulty;
 		
 		// Add search functionality
@@ -225,6 +249,25 @@ export class AdminQuestionsController {
 						}
 					}
 				},
+				lesson: {
+					select: {
+						id: true,
+						name: true,
+						subject: {
+							select: {
+								id: true,
+								name: true,
+								stream: {
+									select: {
+										id: true,
+										name: true,
+										code: true
+									}
+								}
+							}
+						}
+					}
+				},
 				topic: {
 					select: {
 						id: true,
@@ -274,55 +317,122 @@ export class AdminQuestionsController {
 	}
 
 	@Post()
-	async create(@Body() body: { stem: string; explanation?: string; tip_formula?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; lessonId?: string; topicId?: string; subtopicId?: string; options: { text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
-		const question = await this.prisma.question.create({ data: {
-			stem: body.stem,
-			explanation: body.explanation || null,
-			tip_formula: body.tip_formula || null,
-			difficulty: body.difficulty || 'MEDIUM',
-			yearAppeared: body.yearAppeared || null,
-			isPreviousYear: !!body.isPreviousYear,
-			subjectId: body.subjectId || null,
-			lessonId: body.lessonId || null,
-			topicId: body.topicId || null,
-			subtopicId: body.subtopicId || null,
-			options: { create: (body.options || []).map((o: any) => ({ text: o.text, isCorrect: !!o.isCorrect, order: o.order ?? 0 })) },
-		}});
+	async create(@Body() body: { 
+		stem: string; 
+		explanation?: string; 
+		tip_formula?: string; 
+		difficulty?: 'EASY'|'MEDIUM'|'HARD'; 
+		yearAppeared?: number; 
+		isPreviousYear?: boolean; 
+		subjectId?: string; 
+		lessonId?: string; 
+		topicId?: string; 
+		subtopicId?: string; 
+		options: { text: string; isCorrect?: boolean; order?: number }[]; 
+		tagNames?: string[] 
+	}) {
+		const question = await this.prisma.question.create({ 
+			data: {
+				stem: body.stem,
+				explanation: body.explanation || null,
+				tip_formula: body.tip_formula || null,
+				difficulty: body.difficulty || 'MEDIUM',
+				yearAppeared: body.yearAppeared || null,
+				isPreviousYear: !!body.isPreviousYear,
+				subjectId: body.subjectId || null,
+				lessonId: body.lessonId || null,
+				topicId: body.topicId || null,
+				subtopicId: body.subtopicId || null,
+				options: { 
+					create: (body.options || []).map((o: any) => ({ 
+						text: o.text, 
+						isCorrect: !!o.isCorrect, 
+						order: o.order ?? 0 
+					})) 
+				},
+			}
+		});
+		
 		if (body.tagNames?.length) {
 			for (const name of body.tagNames) {
-				const tag = await this.prisma.tag.upsert({ where: { name }, update: {}, create: { name } });
-				await this.prisma.questionTag.create({ data: { questionId: question.id, tagId: tag.id } });
+				const tag = await this.prisma.tag.upsert({ 
+					where: { name }, 
+					update: {}, 
+					create: { name } 
+				});
+				await this.prisma.questionTag.create({ 
+					data: { questionId: question.id, tagId: tag.id } 
+				});
 			}
 		}
-		return this.prisma.question.findUnique({ where: { id: question.id }, include: { options: true, tags: { include: { tag: true } } } });
+		
+		return this.prisma.question.findUnique({ 
+			where: { id: question.id }, 
+			include: { options: true, tags: { include: { tag: true } } } 
+		});
 	}
 
 	@Put(':id')
-	async update(@Param('id') id: string, @Body() body: { stem?: string; explanation?: string; tip_formula?: string; difficulty?: 'EASY'|'MEDIUM'|'HARD'; yearAppeared?: number; isPreviousYear?: boolean; subjectId?: string; lessonId?: string; topicId?: string; subtopicId?: string; options?: { id?: string; text: string; isCorrect?: boolean; order?: number }[]; tagNames?: string[] }) {
-		await this.prisma.question.update({ where: { id }, data: {
-			stem: body.stem,
-			explanation: body.explanation,
-			tip_formula: body.tip_formula,
-			difficulty: body.difficulty,
-			yearAppeared: body.yearAppeared,
-			isPreviousYear: body.isPreviousYear,
-			subjectId: body.subjectId,
-			lessonId: body.lessonId,
-			topicId: body.topicId,
-			subtopicId: body.subtopicId,
-		}});
+	async update(@Param('id') id: string, @Body() body: { 
+		stem?: string; 
+		explanation?: string; 
+		tip_formula?: string; 
+		difficulty?: 'EASY'|'MEDIUM'|'HARD'; 
+		yearAppeared?: number; 
+		isPreviousYear?: boolean; 
+		subjectId?: string; 
+		lessonId?: string; 
+		topicId?: string; 
+		subtopicId?: string; 
+		options?: { id?: string; text: string; isCorrect?: boolean; order?: number }[]; 
+		tagNames?: string[] 
+	}) {
+		await this.prisma.question.update({ 
+			where: { id }, 
+			data: {
+				stem: body.stem,
+				explanation: body.explanation,
+				tip_formula: body.tip_formula,
+				difficulty: body.difficulty,
+				yearAppeared: body.yearAppeared,
+				isPreviousYear: body.isPreviousYear,
+				subjectId: body.subjectId,
+				lessonId: body.lessonId,
+				topicId: body.topicId,
+				subtopicId: body.subtopicId,
+			}
+		});
+		
 		if (body.options) {
 			await this.prisma.questionOption.deleteMany({ where: { questionId: id } });
-			await this.prisma.questionOption.createMany({ data: body.options.map((o: any) => ({ questionId: id, text: o.text, isCorrect: !!o.isCorrect, order: o.order ?? 0 })) });
+			await this.prisma.questionOption.createMany({ 
+				data: body.options.map((o: any) => ({ 
+					questionId: id, 
+					text: o.text, 
+					isCorrect: !!o.isCorrect, 
+					order: o.order ?? 0 
+				})) 
+			});
 		}
+		
 		if (body.tagNames) {
 			await this.prisma.questionTag.deleteMany({ where: { questionId: id } });
 			for (const name of body.tagNames) {
-				const tag = await this.prisma.tag.upsert({ where: { name }, update: {}, create: { name } });
-				await this.prisma.questionTag.create({ data: { questionId: id, tagId: tag.id } });
+				const tag = await this.prisma.tag.upsert({ 
+					where: { name }, 
+					update: {}, 
+					create: { name } 
+				});
+				await this.prisma.questionTag.create({ 
+					data: { questionId: id, tagId: tag.id } 
+				});
 			}
 		}
-		return this.prisma.question.findUnique({ where: { id }, include: { options: true, tags: { include: { tag: true } } } });
+		
+		return this.prisma.question.findUnique({ 
+			where: { id }, 
+			include: { options: true, tags: { include: { tag: true } } } 
+		});
 	}
 
 	@Delete(':id')
@@ -372,6 +482,7 @@ export class AdminQuestionsController {
 				yearAppeared: r.yearAppeared ? Number(r.yearAppeared) : undefined,
 				isPreviousYear: r.isPreviousYear === 'true' || r.isPreviousYear === true,
 				subjectId: r.subjectId || undefined,
+				lessonId: r.lessonId || undefined,
 				topicId: r.topicId || undefined,
 				subtopicId: r.subtopicId || undefined,
 				options,
@@ -383,8 +494,10 @@ export class AdminQuestionsController {
 
 	@Get('export')
 	async exportCsv(@Res() res: Response) {
-		const questions = await this.prisma.question.findMany({ include: { options: true, tags: { include: { tag: true } } } });
-		const header = ['stem','explanation','difficulty','yearAppeared','isPreviousYear','subjectId','topicId','subtopicId','options','tagNames'];
+		const questions = await this.prisma.question.findMany({ 
+			include: { options: true, tags: { include: { tag: true } } } 
+		});
+		const header = ['stem','explanation','difficulty','yearAppeared','isPreviousYear','subjectId','lessonId','topicId','subtopicId','options','tagNames'];
 		const escape = (v: any) => '"' + String(v ?? '').replace(/"/g, '""') + '"';
 		const lines = [header.join(',')];
 		for (const q of questions as any[]) {
@@ -395,6 +508,7 @@ export class AdminQuestionsController {
 				escape(q.yearAppeared || ''),
 				escape(q.isPreviousYear),
 				escape(q.subjectId || ''),
+				escape(q.lessonId || ''),
 				escape(q.topicId || ''),
 				escape(q.subtopicId || ''),
 				escape(JSON.stringify((q.options || []).map((o: any) => ({ text: o.text, isCorrect: o.isCorrect, order: o.order })))),
@@ -415,4 +529,4 @@ function parseString(content: string, rows: any[], cb: (err?: Error) => void) {
 		.on('error', (error) => cb(error as any))
 		.on('data', (row) => rows.push(row))
 		.on('end', () => cb());
-} 
+}

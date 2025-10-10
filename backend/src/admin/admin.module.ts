@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AdminAnalyticsService } from './analytics.service';
 import { AdminAnalyticsController } from './analytics.controller';
 import { SystemSettingsService } from './system-settings.service';
+import { AdminStreamsController } from './streams.controller';
 import { AdminSubjectsController } from './subjects.controller';
 import { AdminLessonsController } from './lessons.controller';
 import { AdminTopicsController } from './topics.controller';
@@ -27,6 +28,7 @@ import { AwsModule } from '../aws/aws.module';
 import { AIProviderFactory } from '../ai/ai-provider.factory';
 import { OpenAIService } from '../ai/openai.service';
 import { DeepSeekService } from '../ai/deepseek.service';
+import { ClaudeService } from '../ai/claude.service';
 import { MathpixService } from './mathpix.service';
 import { ZipProcessorService } from './zip-processor.service';
 import { ImageWatermarkRemoverService } from './image-watermark-remover.service';
@@ -35,6 +37,7 @@ import { ImageWatermarkRemoverService } from './image-watermark-remover.service'
   imports: [PrismaModule, AwsModule, ConfigModule],
   controllers: [
     AdminAnalyticsController,
+    AdminStreamsController,
     AdminSubjectsController,
     AdminLessonsController,
     AdminTopicsController,
@@ -63,7 +66,8 @@ import { ImageWatermarkRemoverService } from './image-watermark-remover.service'
     ImageWatermarkRemoverService,
     AIProviderFactory,
     OpenAIService,
-    DeepSeekService
+    DeepSeekService,
+    ClaudeService
   ],
   exports: [AdminAnalyticsService, SystemSettingsService],
 })

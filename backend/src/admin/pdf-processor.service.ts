@@ -1816,4 +1816,184 @@ Do not generate or hallucinate new data under any circumstances.`;
       };
     }
   }
+
+  async processLatexWithClaude(latexContent: string, fileName: string) {
+    try {
+      this.logger.log(`Processing LaTeX content with Claude for file: ${fileName}`);
+      
+      // Use the same system prompt as ChatGPT
+      const systemPrompt = `You are an expert JEE (Joint Entrance Examination) question analyzer.  
+I will provide you the full content of a \`.tex\` file containing JEE Physics, Chemistry, and Mathematics questions with solutions.  
+
+Your task is to **extract and structure ALL questions into JSON format**.
+
+---
+
+### CRITICAL RULES
+1. Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start with \`{\` and end with \`}\`.  
+2. Preserve **exactly the questions, options, and correct answers** from the \`.tex\` file.  
+   - ❌ Do not fabricate or invent any question text or options.  
+   - ✅ Only include content explicitly present in the provided \`.tex\` file.
+3. **If the \`.tex\` file has fewer than 90 questions, output only those that appear.**
+   - Do NOT generate filler or fake questions for missing ones.
+4. All mathematical and chemical formulas must use LaTeX: $ ... $ (single dollar signs for inline math).
+  **Preserve exactly the question text, math, and options** as they appear in the \`.tex\` file.
+   - Keep all LaTeX math enclosed in single dollar signs \`$ ... $\`.
+   - Preserve symbols, fractions, and expressions exactly.
+5. **Do not skip ANY image references.** Every \`\\includegraphics\` in the \`.tex\` must be included in the JSON.   
+   - Replace them with an HTML \`<img>\` tag.  
+   - Format:  
+     \`\`\`html
+     <img src='https://rankora.s3.eu-north-1.amazonaws.com/content/images/FILENAME/IMAGE_FILE.EXT' />
+     \`\`\`  
+   - \`FILENAME\` = the \`.tex\` file's base name (without extension, and strip any trailing \`[1]\`, \`[2]\` etc).  
+   - \`IMAGE_FILE\` = the original image filename from LaTeX (without extension).  
+   - \`EXT\` =  
+     - \`.png\` if the file name starts with \`smile-\`  
+     - \`.jpg\` otherwise  
+6. Accept question numbering as \`Q1, Q2, …\` or \`1., 2., …\`.  
+7. **Skip all promotional/branding content** (e.g., "Allen", "Best of Luck", headers/footers, watermarks, motivational lines). Keep only actual question data.
+
+---
+
+### CHUNKED PROCESSING
+- Physics: **Q1–Q30**  
+- Chemistry: **Q31–Q60**  
+- Mathematics: **Q61–Q90**  
+- Each subject must have **exactly 30 questions**.  
+- If fewer appear in the \`.tex\`, do not generate realistic filler questions to complete the block.
+
+---
+
+### QUESTION CONTENT RULES
+For each question:
+- \`stem\`: must match the original question text from the \`.tex\`.  
+- \`options\`: must match exactly the four options from the \`.tex\`.  
+- \`isCorrect\`:  
+  - If the correct answer is explicitly given in the \`.tex\`, preserve it.  
+  - If missing, you may **generate the correct answer** as a subject expert.  
+- \`explanation\`:  
+  - If given in the file, preserve it.  
+  - If missing, **generate a step-by-step reasoning** as a subject expert.  
+- \`tip_formula\`:  
+  - If given in the file, preserve it.  
+  - If missing, **generate a key formula or shortcut**.  
+- \`difficulty\`: assign as \`EASY\`, \`MEDIUM\`, or \`HARD\`.  
+- Preserve all LaTeX math exactly.  
+
+---
+
+### CLASSIFICATION RULES
+Use the official **JEE Main 2025 syllabus**:
+- Physics (Units 1–20)  
+- Chemistry (Units 1–20)  
+- Mathematics (Units 1–14)  
+
+Assign: **lesson → topic → subtopic**.  
+
+---
+
+Read the \`.tex\` file carefully and return **only the JSON output**.  
+Ensure questions are numbered sequentially, with lesson/topic/subtopic classification.  
+Ignore and skip any **branding, coaching names, promotional headers/footers, or unrelated text**.  
+Preserve **exactly the questions, options, and correct answers** from the \`.tex\` file.  
+   - ❌ Do not fabricate or invent any question text or options.  
+   - ✅ Use the same wording, LaTeX math, and image references as in the file.  
+**Do not skip ANY image references.** Every \`\\includegraphics\` in the \`.tex\` must be included in the JSON.  
+Use single dollar signs $ ... $ for all LaTeX math expressions.
+Read the .tex file carefully.
+Return only valid JSON, faithfully representing every question that truly exists in the source file.
+Do not generate or hallucinate new data under any circumstances.`;
+
+      // Use the Claude AI provider to process the LaTeX content
+      const provider = this.aiProviderFactory.getProvider('claude');
+      if (!provider) {
+        throw new Error('Claude provider not available');
+      }
+
+      // Check if the provider supports LaTeX processing
+      if (!provider.processLatexContent) {
+        throw new Error('LaTeX processing not supported by Claude provider');
+      }
+
+      // Process the LaTeX content with Claude
+      const response = await provider.processLatexContent(latexContent, systemPrompt);
+      
+      if (!response) {
+        throw new Error('Invalid response from Claude - no data returned');
+      }
+
+      // Handle different response structures
+      let questions = [];
+      
+      if (response.questions) {
+        // Direct questions array
+        questions = response.questions;
+      } else if (response.subjects && Array.isArray(response.subjects)) {
+        // Nested structure with subjects
+        this.logger.log('Detected nested subjects structure, flattening...');
+        for (const subject of response.subjects) {
+          if (subject.questions && Array.isArray(subject.questions)) {
+            questions.push(...subject.questions);
+          }
+        }
+      } else {
+        this.logger.error('Unexpected response structure:', JSON.stringify(response, null, 2).substring(0, 500));
+        throw new Error('Invalid response from Claude - no questions found in response');
+      }
+
+      if (questions.length === 0) {
+        throw new Error('No questions extracted from Claude response');
+      }
+
+      this.logger.log(`Extracted ${questions.length} questions from Claude response`);
+
+      // Normalize the response structure
+      const normalizedResponse = {
+        questions: questions,
+        metadata: response.metadata || {
+          totalQuestions: questions.length,
+          subjects: response.subjects?.map((s: any) => s.subjectName) || [],
+          examName: response.examName,
+          examDate: response.examDate
+        }
+      };
+
+      // Update the cache record with the JSON content
+      const jsonContent = JSON.stringify(normalizedResponse, null, 2);
+      
+      // Find the record by fileName to get the correct ID
+      const record = await this.prisma.pDFProcessorCache.findFirst({
+        where: { fileName: fileName }
+      });
+      
+      if (record) {
+        await this.prisma.pDFProcessorCache.update({
+          where: { id: record.id },
+          data: {
+            jsonContent: jsonContent,
+            processingStatus: 'COMPLETED',
+            lastProcessedAt: new Date()
+          }
+        });
+      }
+
+      this.logger.log(`Successfully processed LaTeX content with Claude for file: ${fileName}`);
+      
+      return {
+        success: true,
+        jsonContent: jsonContent,
+        questionsCount: questions.length,
+        chunksProcessed: normalizedResponse.metadata?.chunksProcessed || 0,
+        metadata: normalizedResponse.metadata
+      };
+      
+    } catch (error) {
+      this.logger.error('Error processing LaTeX with Claude:', error);
+      return {
+        success: false,
+        error: error.message
+      };
+    }
+  }
 }

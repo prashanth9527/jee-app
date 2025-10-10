@@ -16,6 +16,22 @@ interface Question {
   explanation?: string;
   tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  subject?: {
+    id: string;
+    name: string;
+  };
+  lesson?: {
+    id: string;
+    name: string;
+  };
+  topic?: {
+    id: string;
+    name: string;
+  };
+  subtopic?: {
+    id: string;
+    name: string;
+  };
   alternativeExplanations?: Array<{
     id: string;
     explanation: string;
@@ -56,6 +72,7 @@ export default function ExamPage() {
   
   const [submission, setSubmission] = useState<ExamSubmission | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<QuestionAnswer[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -65,6 +82,15 @@ export default function ExamPage() {
   const [examStarted, setExamStarted] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
   const [selectedQuestionForReport, setSelectedQuestionForReport] = useState<Question | null>(null);
+  
+  // Filter states
+  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [selectedLesson, setSelectedLesson] = useState<string | null>(null);
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [selectedSubtopic, setSelectedSubtopic] = useState<string | null>(null);
+  
+  // Tree structure data
+  const [treeData, setTreeData] = useState<any>(null);
   
   const questionStartTime = useRef<number>(Date.now());
   const timerRef = useRef<NodeJS.Timeout | undefined>(undefined);
@@ -81,6 +107,8 @@ export default function ExamPage() {
       const questionsData = questionsResponse.data;
       
       setQuestions(questionsData);
+      setFilteredQuestions(questionsData);
+      generateTreeData(questionsData);
       
       // Initialize answers array
       const initialAnswers: QuestionAnswer[] = questionsData.map((q: Question) => ({
@@ -109,6 +137,94 @@ export default function ExamPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const generateTreeData = (questionsData: Question[]) => {
+    const tree: any = {};
+    
+    questionsData.forEach((question, index) => {
+      const subjectName = question.subject?.name || 'Uncategorized';
+      const lessonName = question.lesson?.name || 'No Lesson';
+      const topicName = question.topic?.name || 'No Topic';
+      const subtopicName = question.subtopic?.name || 'No Subtopic';
+      
+      if (!tree[subjectName]) {
+        tree[subjectName] = {
+          name: subjectName,
+          id: question.subject?.id,
+          count: 0,
+          lessons: {}
+        };
+      }
+      
+      if (!tree[subjectName].lessons[lessonName]) {
+        tree[subjectName].lessons[lessonName] = {
+          name: lessonName,
+          id: question.lesson?.id,
+          count: 0,
+          topics: {}
+        };
+      }
+      
+      if (!tree[subjectName].lessons[lessonName].topics[topicName]) {
+        tree[subjectName].lessons[lessonName].topics[topicName] = {
+          name: topicName,
+          id: question.topic?.id,
+          count: 0,
+          subtopics: {}
+        };
+      }
+      
+      if (!tree[subjectName].lessons[lessonName].topics[topicName].subtopics[subtopicName]) {
+        tree[subjectName].lessons[lessonName].topics[topicName].subtopics[subtopicName] = {
+          name: subtopicName,
+          id: question.subtopic?.id,
+          count: 0,
+          questions: []
+        };
+      }
+      
+      // Add question to the appropriate subtopic
+      tree[subjectName].lessons[lessonName].topics[topicName].subtopics[subtopicName].questions.push({
+        ...question,
+        originalIndex: index
+      });
+      
+      // Update counts
+      tree[subjectName].count++;
+      tree[subjectName].lessons[lessonName].count++;
+      tree[subjectName].lessons[lessonName].topics[topicName].count++;
+      tree[subjectName].lessons[lessonName].topics[topicName].subtopics[subtopicName].count++;
+    });
+    
+    setTreeData(tree);
+  };
+
+  const filterQuestions = () => {
+    let filtered = questions;
+    
+    if (selectedSubject) {
+      filtered = filtered.filter(q => q.subject?.id === selectedSubject);
+    }
+    if (selectedLesson) {
+      filtered = filtered.filter(q => q.lesson?.id === selectedLesson);
+    }
+    if (selectedTopic) {
+      filtered = filtered.filter(q => q.topic?.id === selectedTopic);
+    }
+    if (selectedSubtopic) {
+      filtered = filtered.filter(q => q.subtopic?.id === selectedSubtopic);
+    }
+    
+    setFilteredQuestions(filtered);
+    setCurrentQuestionIndex(0);
+  };
+
+  const clearFilters = () => {
+    setSelectedSubject(null);
+    setSelectedLesson(null);
+    setSelectedTopic(null);
+    setSelectedSubtopic(null);
   };
 
   const handleAutoSubmit = async () => {
@@ -188,7 +304,7 @@ export default function ExamPage() {
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex < questions.length - 1) {
+    if (currentQuestionIndex < filteredQuestions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
@@ -265,6 +381,10 @@ export default function ExamPage() {
       fetchExamResults();
     }
   }, [showResults]);
+
+  useEffect(() => {
+    filterQuestions();
+  }, [selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, questions]);
 
 
 
@@ -499,7 +619,7 @@ export default function ExamPage() {
     );
   }
 
-  const currentQuestion = questions[currentQuestionIndex];
+  const currentQuestion = filteredQuestions[currentQuestionIndex];
   const currentAnswer = answers[currentQuestionIndex];
 
   if (!submissionId) {
@@ -537,7 +657,12 @@ export default function ExamPage() {
                   <div>
                     <h1 className="text-xl font-semibold text-gray-900">{submission.examPaper.title}</h1>
                     <p className="text-sm text-gray-600">
-                      Question {currentQuestionIndex + 1} of {questions.length}
+                      Question {currentQuestionIndex + 1} of {filteredQuestions.length}
+                      {filteredQuestions.length !== questions.length && (
+                        <span className="text-gray-500 ml-1">
+                          (filtered from {questions.length} total)
+                        </span>
+                      )}
                     </p>
                   </div>
                   
@@ -643,7 +768,7 @@ export default function ExamPage() {
                     
                     <button
                       onClick={handleNextQuestion}
-                      disabled={currentQuestionIndex === questions.length - 1}
+                      disabled={currentQuestionIndex === filteredQuestions.length - 1}
                       className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Next
@@ -652,12 +777,129 @@ export default function ExamPage() {
                 </div>
               </div>
               
-              {/* Question Palette */}
+              {/* Tree Navigation Sidebar */}
               <div className="w-80 bg-white shadow-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Question Palette</h3>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Filter Questions</h3>
+                  {(selectedSubject || selectedLesson || selectedTopic || selectedSubtopic) && (
+                    <button
+                      onClick={clearFilters}
+                      className="text-xs text-blue-600 hover:text-blue-800"
+                    >
+                      Clear All
+                    </button>
+                  )}
+                </div>
                 
+                {/* Tree Structure */}
+                {treeData && (
+                  <div className="space-y-2 max-h-96 overflow-y-auto mb-4">
+                    {Object.values(treeData).map((subject: any) => (
+                      <div key={subject.id} className="border border-gray-200 rounded-md">
+                        <button
+                          onClick={() => {
+                            setSelectedSubject(selectedSubject === subject.id ? null : subject.id);
+                            setSelectedLesson(null);
+                            setSelectedTopic(null);
+                            setSelectedSubtopic(null);
+                          }}
+                          className={`w-full text-left p-2 text-sm font-medium flex items-center justify-between ${
+                            selectedSubject === subject.id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50'
+                          }`}
+                        >
+                          <div className="flex items-center">
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                            </svg>
+                            {subject.name}
+                          </div>
+                          <span className="text-xs text-gray-500">({subject.count})</span>
+                        </button>
+                        
+                        {selectedSubject === subject.id && (
+                          <div className="border-t border-gray-200 bg-gray-50">
+                            {Object.values(subject.lessons).map((lesson: any) => (
+                              <div key={lesson.id} className="border-b border-gray-200 last:border-b-0">
+                                <button
+                                  onClick={() => {
+                                    setSelectedLesson(selectedLesson === lesson.id ? null : lesson.id);
+                                    setSelectedTopic(null);
+                                    setSelectedSubtopic(null);
+                                  }}
+                                  className={`w-full text-left p-2 pl-6 text-sm flex items-center justify-between ${
+                                    selectedLesson === lesson.id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50'
+                                  }`}
+                                >
+                                  <div className="flex items-center">
+                                    <svg className="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                    {lesson.name}
+                                  </div>
+                                  <span className="text-xs text-gray-500">({lesson.count})</span>
+                                </button>
+                                
+                                {selectedLesson === lesson.id && (
+                                  <div className="bg-white">
+                                    {Object.values(lesson.topics).map((topic: any) => (
+                                      <div key={topic.id} className="border-b border-gray-100 last:border-b-0">
+                                        <button
+                                          onClick={() => {
+                                            setSelectedTopic(selectedTopic === topic.id ? null : topic.id);
+                                            setSelectedSubtopic(null);
+                                          }}
+                                          className={`w-full text-left p-2 pl-8 text-sm flex items-center justify-between ${
+                                            selectedTopic === topic.id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50'
+                                          }`}
+                                        >
+                                          <div className="flex items-center">
+                                            <svg className="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                            </svg>
+                                            {topic.name}
+                                          </div>
+                                          <span className="text-xs text-gray-500">({topic.count})</span>
+                                        </button>
+                                        
+                                        {selectedTopic === topic.id && (
+                                          <div className="bg-gray-50">
+                                            {Object.values(topic.subtopics).map((subtopic: any) => (
+                                              <button
+                                                key={subtopic.id}
+                                                onClick={() => setSelectedSubtopic(selectedSubtopic === subtopic.id ? null : subtopic.id)}
+                                                className={`w-full text-left p-2 pl-10 text-sm flex items-center justify-between ${
+                                                  selectedSubtopic === subtopic.id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50'
+                                                }`}
+                                              >
+                                                <div className="flex items-center">
+                                                  <svg className="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                                  </svg>
+                                                  {subtopic.name}
+                                                </div>
+                                                <span className="text-xs text-gray-500">({subtopic.count})</span>
+                                              </button>
+                                            ))}
+                                          </div>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
+                {/* Question Navigation */}
+                <div className="pt-4 border-t border-gray-200">
+                  <h4 className="font-semibold text-gray-900 mb-3">Questions ({filteredQuestions.length})</h4>
                 <div className="grid grid-cols-5 gap-2 mb-4">
-                  {questions.map((_, index) => {
+                    {filteredQuestions.map((_, index) => {
                     const status = getQuestionStatus(index);
                     return (
                       <button
@@ -694,11 +936,12 @@ export default function ExamPage() {
                   </div>
                 </div>
                 
-                <div className="mt-6 pt-4 border-t border-gray-200">
+                  <div className="mt-4 pt-4 border-t border-gray-200">
                   <div className="text-sm text-gray-600">
                     <div>Answered: {answers.filter(a => a.selectedOptionId).length}</div>
                     <div>Marked for Review: {answers.filter(a => a.isMarkedForReview).length}</div>
                     <div>Unanswered: {answers.filter(a => !a.selectedOptionId).length}</div>
+                    </div>
                   </div>
                 </div>
               </div>

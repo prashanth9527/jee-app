@@ -12,4 +12,4 @@ export interface AIProviderConfig {
   model?: string;
 }
 
-export type AIProviderType = 'openai' | 'deepseek';
+export type AIProviderType = 'openai' | 'deepseek' | 'claude';

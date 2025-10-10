@@ -207,6 +207,34 @@ export class PDFProcessorCacheController {
     }
   }
 
+  @Post(':id/process-claude')
+  async processWithClaude(@Param('id') id: string, @Body() body: { latexFilePath: string }) {
+    try {
+      console.log(`[Controller] Starting Claude processing for ID: ${id}`);
+      const result = await this.pdfProcessorCacheService.processWithClaude(id, body.latexFilePath);
+      console.log(`[Controller] Claude processing completed for ID: ${id}, success: ${result.success}`);
+      return {
+        success: result.success,
+        message: result.success ? 'LaTeX file processed with Claude successfully' : 'Claude processing failed',
+        jsonContent: result.jsonContent,
+        questionsCount: result.questionsCount,
+        chunksProcessed: result.chunksProcessed,
+        metadata: result.metadata,
+        data: result
+      };
+    } catch (error) {
+      console.error(`[Controller] Error processing with Claude for ID: ${id}:`, error);
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to process LaTeX file with Claude',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
   @Delete(':id/delete-questions')
   async deleteQuestions(@Param('id') id: string) {
     try {

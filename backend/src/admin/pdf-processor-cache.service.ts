@@ -714,4 +714,42 @@ export class PDFProcessorCacheService {
       throw error;
     }
   }
+
+  async processWithClaude(id: string, latexFilePath: string) {
+    try {
+      this.logger.log(`Starting Claude processing for cache ID: ${id}`);
+      
+      // Find the record by ID
+      const record = await this.prisma.pDFProcessorCache.findUnique({
+        where: { id }
+      });
+
+      if (!record) {
+        throw new Error(`Record not found for ID: ${id}`);
+      }
+
+      // Check if LaTeX file path is provided
+      if (!latexFilePath) {
+        throw new Error('LaTeX file path is required');
+      }
+
+      // Download the LaTeX file content
+      this.logger.log(`Downloading LaTeX file from: ${latexFilePath}`);
+      const response = await fetch(latexFilePath);
+      if (!response.ok) {
+        throw new Error(`Failed to download LaTeX file: ${response.statusText}`);
+      }
+      const latexContent = await response.text();
+
+      // Use the existing PDF processor service to process with Claude
+      const result = await this.pdfProcessorService.processLatexWithClaude(latexContent, record.fileName);
+      
+      this.logger.log(`Claude processing completed for cache ID: ${id}, success: ${result.success}`);
+      
+      return result;
+    } catch (error) {
+      this.logger.error('Error processing with Claude:', error);
+      throw error;
+    }
+  }
 }
