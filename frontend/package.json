@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:server": "next build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "npm rebuild @tailwindcss/oxide"
