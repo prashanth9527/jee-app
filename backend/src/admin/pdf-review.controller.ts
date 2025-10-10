@@ -203,5 +203,41 @@ export class PDFReviewController {
       );
     }
   }
+
+  @Post('create-exam')
+  async createExamFromQuestions(@Body() body: { 
+    questionIds: string[]; 
+    title?: string;
+    description?: string;
+    timeLimitMin?: number;
+  }) {
+    try {
+      if (!body.questionIds || !Array.isArray(body.questionIds) || body.questionIds.length === 0) {
+        throw new BadRequestException('questionIds array is required and must not be empty');
+      }
+
+      const result = await this.pdfReviewService.createExamFromQuestions(
+        body.questionIds,
+        body.title,
+        body.description,
+        body.timeLimitMin
+      );
+      
+      return {
+        success: true,
+        message: 'Exam created successfully',
+        data: result
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to create exam',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
 }
 

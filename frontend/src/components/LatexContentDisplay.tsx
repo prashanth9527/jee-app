@@ -16,36 +16,48 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
   // Parse LaTeX blocks from content
   const parseLatexBlocks = (content: string) => {
     const blocks: Array<{ id: string; latex: string; start: number; end: number; type: 'inline' | 'display' }> = [];
-    const inlineRegex = /\$([^$]+)\$/g;
-    const displayRegex = /\$\$([^$]+)\$\$/g;
     
-    let match;
+    // Support multiple LaTeX delimiters (order matters - check display math before inline):
+    // 1. \[ ... \] for display math
+    // 2. \( ... \) for inline math
+    // 3. $$ ... $$ for display math
+    // 4. $ ... $ for inline math
     
-    // Find inline math blocks
-    while ((match = inlineRegex.exec(content)) !== null) {
-      // Unescape LaTeX content (convert \\ to \)
-      const unescapedLatex = match[1].replace(/\\\\/g, '\\');
-      blocks.push({
-        id: `inline-${match.index}`,
-        latex: unescapedLatex,
-        start: match.index,
-        end: match.index + match[0].length,
-        type: 'inline'
-      });
-    }
+    const patterns = [
+      { regex: /\\\[([^\]]+)\\\]/g, type: 'display' as const },    // \[ ... \]
+      { regex: /\\\((.+?)\\\)/g, type: 'inline' as const },        // \( ... \)
+      { regex: /\$\$(.+?)\$\$/g, type: 'display' as const },       // $$ ... $$
+      { regex: /\$(.+?)\$/g, type: 'inline' as const },            // $ ... $
+    ];
     
-    // Find display math blocks
-    while ((match = displayRegex.exec(content)) !== null) {
-      // Unescape LaTeX content (convert \\ to \)
-      const unescapedLatex = match[1].replace(/\\\\/g, '\\');
-      blocks.push({
-        id: `display-${match.index}`,
-        latex: unescapedLatex,
-        start: match.index,
-        end: match.index + match[0].length,
-        type: 'display'
-      });
-    }
+    patterns.forEach(({ regex, type }) => {
+      let match;
+      const regexCopy = new RegExp(regex.source, regex.flags);
+      
+      while ((match = regexCopy.exec(content)) !== null) {
+        const start = match.index;
+        const end = match.index + match[0].length;
+        
+        // Check if this range overlaps with existing blocks
+        const overlaps = blocks.some(block => 
+          (start >= block.start && start < block.end) ||
+          (end > block.start && end <= block.end) ||
+          (start <= block.start && end >= block.end)
+        );
+        
+        if (!overlaps) {
+          // Unescape LaTeX content (convert \\ to \)
+          const unescapedLatex = match[1].replace(/\\\\/g, '\\');
+          blocks.push({
+            id: `${type}-${match.index}`,
+            latex: unescapedLatex,
+            start,
+            end,
+            type
+          });
+        }
+      }
+    });
     
     return blocks.sort((a, b) => a.start - b.start);
   };
@@ -117,8 +129,11 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     return latexRendered;
   };
 
+  // Ensure content is a string
+  const contentString = typeof content === 'string' ? content : String(content || '');
+  
   // Parse HTML content and render it safely
-  const parsedContent = parse(processContent(content), {
+  const parsedContent = parse(processContent(contentString), {
     replace: (domNode: any) => {
       // Handle any special cases if needed
       return domNode;

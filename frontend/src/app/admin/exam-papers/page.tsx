@@ -526,9 +526,9 @@ export default function AdminExamPapersPage() {
 											</div>
 											<div className="flex space-x-2">
 												<button 
-													onClick={() => toggleExpanded(paper.id)}
+													onClick={() => router.push(`/admin/exam-papers/${paper.id}`)}
 													className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
-													title="View details"
+													title="Preview exam"
 												>
 													<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

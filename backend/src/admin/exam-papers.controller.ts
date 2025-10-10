@@ -104,6 +104,7 @@ export class AdminExamPapersController {
 				},
 				include: {
 					subject: true,
+					lesson: true,
 					topic: true,
 					subtopic: true,
 					options: true

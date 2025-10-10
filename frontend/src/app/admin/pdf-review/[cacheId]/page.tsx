@@ -77,6 +77,10 @@ export default function PDFReviewPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<Partial<Omit<Question, 'tags'>> & { tags?: string[] }>({});
   const [pdfData, setPdfData] = useState<{ fileName: string; filePath: string; latexFilePath?: string; processingStatus?: string; recordType?: 'pyq' | 'question' | 'lms' } | null>(null);
+  const [showCreateExamModal, setShowCreateExamModal] = useState(false);
+  const [examTitle, setExamTitle] = useState('');
+  const [examDescription, setExamDescription] = useState('');
+  const [examTimeLimit, setExamTimeLimit] = useState<number | ''>('');
 
   useEffect(() => {
     if (cacheId) {
@@ -283,6 +287,113 @@ export default function PDFReviewPage() {
     }
   };
 
+  const handleCreateExam = async () => {
+    if (selectedQuestions.size === 0) {
+      toast.warning('Please select at least one question to create an exam');
+      return;
+    }
+
+    try {
+      const response = await api.post('/admin/pdf-review/create-exam', {
+        questionIds: Array.from(selectedQuestions),
+        title: examTitle || undefined,
+        description: examDescription || undefined,
+        timeLimitMin: examTimeLimit || undefined
+      });
+
+      if (response.data.success) {
+        const examId = response.data.data.examPaper.id;
+        const examTitle = response.data.data.examPaper.title;
+        
+        toast.success(`Exam "${examTitle}" created successfully with ${response.data.data.questionCount} questions!`);
+        setShowCreateExamModal(false);
+        setExamTitle('');
+        setExamDescription('');
+        setExamTimeLimit('');
+        setSelectedQuestions(new Set());
+        
+        // Optionally redirect to exam preview page
+        const viewExam = window.confirm('Exam created! Would you like to preview it now?');
+        if (viewExam) {
+          router.push(`/admin/exam-papers/${examId}`);
+        }
+      }
+    } catch (error: any) {
+      console.error('Error creating exam:', error);
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
+  const openCreateExamModal = () => {
+    if (selectedQuestions.size === 0) {
+      toast.warning('Please select questions first');
+      return;
+    }
+    
+    // Auto-generate title suggestion based on selected questions
+    const selectedQs = questions.filter(q => selectedQuestions.has(q.id));
+    const subjects = [...new Set(selectedQs.map(q => q.subject?.name).filter(Boolean))];
+    const lessons = [...new Set(selectedQs.map(q => q.lesson?.name).filter(Boolean))];
+    const topics = [...new Set(selectedQs.map(q => q.topic?.name).filter(Boolean))];
+    const subtopics = [...new Set(selectedQs.map(q => q.subtopic?.name).filter(Boolean))];
+    
+    console.log('Title Generation Debug:', {
+      selectedCount: selectedQs.length,
+      subjects,
+      lessons,
+      topics,
+      subtopics
+    });
+    
+    // Generate detailed title based on metadata hierarchy
+    let suggestedTitle = '';
+    
+    if (subtopics.length === 1) {
+      // Single subtopic - most specific
+      const subject = subjects.length === 1 ? subjects[0] : '';
+      const topic = topics.length === 1 ? topics[0] : '';
+      if (subject && topic) {
+        suggestedTitle = `${subject} - ${topic} - ${subtopics[0]} Practice`;
+      } else if (subject) {
+        suggestedTitle = `${subject} - ${subtopics[0]} Practice`;
+      } else {
+        suggestedTitle = `${subtopics[0]} - Practice Exam`;
+      }
+    } else if (topics.length === 1) {
+      // Single topic
+      const subject = subjects.length === 1 ? subjects[0] : '';
+      suggestedTitle = subject 
+        ? `${subject} - ${topics[0]} Practice`
+        : `${topics[0]} - Practice Exam`;
+    } else if (lessons.length === 1) {
+      // Single lesson
+      const subject = subjects.length === 1 ? subjects[0] : '';
+      suggestedTitle = subject 
+        ? `${subject} - ${lessons[0]} Practice`
+        : `${lessons[0]} - Practice Exam`;
+    } else if (subjects.length === 1) {
+      // Single subject with multiple topics/subtopics
+      if (topics.length > 1) {
+        suggestedTitle = `${subjects[0]} - ${topics.slice(0, 2).join(', ')} Practice`;
+      } else {
+        suggestedTitle = `${subjects[0]} - Practice Exam`;
+      }
+    } else if (subjects.length > 1) {
+      // Multiple subjects
+      suggestedTitle = `${subjects.join(', ')} - Mixed Practice`;
+    } else {
+      // No metadata
+      suggestedTitle = 'Practice Exam';
+    }
+    
+    console.log('Generated Title:', suggestedTitle);
+    
+    setExamTitle(suggestedTitle);
+    setExamDescription(`Practice exam with ${selectedQuestions.size} questions`);
+    setExamTimeLimit(selectedQuestions.size * 2); // 2 minutes per question
+    setShowCreateExamModal(true);
+  };
+
   if (loading) {
     return (
       <ProtectedRoute requiredRole="ADMIN">
@@ -419,6 +530,16 @@ export default function PDFReviewPage() {
                     Approve All
                   </button>
                 </div>
+                <button
+                  onClick={openCreateExamModal}
+                  disabled={selectedQuestions.size === 0}
+                  className="w-full bg-indigo-600 text-white px-3 py-2 rounded-md text-sm hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span>Create Exam ({selectedQuestions.size})</span>
+                </button>
               </div>
             </div>
 
@@ -843,6 +964,106 @@ export default function PDFReviewPage() {
             )}
           </div>
         </div>
+
+        {/* Create Exam Modal */}
+        {showCreateExamModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">Create Practice Exam</h2>
+                  <button
+                    onClick={() => setShowCreateExamModal(false)}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {/* Selected Questions Info */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div className="flex items-center space-x-2 text-blue-800">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="font-medium">
+                        {selectedQuestions.size} question{selectedQuestions.size !== 1 ? 's' : ''} selected
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Exam Title */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Exam Title *
+                    </label>
+                    <input
+                      type="text"
+                      value={examTitle}
+                      onChange={(e) => setExamTitle(e.target.value)}
+                      placeholder="e.g., Physics - Mechanics Practice Exam"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
+                    <p className="mt-1 text-sm text-gray-500">
+                      Leave empty to auto-generate based on subject/topic
+                    </p>
+                  </div>
+
+                  {/* Exam Description */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Description
+                    </label>
+                    <textarea
+                      value={examDescription}
+                      onChange={(e) => setExamDescription(e.target.value)}
+                      placeholder="Brief description of the exam..."
+                      rows={3}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
+                  </div>
+
+                  {/* Time Limit */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Time Limit (minutes)
+                    </label>
+                    <input
+                      type="number"
+                      value={examTimeLimit}
+                      onChange={(e) => setExamTimeLimit(e.target.value ? parseInt(e.target.value) : '')}
+                      placeholder="e.g., 60"
+                      min="1"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
+                    <p className="mt-1 text-sm text-gray-500">
+                      Recommended: {selectedQuestions.size * 2} minutes (2 min per question)
+                    </p>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex space-x-3 pt-4">
+                    <button
+                      onClick={handleCreateExam}
+                      className="flex-1 bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 font-medium"
+                    >
+                      Create Exam
+                    </button>
+                    <button
+                      onClick={() => setShowCreateExamModal(false)}
+                      className="flex-1 bg-gray-200 text-gray-800 px-6 py-3 rounded-md hover:bg-gray-300 font-medium"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </AdminLayout>
     </ProtectedRoute>
   );

@@ -1,0 +1,330 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import AdminLayout from '@/components/AdminLayout';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import api from '@/lib/api';
+import { toast } from '@/lib/toast';
+import LatexContentDisplay, { LatexQuestionStem } from '@/components/LatexContentDisplay';
+
+interface Question {
+  id: string;
+  stem: string;
+  difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  subject: { id: string; name: string } | null;
+  lesson: { id: string; name: string } | null;
+  topic: { id: string; name: string } | null;
+  subtopic: { id: string; name: string } | null;
+  options: Array<{
+    id: string;
+    text: string;
+    isCorrect: boolean;
+    order: number;
+  }>;
+}
+
+interface ExamPaper {
+  id: string;
+  title: string;
+  description: string | null;
+  timeLimitMin: number | null;
+  questionIds: string[];
+  subjectIds: string[];
+  topicIds: string[];
+  subtopicIds: string[];
+  createdAt: string;
+  updatedAt: string;
+  _count: {
+    submissions: number;
+  };
+}
+
+export default function ExamPreviewPage() {
+  const params = useParams();
+  const router = useRouter();
+  const examId = params?.id as string;
+
+  const [exam, setExam] = useState<ExamPaper | null>(null);
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  useEffect(() => {
+    if (examId) {
+      fetchExamDetails();
+    }
+  }, [examId]);
+
+  const fetchExamDetails = async () => {
+    try {
+      const response = await api.get(`/admin/exam-papers/${examId}`);
+      setExam(response.data);
+      setQuestions(response.data.questions || []);
+      setLoading(false);
+    } catch (error: any) {
+      console.error('Error fetching exam details:', error);
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+      setLoading(false);
+    }
+  };
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'EASY':
+        return 'bg-green-100 text-green-800';
+      case 'MEDIUM':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'HARD':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getOptionLabel = (index: number) => {
+    return String.fromCharCode(65 + index); // A, B, C, D
+  };
+
+  if (loading) {
+    return (
+      <ProtectedRoute requiredRole="ADMIN">
+        <AdminLayout>
+          <div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        </AdminLayout>
+      </ProtectedRoute>
+    );
+  }
+
+  if (!exam) {
+    return (
+      <ProtectedRoute requiredRole="ADMIN">
+        <AdminLayout>
+          <div className="text-center py-12">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Exam Not Found</h1>
+            <button
+              onClick={() => router.push('/admin/exam-papers')}
+              className="text-blue-600 hover:text-blue-800"
+            >
+              Back to Exam Papers
+            </button>
+          </div>
+        </AdminLayout>
+      </ProtectedRoute>
+    );
+  }
+
+  const currentQuestion = questions[currentQuestionIndex];
+
+  return (
+    <ProtectedRoute requiredRole="ADMIN">
+      <AdminLayout>
+        <div className="min-h-screen bg-gray-50">
+          {/* Header */}
+          <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={() => router.push('/admin/exam-papers')}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                  </button>
+                  <div>
+                    <h1 className="text-2xl font-bold text-gray-900">{exam.title}</h1>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {questions.length} Questions
+                      {exam.timeLimitMin && ` • ${exam.timeLimitMin} minutes`}
+                      {exam._count.submissions > 0 && ` • ${exam._count.submissions} submissions`}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => router.push(`/admin/exam-papers/edit/${examId}`)}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                  >
+                    Edit Exam
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              {/* Question Navigation Sidebar */}
+              <div className="lg:col-span-1">
+                <div className="bg-white rounded-lg shadow p-4 sticky top-24">
+                  <h3 className="font-semibold text-gray-900 mb-3">Questions</h3>
+                  <div className="grid grid-cols-5 lg:grid-cols-4 gap-2">
+                    {questions.map((q, index) => (
+                      <button
+                        key={q.id}
+                        onClick={() => setCurrentQuestionIndex(index)}
+                        className={`w-10 h-10 rounded-md flex items-center justify-center text-sm font-medium transition-colors ${
+                          index === currentQuestionIndex
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }`}
+                      >
+                        {index + 1}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Question Display */}
+              <div className="lg:col-span-3">
+                {currentQuestion ? (
+                  <div className="bg-white rounded-lg shadow">
+                    {/* Question Header */}
+                    <div className="border-b border-gray-200 p-6">
+                      <div className="mb-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <h2 className="text-lg font-semibold text-gray-900">
+                            Question {currentQuestionIndex + 1} of {questions.length}
+                          </h2>
+                          <div className="flex items-center flex-wrap gap-2">
+                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getDifficultyColor(currentQuestion.difficulty)}`}>
+                              {currentQuestion.difficulty}
+                            </span>
+                            {currentQuestion.subject && (
+                              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                                {currentQuestion.subject.name}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        
+                        {/* Metadata: Lesson, Topic, Subtopic */}
+                        {(currentQuestion.lesson || currentQuestion.topic || currentQuestion.subtopic) && (
+                          <div className="flex items-center flex-wrap gap-2 text-sm">
+                            {currentQuestion.lesson && (
+                              <div className="flex items-center text-gray-600">
+                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                <span className="font-medium">Lesson:</span>
+                                <span className="ml-1">{currentQuestion.lesson.name}</span>
+                              </div>
+                            )}
+                            {currentQuestion.topic && (
+                              <div className="flex items-center text-gray-600">
+                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                </svg>
+                                <span className="font-medium">Topic:</span>
+                                <span className="ml-1">{currentQuestion.topic.name}</span>
+                              </div>
+                            )}
+                            {currentQuestion.subtopic && (
+                              <div className="flex items-center text-gray-600">
+                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
+                                <span className="font-medium">Subtopic:</span>
+                                <span className="ml-1">{currentQuestion.subtopic.name}</span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Question Stem */}
+                      <div className="prose max-w-none">
+                        <LatexQuestionStem stem={currentQuestion.stem} />
+                      </div>
+                    </div>
+
+                    {/* Options */}
+                    <div className="p-6">
+                      <h3 className="text-md font-semibold text-gray-900 mb-4">Options</h3>
+                      <div className="space-y-3">
+                        {currentQuestion.options
+                          .sort((a, b) => a.order - b.order)
+                          .map((option, index) => (
+                            <div
+                              key={option.id}
+                              className={`p-4 rounded-lg border-2 transition-colors ${
+                                option.isCorrect
+                                  ? 'border-green-500 bg-green-50'
+                                  : 'border-gray-200 bg-white'
+                              }`}
+                            >
+                              <div className="flex items-start space-x-3">
+                                <div
+                                  className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
+                                    option.isCorrect
+                                      ? 'bg-green-500 text-white'
+                                      : 'bg-gray-200 text-gray-700'
+                                  }`}
+                                >
+                                  {getOptionLabel(index)}
+                                </div>
+                                <div className="flex-1 pt-1">
+                                  <LatexContentDisplay content={option.text} />
+                                  {option.isCorrect && (
+                                    <span className="inline-flex items-center mt-2 text-sm font-medium text-green-700">
+                                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                      </svg>
+                                      Correct Answer
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+
+                    {/* Navigation */}
+                    <div className="border-t border-gray-200 p-6">
+                      <div className="flex items-center justify-between">
+                        <button
+                          onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
+                          disabled={currentQuestionIndex === 0}
+                          className="flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                          <span>Previous</span>
+                        </button>
+                        <span className="text-sm text-gray-600">
+                          {currentQuestionIndex + 1} / {questions.length}
+                        </span>
+                        <button
+                          onClick={() => setCurrentQuestionIndex(Math.min(questions.length - 1, currentQuestionIndex + 1))}
+                          disabled={currentQuestionIndex === questions.length - 1}
+                          className="flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <span>Next</span>
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-lg shadow p-12 text-center">
+                    <p className="text-gray-600">No questions available</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </AdminLayout>
+    </ProtectedRoute>
+  );
+}

@@ -376,4 +376,124 @@ export class PDFReviewService {
       throw error;
     }
   }
+
+  async createExamFromQuestions(
+    questionIds: string[],
+    customTitle?: string,
+    description?: string,
+    timeLimitMin?: number
+  ) {
+    try {
+      // Fetch questions to analyze their metadata
+      const questions = await this.prisma.question.findMany({
+        where: {
+          id: { in: questionIds }
+        },
+        include: {
+          subject: true,
+          lesson: true,
+          topic: true,
+          subtopic: true
+        }
+      });
+
+      if (questions.length === 0) {
+        throw new BadRequestException('No questions found with the provided IDs');
+      }
+
+      // Generate automatic title if not provided
+      let title = customTitle;
+      if (!title) {
+        title = this.generateExamTitle(questions);
+      }
+
+      // Collect unique subject, topic, and subtopic IDs
+      const subjectIds = [...new Set(questions.map(q => q.subjectId).filter((id): id is string => id !== null))];
+      const topicIds = [...new Set(questions.map(q => q.topicId).filter((id): id is string => id !== null))];
+      const subtopicIds = [...new Set(questions.map(q => q.subtopicId).filter((id): id is string => id !== null))];
+
+      // Calculate default time limit (2 minutes per question if not provided)
+      const calculatedTimeLimit = timeLimitMin || questions.length * 2;
+
+      // Create the exam paper
+      const examPaper = await this.prisma.examPaper.create({
+        data: {
+          title,
+          description: description || `Practice exam with ${questions.length} questions`,
+          subjectIds,
+          topicIds,
+          subtopicIds,
+          questionIds,
+          timeLimitMin: calculatedTimeLimit
+        },
+        include: {
+          _count: {
+            select: {
+              submissions: true
+            }
+          }
+        }
+      });
+
+      this.logger.log(`Created exam "${title}" with ${questions.length} questions`);
+
+      return {
+        examPaper,
+        questionCount: questions.length,
+        subjects: questions.map(q => q.subject?.name).filter(Boolean),
+        topics: questions.map(q => q.topic?.name).filter(Boolean),
+        subtopics: questions.map(q => q.subtopic?.name).filter(Boolean)
+      };
+    } catch (error) {
+      this.logger.error('Error creating exam from questions:', error);
+      throw error;
+    }
+  }
+
+  private generateExamTitle(questions: any[]): string {
+    // Analyze questions to generate a meaningful title
+    const subjects = [...new Set(questions.map(q => q.subject?.name).filter(Boolean))];
+    const lessons = [...new Set(questions.map(q => q.lesson?.name).filter(Boolean))];
+    const topics = [...new Set(questions.map(q => q.topic?.name).filter(Boolean))];
+    const subtopics = [...new Set(questions.map(q => q.subtopic?.name).filter(Boolean))];
+
+    // Priority: Subtopic > Topic > Lesson > Subject (most specific to least specific)
+    if (subtopics.length === 1) {
+      // Single subtopic - most specific
+      const subject = subjects.length === 1 ? subjects[0] : '';
+      const topic = topics.length === 1 ? topics[0] : '';
+      if (subject && topic) {
+        return `${subject} - ${topic} - ${subtopics[0]} Practice`;
+      }
+      return `${subtopics[0]} - Practice Exam`;
+    } else if (topics.length === 1) {
+      // Single topic
+      const subject = subjects.length === 1 ? subjects[0] : '';
+      if (subject) {
+        return `${subject} - ${topics[0]} Practice`;
+      }
+      return `${topics[0]} - Practice Exam`;
+    } else if (lessons.length === 1) {
+      // Single lesson
+      const subject = subjects.length === 1 ? subjects[0] : '';
+      if (subject) {
+        return `${subject} - ${lessons[0]} Practice`;
+      }
+      return `${lessons[0]} - Practice Exam`;
+    } else if (subjects.length === 1) {
+      // Single subject
+      return `${subjects[0]} - Practice Exam`;
+    } else if (subjects.length > 1) {
+      // Multiple subjects
+      return `${subjects.join(', ')} - Mixed Practice`;
+    } else {
+      // Fallback to generic title with timestamp
+      const date = new Date().toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+      return `Practice Exam - ${date}`;
+    }
+  }
 }
