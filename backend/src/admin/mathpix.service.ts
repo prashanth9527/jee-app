@@ -1,6 +1,7 @@
 import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AwsService } from '../aws/aws.service';
+import { ImageWatermarkRemoverService } from './image-watermark-remover.service';
 import * as fs from 'fs';
 import * as path from 'path';
 import axios from 'axios';
@@ -34,10 +35,17 @@ export class MathpixService {
   
   // Configuration for background processing
   private readonly ignoreBackground = process.env.MATHPIX_IGNORE_BACKGROUND === 'true' || true; // Default to true
+  
+  // Configuration for watermark removal from images
+  private readonly removeWatermarkFromImages = process.env.MATHPIX_REMOVE_WATERMARK === 'true' || true; // Default to true
+  
+  // Configuration for multi-color watermark removal (blue, red, green, yellow, etc.)
+  private readonly removeAllColorWatermarks = process.env.MATHPIX_REMOVE_ALL_COLORS === 'true' || false; // Default to false (blue only)
 
   constructor(
     private prisma: PrismaService,
     private awsService: AwsService,
+    private imageWatermarkRemover: ImageWatermarkRemoverService,
   ) {
     if (!this.mathpixAppId || !this.mathpixAppKey) {
       this.logger.warn('Mathpix credentials not configured. Set MATHPIX_APP_ID and MATHPIX_APP_KEY environment variables.');
@@ -869,9 +877,42 @@ export class MathpixService {
         writeStream.on('finish', async () => {
           this.logger.log(`🖼️ Image saved locally to: ${imageFilePath}`);
           
+          // Remove watermark from image if enabled
+          let finalImagePath = imageFilePath;
+          if (this.removeWatermarkFromImages) {
+            try {
+              if (this.removeAllColorWatermarks) {
+                // Remove all colored watermarks (blue, red, green, yellow, etc.)
+                this.logger.log(`🧹 Removing multi-color watermark from image: ${originalImageFileName}`);
+                const cleanedPath = await this.imageWatermarkRemover.removeAnyColorWatermark(imageFilePath);
+                
+                // Replace original with cleaned version
+                fs.unlinkSync(imageFilePath); // Delete original
+                fs.renameSync(cleanedPath, imageFilePath); // Rename cleaned to original name
+                finalImagePath = imageFilePath;
+                
+                this.logger.log(`✅ Multi-color watermark removed from: ${originalImageFileName}`);
+              } else {
+                // Remove only blue watermarks (default)
+                this.logger.log(`🧹 Removing blue watermark from image: ${originalImageFileName}`);
+                const cleanedPath = await this.imageWatermarkRemover.removeBlueWatermark(imageFilePath);
+                
+                // Replace original with cleaned version
+                fs.unlinkSync(imageFilePath); // Delete original
+                fs.renameSync(cleanedPath, imageFilePath); // Rename cleaned to original name
+                finalImagePath = imageFilePath;
+                
+                this.logger.log(`✅ Blue watermark removed from: ${originalImageFileName}`);
+              }
+            } catch (watermarkError) {
+              this.logger.warn(`⚠️ Failed to remove watermark from ${originalImageFileName}, using original: ${watermarkError.message}`);
+              // Continue with original image if watermark removal fails
+            }
+          }
+          
           // Upload to AWS
           try {
-            const fileBuffer = fs.readFileSync(imageFilePath);
+            const fileBuffer = fs.readFileSync(finalImagePath);
             const mockFile: Express.Multer.File = {
               fieldname: 'file',
               originalname: originalImageFileName,
@@ -882,7 +923,7 @@ export class MathpixService {
               stream: Readable.from(fileBuffer),
               destination: '',
               filename: originalImageFileName,
-              path: imageFilePath,
+              path: finalImagePath,
             };
 
             const awsUrl = await this.awsService.uploadFileWithCustomName(

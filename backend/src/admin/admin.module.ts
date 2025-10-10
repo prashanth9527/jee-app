@@ -29,6 +29,7 @@ import { OpenAIService } from '../ai/openai.service';
 import { DeepSeekService } from '../ai/deepseek.service';
 import { MathpixService } from './mathpix.service';
 import { ZipProcessorService } from './zip-processor.service';
+import { ImageWatermarkRemoverService } from './image-watermark-remover.service';
 
 @Module({
   imports: [PrismaModule, AwsModule, ConfigModule],
@@ -59,6 +60,7 @@ import { ZipProcessorService } from './zip-processor.service';
     PDFReviewService,
     MathpixService,
     ZipProcessorService,
+    ImageWatermarkRemoverService,
     AIProviderFactory,
     OpenAIService,
     DeepSeekService
