@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   },
   
   // Reduce memory usage during build
-  swcMinify: true,
+  // swcMinify is deprecated in Next.js 15+
   
   // Optimize images
   images: {
@@ -46,26 +46,34 @@ const nextConfig: NextConfig = {
   },
   
   // Webpack optimizations for server builds
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, webpack }) => {
+    // Fix for "self is not defined" error
     if (isServer) {
-      // Reduce bundle size for server builds
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          default: {
-            minChunks: 1,
-            priority: -20,
-            reuseExistingChunk: true,
-          },
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            priority: -10,
-            chunks: 'all',
-          },
-        },
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+        stream: false,
+        url: false,
+        zlib: false,
+        http: false,
+        https: false,
+        assert: false,
+        os: false,
+        path: false,
       };
     }
+    
+    // Define global variables for client-side code
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        'typeof window': JSON.stringify(isServer ? 'undefined' : 'object'),
+        'typeof self': JSON.stringify(isServer ? 'undefined' : 'object'),
+      })
+    );
+    
     return config;
   },
   
