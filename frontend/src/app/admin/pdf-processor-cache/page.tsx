@@ -160,7 +160,7 @@ export default function PDFProcessorCachePage() {
   };
 
   const processWithMathpix = async (fileName: string) => {
-    const record = records.find(r => r.fileName === fileName);
+    const record = records.find(r => r.id === fileName);
     if (!record) {
       toast.error('Record not found');
       return;
@@ -602,7 +602,8 @@ export default function PDFProcessorCachePage() {
       const response = await api.post('/admin/pdf-processor-cache/sync-files');
       
       if (response.data.success) {
-        toast.success(`Sync completed! ${response.data.synced} files synced, ${response.data.skipped} duplicates skipped`);
+        const message = `Sync completed! ${response.data.synced} files synced${response.data.updated ? `, ${response.data.updated} files updated` : ''}, ${response.data.skipped} duplicates skipped`;
+        toast.success(message);
         // Refresh the records and stats
         await fetchRecords();
         await fetchStats();
@@ -1018,11 +1019,11 @@ export default function PDFProcessorCachePage() {
                           {/* Mathpix Processing Button */}
                           {!record.latexFilePath ? (
                             <button
-                              onClick={() => processWithMathpix(record.fileName)}
-                              disabled={processing === record.fileName}
+                              onClick={() => processWithMathpix(record.id)}
+                              disabled={processing === record.id}
                               className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                             >
-                              {processing === record.fileName ? (
+                              {processing === record.id ? (
                                 <>
                                   <svg className="animate-spin -ml-1 mr-1 h-3 w-3 text-white" fill="none" viewBox="0 0 24 24">
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -1036,11 +1037,11 @@ export default function PDFProcessorCachePage() {
                             </button>
                           ) : (
                             <button
-                              onClick={() => processWithMathpix(record.fileName)}
-                              disabled={processing === record.fileName}
+                              onClick={() => processWithMathpix(record.id)}
+                              disabled={processing === record.id}
                               className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                             >
-                              {processing === record.fileName ? (
+                              {processing === record.id ? (
                                 <>
                                   <svg className="animate-spin -ml-1 mr-1 h-3 w-3 text-white" fill="none" viewBox="0 0 24 24">
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

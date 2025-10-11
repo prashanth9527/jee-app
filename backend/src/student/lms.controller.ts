@@ -10,6 +10,135 @@ import { Roles } from '../auth/roles.decorator';
 export class StudentLMSController {
   constructor(private readonly prisma: PrismaService) {}
 
+  @Get('hierarchy')
+  async getLearningHierarchy(@Req() req: any) {
+    const userId = req.user.id;
+    
+    // Get user's stream
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { streamId: true }
+    });
+
+    if (!user?.streamId) {
+      throw new ForbiddenException('No stream assigned to user');
+    }
+
+    // Get subjects with progress
+    const subjects = await this.prisma.subject.findMany({
+      where: {
+        streamId: user.streamId,
+        lmsContent: {
+          some: { status: 'PUBLISHED' }
+        }
+      },
+      include: {
+        lessons: {
+          where: {
+            lmsContent: {
+              some: { status: 'PUBLISHED' }
+            }
+          },
+          include: {
+            topics: {
+              where: {
+                lmsContent: {
+                  some: { status: 'PUBLISHED' }
+                }
+              },
+              include: {
+                subtopics: {
+                  where: {
+                    lmsContent: {
+                      some: { status: 'PUBLISHED' }
+                    }
+                  },
+                  include: {
+                    lmsContent: {
+                      where: { status: 'PUBLISHED' },
+                      orderBy: { order: 'asc' },
+                      include: {
+                        progress: {
+                          where: { userId },
+                          select: {
+                            id: true,
+                            status: true,
+                            progress: true,
+                            completedAt: true
+                          }
+                        }
+                      }
+                    }
+                  },
+                  orderBy: { order: 'asc' }
+                },
+                lmsContent: {
+                  where: { status: 'PUBLISHED' },
+                  orderBy: { order: 'asc' },
+                  include: {
+                    progress: {
+                      where: { userId },
+                      select: {
+                        id: true,
+                        status: true,
+                        progress: true,
+                        completedAt: true
+                      }
+                    }
+                  }
+                }
+              },
+              orderBy: { order: 'asc' }
+            },
+            lmsContent: {
+              where: { status: 'PUBLISHED' },
+              orderBy: { order: 'asc' },
+              include: {
+                progress: {
+                  where: { userId },
+                  select: {
+                    id: true,
+                    status: true,
+                    progress: true,
+                    completedAt: true
+                  }
+                }
+              }
+            }
+          },
+          orderBy: { order: 'asc' }
+        },
+        lmsContent: {
+          where: { status: 'PUBLISHED' },
+          orderBy: { order: 'asc' },
+          include: {
+            progress: {
+              where: { userId },
+              select: {
+                id: true,
+                status: true,
+                progress: true,
+                completedAt: true
+              }
+            }
+          }
+        },
+        // progress: {
+        //   where: { userId },
+        //   select: {
+        //     id: true,
+        //     status: true,
+        //     progress: true,
+        //     completedAt: true
+        //   }
+        // }
+      },
+      orderBy: { name: 'asc' }
+    });
+
+    return subjects;
+  }
+
   @Get('content')
   async getLearningContent(
     @Req() req: any,
@@ -362,6 +491,12 @@ export class StudentLMSController {
         subject: {
           streamId: user.streamId
         }
+      },
+      include: {
+        subject: true,
+        lesson: true,
+        topic: true,
+        subtopic: true
       }
     });
 
@@ -380,19 +515,107 @@ export class StudentLMSController {
       update: {
         status: status as any,
         progress: progressPercent ? parseInt(progressPercent) : undefined,
-        completedAt: status === 'COMPLETED' ? new Date() : undefined
+        completedAt: status === 'COMPLETED' ? new Date() : undefined,
+        lastAccessedAt: new Date()
       },
       create: {
         userId,
         contentId: id,
         status: status as any,
         progress: progressPercent ? parseInt(progressPercent) : 0,
-        completedAt: status === 'COMPLETED' ? new Date() : undefined
+        completedAt: status === 'COMPLETED' ? new Date() : undefined,
+        lastAccessedAt: new Date()
       }
     });
 
+    // Update higher-level progress
+    // await this.updateHigherLevelProgress(userId, content, status);
+
     return progress;
   }
+
+  // private async updateHigherLevelProgress(userId: string, content: any, status: string) {
+  //   // Update subtopic progress if content has subtopic
+  //   if (content.subtopicId) {
+  //     await this.updateSubtopicProgress(userId, content.subtopicId);
+  //   }
+
+  //   // Update topic progress if content has topic
+  //   if (content.topicId) {
+  //     await this.updateTopicProgress(userId, content.topicId);
+  //   }
+
+  //   // Update lesson progress if content has lesson
+  //   if (content.lessonId) {
+  //     await this.updateLessonProgress(userId, content.lessonId);
+  //   }
+
+  //   // Update subject progress
+  //   if (content.subjectId) {
+  //     await this.updateSubjectProgress(userId, content.subjectId);
+  //   }
+  // }
+
+  // private async updateSubtopicProgress(userId: string, subtopicId: string) {
+  //   const subtopic = await this.prisma.subtopic.findUnique({
+  //     where: { id: subtopicId },
+  //     include: {
+  //       lmsContent: {
+  //         where: { status: 'PUBLISHED' },
+  //         include: {
+  //           progress: {
+  //             where: { userId }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   });
+
+  //   if (!subtopic) return;
+
+  //   const totalContent = subtopic.lmsContent.length;
+  //   const completedContent = subtopic.lmsContent.filter(content => 
+  //     content.progress.length > 0 && 
+  //     (content.progress[0].status === 'COMPLETED' || content.progress[0].status === 'REVIEW' || content.progress[0].status === 'REVISIT')
+  //   ).length;
+
+  //   const progress = totalContent > 0 ? (completedContent / totalContent) * 100 : 0;
+  //   const isCompleted = completedContent === totalContent && totalContent > 0;
+
+  //   await this.prisma.subtopicProgress.upsert({
+  //     where: { userId_subtopicId: { userId, subtopicId } },
+  //     update: {
+  //       progress,
+  //       contentCompleted: completedContent,
+  //       totalContent,
+  //       status: isCompleted ? 'COMPLETED' : progress > 0 ? 'IN_PROGRESS' : 'NOT_STARTED',
+  //       completedAt: isCompleted ? new Date() : undefined,
+  //       lastAccessedAt: new Date()
+  //     },
+  //     create: {
+  //       userId,
+  //       subtopicId,
+  //       progress,
+  //       contentCompleted: completedContent,
+  //       totalContent,
+  //       status: isCompleted ? 'COMPLETED' : progress > 0 ? 'IN_PROGRESS' : 'NOT_STARTED',
+  //       completedAt: isCompleted ? new Date() : undefined,
+  //       lastAccessedAt: new Date()
+  //     }
+  //   });
+  // }
+
+  // private async updateTopicProgress(userId: string, topicId: string) {
+  //   // Implementation commented out until migration is run
+  // }
+
+  // private async updateLessonProgress(userId: string, lessonId: string) {
+  //   // Implementation commented out until migration is run
+  // }
+
+  // private async updateSubjectProgress(userId: string, subjectId: string) {
+  //   // Implementation commented out until migration is run
+  // }
 
   @Get('progress')
   async getProgress(@Req() req: any) {

@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
 import api from '@/lib/api';
-import RichTextEditor from '@/components/RichTextEditor';
+import LatexRichTextEditor from '@/components/LatexRichTextEditor';
 
 interface Subject {
   id: string;
@@ -304,10 +304,12 @@ export default function LMSEditPage() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Content
               </label>
-              <RichTextEditor
+              <LatexRichTextEditor
                 value={formData.contentData || ''}
                 onChange={(content) => handleInputChange('contentData', content)}
                 placeholder="Enter your content here..."
+                height={300}
+                className="border border-gray-300 rounded-md"
               />
             </div>
           </div>
@@ -468,10 +470,12 @@ export default function LMSEditPage() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Assignment Instructions
               </label>
-              <RichTextEditor
+              <LatexRichTextEditor
                 value={formData.contentData || ''}
                 onChange={(content) => handleInputChange('contentData', content)}
                 placeholder="Enter assignment instructions..."
+                height={300}
+                className="border border-gray-300 rounded-md"
               />
             </div>
           </div>

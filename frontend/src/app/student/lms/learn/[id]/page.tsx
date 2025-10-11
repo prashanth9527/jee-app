@@ -188,6 +188,14 @@ export default function LearningPage() {
     updateProgress(100, 'COMPLETED');
   };
 
+  const markAsReview = () => {
+    updateProgress(100, 'REVIEW');
+  };
+
+  const markAsRevisit = () => {
+    updateProgress(100, 'REVISIT');
+  };
+
   const navigateToContent = (newContentId: string) => {
     router.push(`/student/lms/learn/${newContentId}`);
   };
@@ -471,12 +479,26 @@ export default function LearningPage() {
                     >
                       +10%
                     </button>
-                    <button
-                      onClick={markAsCompleted}
-                      className="px-4 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700"
-                    >
-                      Mark Complete
-                    </button>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={markAsCompleted}
+                        className="px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700"
+                      >
+                        Complete
+                      </button>
+                      <button
+                        onClick={markAsReview}
+                        className="px-3 py-1 text-sm bg-yellow-600 text-white rounded hover:bg-yellow-700"
+                      >
+                        Review
+                      </button>
+                      <button
+                        onClick={markAsRevisit}
+                        className="px-3 py-1 text-sm bg-orange-600 text-white rounded hover:bg-orange-700"
+                      >
+                        Revisit
+                      </button>
+                    </div>
                   </div>
                 </div>
 

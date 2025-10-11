@@ -6,6 +6,8 @@ import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
 import QuestionReportModal from '@/components/QuestionReportModal';
+import FilterSidebar from '@/components/FilterSidebar';
+import FilterSidebarToggle from '@/components/FilterSidebarToggle';
 import LatexContentDisplay from '@/components/LatexContentDisplay';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
@@ -91,6 +93,9 @@ export default function ExamPage() {
   
   // Tree structure data
   const [treeData, setTreeData] = useState<any>(null);
+  
+  // Sidebar toggle state
+  const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
   
   const questionStartTime = useRef<number>(Date.now());
   const timerRef = useRef<NodeJS.Timeout | undefined>(undefined);
@@ -225,6 +230,10 @@ export default function ExamPage() {
     setSelectedLesson(null);
     setSelectedTopic(null);
     setSelectedSubtopic(null);
+  };
+
+  const toggleFilterSidebar = () => {
+    setIsFilterSidebarOpen(!isFilterSidebarOpen);
   };
 
   const handleAutoSubmit = async () => {
@@ -685,6 +694,44 @@ export default function ExamPage() {
               </div>
             </div>
 
+            {/* Filter Sidebar Toggle */}
+            <FilterSidebarToggle 
+              isOpen={isFilterSidebarOpen} 
+              onToggle={toggleFilterSidebar}
+            />
+
+            {/* Filter Sidebar */}
+            <FilterSidebar
+              isOpen={isFilterSidebarOpen}
+              onClose={() => setIsFilterSidebarOpen(false)}
+              treeData={treeData}
+              selectedSubject={selectedSubject}
+              selectedLesson={selectedLesson}
+              selectedTopic={selectedTopic}
+              selectedSubtopic={selectedSubtopic}
+              onSubjectSelect={(id) => {
+                setSelectedSubject(id);
+                setSelectedLesson(null);
+                setSelectedTopic(null);
+                setSelectedSubtopic(null);
+              }}
+              onLessonSelect={(id) => {
+                setSelectedLesson(id);
+                setSelectedTopic(null);
+                setSelectedSubtopic(null);
+              }}
+              onTopicSelect={(id) => {
+                setSelectedTopic(id);
+                setSelectedSubtopic(null);
+              }}
+              onSubtopicSelect={setSelectedSubtopic}
+              onClearFilters={clearFilters}
+              filteredQuestions={filteredQuestions}
+              currentQuestionIndex={currentQuestionIndex}
+              onQuestionSelect={setCurrentQuestionIndex}
+              className="lg:block"
+            />
+
             <div className="flex">
               {/* Main Content */}
               <div className="flex-1 p-6">
@@ -777,170 +824,77 @@ export default function ExamPage() {
                 </div>
               </div>
               
-              {/* Tree Navigation Sidebar */}
+              {/* Right Sidebar - Additional Information */}
               <div className="w-80 bg-white shadow-lg p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Filter Questions</h3>
-                  {(selectedSubject || selectedLesson || selectedTopic || selectedSubtopic) && (
-                    <button
-                      onClick={clearFilters}
-                      className="text-xs text-blue-600 hover:text-blue-800"
-                    >
-                      Clear All
-                    </button>
+                  <h3 className="text-lg font-semibold text-gray-900">Exam Progress</h3>
+                </div>
+                
+                {/* Exam Progress */}
+                <div className="space-y-3 mb-6">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Total Questions:</span>
+                    <span className="font-medium">{questions.length}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Answered:</span>
+                    <span className="font-medium text-green-600">{answers.filter(a => a.selectedOptionId).length}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Marked for Review:</span>
+                    <span className="font-medium text-yellow-600">{answers.filter(a => a.isMarkedForReview).length}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Unanswered:</span>
+                    <span className="font-medium text-gray-600">{answers.filter(a => !a.selectedOptionId).length}</span>
+                  </div>
+                  {timeRemaining > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Time Remaining:</span>
+                      <span className="font-medium text-red-600">{formatTime(timeRemaining)}</span>
+                    </div>
                   )}
                 </div>
                 
-                {/* Tree Structure */}
-                {treeData && (
-                  <div className="space-y-2 max-h-96 overflow-y-auto mb-4">
-                    {Object.values(treeData).map((subject: any) => (
-                      <div key={subject.id} className="border border-gray-200 rounded-md">
-                        <button
-                          onClick={() => {
-                            setSelectedSubject(selectedSubject === subject.id ? null : subject.id);
-                            setSelectedLesson(null);
-                            setSelectedTopic(null);
-                            setSelectedSubtopic(null);
-                          }}
-                          className={`w-full text-left p-2 text-sm font-medium flex items-center justify-between ${
-                            selectedSubject === subject.id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50'
-                          }`}
-                        >
-                          <div className="flex items-center">
-                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
-                            </svg>
-                            {subject.name}
-                          </div>
-                          <span className="text-xs text-gray-500">({subject.count})</span>
-                        </button>
-                        
-                        {selectedSubject === subject.id && (
-                          <div className="border-t border-gray-200 bg-gray-50">
-                            {Object.values(subject.lessons).map((lesson: any) => (
-                              <div key={lesson.id} className="border-b border-gray-200 last:border-b-0">
-                                <button
-                                  onClick={() => {
-                                    setSelectedLesson(selectedLesson === lesson.id ? null : lesson.id);
-                                    setSelectedTopic(null);
-                                    setSelectedSubtopic(null);
-                                  }}
-                                  className={`w-full text-left p-2 pl-6 text-sm flex items-center justify-between ${
-                                    selectedLesson === lesson.id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50'
-                                  }`}
-                                >
-                                  <div className="flex items-center">
-                                    <svg className="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                    </svg>
-                                    {lesson.name}
-                                  </div>
-                                  <span className="text-xs text-gray-500">({lesson.count})</span>
-                                </button>
-                                
-                                {selectedLesson === lesson.id && (
-                                  <div className="bg-white">
-                                    {Object.values(lesson.topics).map((topic: any) => (
-                                      <div key={topic.id} className="border-b border-gray-100 last:border-b-0">
-                                        <button
-                                          onClick={() => {
-                                            setSelectedTopic(selectedTopic === topic.id ? null : topic.id);
-                                            setSelectedSubtopic(null);
-                                          }}
-                                          className={`w-full text-left p-2 pl-8 text-sm flex items-center justify-between ${
-                                            selectedTopic === topic.id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50'
-                                          }`}
-                                        >
-                                          <div className="flex items-center">
-                                            <svg className="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                                            </svg>
-                                            {topic.name}
-                                          </div>
-                                          <span className="text-xs text-gray-500">({topic.count})</span>
-                                        </button>
-                                        
-                                        {selectedTopic === topic.id && (
-                                          <div className="bg-gray-50">
-                                            {Object.values(topic.subtopics).map((subtopic: any) => (
-                                              <button
-                                                key={subtopic.id}
-                                                onClick={() => setSelectedSubtopic(selectedSubtopic === subtopic.id ? null : subtopic.id)}
-                                                className={`w-full text-left p-2 pl-10 text-sm flex items-center justify-between ${
-                                                  selectedSubtopic === subtopic.id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50'
-                                                }`}
-                                              >
-                                                <div className="flex items-center">
-                                                  <svg className="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                                  </svg>
-                                                  {subtopic.name}
-                                                </div>
-                                                <span className="text-xs text-gray-500">({subtopic.count})</span>
-                                              </button>
-                                            ))}
-                                          </div>
-                                        )}
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                
                 {/* Question Navigation */}
                 <div className="pt-4 border-t border-gray-200">
-                  <h4 className="font-semibold text-gray-900 mb-3">Questions ({filteredQuestions.length})</h4>
-                <div className="grid grid-cols-5 gap-2 mb-4">
+                  <h4 className="font-semibold text-gray-900 mb-3">Quick Navigation</h4>
+                  <div className="grid grid-cols-5 gap-2 mb-4">
                     {filteredQuestions.map((_, index) => {
-                    const status = getQuestionStatus(index);
-                    return (
-                      <button
-                        key={index}
-                        onClick={() => handleJumpToQuestion(index)}
-                        className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${
-                          index === currentQuestionIndex
-                            ? 'ring-2 ring-blue-500'
-                            : ''
-                        } ${getQuestionStatusColor(status)} text-white`}
-                      >
-                        {index + 1}
-                      </button>
-                    );
-                  })}
-                </div>
-                
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center">
-                    <div className="w-4 h-4 bg-green-500 rounded mr-2"></div>
-                    <span>Answered</span>
+                      const status = getQuestionStatus(index);
+                      return (
+                        <button
+                          key={index}
+                          onClick={() => handleJumpToQuestion(index)}
+                          className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${
+                            index === currentQuestionIndex
+                              ? 'ring-2 ring-blue-500'
+                              : ''
+                          } ${getQuestionStatusColor(status)} text-white`}
+                        >
+                          {index + 1}
+                        </button>
+                      );
+                    })}
                   </div>
-                  <div className="flex items-center">
-                    <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
-                    <span>Answered & Marked</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
-                    <span>Marked for Review</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-4 h-4 bg-gray-300 rounded mr-2"></div>
-                    <span>Unanswered</span>
-                  </div>
-                </div>
-                
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                  <div className="text-sm text-gray-600">
-                    <div>Answered: {answers.filter(a => a.selectedOptionId).length}</div>
-                    <div>Marked for Review: {answers.filter(a => a.isMarkedForReview).length}</div>
-                    <div>Unanswered: {answers.filter(a => !a.selectedOptionId).length}</div>
+                  
+                  {/* Question Status Legend */}
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-green-500 rounded mr-2"></div>
+                      <span>Answered</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+                      <span>Answered & Marked</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
+                      <span>Marked for Review</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-gray-300 rounded mr-2"></div>
+                      <span>Unanswered</span>
                     </div>
                   </div>
                 </div>

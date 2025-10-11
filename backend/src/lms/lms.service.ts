@@ -263,11 +263,41 @@ export class LMSService {
       }
     }
 
+    // Validate parent content exists if provided
+    if (data.parentId && data.parentId.trim() !== '') {
+      const parent = await this.prisma.lMSContent.findUnique({
+        where: { id: data.parentId }
+      });
+      if (!parent) {
+        throw new BadRequestException('Parent content not found');
+      }
+    }
+
+    // Clean up the data object to handle empty strings and null values
+    const updateData = { ...data };
+    
+    // Convert empty strings to undefined for foreign key fields
+    if (updateData.parentId === '' || updateData.parentId === null) {
+      updateData.parentId = undefined;
+    }
+    if (updateData.streamId === '' || updateData.streamId === null) {
+      updateData.streamId = undefined;
+    }
+    if (updateData.subjectId === '' || updateData.subjectId === null) {
+      updateData.subjectId = undefined;
+    }
+    if (updateData.topicId === '' || updateData.topicId === null) {
+      updateData.topicId = undefined;
+    }
+    if (updateData.subtopicId === '' || updateData.subtopicId === null) {
+      updateData.subtopicId = undefined;
+    }
+
     const content = await this.prisma.lMSContent.update({
       where: { id },
       data: {
-      ...data,
-        dripDate: data.dripDate ? new Date(data.dripDate) : undefined,
+        ...updateData,
+        dripDate: updateData.dripDate ? new Date(updateData.dripDate) : undefined,
       },
       include: {
         stream: true,

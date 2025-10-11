@@ -60,7 +60,8 @@ export interface ChatGPTResponse {
 @Injectable()
 export class PDFProcessorService {
   private readonly logger = new Logger(PDFProcessorService.name);
-  private readonly contentDir = path.join(process.cwd(), '..', 'content', 'JEE', 'Previous Papers');
+  // private readonly contentDir = path.join(process.cwd(), '..', 'content', 'JEE', 'Previous Papers');
+  private readonly contentDir = path.join(process.cwd(), '..', 'content');
   private readonly processedDir = path.join(process.cwd(), '..', 'content', 'JEE', 'Processed');
 
   // Fixed system prompt for JEE question extraction
@@ -1995,5 +1996,11 @@ Do not generate or hallucinate new data under any circumstances.`;
         error: error.message
       };
     }
+  }
+
+  async getPDFByCacheId(cacheId: string) {
+    return await this.prisma.pDFProcessorCache.findUnique({
+      where: { id: cacheId }
+    });
   }
 }

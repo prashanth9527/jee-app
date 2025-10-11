@@ -100,6 +100,7 @@ export class PDFProcessorCacheController {
         success: true,
         message: 'Files synced successfully',
         synced: result.synced,
+        updated: result.updated,
         skipped: result.skipped,
         total: result.total
       };

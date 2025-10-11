@@ -211,6 +211,7 @@ export class PDFProcessorCacheService {
 
       let synced = 0;
       let skipped = 0;
+      let updated = 0;
 
       for (const fileInfo of pdfFiles) {
         try {
@@ -222,9 +223,35 @@ export class PDFProcessorCacheService {
           });
 
           if (existingRecord) {
-            this.logger.log(`Skipping existing file: ${fileInfo.relativePath}`);
+            // Check if recordType needs to be updated
+            let recordType = 'pyq'; // default
+            if (fileInfo.relativePath.includes('content\\JEE\\LMS')) {
+              recordType = 'lms';
+            } else if (fileInfo.relativePath.includes('content\\JEE\\question')) {
+              recordType = 'question';
+            }
+
+            // Update recordType if it's different or not set
+            if (existingRecord.recordType !== recordType) {
+              await this.prisma.pDFProcessorCache.update({
+                where: { id: existingRecord.id },
+                data: { recordType: recordType as any }
+              });
+              this.logger.log(`Updated recordType for existing file: ${fileInfo.relativePath} -> ${recordType}`);
+              updated++;
+            } else {
+              this.logger.log(`Skipping existing file: ${fileInfo.relativePath}`);
+            }
             skipped++;
             continue;
+          }
+
+          // Determine recordType based on file path
+          let recordType = 'pyq'; // default
+          if (fileInfo.relativePath.includes('content\\JEE\\LMS')) {
+            recordType = 'lms';
+          } else if (fileInfo.relativePath.includes('content\\JEE\\question')) {
+            recordType = 'question';
           }
 
           // Create new record
@@ -233,7 +260,8 @@ export class PDFProcessorCacheService {
               fileName: fileInfo.fileName,
               filePath: fileInfo.relativePath,
               fileSize: fileInfo.fileSize,
-              processingStatus: ProcessingStatus.PENDING
+              processingStatus: ProcessingStatus.PENDING,
+              recordType: recordType as any
             }
           });
 
@@ -245,10 +273,11 @@ export class PDFProcessorCacheService {
         }
       }
 
-      this.logger.log(`Sync completed: ${synced} files synced, ${skipped} duplicates skipped`);
+      this.logger.log(`Sync completed: ${synced} files synced, ${updated} files updated, ${skipped} duplicates skipped`);
       
       return {
         synced,
+        updated,
         skipped,
         total: pdfFiles.length
       };

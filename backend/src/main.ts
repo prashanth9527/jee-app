@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { Request, Response, NextFunction } from 'express';
+import * as bodyParser from 'body-parser';
 
 // Disable SSL certificate verification in development
 if (process.env.NODE_ENV !== 'production') {
@@ -12,6 +13,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+	// Increase the limit for JSON and URL-encoded payloads
+	app.use(bodyParser.json({ limit: '1024mb' }));
+	app.use(bodyParser.urlencoded({ limit: '1024mb', extended: true }));
 	
 	// Configure CORS based on environment
 	// Enable CORS with proxy support

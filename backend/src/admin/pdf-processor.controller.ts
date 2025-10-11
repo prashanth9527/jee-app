@@ -11,7 +11,8 @@ import {
   HttpException,
   HttpStatus,
   Res,
-  StreamableFile
+  StreamableFile,
+  Logger
 } from '@nestjs/common';
 import { Response } from 'express';
 import { createReadStream } from 'fs';
@@ -29,6 +30,8 @@ import { Roles } from '../auth/roles.decorator';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('ADMIN', 'EXPERT')
 export class PDFProcessorController {
+  private readonly logger = new Logger(PDFProcessorController.name);
+
   constructor(
     private readonly pdfProcessorService: PDFProcessorService,
     private readonly mathpixService: MathpixService,
@@ -513,16 +516,21 @@ export class PDFProcessorController {
   ) {
     try {
       // Get the file path from the PDF list
-      const pdfs = await this.pdfProcessorService.listPDFs();
-      const pdf = pdfs.find(p => p.fileName === fileName);
+      // const pdfs = await this.pdfProcessorService.listPDFs();
+      // const pdf = pdfs.find(p => p.fileName === fileName);
+      const pdf = await this.pdfProcessorService.getPDFByCacheId(fileName);
       
       if (!pdf) {
         throw new BadRequestException('PDF file not found');
       }
 
+      const filePath = path.join(process.cwd(), '..', pdf.filePath);
+
+      this.logger.log(`PDF PATH: ${filePath}`);
+
       const result = await this.mathpixService.processPdfWithMathpixByFileNameWithOptions(
-        fileName, 
-        pdf.filePath, 
+        pdf.fileName, 
+        filePath, 
         options
       );
       
