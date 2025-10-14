@@ -10,37 +10,37 @@ datasource db {
 }
 
 model User {
-  id                String           @id @default(cuid())
-  email             String           @unique
-  phone             String?          @unique
+  id                String             @id @default(cuid())
+  email             String             @unique
+  phone             String?            @unique
   pendingPhone      String?
-  emailVerified     Boolean          @default(false)
-  phoneVerified     Boolean          @default(false)
+  emailVerified     Boolean            @default(false)
+  phoneVerified     Boolean            @default(false)
   hashedPassword    String?
   fullName          String
-  role              UserRole         @default(STUDENT)
+  role              UserRole           @default(STUDENT)
   streamId          String?
-  googleId          String?          @unique
+  googleId          String?            @unique
   profilePicture    String?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
   trialStartedAt    DateTime?
   trialEndsAt       DateTime?
-  aiTestsUsed       Int              @default(0)
-  aiTestsLimit      Int              @default(0)
+  aiTestsUsed       Int                @default(0)
+  aiTestsLimit      Int                @default(0)
   lastAiResetAt     DateTime?
-  createdExamPapers ExamPaper[]      @relation("ExamPaperCreator")
+  createdExamPapers ExamPaper[]        @relation("ExamPaperCreator")
   examSubmissions   ExamSubmission[]
   otps              Otp[]
   paymentOrders     PaymentOrder[]
-  createdQuestions  Question[]       @relation("QuestionCreator")
-  reviewedReports   QuestionReport[] @relation("ReportReviewer")
+  createdQuestions  Question[]         @relation("QuestionCreator")
+  reviewedReports   QuestionReport[]   @relation("ReportReviewer")
   questionReports   QuestionReport[]
-  referralReceived  Referral?        @relation("Referee")
-  referralsMade     Referral[]       @relation("Referrer")
+  referralReceived  Referral?          @relation("Referee")
+  referralsMade     Referral[]         @relation("Referrer")
   referralCode      ReferralCode?
   subscriptions     Subscription[]
-  stream            Stream?          @relation(fields: [streamId], references: [id])
+  stream            Stream?            @relation(fields: [streamId], references: [id])
   blogBookmarks     BlogBookmark[]
   blogComments      BlogComment[]
   blogLikes         BlogLike[]
@@ -51,9 +51,9 @@ model User {
   lessonProgress    LessonProgress[]
   lmsProgress       LMSProgress[]
   subjectProgress   SubjectProgress[]
-  topicProgress     TopicProgress[]
   subtopicProgress  SubtopicProgress[]
   ticketResponses   TicketResponse[]
+  topicProgress     TopicProgress[]
   sessions          UserSession[]
 }
 
@@ -72,15 +72,15 @@ model Stream {
 }
 
 model Subject {
-  id          String       @id @default(cuid())
+  id          String            @id @default(cuid())
   name        String
   description String?
   streamId    String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
   lessons     Lesson[]
   questions   Question[]
-  stream      Stream       @relation(fields: [streamId], references: [id], onDelete: Cascade)
+  stream      Stream            @relation(fields: [streamId], references: [id], onDelete: Cascade)
   topics      Topic[]
   blogs       Blog[]
   lmsContent  LMSContent[]
@@ -109,18 +109,18 @@ model Lesson {
 }
 
 model Topic {
-  id          String       @id @default(cuid())
+  id          String          @id @default(cuid())
   name        String
   description String?
   lessonId    String
   subjectId   String
-  order       Int          @default(0)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  order       Int             @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
   questions   Question[]
   subtopics   Subtopic[]
-  lesson      Lesson       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  subject     Subject      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  lesson      Lesson          @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  subject     Subject         @relation(fields: [subjectId], references: [id], onDelete: Cascade)
   lmsContent  LMSContent[]
   progress    TopicProgress[]
 
@@ -129,15 +129,15 @@ model Topic {
 }
 
 model Subtopic {
-  id          String       @id @default(cuid())
+  id          String             @id @default(cuid())
   name        String
   description String?
   topicId     String
-  order       Int          @default(0)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  order       Int                @default(0)
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
   questions   Question[]
-  topic       Topic        @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topic       Topic              @relation(fields: [topicId], references: [id], onDelete: Cascade)
   lmsContent  LMSContent[]
   progress    SubtopicProgress[]
 
@@ -631,6 +631,7 @@ model LMSContent {
   subtopic         Subtopic?     @relation(fields: [subtopicId], references: [id])
   topic            Topic?        @relation(fields: [topicId], references: [id])
   progress         LMSProgress[]
+  pdfProcessorCache PDFProcessorCache[]
 
   @@map("lms_content")
 }
@@ -705,24 +706,24 @@ model LessonProgress {
 }
 
 model TopicProgress {
-  id               String         @id @default(cuid())
-  userId           String
-  topicId          String
-  status           ProgressStatus @default(NOT_STARTED)
-  progress         Float          @default(0)
-  timeSpent        Int            @default(0)
-  startedAt        DateTime?
-  completedAt      DateTime?
-  lastAccessedAt   DateTime?
-  contentCompleted Int            @default(0)
-  totalContent     Int            @default(0)
-  subtopicsCompleted Int          @default(0)
-  totalSubtopics   Int            @default(0)
-  averageScore     Float?
-  attempts         Int            @default(0)
-  data             Json?
-  topic            Topic          @relation(fields: [topicId], references: [id], onDelete: Cascade)
-  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                 String         @id @default(cuid())
+  userId             String
+  topicId            String
+  status             ProgressStatus @default(NOT_STARTED)
+  progress           Float          @default(0)
+  timeSpent          Int            @default(0)
+  startedAt          DateTime?
+  completedAt        DateTime?
+  lastAccessedAt     DateTime?
+  contentCompleted   Int            @default(0)
+  totalContent       Int            @default(0)
+  subtopicsCompleted Int            @default(0)
+  totalSubtopics     Int            @default(0)
+  averageScore       Float?
+  attempts           Int            @default(0)
+  data               Json?
+  topic              Topic          @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, topicId])
   @@map("topic_progress")
@@ -737,7 +738,7 @@ model SubtopicProgress {
   timeSpent        Int            @default(0)
   startedAt        DateTime?
   completedAt      DateTime?
-  lastAccessedAt     DateTime?
+  lastAccessedAt   DateTime?
   contentCompleted Int            @default(0)
   totalContent     Int            @default(0)
   averageScore     Float?
@@ -896,6 +897,7 @@ model PDFProcessorCache {
   latexContent     String?
   latexFilePath    String?
   zipFilePath      String?
+  pdfFilePath      String?
   errorMessage     String?
   processingTimeMs Int?
   retryCount       Int               @default(0)
@@ -903,6 +905,10 @@ model PDFProcessorCache {
   importedAt       DateTime?
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
+  htmlFilePath     String?
+  htmlContent      String?
+  lmsContentId     String?
+  lmsContent       LMSContent? @relation(fields: [lmsContentId], references: [id])
   questions        Question[]
   logs             PDFProcessorLog[]
 
@@ -1055,6 +1061,7 @@ enum ContentType {
 
 enum ContentStatus {
   DRAFT
+  APPROVED
   PUBLISHED
   ARCHIVED
   SCHEDULED

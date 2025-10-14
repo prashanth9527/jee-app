@@ -311,6 +311,22 @@ export default function LearningPage() {
           </div>
         );
 
+      case 'TEXT':
+        return (
+          <div className="space-y-4">
+            {content.contentData?.htmlContent ? (
+              <div 
+                className="prose max-w-none"
+                dangerouslySetInnerHTML={{ __html: content.contentData.htmlContent }}
+              />
+            ) : (
+              <div className="bg-gray-100 p-8 rounded-lg text-center">
+                <p className="text-gray-500">Text content not available</p>
+              </div>
+            )}
+          </div>
+        );
+
       default:
         return (
           <div className="bg-gray-100 p-8 rounded-lg text-center">

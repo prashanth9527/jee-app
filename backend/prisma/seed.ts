@@ -70,7 +70,7 @@ async function main() {
       emailVerified: true,
       phoneVerified: true,
       trialStartedAt: new Date(),
-      trialEndsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
+      trialEndsAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 2 days from now
       aiTestsUsed: 0,
       aiTestsLimit: 10, // 10 AI tests per month
       lastAiResetAt: new Date(),
@@ -87,7 +87,7 @@ async function main() {
       emailVerified: true,
       phoneVerified: true,
       trialStartedAt: new Date(),
-      trialEndsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+      trialEndsAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
       aiTestsUsed: 0,
       aiTestsLimit: 10, // 10 AI tests per month
       lastAiResetAt: new Date(),
@@ -105,7 +105,7 @@ async function main() {
       emailVerified: true,
       phoneVerified: true,
       trialStartedAt: new Date(),
-      trialEndsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+      trialEndsAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
       aiTestsUsed: 0,
       aiTestsLimit: 10,
       lastAiResetAt: new Date(),

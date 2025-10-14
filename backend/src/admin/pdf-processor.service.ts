@@ -471,56 +471,41 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
   }
 
   /**
-   * Save JSON content to local file
+   * Save JSON content to AWS S3 only (no local storage)
    */
   private async saveJsonToFile(fileName: string, jsonContent: string): Promise<string> {
     try {
-      // Create processed directory if it doesn't exist
-      const processedDir = path.join(process.cwd(), 'content', 'Processed');
-      if (!fs.existsSync(processedDir)) {
-        fs.mkdirSync(processedDir, { recursive: true });
-      }
-
       // Generate JSON file name (replace .pdf with .json)
       const jsonFileName = fileName.replace(/\.pdf$/i, '.json');
-      const jsonFilePath = path.join(processedDir, jsonFileName);
 
-      // Write JSON content to file with proper formatting
+      // Format JSON content
       const formattedJson = JSON.stringify(JSON.parse(jsonContent), null, 2);
-      fs.writeFileSync(jsonFilePath, formattedJson, 'utf8');
 
-      this.logger.log(`📋 JSON content saved locally to: ${jsonFilePath}`);
+      this.logger.log(`📤 Uploading JSON content to AWS: ${jsonFileName}`);
 
-      // Upload to AWS and return AWS URL
-      try {
-        const fileBuffer = Buffer.from(formattedJson, 'utf8');
-        const mockFile: Express.Multer.File = {
-          fieldname: 'file',
-          originalname: jsonFileName,
-          encoding: '7bit',
-          mimetype: 'application/json',
-          buffer: fileBuffer,
-          size: fileBuffer.length,
-          stream: Readable.from(fileBuffer),
-          destination: '',
-          filename: jsonFileName,
-          path: jsonFilePath,
-        };
+      // Upload directly to AWS (no local storage)
+      const fileBuffer = Buffer.from(formattedJson, 'utf8');
+      const mockFile: Express.Multer.File = {
+        fieldname: 'file',
+        originalname: jsonFileName,
+        encoding: '7bit',
+        mimetype: 'application/json',
+        buffer: fileBuffer,
+        size: fileBuffer.length,
+        stream: Readable.from(fileBuffer),
+        destination: '',
+        filename: jsonFileName,
+        path: '', // No local path needed
+      };
 
-        const awsUrl = await this.awsService.uploadFileWithCustomName(mockFile, 'content/processed', jsonFileName);
-        this.logger.log(`☁️ JSON file uploaded to AWS: ${awsUrl}`);
-        
-        // Return AWS URL for serving
-        return awsUrl;
-      } catch (awsError) {
-        this.logger.error(`❌ Failed to upload JSON file to AWS: ${awsError.message}`);
-        // Return local path as fallback
-        return jsonFilePath;
-      }
+      const awsUrl = await this.awsService.uploadFileWithCustomName(mockFile, 'content/processed', jsonFileName);
+      this.logger.log(`☁️ JSON file uploaded to AWS: ${awsUrl}`);
+      
+      return awsUrl;
 
     } catch (error) {
-      this.logger.error(`Failed to save JSON file:`, error);
-      throw new Error(`Failed to save JSON file: ${error.message}`);
+      this.logger.error(`Failed to upload JSON file to AWS:`, error);
+      throw new Error(`Failed to upload JSON file to AWS: ${error.message}`);
     }
   }
 

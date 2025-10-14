@@ -64,6 +64,23 @@ export class AwsService {
     return `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${key}`;
   }
 
+  async uploadFileFromPath(filePath: string, key: string, contentType: string = 'application/octet-stream'): Promise<string> {
+    const fs = require('fs');
+    const fileBuffer = fs.readFileSync(filePath);
+    
+    const command = new PutObjectCommand({
+      Bucket: this.bucketName,
+      Key: key,
+      Body: fileBuffer,
+      ContentType: contentType,
+      ACL: undefined,
+    });
+
+    await this.s3Client.send(command);
+    
+    return `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${key}`;
+  }
+
   async deleteFile(fileUrl: string): Promise<void> {
     if (!fileUrl || !fileUrl.includes('.amazonaws.com/')) {
       return;

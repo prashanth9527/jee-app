@@ -24,6 +24,9 @@ interface PDFProcessorCacheRecord {
   latexContent?: string;
   latexFilePath?: string;
   zipFilePath?: string;
+  htmlContent?: string;
+  htmlFilePath?: string;
+  lmsContentId?: string;
   errorMessage?: string;
   processingTimeMs?: number;
   retryCount: number;
@@ -107,15 +110,18 @@ export default function PDFProcessorCachePage() {
       const response = await api.get(`/admin/pdf-processor-cache?${params}`);
       
       if (response.data.success) {
-        setRecords(response.data.data);
+        setRecords(response.data.data || []);
         setPagination(prev => ({
           ...prev,
           ...response.data.pagination
         }));
+      } else {
+        setRecords([]);
       }
     } catch (error) {
       console.error('Error fetching records:', error);
       toast.error('Failed to fetch PDF processor cache records');
+      setRecords([]);
     } finally {
       setLoading(false);
     }
@@ -235,6 +241,71 @@ export default function PDFProcessorCachePage() {
     }
   };
 
+  const processWithMathpixToHtml = async (fileName: string) => {
+    const record = records.find(r => r.id === fileName);
+    if (!record) {
+      toast.error('Record not found');
+      return;
+    }
+
+    const result = await Swal.fire({
+      title: 'Process with Mathpix to HTML',
+      html: `
+        <div>
+          <p>This will process "${record.fileName}" with Mathpix to extract HTML content. This may take a few minutes.</p>
+          <div style="margin-top: 15px;">
+            <label style="display: flex; align-items: center; gap: 8px;">
+              <input type="checkbox" id="ignoreBackgroundHtml" ${ignoreBackground ? 'checked' : ''} style="margin: 0;">
+              <span>Ignore page backgrounds (skip_recrop)</span>
+            </label>
+            <small style="color: #666; margin-top: 5px; display: block;">
+              This helps Mathpix focus on text content and ignore decorative backgrounds
+            </small>
+          </div>
+        </div>
+      `,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Process to HTML',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: '#10b981', // Green color for HTML processing
+      preConfirm: () => {
+        const checkbox = document.getElementById('ignoreBackgroundHtml') as HTMLInputElement;
+        return { ignoreBackground: checkbox.checked };
+      }
+    });
+
+    if (!result.isConfirmed) return;
+
+    const backgroundOption = result.value?.ignoreBackground ?? ignoreBackground;
+    setIgnoreBackground(backgroundOption);
+
+    setProcessing(fileName);
+    toast.loading('Processing PDF with Mathpix to HTML...', 'Please wait');
+
+    try {
+      const response = await api.post(`/admin/pdf-processor-cache/${record.id}/process-mathpix-html`);
+
+      console.log('HTML processing response', response);
+      if (response.data.success) {
+        toast.success('PDF processed with Mathpix to HTML successfully');
+        console.log('HTML processing result:', response.data.data);
+        // Add a small delay to ensure database is fully updated
+        setTimeout(() => {
+          fetchRecords();
+          fetchStats();
+        }, 1000);
+      } else {
+        toast.error(response.data.message || 'Mathpix HTML processing failed');
+      }
+    } catch (error: any) {
+      console.error('Error processing with Mathpix to HTML:', error);
+      toast.error(`Failed to process with Mathpix to HTML: ${error.response?.data?.message || error.message}`);
+    } finally {
+      setProcessing(null);
+    }
+  };
+
   const copyId = async (id: string) => {
     try {
       await navigator.clipboard.writeText(id);
@@ -323,6 +394,68 @@ export default function PDFProcessorCachePage() {
     }
   };
 
+  const viewHtml = (htmlContent: string, fileName: string) => {
+    // Create a new window/tab to display HTML content
+    const htmlWindow = window.open('', '_blank');
+    if (htmlWindow) {
+      htmlWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>HTML Content - ${fileName}</title>
+          <meta charset="utf-8">
+          <style>
+            body { 
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+              margin: 20px; 
+              background: #f5f5f5;
+              line-height: 1.6;
+            }
+            .container { 
+              max-width: 1200px; 
+              margin: 0 auto; 
+              background: white; 
+              padding: 20px; 
+              border-radius: 8px; 
+              box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            .html-content { 
+              background: #f8f9fa; 
+              padding: 20px; 
+              border-radius: 4px; 
+              overflow-x: auto; 
+              border: 1px solid #e9ecef;
+            }
+            h1 { 
+              color: #333; 
+              border-bottom: 2px solid #10b981; 
+              padding-bottom: 10px;
+            }
+            .file-info {
+              background: #d1fae5;
+              padding: 10px;
+              border-radius: 4px;
+              margin-bottom: 20px;
+              border-left: 4px solid #10b981;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1>HTML Content</h1>
+            <div class="file-info">
+              <strong>File:</strong> ${fileName}<br>
+              <strong>Generated:</strong> ${new Date().toLocaleString()}
+            </div>
+            <div class="html-content">${htmlContent}</div>
+          </div>
+        </body>
+        </html>
+      `);
+      htmlWindow.document.close();
+    }
+  };
+
   const openJsonEditor = async (fileName: string) => {
     const record = records.find(r => r.fileName === fileName);
     if (!record) {
@@ -362,6 +495,84 @@ export default function PDFProcessorCachePage() {
       toast.close();
       toast.error(`Error: ${error.response?.data?.message || error.message}`);
     }
+  };
+
+  const saveLMSContent = async () => {
+    if (!editingJson) return;
+
+    const currentRecord = records.find(r => r.fileName === editingJson);
+    if (!currentRecord || currentRecord.recordType !== 'lms') {
+      toast.error('This function is only available for LMS records');
+      return;
+    }
+
+    if (!currentRecord.htmlContent) {
+      toast.error('No HTML content found for this record');
+      return;
+    }
+
+    toast.loading('Saving LMS content...', 'Please wait');
+    
+    try {
+      const response = await api.post(`/admin/pdf-processor-cache/${currentRecord.id}/save-lms-content`);
+      
+      if (response.data.success) {
+        toast.close();
+        toast.success('LMS content saved successfully!');
+        fetchRecords();
+        refreshModalData();
+      }
+    } catch (error: any) {
+      console.error('Error saving LMS content:', error);
+      toast.close();
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
+  const deleteLMSContent = async () => {
+    if (!editingJson) return;
+
+    const currentRecord = records.find(r => r.fileName === editingJson);
+    if (!currentRecord) return;
+
+    const confirmed = await Swal.fire({
+      title: 'Delete LMS Content',
+      html: `This will delete the LMS content for <strong>${editingJson}</strong><br><br>This action cannot be undone. Are you sure you want to continue?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (!confirmed.isConfirmed) return;
+
+    try {
+      toast.loading('Deleting LMS content...', 'Please wait');
+      const response = await api.delete(`/admin/pdf-processor-cache/${currentRecord.id}/delete-lms-content`);
+      
+      if (response.data.success) {
+        toast.close();
+        toast.success('LMS content deleted successfully!');
+        fetchRecords();
+        refreshModalData();
+      }
+    } catch (error: any) {
+      console.error('Error deleting LMS content:', error);
+      toast.close();
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
+  const previewLMSContent = () => {
+    if (!editingJson) return;
+
+    const currentRecord = records.find(r => r.fileName === editingJson);
+    if (!currentRecord) return;
+
+    // Navigate to the LMS content preview page
+    window.open(`/admin/lms-content-preview/${currentRecord.id}`, '_blank');
   };
 
   const markAsCompleted = async () => {
@@ -920,7 +1131,7 @@ export default function PDFProcessorCachePage() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {records.map((record) => (
+                  {records && records.length > 0 ? records.map((record) => (
                     <tr key={record.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900 truncate max-w-xs" title={record.fileName}>
@@ -951,6 +1162,18 @@ export default function PDFProcessorCachePage() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
                             View LaTeX
+                          </button>
+                          )}
+                          {record.htmlContent && (
+                          <button
+                            onClick={() => viewHtml(record.htmlContent || '', record.fileName)}
+                            className="inline-flex items-center px-2 py-1 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
+                            title="View HTML"
+                          >
+                            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                            View HTML
                           </button>
                           )}
                         </div>
@@ -1055,6 +1278,45 @@ export default function PDFProcessorCachePage() {
                             </button>
                           )}
 
+                          {/* Mathpix HTML Processing Button */}
+                          {!record.htmlFilePath ? (
+                            <button
+                              onClick={() => processWithMathpixToHtml(record.id)}
+                              disabled={processing === record.id}
+                              className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            >
+                              {processing === record.id ? (
+                                <>
+                                  <svg className="animate-spin -ml-1 mr-1 h-3 w-3 text-white" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                  Processing...
+                                </>
+                              ) : (
+                                'Process HTML'
+                              )}
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => processWithMathpixToHtml(record.id)}
+                              disabled={processing === record.id}
+                              className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            >
+                              {processing === record.id ? (
+                                <>
+                                  <svg className="animate-spin -ml-1 mr-1 h-3 w-3 text-white" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                  Processing...
+                                </>
+                              ) : (
+                                'Retry HTML'
+                              )}
+                            </button>
+                          )}
+
                           {/* Delete Button - Red */}
                           <button
                             onClick={() => handleDelete(record.id, record.fileName)}
@@ -1069,12 +1331,12 @@ export default function PDFProcessorCachePage() {
                         </div>
                       </td>
                     </tr>
-                  ))}
+                  )) : null}
                 </tbody>
               </table>
             </div>
 
-            {records.length === 0 && !loading && (
+            {(!records || records.length === 0) && !loading && (
               <div className="text-center py-12">
                 <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -1186,7 +1448,7 @@ export default function PDFProcessorCachePage() {
                           currentStatus === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
                           'bg-gray-100 text-gray-800'
                         }`}>
-                          {currentStatus}
+                          {currentStatus} ({records.find(r => r.fileName === editingJson)?.recordType || 'Unknown'})
                         </span>
                       </div>
                     </div>
@@ -1494,31 +1756,55 @@ Do not generate or hallucinate new data under any circumstances.`;
                             </svg>
                           </button>
 
-                          {/* Process Claude Button */}
-                          <button
-                            onClick={processWithClaude}
-                            disabled={processing === editingJson}
-                            className="px-3 py-1 text-sm font-medium text-white bg-purple-600 border border-purple-200 rounded-md hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-1"
-                            title="Process LaTeX file with Claude AI"
-                          >
-                            {processing === editingJson ? (
-                              <>
-                                <svg className="animate-spin h-3 w-3 text-white" fill="none" viewBox="0 0 24 24">
-                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                <span>Processing...</span>
-                              </>
-                            ) : (
-                              <>
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                                <span>Process Claude</span>
-                              </>
-                            )}
-                          </button>
 
+                        </div>
+                      </div>
+                    )}
+
+                    {/* HTML File Path Display - Only for LMS records */}
+                    {records.find(r => r.fileName === editingJson)?.recordType === 'lms' && records.find(r => r.fileName === editingJson)?.htmlFilePath && (
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          HTML File Path
+                        </label>
+                        <div className="flex items-center space-x-2 p-3 bg-gray-50 border border-gray-300 rounded-md">
+                          <code className="flex-1 text-sm text-gray-800 font-mono break-all">
+                            {records.find(r => r.fileName === editingJson)?.htmlFilePath || 'HTML path not found'}
+                          </code>
+                          <button
+                            onClick={() => {
+                              const htmlPath = records.find(r => r.fileName === editingJson)?.htmlFilePath;
+                              if (htmlPath) {
+                                try {
+                                  // Split into base and filename parts
+                                  const lastSlashIndex = htmlPath.lastIndexOf('/');
+                                  const baseUrl = htmlPath.substring(0, lastSlashIndex + 1);
+                                  const fileName = htmlPath.substring(lastSlashIndex + 1);
+
+                                  // Encode only the filename (handles +, spaces, etc.)
+                                  const encodedPath = baseUrl + encodeURIComponent(fileName);
+
+                                  // Copy to clipboard
+                                  navigator.clipboard.writeText(encodedPath)
+                                    .then(() => toast.success('HTML file path copied to clipboard!'))
+                                    .catch(() => toast.error('Failed to copy HTML file path'));
+                                } catch (err) {
+                                  toast.error('Error encoding HTML file path');
+                                }
+                              }
+                            }}
+                            className="flex-shrink-0 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded-md transition-colors"
+                            title="Copy HTML file path to clipboard"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                              />
+                            </svg>
+                          </button>
                         </div>
                       </div>
                     )}
@@ -1574,6 +1860,43 @@ Do not generate or hallucinate new data under any circumstances.`;
                         >
                           Save JSON Content
                         </button>
+                        
+                        {/* LMS Content buttons for LMS records */}
+                        {(() => {
+                          const currentRecord = records.find(r => r.fileName === editingJson);
+                          if (currentRecord?.recordType === 'lms') {
+                            if (currentRecord.lmsContentId) {
+                              // Show Delete and Preview buttons if LMS content exists
+                              return (
+                                <>
+                                  <button
+                                    onClick={deleteLMSContent}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+                                  >
+                                    Delete Content
+                                  </button>
+                                  <button
+                                    onClick={previewLMSContent}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                                  >
+                                    Preview Content
+                                  </button>
+                                </>
+                              );
+                            } else {
+                              // Show Save Content button if no LMS content exists
+                              return (
+                                <button
+                                  onClick={saveLMSContent}
+                                  className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
+                                >
+                                  Save Content
+                                </button>
+                              );
+                            }
+                          }
+                          return null;
+                        })()}
                         
                         {/* Additional buttons based on record state */}
                         {(() => {

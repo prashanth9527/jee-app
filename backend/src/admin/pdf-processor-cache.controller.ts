@@ -48,6 +48,7 @@ export class PDFProcessorCacheController {
         sortOrder: sortOrderValue
       });
 
+      console.log('result', result);
       return {
         success: true,
         data: result.data,
@@ -101,8 +102,7 @@ export class PDFProcessorCacheController {
         message: 'Files synced successfully',
         synced: result.synced,
         updated: result.updated,
-        skipped: result.skipped,
-        total: result.total
+        skipped: result.skipped
       };
     } catch (error) {
       throw new HttpException(
@@ -158,6 +158,30 @@ export class PDFProcessorCacheController {
     }
   }
 
+  @Post(':id/process-mathpix-html')
+  async processWithMathpixToHtml(@Param('id') id: string) {
+    try {
+      console.log(`[Controller] Starting Mathpix HTML processing for ID: ${id}`);
+      const result = await this.pdfProcessorCacheService.processWithMathpixToHtml(id);
+      console.log(`[Controller] Mathpix HTML processing completed for ID: ${id}, success: ${result.success}`);
+      return {
+        success: result.success,
+        message: result.success ? 'PDF processed with Mathpix to HTML successfully' : 'Mathpix HTML processing failed',
+        data: result
+      };
+    } catch (error) {
+      console.error(`[Controller] Error processing Mathpix HTML for ID: ${id}:`, error);
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to process PDF with Mathpix to HTML',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
   @Post(':id/import-questions')
   async importQuestions(@Param('id') id: string) {
     try {
@@ -192,7 +216,6 @@ export class PDFProcessorCacheController {
         questionsCount: result.questionsCount,
         chunksProcessed: result.chunksProcessed,
         totalChunks: result.totalChunks,
-        metadata: result.metadata,
         data: result
       };
     } catch (error) {
@@ -220,7 +243,6 @@ export class PDFProcessorCacheController {
         jsonContent: result.jsonContent,
         questionsCount: result.questionsCount,
         chunksProcessed: result.chunksProcessed,
-        metadata: result.metadata,
         data: result
       };
     } catch (error) {
@@ -316,6 +338,214 @@ export class PDFProcessorCacheController {
         {
           success: false,
           message: 'Failed to delete PDF processor cache record',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Post(':id/save-lms-content')
+  async saveLMSContent(
+    @Param('id') id: string
+  ) {
+    try {
+      const body = await this.pdfProcessorCacheService.findOne(id);
+      if (!body) {
+        throw new HttpException(
+          {
+            success: false,
+            message: 'PDF processor cache record not found'
+          },
+          HttpStatus.NOT_FOUND
+        );
+      }
+      const result = await this.pdfProcessorCacheService.saveLMSContent(id, body.htmlContent || '', body.jsonContent || '');
+      return {
+        success: true,
+        data: result,
+        message: 'LMS content saved successfully'
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to save LMS content',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Delete(':id/delete-lms-content')
+  async deleteLMSContent(@Param('id') id: string) {
+    try {
+      const result = await this.pdfProcessorCacheService.deleteLMSContent(id);
+      return {
+        success: true,
+        data: result,
+        message: 'LMS content deleted successfully'
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to delete LMS content',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get(':id/preview-lms-content')
+  async previewLMSContent(@Param('id') id: string) {
+    try {
+      const result = await this.pdfProcessorCacheService.previewLMSContent(id);
+      return {
+        success: true,
+        data: result,
+        message: 'LMS content retrieved successfully'
+      };
+    } catch (error) {
+      console.error(`[Controller] Error previewing LMS content for ID: ${id}:`, error);
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to preview LMS content',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Post(':id/approve-lms-content')
+  async approveLMSContent(@Param('id') id: string, @Body() publishData: any) {
+    try {
+      const result = await this.pdfProcessorCacheService.approveLMSContent(id, publishData);
+      return {
+        success: true,
+        data: result,
+        message: 'LMS content published successfully'
+      };
+    } catch (error) {
+      console.error(`[Controller] Error publishing LMS content for ID: ${id}:`, error);
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to publish LMS content',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get('dropdowns/streams')
+  async getStreams() {
+    try {
+      const streams = await this.pdfProcessorCacheService.getStreams();
+      return {
+        success: true,
+        data: streams,
+        message: 'Streams retrieved successfully'
+      };
+    } catch (error) {
+      console.error(`[Controller] Error fetching streams:`, error);
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to fetch streams',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get('dropdowns/subjects')
+  async getSubjects(@Query('streamId') streamId?: string) {
+    try {
+      const subjects = await this.pdfProcessorCacheService.getSubjects(streamId);
+      return {
+        success: true,
+        data: subjects,
+        message: 'Subjects retrieved successfully'
+      };
+    } catch (error) {
+      console.error(`[Controller] Error fetching subjects:`, error);
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to fetch subjects',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get('dropdowns/lessons')
+  async getLessons(@Query('subjectId') subjectId?: string) {
+    try {
+      const lessons = await this.pdfProcessorCacheService.getLessons(subjectId);
+      return {
+        success: true,
+        data: lessons,
+        message: 'Lessons retrieved successfully'
+      };
+    } catch (error) {
+      console.error(`[Controller] Error fetching lessons:`, error);
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to fetch lessons',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get('dropdowns/topics')
+  async getTopics(@Query('lessonId') lessonId?: string) {
+    try {
+      const topics = await this.pdfProcessorCacheService.getTopics(lessonId);
+      return {
+        success: true,
+        data: topics,
+        message: 'Topics retrieved successfully'
+      };
+    } catch (error) {
+      console.error(`[Controller] Error fetching topics:`, error);
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to fetch topics',
+          error: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get('dropdowns/subtopics')
+  async getSubtopics(@Query('topicId') topicId?: string) {
+    try {
+      const subtopics = await this.pdfProcessorCacheService.getSubtopics(topicId);
+      return {
+        success: true,
+        data: subtopics,
+        message: 'Subtopics retrieved successfully'
+      };
+    } catch (error) {
+      console.error(`[Controller] Error fetching subtopics:`, error);
+      throw new HttpException(
+        {
+          success: false,
+          message: 'Failed to fetch subtopics',
           error: error.message
         },
         HttpStatus.INTERNAL_SERVER_ERROR
