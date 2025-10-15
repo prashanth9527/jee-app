@@ -5,6 +5,7 @@ import "../styles/math.css";
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { SystemSettingsProvider } from '@/contexts/SystemSettingsContext';
+import { ToastProvider } from '@/contexts/ToastContext';
 import { Analytics } from "@vercel/analytics/next"
 import MobileNavigation from '@/components/MobileNavigation';
 import PWAInstaller from '@/components/PWAInstaller';
@@ -183,14 +184,16 @@ export default function RootLayout({
         <ThemeProvider>
           <SystemSettingsProvider>
             <AuthProvider>
-              <div id="root" className="min-h-screen flex flex-col">
-                <main className="flex-1 pb-16 md:pb-0">
-                  {children}
-                  <Analytics />
-                </main>
-                <MobileNavigation />
-                <PWAInstaller />
-              </div>
+              <ToastProvider>
+                <div id="root" className="min-h-screen flex flex-col">
+                  <main className="flex-1 pb-16 md:pb-0">
+                    {children}
+                    <Analytics />
+                  </main>
+                  <MobileNavigation />
+                  <PWAInstaller />
+                </div>
+              </ToastProvider>
             </AuthProvider>
           </SystemSettingsProvider>
         </ThemeProvider>

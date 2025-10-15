@@ -6,8 +6,6 @@ import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
 import QuestionReportModal from '@/components/QuestionReportModal';
-import FilterSidebar from '@/components/FilterSidebar';
-import FilterSidebarToggle from '@/components/FilterSidebarToggle';
 import LatexContentDisplay from '@/components/LatexContentDisplay';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
@@ -84,18 +82,10 @@ export default function ExamPage() {
   const [examStarted, setExamStarted] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
   const [selectedQuestionForReport, setSelectedQuestionForReport] = useState<Question | null>(null);
+  const [userConfirmedExit, setUserConfirmedExit] = useState(false);
+  const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
   
-  // Filter states
-  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
-  const [selectedLesson, setSelectedLesson] = useState<string | null>(null);
-  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
-  const [selectedSubtopic, setSelectedSubtopic] = useState<string | null>(null);
   
-  // Tree structure data
-  const [treeData, setTreeData] = useState<any>(null);
-  
-  // Sidebar toggle state
-  const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
   
   const questionStartTime = useRef<number>(Date.now());
   const timerRef = useRef<NodeJS.Timeout | undefined>(undefined);
@@ -113,7 +103,6 @@ export default function ExamPage() {
       
       setQuestions(questionsData);
       setFilteredQuestions(questionsData);
-      generateTreeData(questionsData);
       
       // Initialize answers array
       const initialAnswers: QuestionAnswer[] = questionsData.map((q: Question) => ({
@@ -144,100 +133,32 @@ export default function ExamPage() {
     }
   };
 
-  const generateTreeData = (questionsData: Question[]) => {
-    const tree: any = {};
-    
-    questionsData.forEach((question, index) => {
-      const subjectName = question.subject?.name || 'Uncategorized';
-      const lessonName = question.lesson?.name || 'No Lesson';
-      const topicName = question.topic?.name || 'No Topic';
-      const subtopicName = question.subtopic?.name || 'No Subtopic';
-      
-      if (!tree[subjectName]) {
-        tree[subjectName] = {
-          name: subjectName,
-          id: question.subject?.id,
-          count: 0,
-          lessons: {}
-        };
-      }
-      
-      if (!tree[subjectName].lessons[lessonName]) {
-        tree[subjectName].lessons[lessonName] = {
-          name: lessonName,
-          id: question.lesson?.id,
-          count: 0,
-          topics: {}
-        };
-      }
-      
-      if (!tree[subjectName].lessons[lessonName].topics[topicName]) {
-        tree[subjectName].lessons[lessonName].topics[topicName] = {
-          name: topicName,
-          id: question.topic?.id,
-          count: 0,
-          subtopics: {}
-        };
-      }
-      
-      if (!tree[subjectName].lessons[lessonName].topics[topicName].subtopics[subtopicName]) {
-        tree[subjectName].lessons[lessonName].topics[topicName].subtopics[subtopicName] = {
-          name: subtopicName,
-          id: question.subtopic?.id,
-          count: 0,
-          questions: []
-        };
-      }
-      
-      // Add question to the appropriate subtopic
-      tree[subjectName].lessons[lessonName].topics[topicName].subtopics[subtopicName].questions.push({
-        ...question,
-        originalIndex: index
-      });
-      
-      // Update counts
-      tree[subjectName].count++;
-      tree[subjectName].lessons[lessonName].count++;
-      tree[subjectName].lessons[lessonName].topics[topicName].count++;
-      tree[subjectName].lessons[lessonName].topics[topicName].subtopics[subtopicName].count++;
-    });
-    
-    setTreeData(tree);
-  };
 
-  const filterQuestions = () => {
-    let filtered = questions;
-    
-    if (selectedSubject) {
-      filtered = filtered.filter(q => q.subject?.id === selectedSubject);
-    }
-    if (selectedLesson) {
-      filtered = filtered.filter(q => q.lesson?.id === selectedLesson);
-    }
-    if (selectedTopic) {
-      filtered = filtered.filter(q => q.topic?.id === selectedTopic);
-    }
-    if (selectedSubtopic) {
-      filtered = filtered.filter(q => q.subtopic?.id === selectedSubtopic);
-    }
-    
-    setFilteredQuestions(filtered);
-    setCurrentQuestionIndex(0);
-  };
 
-  const clearFilters = () => {
-    setSelectedSubject(null);
-    setSelectedLesson(null);
-    setSelectedTopic(null);
-    setSelectedSubtopic(null);
-  };
-
-  const toggleFilterSidebar = () => {
-    setIsFilterSidebarOpen(!isFilterSidebarOpen);
-  };
 
   const handleAutoSubmit = async () => {
     await submitExam('Time limit reached');
+  };
+
+  const showExitConfirmation = (targetUrl?: string) => {
+    Swal.fire({
+      title: 'Leave Exam?',
+      text: 'You are currently taking an exam. Are you sure you want to leave? Your progress may be lost.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Leave',
+      cancelButtonText: 'Stay in Exam',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User confirmed they want to leave - set flag to prevent further dialogs
+        setUserConfirmedExit(true);
+        // Navigate to the original target or default to LMS
+        const destination = targetUrl || pendingNavigation || '/student/lms';
+        router.push(destination);
+      }
+    });
   };
 
   const submitExam = async (reason: string) => {
@@ -349,6 +270,137 @@ export default function ExamPage() {
     }
   }, [submissionId]);
 
+  // Prevent navigation away from exam
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (examStarted && !examCompleted) {
+        e.preventDefault();
+        e.returnValue = 'You are currently taking an exam. Are you sure you want to leave? Your progress may be lost.';
+        return 'You are currently taking an exam. Are you sure you want to leave? Your progress may be lost.';
+      }
+    };
+
+    const handlePopState = (e: PopStateEvent) => {
+      if (examStarted && !examCompleted) {
+        e.preventDefault();
+        showExitConfirmation();
+      }
+    };
+
+    // Add event listeners
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [examStarted, examCompleted]);
+
+  // Override Next.js router to prevent navigation during exam
+  useEffect(() => {
+    if (examStarted && !examCompleted && !userConfirmedExit) {
+      // Store original push method
+      const originalPush = router.push;
+      const originalReplace = router.replace;
+      const originalBack = router.back;
+      const originalForward = router.forward;
+
+      // Override router methods
+      router.push = (href: string, options?: any) => {
+        setPendingNavigation(href);
+        showExitConfirmation(href);
+        return Promise.resolve(false);
+      };
+
+      router.replace = (href: string, options?: any) => {
+        setPendingNavigation(href);
+        showExitConfirmation(href);
+        return Promise.resolve(false);
+      };
+
+      router.back = () => {
+        showExitConfirmation();
+        return Promise.resolve(false);
+      };
+
+      router.forward = () => {
+        showExitConfirmation();
+        return Promise.resolve(false);
+      };
+
+      // Restore original methods when exam is completed or component unmounts
+      return () => {
+        router.push = originalPush;
+        router.replace = originalReplace;
+        router.back = originalBack;
+        router.forward = originalForward;
+      };
+    }
+  }, [examStarted, examCompleted, userConfirmedExit, router]);
+
+  // Handle navigation within the app
+  useEffect(() => {
+    if (!examStarted || examCompleted || userConfirmedExit) return;
+
+    // Intercept clicks on navigation links
+    const handleLinkClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      
+      if (link) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        
+        // Capture the target URL
+        const href = link.getAttribute('href');
+        if (href) {
+          setPendingNavigation(href);
+          showExitConfirmation(href);
+        } else {
+          showExitConfirmation();
+        }
+        return false;
+      }
+    };
+
+    // Intercept form submissions that might navigate away
+    const handleFormSubmit = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      showExitConfirmation();
+      return false;
+    };
+
+    // Intercept programmatic navigation
+    const handleNavigation = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      showExitConfirmation();
+      return false;
+    };
+
+    // Add event listeners with capture phase to intercept early
+    document.addEventListener('click', handleLinkClick, true);
+    document.addEventListener('submit', handleFormSubmit, true);
+    document.addEventListener('beforeunload', handleNavigation, true);
+    
+    // Also intercept on the document body for better coverage
+    document.body.addEventListener('click', handleLinkClick, true);
+    
+    // Cleanup
+    return () => {
+      document.removeEventListener('click', handleLinkClick, true);
+      document.removeEventListener('submit', handleFormSubmit, true);
+      document.removeEventListener('beforeunload', handleNavigation, true);
+      document.body.removeEventListener('click', handleLinkClick, true);
+    };
+  }, [examStarted, examCompleted, userConfirmedExit]);
+
   useEffect(() => {
     if (examStarted && timeRemaining > 0) {
       timerRef.current = setInterval(() => {
@@ -391,9 +443,6 @@ export default function ExamPage() {
     }
   }, [showResults]);
 
-  useEffect(() => {
-    filterQuestions();
-  }, [selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, questions]);
 
 
 
@@ -694,43 +743,6 @@ export default function ExamPage() {
               </div>
             </div>
 
-            {/* Filter Sidebar Toggle */}
-            <FilterSidebarToggle 
-              isOpen={isFilterSidebarOpen} 
-              onToggle={toggleFilterSidebar}
-            />
-
-            {/* Filter Sidebar */}
-            <FilterSidebar
-              isOpen={isFilterSidebarOpen}
-              onClose={() => setIsFilterSidebarOpen(false)}
-              treeData={treeData}
-              selectedSubject={selectedSubject}
-              selectedLesson={selectedLesson}
-              selectedTopic={selectedTopic}
-              selectedSubtopic={selectedSubtopic}
-              onSubjectSelect={(id) => {
-                setSelectedSubject(id);
-                setSelectedLesson(null);
-                setSelectedTopic(null);
-                setSelectedSubtopic(null);
-              }}
-              onLessonSelect={(id) => {
-                setSelectedLesson(id);
-                setSelectedTopic(null);
-                setSelectedSubtopic(null);
-              }}
-              onTopicSelect={(id) => {
-                setSelectedTopic(id);
-                setSelectedSubtopic(null);
-              }}
-              onSubtopicSelect={setSelectedSubtopic}
-              onClearFilters={clearFilters}
-              filteredQuestions={filteredQuestions}
-              currentQuestionIndex={currentQuestionIndex}
-              onQuestionSelect={setCurrentQuestionIndex}
-              className="lg:block"
-            />
 
             <div className="flex">
               {/* Main Content */}

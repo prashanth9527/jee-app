@@ -1,119 +1,100 @@
-import { Body, Controller, Get, Param, Post, Query, Req, UseGuards, ForbiddenException } from '@nestjs/common';
+import { 
+  Controller, 
+  Get, 
+  Post, 
+  Body, 
+  Param, 
+  Req, 
+  UseGuards,
+  NotFoundException,
+  BadRequestException
+} from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
 import { ExamsService } from './exams.service';
 
-@UseGuards(JwtAuthGuard)
-@Controller('exams')
+@Controller('student/exams')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('STUDENT')
 export class ExamsController {
-	constructor(private readonly exams: ExamsService) {}
+  constructor(private readonly examsService: ExamsService) {}
 
-	@Post('papers')
-	createPaper(@Body() body: { title: string; description?: string; subjectIds?: string[]; lessonIds?: string[]; topicIds?: string[]; subtopicIds?: string[]; questionIds?: string[]; timeLimitMin?: number }) {
-		return this.exams.createPaper(body);
-	}
+  @Get(':id')
+  async getExam(
+    @Req() req: any,
+    @Param('id') examId: string
+  ) {
+    return this.examsService.getExam(req.user.id, examId);
+  }
 
-	@Post('papers/:paperId/start')
-	start(@Req() req: any, @Param('paperId') paperId: string) {
-		return this.exams.startSubmission(req.user.id, paperId);
-	}
+  @Post(':id/submit')
+  async submitExam(
+    @Req() req: any,
+    @Param('id') examId: string,
+    @Body() body: {
+      answers: Array<{
+        questionId: string;
+        optionId: string;
+      }>;
+    }
+  ) {
+    return this.examsService.submitExam(req.user.id, examId, body.answers);
+  }
 
-	@Post('submissions/:submissionId/answer')
-	submit(@Param('submissionId') submissionId: string, @Body() body: { questionId: string; selectedOptionId?: string }) {
-		return this.exams.submitAnswer(submissionId, body.questionId, body.selectedOptionId || null);
-	}
+  @Get(':id/results')
+  async getExamResults(
+    @Req() req: any,
+    @Param('id') examId: string
+  ) {
+    return this.examsService.getExamResults(req.user.id, examId);
+  }
 
-	@Get('submissions/:submissionId')
-	async getSubmission(@Req() req: any, @Param('submissionId') submissionId: string) {
-		const submission = await this.exams.getSubmission(submissionId);
-		
-		// Check if user owns this submission
-		if (submission.userId !== req.user.id) {
-			throw new ForbiddenException('You can only access your own exam submissions');
-		}
-		
-		return submission;
-	}
+  @Post('papers/:id/start')
+  async startExam(
+    @Req() req: any,
+    @Param('id') examId: string
+  ) {
+    return this.examsService.startExam(req.user.id, examId);
+  }
+}
 
-	@Get('submissions/:submissionId/questions')
-	async getSubmissionQuestions(@Req() req: any, @Param('submissionId') submissionId: string) {
-		const submission = await this.exams.getSubmission(submissionId);
-		
-		// Check if user owns this submission
-		if (submission.userId !== req.user.id) {
-			throw new ForbiddenException('You can only access your own exam submissions');
-		}
-		
-		return this.exams.getSubmissionQuestions(submissionId);
-	}
+// Papers Controller
+@Controller('exams')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('STUDENT')
+export class PapersController {
+  constructor(private readonly examsService: ExamsService) {}
 
-	@Post('submissions/:submissionId/finalize')
-	async finalize(@Req() req: any, @Param('submissionId') submissionId: string) {
-		const submission = await this.exams.getSubmission(submissionId);
-		
-		// Check if user owns this submission
-		if (submission.userId !== req.user.id) {
-			throw new ForbiddenException('You can only access your own exam submissions');
-		}
-		
-		return this.exams.finalize(submissionId);
-	}
+  @Post('papers/:id/start')
+  async startExam(
+    @Req() req: any,
+    @Param('id') examId: string
+  ) {
+    return this.examsService.startExam(req.user.id, examId);
+  }
+}
 
-	@Get('submissions/:submissionId/results')
-	async getExamResults(@Req() req: any, @Param('submissionId') submissionId: string) {
-		const submission = await this.exams.getSubmission(submissionId);
-		
-		// Check if user owns this submission
-		if (submission.userId !== req.user.id) {
-			throw new ForbiddenException('You can only access your own exam submissions');
-		}
-		
-		return this.exams.getExamResults(submissionId);
-	}
+// Submissions Controller
+@Controller('exams/submissions')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('STUDENT')
+export class SubmissionsController {
+  constructor(private readonly examsService: ExamsService) {}
 
-	@Get('analytics/subjects')
-	async analyticsBySubject(@Req() req: any) {
-		return this.exams.analyticsBySubject(req.user.id);
-	}
+  @Get(':id')
+  async getSubmission(
+    @Req() req: any,
+    @Param('id') submissionId: string
+  ) {
+    return this.examsService.getSubmission(req.user.id, submissionId);
+  }
 
-	@Get('analytics/topics')
-	async analyticsByTopic(@Req() req: any) {
-		return this.exams.analyticsByTopic(req.user.id);
-	}
-
-	@Get('analytics/subtopics')
-	async analyticsBySubtopic(@Req() req: any) {
-		return this.exams.analyticsBySubtopic(req.user.id);
-	}
-
-	@Post('ai/generate-practice-test')
-	async generateAIPracticeTest(@Req() req: any, @Body() body: {
-		subjectId: string;
-		topicId?: string;
-		subtopicId?: string;
-		questionCount: number;
-		difficulty: 'EASY' | 'MEDIUM' | 'HARD';
-		timeLimitMin: number;
-	}) {
-		return this.exams.generateAIPracticeTest(req.user.id, body);
-	}
-
-	@Post('ai/generate-explanation')
-	async generateAIExplanation(@Req() req: any, @Body() body: {
-		questionId: string;
-		userAnswer?: string;
-	}) {
-		return this.exams.generateAIExplanation(body.questionId, req.user.id, body.userAnswer);
-	}
-
-	@Post('manual/generate-practice-test')
-	async generateManualPracticeTest(@Req() req: any, @Body() body: {
-		subjectId: string;
-		topicId?: string;
-		subtopicId?: string;
-		questionCount: number;
-		difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
-		timeLimitMin: number;
-	}) {
-		return this.exams.generateManualPracticeTest(req.user.id, body);
-	}
-} 
+  @Get(':id/questions')
+  async getSubmissionQuestions(
+    @Req() req: any,
+    @Param('id') submissionId: string
+  ) {
+    return this.examsService.getSubmissionQuestions(req.user.id, submissionId);
+  }
+}

@@ -26,7 +26,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'example.com',
+        hostname: 'youtube.com',
         port: '',
         pathname: '/**',
       },

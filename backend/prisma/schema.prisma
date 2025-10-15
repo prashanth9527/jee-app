@@ -55,6 +55,7 @@ model User {
   ticketResponses   TicketResponse[]
   topicProgress     TopicProgress[]
   sessions          UserSession[]
+  performanceAnalysis ContentPerformanceAnalysis[]
 }
 
 model Stream {
@@ -85,6 +86,7 @@ model Subject {
   blogs       Blog[]
   lmsContent  LMSContent[]
   progress    SubjectProgress[]
+  performanceAnalysis ContentPerformanceAnalysis[]
 
   @@unique([streamId, name])
 }
@@ -123,6 +125,7 @@ model Topic {
   subject     Subject         @relation(fields: [subjectId], references: [id], onDelete: Cascade)
   lmsContent  LMSContent[]
   progress    TopicProgress[]
+  performanceAnalysis ContentPerformanceAnalysis[]
 
   @@unique([lessonId, name])
   @@unique([lessonId, order])
@@ -140,6 +143,7 @@ model Subtopic {
   topic       Topic              @relation(fields: [topicId], references: [id], onDelete: Cascade)
   lmsContent  LMSContent[]
   progress    SubtopicProgress[]
+  performanceAnalysis ContentPerformanceAnalysis[]
 
   @@unique([topicId, name])
 }
@@ -154,6 +158,7 @@ model Question {
   isPreviousYear          Boolean                          @default(false)
   isAIGenerated           Boolean                          @default(false)
   aiPrompt                String?
+  section_name            String?
   subjectId               String?
   lessonId                String?
   topicId                 String?
@@ -256,11 +261,14 @@ model ExamPaper {
   subtopicIds  String[]         @default([])
   questionIds  String[]         @default([])
   timeLimitMin Int?
+  examType     ExamType         @default(REGULAR)
+  contentId    String?          // For content-specific exams
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
   createdById  String?
   createdBy    User?            @relation("ExamPaperCreator", fields: [createdById], references: [id])
   submissions  ExamSubmission[]
+  content      LMSContent?      @relation(fields: [contentId], references: [id])
 }
 
 model ExamSubmission {
@@ -606,6 +614,9 @@ model LMSContent {
   youtubeUrl       String?
   h5pContent       Json?
   scormData        Json?
+  contentSummary   String?       @db.Text
+  mindMap          String?       @db.Text
+  videoLink        String?
   streamId         String?
   subjectId        String?
   lessonId         String?
@@ -632,6 +643,8 @@ model LMSContent {
   topic            Topic?        @relation(fields: [topicId], references: [id])
   progress         LMSProgress[]
   pdfProcessorCache PDFProcessorCache[]
+  exams            ExamPaper[]
+  performanceAnalysis ContentPerformanceAnalysis[]
 
   @@map("lms_content")
 }
@@ -1140,4 +1153,49 @@ enum RecordType {
   pyq
   question
   lms
+}
+
+enum ExamType {
+  REGULAR
+  AI_EXAM
+  CONTENT_EXAM
+}
+
+model ContentPerformanceAnalysis {
+  id                String   @id @default(cuid())
+  userId            String
+  contentId         String
+  subjectId         String?
+  topicId           String?
+  subtopicId        String?
+  
+  // Performance metrics
+  timeSpent         Int      @default(0) // in seconds
+  completionRate   Float    @default(0) // 0-100
+  averageScore      Float?   // if applicable
+  attempts          Int      @default(0)
+  
+  // AI analysis data
+  strengths         String[] @default([])
+  weaknesses        String[] @default([])
+  suggestions       String[] @default([])
+  difficultyLevel   String?  // AI assessed difficulty
+  learningStyle    String?  // AI detected learning style
+  
+  // Analysis metadata
+  lastAnalyzedAt    DateTime @default(now())
+  analysisVersion   String   @default("1.0")
+  aiModel           String   @default("gpt-4")
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content           LMSContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  subject           Subject? @relation(fields: [subjectId], references: [id])
+  topic            Topic?   @relation(fields: [topicId], references: [id])
+  subtopic          Subtopic? @relation(fields: [subtopicId], references: [id])
+  
+  @@unique([userId, contentId])
+  @@map("content_performance_analysis")
 }
