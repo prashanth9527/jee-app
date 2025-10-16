@@ -1569,6 +1569,7 @@ Assign: **lesson → topic → subtopic**.
       "subtopic": "Defects in Crystals",
       "yearAppeared": 2023,
       "isPreviousYear": true,
+      "exerciseName": "Exercise1",
       "tags": ["solid-state", "defects", "charge-neutrality"]
     }
   ],
