@@ -164,7 +164,7 @@ export default function HomeTemplate2() {
                   </Link>
                   <Link 
                     href="/demo" 
-                    className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-emerald-600 transition-colors"
+                    className="bg-white text-emerald-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-emerald-50 transition-colors shadow-lg"
                   >
                     Try Demo
                   </Link>
@@ -251,7 +251,7 @@ export default function HomeTemplate2() {
                   Get personalized explanations and learning recommendations tailored to your learning style and pace.
                 </p>
                 <div className="flex items-center text-sm">
-                  <span className="bg-white/20 px-3 py-1 rounded-full">24/7 Available</span>
+                  <span className="bg-white text-emerald-700 px-3 py-1 rounded-full font-semibold">24/7 Available</span>
                 </div>
               </div>
 
@@ -262,7 +262,7 @@ export default function HomeTemplate2() {
                   Advanced performance tracking with detailed insights on your strengths, weaknesses, and progress trends.
                 </p>
                 <div className="flex items-center text-sm">
-                  <span className="bg-white/20 px-3 py-1 rounded-full">Real-time Insights</span>
+                  <span className="bg-white text-teal-700 px-3 py-1 rounded-full font-semibold">Real-time Insights</span>
                 </div>
               </div>
 
@@ -273,7 +273,7 @@ export default function HomeTemplate2() {
                   AI-generated practice questions that adapt to your skill level and focus on areas that need improvement.
                 </p>
                 <div className="flex items-center text-sm">
-                  <span className="bg-white/20 px-3 py-1 rounded-full">Personalized</span>
+                  <span className="bg-white text-cyan-700 px-3 py-1 rounded-full font-semibold">Personalized</span>
                 </div>
               </div>
 
@@ -284,7 +284,7 @@ export default function HomeTemplate2() {
                   Get immediate, detailed explanations for every question with AI-powered solution analysis.
                 </p>
                 <div className="flex items-center text-sm">
-                  <span className="bg-white/20 px-3 py-1 rounded-full">Instant Results</span>
+                  <span className="bg-white text-blue-700 px-3 py-1 rounded-full font-semibold">Instant Results</span>
                 </div>
               </div>
 
@@ -295,7 +295,7 @@ export default function HomeTemplate2() {
                   AI suggests the best study path based on your performance, goals, and learning preferences.
                 </p>
                 <div className="flex items-center text-sm">
-                  <span className="bg-white/20 px-3 py-1 rounded-full">Optimized Path</span>
+                  <span className="bg-white text-indigo-700 px-3 py-1 rounded-full font-semibold">Optimized Path</span>
                 </div>
               </div>
 
@@ -306,7 +306,7 @@ export default function HomeTemplate2() {
                   AI predicts your exam performance and suggests targeted improvements to maximize your success.
                 </p>
                 <div className="flex items-center text-sm">
-                  <span className="bg-white/20 px-3 py-1 rounded-full">Predictive Analytics</span>
+                  <span className="bg-white text-purple-700 px-3 py-1 rounded-full font-semibold">Predictive Analytics</span>
                 </div>
               </div>
             </div>
@@ -387,7 +387,7 @@ export default function HomeTemplate2() {
               </Link>
               <Link 
                 href="/contact" 
-                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-emerald-600 transition-colors"
+                className="bg-white text-emerald-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-emerald-50 transition-colors shadow-lg"
               >
                 Talk to Expert
               </Link>
