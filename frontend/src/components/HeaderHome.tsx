@@ -21,7 +21,11 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [logoError, setLogoError] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <nav className="bg-white dark:bg-gray-800 shadow-sm fixed w-full top-0 z-50">
@@ -105,7 +109,7 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
                 </Link>
               </div>
             )}
-            <ThemeToggle />
+            {mounted && <ThemeToggle />}
           </div>
 
           {/* Mobile menu button */}
