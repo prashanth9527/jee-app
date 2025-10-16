@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'jeemaster.com',
+        hostname: 'devrankora.s3.eu-north-1.amazonaws.com',
         port: '',
         pathname: '/**',
       },

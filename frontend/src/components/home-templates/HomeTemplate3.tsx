@@ -136,10 +136,13 @@ export default function HomeTemplate3() {
         keywords={systemSettings?.siteKeywords}
         ogImage={systemSettings?.ogImageUrl}
       />
-      <DynamicFavicon faviconUrl={systemSettings?.faviconUrl} />
+      <DynamicFavicon 
+        faviconUrl={systemSettings?.faviconUrl} 
+        siteTitle={systemSettings?.siteTitle || 'JEE App'}
+      />
       
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-        <HeaderHome />
+        <HeaderHome systemSettings={systemSettings || undefined} />
         
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">

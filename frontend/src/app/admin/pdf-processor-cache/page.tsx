@@ -165,8 +165,8 @@ export default function PDFProcessorCachePage() {
     }
   };
 
-  const processWithMathpix = async (fileName: string) => {
-    const record = records.find(r => r.id === fileName);
+  const processWithMathpix = async (id: string) => {
+    const record = records.find(r => r.id === id);
     if (!record) {
       toast.error('Record not found');
       return;
@@ -204,13 +204,13 @@ export default function PDFProcessorCachePage() {
     const backgroundOption = result.value?.ignoreBackground ?? ignoreBackground;
     setIgnoreBackground(backgroundOption);
 
-    setProcessing(fileName);
+    setProcessing(id);
     toast.loading('Processing PDF with Mathpix...', 'Please wait');
 
     try {
       // Use the new endpoint with options if background processing is different from default
       const endpoint = backgroundOption 
-        ? `/admin/pdf-processor/process-mathpix-file-with-options/${fileName}`
+        ? `/admin/pdf-processor/process-mathpix-file-with-options/${id}`
         : `/admin/pdf-processor-cache/${record.id}/process-mathpix`;
       
       const requestData = backgroundOption 

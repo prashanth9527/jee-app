@@ -138,10 +138,13 @@ export default function HomeTemplate2() {
         keywords={systemSettings?.siteKeywords}
         ogImage={systemSettings?.ogImageUrl}
       />
-      <DynamicFavicon faviconUrl={systemSettings?.faviconUrl} />
+      <DynamicFavicon 
+        faviconUrl={systemSettings?.faviconUrl} 
+        siteTitle={systemSettings?.siteTitle || 'JEE App'}
+      />
       
       <main className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50">
-        <HeaderHome />
+        <HeaderHome systemSettings={systemSettings || undefined} />
         
         {/* Hero Section with Slider */}
         <section className="relative overflow-hidden">
