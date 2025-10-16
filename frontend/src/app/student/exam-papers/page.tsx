@@ -152,7 +152,6 @@ export default function ExamPapersPage() {
       if (result.isConfirmed) {
         const response = await api.post(`/exams/papers/${paperId}/start`);
         const { submissionId } = response.data;
-        
         // Redirect to exam page
         router.push(`/student/exam/${submissionId}`);
       }

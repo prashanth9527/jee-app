@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { PrismaService } from '../prisma/prisma.service';
 import { OpenAIService } from '../ai/openai.service';
 import { SubscriptionValidationService } from '../subscriptions/subscription-validation.service';
+import { AIFeatureType } from '@prisma/client';
 
 export interface ContentNotes {
   notes: string;
@@ -108,6 +109,78 @@ export class ContentLearningService {
     return (progress?.data as any)?.notes as ContentNotes || null;
   }
 
+  async getAllNotes(userId: string): Promise<any[]> {
+    const progressRecords = await this.prisma.lMSProgress.findMany({
+      where: {
+        userId
+      },
+      include: {
+        content: {
+          include: {
+            subject: true,
+            topic: true,
+            subtopic: true
+          }
+        }
+      }
+    });
+
+    return progressRecords
+      .filter(record => record.data && (record.data as any)?.notes)
+      .map(record => ({
+        id: record.id,
+        contentId: record.contentId,
+        contentTitle: record.content.title,
+        subject: record.content.subject?.name || 'Unknown Subject',
+        topic: record.content.topic?.name || 'Unknown Topic',
+        subtopic: record.content.subtopic?.name || 'Unknown Subtopic',
+        notes: (record.data as any)?.notes,
+        lastUpdated: record.lastAccessedAt || record.startedAt || new Date()
+      }));
+  }
+
+  async getUserContentExams(userId: string): Promise<any[]> {
+    const contentExams = await this.prisma.examPaper.findMany({
+      where: {
+        contentId: {
+          not: null
+        },
+        createdById: userId
+      },
+      include: {
+        content: {
+          include: {
+            subject: true,
+            topic: true,
+            subtopic: true
+          }
+        },
+        // Questions will be fetched separately using questionIds
+        // Submissions will be fetched separately
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    return contentExams.map(exam => ({
+      id: exam.id,
+      title: exam.title,
+      description: exam.description,
+      contentId: exam.contentId,
+      contentTitle: exam.content?.title || 'Unknown Content',
+      subject: exam.content?.subject?.name || 'Unknown Subject',
+      topic: exam.content?.topic?.name || 'Unknown Topic',
+      subtopic: exam.content?.subtopic?.name || 'Unknown Subtopic',
+      questionCount: exam.questionIds.length,
+      duration: exam.timeLimitMin,
+      examType: exam.examType,
+      createdAt: exam.createdAt,
+      lastSubmission: null, // Will be fetched separately if needed
+      totalSubmissions: 0 // Will be fetched separately if needed
+    }));
+  }
+
   private async getNotesVersion(userId: string, contentId: string): Promise<number> {
     const progress = await this.prisma.lMSProgress.findUnique({
       where: {
@@ -126,24 +199,10 @@ export class ContentLearningService {
   async generateAIQuestions(userId: string, request: AIQuestionRequest): Promise<AIQuestionResponse> {
     console.log('Starting AI question generation for user:', userId, 'request:', request);
     
-    try {
-      // Validate subscription for AI features
-      console.log('Validating subscription...');
-      const subscriptionStatus = await this.subscriptionValidation.validateStudentSubscription(userId);
-      console.log('Subscription status:', subscriptionStatus);
-      
-      // Allow AI features for trial users or users with valid subscriptions
-      if (!subscriptionStatus.hasValidSubscription && !subscriptionStatus.isOnTrial) {
-        console.log('User does not have valid subscription or trial access');
-        throw new BadRequestException('AI features require an active subscription or trial access');
-      }
-      
-      console.log('Subscription validation passed');
-    } catch (error) {
-      console.error('Subscription validation error:', error);
-      // For now, let's allow the request to proceed even if subscription validation fails
-      // This is a temporary fix to allow testing
-      console.log('Allowing request to proceed despite subscription validation error');
+    // Check AI feature usage
+    const usageCheck = await this.checkAIFeatureUsage(userId, request.contentId, 'AI_QUESTIONS');
+    if (!usageCheck.canUse) {
+      throw new BadRequestException(usageCheck.message);
     }
 
     // Get content details
@@ -215,6 +274,12 @@ export class ContentLearningService {
         questionIds: createdQuestions.map(q => q.id)
       }
     });
+
+    // Record usage after successful generation
+    await this.recordAIFeatureUsage(userId, request.contentId, 'AI_QUESTIONS');
+
+    // Note: AI questions are already stored in the questions table with isAIGenerated flag
+    // No need to store in AIGeneratedResult table as they have dedicated storage
 
     return {
       questions: aiQuestions,
@@ -695,5 +760,343 @@ Focus on:
       timeLimitMin: examPaper.timeLimitMin,
       examType: examPaper.examType
     };
+  }
+
+  // AI Feature Usage Tracking Methods
+  async checkAIFeatureUsage(userId: string, contentId: string, featureType: AIFeatureType) {
+    console.log('Checking AI feature usage:', { userId, contentId, featureType });
+
+    // Get user's subscription status
+    const subscriptionStatus = await this.subscriptionValidation.validateStudentSubscription(userId);
+    
+    if (!subscriptionStatus.hasValidSubscription && !subscriptionStatus.isOnTrial) {
+      return {
+        canUse: false,
+        reason: 'no_subscription',
+        message: 'AI features require an active subscription. Please upgrade your plan.',
+        usageCount: 0,
+        limit: 0
+      };
+    }
+
+    // Check if user has AI_ENABLED subscription
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        subscriptions: {
+          where: { status: 'ACTIVE' },
+          include: { plan: true }
+        }
+      }
+    });
+
+    const hasAIEnabled = user?.subscriptions.some(sub => 
+      sub.plan.name === 'AI_ENABLED'
+    );
+
+    if (!hasAIEnabled && !subscriptionStatus.isOnTrial) {
+      return {
+        canUse: false,
+        reason: 'upgrade_required',
+        message: 'AI features require an AI_ENABLED subscription. Please upgrade your plan.',
+        usageCount: 0,
+        limit: 0
+      };
+    }
+
+    // Get current usage for this feature
+    const usage = await this.prisma.aIFeatureUsage.findUnique({
+      where: {
+        userId_contentId_featureType: {
+          userId,
+          contentId,
+          featureType
+        }
+      }
+    });
+
+    const usageCount = usage?.usageCount || 0;
+    const limit = 3; // 3 uses per content per feature
+
+    if (usageCount >= limit) {
+      return {
+        canUse: false,
+        reason: 'limit_reached',
+        message: `You have reached the limit of ${limit} uses for this AI feature on this content.`,
+        usageCount,
+        limit
+      };
+    }
+
+    return {
+      canUse: true,
+      reason: 'allowed',
+      message: `You have ${limit - usageCount} uses remaining for this AI feature.`,
+      usageCount,
+      limit
+    };
+  }
+
+  async recordAIFeatureUsage(userId: string, contentId: string, featureType: AIFeatureType) {
+    console.log('Recording AI feature usage:', { userId, contentId, featureType });
+
+    await this.prisma.aIFeatureUsage.upsert({
+      where: {
+        userId_contentId_featureType: {
+          userId,
+          contentId,
+          featureType
+        }
+      },
+      update: {
+        usageCount: {
+          increment: 1
+        },
+        lastUsedAt: new Date()
+      },
+      create: {
+        userId,
+        contentId,
+        featureType,
+        usageCount: 1,
+        lastUsedAt: new Date()
+      }
+    });
+  }
+
+  async storeAIGeneratedResult(
+    userId: string, 
+    contentId: string, 
+    featureType: AIFeatureType, 
+    resultData: any
+  ) {
+    console.log('Storing AI generated result:', { userId, contentId, featureType });
+
+    // Get the next version number for this user/content/feature combination
+    const existingResults = await this.prisma.aIGeneratedResult.findMany({
+      where: {
+        userId,
+        contentId,
+        featureType
+      },
+      orderBy: {
+        version: 'desc'
+      },
+      take: 1
+    });
+
+    const nextVersion = existingResults.length > 0 ? existingResults[0].version + 1 : 1;
+
+    // Deactivate previous results for this feature
+    await this.prisma.aIGeneratedResult.updateMany({
+      where: {
+        userId,
+        contentId,
+        featureType,
+        isActive: true
+      },
+      data: {
+        isActive: false
+      }
+    });
+
+    // Create new result
+    const result = await this.prisma.aIGeneratedResult.create({
+      data: {
+        userId,
+        contentId,
+        featureType,
+        resultData,
+        version: nextVersion,
+        isActive: true
+      }
+    });
+
+    return result;
+  }
+
+  async getAIGeneratedResults(userId: string, contentId: string, featureType?: AIFeatureType) {
+    console.log('Getting AI generated results:', { userId, contentId, featureType });
+
+    const where: any = {
+      userId,
+      contentId,
+      isActive: true
+    };
+
+    if (featureType) {
+      where.featureType = featureType;
+    }
+
+    const results = await this.prisma.aIGeneratedResult.findMany({
+      where,
+      include: {
+        content: {
+          include: {
+            subject: true,
+            topic: true,
+            subtopic: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    return results;
+  }
+
+  async getAllAIGeneratedResults(userId: string) {
+    console.log('Getting all AI generated results for user:', userId);
+
+    const results = await this.prisma.aIGeneratedResult.findMany({
+      where: {
+        userId,
+        isActive: true,
+        // Exclude AI_QUESTIONS as they are stored in questions table
+        featureType: {
+          not: 'AI_QUESTIONS'
+        }
+      },
+      include: {
+        content: {
+          include: {
+            subject: true,
+            topic: true,
+            subtopic: true
+          }
+        }
+      },
+      orderBy: [
+        { contentId: 'asc' },
+        { featureType: 'asc' },
+        { createdAt: 'desc' }
+      ]
+    });
+
+    // Group results by content and feature type
+    const groupedResults = results.reduce((acc, result) => {
+      const key = `${result.contentId}_${result.featureType}`;
+      if (!acc[key]) {
+        acc[key] = {
+          contentId: result.contentId,
+          contentTitle: result.content.title,
+          subject: result.content.subject?.name || 'Unknown Subject',
+          topic: result.content.topic?.name || 'Unknown Topic',
+          subtopic: result.content.subtopic?.name || 'Unknown Subtopic',
+          featureType: result.featureType,
+          results: []
+        };
+      }
+      acc[key].results.push({
+        id: result.id,
+        resultData: result.resultData,
+        version: result.version,
+        createdAt: result.createdAt
+      });
+      return acc;
+    }, {} as any);
+
+    return Object.values(groupedResults);
+  }
+
+  async getAIGeneratedQuestions(userId: string, contentId?: string) {
+    console.log('Getting AI generated questions for user:', userId, 'content:', contentId);
+
+    const where: any = {
+      isAIGenerated: true,
+      // Questions are linked to content through subjectId, topicId, subtopicId
+      // We need to find questions that match the content's subject/topic/subtopic
+    };
+
+    if (contentId) {
+      // Get content details to match questions
+      const content = await this.prisma.lMSContent.findUnique({
+        where: { id: contentId },
+        select: {
+          subjectId: true,
+          topicId: true,
+          subtopicId: true
+        }
+      });
+
+      if (content) {
+        where.subjectId = content.subjectId;
+        where.topicId = content.topicId;
+        where.subtopicId = content.subtopicId;
+      }
+    }
+
+    const questions = await this.prisma.question.findMany({
+      where,
+      include: {
+        subject: true,
+        topic: true,
+        subtopic: true,
+        options: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    // Group questions by content (subject/topic/subtopic combination)
+    const groupedQuestions = questions.reduce((acc, question) => {
+      const key = `${question.subjectId}_${question.topicId}_${question.subtopicId}`;
+      if (!acc[key]) {
+        acc[key] = {
+          subjectId: question.subjectId,
+          topicId: question.topicId,
+          subtopicId: question.subtopicId,
+          subject: question.subject?.name || 'Unknown Subject',
+          topic: question.topic?.name || 'Unknown Topic',
+          subtopic: question.subtopic?.name || 'Unknown Subtopic',
+          questions: []
+        };
+      }
+      acc[key].questions.push({
+        id: question.id,
+        stem: question.stem,
+        explanation: question.explanation,
+        difficulty: question.difficulty,
+        options: question.options,
+        aiPrompt: question.aiPrompt,
+        createdAt: question.createdAt
+      });
+      return acc;
+    }, {} as any);
+
+    return Object.values(groupedQuestions);
+  }
+
+  async getAIFeatureUsage(userId: string, contentId: string) {
+    console.log('Getting AI feature usage:', { userId, contentId });
+
+    const usage = await this.prisma.aIFeatureUsage.findMany({
+      where: {
+        userId,
+        contentId
+      }
+    });
+
+    const usageMap: any = {
+      AI_QUESTIONS: { usageCount: 0, limit: 3 },
+      PERFORMANCE_ANALYSIS: { usageCount: 0, limit: 3 },
+      SUMMARY: { usageCount: 0, limit: 3 },
+      MINDMAP: { usageCount: 0, limit: 3 },
+      ANALYTICS_REFRESH: { usageCount: 0, limit: 1 }
+    };
+
+    usage.forEach(u => {
+      if (usageMap[u.featureType]) {
+        usageMap[u.featureType] = {
+          usageCount: u.usageCount,
+          limit: u.featureType === 'ANALYTICS_REFRESH' ? 1 : 3
+        };
+      }
+    });
+
+    return usageMap;
   }
 }

@@ -72,10 +72,10 @@ export default function ExamPage() {
       
       setExamData(response.data);
       setTimeRemaining(response.data.timeLimitMin * 60); // Convert to seconds
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load exam:', error);
       console.error('Error details:', error.response?.data);
-      
+
       const errorMessage = error.response?.data?.message || 'Could not load exam data. Please try again.';
       showError('Failed to Load Exam', errorMessage);
       
@@ -121,10 +121,10 @@ export default function ExamPage() {
       setTimeout(() => {
         router.push('/student/lms');
       }, 2000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to submit exam:', error);
       console.error('Error details:', error.response?.data);
-      
+
       const errorMessage = error.response?.data?.message || 'Could not submit exam. Please try again.';
       showError('Submission Failed', errorMessage);
       

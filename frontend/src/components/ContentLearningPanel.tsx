@@ -73,11 +73,14 @@ export default function ContentLearningPanel({
   const [createdExamId, setCreatedExamId] = useState<string | null>(null);
   const [quizzes, setQuizzes] = useState<any[]>([]);
   const [loadingQuizzes, setLoadingQuizzes] = useState(false);
+  const [aiUsage, setAiUsage] = useState<any>(null);
+  const [loadingUsage, setLoadingUsage] = useState(false);
 
   useEffect(() => {
     loadNotes();
     loadPerformanceAnalysis();
     loadQuizzes();
+    loadAIUsage();
   }, [contentId]);
 
   const loadNotes = async () => {
@@ -102,6 +105,19 @@ export default function ContentLearningPanel({
       setQuizzes([]);
     } finally {
       setLoadingQuizzes(false);
+    }
+  };
+
+  const loadAIUsage = async () => {
+    setLoadingUsage(true);
+    try {
+      const response = await api.get(`/student/content-learning/usage/${contentId}`);
+      setAiUsage(response.data);
+    } catch (error) {
+      console.error('Failed to load AI usage:', error);
+      setAiUsage(null);
+    } finally {
+      setLoadingUsage(false);
     }
   };
 
@@ -142,6 +158,19 @@ export default function ContentLearningPanel({
     setGeneratingQuestions(true);
     setExamCreated(false);
     try {
+      // Check usage before generating
+      const usageResponse = await api.post(`/student/content-learning/check-usage/${contentId}`, {
+        featureType: 'AI_QUESTIONS'
+      });
+      
+      if (!usageResponse.data.canUse) {
+        showError(
+          'Usage Limit Reached',
+          usageResponse.data.message
+        );
+        return;
+      }
+      
       const requestBody = {
         contentId,
         questionCount,
@@ -169,13 +198,16 @@ export default function ContentLearningPanel({
         `Successfully generated ${response.data.questions.length} AI questions. Select the ones you want for your practice exam.`
       );
       
+      // Reload usage after successful generation
+      loadAIUsage();
+      
       if (onExamCreated) {
         onExamCreated(response.data.examPaperId);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to generate questions:', error);
       console.error('Error details:', error.response?.data);
-      
+
       // Show error toast
       const errorMessage = error.response?.data?.message || 'Failed to generate questions. Please try again.';
       showError(
@@ -244,10 +276,10 @@ export default function ContentLearningPanel({
       if (onExamCreated) {
         onExamCreated(response.data.id);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to create exam:', error);
       console.error('Error details:', error.response?.data);
-      
+
       // Show error toast
       const errorMessage = error.response?.data?.message || 'Failed to create practice exam. Please try again.';
       showError(
@@ -282,10 +314,10 @@ export default function ContentLearningPanel({
       // Redirect to exam page with submission ID
       console.log('Redirecting to exam page:', `/student/exam/${submissionId}`);
       router.push(`/student/exam/${submissionId}`);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to start exam:', error);
       console.error('Error details:', error.response?.data);
-      
+
       const errorMessage = error.response?.data?.message || 'Failed to start exam. Please try again.';
       showError(
         'Failed to Start Exam',
@@ -302,7 +334,7 @@ export default function ContentLearningPanel({
       
       console.log('Quiz started, submission ID:', submissionId);
       router.push(`/student/exam/${submissionId}`);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to start quiz:', error);
       const errorMessage = error.response?.data?.message || 'Failed to start quiz. Please try again.';
       showError('Failed to Start Quiz', errorMessage);
@@ -455,7 +487,14 @@ export default function ContentLearningPanel({
               <div className="space-y-6">
                 {/* Question Generation Controls - Mobile Responsive */}
                 <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
-                  <h4 className="text-sm sm:text-md font-medium text-gray-900 mb-3 sm:mb-4">Generate AI Questions</h4>
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <h4 className="text-sm sm:text-md font-medium text-gray-900">Generate AI Questions</h4>
+                    {aiUsage && (
+                      <div className="text-xs text-gray-600">
+                        {aiUsage.AI_QUESTIONS?.usageCount || 0}/{aiUsage.AI_QUESTIONS?.limit || 3} uses
+                      </div>
+                    )}
+                  </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 <div>
                   <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
@@ -489,14 +528,23 @@ export default function ContentLearningPanel({
                 <div className="flex items-end sm:col-span-2 lg:col-span-1">
                   <button
                     onClick={generateAIQuestions}
-                    disabled={generatingQuestions}
-                    className="w-full px-3 sm:px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-xs sm:text-sm"
+                    disabled={generatingQuestions || (aiUsage && aiUsage.AI_QUESTIONS?.usageCount >= aiUsage.AI_QUESTIONS?.limit)}
+                    className={`w-full px-3 sm:px-4 py-2 rounded-md flex items-center justify-center text-xs sm:text-sm ${
+                      aiUsage && aiUsage.AI_QUESTIONS?.usageCount >= aiUsage.AI_QUESTIONS?.limit
+                        ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                        : 'bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed'
+                    }`}
                   >
                     {generatingQuestions ? (
                       <>
                         <div className="animate-spin rounded-full h-3 w-3 sm:h-4 sm:w-4 border-b-2 border-white mr-1 sm:mr-2"></div>
                         <span className="hidden sm:inline">Generating...</span>
                         <span className="sm:hidden">...</span>
+                      </>
+                    ) : aiUsage && aiUsage.AI_QUESTIONS?.usageCount >= aiUsage.AI_QUESTIONS?.limit ? (
+                      <>
+                        <span className="hidden sm:inline">Limit Reached</span>
+                        <span className="sm:hidden">Limit</span>
                       </>
                     ) : (
                       <>

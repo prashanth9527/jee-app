@@ -44,6 +44,42 @@ export class ContentLearningController {
     return this.contentLearningService.getNotes(req.user.id, contentId);
   }
 
+  @Get('notes')
+  async getAllNotes(@Req() req: any) {
+    return this.contentLearningService.getAllNotes(req.user.id);
+  }
+
+  @Get('content-exams')
+  async getContentExams(@Req() req: any) {
+    return this.contentLearningService.getUserContentExams(req.user.id);
+  }
+
+  @Get('ai-results/:contentId')
+  async getAIGeneratedResults(
+    @Req() req: any,
+    @Param('contentId') contentId: string,
+    @Query('featureType') featureType?: string
+  ) {
+    return this.contentLearningService.getAIGeneratedResults(
+      req.user.id, 
+      contentId, 
+      featureType as any
+    );
+  }
+
+  @Get('ai-results')
+  async getAllAIGeneratedResults(@Req() req: any) {
+    return this.contentLearningService.getAllAIGeneratedResults(req.user.id);
+  }
+
+  @Get('ai-questions')
+  async getAIGeneratedQuestions(
+    @Req() req: any,
+    @Query('contentId') contentId?: string
+  ) {
+    return this.contentLearningService.getAIGeneratedQuestions(req.user.id, contentId);
+  }
+
   // ==================== AI QUESTION GENERATION ====================
 
   @Post('generate-questions')
@@ -141,10 +177,31 @@ export class ContentLearningController {
   }
 
   @Get('exams/:contentId')
-  async getContentExams(
+  async getContentExamsByContent(
     @Param('contentId') contentId: string,
     @Query('examType') examType?: string
   ) {
     return this.contentLearningService.getContentExams(contentId, examType);
+  }
+
+  @Get('usage/:contentId')
+  async getAIFeatureUsage(
+    @Req() req: any,
+    @Param('contentId') contentId: string
+  ) {
+    return this.contentLearningService.getAIFeatureUsage(req.user.id, contentId);
+  }
+
+  @Post('check-usage/:contentId')
+  async checkAIFeatureUsage(
+    @Req() req: any,
+    @Param('contentId') contentId: string,
+    @Body() body: { featureType: string }
+  ) {
+    return this.contentLearningService.checkAIFeatureUsage(
+      req.user.id, 
+      contentId, 
+      body.featureType as any
+    );
   }
 }

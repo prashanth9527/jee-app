@@ -56,6 +56,9 @@ model User {
   topicProgress     TopicProgress[]
   sessions          UserSession[]
   performanceAnalysis ContentPerformanceAnalysis[]
+  aiFeatureUsage     AIFeatureUsage[]
+  aiGeneratedResults AIGeneratedResult[]
+  aiContentGenerations AIContentGeneration[]
 }
 
 model Stream {
@@ -105,6 +108,7 @@ model Lesson {
   topics      Topic[]
   progress    LessonProgress[]
   lmsContent  LMSContent[]
+  aiContentGenerations AIContentGeneration[]
 
   @@unique([subjectId, name])
   @@unique([subjectId, order])
@@ -126,6 +130,7 @@ model Topic {
   lmsContent  LMSContent[]
   progress    TopicProgress[]
   performanceAnalysis ContentPerformanceAnalysis[]
+  aiContentGenerations AIContentGeneration[]
 
   @@unique([lessonId, name])
   @@unique([lessonId, order])
@@ -144,6 +149,7 @@ model Subtopic {
   lmsContent  LMSContent[]
   progress    SubtopicProgress[]
   performanceAnalysis ContentPerformanceAnalysis[]
+  aiContentGenerations AIContentGeneration[]
 
   @@unique([topicId, name])
 }
@@ -169,6 +175,7 @@ model Question {
   updatedAt               DateTime                         @updatedAt
   createdById             String?
   formulaid               String?
+  exerciseName            String?
   answers                 ExamAnswer[]
   createdBy               User?                            @relation("QuestionCreator", fields: [createdById], references: [id])
   lesson                  Lesson?                          @relation(fields: [lessonId], references: [id])
@@ -645,6 +652,8 @@ model LMSContent {
   pdfProcessorCache PDFProcessorCache[]
   exams            ExamPaper[]
   performanceAnalysis ContentPerformanceAnalysis[]
+  aiFeatureUsage     AIFeatureUsage[]
+  aiGeneratedResults AIGeneratedResult[]
 
   @@map("lms_content")
 }
@@ -1198,4 +1207,81 @@ model ContentPerformanceAnalysis {
   
   @@unique([userId, contentId])
   @@map("content_performance_analysis")
+}
+
+model AIFeatureUsage {
+  id                String   @id @default(cuid())
+  userId            String
+  contentId         String
+  featureType       AIFeatureType
+  usageCount        Int      @default(0)
+  lastUsedAt        DateTime @default(now())
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content           LMSContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, contentId, featureType])
+  @@map("ai_feature_usage")
+}
+
+model AIGeneratedResult {
+  id                String   @id @default(cuid())
+  userId            String
+  contentId         String
+  featureType       AIFeatureType
+  resultData        Json     // Stores the generated content (questions, summary, etc.)
+  version           Int      @default(1)
+  isActive          Boolean  @default(true)
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content           LMSContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, contentId, featureType, version])
+  @@map("ai_generated_results")
+}
+
+model AIContentGeneration {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Content identification
+  lessonId  String?
+  topicId   String?
+  subtopicId String?
+  
+  // Content type and data
+  contentType String // 'LESSON_SUMMARY', 'TOPIC_EXPLANATION', 'MICRO_LESSON'
+  contentData Json   // The actual generated content
+  
+  // Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  lesson    Lesson?    @relation(fields: [lessonId], references: [id])
+  topic     Topic?     @relation(fields: [topicId], references: [id])
+  subtopic  Subtopic?  @relation(fields: [subtopicId], references: [id])
+  
+  @@unique([userId, lessonId, contentType])
+  @@unique([userId, topicId, contentType])
+  @@unique([userId, subtopicId, contentType])
+  @@map("ai_content_generations")
+}
+
+enum AIFeatureType {
+  AI_QUESTIONS
+  PERFORMANCE_ANALYSIS
+  SUMMARY
+  MINDMAP
+  ANALYTICS_REFRESH
+  LESSON_SUMMARY
+  TOPIC_EXPLANATION
+  MICRO_LESSON
 }

@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
+import { SubscriptionValidationService } from '../subscriptions/subscription-validation.service';
 
 export interface AILessonSummary {
   keyConcepts: string[];
@@ -36,6 +37,26 @@ export interface AITopicExplanation {
     problem: string;
     difficulty: 'EASY' | 'MEDIUM' | 'HARD';
     hints: string[];
+  }>;
+  suggestedReadings?: Array<{
+    id: string;
+    title: string;
+    type: string;
+    description: string;
+    subject: string;
+    topic: string;
+    url: string;
+    difficulty: string;
+  }>;
+  relatedContent?: Array<{
+    id: string;
+    title: string;
+    type: string;
+    description: string;
+    subject: string;
+    topic: string;
+    subtopic: string;
+    url: string;
   }>;
 }
 
@@ -80,15 +101,36 @@ export class ContentGenerationService {
 
   constructor(
     private readonly prisma: PrismaService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly subscriptionValidationService: SubscriptionValidationService
   ) {
     this.openaiApiKey = this.configService.get<string>('OPENAI_API_KEY') || '';
     this.openaiBaseUrl = this.configService.get<string>('OPENAI_BASE_URL') || 'https://api.openai.com/v1';
     this.openaiModel = this.configService.get<string>('OPENAI_MODEL') || 'gpt-3.5-turbo';
   }
 
-  async generateLessonSummary(lessonId: string): Promise<AILessonSummary> {
+  async generateLessonSummary(lessonId: string, userId: string): Promise<AILessonSummary> {
     try {
+      // Check AI subscription
+      const aiAccess = await this.subscriptionValidationService.validateAiUsage(userId);
+      if (!aiAccess.canUseAi) {
+        throw new Error('AI content generation requires AI_ENABLED subscription. Please upgrade your plan to use this feature.');
+      }
+
+      // Check if content already exists for this user and lesson
+      const existingContent = await this.prisma.aIContentGeneration.findFirst({
+        where: {
+          userId,
+          lessonId,
+          contentType: 'LESSON_SUMMARY'
+        }
+      });
+
+      if (existingContent) {
+        this.logger.log('Returning existing lesson summary for user:', userId, 'lesson:', lessonId);
+        return existingContent.contentData as unknown as AILessonSummary;
+      }
+
       const lesson = await this.prisma.lesson.findUnique({
         where: { id: lessonId },
         include: {
@@ -112,16 +154,50 @@ export class ContentGenerationService {
 
       const prompt = this.buildLessonSummaryPrompt(lesson);
       const aiResponse = await this.callOpenAI(prompt);
+      const generatedContent = this.parseLessonSummaryResponse(aiResponse, lesson);
       
-      return this.parseLessonSummaryResponse(aiResponse, lesson);
+      // Store the generated content
+      await this.prisma.aIContentGeneration.create({
+        data: {
+          userId,
+          lessonId,
+          contentType: 'LESSON_SUMMARY',
+          contentData: generatedContent as any
+        }
+      });
+
+      // Record AI feature usage
+      await this.recordAIFeatureUsage(userId, null, 'LESSON_SUMMARY');
+      
+      return generatedContent;
     } catch (error) {
       this.logger.error('Error generating lesson summary:', error);
       throw new Error('Failed to generate lesson summary');
     }
   }
 
-  async generateTopicExplanation(topicId: string): Promise<AITopicExplanation> {
+  async generateTopicExplanation(topicId: string, userId: string): Promise<AITopicExplanation> {
     try {
+      // Check AI subscription
+      const aiAccess = await this.subscriptionValidationService.validateAiUsage(userId);
+      if (!aiAccess.canUseAi) {
+        throw new Error('AI content generation requires AI_ENABLED subscription. Please upgrade your plan to use this feature.');
+      }
+
+      // Check if content already exists for this user and topic
+      const existingContent = await this.prisma.aIContentGeneration.findFirst({
+        where: {
+          userId,
+          topicId,
+          contentType: 'TOPIC_EXPLANATION'
+        }
+      });
+
+      if (existingContent) {
+        this.logger.log('Returning existing topic explanation for user:', userId, 'topic:', topicId);
+        return existingContent.contentData as unknown as AITopicExplanation;
+      }
+
       const topic = await this.prisma.topic.findUnique({
         where: { id: topicId },
         include: {
@@ -143,16 +219,50 @@ export class ContentGenerationService {
 
       const prompt = this.buildTopicExplanationPrompt(topic);
       const aiResponse = await this.callOpenAI(prompt);
+      const generatedContent = await this.parseTopicExplanationResponse(aiResponse, topic);
       
-      return this.parseTopicExplanationResponse(aiResponse, topic);
+      // Store the generated content
+      await this.prisma.aIContentGeneration.create({
+        data: {
+          userId,
+          topicId,
+          contentType: 'TOPIC_EXPLANATION',
+          contentData: generatedContent as any
+        }
+      });
+
+      // Record AI feature usage
+      await this.recordAIFeatureUsage(userId, null, 'TOPIC_EXPLANATION');
+      
+      return generatedContent;
     } catch (error) {
       this.logger.error('Error generating topic explanation:', error);
       throw new Error('Failed to generate topic explanation');
     }
   }
 
-  async generateMicroLesson(subtopicId: string): Promise<AIMicroLesson> {
+  async generateMicroLesson(subtopicId: string, userId: string): Promise<AIMicroLesson> {
     try {
+      // Check AI subscription
+      const aiAccess = await this.subscriptionValidationService.validateAiUsage(userId);
+      if (!aiAccess.canUseAi) {
+        throw new Error('AI content generation requires AI_ENABLED subscription. Please upgrade your plan to use this feature.');
+      }
+
+      // Check if content already exists for this user and subtopic
+      const existingContent = await this.prisma.aIContentGeneration.findFirst({
+        where: {
+          userId,
+          subtopicId,
+          contentType: 'MICRO_LESSON'
+        }
+      });
+
+      if (existingContent) {
+        this.logger.log('Returning existing micro lesson for user:', userId, 'subtopic:', subtopicId);
+        return existingContent.contentData as unknown as AIMicroLesson;
+      }
+
       const subtopic = await this.prisma.subtopic.findUnique({
         where: { id: subtopicId },
         include: {
@@ -177,8 +287,22 @@ export class ContentGenerationService {
 
       const prompt = this.buildMicroLessonPrompt(subtopic);
       const aiResponse = await this.callOpenAI(prompt);
+      const generatedContent = this.parseMicroLessonResponse(aiResponse, subtopic);
       
-      return this.parseMicroLessonResponse(aiResponse, subtopic);
+      // Store the generated content
+      await this.prisma.aIContentGeneration.create({
+        data: {
+          userId,
+          subtopicId,
+          contentType: 'MICRO_LESSON',
+          contentData: generatedContent as any
+        }
+      });
+
+      // Record AI feature usage
+      await this.recordAIFeatureUsage(userId, null, 'MICRO_LESSON');
+      
+      return generatedContent;
     } catch (error) {
       this.logger.error('Error generating micro lesson:', error);
       throw new Error('Failed to generate micro lesson');
@@ -400,9 +524,16 @@ export class ContentGenerationService {
     }
   }
 
-  private parseTopicExplanationResponse(response: string, topic: any): AITopicExplanation {
+  private async parseTopicExplanationResponse(response: string, topic: any): Promise<AITopicExplanation> {
     try {
+      this.logger.log('Parsing OpenAI response:', response);
       const parsed = JSON.parse(response);
+      
+      // Get database content
+      const suggestedReadings = await this.getSuggestedReadings(topic);
+      const relatedContent = await this.getRelatedContent(topic);
+      const practiceQuestions = await this.getPracticeQuestions(topic);
+      
       return {
         overview: parsed.overview || 'Topic overview not available',
         keyPoints: parsed.keyPoints || [],
@@ -410,11 +541,14 @@ export class ContentGenerationService {
         examples: parsed.examples || [],
         visualAids: parsed.visualAids || [],
         commonQuestions: parsed.commonQuestions || [],
-        practiceExercises: parsed.practiceExercises || []
+        practiceExercises: parsed.practiceExercises || practiceQuestions,
+        suggestedReadings: suggestedReadings,
+        relatedContent: relatedContent
       };
     } catch (error) {
       this.logger.error('Error parsing topic explanation response:', error);
-      return this.getDefaultTopicExplanation(topic);
+      this.logger.error('Raw response that failed to parse:', response);
+      return await this.getDefaultTopicExplanation(topic);
     }
   }
 
@@ -508,8 +642,11 @@ export class ContentGenerationService {
 
   private async callOpenAI(prompt: string): Promise<string> {
     if (!this.openaiApiKey) {
+      this.logger.error('OpenAI API key not configured');
       throw new Error('OpenAI API key not configured');
     }
+
+    this.logger.log('Calling OpenAI with prompt:', prompt.substring(0, 200) + '...');
 
     try {
       const response = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
@@ -535,7 +672,14 @@ export class ContentGenerationService {
         })
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        this.logger.error('OpenAI API error:', errorData);
+        throw new Error(`OpenAI API error: ${errorData.error?.message || 'Unknown error'}`);
+      }
+
       const data = await response.json();
+      this.logger.log('OpenAI response received:', data.choices[0]?.message?.content?.substring(0, 200) + '...');
       return data.choices[0].message.content;
     } catch (error) {
       this.logger.error('OpenAI API call failed:', error);
@@ -544,44 +688,349 @@ export class ContentGenerationService {
   }
 
   private getDefaultLessonSummary(lesson: any): AILessonSummary {
+    const lessonName = lesson?.name || 'this lesson';
+    const subjectName = lesson?.subject?.name || 'Mathematics';
+    
     return {
-      keyConcepts: ['Concept understanding', 'Problem solving'],
-      importantFormulas: [],
-      commonMistakes: ['Calculation errors', 'Concept confusion'],
-      practiceTips: ['Practice regularly', 'Review mistakes'],
-      relatedTopics: [],
+      keyConcepts: [
+        `Fundamental concepts of ${lessonName}`,
+        `Problem-solving strategies for ${lessonName}`,
+        `Application of ${lessonName} in JEE problems`,
+        `Advanced techniques in ${lessonName}`
+      ],
+      importantFormulas: [
+        `Key formula 1 for ${lessonName}`,
+        `Key formula 2 for ${lessonName}`,
+        `Derived formulas from ${lessonName}`
+      ],
+      commonMistakes: [
+        'Calculation errors in complex problems',
+        'Misunderstanding of fundamental concepts',
+        'Incorrect application of formulas',
+        'Sign errors in algebraic manipulations'
+      ],
+      practiceTips: [
+        'Practice problems of varying difficulty levels',
+        'Focus on understanding concepts before memorizing formulas',
+        'Review and analyze your mistakes regularly',
+        'Time management during practice sessions'
+      ],
+      relatedTopics: [
+        `Prerequisites for ${lessonName}`,
+        `Advanced topics building on ${lessonName}`,
+        `Cross-connections with other ${subjectName} topics`
+      ],
       difficultyLevel: 'MEDIUM',
-      estimatedStudyTime: 60,
-      prerequisites: [],
-      learningObjectives: ['Understand key concepts', 'Solve problems accurately']
+      estimatedStudyTime: 90,
+      prerequisites: [
+        'Basic mathematical concepts',
+        'Fundamental problem-solving skills'
+      ],
+      learningObjectives: [
+        `Master the fundamental concepts of ${lessonName}`,
+        `Develop problem-solving skills for ${lessonName}`,
+        `Apply ${lessonName} concepts to JEE-level problems`,
+        `Build confidence in ${lessonName} problem-solving`
+      ]
     };
   }
 
-  private getDefaultTopicExplanation(topic: any): AITopicExplanation {
+  private async getDefaultTopicExplanation(topic: any): Promise<AITopicExplanation> {
+    const topicName = topic?.name || 'this topic';
+    const subjectName = topic?.subject?.name || 'Mathematics';
+    
+    // Get related content from database
+    const relatedContent = await this.getRelatedContent(topic);
+    const suggestedReadings = await this.getSuggestedReadings(topic);
+    const practiceQuestions = await this.getPracticeQuestions(topic);
+    
     return {
-      overview: `Overview of ${topic.name}`,
-      keyPoints: ['Key point 1', 'Key point 2'],
-      detailedExplanation: `Detailed explanation for ${topic.name}`,
-      examples: [],
-      visualAids: [],
-      commonQuestions: [],
-      practiceExercises: []
+      overview: `${topicName} is a fundamental concept in ${subjectName} that forms the foundation for more advanced topics. Understanding ${topicName} is crucial for JEE preparation as it appears frequently in competitive exams.`,
+      keyPoints: [
+        `Understanding the basic principles of ${topicName}`,
+        `Key formulas and theorems related to ${topicName}`,
+        `Common problem-solving techniques for ${topicName}`,
+        `Important applications of ${topicName} in real-world scenarios`
+      ],
+      detailedExplanation: `${topicName} is an essential topic in ${subjectName} that requires thorough understanding. This concept builds upon previous knowledge and serves as a foundation for more complex topics. Students should focus on understanding the underlying principles, memorizing key formulas, and practicing various types of problems to master this topic. Regular practice and conceptual clarity are essential for success in JEE examinations.`,
+      examples: [
+        {
+          problem: `Example problem related to ${topicName}`,
+          solution: `Step-by-step solution approach`,
+          explanation: `Detailed explanation of the solution method`
+        }
+      ],
+      visualAids: [
+        {
+          type: 'DIAGRAM',
+          description: `Visual representation of ${topicName}`,
+          content: `Diagram showing key concepts of ${topicName}`
+        }
+      ],
+      commonQuestions: [
+        {
+          question: `What is the importance of ${topicName} in JEE preparation?`,
+          answer: `${topicName} is crucial for JEE as it forms the foundation for many advanced topics and appears frequently in the examination.`
+        },
+        {
+          question: `What are the key concepts to focus on in ${topicName}?`,
+          answer: `Focus on understanding the basic principles, memorizing key formulas, and practicing various problem types.`
+        }
+      ],
+      practiceExercises: practiceQuestions,
+      suggestedReadings: suggestedReadings,
+      relatedContent: relatedContent
     };
   }
 
   private getDefaultMicroLesson(subtopic: any): AIMicroLesson {
+    const subtopicName = subtopic?.name || 'this subtopic';
+    const topicName = subtopic?.topic?.name || 'the parent topic';
+    
     return {
       lessonId: subtopic.id,
-      title: subtopic.name,
-      duration: 10,
+      title: subtopicName,
+      duration: 15,
       content: {
-        introduction: `Introduction to ${subtopic.name}`,
-        mainContent: `Main content for ${subtopic.name}`,
-        summary: `Summary of ${subtopic.name}`,
-        keyTakeaways: ['Key takeaway 1', 'Key takeaway 2']
+        introduction: `Welcome to ${subtopicName}! This micro-lesson will help you understand the fundamental concepts of ${subtopicName} within the broader context of ${topicName}. This topic is essential for JEE preparation and builds upon previous knowledge.`,
+        mainContent: `${subtopicName} is a crucial concept that students must master for JEE success. This topic involves understanding key principles, applying formulas correctly, and developing problem-solving strategies. The main content covers the theoretical foundation, practical applications, and common problem types that appear in competitive examinations.`,
+        summary: `In this lesson, we covered the essential aspects of ${subtopicName}. Key points include understanding the fundamental principles, mastering the application of formulas, and developing effective problem-solving techniques. Regular practice and conceptual clarity are essential for success.`,
+        keyTakeaways: [
+          `Master the fundamental concepts of ${subtopicName}`,
+          `Understand the practical applications of ${subtopicName}`,
+          `Develop problem-solving strategies for ${subtopicName}`,
+          `Build confidence through regular practice`
+        ]
       },
-      interactiveElements: [],
-      assessment: { questions: [] }
+      interactiveElements: [
+        {
+          type: 'QUIZ',
+          // title: `Quick Check: ${subtopicName}`, // Remove title as it's not in the interface
+          content: `Test your understanding of ${subtopicName} with this interactive quiz.`
+        }
+      ],
+      assessment: { 
+        questions: [
+          {
+            question: `What is the primary importance of ${subtopicName} in JEE preparation?`,
+            options: [
+              'It appears frequently in JEE exams',
+              'It builds foundation for advanced topics',
+              'It improves problem-solving skills',
+              'All of the above'
+            ],
+            correctAnswer: 3,
+            explanation: `${subtopicName} is crucial for JEE preparation as it appears frequently, builds foundation for advanced topics, and improves overall problem-solving skills.`
+          }
+        ]
+      }
     };
+  }
+
+  private async recordAIFeatureUsage(userId: string, contentId: string | null, featureType: string): Promise<void> {
+    try {
+      await this.prisma.aIFeatureUsage.create({
+        data: {
+          userId,
+          contentId: contentId || '',
+          featureType: featureType as any,
+          usageCount: 1
+        }
+      });
+    } catch (error) {
+      this.logger.error('Error recording AI feature usage:', error);
+      // Don't throw error as this is not critical
+    }
+  }
+
+  private async getRelatedContent(topic: any): Promise<any[]> {
+    try {
+      // Get related LMS content for this topic
+      const relatedContent = await this.prisma.lMSContent.findMany({
+        where: {
+          topicId: topic.id,
+          // isActive: true // Remove isActive as it doesn't exist in the schema
+        },
+        include: {
+          subject: true,
+          topic: true,
+          subtopic: true
+        },
+        take: 5,
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+
+      return relatedContent.map(content => ({
+        id: content.id,
+        title: content.title,
+        type: content.contentType,
+        description: content.description,
+        subject: (content as any).subject?.name || 'Unknown Subject',
+        topic: (content as any).topic?.name || 'Unknown Topic',
+        subtopic: (content as any).subtopic?.name || 'Unknown Subtopic',
+        url: `/student/lms/content/${content.id}`
+      }));
+    } catch (error) {
+      this.logger.error('Error getting related content:', error);
+      return [];
+    }
+  }
+
+  private async getSuggestedReadings(topic: any): Promise<any[]> {
+    try {
+      // Get suggested readings from LMS content
+      const readings = await this.prisma.lMSContent.findMany({
+        where: {
+          topicId: topic.id,
+          contentType: {
+            in: ['VIDEO', 'TEXT'] // Use valid ContentType values
+          },
+          // isActive: true // Remove isActive as it doesn't exist in the schema
+        },
+        include: {
+          subject: true,
+          topic: true
+        },
+        take: 8,
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+
+      return readings.map(reading => ({
+        id: reading.id,
+        title: reading.title,
+        type: reading.contentType,
+        description: reading.description,
+        subject: reading.subjectId || 'Unknown Subject',
+        topic: reading.topicId || 'Unknown Topic',
+        url: `/student/lms/content/${reading.id}`,
+        difficulty: reading.difficulty || 'MEDIUM'
+      }));
+    } catch (error) {
+      this.logger.error('Error getting suggested readings:', error);
+      return [];
+    }
+  }
+
+  private async getPracticeQuestions(topic: any): Promise<any[]> {
+    try {
+      // Get practice questions for this topic
+      const questions = await this.prisma.question.findMany({
+        where: {
+          topicId: topic.id,
+          // isActive: true // Remove isActive as it doesn't exist in the schema
+        },
+        include: {
+          options: true,
+          subject: true,
+          topic: true
+        },
+        take: 5,
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+
+      return questions.map(question => ({
+        id: question.id,
+        problem: question.stem,
+        difficulty: question.difficulty,
+        subject: question.subject?.name,
+        topic: question.topic?.name,
+        options: (question as any).options?.map((opt: any) => opt.text) || [],
+        hints: [
+          'Read the question carefully',
+          'Identify the key concepts',
+          'Apply the appropriate formula or method'
+        ]
+      }));
+    } catch (error) {
+      this.logger.error('Error getting practice questions:', error);
+      return [];
+    }
+  }
+
+  async checkContentExists(userId: string, contentType: string, id: string): Promise<{ exists: boolean; content?: any }> {
+    try {
+      const whereClause: any = {
+        userId,
+        contentType
+      };
+
+      if (contentType === 'LESSON_SUMMARY') {
+        whereClause.lessonId = id;
+      } else if (contentType === 'TOPIC_EXPLANATION') {
+        whereClause.topicId = id;
+      } else if (contentType === 'MICRO_LESSON') {
+        whereClause.subtopicId = id;
+      }
+
+      const existingContent = await this.prisma.aIContentGeneration.findFirst({
+        where: whereClause,
+        include: {
+          lesson: true,
+          topic: true,
+          subtopic: true
+        }
+      });
+
+      return {
+        exists: !!existingContent,
+        content: existingContent?.contentData
+      };
+    } catch (error) {
+      this.logger.error('Error checking content existence:', error);
+      return { exists: false };
+    }
+  }
+
+  async getUserGeneratedContent(userId: string): Promise<any[]> {
+    try {
+      const content = await this.prisma.aIContentGeneration.findMany({
+        where: { userId },
+        include: {
+          lesson: {
+            include: {
+              subject: true
+            }
+          },
+          topic: {
+            include: {
+              subject: true,
+              lesson: true
+            }
+          },
+          subtopic: {
+            include: {
+              topic: {
+                include: {
+                  subject: true,
+                  lesson: true
+                }
+              }
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+
+      return content.map(item => ({
+        id: item.id,
+        contentType: item.contentType,
+        contentData: item.contentData,
+        createdAt: item.createdAt,
+        lesson: item.lesson,
+        topic: item.topic,
+        subtopic: item.subtopic
+      }));
+    } catch (error) {
+      this.logger.error('Error getting user generated content:', error);
+      return [];
+    }
   }
 }

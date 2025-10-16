@@ -24,10 +24,15 @@ export class AISuggestionsController {
   ) {
     const userId = req.user.id;
 
-    // Check subscription status
+    // Check subscription status - require AI_ENABLED for detailed suggestions
     const subscriptionStatus = await this.subscriptionValidation.validateStudentSubscription(userId);
     if (!subscriptionStatus.hasValidSubscription && !subscriptionStatus.isOnTrial) {
       throw new ForbiddenException('Subscription required to access AI suggestions');
+    }
+
+    // Check for AI_ENABLED subscription for detailed suggestions
+    if (subscriptionStatus.planType !== 'AI_ENABLED') {
+      throw new ForbiddenException('AI Detailed Suggestions require AI_ENABLED subscription. Please upgrade your plan.');
     }
 
     const request = {
@@ -124,6 +129,12 @@ export class AISuggestionsController {
           : 0;
       });
 
+      // Calculate performance trends
+      const performanceTrends = this.calculatePerformanceTrends(performanceData);
+      
+      // Generate insights
+      const insights = this.generatePerformanceInsights(performanceData, subjectBreakdown);
+
       return {
         success: true,
         data: {
@@ -133,7 +144,9 @@ export class AISuggestionsController {
             score: Math.round(overallScore * 100) / 100
           },
           subjects: Object.values(subjectBreakdown),
-          performanceData
+          performanceData,
+          trends: performanceTrends,
+          insights
         },
         metadata: {
           generatedAt: new Date().toISOString(),
@@ -153,6 +166,86 @@ export class AISuggestionsController {
         }
       };
     }
+  }
+
+  private calculatePerformanceTrends(performanceData: any[]): any {
+    // Group by difficulty and calculate trends
+    const difficultyTrends = performanceData.reduce((acc, p) => {
+      if (!acc[p.difficulty]) {
+        acc[p.difficulty] = { total: 0, correct: 0, count: 0 };
+      }
+      acc[p.difficulty].total += p.totalQuestions;
+      acc[p.difficulty].correct += p.correctAnswers;
+      acc[p.difficulty].count += 1;
+      return acc;
+    }, {});
+
+    // Calculate average scores by difficulty
+    Object.keys(difficultyTrends).forEach(difficulty => {
+      const trend = difficultyTrends[difficulty];
+      trend.averageScore = trend.total > 0 ? (trend.correct / trend.total) * 100 : 0;
+    });
+
+    return {
+      byDifficulty: difficultyTrends,
+      totalAreas: performanceData.length,
+      weakAreas: performanceData.filter(p => p.score < 60).length,
+      strongAreas: performanceData.filter(p => p.score >= 80).length
+    };
+  }
+
+  private generatePerformanceInsights(performanceData: any[], subjectBreakdown: any): any[] {
+    const insights = [];
+
+    // Find weakest subject
+    const weakestSubject = Object.values(subjectBreakdown)
+      .sort((a: any, b: any) => a.score - b.score)[0] as any;
+    
+    if (weakestSubject) {
+      insights.push({
+        type: 'WEAKNESS',
+        title: 'Primary Focus Area',
+        description: `${weakestSubject.subjectName} needs immediate attention with ${weakestSubject.score.toFixed(1)}% accuracy`,
+        recommendation: 'Focus on fundamental concepts and practice more questions',
+        priority: 'HIGH'
+      });
+    }
+
+    // Find strongest subject
+    const strongestSubject = Object.values(subjectBreakdown)
+      .sort((a: any, b: any) => b.score - a.score)[0] as any;
+    
+    if (strongestSubject && strongestSubject.score > 80) {
+      insights.push({
+        type: 'STRENGTH',
+        title: 'Strong Performance Area',
+        description: `${strongestSubject.subjectName} shows excellent mastery with ${strongestSubject.score.toFixed(1)}% accuracy`,
+        recommendation: 'Use this strength to build confidence and help others',
+        priority: 'LOW'
+      });
+    }
+
+    // Overall performance insight
+    const averageScore = performanceData.reduce((sum, p) => sum + p.score, 0) / performanceData.length;
+    if (averageScore < 60) {
+      insights.push({
+        type: 'IMPROVEMENT',
+        title: 'Overall Performance Needs Improvement',
+        description: `Average performance across all areas is ${averageScore.toFixed(1)}%`,
+        recommendation: 'Focus on consistent practice and concept reinforcement',
+        priority: 'HIGH'
+      });
+    } else if (averageScore > 80) {
+      insights.push({
+        type: 'EXCELLENCE',
+        title: 'Excellent Overall Performance',
+        description: `Average performance across all areas is ${averageScore.toFixed(1)}%`,
+        recommendation: 'Continue current study methods and challenge yourself with advanced topics',
+        priority: 'LOW'
+      });
+    }
+
+    return insights;
   }
 
   @Get('history')

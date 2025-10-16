@@ -722,4 +722,132 @@ export class AdvancedAnalyticsService {
       throw error;
     }
   }
+
+  async refreshAnalyticsWithLimit(userId: string) {
+    try {
+      // Check if user has AI_ENABLED subscription
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        include: { subscriptions: { include: { plan: true } } }
+      });
+
+      if (!user?.subscriptions || user.subscriptions.length === 0 || user.subscriptions[0].plan.name !== 'AI_ENABLED') {
+        return {
+          canRefresh: false,
+          message: 'AI analytics refresh requires AI_ENABLED subscription. Please upgrade your plan.',
+          data: null
+        };
+      }
+
+      // Check daily refresh limit
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+
+      const todayRefreshes = await this.prisma.aIFeatureUsage.count({
+        where: {
+          userId,
+          featureType: 'ANALYTICS_REFRESH',
+          createdAt: {
+            gte: today,
+            lt: tomorrow
+          }
+        }
+      });
+
+      if (todayRefreshes >= 1) {
+        return {
+          canRefresh: false,
+          message: 'You have already refreshed your analytics today. Please try again tomorrow.',
+          data: null
+        };
+      }
+
+      // Record the refresh usage
+      await this.prisma.aIFeatureUsage.create({
+        data: {
+          userId,
+          contentId: '', // Analytics refresh is not content-specific
+          featureType: 'ANALYTICS_REFRESH',
+          usageCount: 1
+        }
+      });
+
+      // Generate fresh analytics data
+      const [learningProfile, insights] = await Promise.all([
+        this.generateDetailedLearningProfile(userId),
+        this.generateLearningInsights(userId)
+      ]);
+
+      return {
+        canRefresh: true,
+        message: 'Analytics refreshed successfully!',
+        data: {
+          learningProfile,
+          insights
+        }
+      };
+    } catch (error) {
+      this.logger.error('Error refreshing analytics:', error);
+      throw error;
+    }
+  }
+
+  async getRefreshStatus(userId: string) {
+    try {
+      // Check subscription
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        include: { subscriptions: { include: { plan: true } } }
+      });
+
+      const hasAISubscription = user?.subscriptions && user.subscriptions.length > 0 && user.subscriptions[0].plan.name === 'AI_ENABLED';
+
+      if (!hasAISubscription) {
+        return {
+          canRefresh: false,
+          hasAISubscription: false,
+          message: 'AI analytics refresh requires AI_ENABLED subscription. Please upgrade your plan.',
+          todayRefreshes: 0,
+          maxRefreshes: 1,
+          nextRefreshAvailable: null
+        };
+      }
+
+      // Check today's refresh count
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+
+      const todayRefreshes = await this.prisma.aIFeatureUsage.count({
+        where: {
+          userId,
+          featureType: 'ANALYTICS_REFRESH',
+          createdAt: {
+            gte: today,
+            lt: tomorrow
+          }
+        }
+      });
+
+      const canRefresh = todayRefreshes < 1;
+      const nextRefreshAvailable = canRefresh ? null : tomorrow;
+
+      return {
+        canRefresh,
+        hasAISubscription: true,
+        message: canRefresh 
+          ? 'You can refresh your analytics now.' 
+          : 'You have already refreshed your analytics today. Please try again tomorrow.',
+        todayRefreshes,
+        maxRefreshes: 1,
+        nextRefreshAvailable
+      };
+    } catch (error) {
+      this.logger.error('Error getting refresh status:', error);
+      throw error;
+    }
+  }
 }

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import StudentLayout from '@/components/StudentLayout';
+import { useToastContext } from '@/contexts/ToastContext';
 
 interface LearningProfile {
   userId: string;
@@ -56,14 +57,42 @@ export default function LearningAnalyticsPage() {
   const [insights, setInsights] = useState<LearningInsight[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
+  const [refreshStatus, setRefreshStatus] = useState<any>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [hasAISubscription, setHasAISubscription] = useState<boolean | null>(null);
+  const { showSuccess, showError, showInfo } = useToastContext();
 
   useEffect(() => {
+    checkAISubscription();
     loadAnalyticsData();
+    loadRefreshStatus();
   }, []);
+
+  const checkAISubscription = async () => {
+    try {
+      const response = await api.get('/subscriptions/status');
+      setHasAISubscription(response.data.plan === 'AI_ENABLED');
+    } catch (error) {
+      console.error('Error checking AI subscription:', error);
+      setHasAISubscription(false);
+    }
+  };
+
+  const handleUpgrade = () => {
+    // Redirect to subscription/renewal page
+    window.location.href = '/student/subscription';
+  };
 
   const loadAnalyticsData = async () => {
     try {
       setLoading(true);
+      
+      // Check subscription first
+      if (hasAISubscription === false) {
+        setLoading(false);
+        return;
+      }
+      
       const [profileResponse, insightsResponse] = await Promise.all([
         api.get('/ai/advanced/analytics/learning-profile'),
         api.get('/ai/advanced/analytics/insights')
@@ -71,10 +100,53 @@ export default function LearningAnalyticsPage() {
 
       setLearningProfile(profileResponse.data);
       setInsights(insightsResponse.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error loading analytics data:', error);
+      if (error.response?.status === 403 || error.response?.data?.message?.includes('subscription')) {
+        setHasAISubscription(false);
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadRefreshStatus = async () => {
+    try {
+      const response = await api.get('/ai/advanced/analytics/refresh-status');
+      setRefreshStatus(response.data);
+    } catch (error) {
+      console.error('Error loading refresh status:', error);
+    }
+  };
+
+  const handleRefreshAnalytics = async () => {
+    if (!refreshStatus?.canRefresh) {
+      if (!refreshStatus?.hasAISubscription) {
+        showError('Upgrade Required', 'AI analytics refresh requires AI_ENABLED subscription. Please upgrade your plan to use this feature.');
+      } else {
+        showInfo('Daily Limit Reached', 'You have already refreshed your analytics today. Please try again tomorrow.');
+      }
+      return;
+    }
+
+    try {
+      setRefreshing(true);
+      const response = await api.post('/ai/advanced/analytics/refresh');
+      
+      // Update the data with fresh analytics
+      setLearningProfile(response.data.learningProfile);
+      setInsights(response.data.insights);
+      
+      // Reload refresh status
+      await loadRefreshStatus();
+      
+      showSuccess('Analytics Refreshed', 'Your AI analytics have been successfully refreshed with the latest data!');
+    } catch (error: any) {
+      console.error('Error refreshing analytics:', error);
+      const errorMessage = error.response?.data?.message || 'Failed to refresh analytics. Please try again.';
+      showError('Refresh Failed', errorMessage);
+    } finally {
+      setRefreshing(false);
     }
   };
 
@@ -109,6 +181,100 @@ export default function LearningAnalyticsPage() {
     );
   }
 
+  // Show upgrade message for non-AI users
+  if (hasAISubscription === false) {
+    return (
+      <ProtectedRoute allowedRoles={['STUDENT']}>
+        <StudentLayout>
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900">🧠 AI Learning Analytics</h1>
+                  <p className="text-gray-600 mt-1">Personalized insights into your learning patterns and performance</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Upgrade Message */}
+            <div className="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-lg p-8">
+              <div className="text-center">
+                <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 mb-4">
+                  <svg className="h-8 w-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">AI Analytics Requires Premium Subscription</h2>
+                <p className="text-lg text-gray-600 mb-6">
+                  Unlock powerful AI-driven insights into your learning patterns, performance predictions, and personalized recommendations.
+                </p>
+                <div className="bg-white rounded-lg p-6 mb-6 text-left max-w-2xl mx-auto">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">What you'll get with AI Analytics:</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex items-start space-x-3">
+                      <div className="flex-shrink-0">
+                        <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                          <span className="text-blue-600 text-sm">✓</span>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Learning Style Analysis</h4>
+                        <p className="text-sm text-gray-600">Discover your optimal learning methods</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="flex-shrink-0">
+                        <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                          <span className="text-blue-600 text-sm">✓</span>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Performance Predictions</h4>
+                        <p className="text-sm text-gray-600">AI-powered success probability</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="flex-shrink-0">
+                        <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                          <span className="text-blue-600 text-sm">✓</span>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Weakness Identification</h4>
+                        <p className="text-sm text-gray-600">Target areas for improvement</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="flex-shrink-0">
+                        <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                          <span className="text-blue-600 text-sm">✓</span>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">Personalized Recommendations</h4>
+                        <p className="text-sm text-gray-600">AI-driven study suggestions</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={handleUpgrade}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  🚀 Upgrade to AI Analytics
+                </button>
+                <p className="text-sm text-gray-500 mt-4">
+                  Join thousands of students using AI to optimize their learning
+                </p>
+              </div>
+            </div>
+          </div>
+        </StudentLayout>
+      </ProtectedRoute>
+    );
+  }
+
   return (
     <ProtectedRoute allowedRoles={['STUDENT']}>
       <StudentLayout>
@@ -122,11 +288,45 @@ export default function LearningAnalyticsPage() {
               </div>
               <div className="flex space-x-2">
                 <button
-                  onClick={() => loadAnalyticsData()}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  onClick={handleRefreshAnalytics}
+                  disabled={refreshing || !refreshStatus?.canRefresh}
+                  className={`px-4 py-2 rounded-lg transition-colors flex items-center space-x-2 ${
+                    refreshStatus?.canRefresh && !refreshing
+                      ? 'bg-blue-600 text-white hover:bg-blue-700'
+                      : refreshStatus?.hasAISubscription === false
+                      ? 'bg-orange-500 text-white hover:bg-orange-600'
+                      : 'bg-gray-400 text-white cursor-not-allowed'
+                  }`}
                 >
-                  🔄 Refresh
+                  {refreshing ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <span>Refreshing...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>🔄</span>
+                      <span>
+                        {refreshStatus?.hasAISubscription === false
+                          ? 'Upgrade to Refresh'
+                          : refreshStatus?.canRefresh
+                          ? 'Refresh'
+                          : 'Daily Limit Reached'}
+                      </span>
+                    </>
+                  )}
                 </button>
+                {refreshStatus && (
+                  <div className="text-sm text-gray-600 flex items-center">
+                    {refreshStatus.hasAISubscription ? (
+                      <span>
+                        {refreshStatus.todayRefreshes}/{refreshStatus.maxRefreshes} refreshes today
+                      </span>
+                    ) : (
+                      <span className="text-orange-600">AI subscription required</span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

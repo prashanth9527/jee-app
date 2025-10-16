@@ -82,7 +82,7 @@ export class AdvancedAIController {
       throw new Error('AI features require premium subscription');
     }
 
-    return this.contentGenerationService.generateLessonSummary(lessonId);
+    return this.contentGenerationService.generateLessonSummary(lessonId, userId);
   }
 
   @Get('content/topic-explanation/:topicId')
@@ -95,7 +95,7 @@ export class AdvancedAIController {
       throw new Error('AI features require premium subscription');
     }
 
-    return this.contentGenerationService.generateTopicExplanation(topicId);
+    return this.contentGenerationService.generateTopicExplanation(topicId, userId);
   }
 
   @Get('content/micro-lesson/:subtopicId')
@@ -108,7 +108,7 @@ export class AdvancedAIController {
       throw new Error('AI features require premium subscription');
     }
 
-    return this.contentGenerationService.generateMicroLesson(subtopicId);
+    return this.contentGenerationService.generateMicroLesson(subtopicId, userId);
   }
 
   @Post('content/enhance')
@@ -242,6 +242,42 @@ export class AdvancedAIController {
       body.count,
       body.difficulty
     );
+  }
+
+  @Post('analytics/refresh')
+  @Roles('STUDENT')
+  async refreshAnalytics(@Req() req: any) {
+    const userId = req.user.id;
+    
+    // Check AI access and daily limit
+    const refreshResult = await this.advancedAnalyticsService.refreshAnalyticsWithLimit(userId);
+    
+    if (!refreshResult.canRefresh) {
+      throw new Error(refreshResult.message);
+    }
+
+    return refreshResult.data;
+  }
+
+  @Get('analytics/refresh-status')
+  @Roles('STUDENT')
+  async getRefreshStatus(@Req() req: any) {
+    const userId = req.user.id;
+    return this.advancedAnalyticsService.getRefreshStatus(userId);
+  }
+
+  @Get('content/check/:contentType/:id')
+  @Roles('STUDENT')
+  async checkContentExists(@Req() req: any, @Param('contentType') contentType: string, @Param('id') id: string) {
+    const userId = req.user.id;
+    return this.contentGenerationService.checkContentExists(userId, contentType, id);
+  }
+
+  @Get('content/user-generated')
+  @Roles('STUDENT')
+  async getUserGeneratedContent(@Req() req: any) {
+    const userId = req.user.id;
+    return this.contentGenerationService.getUserGeneratedContent(userId);
   }
 }
 

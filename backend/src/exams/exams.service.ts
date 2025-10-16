@@ -115,7 +115,7 @@ export class ExamsService {
 				answers: {
 					include: {
 						question: {
-							include: {
+			include: {
                 options: true
 							}
 						}
@@ -155,19 +155,19 @@ export class ExamsService {
         answers: {
           include: {
             question: {
-				include: {
+			include: {
 					options: true
 				}
             }
-          }
+				}
         }
       },
       orderBy: {
         submittedAt: 'desc'
-      }
-    });
+			}
+		});
 
-    if (!submission) {
+		if (!submission) {
       throw new NotFoundException('Exam results not found');
     }
 
@@ -191,33 +191,33 @@ export class ExamsService {
   async getSubmission(userId: string, submissionId: string) {
     console.log('Getting submission:', { userId, submissionId });
 
-    const submission = await this.prisma.examSubmission.findUnique({
-      where: { id: submissionId },
-      include: {
-        examPaper: true,
-        answers: {
-          include: {
-            question: {
+		const submission = await this.prisma.examSubmission.findUnique({
+			where: { id: submissionId },
 			include: {
+        examPaper: true,
+				answers: {
+					include: {
+						question: {
+							include: {
                 options: true
-              }
-            }
-          }
+							}
+						}
+					}
 				}
 			}
 		});
 
-    if (!submission) {
+		if (!submission) {
       throw new NotFoundException('Submission not found');
     }
 
     // Check if user has access to this submission
     if (submission.userId !== userId) {
       throw new BadRequestException('You do not have access to this submission');
-    }
+		}
 
 		return {
-      id: submission.id,
+				id: submission.id,
       userId: submission.userId,
       examPaper: {
         id: submission.examPaper.id,
@@ -225,25 +225,25 @@ export class ExamsService {
         timeLimitMin: submission.examPaper.timeLimitMin
       },
       questionIds: submission.examPaper.questionIds,
-      startedAt: submission.startedAt,
-      submittedAt: submission.submittedAt,
-      totalQuestions: submission.totalQuestions,
+				startedAt: submission.startedAt,
+				submittedAt: submission.submittedAt,
+				totalQuestions: submission.totalQuestions,
       scorePercent: submission.scorePercent,
-      correctCount: submission.correctCount,
+				correctCount: submission.correctCount,
       answers: submission.answers.map(answer => ({
-        questionId: answer.questionId,
+				questionId: answer.questionId,
         selectedOptionId: answer.selectedOptionId,
         isCorrect: answer.question.options.find(o => o.id === answer.selectedOptionId)?.isCorrect || false
-      }))
-    };
-  }
+			}))
+		};
+	}
 
   async getSubmissionQuestions(userId: string, submissionId: string) {
     console.log('Getting submission questions:', { userId, submissionId });
 
     const submission = await this.prisma.examSubmission.findUnique({
       where: { id: submissionId },
-      include: {
+				include: {
         examPaper: true
       }
     });
@@ -260,8 +260,8 @@ export class ExamsService {
     // Fetch questions using the questionIds from the exam paper
     const questions = await this.prisma.question.findMany({
       where: { id: { in: submission.examPaper.questionIds } },
-      include: {
-        options: {
+			include: {
+				options: {
           orderBy: { order: 'asc' }
         },
         subject: true,
@@ -272,7 +272,7 @@ export class ExamsService {
 
     return questions.map(question => ({
       id: question.id,
-      stem: question.stem,
+				stem: question.stem,
       explanation: question.explanation,
       tip_formula: question.tip_formula,
       difficulty: question.difficulty,
@@ -327,12 +327,12 @@ export class ExamsService {
 
     console.log('Exam started, submission created:', submission.id);
 
-    return {
+		return {
       submissionId: submission.id,
       examId: exam.id,
       title: exam.title,
       timeLimitMin: exam.timeLimitMin,
       totalQuestions: exam.questionIds.length
-    };
-  }
-}
+		};
+	}
+} 

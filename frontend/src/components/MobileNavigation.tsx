@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, BookOpen, FileText, HelpCircle, LogIn, ClipboardList, GraduationCap, Archive } from 'lucide-react';
+import { Home, BookOpen, FileText, HelpCircle, LogIn, ClipboardList, GraduationCap, Archive, Edit, FileText as FileTextIcon, Brain } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function MobileNavigation() {
@@ -148,6 +148,36 @@ export default function MobileNavigation() {
           >
             <BookOpen className="w-5 h-5 mb-1" />
             <span className="text-xs font-medium">LMS</span>
+          </Link>
+          
+          <Link
+            href="/student/notes"
+            className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${
+              pathname?.startsWith('/student/notes') ? 'text-orange-600 bg-orange-50' : 'text-gray-600 hover:text-orange-600'
+            }`}
+          >
+            <Edit className="w-5 h-5 mb-1" />
+            <span className="text-xs font-medium">Notes</span>
+          </Link>
+          
+          <Link
+            href="/student/content-exams"
+            className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${
+              pathname?.startsWith('/student/content-exams') ? 'text-orange-600 bg-orange-50' : 'text-gray-600 hover:text-orange-600'
+            }`}
+          >
+            <FileTextIcon className="w-5 h-5 mb-1" />
+            <span className="text-xs font-medium">Content Exams</span>
+          </Link>
+          
+          <Link
+            href="/student/ai-results"
+            className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${
+              pathname?.startsWith('/student/ai-results') ? 'text-orange-600 bg-orange-50' : 'text-gray-600 hover:text-orange-600'
+            }`}
+          >
+            <Brain className="w-5 h-5 mb-1" />
+            <span className="text-xs font-medium">AI Results</span>
           </Link>
         </div>
       </div>
