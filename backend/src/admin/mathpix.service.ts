@@ -219,14 +219,14 @@ export class MathpixService {
               latexContent: this.sanitizeStringData(existingLatexContent),
               latexFilePath: awsLatexFilePath,
               pdfFilePath: this.sanitizeStringData(pdfFilePath),
-              processingStatus: 'COMPLETED',
+              // processingStatus: 'COMPLETED',
               lastProcessedAt: new Date()
             },
             create: {
               fileName: this.sanitizeStringData(fileName),
               filePath: this.sanitizeStringData(filePath),
               fileSize: 0, // We don't have the file size here
-              processingStatus: 'COMPLETED',
+              // processingStatus: 'COMPLETED',
               latexContent: this.sanitizeStringData(existingLatexContent),
               latexFilePath: awsLatexFilePath,
               pdfFilePath: this.sanitizeStringData(pdfFilePath)
@@ -1904,7 +1904,7 @@ export class MathpixService {
               latexContent: latexContent,
               latexFilePath: this.sanitizeStringData(latexFilePath),
               zipFilePath: this.sanitizeStringData(zipFilePath),
-              processingStatus: 'COMPLETED',
+              // processingStatus: 'COMPLETED',
               lastProcessedAt: new Date(),
               processingTimeMs: Date.now() - startTime
             },
@@ -1912,7 +1912,7 @@ export class MathpixService {
               fileName: this.sanitizeStringData(fileName),
               filePath: this.sanitizeStringData(filePath),
               fileSize: fileStats.size,
-              processingStatus: 'COMPLETED',
+              // processingStatus: 'COMPLETED',
               latexContent: latexContent,
               latexFilePath: this.sanitizeStringData(latexFilePath),
               zipFilePath: this.sanitizeStringData(zipFilePath),
@@ -1933,7 +1933,7 @@ export class MathpixService {
               latexContent: latexContent,
               latexFilePath: this.sanitizeStringData(latexFilePath),
               zipFilePath: this.sanitizeStringData(zipFilePath),
-              processingStatus: 'COMPLETED',
+              // processingStatus: 'COMPLETED',
               lastProcessedAt: new Date(),
               processingTimeMs: Date.now() - startTime
             }

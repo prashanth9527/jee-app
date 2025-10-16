@@ -286,6 +286,15 @@ export class PDFProcessorCacheService {
       });
 
       this.logger.log(`Deleted ${deletedQuestions.count} questions for cache ID: ${id}`);
+
+      // Update record with import timestamp
+      await this.prisma.pDFProcessorCache.update({
+        where: { id },
+        data: { 
+          importedAt: null,
+          processingStatus: 'PENDING'
+        }
+      });
       
       return {
         success: true,
@@ -424,7 +433,10 @@ export class PDFProcessorCacheService {
       // Update record with import timestamp
       await this.prisma.pDFProcessorCache.update({
         where: { id },
-        data: { importedAt: new Date() }
+        data: { 
+          importedAt: new Date(),
+          processingStatus: 'COMPLETED'
+        }
       });
 
       this.logger.log(`Successfully imported ${importedCount} questions for cache ID: ${id}`);
@@ -554,7 +566,11 @@ export class PDFProcessorCacheService {
       // Update the PDF processor cache with LMS content ID
       await this.prisma.pDFProcessorCache.update({
         where: { id },
-        data: { lmsContentId: lmsContent.id }
+        data: { 
+          lmsContentId: lmsContent.id,
+          importedAt: new Date(),
+          processingStatus: 'COMPLETED'
+        }
       });
 
       this.logger.log(`Successfully saved LMS content for cache ID: ${id}`);
@@ -594,7 +610,11 @@ export class PDFProcessorCacheService {
       // Update the PDF processor cache to remove LMS content ID
       await this.prisma.pDFProcessorCache.update({
         where: { id },
-        data: { lmsContentId: null }
+        data: { 
+          lmsContentId: null,
+          importedAt: null,
+          processingStatus: 'PENDING'
+        }
       });
 
       this.logger.log(`Successfully deleted LMS content for cache ID: ${id}`);
