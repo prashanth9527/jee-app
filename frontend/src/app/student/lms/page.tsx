@@ -138,6 +138,7 @@ export default function StudentLMSPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [summarySidebarVisible, setSummarySidebarVisible] = useState(false);
   const [learningSidebarVisible, setLearningSidebarVisible] = useState(false);
+  const [resumingSubject, setResumingSubject] = useState<string | null>(null);
 
   // Toggle logic: when summary sidebar opens, collapse left sidebar
   useEffect(() => {
@@ -225,9 +226,30 @@ export default function StudentLMSPage() {
       if (response.data.length > 0) {
         setExpandedItems(new Set([response.data[0].id]));
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error loading hierarchy:', error);
-      Swal.fire('Error', 'Failed to load learning hierarchy', 'error');
+      
+      let errorMessage = 'Failed to load learning hierarchy';
+      if (error.response?.status === 403) {
+        errorMessage = 'You do not have access to learning content. Please contact your administrator to assign you to a stream.';
+      } else if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      }
+      
+      Swal.fire({
+        icon: 'error',
+        title: 'Error Loading Content',
+        text: errorMessage,
+        confirmButtonText: 'Retry',
+        showCancelButton: true,
+        cancelButtonText: 'Go to Dashboard'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          loadHierarchy();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          router.push('/student');
+        }
+      });
     } finally {
       setLoading(false);
     }
@@ -551,6 +573,29 @@ export default function StudentLMSPage() {
     setSelectedSubjectId(null);
     setSelectedContent(null);
     setSelectedContentId(null);
+  };
+
+  const handleResumeLearning = async (subjectId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      setResumingSubject(subjectId);
+      const response = await api.get(`/student/lms/resume/${subjectId}`);
+      
+      if (response.data) {
+        // Navigate directly to the learning page
+        router.push(`/student/lms/learn/${response.data.id}`);
+      } else {
+        // If no content found, just open the subject
+        handleSubjectSelect(subjectId);
+      }
+    } catch (error) {
+      console.error('Error resuming learning:', error);
+      Swal.fire('Error', 'Failed to resume learning', 'error');
+      // Fallback to opening subject
+      handleSubjectSelect(subjectId);
+    } finally {
+      setResumingSubject(null);
+    }
   };
 
   const calculateItemProgress = (
@@ -944,8 +989,25 @@ export default function StudentLMSPage() {
             )}
 
             {/* Subject Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {hierarchy.map((subject) => {
+            {hierarchy.length === 0 ? (
+              <div className="bg-white rounded-lg shadow-md p-12 text-center">
+                <div className="max-w-md mx-auto">
+                  <div className="text-6xl mb-4">📚</div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No Subjects Available</h3>
+                  <p className="text-gray-600 mb-4">
+                    There are no learning subjects available for your stream yet. Please contact your administrator or check back later.
+                  </p>
+                  <button
+                    onClick={() => loadHierarchy()}
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Refresh
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {hierarchy.map((subject) => {
                 const progress = calculateItemProgress(subject, 'subject');
                 return (
                   <div
@@ -1008,17 +1070,56 @@ export default function StudentLMSPage() {
                     </div>
 
                     <div className="bg-gray-50 px-6 py-3 border-t border-gray-100">
-                      <button className="text-sm font-medium text-blue-600 group-hover:text-blue-700 flex items-center">
-                        <span>Start Learning</span>
-                        <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </button>
+                      <div className="flex items-center justify-between gap-2">
+                        {progress.percentage > 0 && progress.percentage < 100 ? (
+                          <>
+                            <button 
+                              onClick={(e) => handleResumeLearning(subject.id, e)}
+                              disabled={resumingSubject === subject.id}
+                              className="flex-1 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            >
+                              {resumingSubject === subject.id ? (
+                                <>
+                                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                  <span>Loading...</span>
+                                </>
+                              ) : (
+                                <>
+                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                  <span>Resume</span>
+                                </>
+                              )}
+                            </button>
+                            <button 
+                              onClick={() => handleSubjectSelect(subject.id)}
+                              className="text-sm font-medium text-blue-600 hover:text-blue-700 px-3 py-2 flex items-center"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                              </svg>
+                            </button>
+                          </>
+                        ) : (
+                          <button className="text-sm font-medium text-blue-600 group-hover:text-blue-700 flex items-center">
+                            <span>{progress.percentage === 100 ? 'Review Content' : 'Start Learning'}</span>
+                            <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
               })}
-            </div>
+              </div>
+            )}
           </div>
         </StudentLayout>
       </ProtectedRoute>

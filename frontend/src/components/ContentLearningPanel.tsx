@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   BookOpen,
@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import api from '@/lib/api';
 import { useToastContext } from '@/contexts/ToastContext';
+import LatexRichTextEditor from '@/components/LatexRichTextEditor';
 
 interface ContentLearningPanelProps {
   contentId: string;
@@ -75,6 +76,7 @@ export default function ContentLearningPanel({
   const [loadingQuizzes, setLoadingQuizzes] = useState(false);
   const [aiUsage, setAiUsage] = useState<any>(null);
   const [loadingUsage, setLoadingUsage] = useState(false);
+  const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     loadNotes();
@@ -409,13 +411,22 @@ export default function ContentLearningPanel({
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Your Notes
+                <span className="ml-2 text-xs text-gray-500">(Supports LaTeX math equations)</span>
               </label>
-              <textarea
+              <LatexRichTextEditor
                 value={notesContent}
-                onChange={(e) => setNotesContent(e.target.value)}
-                onBlur={saveNotes}
-                placeholder="Write your notes here... You can use this space to jot down important points, formulas, or concepts from this content."
-                className="w-full h-48 sm:h-64 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+                onChange={(value) => {
+                  setNotesContent(value);
+                  // Auto-save after 2 seconds of no typing
+                  if (autoSaveTimeoutRef.current) {
+                    clearTimeout(autoSaveTimeoutRef.current);
+                  }
+                  autoSaveTimeoutRef.current = setTimeout(() => {
+                    saveNotes();
+                  }, 2000);
+                }}
+                placeholder="Write your notes here... You can use LaTeX for math equations (e.g., $x^2 + y^2 = z^2$ or $$\frac{a}{b}$$)"
+                height={250}
               />
             </div>
             

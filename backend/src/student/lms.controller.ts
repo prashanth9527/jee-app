@@ -649,4 +649,108 @@ export class StudentLMSController {
 
     return progress;
   }
+
+  @Get('resume/:subjectId')
+  async getResumeContent(@Param('subjectId') subjectId: string, @Req() req: any) {
+    const userId = req.user.id;
+    
+    // Get user's stream
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { streamId: true }
+    });
+
+    if (!user?.streamId) {
+      throw new ForbiddenException('No stream assigned to user');
+    }
+
+    // Find the last accessed content for this subject that is not completed
+    const lastProgress = await this.prisma.lMSProgress.findFirst({
+      where: {
+        userId,
+        status: {
+          in: ['IN_PROGRESS', 'REVIEW', 'REVISIT']
+        },
+        content: {
+          subjectId,
+          status: 'PUBLISHED',
+          subject: {
+            streamId: user.streamId
+          }
+        }
+      },
+      include: {
+        content: {
+          include: {
+            subject: {
+              select: { id: true, name: true }
+            },
+            lesson: {
+              select: { id: true, name: true }
+            },
+            topic: {
+              select: { id: true, name: true }
+            },
+            subtopic: {
+              select: { id: true, name: true }
+            }
+          }
+        }
+      },
+      orderBy: { lastAccessedAt: 'desc' }
+    });
+
+    if (!lastProgress) {
+      // If no in-progress content, find the first content in the subject
+      const firstContent = await this.prisma.lMSContent.findFirst({
+        where: {
+          subjectId,
+          status: 'PUBLISHED',
+          subject: {
+            streamId: user.streamId
+          }
+        },
+        include: {
+          subject: {
+            select: { id: true, name: true }
+          },
+          lesson: {
+            select: { id: true, name: true }
+          },
+          topic: {
+            select: { id: true, name: true }
+          },
+          subtopic: {
+            select: { id: true, name: true }
+          },
+          progress: {
+            where: { userId },
+            select: {
+              id: true,
+              status: true,
+              progress: true,
+              completedAt: true
+            }
+          }
+        },
+        orderBy: [
+          { lesson: { order: 'asc' } },
+          { topic: { order: 'asc' } },
+          { order: 'asc' }
+        ]
+      });
+
+      return firstContent;
+    }
+
+    return {
+      ...lastProgress.content,
+      progress: [{
+        id: lastProgress.id,
+        status: lastProgress.status,
+        progress: lastProgress.progress,
+        completedAt: lastProgress.completedAt
+      }]
+    };
+  }
 }
