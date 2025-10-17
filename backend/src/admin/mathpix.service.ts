@@ -524,10 +524,11 @@ export class MathpixService {
       // Upload PDF to AWS first
       let pdfFilePath = '';
       try {
+        this.logger.log(`📤 Starting PDF upload to AWS: ${cache.fileName} from path: ${pdfPath}`);
         pdfFilePath = await this.savePdfToAws(cache.fileName, pdfPath);
-        this.logger.log(`✅ PDF uploaded to AWS: ${pdfFilePath}`);
+        this.logger.log(`✅ PDF uploaded to AWS successfully: ${pdfFilePath}`);
       } catch (pdfUploadError) {
-        this.logger.warn(`⚠️ Failed to upload PDF to AWS, continuing with processing: ${pdfUploadError.message}`);
+        this.logger.error(`❌ Failed to upload PDF to AWS: ${pdfUploadError.message}`, pdfUploadError.stack);
         // Continue processing even if PDF upload fails
       }
 
@@ -542,36 +543,33 @@ export class MathpixService {
       let latexFilePath = '';
       let zipFilePath = '';
 
+      // Check if we have ZIP file path (means ZIP was uploaded to AWS)
       if (result.zipFilePath) {
-        // ZIP file was saved, now extract LaTeX content immediately
         zipFilePath = result.zipFilePath;
-        this.logger.log('📦 ZIP file saved, extracting LaTeX content...');
+        this.logger.log('📦 ZIP file uploaded to AWS successfully');
+      }
+
+      // Process the LaTeX content (already extracted from ZIP buffer in getPDFAsLatex)
+      if (result.content) {
+        this.logger.log('📄 Processing extracted LaTeX content...');
+        // Validate and clean LaTeX content
+        const cleanedContent = this.validateAndCleanLatex(result.content);
+        latexContent = this.sanitizeStringData(cleanedContent);
         
-        // Determine local ZIP file path for extraction
-        let localZipFilePath = zipFilePath;
-        if (zipFilePath.includes('s3.') || zipFilePath.includes('amazonaws.com')) {
-          // If it's an AWS URL, construct the local path with sanitized filename
-          const originalZipFileName = cache.fileName.replace(/\.pdf$/i, '.zip');
-          const zipFileName = this.sanitizeFileName(originalZipFileName);
-          localZipFilePath = path.join(process.cwd(), '..', 'content', 'zip', zipFileName);
-        }
-        
-        // Extract LaTeX content from local ZIP file
-        const extractedContent = await this.extractLatexFromZipFile(localZipFilePath, cache.fileName);
-        if (extractedContent) {
-          // Validate and clean LaTeX content
-          const cleanedContent = this.validateAndCleanLatex(extractedContent);
-          latexContent = this.sanitizeStringData(cleanedContent);
-          latexFilePath = await this.saveLatexToFile(cache.fileName, latexContent);
-          this.logger.log('✅ LaTeX content extracted, cleaned, and saved to latex folder');
-        }
-      } else if (result.content) {
-        // Regular text content
-        latexContent = this.sanitizeStringData(result.content);
+        // Save LaTeX content to AWS
         latexFilePath = await this.saveLatexToFile(cache.fileName, latexContent);
+        this.logger.log('✅ LaTeX content cleaned and saved to AWS');
+      } else {
+        this.logger.warn('⚠️ No LaTeX content extracted from ZIP file');
       }
 
       // Update database with LaTeX content
+      this.logger.log(`💾 Updating database with:
+        - latexContent length: ${latexContent.length}
+        - latexFilePath: ${latexFilePath}
+        - zipFilePath: ${zipFilePath}
+        - pdfFilePath: ${pdfFilePath}`);
+      
       let updatedCache;
       try {
         updatedCache = await this.prisma.pDFProcessorCache.update({
@@ -985,7 +983,7 @@ export class MathpixService {
       });
 
       const data = response.data;
-      this.logger.log('📄 PDF uploaded to Mathpix:', data);
+      // this.logger.log('📄 PDF uploaded to Mathpix:', data);
       
       // Check if there's an error in the response
       if (data.error) {
@@ -1055,10 +1053,12 @@ export class MathpixService {
       
       // Check if the response is a ZIP file (starts with PK)
       if (data.toString('ascii', 0, 2) === 'PK') {
-        this.logger.log('📦 Detected ZIP file from Mathpix, extracting content and uploading to AWS...');
+        this.logger.log(`📦 Detected ZIP file from Mathpix (${data.length} bytes), extracting content and uploading to AWS...`);
         
         // Extract LaTeX content from ZIP buffer before uploading
+        this.logger.log('🔍 Starting ZIP extraction to find .tex file...');
         const extractedContent = await this.extractLatexFromZipBuffer(data, fileName);
+        this.logger.log(`🔍 ZIP extraction completed. Content length: ${extractedContent ? extractedContent.length : 0}`);
         
         // Upload ZIP to AWS
         const zipFilePath = await this.saveZipFile(fileName, data);
@@ -1087,7 +1087,7 @@ export class MathpixService {
     return new Promise((resolve, reject) => {
       yauzl.open(zipFilePath, { lazyEntries: true }, (err, zipfile) => {
         if (err) {
-          this.logger.error('Error opening ZIP file:', err);
+          this.logger.error('Error opening ZIP file - extractLatexFromZipFile:', err);
           resolve(null);
           return;
         }
@@ -1245,90 +1245,45 @@ export class MathpixService {
   }
 
   /**
-   * Save image from ZIP stream to content/images folder
+   * Save image from ZIP stream directly to AWS (no local storage)
    */
   private async saveImageFromZip(readStream: any, fileName: string, originalFileName?: string): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
-        // Create images directory if it doesn't exist
-        const imagesDir = path.join(process.cwd(), '..', 'content', 'images');
-        if (!fs.existsSync(imagesDir)) {
-          fs.mkdirSync(imagesDir, { recursive: true });
-        }
-
-        // Create subfolder with the same name as the original file (without extension)
+        // Extract only the filename from the path
+        const originalImageFileName = path.basename(fileName);
+        
+        // Create subfolder name from original PDF filename
         let subfolderName = 'default';
         if (originalFileName) {
           const originalBaseName = path.basename(originalFileName, path.extname(originalFileName));
           subfolderName = this.sanitizeFileName(originalBaseName);
         }
+
+        // Collect stream data into buffer
+        const chunks: Buffer[] = [];
         
-        const subfolderPath = path.join(imagesDir, subfolderName);
-        if (!fs.existsSync(subfolderPath)) {
-          fs.mkdirSync(subfolderPath, { recursive: true });
-        }
+        readStream.on('data', (chunk: Buffer) => {
+          chunks.push(chunk);
+        });
 
-        // Keep the original image filename from ZIP file (no sanitization)
-        // Extract only the filename from the path to avoid nested directory issues
-        const originalImageFileName = path.basename(fileName);
-        const imageFilePath = path.join(subfolderPath, originalImageFileName);
-
-        // Create write stream
-        const writeStream = fs.createWriteStream(imageFilePath);
-
-        // Pipe the read stream to write stream
-        readStream.pipe(writeStream);
-
-        writeStream.on('finish', async () => {
-          this.logger.log(`🖼️ Image saved locally to: ${imageFilePath}`);
-          
-          // Remove watermark from image if enabled
-          let finalImagePath = imageFilePath;
-          if (this.removeWatermarkFromImages) {
-            try {
-              if (this.removeAllColorWatermarks) {
-                // Remove all colored watermarks (blue, red, green, yellow, etc.)
-                this.logger.log(`🧹 Removing multi-color watermark from image: ${originalImageFileName}`);
-                const cleanedPath = await this.imageWatermarkRemover.removeAnyColorWatermark(imageFilePath);
-                
-                // Replace original with cleaned version
-                fs.unlinkSync(imageFilePath); // Delete original
-                fs.renameSync(cleanedPath, imageFilePath); // Rename cleaned to original name
-                finalImagePath = imageFilePath;
-                
-                this.logger.log(`✅ Multi-color watermark removed from: ${originalImageFileName}`);
-              } else {
-                // Remove only blue watermarks (default)
-                this.logger.log(`🧹 Removing blue watermark from image: ${originalImageFileName}`);
-                const cleanedPath = await this.imageWatermarkRemover.removeBlueWatermark(imageFilePath);
-                
-                // Replace original with cleaned version
-                fs.unlinkSync(imageFilePath); // Delete original
-                fs.renameSync(cleanedPath, imageFilePath); // Rename cleaned to original name
-                finalImagePath = imageFilePath;
-                
-                this.logger.log(`✅ Blue watermark removed from: ${originalImageFileName}`);
-              }
-            } catch (watermarkError) {
-              this.logger.warn(`⚠️ Failed to remove watermark from ${originalImageFileName}, using original: ${watermarkError.message}`);
-              // Continue with original image if watermark removal fails
-            }
-          }
-          
-          // Upload to AWS
+        readStream.on('end', async () => {
           try {
-            const fileBuffer = fs.readFileSync(finalImagePath);
+            const imageBuffer = Buffer.concat(chunks);
+            this.logger.log(`🖼️ Image loaded from ZIP: ${originalImageFileName} (${imageBuffer.length} bytes)`);
+            
+            // Upload directly to AWS (no local storage)
             const mockFile: Express.Multer.File = {
               fieldname: 'file',
               originalname: originalImageFileName,
               encoding: '7bit',
               mimetype: this.getMimeType(originalImageFileName),
-              buffer: fileBuffer,
-              size: fileBuffer.length,
-              stream: Readable.from(fileBuffer),
+              buffer: imageBuffer,
+              size: imageBuffer.length,
+              stream: Readable.from(imageBuffer),
               destination: '',
               filename: originalImageFileName,
-              path: finalImagePath,
+              path: '',
             };
 
             const awsUrl = await this.awsService.uploadFileWithCustomName(
@@ -1337,16 +1292,11 @@ export class MathpixService {
               originalImageFileName
             );
             this.logger.log(`☁️ Image uploaded to AWS: ${awsUrl}`);
-          } catch (awsError) {
-            this.logger.error(`❌ Failed to upload image to AWS: ${awsError.message}`);
+            resolve();
+          } catch (error) {
+            this.logger.error(`❌ Failed to upload image to AWS: ${error.message}`);
+            reject(error);
           }
-          
-          resolve();
-        });
-
-        writeStream.on('error', (error) => {
-          this.logger.error('Error writing image file:', error);
-          reject(error);
         });
 
         readStream.on('error', (error: any) => {
@@ -1401,6 +1351,8 @@ export class MathpixService {
    * Extract LaTeX content directly from ZIP buffer (no local file needed)
    */
   private async extractLatexFromZipBuffer(zipBuffer: Buffer, originalFileName?: string): Promise<string | null> {
+    this.logger.log(`🔧 extractLatexFromZipBuffer called with buffer size: ${zipBuffer.length} bytes, fileName: ${originalFileName}`);
+    
     return new Promise((resolve, reject) => {
       // Create a readable stream from the buffer
       const stream = Readable.from(zipBuffer);
@@ -1427,11 +1379,12 @@ export class MathpixService {
         
         zipfile.on('entry', (entry) => {
           totalEntries++;
-          this.logger.log(`Processing entry ${totalEntries}: ${entry.fileName}`);
+          const entryLower = entry.fileName.toLowerCase();
+          this.logger.log(`📦 ZIP Entry #${totalEntries}: "${entry.fileName}" (${entry.uncompressedSize} bytes) - isTeX: ${entryLower.endsWith('.tex')}`);
           
-          // Look for .tex files
-          if (entry.fileName.endsWith('.tex')) {
-            this.logger.log(`📄 Found LaTeX file in ZIP: ${entry.fileName}`);
+          // Look for .tex files (case-insensitive)
+          if (entryLower.endsWith('.tex')) {
+            this.logger.log(`📄 ✅✅✅ FOUND LATEX FILE: ${entry.fileName}`);
             foundLatexFile = true;
             pendingOperations++;
             
@@ -1511,10 +1464,17 @@ export class MathpixService {
               resolve(foundLatexFile ? latexContent : null);
             }
           }
+          
+          // CRITICAL: Always read next entry to continue processing
+          zipfile.readEntry();
         });
 
         zipfile.on('end', () => {
           this.logger.log(`📦 Finished processing ZIP file (${totalEntries} entries)`);
+          this.logger.log(`📊 Summary: foundLatexFile=${foundLatexFile}, latexContentLength=${latexContent.length}, pendingOps=${pendingOperations}`);
+          if (!foundLatexFile) {
+            this.logger.error(`❌ NO .TEX FILE FOUND in ZIP! Processed ${totalEntries} entries.`);
+          }
           if (processedEntries >= totalEntries && pendingOperations === 0) {
             resolve(foundLatexFile ? latexContent : null);
           }
@@ -1860,33 +1820,24 @@ export class MathpixService {
       let latexFilePath = '';
       let zipFilePath = '';
 
+      // Check if we have ZIP file path (means ZIP was uploaded to AWS)
       if (result.zipFilePath) {
-        // ZIP file was saved, now extract LaTeX content immediately
         zipFilePath = result.zipFilePath;
-        this.logger.log('📦 ZIP file saved, extracting LaTeX content...');
+        this.logger.log('📦 ZIP file uploaded to AWS successfully');
+      }
+
+      // Process the LaTeX content (already extracted from ZIP buffer in getPDFAsLatex)
+      if (result.content) {
+        this.logger.log('📄 Processing extracted LaTeX content...');
+        // Validate and clean LaTeX content
+        const cleanedContent = this.validateAndCleanLatex(result.content);
+        latexContent = this.sanitizeStringData(cleanedContent);
         
-        // Determine local ZIP file path for extraction
-        let localZipFilePath = zipFilePath;
-        if (zipFilePath.includes('s3.') || zipFilePath.includes('amazonaws.com')) {
-          // If it's an AWS URL, construct the local path with sanitized filename
-          const originalZipFileName = fileName.replace(/\.pdf$/i, '.zip');
-          const zipFileName = this.sanitizeFileName(originalZipFileName);
-          localZipFilePath = path.join(process.cwd(), '..', 'content', 'zip', zipFileName);
-        }
-        
-        // Extract LaTeX content from local ZIP file
-        const extractedContent = await this.extractLatexFromZipFile(localZipFilePath, fileName);
-        if (extractedContent) {
-          // Validate and clean LaTeX content
-          const cleanedContent = this.validateAndCleanLatex(extractedContent);
-          latexContent = this.sanitizeStringData(cleanedContent);
-          latexFilePath = await this.saveLatexToFile(fileName, latexContent);
-          this.logger.log('✅ LaTeX content extracted, cleaned, and saved to latex folder');
-        }
-      } else if (result.content) {
-        // Regular text content
-        latexContent = this.sanitizeStringData(result.content);
+        // Save LaTeX content to AWS
         latexFilePath = await this.saveLatexToFile(fileName, latexContent);
+        this.logger.log('✅ LaTeX content cleaned and saved to AWS');
+      } else {
+        this.logger.warn('⚠️ No LaTeX content extracted from ZIP file');
       }
 
       // Update or create cache record

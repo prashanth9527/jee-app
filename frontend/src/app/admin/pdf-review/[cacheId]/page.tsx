@@ -24,6 +24,7 @@ interface Question {
   isPreviousYear: boolean;
   isAIGenerated: boolean;
   status: 'approved' | 'underreview' | 'rejected';
+  exerciseName: string | null;
   subject: {
     id: string;
     name: string;
@@ -81,6 +82,7 @@ export default function PDFReviewPage() {
   const [examTitle, setExamTitle] = useState('');
   const [examDescription, setExamDescription] = useState('');
   const [examTimeLimit, setExamTimeLimit] = useState<number | ''>('');
+  const [groupedQuestions, setGroupedQuestions] = useState<Record<string, Question[]>>({});
 
   useEffect(() => {
     if (cacheId) {
@@ -93,7 +95,20 @@ export default function PDFReviewPage() {
     try {
       const response = await api.get(`/admin/pdf-review/${cacheId}`);
       if (response.data.success) {
-        setQuestions(response.data.data);
+        const fetchedQuestions = response.data.data;
+        setQuestions(fetchedQuestions);
+        
+        // Group questions by exerciseName
+        const grouped = fetchedQuestions.reduce((acc: Record<string, Question[]>, question: Question) => {
+          const exerciseName = question.exerciseName || 'No Exercise';
+          if (!acc[exerciseName]) {
+            acc[exerciseName] = [];
+          }
+          acc[exerciseName].push(question);
+          return acc;
+        }, {});
+        setGroupedQuestions(grouped);
+        
         // Set PDF data from the response
         if (response.data.pdfCache) {
           setPdfData(response.data.pdfCache);
@@ -394,6 +409,45 @@ export default function PDFReviewPage() {
     setShowCreateExamModal(true);
   };
 
+  const createExamForExercise = async (exerciseName: string) => {
+    const exerciseQuestions = groupedQuestions[exerciseName];
+    if (!exerciseQuestions || exerciseQuestions.length === 0) {
+      toast.warning('No questions found in this exercise');
+      return;
+    }
+
+    const questionIds = exerciseQuestions.map(q => q.id);
+    const subjects = [...new Set(exerciseQuestions.map(q => q.subject?.name).filter(Boolean))];
+    const title = subjects.length > 0 
+      ? `${subjects.join(', ')} - ${exerciseName}`
+      : exerciseName;
+
+    try {
+      const response = await api.post('/admin/pdf-review/create-exam', {
+        questionIds: questionIds,
+        title: title,
+        description: `Practice exam from ${exerciseName} with ${questionIds.length} questions`,
+        timeLimitMin: questionIds.length * 2 // 2 minutes per question
+      });
+
+      if (response.data.success) {
+        const examId = response.data.data.examPaper.id;
+        const examTitle = response.data.data.examPaper.title;
+        
+        toast.success(`Exam "${examTitle}" created successfully with ${response.data.data.questionCount} questions!`);
+        
+        // Optionally redirect to exam preview page
+        const viewExam = window.confirm('Exam created! Would you like to preview it now?');
+        if (viewExam) {
+          router.push(`/admin/exam-papers/${examId}`);
+        }
+      }
+    } catch (error: any) {
+      console.error('Error creating exam:', error);
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
   if (loading) {
     return (
       <ProtectedRoute requiredRole="ADMIN">
@@ -543,56 +597,91 @@ export default function PDFReviewPage() {
               </div>
             </div>
 
-            {/* Question List */}
+            {/* Question List - Grouped by Exercise */}
             <div className="flex-1 overflow-y-auto">
               <div className="p-2">
-                {questions.map((question, index) => (
-                  <div
-                    key={question.id}
-                    className={`p-3 mb-2 rounded-lg border cursor-pointer transition-all ${
-                      index === currentQuestionIndex
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                    onClick={() => setCurrentQuestionIndex(index)}
-                  >
-                    <div className="flex items-start space-x-3">
-                      <input
-                        type="checkbox"
-                        checked={selectedQuestions.has(question.id)}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          toggleQuestionSelection(question.id);
-                        }}
-                        className="mt-1"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-sm font-medium text-gray-900">
-                            Q{index + 1}
-                          </span>
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(question.status)}`}>
-                            {question.status}
+                {Object.entries(groupedQuestions).map(([exerciseName, exerciseQuestions]) => (
+                  <div key={exerciseName} className="mb-4">
+                    {/* Exercise Header */}
+                    <div className="sticky top-0 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-3 mb-2 shadow-sm z-10">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                          </svg>
+                          <h3 className="font-semibold text-indigo-900">{exerciseName}</h3>
+                          <span className="text-xs text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full">
+                            {exerciseQuestions.length} questions
                           </span>
                         </div>
-                        <div className="text-sm text-gray-600 line-clamp-2">
-                          <LatexContentDisplay 
-                            content={question.stem} 
-                            className="text-sm"
-                          />
-                        </div>
-                        <div className="flex items-center space-x-2 mt-2">
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getDifficultyColor(question.difficulty)}`}>
-                            {question.difficulty}
-                          </span>
-                          {question.subject && (
-                            <span className="text-xs text-gray-500">
-                              {question.subject.name}
-                            </span>
-                          )}
-                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            createExamForExercise(exerciseName);
+                          }}
+                          className="bg-indigo-600 text-white px-3 py-1.5 rounded-md text-xs hover:bg-indigo-700 flex items-center space-x-1 shadow-sm transition-colors"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                          </svg>
+                          <span>Create Exam</span>
+                        </button>
                       </div>
                     </div>
+
+                    {/* Questions in this Exercise */}
+                    {exerciseQuestions.map((question) => {
+                      const globalIndex = questions.findIndex(q => q.id === question.id);
+                      return (
+                        <div
+                          key={question.id}
+                          className={`p-3 mb-2 rounded-lg border cursor-pointer transition-all ${
+                            globalIndex === currentQuestionIndex
+                              ? 'border-blue-500 bg-blue-50'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                          onClick={() => setCurrentQuestionIndex(globalIndex)}
+                        >
+                          <div className="flex items-start space-x-3">
+                            <input
+                              type="checkbox"
+                              checked={selectedQuestions.has(question.id)}
+                              onChange={(e) => {
+                                e.stopPropagation();
+                                toggleQuestionSelection(question.id);
+                              }}
+                              className="mt-1"
+                            />
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-sm font-medium text-gray-900">
+                                  Q{globalIndex + 1}
+                                </span>
+                                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(question.status)}`}>
+                                  {question.status}
+                                </span>
+                              </div>
+                              <div className="text-sm text-gray-600 line-clamp-2">
+                                <LatexContentDisplay 
+                                  content={question.stem} 
+                                  className="text-sm"
+                                />
+                              </div>
+                              <div className="flex items-center space-x-2 mt-2">
+                                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getDifficultyColor(question.difficulty)}`}>
+                                  {question.difficulty}
+                                </span>
+                                {question.subject && (
+                                  <span className="text-xs text-gray-500">
+                                    {question.subject.name}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 ))}
               </div>

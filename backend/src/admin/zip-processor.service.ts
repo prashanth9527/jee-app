@@ -89,7 +89,7 @@ export class ZipProcessorService {
     return new Promise((resolve, reject) => {
       yauzl.open(zipFilePath, { lazyEntries: true }, (err, zipfile) => {
         if (err) {
-          this.logger.error('Error opening ZIP file:', err);
+          this.logger.error('Error opening ZIP file-extractLatexFromZip:', err);
           reject(new Error(`Failed to open ZIP file: ${err.message}`));
           return;
         }

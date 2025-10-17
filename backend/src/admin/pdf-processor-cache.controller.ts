@@ -11,6 +11,7 @@ import {
   HttpStatus
 } from '@nestjs/common';
 import { PDFProcessorCacheService } from './pdf-processor-cache.service';
+import { MathpixProcessorService } from './mathpix-processor.service';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -20,7 +21,8 @@ import { Roles } from '../auth/roles.decorator';
 @Roles('ADMIN', 'EXPERT')
 export class PDFProcessorCacheController {
   constructor(
-    private readonly pdfProcessorCacheService: PDFProcessorCacheService
+    private readonly pdfProcessorCacheService: PDFProcessorCacheService,
+    private readonly mathpixProcessorService: MathpixProcessorService
   ) {}
 
   @Get()
@@ -48,7 +50,7 @@ export class PDFProcessorCacheController {
         sortOrder: sortOrderValue
       });
 
-      console.log('result', result);
+      // console.log('result', result);
       return {
         success: true,
         data: result.data,
@@ -137,12 +139,12 @@ export class PDFProcessorCacheController {
   @Post(':id/process-mathpix')
   async processWithMathpix(@Param('id') id: string) {
     try {
-      console.log(`[Controller] Starting Mathpix processing for ID: ${id}`);
-      const result = await this.pdfProcessorCacheService.processWithMathpix(id);
-      console.log(`[Controller] Mathpix processing completed for ID: ${id}, success: ${result.success}`);
+      console.log(`[Controller] Starting LaTeX processing for ID: ${id}`);
+      const result = await this.mathpixProcessorService.processToLatex(id);
+      console.log(`[Controller] LaTeX processing completed for ID: ${id}`);
       return {
-        success: result.success,
-        message: result.success ? 'PDF processed with Mathpix successfully' : 'Mathpix processing failed',
+        success: true,
+        message: 'PDF processed with Mathpix to LaTeX successfully',
         data: result
       };
     } catch (error) {
@@ -161,12 +163,12 @@ export class PDFProcessorCacheController {
   @Post(':id/process-mathpix-html')
   async processWithMathpixToHtml(@Param('id') id: string) {
     try {
-      console.log(`[Controller] Starting Mathpix HTML processing for ID: ${id}`);
-      const result = await this.pdfProcessorCacheService.processWithMathpixToHtml(id);
-      console.log(`[Controller] Mathpix HTML processing completed for ID: ${id}, success: ${result.success}`);
+      console.log(`[Controller] Starting HTML processing for ID: ${id}`);
+      const result = await this.mathpixProcessorService.processToHtml(id);
+      console.log(`[Controller] HTML processing completed for ID: ${id}`);
       return {
-        success: result.success,
-        message: result.success ? 'PDF processed with Mathpix to HTML successfully' : 'Mathpix HTML processing failed',
+        success: true,
+        message: 'PDF processed with Mathpix to HTML successfully',
         data: result
       };
     } catch (error) {

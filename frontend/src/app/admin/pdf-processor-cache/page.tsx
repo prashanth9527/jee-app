@@ -208,20 +208,11 @@ export default function PDFProcessorCachePage() {
     toast.loading('Processing PDF with Mathpix...', 'Please wait');
 
     try {
-      // Use the new endpoint with options if background processing is different from default
-      const endpoint = backgroundOption 
-        ? `/admin/pdf-processor/process-mathpix-file-with-options/${id}`
-        : `/admin/pdf-processor-cache/${record.id}/process-mathpix`;
-      
-      const requestData = backgroundOption 
-        ? { skipRecrop: backgroundOption }
-        : undefined;
+      // Use the new clean MathpixProcessorService endpoint
+      const endpoint = `/admin/pdf-processor-cache/${record.id}/process-mathpix`;
+      const response = await api.post(endpoint);
 
-      const response = backgroundOption
-        ? await api.post(endpoint, requestData)
-        : await api.post(endpoint);
-
-      console.log('response', response);
+      // console.log('response', response);
       if (response.data.success) {
         toast.success('PDF processed with Mathpix successfully');
         console.log('Processing result:', response.data.data);
@@ -1575,6 +1566,7 @@ Assign: **lesson → topic → subtopic**.
   ],
   "metadata": {
     "totalQuestions": 90,
+    "totalExercises": 3,
     "subjects": ["Physics", "Chemistry", "Mathematics"],
     "difficultyDistribution": {"easy": 30, "medium": 45, "hard": 15}
   }

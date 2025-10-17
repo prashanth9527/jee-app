@@ -30,6 +30,7 @@ import { OpenAIService } from '../ai/openai.service';
 import { DeepSeekService } from '../ai/deepseek.service';
 import { ClaudeService } from '../ai/claude.service';
 import { MathpixService } from './mathpix.service';
+import { MathpixProcessorService } from './mathpix-processor.service';
 import { ZipProcessorService } from './zip-processor.service';
 import { ImageWatermarkRemoverService } from './image-watermark-remover.service';
 
@@ -62,6 +63,7 @@ import { ImageWatermarkRemoverService } from './image-watermark-remover.service'
     PDFProcessorCacheService,
     PDFReviewService,
     MathpixService,
+    MathpixProcessorService,
     ZipProcessorService,
     ImageWatermarkRemoverService,
     AIProviderFactory,

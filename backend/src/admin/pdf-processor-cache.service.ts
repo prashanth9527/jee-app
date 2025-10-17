@@ -378,7 +378,7 @@ export class PDFProcessorCacheService {
       throw error;
     }
   }
-
+/*
   async importQuestionsFromJson(id: string) {
     try {
       this.logger.log(`Starting import of questions from JSON for cache ID: ${id}`);
@@ -403,6 +403,7 @@ export class PDFProcessorCacheService {
 
       for (const questionData of questions) {
         try {
+          // Don't include 'id' field - let Prisma generate new IDs
           await this.prisma.question.create({
             data: {
               stem: questionData.stem || '',
@@ -416,10 +417,10 @@ export class PDFProcessorCacheService {
               status: 'underreview',
               pdfProcessorCacheId: id,
               options: {
-                create: (questionData.options || []).map((option: any) => ({
-                  id: option.id || 'A',
+                create: (questionData.options || []).map((option: any, index: number) => ({
                   text: option.text || '',
-                  isCorrect: option.isCorrect || false
+                  isCorrect: option.isCorrect || false,
+                  order: Number(index)
                 }))
               }
             }
@@ -445,6 +446,286 @@ export class PDFProcessorCacheService {
         success: true,
         importedCount,
         message: `Successfully imported ${importedCount} questions`
+      };
+    } catch (error) {
+      this.logger.error('Error importing questions from JSON:', error);
+      throw error;
+    }
+  }
+  */
+
+  async importQuestionsFromJson(id: string) {
+    try {
+      this.logger.log(`Starting import of questions from JSON for record ID: ${id}`);
+      
+      // Find the record by ID
+      const record = await this.prisma.pDFProcessorCache.findUnique({
+        where: { id }
+      });
+
+      if (!record) {
+        throw new Error(`Record not found for ID: ${id}`);
+      }
+
+      if (!record.jsonContent) {
+        throw new Error('No JSON content found for this record');
+      }
+
+      // Parse the JSON content
+      let questionsData;
+      try {
+        questionsData = JSON.parse(record.jsonContent);
+      } catch (error) {
+        throw new Error('Invalid JSON content');
+      }
+
+      if (!questionsData.questions || !Array.isArray(questionsData.questions)) {
+        throw new Error('Invalid JSON structure: questions array not found');
+      }
+
+      if (questionsData.questions.length === 0) {
+        this.logger.warn('No questions found in JSON data');
+        return {
+          importedCount: 0,
+          totalQuestions: 0
+        };
+      }
+
+      let importedCount = 0;
+
+      // Import each question
+      for (const questionData of questionsData.questions) {
+        try {
+          // Validate required fields
+          if (!questionData.stem || questionData.stem.trim() === '') {
+            this.logger.warn('Skipping question with empty stem');
+            continue;
+          }
+
+          this.logger.log(`Processing question: ${questionData.stem?.substring(0, 50)}...`);
+          
+          let subjectId: string | null = null;
+          let lessonId: string | null = null;
+          let topicId: string | null = null;
+          let subtopicId: string | null = null;
+
+          // Handle Subject (must belong to a Stream)
+          if (questionData.subject) {
+            this.logger.log(`Processing subject: ${questionData.subject}`);
+            // First, ensure we have a default stream for JEE
+            const defaultStream = await this.prisma.stream.upsert({
+              where: { code: 'JEE' },
+              update: {},
+              create: {
+                name: 'JEE (Joint Entrance Examination)',
+                code: 'JEE',
+                description: 'Joint Entrance Examination preparation'
+              }
+            });
+
+            // Create or find subject
+            const subject = await this.prisma.subject.upsert({
+              where: {
+                streamId_name: {
+                  streamId: defaultStream.id,
+                  name: questionData.subject
+                }
+              },
+              update: {},
+              create: {
+                name: questionData.subject,
+                streamId: defaultStream.id
+              }
+            });
+            subjectId = subject.id;
+          }
+
+          // Handle Lesson (optional, but if provided, must be under a subject)
+          if (questionData.lesson && subjectId) {
+            this.logger.log(`Processing lesson: ${questionData.lesson}`);
+            const lesson = await this.prisma.lesson.findFirst({
+              where: {
+                name: questionData.lesson,
+                subjectId: subjectId
+              }
+            });
+
+            if (lesson) {
+              lessonId = lesson.id;
+            } else {
+              // Find the next available order number for this subject
+              const lastLesson = await this.prisma.lesson.findFirst({
+                where: { subjectId: subjectId },
+                orderBy: { order: 'desc' }
+              });
+              const nextOrder = lastLesson ? lastLesson.order + 1 : 0;
+              
+              // Create new lesson
+              const newLesson = await this.prisma.lesson.create({
+                data: {
+                  name: questionData.lesson.trim(),
+                  subjectId: subjectId,
+                  order: nextOrder
+                }
+              });
+              lessonId = newLesson.id;
+            }
+          }
+
+          // Handle Topic (optional, but if provided, must be under a lesson)
+          if (questionData.topic && lessonId && subjectId) {
+            this.logger.log(`Processing topic: ${questionData.topic}`);
+            const topic = await this.prisma.topic.findFirst({
+              where: {
+                name: questionData.topic,
+                lessonId: lessonId,
+                subjectId: subjectId
+              }
+            });
+
+            if (topic) {
+              topicId = topic.id;
+            } else {
+              // Find the next available order number for this lesson
+              const lastTopic = await this.prisma.topic.findFirst({
+                where: { lessonId: lessonId },
+                orderBy: { order: 'desc' }
+              });
+              const nextOrder = lastTopic ? lastTopic.order + 1 : 0;
+              
+              // Create new topic
+              const newTopic = await this.prisma.topic.create({
+                data: {
+                  name: questionData.topic.trim(),
+                  lessonId: lessonId,
+                  subjectId: subjectId,
+                  order: nextOrder
+                }
+              });
+              topicId = newTopic.id;
+            }
+          }
+
+          // Handle Subtopic (optional, but if provided, must be under a topic)
+          if (questionData.subtopic && topicId) {
+            this.logger.log(`Processing subtopic: ${questionData.subtopic}`);
+            const subtopic = await this.prisma.subtopic.findFirst({
+              where: {
+                name: questionData.subtopic,
+                topicId: topicId
+              }
+            });
+
+            if (subtopic) {
+              subtopicId = subtopic.id;
+            } else {
+              // Find the next available order number for this topic
+              const lastSubtopic = await this.prisma.subtopic.findFirst({
+                where: { topicId: topicId },
+                orderBy: { order: 'desc' }
+              });
+              const nextOrder = lastSubtopic ? lastSubtopic.order + 1 : 0;
+              
+              // Create new subtopic
+              const newSubtopic = await this.prisma.subtopic.create({
+                data: {
+                  name: questionData.subtopic.trim(),
+                  topicId: topicId,
+                  order: nextOrder
+                }
+              });
+              subtopicId = newSubtopic.id;
+            }
+          }
+          
+          // Handle Formula - create/find in Formula table if tip_formula exists
+          let formulaId: string | null = null;
+          if (questionData.tip_formula && questionData.tip_formula.trim() !== '') {
+            this.logger.log(`Processing formula: ${questionData.tip_formula.substring(0, 50)}...`);
+            
+             // Check if formula already exists (by content and subject)
+             const existingFormula = await this.prisma.formula.findFirst({
+               where: {
+                 formula: questionData.tip_formula,
+                 subject: subjectId
+               }
+             });
+
+            if (existingFormula) {
+              formulaId = existingFormula.id;
+              this.logger.log(`Using existing formula ID: ${formulaId}`);
+            } else {
+               // Create new formula
+               const newFormula = await this.prisma.formula.create({
+                 data: {
+                   title: questionData.tip_formula.substring(0, 100), // Use first 100 chars as title
+                   formula: questionData.tip_formula,
+                   subject: subjectId,
+                   topicId: topicId,
+                   subtopicId: subtopicId
+                 }
+               });
+              formulaId = newFormula.id;
+              this.logger.log(`Created new formula with ID: ${formulaId}`);
+            }
+          }
+
+          // Create question in database
+          const question = await this.prisma.question.create({
+            data: {
+              stem: questionData.stem || '',
+              explanation: questionData.explanation || '',
+              tip_formula: questionData.tip_formula || '',
+              difficulty: questionData.difficulty || 'MEDIUM',
+              yearAppeared: questionData.yearAppeared || new Date().getFullYear(),
+              isPreviousYear: questionData.isPreviousYear || false,
+              subjectId: subjectId,
+              lessonId: lessonId,
+              topicId: topicId,
+              subtopicId: subtopicId,
+               formulaid: formulaId, // Link to Formula table
+              pdfProcessorCacheId: record.id
+            }
+          });
+
+          // Create question options
+          if (questionData.options && Array.isArray(questionData.options)) {
+            for (let i = 0; i < questionData.options.length; i++) {
+              const option = questionData.options[i];
+              await this.prisma.questionOption.create({
+                data: {
+                  questionId: question.id,
+                  text: option.text || '',
+                  isCorrect: option.isCorrect || false,
+                  order: i
+                }
+              });
+            }
+          }
+
+          importedCount++;
+          this.logger.log(`Successfully imported question with hierarchy: Subject=${subjectId}, Lesson=${lessonId}, Topic=${topicId}, Subtopic=${subtopicId}`);
+        } catch (error) {
+          this.logger.error(`Error importing question ${questionData.id || 'unknown'}:`, error);
+          this.logger.error(`Question data:`, JSON.stringify(questionData, null, 2));
+          // Continue with other questions even if one fails
+        }
+      }
+
+      // Update the record to mark as imported
+      await this.prisma.pDFProcessorCache.update({
+        where: { id: record.id },
+        data: { 
+          importedAt: new Date(),
+          processingStatus: 'COMPLETED'
+        }
+      });
+
+      this.logger.log(`Successfully imported ${importedCount} questions for file: ${record.fileName}`);
+      
+      return {
+        importedCount,
+        totalQuestions: questionsData.questions.length
       };
     } catch (error) {
       this.logger.error('Error importing questions from JSON:', error);
