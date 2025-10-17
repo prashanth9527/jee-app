@@ -726,8 +726,12 @@ export class MathpixProcessorService {
    * Upload .tex file to AWS
    */
   private async uploadTexFileToAws(pdfFileName: string, texContent: string): Promise<string> {
-    const texFileName = pdfFileName.replace(/\.pdf$/i, '.tex');
+    // Generate LaTeX file name (replace .pdf with .tex) and sanitize it
+    const originalLatexFileName = pdfFileName.replace(/\.pdf$/i, '.tex');
+    const texFileName = this.sanitizeFileName(originalLatexFileName);
     const texBuffer = Buffer.from(texContent, 'utf8');
+    
+    this.logger.log(`📤 Uploading LaTeX content to AWS: ${texFileName}`);
 
     const mockFile: Express.Multer.File = {
       fieldname: 'file',
@@ -749,8 +753,12 @@ export class MathpixProcessorService {
    * Upload .html file to AWS
    */
   private async uploadHtmlFileToAws(pdfFileName: string, htmlContent: string): Promise<string> {
-    const htmlFileName = pdfFileName.replace(/\.pdf$/i, '.html');
+    // Sanitize filename for HTML
+    const originalHtmlFileName = pdfFileName.replace(/\.pdf$/i, '.html');
+    const htmlFileName = this.sanitizeFileName(originalHtmlFileName);
     const htmlBuffer = Buffer.from(htmlContent, 'utf8');
+    
+    this.logger.log(`📤 Uploading HTML content to AWS: ${htmlFileName}`);
 
     const mockFile: Express.Multer.File = {
       fieldname: 'file',
@@ -772,7 +780,11 @@ export class MathpixProcessorService {
    * Upload ZIP file to AWS
    */
   private async uploadZipToAws(pdfFileName: string, zipBuffer: Buffer): Promise<string> {
-    const zipFileName = pdfFileName.replace(/\.pdf$/i, '.zip');
+    // Generate ZIP file name (replace .pdf with .zip) and sanitize it
+    const originalZipFileName = pdfFileName.replace(/\.pdf$/i, '.zip');
+    const zipFileName = this.sanitizeFileName(originalZipFileName);
+    
+    this.logger.log(`📤 Uploading ZIP file to AWS: ${zipFileName}`);
 
     const mockFile: Express.Multer.File = {
       fieldname: 'file',
@@ -791,14 +803,45 @@ export class MathpixProcessorService {
   }
 
   /**
-   * Sanitize filename for AWS
+   * Sanitize filename to remove special characters, spaces, and ensure URL-safe naming
    */
   private sanitizeFileName(fileName: string): string {
-    return fileName
-      .toLowerCase()
-      .replace(/[^a-z0-9._-]/g, '_')
-      .replace(/_+/g, '_')
-      .replace(/^_|_$/g, '');
+    if (!fileName) return fileName;
+    
+    try {
+      // Extract base name and extension
+      const extension = path.extname(fileName);
+      const baseName = path.basename(fileName, extension);
+      
+      // Sanitize the base name:
+      // 1. Replace spaces with underscores
+      // 2. Remove or replace special characters that can cause URL issues
+      // 3. Keep only alphanumeric characters, underscores, and hyphens
+      let sanitizedBaseName = baseName
+        .replace(/\s+/g, '_')                    // Replace spaces with underscores
+        .replace(/[^a-zA-Z0-9_-]/g, '_')         // Replace special chars with underscores
+        .replace(/_+/g, '_')                     // Replace multiple underscores with single
+        .replace(/^_|_$/g, '')                   // Remove leading/trailing underscores
+        .toLowerCase();                          // Convert to lowercase for consistency
+      
+      // Ensure the filename is not empty
+      if (!sanitizedBaseName) {
+        sanitizedBaseName = 'sanitized_file';
+      }
+      
+      // Limit filename length to prevent issues
+      if (sanitizedBaseName.length > 100) {
+        sanitizedBaseName = sanitizedBaseName.substring(0, 100);
+      }
+      
+      const sanitizedFileName = sanitizedBaseName + extension;
+      this.logger.log(`📝 Sanitized filename: "${fileName}" -> "${sanitizedFileName}"`);
+      
+      return sanitizedFileName;
+    } catch (error) {
+      this.logger.warn('Failed to sanitize filename:', error);
+      return fileName;
+    }
   }
 
   /**

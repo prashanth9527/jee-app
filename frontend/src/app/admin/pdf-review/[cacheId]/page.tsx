@@ -416,17 +416,27 @@ export default function PDFReviewPage() {
       return;
     }
 
-    const questionIds = exerciseQuestions.map(q => q.id);
-    const subjects = [...new Set(exerciseQuestions.map(q => q.subject?.name).filter(Boolean))];
+    // Filter to only selected questions from this exercise
+    const selectedExerciseQuestions = exerciseQuestions.filter(q => selectedQuestions.has(q.id));
+    
+    // If no questions selected from this exercise, use all questions from the exercise
+    const questionsToUse = selectedExerciseQuestions.length > 0 ? selectedExerciseQuestions : exerciseQuestions;
+    const questionIds = questionsToUse.map(q => q.id);
+    
+    const subjects = [...new Set(questionsToUse.map(q => q.subject?.name).filter(Boolean))];
     const title = subjects.length > 0 
       ? `${subjects.join(', ')} - ${exerciseName}`
       : exerciseName;
+
+    const description = selectedExerciseQuestions.length > 0
+      ? `Practice exam from ${exerciseName} with ${questionIds.length} selected questions`
+      : `Practice exam from ${exerciseName} with all ${questionIds.length} questions`;
 
     try {
       const response = await api.post('/admin/pdf-review/create-exam', {
         questionIds: questionIds,
         title: title,
-        description: `Practice exam from ${exerciseName} with ${questionIds.length} questions`,
+        description: description,
         timeLimitMin: questionIds.length * 2 // 2 minutes per question
       });
 
@@ -600,34 +610,47 @@ export default function PDFReviewPage() {
             {/* Question List - Grouped by Exercise */}
             <div className="flex-1 overflow-y-auto">
               <div className="p-2">
-                {Object.entries(groupedQuestions).map(([exerciseName, exerciseQuestions]) => (
-                  <div key={exerciseName} className="mb-4">
-                    {/* Exercise Header */}
-                    <div className="sticky top-0 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-3 mb-2 shadow-sm z-10">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                          </svg>
-                          <h3 className="font-semibold text-indigo-900">{exerciseName}</h3>
-                          <span className="text-xs text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full">
-                            {exerciseQuestions.length} questions
-                          </span>
+                {Object.entries(groupedQuestions).map(([exerciseName, exerciseQuestions]) => {
+                  // Count selected questions in this exercise
+                  const selectedInExercise = exerciseQuestions.filter(q => selectedQuestions.has(q.id)).length;
+                  
+                  return (
+                    <div key={exerciseName} className="mb-4">
+                      {/* Exercise Header */}
+                      <div className="sticky top-0 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-3 mb-2 shadow-sm z-10">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            <h3 className="font-semibold text-indigo-900">{exerciseName}</h3>
+                            <span className="text-xs text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full">
+                              {exerciseQuestions.length} questions
+                            </span>
+                            {selectedInExercise > 0 && (
+                              <span className="text-xs text-green-700 bg-green-100 px-2 py-1 rounded-full font-medium">
+                                {selectedInExercise} selected
+                              </span>
+                            )}
+                          </div>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              createExamForExercise(exerciseName);
+                            }}
+                            className="bg-indigo-600 text-white px-3 py-1.5 rounded-md text-xs hover:bg-indigo-700 flex items-center space-x-1 shadow-sm transition-colors"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                            </svg>
+                            <span>
+                              {selectedInExercise > 0 
+                                ? `Create Exam (${selectedInExercise})` 
+                                : 'Create Exam (All)'}
+                            </span>
+                          </button>
                         </div>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            createExamForExercise(exerciseName);
-                          }}
-                          className="bg-indigo-600 text-white px-3 py-1.5 rounded-md text-xs hover:bg-indigo-700 flex items-center space-x-1 shadow-sm transition-colors"
-                        >
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                          </svg>
-                          <span>Create Exam</span>
-                        </button>
                       </div>
-                    </div>
 
                     {/* Questions in this Exercise */}
                     {exerciseQuestions.map((question) => {
@@ -683,7 +706,8 @@ export default function PDFReviewPage() {
                       );
                     })}
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
