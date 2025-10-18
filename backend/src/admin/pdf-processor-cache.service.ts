@@ -704,10 +704,32 @@ export class PDFProcessorCacheService {
           }
 
           // Handle tags if they exist
-          if (questionData.tags && Array.isArray(questionData.tags)) {
-            this.logger.log(`Processing ${questionData.tags.length} tags for question`);
-            
-            for (const tagName of questionData.tags) {
+          this.logger.log(`TAGS: ${JSON.stringify(questionData.tags)}`);
+          this.logger.log(`TAGS type: ${typeof questionData.tags}`);
+          this.logger.log(`TAGS is array: ${Array.isArray(questionData.tags)}`);
+          this.logger.log(`TAGS truthy: ${!!questionData.tags}`);
+          this.logger.log(`Full question data keys: ${Object.keys(questionData)}`);
+          
+          // Handle tags - try multiple approaches
+          let tagsToProcess = [];
+          
+          if (questionData.tags) {
+            if (Array.isArray(questionData.tags)) {
+              tagsToProcess = questionData.tags;
+              this.logger.log(`Processing ${tagsToProcess.length} tags from array`);
+            } else if (typeof questionData.tags === 'string') {
+              // Handle case where tags might be a comma-separated string
+              tagsToProcess = questionData.tags.split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag);
+              this.logger.log(`Processing ${tagsToProcess.length} tags from string`);
+            } else {
+              this.logger.log(`Tags is neither array nor string: ${typeof questionData.tags}`);
+            }
+          } else {
+            this.logger.log(`No tags property found in question data`);
+          }
+          
+          if (tagsToProcess.length > 0) {
+            for (const tagName of tagsToProcess) {
               if (tagName && tagName.trim() !== '') {
                 try {
                   // Create or find tag
