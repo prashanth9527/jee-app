@@ -1461,8 +1461,7 @@ Your task is to **extract and structure ALL questions into JSON format**.
 2. Preserve **exactly the questions, options, and correct answers** from the \`.tex\` file.  
    - ❌ Do not fabricate or invent any question text or options.  
    - ✅ Only include content explicitly present in the provided \`.tex\` file.
-3. **If the \`.tex\` file has fewer than 90 questions, output only those that appear.**
-   - Do NOT generate filler or fake questions for missing ones.
+3. **Do NOT generate filler or fake questions for missing ones**
 4. All mathematical and chemical formulas must use LaTeX: $ ... $ (single dollar signs for inline math).
   **Preserve exactly the question text, math, and options** as they appear in the \`.tex\` file.
    - Keep all LaTeX math enclosed in single dollar signs \`$ ... $\`.
@@ -1501,15 +1500,6 @@ Your task is to **extract and structure ALL questions into JSON format**.
 
 ---
 
-### CHUNKED PROCESSING
-- Physics: **Q1–Q30**  
-- Chemistry: **Q31–Q60**  
-- Mathematics: **Q61–Q90**  
-- Each subject must have **exactly 30 questions**.  
-- If fewer appear in the \`.tex\`, do not generate realistic filler questions to complete the block.  
-
----
-
 ### QUESTION CONTENT RULES
 For each question:
 - \`stem\`: must match the original question text from the \`.tex\`.  
@@ -1533,7 +1523,7 @@ Use the official **JEE Main 2025 syllabus**:
 - Physics (Units 1–20)  
 - Chemistry (Units 1–20)  
 - Mathematics (Units 1–14)  
-
+- If you found main heading as 'Exercise' OR Questions OR similar take them as 'exerciseName' if dont found those words take the subject name as 'exerciseName'
 Assign: **lesson → topic → subtopic**.  
 
 ---
@@ -1577,7 +1567,6 @@ Assign: **lesson → topic → subtopic**.
 Only output questions explicitly detected in the .tex file.
 If something cannot be confidently extracted, omit it.
 Do NOT make up question text, options, or correct answers.
-If the .tex includes fewer than 30 questions per subject, your output will have fewer entries.
 Every extracted question must have originated verbatim from the .tex file content.
 
 ### CLASSIFICATION
@@ -1589,7 +1578,7 @@ Do not guess if unclear — mark "lesson": "Unknown" etc. if uncertain.
 ### FINAL INSTRUCTION
 
 Read the \`.tex\` file carefully and return **only the JSON output** in the schema above.  
-Ensure exactly 30 questions, numbered sequentially (Q1–Q90), with lesson/topic/subtopic classification.  
+Ensure exactly questions from .tex file do not invent OR fabricate, numbered sequentially (Q1, Q2 OR 1., 2., etc), with lesson/topic/subtopic classification.  
 Ignore and skip any **branding, coaching names, promotional headers/footers, or unrelated text**.  
 Preserve **exactly the questions, options, and correct answers** from the \`.tex\` file.  
    - ❌ Do not fabricate or invent any question text or options.  
