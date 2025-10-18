@@ -1504,10 +1504,12 @@ Your task is to **extract and structure ALL questions into JSON format**.
 For each question:
 - \`stem\`: must match the original question text from the \`.tex\`.  
 - \`options\`: must match exactly the four options from the \`.tex\`.  
-- \`isCorrect\`:  
+- \`isCorrect\`: 
+  - You can find correct answer with \`Answer (D)\` 
   - If the correct answer is explicitly given in the \`.tex\`, preserve it.  
   - If missing, you may **generate the correct answer** as a subject expert.  
 - \`explanation\`:  
+  - You can find explanation with \`Sol.\`
   - If given in the file, preserve it.  
   - If missing, **generate a step-by-step reasoning** as a subject expert.  
 - \`tip_formula\`:  
@@ -1579,15 +1581,18 @@ Do not guess if unclear — mark "lesson": "Unknown" etc. if uncertain.
 
 Read the \`.tex\` file carefully and return **only the JSON output** in the schema above.  
 Ensure exactly questions from .tex file do not invent OR fabricate, numbered sequentially (Q1, Q2 OR 1., 2., etc), with lesson/topic/subtopic classification.  
+Ensure exactly solution/explanation from .tex file do not invent OR fabricate, starts with (Sol., Answer etc).
 Ignore and skip any **branding, coaching names, promotional headers/footers, or unrelated text**.  
-Preserve **exactly the questions, options, and correct answers** from the \`.tex\` file.  
+Preserve **exactly the questions, options, solution/explanation and correct answers** from the \`.tex\` file.  
    - ❌ Do not fabricate or invent any question text or options.  
    - ✅ Use the same wording, LaTeX math, and image references as in the file.  
 **Do not skip ANY image references.** Every \`\\includegraphics\` in the \`.tex\` must be included in the JSON.  
 Use single dollar signs $ ... $ for all LaTeX math expressions.
 Read the .tex file carefully.
 Return only valid JSON, faithfully representing every question that truly exists in the source file.
-Do not generate or hallucinate new data under any circumstances.`;
+Do not generate or hallucinate new data under any circumstances.
+Please proceed with extracting ALL questions from the complete .tex file content you provided. Read through the entire document carefully and include all questions. If you need do **CHUNK PROCESSING** for reading all questions
+First scan the entire file and count the how many questions in the file, at the end of the process cross check with questions count`;
 
                           navigator.clipboard.writeText(promptText).then(() => {
                             toast.success('Prompt copied to clipboard!');
