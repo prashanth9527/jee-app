@@ -6,7 +6,7 @@ import api from '@/lib/api';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
 import Swal from 'sweetalert2';
-import QuestionDisplay from '@/components/QuestionDisplay';
+import LatexContentDisplay from '@/components/LatexContentDisplay';
 import MathRenderer from '@/components/MathRenderer';
 
 interface Stream {
@@ -1031,7 +1031,7 @@ function CreateEnhancedExamPageContent() {
 													<div className="flex-1 min-w-0">
 														{/* Question Stem with Math Rendering */}
 														<div className="mb-3">
-															<QuestionDisplay content={question.stem} className="text-sm text-gray-900 leading-relaxed" />
+															<LatexContentDisplay content={question.stem} className="text-sm text-gray-900 leading-relaxed" />
 														</div>
 														
 														{/* Question Options */}
@@ -1051,7 +1051,7 @@ function CreateEnhancedExamPageContent() {
 																				{String.fromCharCode(65 + index)}.
 																			</span>
 																			<div className="flex-1">
-																				<QuestionDisplay content={option.text} className="text-xs" />
+																				<LatexContentDisplay content={option.text} className="text-xs" />
 																			</div>
 																			{option.isCorrect && (
 																				<span className="text-green-600 font-medium text-xs">✓ Correct</span>
@@ -1087,7 +1087,7 @@ function CreateEnhancedExamPageContent() {
 																)}
 															</div>
 															<button
-																onClick={() => window.open(`/admin/questions/${question.id}`, '_blank')}
+																onClick={() => window.open(`/admin/questions/edit/${question.id}`, '_blank')}
 																className="inline-flex items-center px-2 py-1 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors"
 																title="Edit question in new tab"
 															>
