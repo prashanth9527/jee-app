@@ -87,6 +87,7 @@ export default function PDFProcessorCachePage() {
   const [searchInput, setSearchInput] = useState('');
   const [syncing, setSyncing] = useState(false);
   const [ignoreBackground, setIgnoreBackground] = useState(true);
+  const [importing, setImporting] = useState(false);
 
   useEffect(() => {
     fetchRecords();
@@ -615,6 +616,7 @@ export default function PDFProcessorCachePage() {
     if (!confirmed.isConfirmed) return;
 
     try {
+      setImporting(true);
       toast.info('Importing questions from JSON...');
       const response = await api.post(`/admin/pdf-processor-cache/${currentRecord.id}/import-questions`);
       if (response.data.success) {
@@ -627,6 +629,8 @@ export default function PDFProcessorCachePage() {
     } catch (error: any) {
       console.error('Error importing questions:', error);
       toast.error(error.response?.data?.message || 'Failed to import questions');
+    } finally {
+      setImporting(false);
     }
   };
 
@@ -1897,9 +1901,24 @@ First scan the entire file and count the how many questions in the file, at the 
                               <>
                                 <button
                                   onClick={importQuestions}
-                                  className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+                                  disabled={importing}
+                                  className={`px-4 py-2 text-sm font-medium text-white rounded-md transition-colors flex items-center space-x-2 ${
+                                    importing 
+                                      ? 'bg-gray-400 cursor-not-allowed' 
+                                      : 'bg-red-600 hover:bg-red-700'
+                                  }`}
                                 >
-                                  {currentRecord?.importedAt ? 'Re-import' : 'Import'}
+                                  {importing ? (
+                                    <>
+                                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                      </svg>
+                                      Importing...
+                                    </>
+                                  ) : (
+                                    currentRecord?.importedAt ? 'Re-import' : 'Import'
+                                  )}
                                 </button>
                                 
                                 {/* Show Preview button if already imported */}
