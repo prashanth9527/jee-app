@@ -1508,7 +1508,7 @@ Your task is to **extract and structure ALL questions into JSON format**.
 For each question:
 - \`stem\`: must match the original question text from the \`.tex\`.  
 - \`options\`: must match exactly the four options from the \`.tex\`.  
-- \`isCorrect\`: 
+- \`isCorrect\`:  
   - You can find correct answer with \`Answer (D)\` 
   - If the correct answer is explicitly given in the \`.tex\`, preserve it.  
   - If missing, you may **generate the correct answer** as a subject expert.  

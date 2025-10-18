@@ -330,7 +330,7 @@ export default function PDFReviewPage() {
         // Optionally redirect to exam preview page
         const viewExam = window.confirm('Exam created! Would you like to preview it now?');
         if (viewExam) {
-          router.push(`/admin/exam-papers/${examId}`);
+          router.push(`/admin/exam-papers/create-enhanced?edit=${examId}`);
         }
       }
     } catch (error: any) {

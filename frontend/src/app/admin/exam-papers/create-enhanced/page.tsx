@@ -6,6 +6,8 @@ import api from '@/lib/api';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
 import Swal from 'sweetalert2';
+import QuestionDisplay from '@/components/QuestionDisplay';
+import MathRenderer from '@/components/MathRenderer';
 
 interface Stream {
 	id: string;
@@ -133,6 +135,9 @@ function CreateEnhancedExamPageContent() {
 	const [filteredLessons, setFilteredLessons] = useState<Lesson[]>([]);
 	const [filteredTopics, setFilteredTopics] = useState<Topic[]>([]);
 	const [filteredSubtopics, setFilteredSubtopics] = useState<Subtopic[]>([]);
+	
+	// Collapsible filter sections state
+	const [openFilterSection, setOpenFilterSection] = useState<string>('streams');
 
 	useEffect(() => {
 		loadData();
@@ -391,6 +396,10 @@ function CreateEnhancedExamPageContent() {
 				? prev.filter(id => id !== streamId)
 				: [...prev, streamId]
 		);
+		// Auto-open subjects section when stream is selected
+		if (!selectedStreams.includes(streamId)) {
+			setOpenFilterSection('subjects');
+		}
 	};
 
 	const handleSubjectToggle = (subjectId: string) => {
@@ -399,6 +408,10 @@ function CreateEnhancedExamPageContent() {
 				? prev.filter(id => id !== subjectId)
 				: [...prev, subjectId]
 		);
+		// Auto-open lessons section when subject is selected
+		if (!selectedSubjects.includes(subjectId)) {
+			setOpenFilterSection('lessons');
+		}
 	};
 
 	const handleLessonToggle = (lessonId: string) => {
@@ -407,6 +420,10 @@ function CreateEnhancedExamPageContent() {
 				? prev.filter(id => id !== lessonId)
 				: [...prev, lessonId]
 		);
+		// Auto-open topics section when lesson is selected
+		if (!selectedLessons.includes(lessonId)) {
+			setOpenFilterSection('topics');
+		}
 	};
 
 	const handleTopicToggle = (topicId: string) => {
@@ -415,6 +432,10 @@ function CreateEnhancedExamPageContent() {
 				? prev.filter(id => id !== topicId)
 				: [...prev, topicId]
 		);
+		// Auto-open subtopics section when topic is selected
+		if (!selectedTopics.includes(topicId)) {
+			setOpenFilterSection('subtopics');
+		}
 	};
 
 	const handleSubtopicToggle = (subtopicId: string) => {
@@ -595,6 +616,7 @@ function CreateEnhancedExamPageContent() {
 	return (
 		<ProtectedRoute requiredRole="ADMIN">
 			<AdminLayout>
+				<MathRenderer />
 				<div className="space-y-6">
 					{/* Breadcrumbs */}
 					<nav className="flex items-center space-x-2 text-sm text-gray-500">
@@ -655,195 +677,247 @@ function CreateEnhancedExamPageContent() {
 								{/* Streams */}
 								<div className="mb-4">
 									<div className="flex items-center justify-between mb-2">
-										<h3 className="text-sm font-medium text-gray-900">Streams</h3>
 										<button
-											onClick={handleSelectAllStreams}
-											className="text-xs text-blue-600 hover:text-blue-800"
+											onClick={() => setOpenFilterSection(openFilterSection === 'streams' ? '' : 'streams')}
+											className="flex items-center space-x-2 text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors"
 										>
-											{selectedStreams.length === streams.length ? 'Deselect All' : 'Select All'}
+											<span>Streams</span>
+											<svg className={`w-4 h-4 transition-transform ${openFilterSection === 'streams' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+											</svg>
 										</button>
-									</div>
-									<div className="space-y-1 max-h-32 overflow-y-auto">
-										{streams.length === 0 ? (
-											<div className="text-sm text-gray-500 p-2">
-												{loading ? 'Loading streams...' : 'No streams found'}
-											</div>
-										) : (
-											streams.map((stream) => (
-												<label key={stream.id} className="flex items-center space-x-2 p-2 rounded border hover:bg-gray-50 cursor-pointer">
-													<input
-														type="checkbox"
-														checked={selectedStreams.includes(stream.id)}
-														onChange={() => handleStreamToggle(stream.id)}
-														className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-													/>
-													<span className="text-sm text-gray-900">
-														{stream.name}
-														<span className="text-gray-500 ml-1">({streamCounts[stream.id] || 0})</span>
-													</span>
-												</label>
-											))
+										{openFilterSection === 'streams' && (
+											<button
+												onClick={handleSelectAllStreams}
+												className="text-xs text-blue-600 hover:text-blue-800"
+											>
+												{selectedStreams.length === streams.length ? 'Deselect All' : 'Select All'}
+											</button>
 										)}
 									</div>
+									{openFilterSection === 'streams' && (
+										<div className="space-y-1 max-h-48 overflow-y-auto">
+											{streams.length === 0 ? (
+												<div className="text-sm text-gray-500 p-2">
+													{loading ? 'Loading streams...' : 'No streams found'}
+												</div>
+											) : (
+												streams.map((stream) => (
+													<label key={stream.id} className="flex items-center space-x-2 p-2 rounded border hover:bg-gray-50 cursor-pointer">
+														<input
+															type="checkbox"
+															checked={selectedStreams.includes(stream.id)}
+															onChange={() => handleStreamToggle(stream.id)}
+															className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+														/>
+														<span className="text-sm text-gray-900">
+															{stream.name}
+															<span className="text-gray-500 ml-1">({streamCounts[stream.id] || 0})</span>
+														</span>
+													</label>
+												))
+											)}
+										</div>
+									)}
 								</div>
 
 								{/* Subjects */}
 								<div className="mb-4">
 									<div className="flex items-center justify-between mb-2">
-										<h3 className="text-sm font-medium text-gray-900">
-											Subjects {selectedStreams.length > 0 && `(Filtered)`}
-										</h3>
 										<button
-											onClick={handleSelectAllSubjects}
-											className="text-xs text-blue-600 hover:text-blue-800"
+											onClick={() => setOpenFilterSection(openFilterSection === 'subjects' ? '' : 'subjects')}
+											className="flex items-center space-x-2 text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors"
 										>
-											{selectedSubjects.length === filteredSubjects.length ? 'Deselect All' : 'Select All'}
+											<span>Subjects {selectedStreams.length > 0 && `(Filtered)`}</span>
+											<svg className={`w-4 h-4 transition-transform ${openFilterSection === 'subjects' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+											</svg>
 										</button>
-									</div>
-									<div className="space-y-1 max-h-32 overflow-y-auto">
-										{filteredSubjects.length === 0 ? (
-											<div className="text-sm text-gray-500 p-2">
-												{loading ? 'Loading subjects...' : 'No subjects found'}
-											</div>
-										) : (
-											filteredSubjects.map((subject) => (
-												<label key={subject.id} className="flex items-center space-x-2 p-2 rounded border hover:bg-gray-50 cursor-pointer">
-													<input
-														type="checkbox"
-														checked={selectedSubjects.includes(subject.id)}
-														onChange={() => handleSubjectToggle(subject.id)}
-														className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-													/>
-													<span className="text-sm text-gray-900">
-														{subject.name}
-														<span className="text-gray-500 ml-1">({subjectCounts[subject.id] || 0})</span>
-													</span>
-												</label>
-											))
+										{openFilterSection === 'subjects' && (
+											<button
+												onClick={handleSelectAllSubjects}
+												className="text-xs text-blue-600 hover:text-blue-800"
+											>
+												{selectedSubjects.length === filteredSubjects.length ? 'Deselect All' : 'Select All'}
+											</button>
 										)}
 									</div>
+									{openFilterSection === 'subjects' && (
+										<div className="space-y-1 max-h-48 overflow-y-auto">
+											{filteredSubjects.length === 0 ? (
+												<div className="text-sm text-gray-500 p-2">
+													{loading ? 'Loading subjects...' : 'No subjects found'}
+												</div>
+											) : (
+												filteredSubjects.map((subject) => (
+													<label key={subject.id} className="flex items-center space-x-2 p-2 rounded border hover:bg-gray-50 cursor-pointer">
+														<input
+															type="checkbox"
+															checked={selectedSubjects.includes(subject.id)}
+															onChange={() => handleSubjectToggle(subject.id)}
+															className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+														/>
+														<span className="text-sm text-gray-900">
+															{subject.name}
+															<span className="text-gray-500 ml-1">({subjectCounts[subject.id] || 0})</span>
+														</span>
+													</label>
+												))
+											)}
+										</div>
+									)}
 								</div>
 
 								{/* Lessons */}
 								<div className="mb-4">
 									<div className="flex items-center justify-between mb-2">
-										<h3 className="text-sm font-medium text-gray-900">
-											Lessons {selectedSubjects.length > 0 && `(Filtered)`}
-										</h3>
 										<button
-											onClick={handleSelectAllLessons}
-											className="text-xs text-blue-600 hover:text-blue-800"
+											onClick={() => setOpenFilterSection(openFilterSection === 'lessons' ? '' : 'lessons')}
+											className="flex items-center space-x-2 text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors"
 										>
-											{selectedLessons.length === filteredLessons.length ? 'Deselect All' : 'Select All'}
+											<span>Lessons {selectedSubjects.length > 0 && `(Filtered)`}</span>
+											<svg className={`w-4 h-4 transition-transform ${openFilterSection === 'lessons' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+											</svg>
 										</button>
-									</div>
-									<div className="space-y-1 max-h-32 overflow-y-auto">
-										{filteredLessons.length === 0 ? (
-											<div className="text-sm text-gray-500 p-2">
-												{loading ? 'Loading lessons...' : 'No lessons found'}
-											</div>
-										) : (
-											filteredLessons.map((lesson) => (
-												<label key={lesson.id} className="flex items-center space-x-2 p-2 rounded border hover:bg-gray-50 cursor-pointer">
-													<input
-														type="checkbox"
-														checked={selectedLessons.includes(lesson.id)}
-														onChange={() => handleLessonToggle(lesson.id)}
-														className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-													/>
-													<div className="flex flex-col">
-														<span className="text-sm text-gray-900">
-															{lesson.name}
-															<span className="text-gray-500 ml-1">({lessonCounts[lesson.id] || 0})</span>
-														</span>
-														<span className="text-xs text-gray-500">{lesson.subject.name}</span>
-													</div>
-												</label>
-											))
+										{openFilterSection === 'lessons' && (
+											<button
+												onClick={handleSelectAllLessons}
+												className="text-xs text-blue-600 hover:text-blue-800"
+											>
+												{selectedLessons.length === filteredLessons.length ? 'Deselect All' : 'Select All'}
+											</button>
 										)}
 									</div>
+									{openFilterSection === 'lessons' && (
+										<div className="space-y-1 max-h-48 overflow-y-auto">
+											{filteredLessons.length === 0 ? (
+												<div className="text-sm text-gray-500 p-2">
+													{loading ? 'Loading lessons...' : 'No lessons found'}
+												</div>
+											) : (
+												filteredLessons.map((lesson) => (
+													<label key={lesson.id} className="flex items-center space-x-2 p-2 rounded border hover:bg-gray-50 cursor-pointer">
+														<input
+															type="checkbox"
+															checked={selectedLessons.includes(lesson.id)}
+															onChange={() => handleLessonToggle(lesson.id)}
+															className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+														/>
+														<div className="flex flex-col">
+															<span className="text-sm text-gray-900">
+																{lesson.name}
+																<span className="text-gray-500 ml-1">({lessonCounts[lesson.id] || 0})</span>
+															</span>
+															<span className="text-xs text-gray-500">{lesson.subject.name}</span>
+														</div>
+													</label>
+												))
+											)}
+										</div>
+									)}
 								</div>
 
 								{/* Topics */}
 								<div className="mb-4">
 									<div className="flex items-center justify-between mb-2">
-										<h3 className="text-sm font-medium text-gray-900">
-											Topics {selectedSubjects.length > 0 && `(Filtered)`}
-										</h3>
 										<button
-											onClick={handleSelectAllTopics}
-											className="text-xs text-blue-600 hover:text-blue-800"
+											onClick={() => setOpenFilterSection(openFilterSection === 'topics' ? '' : 'topics')}
+											className="flex items-center space-x-2 text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors"
 										>
-											{selectedTopics.length === filteredTopics.length ? 'Deselect All' : 'Select All'}
+											<span>Topics {selectedSubjects.length > 0 && `(Filtered)`}</span>
+											<svg className={`w-4 h-4 transition-transform ${openFilterSection === 'topics' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+											</svg>
 										</button>
-									</div>
-									<div className="space-y-1 max-h-32 overflow-y-auto">
-										{filteredTopics.length === 0 ? (
-											<div className="text-sm text-gray-500 p-2">
-												{loading ? 'Loading topics...' : 'No topics found'}
-											</div>
-										) : (
-											filteredTopics.map((topic) => (
-												<label key={topic.id} className="flex items-center space-x-2 p-2 rounded border hover:bg-gray-50 cursor-pointer">
-													<input
-														type="checkbox"
-														checked={selectedTopics.includes(topic.id)}
-														onChange={() => handleTopicToggle(topic.id)}
-														className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-													/>
-													<div className="flex flex-col">
-														<span className="text-sm text-gray-900">
-															{topic.name}
-															<span className="text-gray-500 ml-1">({topicCounts[topic.id] || 0})</span>
-														</span>
-														<span className="text-xs text-gray-500">{topic.subject.name}</span>
-													</div>
-												</label>
-											))
+										{openFilterSection === 'topics' && (
+											<button
+												onClick={handleSelectAllTopics}
+												className="text-xs text-blue-600 hover:text-blue-800"
+											>
+												{selectedTopics.length === filteredTopics.length ? 'Deselect All' : 'Select All'}
+											</button>
 										)}
 									</div>
+									{openFilterSection === 'topics' && (
+										<div className="space-y-1 max-h-48 overflow-y-auto">
+											{filteredTopics.length === 0 ? (
+												<div className="text-sm text-gray-500 p-2">
+													{loading ? 'Loading topics...' : 'No topics found'}
+												</div>
+											) : (
+												filteredTopics.map((topic) => (
+													<label key={topic.id} className="flex items-center space-x-2 p-2 rounded border hover:bg-gray-50 cursor-pointer">
+														<input
+															type="checkbox"
+															checked={selectedTopics.includes(topic.id)}
+															onChange={() => handleTopicToggle(topic.id)}
+															className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+														/>
+														<div className="flex flex-col">
+															<span className="text-sm text-gray-900">
+																{topic.name}
+																<span className="text-gray-500 ml-1">({topicCounts[topic.id] || 0})</span>
+															</span>
+															<span className="text-xs text-gray-500">{topic.subject.name}</span>
+														</div>
+													</label>
+												))
+											)}
+										</div>
+									)}
 								</div>
 
 								{/* Subtopics */}
 								<div className="mb-4">
 									<div className="flex items-center justify-between mb-2">
-										<h3 className="text-sm font-medium text-gray-900">
-											Subtopics {selectedTopics.length > 0 && `(Filtered)`}
-										</h3>
 										<button
-											onClick={handleSelectAllSubtopics}
-											className="text-xs text-blue-600 hover:text-blue-800"
+											onClick={() => setOpenFilterSection(openFilterSection === 'subtopics' ? '' : 'subtopics')}
+											className="flex items-center space-x-2 text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors"
 										>
-											{selectedSubtopics.length === filteredSubtopics.length ? 'Deselect All' : 'Select All'}
+											<span>Subtopics {selectedTopics.length > 0 && `(Filtered)`}</span>
+											<svg className={`w-4 h-4 transition-transform ${openFilterSection === 'subtopics' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+											</svg>
 										</button>
-									</div>
-									<div className="space-y-1 max-h-32 overflow-y-auto">
-										{filteredSubtopics.length === 0 ? (
-											<div className="text-sm text-gray-500 p-2">
-												{loading ? 'Loading subtopics...' : 'No subtopics found'}
-											</div>
-										) : (
-											filteredSubtopics.map((subtopic) => (
-												<label key={subtopic.id} className="flex items-center space-x-2 p-2 rounded border hover:bg-gray-50 cursor-pointer">
-													<input
-														type="checkbox"
-														checked={selectedSubtopics.includes(subtopic.id)}
-														onChange={() => handleSubtopicToggle(subtopic.id)}
-														className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-													/>
-													<div className="flex flex-col">
-														<span className="text-sm text-gray-900">
-															{subtopic.name}
-															<span className="text-gray-500 ml-1">({subtopicCounts[subtopic.id] || 0})</span>
-														</span>
-														<span className="text-xs text-gray-500">
-															{subtopic.topic.name} • {subtopic.topic.subject.name}
-														</span>
-													</div>
-												</label>
-											))
+										{openFilterSection === 'subtopics' && (
+											<button
+												onClick={handleSelectAllSubtopics}
+												className="text-xs text-blue-600 hover:text-blue-800"
+											>
+												{selectedSubtopics.length === filteredSubtopics.length ? 'Deselect All' : 'Select All'}
+											</button>
 										)}
 									</div>
+									{openFilterSection === 'subtopics' && (
+										<div className="space-y-1 max-h-48 overflow-y-auto">
+											{filteredSubtopics.length === 0 ? (
+												<div className="text-sm text-gray-500 p-2">
+													{loading ? 'Loading subtopics...' : 'No subtopics found'}
+												</div>
+											) : (
+												filteredSubtopics.map((subtopic) => (
+													<label key={subtopic.id} className="flex items-center space-x-2 p-2 rounded border hover:bg-gray-50 cursor-pointer">
+														<input
+															type="checkbox"
+															checked={selectedSubtopics.includes(subtopic.id)}
+															onChange={() => handleSubtopicToggle(subtopic.id)}
+															className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+														/>
+														<div className="flex flex-col">
+															<span className="text-sm text-gray-900">
+																{subtopic.name}
+																<span className="text-gray-500 ml-1">({subtopicCounts[subtopic.id] || 0})</span>
+															</span>
+															<span className="text-xs text-gray-500">
+																{subtopic.topic.name} • {subtopic.topic.subject.name}
+															</span>
+														</div>
+													</label>
+												))
+											)}
+										</div>
+									)}
 								</div>
 
 								{/* Filter Summary */}
@@ -955,30 +1029,73 @@ function CreateEnhancedExamPageContent() {
 														className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1"
 													/>
 													<div className="flex-1 min-w-0">
-														<p className="text-sm text-gray-900 mb-3 line-clamp-3 leading-relaxed">
-															{question.stem}
-														</p>
-														<div className="flex flex-wrap gap-2">
-															{question.subject && (
-																<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-																	{question.subject.name}
-																</span>
-															)}
-															{question.lesson && (
-																<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-																	{question.lesson.name}
-																</span>
-															)}
-															{question.topic && (
-																<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-																	{question.topic.name}
-																</span>
-															)}
-															{question.subtopic && (
-																<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-																	{question.subtopic.name}
-																</span>
-															)}
+														{/* Question Stem with Math Rendering */}
+														<div className="mb-3">
+															<QuestionDisplay content={question.stem} className="text-sm text-gray-900 leading-relaxed" />
+														</div>
+														
+														{/* Question Options */}
+														{question.options && question.options.length > 0 && (
+															<div className="mb-3">
+																<div className="text-xs font-medium text-gray-600 mb-2">Options:</div>
+																<div className="space-y-1">
+																	{question.options.map((option, index) => (
+																		<div key={option.id} className={`flex items-center space-x-2 p-2 rounded text-xs ${
+																			option.isCorrect 
+																				? 'bg-green-50 border border-green-200' 
+																				: 'bg-gray-50 border border-gray-200'
+																		}`}>
+																			<span className={`font-medium ${
+																				option.isCorrect ? 'text-green-800' : 'text-gray-600'
+																			}`}>
+																				{String.fromCharCode(65 + index)}.
+																			</span>
+																			<div className="flex-1">
+																				<QuestionDisplay content={option.text} className="text-xs" />
+																			</div>
+																			{option.isCorrect && (
+																				<span className="text-green-600 font-medium text-xs">✓ Correct</span>
+																			)}
+																		</div>
+																	))}
+																</div>
+															</div>
+														)}
+														
+														{/* Tags and Edit Button */}
+														<div className="flex items-center justify-between">
+															<div className="flex flex-wrap gap-2">
+																{question.subject && (
+																	<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+																		{question.subject.name}
+																	</span>
+																)}
+																{question.lesson && (
+																	<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+																		{question.lesson.name}
+																	</span>
+																)}
+																{question.topic && (
+																	<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+																		{question.topic.name}
+																	</span>
+																)}
+																{question.subtopic && (
+																	<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+																		{question.subtopic.name}
+																	</span>
+																)}
+															</div>
+															<button
+																onClick={() => window.open(`/admin/questions/${question.id}`, '_blank')}
+																className="inline-flex items-center px-2 py-1 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors"
+																title="Edit question in new tab"
+															>
+																<svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+																	<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+																</svg>
+																Edit
+															</button>
 														</div>
 													</div>
 												</div>
