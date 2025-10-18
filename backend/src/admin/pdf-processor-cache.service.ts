@@ -683,7 +683,7 @@ export class PDFProcessorCacheService {
               lessonId: lessonId,
               topicId: topicId,
               subtopicId: subtopicId,
-               formulaid: formulaId, // Link to Formula table
+              formulaid: formulaId, // Link to Formula table
               pdfProcessorCacheId: record.id
             }
           });
@@ -700,6 +700,39 @@ export class PDFProcessorCacheService {
                   order: i
                 }
               });
+            }
+          }
+
+          // Handle tags if they exist
+          if (questionData.tags && Array.isArray(questionData.tags)) {
+            this.logger.log(`Processing ${questionData.tags.length} tags for question`);
+            
+            for (const tagName of questionData.tags) {
+              if (tagName && tagName.trim() !== '') {
+                try {
+                  // Create or find tag
+                  const tag = await this.prisma.tag.upsert({
+                    where: { name: tagName.trim() },
+                    update: {},
+                    create: {
+                      name: tagName.trim(),
+                    }
+                  });
+
+                  // Link tag to question
+                  await this.prisma.questionTag.create({
+                    data: {
+                      questionId: question.id,
+                      tagId: tag.id
+                    }
+                  });
+
+                  this.logger.log(`Linked tag "${tagName}" to question`);
+                } catch (error) {
+                  this.logger.error(`Error processing tag "${tagName}":`, error);
+                  // Continue with other tags even if one fails
+                }
+              }
             }
           }
 
