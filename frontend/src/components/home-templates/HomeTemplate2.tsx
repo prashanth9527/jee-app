@@ -197,13 +197,13 @@ export default function HomeTemplate2() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className={`text-4xl font-bold ${stat.color} mb-2`}>{stat.number}</div>
-                  <div className="text-gray-600">{stat.label}</div>
+                  <div className="text-gray-600 dark:text-gray-300">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -211,23 +211,23 @@ export default function HomeTemplate2() {
         </section>
 
         {/* Features Grid */}
-        <section className="py-20 bg-gradient-to-br from-gray-50 to-emerald-50">
+        <section className="py-20 bg-gradient dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray mb-4">
                 Powerful Features
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                 Everything you need to excel in JEE preparation, all in one platform.
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {features.map((feature, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
                   <div className="text-4xl mb-4">{feature.icon}</div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 text-sm">{feature.description}</p>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">{feature.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -235,13 +235,13 @@ export default function HomeTemplate2() {
         </section>
 
         {/* AI Features Section */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-white dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray mb-4">
                 AI-Powered Learning Features
               </h2>
-              <p className="text-xl text-gray-600">
+              <p className="text-xl text-gray-600 dark:text-gray-300">
                 Experience the future of education with our advanced AI technology.
               </p>
             </div>
@@ -324,20 +324,20 @@ export default function HomeTemplate2() {
 
         {/* Pricing Section */}
         {plans.length > 0 && (
-          <section className="py-20 bg-gradient-to-br from-emerald-50 to-teal-50">
+          <section className="py-20 bg-gradient dark:bg-gray-900">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray mb-4">
                   Flexible Pricing
                 </h2>
-                <p className="text-xl text-gray-600">
+                <p className="text-xl text-gray-600 dark:text-gray-300">
                   Choose the plan that fits your learning needs and budget.
                 </p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-8">
                 {plans.slice(0, 3).map((plan) => (
-                  <div key={plan.id} className={`bg-white rounded-2xl p-8 shadow-lg relative ${
+                  <div key={plan.id} className={`bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg relative ${
                     plan.name.toLowerCase().includes('premium') ? 'ring-2 ring-emerald-500 transform scale-105' : ''
                   }`}>
                     {plan.name.toLowerCase().includes('premium') && (
@@ -348,18 +348,18 @@ export default function HomeTemplate2() {
                       </div>
                     )}
                     <div className="text-center">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{plan.name}</h3>
                       <div className="text-4xl font-bold text-emerald-600 mb-4">
                         {formatPrice(plan.priceCents)}
-                        <span className="text-lg text-gray-500">/{plan.interval}</span>
+                        <span className="text-lg text-gray-500 dark:text-gray-400">/{plan.interval}</span>
                       </div>
-                      <p className="text-gray-600 mb-6">{plan.description}</p>
+                      <p className="text-gray-600 dark:text-gray-300 mb-6">{plan.description}</p>
                       <Link 
                         href="/register" 
                         className={`block w-full py-3 rounded-lg font-semibold transition-colors ${
                           plan.name.toLowerCase().includes('premium') 
                             ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
-                            : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                            : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
                         }`}
                       >
                         Choose Plan
