@@ -684,7 +684,8 @@ export class PDFProcessorCacheService {
               topicId: topicId,
               subtopicId: subtopicId,
               formulaid: formulaId, // Link to Formula table
-              pdfProcessorCacheId: record.id
+              pdfProcessorCacheId: record.id,
+              exerciseName: questionData.exerciseName || ''
             }
           });
 
