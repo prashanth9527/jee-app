@@ -261,7 +261,7 @@ export default function ExamPreviewPage() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <button
-                    onClick={() => router.push(`/admin/exam-papers/edit/${examId}`)}
+                    onClick={() => router.push(`/admin/exam-papers/create-enhanced?edit=${examId}`)}
                     className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
                   >
                     Edit Exam
