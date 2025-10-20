@@ -447,6 +447,13 @@ export class ExamsService {
         });
       }
 
+      let lesson = null;
+      if (config.lessonId) {
+        lesson = await this.prisma.lesson.findUnique({
+          where: { id: config.lessonId }
+        });
+      }
+
       if (!subject) {
         throw new BadRequestException('Subject not found');
       }
@@ -454,6 +461,7 @@ export class ExamsService {
       // Generate questions using AI
       const aiQuestions = await this.aiService.generateQuestionsWithTips({
         subject: subject.name,
+        lesson: lesson?.name,
         topic: topic?.name,
         subtopic: subtopic?.name,
         difficulty: config.difficulty === 'MIXED' ? 'MEDIUM' : config.difficulty,

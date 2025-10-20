@@ -356,6 +356,7 @@ export class AiService {
 
   async generateQuestionsWithTips(request: {
     subject: string;
+    lesson?: string;
     topic?: string;
     subtopic?: string;
     difficulty: 'EASY' | 'MEDIUM' | 'HARD';
@@ -392,44 +393,55 @@ export class AiService {
             {
               role: 'system',
               content: `You are an expert JEE (Joint Entrance Examination) question generator. Your task is to create high-quality, educational questions that test students' understanding of concepts.
+You are an expert JEE (Joint Entrance Examination) question generator. Your task is to create high-quality, educational questions that test students' conceptual understanding.
+
+CRITICAL INPUTS:
+- Subject: ${request.subject}
+- Lesson: ${request.lesson}
+- Topic: ${request.topic}
+- Subtopic (if exists): ${request.subtopic}
+- Difficulty level: ${request.difficulty}
+- Number of questions: ${request.questionCount}
+
+Your output must align closely with the provided subject, lesson, topic, and subtopic. All questions and options must be contextually accurate to that scope.
 
 CRITICAL REQUIREMENTS:
-1. Generate exactly ${request.questionCount} questions
-2. Each question must have exactly 4 options (A, B, C, D)
-3. Mark exactly ONE option as correct (isCorrect: true)
-4. Provide detailed explanations for each answer
-5. Include relevant tips/formulas for each question
-6. Ensure questions are appropriate for ${request.difficulty} difficulty level
-7. Make questions relevant to JEE preparation standards
-8. Use proper mathematical notation with LaTeX when needed ($$...$$)
-9. Ensure questions test conceptual understanding, not just memorization
-10. Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start with '{' and end with '}'.
-11. All mathematical and chemical formulas must use LaTeX: $ ... $ (single dollar signs for inline math). 
-12. OPTIONS QUALITY: Options must be CONCRETE content (values/statements), NOT placeholders. Do NOT write labels like "Option A", "Option B", etc. Do NOT repeat the word "Option" anywhere. Avoid trivial re-phrasings. All four options must be distinct and plausible. Never use "All of the above" or "None of the above".
-13. For numerical/units questions: include appropriate units in ALL options and keep magnitudes realistic and consistent.
+1. Generate exactly ${request.questionCount} questions.
+2. Each question must have exactly 4 distinct, contextually relevant options (A, B, C, D).
+3. Mark exactly ONE option as correct (isCorrect: true).
+4. Each incorrect option must be a **plausible misconception** or **near-miss** (numerically close, algebraically similar, or based on a common error).
+5. Do NOT use placeholder text such as "Option A", "Option 1", "All of the above", or "None of the above".
+6. All options must be **concrete, meaningful answers** directly related to the question (values, expressions, equations, or statements).
+7. Provide detailed step-by-step explanations for each correct answer.
+8. Include a "tip_formula" field summarizing key formulas or concepts used.
+9. Questions must match ${request.difficulty} difficulty and JEE relevance.
+10. Use single dollar signs $...$ for all LaTeX math expressions (not double).
+11. Ensure conceptual depth — not memory-based or trivial recall.
+12. For numerical/units questions: ensure all options include consistent units and realistic magnitudes.
+13. Ensure JSON validity: no unescaped quotes, no extra text, no markdown. Start with '{' and end with '}'.
 
-RESPONSE FORMAT:
-You MUST respond with ONLY valid JSON in this exact structure. Pay special attention to proper JSON escaping:
+ADDITIONAL GUIDANCE FOR OPTION GENERATION:
+- For **calculation-based** questions: make distractors by varying constants, powers, or signs slightly (e.g., $2x$, $x^2$, $3x$, $x/2$).
+- For **conceptual** questions: use common misconceptions or reversed logic.
+- For **chemistry**: vary oxidation states, hybridization, or molecular geometry plausibly.
+- For **physics**: vary numerical values or formula substitutions.
+- NEVER produce generic placeholder options.
 
-IMPORTANT JSON ESCAPING RULES:
-- Use double backslashes for LaTeX: \\frac instead of \\frac
-- Escape quotes inside strings: \" instead of "
-- No line breaks inside strings (use \\n for newlines)
-- Ensure all strings are properly quoted
+RESPONSE FORMAT (Strict JSON Only):
 
 {
   "questions": [
     {
-      "question": "Question text with properly escaped LaTeX: $$\\frac{d}{dx}[x^2] = ?$$",
+      "question": "Text with LaTeX like $\\frac{d}{dx}[x^2] = ?$",
       "options": [
-        {"text": "$$2x$$", "isCorrect": true},
-        {"text": "$$x^2$$", "isCorrect": false},
-        {"text": "$$2x^2$$", "isCorrect": false},
-        {"text": "$$x$$", "isCorrect": false}
+        {"text": "$2x$", "isCorrect": true},
+        {"text": "$x^2$", "isCorrect": false},
+        {"text": "$2x^2$", "isCorrect": false},
+        {"text": "$x$", "isCorrect": false}
       ],
-      "explanation": "Detailed explanation with properly escaped LaTeX: $$\\frac{d}{dx}[x^2] = 2x$$. This is because...",
+      "explanation": "Step-by-step reasoning explaining why $\\frac{d}{dx}[x^2] = 2x$ and why others are incorrect.",
       "difficulty": "${request.difficulty}",
-      "tip_formula": "Key formula: $$\\frac{d}{dx}[x^n] = nx^{n-1}$$"
+      "tip_formula": "Key formula: $\\frac{d}{dx}[x^n] = nx^{n-1}$"
     }
   ]
 }
@@ -448,7 +460,7 @@ Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start
             }
           ],
           max_tokens: 4000,
-          temperature: 0.7,
+          temperature: 0.3,
         }),
       });
 
@@ -476,6 +488,12 @@ Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start
           cleanedContent = cleanedContent.replace(/^```json\s*/, '').replace(/\s*```$/, '');
         } else if (cleanedContent.startsWith('```')) {
           cleanedContent = cleanedContent.replace(/^```\s*/, '').replace(/\s*```$/, '');
+        }
+        // If model wrapped JSON with stray characters before/after, try to slice to the first '{' and last '}'
+        const firstBrace = cleanedContent.indexOf('{');
+        const lastBrace = cleanedContent.lastIndexOf('}');
+        if (firstBrace > 0 && lastBrace > firstBrace) {
+          cleanedContent = cleanedContent.slice(firstBrace, lastBrace + 1);
         }
 
         // Try to fix common JSON escaping issues
@@ -556,16 +574,8 @@ Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start
         console.error('Raw response:', content);
         
         // Fallback: try to extract questions using regex if JSON parsing fails
-        try {
-          const fallbackQuestions = this.extractQuestionsFromText(content, request.questionCount);
-          if (fallbackQuestions.length > 0) {
-            console.log(`Using fallback extraction: found ${fallbackQuestions.length} questions`);
-            return { questions: fallbackQuestions };
-          }
-        } catch (fallbackError) {
-          console.error('Fallback extraction also failed:', fallbackError);
-        }
-        
+        // IMPORTANT: Disable placeholder fallbacks. If parsing fails, propagate the error so we never create
+        // generic options like "Option A/B/C/D".
         throw new Error(`Failed to parse AI response: ${parseError.message}`);
       }
     } catch (error) {
@@ -576,11 +586,13 @@ Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start
 
   private buildQuestionGenerationPrompt(request: {
     subject: string;
+    lesson?: string;
     topic?: string;
     subtopic?: string;
     difficulty: 'EASY' | 'MEDIUM' | 'HARD';
     questionCount: number;
   }): string {
+    const lessonContext = request.lesson ? ` - ${request.lesson}` : '';
     const topicContext = request.topic ? ` - ${request.topic}` : '';
     const subtopicContext = request.subtopic ? ` - ${request.subtopic}` : '';
     
@@ -592,7 +604,7 @@ Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start
 
     return `Generate ${request.questionCount} high-quality JEE practice questions for:
 
-Subject: ${request.subject}${topicContext}${subtopicContext}
+Subject: ${request.subject}${lessonContext}${topicContext}${subtopicContext}
 Difficulty Level: ${request.difficulty}
 Difficulty Guidelines: ${difficultyGuidelines[request.difficulty]}
 
@@ -626,11 +638,13 @@ Generate questions that would help students prepare for JEE Main and Advanced ex
     const placeholderPatterns = [
       /^option\s*[a-d]\b/,
       /^choice\s*[a-d]\b/,
-      /^[a-d]\)?\.?$/,           // single letter like "A)"
+      /^[a-d]\)?\.?[:\-]?\s*$/,           // single letter like "A)" or "C:"
       /^(all\s*of\s*the\s*above|none\s*of\s*the\s*above|both\s*a\s*and\s*b)$/,
       /^opt\s*[a-d]\b/
     ];
     if (placeholderPatterns.some((re) => re.test(trimmed))) return true;
+    // Any occurrence of the word 'option' is suspicious
+    if (trimmed.includes('option')) return true;
     if (['a', 'b', 'c', 'd'].includes(trimmed)) return true;
     return false;
   }
@@ -649,10 +663,16 @@ Generate questions that would help students prepare for JEE Main and Advanced ex
 
   private async repairQuestionOptions(original: any, context: { subject: string; topic?: string; subtopic?: string; difficulty: string }): Promise<any> {
     // Ask the model to rewrite only the options to satisfy constraints. Keep question, explanation, tip_formula intact.
-    const system = `You are an expert JEE item writer. You will FIX only the options for a given question.`;
+    const system = `You are an expert JEE item writer. You will FIX only the options for a given question.
+STRICT RULES:
+1) Options must be concrete values/statements relevant to the question. 
+2) DO NOT use labels like "Option A", "Option B", etc. Do not include the word 'Option' anywhere.
+3) Exactly four distinct options; exactly one must have isCorrect: true.
+4) For numeric problems include units consistently and keep magnitudes realistic.
+5) Never use "All of the above" / "None of the above" / duplicates.`;
     const user = {
       role: 'user',
-      content: `Context:\nSubject: ${context.subject}${context.topic ? ` | Topic: ${context.topic}` : ''}${context.subtopic ? ` | Subtopic: ${context.subtopic}` : ''}\nDifficulty: ${context.difficulty}\n\nQuestion JSON (keep question/explanation/tip_formula exactly the same):\n${JSON.stringify(original)}\n\nTASK:\n- Replace the options with exactly 4 distinct, relevant options.\n- Exactly ONE option must have "+ isCorrect: true".\n- Options must be concrete values/statements; avoid placeholders.\n- For numeric/units problems, include consistent units.\n\nRespond with ONLY the full corrected JSON object for this single question.`
+      content: `Context:\nSubject: ${context.subject}${context.topic ? ` | Topic: ${context.topic}` : ''}${context.subtopic ? ` | Subtopic: ${context.subtopic}` : ''}\nDifficulty: ${context.difficulty}\n\nQuestion JSON (keep question/explanation/tip_formula exactly the same):\n${JSON.stringify(original)}\n\nTASK:\n- Replace the options with exactly 4 distinct, realistic options.\n- Exactly ONE option must have "+ isCorrect: true".\n- Do NOT use placeholder words like "Option A/B/C/D"; do not include the word 'Option' at all.\n- For numeric/units problems, include consistent units.\n\nRespond with ONLY the full corrected JSON object for this single question.`
     } as any;
 
     try {
@@ -826,13 +846,9 @@ Make the explanation educational and suitable for JEE preparation level.`;
     fixed = fixed.replace(/(?<!\\)\\(?!\\)/g, '\\\\');
     
     // Fix unescaped quotes in LaTeX expressions
-    fixed = fixed.replace(/\\\\([^"]*)"([^"]*)\\\\/g, '\\\\$1\\"$2\\\\');
+    fixed = fixed.replace(/\\\\([^"]*)"([^\\"]*)\\\\/g, '\\\\$1\\"$2\\\\');
     
-    // Fix other common escaping issues
-    fixed = fixed.replace(/\n/g, '\\n');
-    fixed = fixed.replace(/\r/g, '\\r');
-    fixed = fixed.replace(/\t/g, '\\t');
-    
+    // DO NOT replace raw newlines/tabs globally; that corrupts JSON outside strings
     return fixed;
   }
 
@@ -855,51 +871,8 @@ Make the explanation educational and suitable for JEE preparation level.`;
     return cleaned.trim();
   }
 
-  private extractQuestionsFromText(content: string, expectedCount: number): any[] {
-    // Fallback method to extract questions when JSON parsing fails
-    const questions = [];
-    
-    try {
-      // Try to find question patterns in the text
-      const questionMatches = content.match(/"question":\s*"([^"]+)"/g);
-      const optionMatches = content.match(/"options":\s*\[([^\]]+)\]/g);
-      const explanationMatches = content.match(/"explanation":\s*"([^"]+)"/g);
-      
-      if (questionMatches && optionMatches && explanationMatches) {
-        const minLength = Math.min(questionMatches.length, optionMatches.length, explanationMatches.length);
-        
-        for (let i = 0; i < Math.min(minLength, expectedCount); i++) {
-          try {
-            const questionText = questionMatches[i].match(/"question":\s*"([^"]+)"/)?.[1] || '';
-            const explanationText = explanationMatches[i].match(/"explanation":\s*"([^"]+)"/)?.[1] || '';
-            
-            // Create basic options (this is a fallback, so we'll create generic options)
-            const options = [
-              { text: 'Option A', isCorrect: true },
-              { text: 'Option B', isCorrect: false },
-              { text: 'Option C', isCorrect: false },
-              { text: 'Option D', isCorrect: false }
-            ];
-            
-            if (questionText && explanationText) {
-              questions.push({
-                question: this.cleanTextContent(questionText),
-                options: options,
-                explanation: this.cleanTextContent(explanationText),
-                difficulty: 'MEDIUM',
-                tip_formula: undefined
-              });
-            }
-          } catch (itemError) {
-            console.warn('Error processing fallback question item:', itemError);
-            continue;
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error in fallback extraction:', error);
-    }
-    
-    return questions;
+  private extractQuestionsFromText(_content: string, _expectedCount: number): any[] {
+    // Fallback disabled to avoid placeholder options. Return empty to force upstream retry/failure.
+    return [];
   }
 } 
