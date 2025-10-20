@@ -420,12 +420,13 @@ CRITICAL REQUIREMENTS:
 12. For numerical/units questions: ensure all options include consistent units and realistic magnitudes.
 13. Ensure JSON validity: no unescaped quotes, no extra text, no markdown. Start with '{' and end with '}'. The output must be a single JSON object with a "questions" array of length ${request.questionCount}.
 
-ADDITIONAL GUIDANCE FOR OPTION GENERATION:
-- For **calculation-based** questions: make distractors by varying constants, powers, or signs slightly (e.g., $2x$, $x^2$, $3x$, $x/2$).
-- For **conceptual** questions: use common misconceptions or reversed logic.
-- For **chemistry**: vary oxidation states, hybridization, or molecular geometry plausibly.
-- For **physics**: vary numerical values or formula substitutions.
-- NEVER produce generic placeholder options.
+ ADDITIONAL GUIDANCE FOR OPTION GENERATION:
+ - For **calculation-based** questions: make distractors by varying constants, powers, or signs slightly (e.g., $2x$, $x^2$, $3x$, $x/2$).
+ - For **conceptual** questions: use common misconceptions or reversed logic.
+ - For **chemistry**: vary oxidation states, hybridization, or molecular geometry plausibly.
+ - For **physics**: vary numerical values or formula substitutions.
+ - NEVER produce generic placeholder options.
+ - **LaTeX in options**: Options may contain LaTeX equations using single dollar signs $...$ for inline math (e.g., $\\frac{1}{2}$, $x^2$, $\\sqrt{3}$).
 
 RESPONSE FORMAT (Strict JSON Only):
 
