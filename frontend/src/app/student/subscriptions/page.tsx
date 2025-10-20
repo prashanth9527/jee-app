@@ -235,7 +235,7 @@ export default function SubscriptionsPage() {
 
           {/* Trial Expired Message */}
           {subscriptionStatus?.needsSubscription && (
-            <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-6">
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900 rounded-lg p-6 border border-blue-200 dark:border-blue-700">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

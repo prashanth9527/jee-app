@@ -374,6 +374,72 @@ textarea:focus {
   color: #6b7280;
 }
 
+/* Report Modal Overrides */
+.report-modal {
+  background-color: white !important;
+}
+
+.dark .report-modal {
+  background-color: rgb(31, 41, 55) !important;
+}
+
+.report-modal select {
+  background-color: white !important;
+  color: rgb(17, 24, 39) !important;
+}
+
+.dark .report-modal select {
+  background-color: rgb(31, 41, 55) !important;
+  color: rgb(243, 244, 246) !important;
+}
+
+.report-modal textarea {
+  background-color: white !important;
+  color: rgb(17, 24, 39) !important;
+}
+
+.dark .report-modal textarea {
+  background-color: rgb(31, 41, 55) !important;
+  color: rgb(243, 244, 246) !important;
+}
+
+/* SweetAlert Dark Mode Styles */
+.swal-dark-popup {
+  background-color: white !important;
+}
+
+.dark .swal-dark-popup {
+  background-color: rgb(31, 41, 55) !important;
+  border: 1px solid rgb(55, 65, 81) !important;
+}
+
+.swal-dark-title {
+  color: rgb(17, 24, 39) !important;
+}
+
+.dark .swal-dark-title {
+  color: rgb(243, 244, 246) !important;
+}
+
+.swal-dark-content {
+  color: rgb(55, 65, 81) !important;
+}
+
+.dark .swal-dark-content {
+  color: rgb(209, 213, 219) !important;
+}
+
+.swal-dark-confirm {
+  background-color: rgb(59, 130, 246) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.dark .swal-dark-confirm {
+  background-color: rgb(59, 130, 246) !important;
+  color: white !important;
+}
+
 /* LaTeX Content Display Styles */
 .latex-content-display .math-inline {
   display: inline;

@@ -8,6 +8,7 @@ import SubscriptionGuard from '@/components/SubscriptionGuard';
 import QuestionReportModal from '@/components/QuestionReportModal';
 import api, { bookmarkApi } from '@/lib/api';
 import Swal from 'sweetalert2';
+import LatexContentDisplay from '@/components/LatexContentDisplay';
 
 interface Question {
   id: string;
@@ -56,8 +57,27 @@ interface Submission {
 }
 
 interface ExamResults {
-  submission: Submission;
-  answers: Answer[];
+  submissionId: string;
+  scorePercent: number;
+  correctCount: number;
+  totalQuestions: number;
+  submittedAt: string;
+  examTitle: string;
+  answers: Array<{
+    questionId: string;
+    question: string;
+    selectedOption: {
+      id: string;
+      text: string;
+      isCorrect: boolean;
+    } | null;
+    correctOption: {
+      id: string;
+      text: string;
+      isCorrect: boolean;
+    } | null;
+    isCorrect: boolean;
+  }>;
 }
 
 export default function PracticeTestResultsPage() {
@@ -66,6 +86,7 @@ export default function PracticeTestResultsPage() {
   const submissionId = params?.submissionId as string;
 
   const [results, setResults] = useState<ExamResults | null>(null);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState<number | null>(null);
   const [reportModalOpen, setReportModalOpen] = useState(false);
@@ -84,9 +105,17 @@ export default function PracticeTestResultsPage() {
       const response = await api.get(`/exams/submissions/${submissionId}/results`);
       setResults(response.data);
       
+      // Fetch all questions for complete performance picture
+      const questionsResponse = await api.get(`/exams/submissions/${submissionId}/questions`);
+      setQuestions(questionsResponse.data);
+      // Auto-select first question for initial render
+      if (questionsResponse.data && questionsResponse.data.length > 0) {
+        setSelectedQuestionIndex(0);
+      }
+      
       // Fetch bookmark status for all questions
       if (response.data.answers) {
-        const questionIds = response.data.answers.map((answer: any) => answer.question.id);
+        const questionIds = response.data.answers.map((answer: any) => answer.questionId);
         try {
           const bookmarkResponse = await bookmarkApi.getBookmarkStatus(questionIds);
           const bookmarkedSet = new Set<string>(
@@ -112,6 +141,13 @@ export default function PracticeTestResultsPage() {
       setLoading(false);
     }
   };
+
+  // Safety: if results and questions are loaded but nothing selected, select first
+  useEffect(() => {
+    if (!loading && selectedQuestionIndex === null && questions.length > 0) {
+      setSelectedQuestionIndex(0);
+    }
+  }, [loading, questions, selectedQuestionIndex]);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -239,10 +275,24 @@ export default function PracticeTestResultsPage() {
     );
   }
 
-  const { submission, answers } = results;
+  const { answers, totalQuestions } = results;
   const correctAnswers = answers.filter(a => a.isCorrect).length;
   const incorrectAnswers = answers.filter(a => !a.isCorrect).length;
-  const unansweredCount = submission.totalQuestions - answers.length;
+  const unansweredCount = totalQuestions - answers.length;
+
+  // Create a map of answers by questionId for quick lookup
+  const answersMap = new Map(answers.map(answer => [answer.questionId, answer]));
+  
+  // Create a combined array of all questions with their answer status
+  const allQuestionsWithStatus = questions.map((question, index) => {
+    const answer = answersMap.get(question.id);
+    return {
+      question,
+      answer,
+      index,
+      status: answer ? (answer.isCorrect ? 'correct' : 'incorrect') : 'unanswered'
+    };
+  });
 
   return (
     <ProtectedRoute requiredRole="STUDENT">
@@ -252,7 +302,7 @@ export default function PracticeTestResultsPage() {
             {/* Header */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Test Results</h1>
-              <p className="text-lg text-gray-700">{submission.examPaper.title}</p>
+              <p className="text-lg text-gray-700">{results.examTitle}</p>
             </div>
 
             {/* Score Summary */}
@@ -260,10 +310,10 @@ export default function PracticeTestResultsPage() {
               <div className="text-center mb-8">
                 <div className="text-6xl mb-4">🎯</div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Your Score</h2>
-                <div className={`text-5xl font-bold mb-2 ${getScoreColor(submission.scorePercent)}`}>
-                  {submission.scorePercent.toFixed(1)}%
+                <div className={`text-5xl font-bold mb-2 ${getScoreColor(results.scorePercent)}`}>
+                  {results.scorePercent.toFixed(1)}%
                 </div>
-                <p className="text-lg text-gray-800 mb-4">{getScoreMessage(submission.scorePercent)}</p>
+                <p className="text-lg text-gray-800 mb-4">{getScoreMessage(results.scorePercent)}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -280,7 +330,7 @@ export default function PracticeTestResultsPage() {
                   <div className="text-sm text-gray-800">Unanswered</div>
                 </div>
                 <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <div className="text-2xl font-bold text-blue-600">{submission.totalQuestions}</div>
+                  <div className="text-2xl font-bold text-blue-600">{results.totalQuestions}</div>
                   <div className="text-sm text-blue-700">Total</div>
                 </div>
               </div>
@@ -289,20 +339,20 @@ export default function PracticeTestResultsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-700 font-medium">Time Taken:</span>
-                    <span className="font-semibold text-gray-900">{formatDuration(submission.startedAt, submission.submittedAt)}</span>
+                    <span className="font-semibold text-gray-900">Time taken: N/A</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-700 font-medium">Started:</span>
-                    <span className="font-semibold text-gray-900">{new Date(submission.startedAt).toLocaleString()}</span>
+                    <span className="font-semibold text-gray-900">N/A</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-700 font-medium">Completed:</span>
-                    <span className="font-semibold text-gray-900">{new Date(submission.submittedAt).toLocaleString()}</span>
+                    <span className="font-semibold text-gray-900">{new Date(results.submittedAt).toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-700 font-medium">Time Limit:</span>
                     <span className="font-semibold text-gray-900">
-                      {submission.examPaper.timeLimitMin ? `${submission.examPaper.timeLimitMin} minutes` : 'No limit'}
+                      No limit
                     </span>
                   </div>
                 </div>
@@ -319,16 +369,18 @@ export default function PracticeTestResultsPage() {
                   <div className="bg-gray-50 rounded-lg p-4 sticky top-24">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Questions</h3>
                     <div className="grid grid-cols-5 gap-2">
-                      {answers.map((answer, index) => (
+                      {allQuestionsWithStatus.map((item, index) => (
                         <button
-                          key={index}
+                          key={item.question.id}
                           onClick={() => setSelectedQuestionIndex(index)}
                           className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${
                             selectedQuestionIndex === index
                               ? 'bg-blue-600 text-white'
-                              : answer.isCorrect
+                              : item.status === 'correct'
                               ? 'bg-green-100 text-green-800 border border-green-300'
-                              : 'bg-red-100 text-red-800 border border-red-300'
+                              : item.status === 'incorrect'
+                              ? 'bg-red-100 text-red-800 border border-red-300'
+                              : 'bg-gray-100 text-gray-600 border border-gray-300'
                           }`}
                         >
                           {index + 1}
@@ -345,17 +397,25 @@ export default function PracticeTestResultsPage() {
                         <div className="w-3 h-3 bg-red-100 border border-red-300 rounded"></div>
                         <span className="text-gray-700">Incorrect</span>
                       </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 bg-gray-100 border border-gray-300 rounded"></div>
+                        <span className="text-gray-700">Unanswered</span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Question Details */}
                 <div className="lg:col-span-3">
-                  {selectedQuestionIndex !== null && answers[selectedQuestionIndex] && (
+                  {selectedQuestionIndex !== null && allQuestionsWithStatus[selectedQuestionIndex] && (
                     <div className="space-y-6">
                       {(() => {
-                        const answer = answers[selectedQuestionIndex];
-                        const question = answer.question;
+                        const item = allQuestionsWithStatus[selectedQuestionIndex];
+                        const { question, answer, status } = item;
+                        
+                        if (!question) {
+                          return <div>Question not found</div>;
+                        }
                         
                         return (
                           <>
@@ -369,9 +429,13 @@ export default function PracticeTestResultsPage() {
                                   {question.difficulty}
                                 </span>
                                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                  answer.isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                  status === 'correct' ? 'bg-green-100 text-green-800' : 
+                                  status === 'incorrect' ? 'bg-red-100 text-red-800' : 
+                                  'bg-gray-100 text-gray-600'
                                 }`}>
-                                  {answer.isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                                  {status === 'correct' ? '✓ Correct' : 
+                                   status === 'incorrect' ? '✗ Incorrect' : 
+                                   '○ Unanswered'}
                                 </span>
                               </div>
                               <div className="flex items-center space-x-2">
@@ -427,14 +491,14 @@ export default function PracticeTestResultsPage() {
                             {/* Question Stem */}
                             <div className="bg-gray-50 rounded-lg p-6">
                               <p className="text-lg text-gray-900 leading-relaxed whitespace-pre-wrap">
-                                {question.stem}
+                                <LatexContentDisplay content={question.stem} />
                               </p>
                             </div>
 
                             {/* Options */}
                             <div className="space-y-3">
                               {question.options.map((option) => {
-                                const isSelected = answer.selectedOption?.id === option.id;
+                                const isSelected = answer?.selectedOption?.id === option.id;
                                 const isCorrect = option.isCorrect;
                                 
                                 let optionClass = 'p-4 rounded-lg border-2';
@@ -457,7 +521,7 @@ export default function PracticeTestResultsPage() {
                                         isSelected && !isCorrect ? 'text-red-800' : 
                                         'text-gray-700'
                                       }`}>
-                                        {option.text}
+                                        <LatexContentDisplay content={option.text} />
                                       </span>
                                       {isSelected && <span className="text-sm text-gray-600">(Your answer)</span>}
                                       {isCorrect && <span className="text-sm text-green-600 font-medium">(Correct answer)</span>}
@@ -477,7 +541,7 @@ export default function PracticeTestResultsPage() {
                                   </span>
                                 </div>
                                 <p className="text-yellow-800 leading-relaxed whitespace-pre-wrap">
-                                  {question.tip_formula}
+                                  <LatexContentDisplay content={question.tip_formula} />
                                 </p>
                               </div>
                             )}
@@ -497,7 +561,7 @@ export default function PracticeTestResultsPage() {
                                       )}
                                     </div>
                                     <p className="text-blue-800 leading-relaxed whitespace-pre-wrap">
-                                      {question.explanation}
+                                      <LatexContentDisplay content={question.explanation} />
                                     </p>
                                   </div>
                                 )}

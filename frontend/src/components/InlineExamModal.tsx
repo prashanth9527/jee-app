@@ -131,16 +131,19 @@ export default function InlineExamModal({
       
       const submissionId = submissionResponse.data.id;
       
-      // Submit answers
-      for (const [questionId, optionId] of Object.entries(answers)) {
-        await api.post(`/student/exams/submissions/${submissionId}/answer`, {
+      // Prepare all answers for single submission
+      const answersToSubmit = Object.entries(answers)
+        .filter(([_, optionId]) => optionId)
+        .map(([questionId, optionId]) => ({
           questionId,
-          selectedOptionId: optionId
-        });
-      }
-      
-      // Finalize submission
-      const finalizeResponse = await api.post(`/student/exams/submissions/${submissionId}/finalize`);
+          optionId,
+        }));
+
+      // Submit exam with all answers at once
+      const finalizeResponse = await api.post(`/student/exams/${exam.id}/submit`, {
+        answers: answersToSubmit,
+        submissionId: submissionId, // Pass the submission ID
+      });
       
       const timeSpent = startTime ? Math.floor((Date.now() - startTime.getTime()) / 1000) : 0;
       

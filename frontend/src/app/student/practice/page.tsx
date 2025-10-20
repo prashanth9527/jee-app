@@ -243,11 +243,11 @@ function PracticeTestPageContent() {
           timeLimitMin: config.timeLimit
         };
 
-        const aiResponse = await api.post('/exams/ai/generate-practice-test', aiTestData);
+        const aiResponse = await api.post('/student/exams/ai/generate-practice-test', aiTestData);
         const paperId = aiResponse.data.examPaper.id;
 
         // Start the practice test
-        const startResponse = await api.post(`/exams/papers/${paperId}/start`);
+        const startResponse = await api.post(`/student/exams/papers/${paperId}/start`);
         const { submissionId } = startResponse.data;
 
         // Redirect to the practice test
@@ -264,11 +264,11 @@ function PracticeTestPageContent() {
           timeLimitMin: config.timeLimit
         };
 
-        const manualResponse = await api.post('/exams/manual/generate-practice-test', manualTestData);
+        const manualResponse = await api.post('/student/exams/manual/generate-practice-test', manualTestData);
         const paperId = manualResponse.data.examPaper.id;
 
         // Start the practice test
-        const startResponse = await api.post(`/exams/papers/${paperId}/start`);
+        const startResponse = await api.post(`/student/exams/papers/${paperId}/start`);
         const { submissionId } = startResponse.data;
 
         // Redirect to the practice test

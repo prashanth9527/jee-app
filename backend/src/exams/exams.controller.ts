@@ -37,9 +37,10 @@ export class ExamsController {
         questionId: string;
         optionId: string;
       }>;
+      submissionId?: string;
     }
   ) {
-    return this.examsService.submitExam(req.user.id, examId, body.answers);
+    return this.examsService.submitExam(req.user.id, examId, body.answers, body.submissionId);
   }
 
   @Get(':id/results')
@@ -56,6 +57,38 @@ export class ExamsController {
     @Param('id') examId: string
   ) {
     return this.examsService.startExam(req.user.id, examId);
+  }
+
+  @Post('ai/generate-practice-test')
+  async generateAIPracticeTest(
+    @Req() req: any,
+    @Body() body: {
+      subjectId: string;
+      lessonId?: string;
+      topicId?: string;
+      subtopicId?: string;
+      questionCount: number;
+      difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
+      timeLimitMin: number;
+    }
+  ) {
+    return this.examsService.generateAIPracticeTest(req.user.id, body);
+  }
+
+  @Post('manual/generate-practice-test')
+  async generateManualPracticeTest(
+    @Req() req: any,
+    @Body() body: {
+      subjectId: string;
+      lessonId?: string;
+      topicId?: string;
+      subtopicId?: string;
+      questionCount: number;
+      difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
+      timeLimitMin: number;
+    }
+  ) {
+    return this.examsService.generateManualPracticeTest(req.user.id, body);
   }
 }
 
@@ -96,5 +129,13 @@ export class SubmissionsController {
     @Param('id') submissionId: string
   ) {
     return this.examsService.getSubmissionQuestions(req.user.id, submissionId);
+  }
+
+  @Get(':id/results')
+  async getSubmissionResults(
+    @Req() req: any,
+    @Param('id') submissionId: string
+  ) {
+    return this.examsService.getSubmissionResults(req.user.id, submissionId);
   }
 }

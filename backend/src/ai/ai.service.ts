@@ -492,7 +492,7 @@ Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start
         }
 
         // Validate and clean each question
-        const cleanedQuestions = [];
+        const cleanedQuestions = [] as any[];
         for (const question of parsedContent.questions) {
           if (!question.question || !question.options || !question.explanation) {
             console.warn('Skipping invalid question structure:', question);
@@ -509,7 +509,7 @@ Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start
           }
 
           // Clean the question content
-          cleanedQuestions.push({
+          const cleaned = {
             question: this.cleanTextContent(question.question),
             options: question.options.map((opt: any) => ({
               text: this.cleanTextContent(opt.text),
@@ -518,7 +518,30 @@ Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start
             explanation: this.cleanTextContent(question.explanation),
             difficulty: question.difficulty || request.difficulty,
             tip_formula: question.tip_formula ? this.cleanTextContent(question.tip_formula) : undefined
-          });
+          };
+
+          // Run server-side validation; attempt single repair if needed
+          const validation = this.validateQuestionShape(cleaned as any);
+          if (!validation.valid) {
+            try {
+              const repaired = await this.repairQuestionOptions(cleaned, {
+                subject: request.subject,
+                topic: request.topic,
+                subtopic: request.subtopic,
+                difficulty: request.difficulty
+              });
+              const recheck = this.validateQuestionShape(repaired);
+              if (recheck.valid) {
+                cleanedQuestions.push(repaired);
+              } else {
+                console.warn('Dropping question after failed repair:', recheck.reason);
+              }
+            } catch (_e) {
+              console.warn('Repair failed; dropping question');
+            }
+          } else {
+            cleanedQuestions.push(cleaned);
+          }
         }
 
         if (cleanedQuestions.length === 0) {
@@ -575,7 +598,11 @@ QUESTION REQUIREMENTS:
 1. Create questions that test conceptual understanding
 2. Include mathematical problems with proper LaTeX formatting
 3. Ensure questions are relevant to JEE syllabus
-4. Make options plausible but with only one correct answer
+4. Options must be CONCRETE content (values/statements), not placeholders. NEVER output texts like "Option A", "Option B", etc.
+5. Provide exactly 4 options. Make 1 option correct and 3 distractors that are plausible and close to the correct value/concept.
+6. For numerical/units questions: include appropriate units in ALL options; keep magnitudes realistic; distractors should reflect common mistakes.
+7. Do NOT use options like "All of the above" / "None of the above" / duplicates.
+8. Ensure option texts are distinct and non-empty; avoid trivial variations.
 5. Provide comprehensive explanations
 6. Include relevant formulas and tips
 7. Vary question types (calculation, conceptual, application)
@@ -586,6 +613,64 @@ ${request.topic ? `Primary Topic: ${request.topic}` : 'General subject knowledge
 ${request.subtopic ? `Specific Subtopic: ${request.subtopic}` : ''}
 
 Generate questions that would help students prepare for JEE Main and Advanced exams.`;
+  }
+
+  // Basic server-side validation and auto-repair for option quality
+  private isOptionTextWeak(text: string): boolean {
+    if (!text) return true;
+    const trimmed = text.trim().toLowerCase();
+    if (trimmed.length < 2) return true;
+    // Reject placeholder-like options
+    if (['option a', 'option b', 'option c', 'option d', 'a', 'b', 'c', 'd'].includes(trimmed)) return true;
+    return false;
+  }
+
+  private validateQuestionShape(q: any): { valid: boolean; reason?: string } {
+    if (!q) return { valid: false, reason: 'empty' };
+    if (!Array.isArray(q.options) || q.options.length !== 4) return { valid: false, reason: 'must have exactly 4 options' };
+    const correctCount = q.options.filter((o: any) => o?.isCorrect === true).length;
+    if (correctCount !== 1) return { valid: false, reason: 'must have exactly one correct option' };
+    const texts = q.options.map((o: any) => (o?.text || '').trim());
+    if (texts.some((t: string) => this.isOptionTextWeak(t))) return { valid: false, reason: 'weak/placeholder option text' };
+    const unique = new Set(texts.map((t: string) => t.toLowerCase()));
+    if (unique.size !== texts.length) return { valid: false, reason: 'duplicate options' };
+    return { valid: true };
+  }
+
+  private async repairQuestionOptions(original: any, context: { subject: string; topic?: string; subtopic?: string; difficulty: string }): Promise<any> {
+    // Ask the model to rewrite only the options to satisfy constraints. Keep question, explanation, tip_formula intact.
+    const system = `You are an expert JEE item writer. You will FIX only the options for a given question.`;
+    const user = {
+      role: 'user',
+      content: `Context:\nSubject: ${context.subject}${context.topic ? ` | Topic: ${context.topic}` : ''}${context.subtopic ? ` | Subtopic: ${context.subtopic}` : ''}\nDifficulty: ${context.difficulty}\n\nQuestion JSON (keep question/explanation/tip_formula exactly the same):\n${JSON.stringify(original)}\n\nTASK:\n- Replace the options with exactly 4 distinct, relevant options.\n- Exactly ONE option must have "+ isCorrect: true".\n- Options must be concrete values/statements; avoid placeholders.\n- For numeric/units problems, include consistent units.\n\nRespond with ONLY the full corrected JSON object for this single question.`
+    } as any;
+
+    try {
+      const resp = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.openaiApiKey}`,
+        },
+        body: JSON.stringify({
+          model: this.openaiModel,
+          messages: [
+            { role: 'system', content: system },
+            user
+          ],
+          temperature: 0.7,
+        })
+      });
+
+      const data = await resp.json();
+      const content = data.choices?.[0]?.message?.content;
+      if (!content) return original;
+      const fixed = JSON.parse(content);
+      return fixed;
+    } catch (e) {
+      // If repair fails, return original
+      return original;
+    }
   }
 
   async generateExplanationWithTips(

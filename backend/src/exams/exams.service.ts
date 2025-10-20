@@ -1,9 +1,14 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { ExamType } from '@prisma/client';
+import { AiService } from '../ai/ai.service';
 
 @Injectable()
 export class ExamsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly aiService: AiService
+  ) {}
 
   async getExam(userId: string, examId: string) {
     console.log('Getting exam:', { userId, examId });
@@ -17,7 +22,7 @@ export class ExamsService {
     }
 
     // Check if user has access to this exam
-    if (exam.createdById !== userId) {
+    if (exam.createdById && exam.createdById !== userId) {
       throw new BadRequestException('You do not have access to this exam');
     }
 
@@ -54,8 +59,8 @@ export class ExamsService {
     };
   }
 
-  async submitExam(userId: string, examId: string, answers: Array<{ questionId: string; optionId: string }>) {
-    console.log('Submitting exam:', { userId, examId, answerCount: answers.length });
+  async submitExam(userId: string, examId: string, answers: Array<{ questionId: string; optionId: string }>, submissionId?: string) {
+    console.log('Submitting exam:', { userId, examId, submissionId, answerCount: answers.length });
 
     // Get exam details
     const exam = await this.prisma.examPaper.findUnique({
@@ -67,7 +72,7 @@ export class ExamsService {
     }
 
     // Check if user has access to this exam
-    if (exam.createdById !== userId) {
+    if (exam.createdById && exam.createdById !== userId) {
       throw new BadRequestException('You do not have access to this exam');
     }
 
@@ -95,34 +100,67 @@ export class ExamsService {
 
     const scorePercent = Math.round((correctCount / totalQuestions) * 100);
 
-    // Create exam submission
-    const submission = await this.prisma.examSubmission.create({
-      data: {
-        userId,
-        examPaperId: examId,
-        scorePercent,
-        correctCount,
-        totalQuestions,
-        submittedAt: new Date(),
-        answers: {
-          create: answers.map(answer => ({
-            questionId: answer.questionId,
-            selectedOptionId: answer.optionId
-          }))
+    let submission;
+    
+    if (submissionId) {
+      // Update existing submission
+      submission = await this.prisma.examSubmission.update({
+        where: { id: submissionId },
+        data: {
+          scorePercent,
+          correctCount,
+          totalQuestions,
+          submittedAt: new Date(),
+          answers: {
+            deleteMany: {}, // Delete existing answers
+            create: answers.map(answer => ({
+              questionId: answer.questionId,
+              selectedOptionId: answer.optionId
+            }))
+          }
+        },
+        include: {
+          answers: {
+            include: {
+              question: {
+                include: {
+                  options: true
+                }
+              }
+            }
+          }
         }
-      },
-      include: {
-				answers: {
-					include: {
-						question: {
-			include: {
-                options: true
-							}
-						}
-					}
-				}
-			}
-		});
+      });
+    } else {
+      // Create new submission
+      submission = await this.prisma.examSubmission.create({
+        data: {
+          userId,
+          examPaperId: examId,
+          scorePercent,
+          correctCount,
+          totalQuestions,
+          submittedAt: new Date(),
+          answers: {
+            create: answers.map(answer => ({
+              questionId: answer.questionId,
+              selectedOptionId: answer.optionId
+            }))
+          }
+        },
+        include: {
+          answers: {
+            include: {
+              question: {
+                include: {
+                  options: true
+                }
+              }
+            }
+          }
+        }
+      });
+    }
 
     console.log('Exam submitted:', { submissionId: submission.id, score: scorePercent });
 
@@ -222,7 +260,8 @@ export class ExamsService {
       examPaper: {
         id: submission.examPaper.id,
         title: submission.examPaper.title,
-        timeLimitMin: submission.examPaper.timeLimitMin
+        timeLimitMin: submission.examPaper.timeLimitMin,
+        examType: submission.examPaper.examType
       },
       questionIds: submission.examPaper.questionIds,
 				startedAt: submission.startedAt,
@@ -296,6 +335,46 @@ export class ExamsService {
     }));
   }
 
+  async getSubmissionResults(userId: string, submissionId: string) {
+    console.log('Getting submission results by submissionId:', { userId, submissionId });
+
+    const submission = await this.prisma.examSubmission.findUnique({
+      where: { id: submissionId },
+      include: {
+        examPaper: true,
+        answers: {
+          include: {
+            question: { include: { options: true } }
+          }
+        }
+      }
+    });
+
+    if (!submission) {
+      throw new NotFoundException('Submission not found');
+    }
+
+    if (submission.userId !== userId) {
+      throw new BadRequestException('You do not have access to this submission');
+    }
+
+    return {
+      submissionId: submission.id,
+      scorePercent: submission.scorePercent,
+      correctCount: submission.correctCount,
+      totalQuestions: submission.totalQuestions,
+      submittedAt: submission.submittedAt,
+      examTitle: submission.examPaper.title,
+      answers: submission.answers.map(a => ({
+        questionId: a.questionId,
+        question: a.question.stem,
+        selectedOption: a.question.options.find(o => o.id === a.selectedOptionId) || null,
+        correctOption: a.question.options.find(o => o.isCorrect) || null,
+        isCorrect: !!a.question.options.find(o => o.id === a.selectedOptionId && o.isCorrect)
+      }))
+    };
+  }
+
   async startExam(userId: string, examId: string) {
     console.log('Starting exam:', { userId, examId });
 
@@ -309,7 +388,7 @@ export class ExamsService {
     }
 
     // Check if user has access to this exam
-    if (exam.createdById !== userId) {
+    if (exam.createdById && exam.createdById !== userId) {
       throw new BadRequestException('You do not have access to this exam');
     }
 
@@ -335,4 +414,182 @@ export class ExamsService {
       totalQuestions: exam.questionIds.length
 		};
 	}
+
+  async generateAIPracticeTest(userId: string, config: {
+    subjectId: string;
+    lessonId?: string;
+    topicId?: string;
+    subtopicId?: string;
+    questionCount: number;
+    difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
+    timeLimitMin: number;
+  }) {
+    console.log('Generating AI practice test:', { userId, config });
+
+    try {
+      // Get subject, topic, and subtopic information for AI generation
+      const subject = await this.prisma.subject.findUnique({
+        where: { id: config.subjectId }
+      });
+
+      let topic = null;
+      if (config.topicId) {
+        topic = await this.prisma.topic.findUnique({
+          where: { id: config.topicId }
+        });
+      }
+
+      let subtopic = null;
+      if (config.subtopicId) {
+        subtopic = await this.prisma.subtopic.findUnique({
+          where: { id: config.subtopicId }
+        });
+      }
+
+      if (!subject) {
+        throw new BadRequestException('Subject not found');
+      }
+
+      // Generate questions using AI
+      const aiQuestions = await this.aiService.generateQuestionsWithTips({
+        subject: subject.name,
+        topic: topic?.name,
+        subtopic: subtopic?.name,
+        difficulty: config.difficulty === 'MIXED' ? 'MEDIUM' : config.difficulty,
+        questionCount: config.questionCount,
+        subjectId: config.subjectId,
+        topicId: config.topicId,
+        subtopicId: config.subtopicId
+      });
+
+      // Create questions in database
+      const createdQuestions = [];
+      for (const aiQuestion of aiQuestions.questions) {
+        const question = await this.prisma.question.create({
+          data: {
+            stem: aiQuestion.question,
+            explanation: aiQuestion.explanation,
+            tip_formula: aiQuestion.tip_formula,
+            difficulty: aiQuestion.difficulty as 'EASY' | 'MEDIUM' | 'HARD',
+            subjectId: config.subjectId,
+            lessonId: config.lessonId,
+            topicId: config.topicId,
+            subtopicId: config.subtopicId,
+            options: {
+              create: aiQuestion.options.map((option: any, index: number) => ({
+                text: option.text,
+                isCorrect: option.isCorrect,
+                order: index + 1
+              }))
+            }
+          },
+          include: {
+            options: {
+              orderBy: { order: 'asc' }
+            }
+          }
+        });
+        createdQuestions.push(question);
+      }
+
+      // Create exam paper
+      const examPaper = await this.prisma.examPaper.create({
+        data: {
+          title: `AI Practice Test - ${new Date().toLocaleDateString()}`,
+          description: 'AI Generated Practice Test',
+          questionIds: createdQuestions.map(q => q.id),
+          timeLimitMin: config.timeLimitMin,
+          examType: 'PRACTICE_EXAM' as ExamType,
+          createdById: userId
+        }
+      });
+
+      console.log('AI practice test created:', { examPaperId: examPaper.id, questionCount: createdQuestions.length });
+
+      return {
+        examPaper: {
+          id: examPaper.id,
+          title: examPaper.title,
+          timeLimitMin: examPaper.timeLimitMin,
+          examType: examPaper.examType
+        },
+        questions: createdQuestions,
+        totalQuestions: createdQuestions.length
+      };
+    } catch (error) {
+      console.error('Error generating AI practice test:', error);
+      throw new BadRequestException(`Failed to generate AI practice test: ${error.message}`);
+    }
+  }
+
+  async generateManualPracticeTest(userId: string, config: {
+    subjectId: string;
+    lessonId?: string;
+    topicId?: string;
+    subtopicId?: string;
+    questionCount: number;
+    difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
+    timeLimitMin: number;
+  }) {
+    console.log('Generating manual practice test:', { userId, config });
+
+    // Build where clause for question selection
+    const where: any = {
+      subjectId: config.subjectId
+    };
+
+    if (config.lessonId) where.lessonId = config.lessonId;
+    if (config.topicId) where.topicId = config.topicId;
+    if (config.subtopicId) where.subtopicId = config.subtopicId;
+    if (config.difficulty !== 'MIXED') where.difficulty = config.difficulty;
+
+    // Get available questions
+    const availableQuestions = await this.prisma.question.findMany({
+      where,
+      include: {
+        options: {
+          orderBy: { order: 'asc' }
+        },
+        subject: true,
+        topic: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    if (availableQuestions.length === 0) {
+      throw new BadRequestException('No questions available with the specified criteria');
+    }
+
+    // Randomly select questions
+    const selectedQuestions = availableQuestions
+      .sort(() => Math.random() - 0.5)
+      .slice(0, Math.min(config.questionCount, availableQuestions.length));
+
+    // Create exam paper
+    const examPaper = await this.prisma.examPaper.create({
+      data: {
+        title: `Manual Practice Test - ${new Date().toLocaleDateString()}`,
+        description: 'Manual Practice Test from existing questions',
+        questionIds: selectedQuestions.map(q => q.id),
+        timeLimitMin: config.timeLimitMin,
+        examType: 'PRACTICE_EXAM' as ExamType, // Set as practice exam
+        createdById: userId
+      }
+    });
+
+    console.log('Manual practice test created:', { examPaperId: examPaper.id, questionCount: selectedQuestions.length });
+
+    return {
+      examPaper: {
+        id: examPaper.id,
+        title: examPaper.title,
+        timeLimitMin: examPaper.timeLimitMin,
+        examType: examPaper.examType
+      },
+      questions: selectedQuestions,
+      totalQuestions: selectedQuestions.length
+    };
+  }
 } 

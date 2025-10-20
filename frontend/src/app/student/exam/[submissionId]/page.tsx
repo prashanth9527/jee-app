@@ -77,7 +77,6 @@ export default function ExamPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [examCompleted, setExamCompleted] = useState(false);
-  const [showResults, setShowResults] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
@@ -96,6 +95,13 @@ export default function ExamPage() {
       const submissionData = response.data;
       
       setSubmission(submissionData);
+      
+      // Check if exam is already completed
+      if (submissionData.submittedAt) {
+        // Exam is already completed, redirect to results page
+        router.push(`/student/exam/results/${submissionId}`);
+        return;
+      }
       
       // Fetch questions
       const questionsResponse = await api.get(`/exams/submissions/${submissionId}/questions`);
@@ -163,29 +169,47 @@ export default function ExamPage() {
 
   const submitExam = async (reason: string) => {
     try {
-      // Submit all answers
-      for (let i = 0; i < answers.length; i++) {
-        const answer = answers[i];
-        if (answer.selectedOptionId) {
-          await api.post(`/exams/submissions/${submissionId}/answer`, {
-            questionId: answer.questionId,
-            selectedOptionId: answer.selectedOptionId,
-          });
-        }
+      if (!submission) {
+        throw new Error('Exam submission not found');
       }
 
-      // Finalize exam
-      await api.post(`/exams/submissions/${submissionId}/finalize`);
+      // Prepare all answers for single submission
+      const answersToSubmit = answers
+        .filter(answer => answer.selectedOptionId)
+        .map(answer => ({
+          questionId: answer.questionId,
+          optionId: answer.selectedOptionId,
+        }));
+
+      // Submit exam with all answers at once
+      const response = await api.post(`/student/exams/${submission.examPaper.id}/submit`, {
+        answers: answersToSubmit,
+        submissionId: submissionId, // Pass the current submission ID
+      });
       
+      const responseData = response.data; 
+      const newSubmissionId = responseData.submissionId;
+      console.log(newSubmissionId);
+      console.log(responseData);
+      // Set exam completed state first
       setExamCompleted(true);
       
+      // Use a more reliable redirect approach
       Swal.fire({
         title: 'Exam Submitted!',
         text: reason,
         icon: 'success',
         confirmButtonText: 'View Results',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
       }).then(() => {
-        setShowResults(true);
+        // Try router.push first, fallback to window.location
+        try {
+          router.push(`/student/exam/results/${newSubmissionId}`);
+        } catch (error) {
+          console.warn('Router push failed, using window.location:', error);
+          window.location.href = `/student/exam/results/${newSubmissionId}`;
+        }
       });
       
     } catch (error) {
@@ -198,24 +222,6 @@ export default function ExamPage() {
     }
   };
 
-  const fetchExamResults = async () => {
-    try {
-      const response = await api.get(`/exams/submissions/${submissionId}/results`);
-      const results = response.data;
-      
-      // Update answers with correct/incorrect status
-      setAnswers(prev => prev.map(answer => {
-        const resultAnswer = results.answers.find((ra: any) => ra.questionId === answer.questionId);
-        return {
-          ...answer,
-          isCorrect: resultAnswer?.isCorrect || false,
-        };
-      }));
-      
-    } catch (error) {
-      console.error('Error fetching exam results:', error);
-    }
-  };
 
   const handleAnswerSelect = (optionId: string) => {
     setAnswers(prev => prev.map((answer, index) => 
@@ -263,6 +269,7 @@ export default function ExamPage() {
       await submitExam('Exam submitted by student');
     }
   };
+
 
   useEffect(() => {
     if (submissionId) {
@@ -337,6 +344,18 @@ export default function ExamPage() {
         router.back = originalBack;
         router.forward = originalForward;
       };
+    } else if (examCompleted) {
+      // When exam is completed, restore original router methods immediately
+      const originalPush = router.push;
+      const originalReplace = router.replace;
+      const originalBack = router.back;
+      const originalForward = router.forward;
+
+      // Restore original methods
+      router.push = originalPush;
+      router.replace = originalReplace;
+      router.back = originalBack;
+      router.forward = originalForward;
     }
   }, [examStarted, examCompleted, userConfirmedExit, router]);
 
@@ -437,11 +456,6 @@ export default function ExamPage() {
     }
   }, [currentQuestionIndex, examStarted]);
 
-  useEffect(() => {
-    if (showResults) {
-      fetchExamResults();
-    }
-  }, [showResults]);
 
 
 
@@ -472,7 +486,7 @@ export default function ExamPage() {
       case 'answered': return 'bg-green-500';
       case 'answered-review': return 'bg-blue-500';
       case 'review': return 'bg-yellow-500';
-      case 'unanswered': return 'bg-gray-300';
+      case 'unanswered': return 'bg-gray-500';
       default: return 'bg-gray-300';
     }
   };
@@ -494,172 +508,6 @@ export default function ExamPage() {
     );
   }
 
-  if (examCompleted && showResults) {
-    return (
-      <ProtectedRoute requiredRole="STUDENT">
-        <SubscriptionGuard>
-          <StudentLayout>
-            <div className="space-y-6">
-              <div className="bg-white rounded-lg shadow p-6">
-                <h1 className="text-2xl font-bold text-gray-900 mb-4">Exam Results</h1>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                  <div className="bg-blue-50 rounded-lg p-4">
-                    <h3 className="text-lg font-semibold text-blue-900">Total Questions</h3>
-                    <p className="text-2xl font-bold text-blue-600">{questions.length}</p>
-                  </div>
-                  <div className="bg-green-50 rounded-lg p-4">
-                    <h3 className="text-lg font-semibold text-green-900">Correct Answers</h3>
-                    <p className="text-2xl font-bold text-green-600">
-                      {answers.filter(a => a.isCorrect).length}
-                    </p>
-                  </div>
-                  <div className="bg-purple-50 rounded-lg p-4">
-                    <h3 className="text-lg font-semibold text-purple-900">Score</h3>
-                    <p className="text-2xl font-bold text-purple-600">
-                      {Math.round((answers.filter(a => a.isCorrect).length / questions.length) * 100)}%
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Question Review */}
-              <div className="space-y-4">
-                {questions.map((question, index) => {
-                  const answer = answers[index];
-                  const isCorrect = answer?.isCorrect;
-                  const selectedOption = question.options.find(opt => opt.id === answer?.selectedOptionId);
-                  const correctOption = question.options.find(opt => opt.isCorrect);
-                  
-                  return (
-                    <div key={question.id} className="bg-white rounded-lg shadow p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          Question {index + 1}
-                        </h3>
-                        <div className="flex items-center space-x-2">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                          }`}>
-                            {isCorrect ? 'Correct' : 'Incorrect'}
-                          </span>
-                          <span className="text-sm text-gray-500">
-                            Time: {formatTime(answer?.timeSpent || 0)}
-                          </span>
-                          <button
-                            onClick={() => {
-                              setSelectedQuestionForReport(question);
-                              setReportModalOpen(true);
-                            }}
-                            className="px-3 py-1 text-sm bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors"
-                          >
-                            Report Issue
-                          </button>
-                        </div>
-                      </div>
-                      
-                      <div className="mb-4">
-                        <p className="text-gray-900 mb-4">{question.stem}</p>
-                        
-                        <div className="space-y-2">
-                          {question.options.map((option) => (
-                            <div
-                              key={option.id}
-                              className={`p-3 rounded-lg border ${
-                                option.isCorrect
-                                  ? 'bg-green-50 border-green-200'
-                                  : option.id === answer?.selectedOptionId && !option.isCorrect
-                                  ? 'bg-red-50 border-red-200'
-                                  : 'bg-gray-50 border-gray-200'
-                              }`}
-                            >
-                              <div className="flex items-center">
-                                <span className={`w-4 h-4 rounded-full border-2 mr-3 ${
-                                  option.isCorrect
-                                    ? 'bg-green-500 border-green-500'
-                                    : option.id === answer?.selectedOptionId
-                                    ? 'bg-red-500 border-red-500'
-                                    : 'border-gray-300'
-                                }`}>
-                                  {option.isCorrect && (
-                                    <svg className="w-3 h-3 text-white mx-auto mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                    </svg>
-                                  )}
-                                </span>
-                                <span className={`${
-                                  option.isCorrect
-                                    ? 'text-green-800 font-medium'
-                                    : option.id === answer?.selectedOptionId && !option.isCorrect
-                                    ? 'text-red-800 font-medium'
-                                    : 'text-gray-700'
-                                }`}>
-                                  {option.text}
-                                </span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      {/* Tips & Formulas */}
-                      {question.tip_formula && (
-                        <div className="bg-yellow-50 rounded-lg p-4 mb-4 border border-yellow-200">
-                          <h4 className="font-semibold text-yellow-900 mb-2">💡 Tips & Formulas</h4>
-                          <div className="text-yellow-800">
-                            <LatexContentDisplay content={question.tip_formula} />
-                          </div>
-                        </div>
-                      )}
-                      
-                      {/* Explanations */}
-                      {(question.explanation || (question.alternativeExplanations && question.alternativeExplanations.length > 0)) && (
-                        <div className="space-y-4">
-                          {/* Original Explanation */}
-                          {question.explanation && (
-                            <div className="bg-blue-50 rounded-lg p-4">
-                              <h4 className="font-semibold text-blue-900 mb-2">Original Explanation</h4>
-                              <div className="text-blue-800">
-                                <LatexContentDisplay content={question.explanation} />
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Alternative Explanations */}
-                          {question.alternativeExplanations && question.alternativeExplanations.length > 0 && (
-                            <div className="space-y-3">
-                              <h4 className="font-semibold text-gray-900">Additional Explanations</h4>
-                              {question.alternativeExplanations.map((altExp, altIndex) => (
-                                <div key={altExp.id} className="bg-green-50 rounded-lg p-4 border border-green-200">
-                                  <div className="flex items-center justify-between mb-2">
-                                    <h5 className="text-md font-semibold text-green-900">
-                                      Alternative Explanation {altIndex + 1}
-                                    </h5>
-                                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                      {altExp.source === 'REPORT_APPROVED' ? 'Student Suggested' : 'Community'}
-                                    </span>
-                                  </div>
-                                  <div className="text-green-800">
-                                    <LatexContentDisplay content={altExp.explanation} />
-                                  </div>
-                                  <div className="mt-2 text-xs text-green-600">
-                                    Added on {new Date(altExp.createdAt).toLocaleDateString()}
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </StudentLayout>
-        </SubscriptionGuard>
-      </ProtectedRoute>
-    );
-  }
 
   if (!submission || questions.length === 0) {
     return (
@@ -767,7 +615,7 @@ export default function ExamPage() {
                           className={`px-3 py-1 text-sm rounded-md transition-colors ${
                             currentAnswer?.isMarkedForReview
                               ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                              : 'px-3 py-1 text-sm font-medium rounded-md shadow-sm bg-white text-gray-800 border border-gray-200 hover:bg-gray-50         dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 dark:hover:bg-gray-600         transition-colors duration-150         focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400'
                           }`}
                         >
                           {currentAnswer?.isMarkedForReview ? '✓ Marked for Review' : 'Mark for Review'}
@@ -872,23 +720,34 @@ export default function ExamPage() {
                 <div className="pt-4 border-t border-gray-200">
                   <h4 className="font-semibold text-gray-900 mb-3">Quick Navigation</h4>
                   <div className="grid grid-cols-5 gap-2 mb-4">
-                    {filteredQuestions.map((_, index) => {
-                      const status = getQuestionStatus(index);
-                      return (
-                        <button
-                          key={index}
-                          onClick={() => handleJumpToQuestion(index)}
-                          className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${
-                            index === currentQuestionIndex
-                              ? 'ring-2 ring-blue-500'
-                              : ''
-                          } ${getQuestionStatusColor(status)} text-white`}
-                        >
-                          {index + 1}
-                        </button>
-                      );
-                    })}
-                  </div>
+  {filteredQuestions.map((_, index) => {
+    const status = getQuestionStatus(index);
+    const isCurrent = index === currentQuestionIndex;
+
+    // minimal base + tiny accessibility/focus additions
+    const base =
+      "w-10 h-10 rounded-lg text-sm font-medium flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
+
+    // keep your existing color helper for non-current tiles
+    const colorClasses = isCurrent
+      ? "ring-2 ring-blue-500 bg-blue-600 text-white dark:bg-blue-500 dark:text-white"
+      : getQuestionStatusColor(status); // existing function
+
+    return (
+      <button
+        key={index}
+        type="button"
+        onClick={() => handleJumpToQuestion(index)}
+        title={`Question ${index + 1}${isCurrent ? " (current)" : ""}`}
+        aria-current={isCurrent ? "true" : undefined}
+        className={`${base} ${colorClasses}`}
+      >
+        {index + 1}
+      </button>
+    );
+  })}
+</div>
+
                   
                   {/* Question Status Legend */}
                   <div className="space-y-2 text-sm">

@@ -93,10 +93,21 @@ export default function ExamHistoryPage() {
     });
   };
 
-  const handleViewResults = (submissionId: string) => {
-    // Determine if it's a practice test or exam paper based on the title or other criteria
-    // For now, we'll redirect to practice results, but this could be enhanced
-    router.push(`/student/practice/results/${submissionId}`);
+  const handleViewResults = (submissionId: string, submission: any) => {
+    try {
+      console.log('View Results clicked:', { submissionId, submission });
+      
+      if (!submissionId) {
+        console.error('No submission ID provided');
+        return;
+      }
+      
+      // Route to exam results page
+      console.log('Routing to exam results:', `/student/exam/results/${submissionId}`);
+      router.push(`/student/exam/results/${submissionId}`);
+    } catch (error) {
+      console.error('Error in handleViewResults:', error);
+    }
   };
 
   if (loading) {
@@ -282,8 +293,14 @@ export default function ExamHistoryPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <button
-                            onClick={() => handleViewResults(submission.id)}
-                            className="text-blue-600 hover:text-blue-900"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              console.log('Button clicked for submission:', submission.id);
+                              handleViewResults(submission.id, submission);
+                            }}
+                            className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer"
+                            type="button"
                           >
                             View Results
                           </button>

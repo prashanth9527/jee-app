@@ -1168,6 +1168,7 @@ enum ExamType {
   REGULAR
   AI_EXAM
   CONTENT_EXAM
+  PRACTICE_EXAM
 }
 
 model ContentPerformanceAnalysis {

@@ -141,17 +141,8 @@ export default function PracticeTestPage() {
     }
   };
 
-  const handleAnswerSelect = async (questionId: string, optionId: string) => {
+  const handleAnswerSelect = (questionId: string, optionId: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: optionId }));
-
-    try {
-      await api.post(`/exams/submissions/${submissionId}/answer`, {
-        questionId,
-        selectedOptionId: optionId
-      });
-    } catch (error) {
-      console.error('Error submitting answer:', error);
-    }
   };
 
   const handleAutoSubmit = async () => {
@@ -194,8 +185,23 @@ export default function PracticeTestPage() {
     try {
       setSubmitting(true);
       
-      // Finalize the submission
-      await api.post(`/exams/submissions/${submissionId}/finalize`);
+      if (!submission) {
+        throw new Error('Test submission not found');
+      }
+
+      // Prepare all answers for single submission
+      const answersToSubmit = Object.entries(answers)
+        .filter(([_, optionId]) => optionId)
+        .map(([questionId, optionId]) => ({
+          questionId,
+          optionId,
+        }));
+
+      // Submit test with all answers at once
+      await api.post(`/student/exams/${submission.examPaper.id}/submit`, {
+        answers: answersToSubmit,
+        submissionId: submissionId, // Pass the current submission ID
+      });
       
       // Redirect to results page
       router.push(`/student/practice/results/${submissionId}`);

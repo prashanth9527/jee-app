@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import api from '@/lib/api';
+import LatexContentDisplay from '@/components/LatexContentDisplay';
 
 interface QuestionReportModalProps {
   isOpen: boolean;
@@ -81,11 +82,15 @@ export default function QuestionReportModal({
 
         <div className="mb-4 p-4 bg-gray-50 rounded-lg">
             <h3 className="font-medium text-gray-900 mb-2">Question:</h3>
-          <p className="text-gray-700 text-sm">{questionStem}</p>
+          <p className="text-gray-700 text-sm">
+            <LatexContentDisplay content={questionStem} />
+          </p>
             {currentExplanation && (
             <>
               <h3 className="font-medium text-gray-900 mb-2 mt-4">Current Explanation:</h3>
-              <p className="text-gray-700 text-sm">{currentExplanation}</p>
+              <p className="text-gray-700 text-sm">
+                <LatexContentDisplay content={currentExplanation} />
+              </p>
             </>
             )}
           </div>
