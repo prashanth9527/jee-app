@@ -9,6 +9,7 @@ import { ToastProvider } from '@/contexts/ToastContext';
 import { Analytics } from "@vercel/analytics/next"
 import MobileNavigation from '@/components/MobileNavigation';
 import PWAInstaller from '@/components/PWAInstaller';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -189,6 +190,7 @@ export default function RootLayout({
                   <main className="flex-1 pb-16 md:pb-0">
                     {children}
                     <Analytics />
+                    <SpeedInsights />
                   </main>
                   <MobileNavigation />
                   <PWAInstaller />
