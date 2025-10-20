@@ -56,7 +56,6 @@ interface ReportStats {
     count: number;
   }[];
 }
-
 export default function ExpertQuestionReportsPage() {
   const [reports, setReports] = useState<QuestionReport[]>([]);
   const [stats, setStats] = useState<ReportStats | null>(null);
