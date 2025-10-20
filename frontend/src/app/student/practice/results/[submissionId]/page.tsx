@@ -93,10 +93,13 @@ export default function PracticeTestResultsPage() {
   const [selectedQuestionForReport, setSelectedQuestionForReport] = useState<Question | null>(null);
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<Set<string>>(new Set());
   const [bookmarkLoading, setBookmarkLoading] = useState<Set<string>>(new Set());
+  const [submittedReports, setSubmittedReports] = useState<Set<string>>(new Set());
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (submissionId) {
       fetchResults();
+      fetchExistingReports();
     }
   }, [submissionId]);
 
@@ -139,6 +142,18 @@ export default function PracticeTestResultsPage() {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchExistingReports = async () => {
+    try {
+      const response = await api.get('/student/question-reports/my-reports');
+      const reportedQuestionIds = new Set<string>(
+        response.data.map((report: any) => report.questionId)
+      );
+      setSubmittedReports(reportedQuestionIds);
+    } catch (error) {
+      console.error('Error fetching existing reports:', error);
     }
   };
 
@@ -298,66 +313,137 @@ export default function PracticeTestResultsPage() {
     <ProtectedRoute requiredRole="STUDENT">
       <SubscriptionGuard>
         <StudentLayout>
-          <div className="space-y-8">
-            {/* Header */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Test Results</h1>
-              <p className="text-lg text-gray-700">{results.examTitle}</p>
+          <div className="flex h-screen bg-gray-50 dark:bg-gray-900 hide-scrollbar">
+            {/* Mobile Backdrop */}
+            {sidebarOpen && (
+              <div 
+                className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+                onClick={() => setSidebarOpen(false)}
+              />
+            )}
+
+            {/* Sidebar - Score Summary */}
+            <div className={`fixed inset-y-0 right-0 z-50 w-80 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out ${
+              sidebarOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}>
+              <div className="h-full overflow-y-auto hide-scrollbar">
+                <div className="p-6">
+                  {/* Sidebar Header */}
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">Test Results</h2>
+                    <button
+                      onClick={() => setSidebarOpen(false)}
+                      className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Score Display */}
+                  <div className="text-center mb-8">
+                    <div className="text-6xl mb-4">🎯</div>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Your Score</h3>
+                    <div className={`text-5xl font-bold mb-2 ${getScoreColor(results.scorePercent)}`}>
+                      {results.scorePercent.toFixed(1)}%
+                    </div>
+                    <p className="text-lg text-gray-800 dark:text-gray-300 mb-4">{getScoreMessage(results.scorePercent)}</p>
+                  </div>
+
+                  {/* Statistics Grid */}
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                      <div className="text-2xl font-bold text-green-600 dark:text-green-400">{correctAnswers}</div>
+                      <div className="text-sm text-green-700 dark:text-green-300">Correct</div>
+                    </div>
+                    <div className="text-center p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                      <div className="text-2xl font-bold text-red-600 dark:text-red-400">{incorrectAnswers}</div>
+                      <div className="text-sm text-red-700 dark:text-red-300">Incorrect</div>
+                    </div>
+                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                      <div className="text-2xl font-bold text-gray-700 dark:text-gray-300">{unansweredCount}</div>
+                      <div className="text-sm text-gray-800 dark:text-gray-400">Unanswered</div>
+                    </div>
+                    <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                      <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{results.totalQuestions}</div>
+                      <div className="text-sm text-blue-700 dark:text-blue-300">Total</div>
+                    </div>
+                  </div>
+
+                  {/* Test Details */}
+                  <div className="pt-6 border-t border-gray-200 dark:border-gray-600">
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Test Details</h4>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-700 dark:text-gray-300 font-medium">Time Taken:</span>
+                        <span className="font-semibold text-gray-900 dark:text-white">N/A</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700 dark:text-gray-300 font-medium">Started:</span>
+                        <span className="font-semibold text-gray-900 dark:text-white">N/A</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700 dark:text-gray-300 font-medium">Completed:</span>
+                        <span className="font-semibold text-gray-900 dark:text-white">{new Date(results.submittedAt).toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700 dark:text-gray-300 font-medium">Time Limit:</span>
+                        <span className="font-semibold text-gray-900 dark:text-white">No limit</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Score Summary */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-              <div className="text-center mb-8">
-                <div className="text-6xl mb-4">🎯</div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Your Score</h2>
-                <div className={`text-5xl font-bold mb-2 ${getScoreColor(results.scorePercent)}`}>
-                  {results.scorePercent.toFixed(1)}%
-                </div>
-                <p className="text-lg text-gray-800 mb-4">{getScoreMessage(results.scorePercent)}</p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
-                  <div className="text-2xl font-bold text-green-600">{correctAnswers}</div>
-                  <div className="text-sm text-green-700">Correct</div>
-                </div>
-                <div className="text-center p-4 bg-red-50 rounded-lg border border-red-200">
-                  <div className="text-2xl font-bold text-red-600">{incorrectAnswers}</div>
-                  <div className="text-sm text-red-700">Incorrect</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="text-2xl font-bold text-gray-700">{unansweredCount}</div>
-                  <div className="text-sm text-gray-800">Unanswered</div>
-                </div>
-                <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <div className="text-2xl font-bold text-blue-600">{results.totalQuestions}</div>
-                  <div className="text-sm text-blue-700">Total</div>
-                </div>
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-700 font-medium">Time Taken:</span>
-                    <span className="font-semibold text-gray-900">Time taken: N/A</span>
+            {/* Main Content Area */}
+            <div className="flex-1 flex flex-col overflow-hidden hide-scrollbar">
+              {/* Top Header with Hamburger */}
+              <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={() => setSidebarOpen(true)}
+                      className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                      </svg>
+                    </button>
+                    <div>
+                      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{results.examTitle}</h1>
+                      <p className="text-gray-600 dark:text-gray-400">Practice Test Results</p>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700 font-medium">Started:</span>
-                    <span className="font-semibold text-gray-900">N/A</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700 font-medium">Completed:</span>
-                    <span className="font-semibold text-gray-900">{new Date(results.submittedAt).toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700 font-medium">Time Limit:</span>
-                    <span className="font-semibold text-gray-900">
-                      No limit
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={() => router.push('/student/exam-history')}
+                      className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center space-x-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                      </svg>
+                      <span>Back to History</span>
+                    </button>
+                    <button
+                      onClick={() => router.push(`/student/practice/test/${submissionId}`)}
+                      className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                      <span>Retake</span>
+                    </button>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      Click hamburger to view statistics
                     </span>
                   </div>
                 </div>
               </div>
-            </div>
+
+              {/* Main Content */}
+              <div className="flex-1 overflow-y-auto p-6 hide-scrollbar">
 
             {/* Question Review */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -481,9 +567,14 @@ export default function PracticeTestResultsPage() {
                                     setSelectedQuestionForReport(question);
                                     setReportModalOpen(true);
                                   }}
-                                  className="px-3 py-1 text-sm bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors"
+                                  disabled={submittedReports.has(question.id)}
+                                  className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                                    submittedReports.has(question.id)
+                                      ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                                      : 'bg-orange-500 text-white hover:bg-orange-600'
+                                  }`}
                                 >
-                                  Report Issue
+                                  {submittedReports.has(question.id) ? 'Reported' : 'Report Issue'}
                                 </button>
                               </div>
                             </div>
@@ -599,6 +690,9 @@ export default function PracticeTestResultsPage() {
               </div>
             </div>
 
+              </div>
+            </div>
+
             {/* Question Report Modal */}
             {reportModalOpen && selectedQuestionForReport && (
               <QuestionReportModal
@@ -606,6 +700,9 @@ export default function PracticeTestResultsPage() {
                 onClose={() => {
                   setReportModalOpen(false);
                   setSelectedQuestionForReport(null);
+                }}
+                onReportSubmitted={(questionId) => {
+                  setSubmittedReports(prev => new Set([...prev, questionId]));
                 }}
                 questionId={selectedQuestionForReport.id}
                 questionStem={selectedQuestionForReport.stem}

@@ -172,6 +172,15 @@ export default function ExamResultsPage() {
     setCurrentQuestionIndex(index);
   };
 
+  const handleRetake = () => {
+    const examType = submissionData?.examPaper?.examType;
+    if (examType === 'PRACTICE_EXAM') {
+      router.push(`/student/practice/test/${submissionId}`);
+    } else {
+      router.push(`/student/exam/${submissionId}`);
+    }
+  };
+
   const isReportSubmitted = (questionId: string) => {
     return submittedReports.has(questionId);
   };
@@ -252,15 +261,13 @@ export default function ExamResultsPage() {
                     className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
                   >
                     Back to History
-                  </button>
-                  {submissionData?.examPaper?.examType !== 'REGULAR' && (
+                  </button>                  
                     <button
-                      onClick={() => router.push(`/student/exam/${submissionId}`)}
+                      onClick={handleRetake}
                       className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                     >
                       Retake Exam
-                    </button>
-                  )}
+                    </button>                 
                 </div>
               </div>
               
@@ -377,7 +384,7 @@ export default function ExamResultsPage() {
                                           ? 'text-white-800 font-medium'
                                           : 'text-white-700'
                                       }`}>
-                                        {option.text}
+                                        <LatexContentDisplay content={option.text} />
                                       </span>
                                       {isSelected && (
                                         <span className="ml-3 text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">

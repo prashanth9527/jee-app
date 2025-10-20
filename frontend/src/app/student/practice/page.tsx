@@ -209,6 +209,31 @@ function PracticeTestPageContent() {
     setConfig(prev => ({ ...prev, [field]: value }));
   };
 
+  const generateTestTitle = () => {
+    const currentDate = new Date().toLocaleDateString();
+    const subjectName = subjects.find(s => s.id === selectedSubject)?.name || 'Unknown Subject';
+    const lessonName = lessons.find(l => l.id === selectedLesson)?.name || '';
+    const topicName = topics.find(t => t.id === selectedTopic)?.name || '';
+    const subtopicName = subtopics.find(st => st.id === selectedSubtopic)?.name || '';
+    const difficultyText = config.difficulty === 'MIXED' ? 'Mixed' : config.difficulty;
+    const timeText = config.timeLimit === 60 ? '1 hour' : 
+                     config.timeLimit === 90 ? '1.5 hours' :
+                     config.timeLimit === 120 ? '2 hours' :
+                     `${config.timeLimit} minutes`;
+
+    // Build the title parts
+    const titleParts = [subjectName];
+    
+    if (lessonName) titleParts.push(lessonName);
+    if (topicName) titleParts.push(topicName);
+    if (subtopicName) titleParts.push(subtopicName);
+    
+    titleParts.push(difficultyText);
+    titleParts.push(timeText);
+    
+    return `${titleParts.join(' -> ')} - ${currentDate}`;
+  };
+
   const createPracticeTest = async () => {
     if (!selectedSubject) {
       Swal.fire({
@@ -240,7 +265,8 @@ function PracticeTestPageContent() {
           subtopicId: selectedSubtopic || undefined,
           questionCount: config.questionCount,
           difficulty: config.difficulty === 'MIXED' ? 'MEDIUM' : config.difficulty,
-          timeLimitMin: config.timeLimit
+          timeLimitMin: config.timeLimit,
+          title: generateTestTitle()
         };
 
         const aiResponse = await api.post('/student/exams/ai/generate-practice-test', aiTestData);
@@ -261,7 +287,8 @@ function PracticeTestPageContent() {
           subtopicId: selectedSubtopic || undefined,
           questionCount: config.questionCount,
           difficulty: config.difficulty,
-          timeLimitMin: config.timeLimit
+          timeLimitMin: config.timeLimit,
+          title: generateTestTitle()
         };
 
         const manualResponse = await api.post('/student/exams/manual/generate-practice-test', manualTestData);
@@ -529,6 +556,14 @@ function PracticeTestPageContent() {
                     </div>
                   </div>
                 </div>
+
+                {/* Test Title Preview */}
+                {selectedSubject && (
+                  <div className="bg-blue-50 rounded-lg border border-blue-200 p-4 mb-6">
+                    <h4 className="text-sm font-semibold text-blue-900 mb-2">Generated Test Title:</h4>
+                    <p className="text-blue-800 font-medium">{generateTestTitle()}</p>
+                  </div>
+                )}
 
                 {/* Start Test Button */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">

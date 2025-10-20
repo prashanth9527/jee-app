@@ -70,6 +70,7 @@ export class ExamsController {
       questionCount: number;
       difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
       timeLimitMin: number;
+      title?: string;
     }
   ) {
     return this.examsService.generateAIPracticeTest(req.user.id, body);
@@ -86,6 +87,7 @@ export class ExamsController {
       questionCount: number;
       difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
       timeLimitMin: number;
+      title?: string;
     }
   ) {
     return this.examsService.generateManualPracticeTest(req.user.id, body);

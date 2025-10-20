@@ -423,6 +423,7 @@ export class ExamsService {
     questionCount: number;
     difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
     timeLimitMin: number;
+    title?: string;
   }) {
     console.log('Generating AI practice test:', { userId, config });
 
@@ -495,7 +496,7 @@ export class ExamsService {
       // Create exam paper
       const examPaper = await this.prisma.examPaper.create({
         data: {
-          title: `AI Practice Test - ${new Date().toLocaleDateString()}`,
+          title: config.title || `AI Practice Test - ${new Date().toLocaleDateString()}`,
           description: 'AI Generated Practice Test',
           questionIds: createdQuestions.map(q => q.id),
           timeLimitMin: config.timeLimitMin,
@@ -530,6 +531,7 @@ export class ExamsService {
     questionCount: number;
     difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
     timeLimitMin: number;
+    title?: string;
   }) {
     console.log('Generating manual practice test:', { userId, config });
 
@@ -570,7 +572,7 @@ export class ExamsService {
     // Create exam paper
     const examPaper = await this.prisma.examPaper.create({
       data: {
-        title: `Manual Practice Test - ${new Date().toLocaleDateString()}`,
+        title: config.title || `Manual Practice Test - ${new Date().toLocaleDateString()}`,
         description: 'Manual Practice Test from existing questions',
         questionIds: selectedQuestions.map(q => q.id),
         timeLimitMin: config.timeLimitMin,

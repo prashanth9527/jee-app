@@ -535,3 +535,13 @@ textarea:focus {
   font-style: italic;
   color: #6b7280;
 }
+
+/* Hide scrollbars utility - use sparingly to avoid breaking layout */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;            /* Chrome, Safari, Opera */
+}
