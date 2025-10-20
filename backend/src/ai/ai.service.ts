@@ -405,29 +405,31 @@ CRITICAL REQUIREMENTS:
 9. Ensure questions test conceptual understanding, not just memorization
 10. Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start with '{' and end with '}'.
 11. All mathematical and chemical formulas must use LaTeX: $ ... $ (single dollar signs for inline math). 
+12. OPTIONS QUALITY: Options must be CONCRETE content (values/statements), NOT placeholders. Do NOT write labels like "Option A", "Option B", etc. Do NOT repeat the word "Option" anywhere. Avoid trivial re-phrasings. All four options must be distinct and plausible. Never use "All of the above" or "None of the above".
+13. For numerical/units questions: include appropriate units in ALL options and keep magnitudes realistic and consistent.
 
 RESPONSE FORMAT:
 You MUST respond with ONLY valid JSON in this exact structure. Pay special attention to proper JSON escaping:
 
 IMPORTANT JSON ESCAPING RULES:
-- Use double backslashes for LaTeX: \\\\frac instead of \\frac
-- Escape quotes inside strings: \\" instead of "
+- Use double backslashes for LaTeX: \\frac instead of \\frac
+- Escape quotes inside strings: \" instead of "
 - No line breaks inside strings (use \\n for newlines)
 - Ensure all strings are properly quoted
 
 {
   "questions": [
     {
-      "question": "Question text with properly escaped LaTeX: $$\\\\frac{d}{dx}[x^2] = ?$$",
+      "question": "Question text with properly escaped LaTeX: $$\\frac{d}{dx}[x^2] = ?$$",
       "options": [
-        {"text": "Option A with LaTeX: $$2x$$", "isCorrect": true},
-        {"text": "Option B with LaTeX: $$x^2$$", "isCorrect": false},
-        {"text": "Option C with LaTeX: $$2x^2$$", "isCorrect": false},
-        {"text": "Option D with LaTeX: $$x$$", "isCorrect": false}
+        {"text": "$$2x$$", "isCorrect": true},
+        {"text": "$$x^2$$", "isCorrect": false},
+        {"text": "$$2x^2$$", "isCorrect": false},
+        {"text": "$$x$$", "isCorrect": false}
       ],
-      "explanation": "Detailed explanation with properly escaped LaTeX: $$\\\\frac{d}{dx}[x^2] = 2x$$. This is because...",
+      "explanation": "Detailed explanation with properly escaped LaTeX: $$\\frac{d}{dx}[x^2] = 2x$$. This is because...",
       "difficulty": "${request.difficulty}",
-      "tip_formula": "Key formula: $$\\\\frac{d}{dx}[x^n] = nx^{n-1}$$"
+      "tip_formula": "Key formula: $$\\frac{d}{dx}[x^n] = nx^{n-1}$$"
     }
   ]
 }
@@ -620,8 +622,16 @@ Generate questions that would help students prepare for JEE Main and Advanced ex
     if (!text) return true;
     const trimmed = text.trim().toLowerCase();
     if (trimmed.length < 2) return true;
-    // Reject placeholder-like options
-    if (['option a', 'option b', 'option c', 'option d', 'a', 'b', 'c', 'd'].includes(trimmed)) return true;
+    // Reject placeholder-like options and label patterns
+    const placeholderPatterns = [
+      /^option\s*[a-d]\b/,
+      /^choice\s*[a-d]\b/,
+      /^[a-d]\)?\.?$/,           // single letter like "A)"
+      /^(all\s*of\s*the\s*above|none\s*of\s*the\s*above|both\s*a\s*and\s*b)$/,
+      /^opt\s*[a-d]\b/
+    ];
+    if (placeholderPatterns.some((re) => re.test(trimmed))) return true;
+    if (['a', 'b', 'c', 'd'].includes(trimmed)) return true;
     return false;
   }
 
