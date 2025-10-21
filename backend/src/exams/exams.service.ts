@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { ExamType } from '@prisma/client';
+// import { ExamType } from '@prisma/client';
 import { AiService } from '../ai/ai.service';
 
 @Injectable()
@@ -45,10 +45,13 @@ export class ExamsService {
       questionCount: questions.length,
       timeLimitMin: exam.timeLimitMin,
       examType: 'REGULAR',
-      questions: questions.map(question => ({
+      questions: questions.map((question: any) => ({
         id: question.id,
         stem: question.stem,
-        options: question.options.map(option => ({
+        isOpenEnded: question.isOpenEnded,
+        correctNumericAnswer: question.correctNumericAnswer,
+        answerTolerance: question.answerTolerance,
+        options: question.options.map((option: any) => ({
           id: option.id,
           text: option.text,
           isCorrect: option.isCorrect
@@ -59,7 +62,7 @@ export class ExamsService {
     };
   }
 
-  async submitExam(userId: string, examId: string, answers: Array<{ questionId: string; optionId: string }>, submissionId?: string) {
+  async submitExam(userId: string, examId: string, answers: Array<{ questionId: string; optionId?: string; numericValue?: number }>, submissionId?: string) {
     console.log('Submitting exam:', { userId, examId, submissionId, answerCount: answers.length });
 
     // Get exam details
@@ -89,10 +92,48 @@ export class ExamsService {
     const totalQuestions = questions.length;
 
     for (const answer of answers) {
-      const question = questions.find(q => q.id === answer.questionId);
+      const question = questions.find((q: any) => q.id === answer.questionId);
       if (question) {
-        const selectedOption = question.options.find(o => o.id === answer.optionId);
-        if (selectedOption && selectedOption.isCorrect) {
+        let isCorrect = false;
+        
+        if (question.isOpenEnded) {
+          // Handle open-ended questions
+          if (answer.numericValue !== undefined && question.correctNumericAnswer !== null) {
+            const tolerance = question.answerTolerance || 0.01;
+            isCorrect = Math.abs(answer.numericValue - question.correctNumericAnswer) <= tolerance;
+            console.log('Open-ended validation:', {
+              questionId: question.id,
+              userAnswer: answer.numericValue,
+              correctAnswer: question.correctNumericAnswer,
+              tolerance: tolerance,
+              difference: Math.abs(answer.numericValue - question.correctNumericAnswer),
+              isCorrect: isCorrect
+            });
+          }
+        } else if (!question.options || question.options.length === 0) {
+          // Fallback: if question has no options, treat as open-ended
+          console.log('Fallback: treating question without options as open-ended');
+          if (answer.numericValue !== undefined && question.correctNumericAnswer !== null) {
+            const tolerance = question.answerTolerance || 0.01;
+            isCorrect = Math.abs(answer.numericValue - question.correctNumericAnswer) <= tolerance;
+            console.log('Fallback open-ended validation:', {
+              questionId: question.id,
+              userAnswer: answer.numericValue,
+              correctAnswer: question.correctNumericAnswer,
+              tolerance: tolerance,
+              difference: Math.abs(answer.numericValue - question.correctNumericAnswer),
+              isCorrect: isCorrect
+            });
+          }
+        } else {
+          // Handle multiple choice questions
+          if (answer.optionId) {
+            const selectedOption = question.options.find((o: any) => o.id === answer.optionId);
+            isCorrect = selectedOption ? selectedOption.isCorrect : false;
+          }
+        }
+        
+        if (isCorrect) {
           correctCount++;
         }
       }
@@ -113,10 +154,39 @@ export class ExamsService {
           submittedAt: new Date(),
           answers: {
             deleteMany: {}, // Delete existing answers
-            create: answers.map(answer => ({
-              questionId: answer.questionId,
-              selectedOptionId: answer.optionId
-            }))
+            create: answers.map((answer: any) => {
+              // Find the question to determine if the answer is correct
+              const question = questions.find((q: any) => q.id === answer.questionId);
+              let isCorrect = false;
+              
+              if (question) {
+                if (question.isOpenEnded) {
+                  if (answer.numericValue !== undefined && question.correctNumericAnswer !== null) {
+                    const tolerance = question.answerTolerance || 0.01;
+                    isCorrect = Math.abs(answer.numericValue - question.correctNumericAnswer) <= tolerance;
+                  }
+                } else if (!question.options || question.options.length === 0) {
+                  // Fallback for questions without options
+                  if (answer.numericValue !== undefined && question.correctNumericAnswer !== null) {
+                    const tolerance = question.answerTolerance || 0.01;
+                    isCorrect = Math.abs(answer.numericValue - question.correctNumericAnswer) <= tolerance;
+                  }
+                } else {
+                  // Multiple choice questions
+                  if (answer.optionId) {
+                    const selectedOption = question.options.find((o: any) => o.id === answer.optionId);
+                    isCorrect = selectedOption ? selectedOption.isCorrect : false;
+                  }
+                }
+              }
+              
+              return {
+                questionId: answer.questionId,
+                selectedOptionId: answer.optionId,
+                numericValue: answer.numericValue,
+                isCorrect: isCorrect
+              };
+            })
           }
         },
         include: {
@@ -142,10 +212,39 @@ export class ExamsService {
           totalQuestions,
           submittedAt: new Date(),
           answers: {
-            create: answers.map(answer => ({
-              questionId: answer.questionId,
-              selectedOptionId: answer.optionId
-            }))
+            create: answers.map((answer: any) => {
+              // Find the question to determine if the answer is correct
+              const question = questions.find((q: any) => q.id === answer.questionId);
+              let isCorrect = false;
+              
+              if (question) {
+                if (question.isOpenEnded) {
+                  if (answer.numericValue !== undefined && question.correctNumericAnswer !== null) {
+                    const tolerance = question.answerTolerance || 0.01;
+                    isCorrect = Math.abs(answer.numericValue - question.correctNumericAnswer) <= tolerance;
+                  }
+                } else if (!question.options || question.options.length === 0) {
+                  // Fallback for questions without options
+                  if (answer.numericValue !== undefined && question.correctNumericAnswer !== null) {
+                    const tolerance = question.answerTolerance || 0.01;
+                    isCorrect = Math.abs(answer.numericValue - question.correctNumericAnswer) <= tolerance;
+                  }
+                } else {
+                  // Multiple choice questions
+                  if (answer.optionId) {
+                    const selectedOption = question.options.find((o: any) => o.id === answer.optionId);
+                    isCorrect = selectedOption ? selectedOption.isCorrect : false;
+                  }
+                }
+              }
+              
+              return {
+                questionId: answer.questionId,
+                selectedOptionId: answer.optionId,
+                numericValue: answer.numericValue,
+                isCorrect: isCorrect
+              };
+            })
           }
         },
         include: {
@@ -170,12 +269,19 @@ export class ExamsService {
       correctCount,
       totalQuestions,
 				submittedAt: submission.submittedAt,
-      answers: submission.answers.map(answer => ({
+      answers: submission.answers.map((answer: any) => ({
 				questionId: answer.questionId,
         question: answer.question.stem,
-        selectedOption: answer.question.options.find(o => o.id === answer.selectedOptionId),
-        correctOption: answer.question.options.find(o => o.isCorrect),
-        isCorrect: answer.question.options.find(o => o.id === answer.selectedOptionId)?.isCorrect || false
+        isOpenEnded: answer.question.isOpenEnded,
+        correctNumericAnswer: answer.question.correctNumericAnswer,
+        answerTolerance: answer.question.answerTolerance,
+        selectedOption: answer.question.isOpenEnded ? 
+          { text: answer.numericValue?.toString() || '', isCorrect: answer.isCorrect } :
+          answer.question.options.find((o: any) => o.id === answer.selectedOptionId),
+        correctOption: answer.question.isOpenEnded ?
+          { text: answer.question.correctNumericAnswer?.toString() || '', isCorrect: true } :
+          answer.question.options.find((o: any) => o.isCorrect),
+        isCorrect: answer.isCorrect
 			}))
 		};
 	}
@@ -216,12 +322,16 @@ export class ExamsService {
       totalQuestions: submission.totalQuestions,
       submittedAt: submission.submittedAt,
       examTitle: submission.examPaper.title,
-      answers: submission.answers.map(answer => ({
+      answers: submission.answers.map((answer: any) => ({
         questionId: answer.questionId,
         question: answer.question.stem,
-        selectedOption: answer.question.options.find(o => o.id === answer.selectedOptionId),
-        correctOption: answer.question.options.find(o => o.isCorrect),
-        isCorrect: answer.question.options.find(o => o.id === answer.selectedOptionId)?.isCorrect || false
+        selectedOption: answer.question.isOpenEnded ? 
+          { text: answer.numericValue?.toString() || '', isCorrect: answer.isCorrect } :
+          answer.question.options.find((o: any) => o.id === answer.selectedOptionId),
+        correctOption: answer.question.isOpenEnded ?
+          { text: answer.question.correctNumericAnswer?.toString() || '', isCorrect: true } :
+          answer.question.options.find((o: any) => o.isCorrect),
+        isCorrect: answer.isCorrect
       }))
     };
   }
@@ -269,10 +379,10 @@ export class ExamsService {
 				totalQuestions: submission.totalQuestions,
       scorePercent: submission.scorePercent,
 				correctCount: submission.correctCount,
-      answers: submission.answers.map(answer => ({
+      answers: submission.answers.map((answer: any) => ({
 				questionId: answer.questionId,
         selectedOptionId: answer.selectedOptionId,
-        isCorrect: answer.question.options.find(o => o.id === answer.selectedOptionId)?.isCorrect || false
+        isCorrect: answer.question.options.find((o: any) => o.id === answer.selectedOptionId)?.isCorrect || false
 			}))
 		};
 	}
@@ -309,12 +419,24 @@ export class ExamsService {
       }
     });
 
-    return questions.map(question => ({
-      id: question.id,
+    return questions.map((question: any) => {
+      console.log('Question data:', {
+        id: question.id,
+        isOpenEnded: question.isOpenEnded,
+        correctNumericAnswer: question.correctNumericAnswer,
+        answerTolerance: question.answerTolerance,
+        optionsCount: question.options?.length || 0
+      });
+      
+      return {
+        id: question.id,
 				stem: question.stem,
-      explanation: question.explanation,
-      tip_formula: question.tip_formula,
-      difficulty: question.difficulty,
+        explanation: question.explanation,
+        tip_formula: question.tip_formula,
+        difficulty: question.difficulty,
+        isOpenEnded: question.isOpenEnded,
+        correctNumericAnswer: question.correctNumericAnswer,
+        answerTolerance: question.answerTolerance,
       subject: question.subject ? {
         id: question.subject.id,
         name: question.subject.name
@@ -327,12 +449,13 @@ export class ExamsService {
         id: question.subtopic.id,
         name: question.subtopic.name
       } : undefined,
-      options: question.options.map(option => ({
+      options: question.options.map((option: any) => ({
         id: option.id,
         text: option.text,
         isCorrect: option.isCorrect
       }))
-    }));
+      };
+    });
   }
 
   async getSubmissionResults(userId: string, submissionId: string) {
@@ -357,7 +480,7 @@ export class ExamsService {
     if (submission.userId !== userId) {
       throw new BadRequestException('You do not have access to this submission');
     }
-
+    console.log('Submission results:', { submissionId: submission.answers, score: submission.scorePercent });
     return {
       submissionId: submission.id,
       scorePercent: submission.scorePercent,
@@ -365,12 +488,16 @@ export class ExamsService {
       totalQuestions: submission.totalQuestions,
       submittedAt: submission.submittedAt,
       examTitle: submission.examPaper.title,
-      answers: submission.answers.map(a => ({
+      answers: submission.answers.map((a: any) => ({
         questionId: a.questionId,
         question: a.question.stem,
-        selectedOption: a.question.options.find(o => o.id === a.selectedOptionId) || null,
-        correctOption: a.question.options.find(o => o.isCorrect) || null,
-        isCorrect: !!a.question.options.find(o => o.id === a.selectedOptionId && o.isCorrect)
+        selectedOption: a.question.isOpenEnded ? 
+          { text: a.numericValue?.toString() || '', isCorrect: a.isCorrect } :
+          a.question.options.find((o: any) => o.id === a.selectedOptionId) || null,
+        correctOption: a.question.isOpenEnded ?
+          { text: a.question.correctNumericAnswer?.toString() || '', isCorrect: true } :
+          a.question.options.find((o: any) => o.isCorrect) || null,
+        isCorrect: a.isCorrect
       }))
     };
   }
@@ -474,24 +601,37 @@ export class ExamsService {
       // Create questions in database
       const createdQuestions = [];
       for (const aiQuestion of aiQuestions.questions) {
-        const question = await this.prisma.question.create({
-          data: {
-            stem: aiQuestion.question,
-            explanation: aiQuestion.explanation,
-            tip_formula: aiQuestion.tip_formula,
-            difficulty: aiQuestion.difficulty as 'EASY' | 'MEDIUM' | 'HARD',
-            subjectId: config.subjectId,
-            lessonId: config.lessonId,
-            topicId: config.topicId,
-            subtopicId: config.subtopicId,
-            options: {
+        const questionData: any = {
+          stem: aiQuestion.question,
+          explanation: aiQuestion.explanation,
+          tip_formula: aiQuestion.tip_formula,
+          difficulty: aiQuestion.difficulty as 'EASY' | 'MEDIUM' | 'HARD',
+          subjectId: config.subjectId,
+          lessonId: config.lessonId,
+          topicId: config.topicId,
+          subtopicId: config.subtopicId,
+        };
+
+        // Handle open-ended questions
+        if (aiQuestion.isOpenEnded) {
+          questionData.isOpenEnded = true;
+          questionData.correctNumericAnswer = aiQuestion.correctNumericAnswer;
+          questionData.answerTolerance = aiQuestion.answerTolerance || 0.01;
+        } else {
+          // Handle multiple choice questions
+          if (aiQuestion.options && Array.isArray(aiQuestion.options)) {
+            questionData.options = {
               create: aiQuestion.options.map((option: any, index: number) => ({
                 text: option.text,
                 isCorrect: option.isCorrect,
                 order: index + 1
               }))
-            }
-          },
+            };
+          }
+        }
+
+        const question = await this.prisma.question.create({
+          data: questionData,
           include: {
             options: {
               orderBy: { order: 'asc' }
@@ -508,7 +648,7 @@ export class ExamsService {
           description: 'AI Generated Practice Test',
           questionIds: createdQuestions.map(q => q.id),
           timeLimitMin: config.timeLimitMin,
-          examType: 'PRACTICE_EXAM' as ExamType,
+          examType: 'PRACTICE_EXAM' as any,
           createdById: userId
         }
       });
@@ -582,9 +722,9 @@ export class ExamsService {
       data: {
         title: config.title || `Manual Practice Test - ${new Date().toLocaleDateString()}`,
         description: 'Manual Practice Test from existing questions',
-        questionIds: selectedQuestions.map(q => q.id),
+        questionIds: selectedQuestions.map((q: any) => q.id),
         timeLimitMin: config.timeLimitMin,
-        examType: 'PRACTICE_EXAM' as ExamType, // Set as practice exam
+        examType: 'PRACTICE_EXAM' as any, // Set as practice exam
         createdById: userId
       }
     });

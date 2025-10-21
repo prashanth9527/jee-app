@@ -16,6 +16,9 @@ interface Question {
   explanation?: string;
   tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  isOpenEnded?: boolean;
+  correctNumericAnswer?: number;
+  answerTolerance?: number;
   subject?: {
     id: string;
     name: string;
@@ -38,7 +41,7 @@ interface Question {
     source: string;
     createdAt: string;
   }>;
-  options: {
+  options?: {
     id: string;
     text: string;
     isCorrect: boolean;
@@ -60,6 +63,7 @@ interface ExamSubmission {
 interface QuestionAnswer {
   questionId: string;
   selectedOptionId?: string;
+  numericValue?: number;
   isCorrect?: boolean;
   timeSpent: number;
   isMarkedForReview: boolean;
@@ -175,10 +179,11 @@ export default function ExamPage() {
 
       // Prepare all answers for single submission
       const answersToSubmit = answers
-        .filter(answer => answer.selectedOptionId)
+        .filter(answer => answer.selectedOptionId || answer.numericValue !== undefined)
         .map(answer => ({
           questionId: answer.questionId,
           optionId: answer.selectedOptionId,
+          numericValue: answer.numericValue,
         }));
 
       // Submit exam with all answers at once
@@ -226,7 +231,15 @@ export default function ExamPage() {
   const handleAnswerSelect = (optionId: string) => {
     setAnswers(prev => prev.map((answer, index) => 
       index === currentQuestionIndex 
-        ? { ...answer, selectedOptionId: optionId }
+        ? { ...answer, selectedOptionId: optionId, numericValue: undefined }
+        : answer
+    ));
+  };
+
+  const handleNumericAnswerChange = (value: number | undefined) => {
+    setAnswers(prev => prev.map((answer, index) => 
+      index === currentQuestionIndex 
+        ? { ...answer, numericValue: value, selectedOptionId: undefined }
         : answer
     ));
   };
@@ -600,7 +613,7 @@ export default function ExamPage() {
                   <div className="mb-6">
                     <div className="flex items-center justify-between mb-4">
                       <h2 className="text-lg font-semibold text-gray-900">
-                        Question {currentQuestionIndex + 1}
+                        Question {currentQuestionIndex + 1} - {currentQuestion.id} - {(currentQuestion.isOpenEnded || !currentQuestion.options || currentQuestion.options.length === 0) ? 'Open Ended' : 'Multiple Choice'}
                       </h2>
                       <div className="flex items-center space-x-2">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -627,40 +640,58 @@ export default function ExamPage() {
                       <LatexContentDisplay content={currentQuestion.stem} />
                     </div>
                     
-                    {/* Options */}
-                    <div className="space-y-3">
-                      {currentQuestion.options.map((option) => (
-                        <label
-                          key={option.id}
-                          className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors ${
-                            currentAnswer?.selectedOptionId === option.id
-                              ? 'border-blue-500 bg-blue-50'
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}
-                        >
+                    {/* Options or Numeric Input */}
+                    {currentQuestion.isOpenEnded || !currentQuestion.options || currentQuestion.options.length === 0 ? (
+                      <div className="space-y-3">
+                        <div className="p-4 rounded-lg border-2 border-gray-200 bg-gray-50">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Enter your numeric answer:
+                          </label>
                           <input
-                            type="radio"
-                            name={`question-${currentQuestion.id}`}
-                            value={option.id}
-                            checked={currentAnswer?.selectedOptionId === option.id}
-                            onChange={() => handleAnswerSelect(option.id)}
-                            className="sr-only"
+                            type="number"
+                            step="any"
+                            value={currentAnswer?.numericValue || ''}
+                            onChange={(e) => handleNumericAnswerChange(parseFloat(e.target.value) || undefined)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Enter numeric value"
                           />
-                          <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                            currentAnswer?.selectedOptionId === option.id
-                              ? 'border-blue-500 bg-blue-500'
-                              : 'border-gray-300'
-                          }`}>
-                            {currentAnswer?.selectedOptionId === option.id && (
-                              <div className="w-2 h-2 bg-white rounded-full"></div>
-                            )}
-                          </div>
-                          <div className="text-gray-900">
-                            <LatexContentDisplay content={option.text} />
-                          </div>
-                        </label>
-                      ))}
-                    </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        {currentQuestion.options?.map((option) => (
+                          <label
+                            key={option.id}
+                            className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors ${
+                              currentAnswer?.selectedOptionId === option.id
+                                ? 'border-blue-500 bg-blue-50'
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name={`question-${currentQuestion.id}`}
+                              value={option.id}
+                              checked={currentAnswer?.selectedOptionId === option.id}
+                              onChange={() => handleAnswerSelect(option.id)}
+                              className="sr-only"
+                            />
+                            <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
+                              currentAnswer?.selectedOptionId === option.id
+                                ? 'border-blue-500 bg-blue-500'
+                                : 'border-gray-300'
+                            }`}>
+                              {currentAnswer?.selectedOptionId === option.id && (
+                                <div className="w-2 h-2 bg-white rounded-full"></div>
+                              )}
+                            </div>
+                            <div className="text-gray-900">
+                              <LatexContentDisplay content={option.text} />
+                            </div>
+                          </label>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   
                   {/* Navigation */}

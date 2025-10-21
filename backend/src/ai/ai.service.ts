@@ -367,10 +367,13 @@ export class AiService {
   }): Promise<{
     questions: Array<{
       question: string;
-      options: Array<{ text: string; isCorrect: boolean }>;
+      options?: Array<{ text: string; isCorrect: boolean }>;
       explanation: string;
       difficulty: string;
       tip_formula?: string;
+      isOpenEnded?: boolean;
+      correctNumericAnswer?: number;
+      answerTolerance?: number;
     }>;
   }> {
     if (!this.openaiApiKey) {
@@ -405,20 +408,23 @@ CRITICAL INPUTS:
 
 Your output must align closely with the provided subject, lesson, topic, and subtopic. All questions and options must be contextually accurate to that scope.
 
-CRITICAL REQUIREMENTS:
-1. Generate EXACTLY ${request.questionCount} questions — not fewer, not more. If you cannot fit everything in one response, process internally in chunks, but the FINAL returned JSON MUST contain a single "questions" array with exactly ${request.questionCount} items.
-2. Each question must have exactly 4 distinct, contextually relevant options (A, B, C, D).
-3. Mark exactly ONE option as correct (isCorrect: true).
-4. Each incorrect option must be a **plausible misconception** or **near-miss** (numerically close, algebraically similar, or based on a common error).
-5. Do NOT use placeholder text such as "Option A", "Option 1", "All of the above", or "None of the above".
-6. All options must be **concrete, meaningful answers** directly related to the question (values, expressions, equations, or statements).
-7. Provide detailed step-by-step explanations for each correct answer.
-8. Include a "tip_formula" field summarizing key formulas or concepts used.
-9. Questions must match ${request.difficulty} difficulty and JEE relevance.
-10. Use single dollar signs $...$ for all LaTeX math expressions (not double).
-11. Ensure conceptual depth — not memory-based or trivial recall.
-12. For numerical/units questions: ensure all options include consistent units and realistic magnitudes.
-13. Ensure JSON validity: no unescaped quotes, no extra text, no markdown. Start with '{' and end with '}'. The output must be a single JSON object with a "questions" array of length ${request.questionCount}.
+ CRITICAL REQUIREMENTS:
+ 1. Generate EXACTLY ${request.questionCount} questions — not fewer, not more. If you cannot fit everything in one response, process internally in chunks, but the FINAL returned JSON MUST contain a single "questions" array with exactly ${request.questionCount} items.
+ 2. Each question can be either:
+    a) Multiple choice: exactly 4 distinct, contextually relevant options (A, B, C, D)
+    b) Open-ended: no options, requires numeric answer input
+ 3. For multiple choice: Mark exactly ONE option as correct (isCorrect: true).
+ 4. For open-ended: Include correctNumericAnswer (the exact numeric value) and answerTolerance (acceptable range, default 0.01).
+ 5. Each incorrect option must be a **plausible misconception** or **near-miss** (numerically close, algebraically similar, or based on a common error).
+ 6. Do NOT use placeholder text such as "Option A", "Option 1", "All of the above", or "None of the above".
+ 7. All options must be **concrete, meaningful answers** directly related to the question (values, expressions, equations, or statements).
+ 8. Provide detailed step-by-step explanations for each correct answer.
+ 9. Include a "tip_formula" field summarizing key formulas or concepts used.
+ 10. Questions must match ${request.difficulty} difficulty and JEE relevance.
+ 11. Use single dollar signs $...$ for all LaTeX math expressions (not double).
+ 12. Ensure conceptual depth — not memory-based or trivial recall.
+ 13. For numerical/units questions: ensure all options include consistent units and realistic magnitudes.
+ 14. Ensure JSON validity: no unescaped quotes, no extra text, no markdown. Start with '{' and end with '}'. The output must be a single JSON object with a "questions" array of length ${request.questionCount}.
 
  ADDITIONAL GUIDANCE FOR OPTION GENERATION:
  - For **calculation-based** questions: make distractors by varying constants, powers, or signs slightly (e.g., $2x$, $x^2$, $3x$, $x/2$).
@@ -428,24 +434,33 @@ CRITICAL REQUIREMENTS:
  - NEVER produce generic placeholder options.
  - **LaTeX in options**: Options may contain LaTeX equations using single dollar signs $...$ for inline math (e.g., $\\frac{1}{2}$, $x^2$, $\\sqrt{3}$).
 
-RESPONSE FORMAT (Strict JSON Only):
-
-{
-  "questions": [
-    {
-      "question": "Text with LaTeX like $\\frac{d}{dx}[x^2] = ?$",
-      "options": [
-        {"text": "$2x$", "isCorrect": true},
-        {"text": "$x^2$", "isCorrect": false},
-        {"text": "$2x^2$", "isCorrect": false},
-        {"text": "$x$", "isCorrect": false}
-      ],
-      "explanation": "Step-by-step reasoning explaining why $\\frac{d}{dx}[x^2] = 2x$ and why others are incorrect.",
-      "difficulty": "${request.difficulty}",
-      "tip_formula": "Key formula: $\\frac{d}{dx}[x^n] = nx^{n-1}$"
-    }
-  ]
-}
+ RESPONSE FORMAT (Strict JSON Only):
+ 
+ {
+   "questions": [
+     {
+       "question": "Text with LaTeX like $\\frac{d}{dx}[x^2] = ?$",
+       "options": [
+         {"text": "$2x$", "isCorrect": true},
+         {"text": "$x^2$", "isCorrect": false},
+         {"text": "$2x^2$", "isCorrect": false},
+         {"text": "$x$", "isCorrect": false}
+       ],
+       "explanation": "Step-by-step reasoning explaining why $\\frac{d}{dx}[x^2] = 2x$ and why others are incorrect.",
+       "difficulty": "${request.difficulty}",
+       "tip_formula": "Key formula: $\\frac{d}{dx}[x^n] = nx^{n-1}$"
+     },
+     {
+       "question": "Calculate the value of $\\int_0^1 x^2 dx$",
+       "isOpenEnded": true,
+       "correctNumericAnswer": 0.333,
+       "answerTolerance": 0.01,
+       "explanation": "Using the power rule: $\\int x^2 dx = \\frac{x^3}{3}$. Evaluating from 0 to 1: $\\frac{1^3}{3} - \\frac{0^3}{3} = \\frac{1}{3} \\approx 0.333$",
+       "difficulty": "${request.difficulty}",
+       "tip_formula": "Power rule: $\\int x^n dx = \\frac{x^{n+1}}{n+1} + C$"
+     }
+   ]
+ }
 
 CRITICAL: Test your JSON before responding. Ensure it's valid JSON that can be parsed without errors.
 Do not include any text outside the JSON structure.
@@ -515,11 +530,33 @@ Respond with **ONLY valid JSON**. Do not include explanations or markdown. Start
         // Validate and clean each question
         const cleanedQuestions = [] as any[];
         for (const question of parsedContent.questions) {
-          if (!question.question || !question.options || !question.explanation) {
+          if (!question.question || !question.explanation) {
             console.warn('Skipping invalid question structure:', question);
             continue;
           }
-          if (!Array.isArray(question.options) || question.options.length !== 4) {
+
+          // Handle open-ended questions
+          if (question.isOpenEnded) {
+            if (typeof question.correctNumericAnswer !== 'number') {
+              console.warn('Skipping open-ended question with invalid numeric answer:', question);
+              continue;
+            }
+            
+            const cleaned = {
+              question: this.cleanTextContent(question.question),
+              explanation: this.cleanTextContent(question.explanation),
+              difficulty: question.difficulty || request.difficulty,
+              tip_formula: question.tip_formula ? this.cleanTextContent(question.tip_formula) : undefined,
+              isOpenEnded: true,
+              correctNumericAnswer: question.correctNumericAnswer,
+              answerTolerance: question.answerTolerance || 0.01
+            };
+            cleanedQuestions.push(cleaned);
+            continue;
+          }
+
+          // Handle multiple choice questions
+          if (!question.options || !Array.isArray(question.options) || question.options.length !== 4) {
             console.warn('Skipping question with invalid options:', question);
             continue;
           }

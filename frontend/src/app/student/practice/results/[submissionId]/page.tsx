@@ -16,6 +16,9 @@ interface Question {
   explanation?: string;
   tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  isOpenEnded?: boolean;
+  correctNumericAnswer?: number;
+  answerTolerance?: number;
   isAIGenerated?: boolean;
   aiPrompt?: string;
   alternativeExplanations?: Array<{
@@ -24,7 +27,7 @@ interface Question {
     source: string;
     createdAt: string;
   }>;
-  options: {
+  options?: {
     id: string;
     text: string;
     isCorrect: boolean;
@@ -339,55 +342,55 @@ export default function PracticeTestResultsPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </button>
-                  </div>
+            </div>
 
                   {/* Score Display */}
-                  <div className="text-center mb-8">
-                    <div className="text-6xl mb-4">🎯</div>
+              <div className="text-center mb-8">
+                <div className="text-6xl mb-4">🎯</div>
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Your Score</h3>
                     <div className={`text-5xl font-bold mb-2 ${getScoreColor(results.scorePercent)}`}>
                       {results.scorePercent.toFixed(1)}%
-                    </div>
+                </div>
                     <p className="text-lg text-gray-800 dark:text-gray-300 mb-4">{getScoreMessage(results.scorePercent)}</p>
-                  </div>
+              </div>
 
                   {/* Statistics Grid */}
                   <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
                       <div className="text-2xl font-bold text-green-600 dark:text-green-400">{correctAnswers}</div>
                       <div className="text-sm text-green-700 dark:text-green-300">Correct</div>
-                    </div>
+                </div>
                     <div className="text-center p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
                       <div className="text-2xl font-bold text-red-600 dark:text-red-400">{incorrectAnswers}</div>
                       <div className="text-sm text-red-700 dark:text-red-300">Incorrect</div>
-                    </div>
+                </div>
                     <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
                       <div className="text-2xl font-bold text-gray-700 dark:text-gray-300">{unansweredCount}</div>
                       <div className="text-sm text-gray-800 dark:text-gray-400">Unanswered</div>
-                    </div>
+                </div>
                     <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                       <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{results.totalQuestions}</div>
                       <div className="text-sm text-blue-700 dark:text-blue-300">Total</div>
-                    </div>
-                  </div>
+                </div>
+              </div>
 
                   {/* Test Details */}
                   <div className="pt-6 border-t border-gray-200 dark:border-gray-600">
                     <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Test Details</h4>
                     <div className="space-y-3 text-sm">
-                      <div className="flex justify-between">
+                  <div className="flex justify-between">
                         <span className="text-gray-700 dark:text-gray-300 font-medium">Time Taken:</span>
                         <span className="font-semibold text-gray-900 dark:text-white">N/A</span>
-                      </div>
-                      <div className="flex justify-between">
+                  </div>
+                  <div className="flex justify-between">
                         <span className="text-gray-700 dark:text-gray-300 font-medium">Started:</span>
                         <span className="font-semibold text-gray-900 dark:text-white">N/A</span>
-                      </div>
-                      <div className="flex justify-between">
+                  </div>
+                  <div className="flex justify-between">
                         <span className="text-gray-700 dark:text-gray-300 font-medium">Completed:</span>
                         <span className="font-semibold text-gray-900 dark:text-white">{new Date(results.submittedAt).toLocaleString()}</span>
-                      </div>
-                      <div className="flex justify-between">
+                  </div>
+                  <div className="flex justify-between">
                         <span className="text-gray-700 dark:text-gray-300 font-medium">Time Limit:</span>
                         <span className="font-semibold text-gray-900 dark:text-white">No limit</span>
                       </div>
@@ -427,7 +430,7 @@ export default function PracticeTestResultsPage() {
                       <span>Back to History</span>
                     </button>
                     <button
-                      onClick={() => router.push(`/student/practice/test/${submissionId}`)}
+                      onClick={() => router.push('/student/practice')}
                       className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors flex items-center space-x-2"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -586,10 +589,35 @@ export default function PracticeTestResultsPage() {
                               </p>
                             </div>
 
-                            {/* Options */}
+                            {/* Options or Numeric Answer Display */}
+                            {question.isOpenEnded ? (
+                              <div className="space-y-3">
+                                <div className="p-4 rounded-lg border-2 bg-gray-50 border-gray-200">
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center">
+                                      <span className="text-lg text-gray-700 font-medium">
+                                        Your Answer: {answer?.selectedOption?.text || 'No answer provided'}
+                                      </span>
+                                      {answer?.isCorrect ? (
+                                        <span className="ml-3 text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
+                                          Correct
+                                        </span>
+                                      ) : (
+                                        <span className="ml-3 text-sm bg-red-100 text-red-800 px-2 py-1 rounded">
+                                          Incorrect
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div className="mt-2 text-sm text-gray-600">
+                                    Correct Answer: {question.correctNumericAnswer}
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
                             <div className="space-y-3">
-                              {question.options.map((option) => {
-                                const isSelected = answer?.selectedOption?.id === option.id;
+                                {question.options?.map((option) => {
+                                  const isSelected = answer?.selectedOption?.id === option.id;
                                 const isCorrect = option.isCorrect;
                                 
                                 let optionClass = 'p-4 rounded-lg border-2';
@@ -612,7 +640,7 @@ export default function PracticeTestResultsPage() {
                                         isSelected && !isCorrect ? 'text-red-800' : 
                                         'text-gray-700'
                                       }`}>
-                                        <LatexContentDisplay content={option.text} />
+                                          <LatexContentDisplay content={option.text} />
                                       </span>
                                       {isSelected && <span className="text-sm text-gray-600">(Your answer)</span>}
                                       {isCorrect && <span className="text-sm text-green-600 font-medium">(Correct answer)</span>}
@@ -621,6 +649,7 @@ export default function PracticeTestResultsPage() {
                                 );
                               })}
                             </div>
+                            )}
 
                             {/* Tips & Formulas */}
                             {question.tip_formula && (

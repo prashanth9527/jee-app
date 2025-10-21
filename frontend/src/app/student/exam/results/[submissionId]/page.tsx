@@ -15,6 +15,9 @@ interface Question {
   explanation?: string;
   tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  isOpenEnded?: boolean;
+  correctNumericAnswer?: number;
+  answerTolerance?: number;
   subject?: {
     id: string;
     name: string;
@@ -37,7 +40,7 @@ interface Question {
     source: string;
     createdAt: string;
   }>;
-  options: {
+  options?: {
     id: string;
     text: string;
     isCorrect: boolean;
@@ -96,7 +99,7 @@ export default function ExamResultsPage() {
       }
 
       // Get exam results
-      const resultsResponse = await api.get(`/student/exams/${submissionData.examPaper.id}/results`);
+      const resultsResponse = await api.get(`/exams/submissions/${submissionId}/results`);
       const resultsData = resultsResponse.data;
       
       setResults(resultsData);
@@ -172,12 +175,29 @@ export default function ExamResultsPage() {
     setCurrentQuestionIndex(index);
   };
 
-  const handleRetake = () => {
-    const examType = submissionData?.examPaper?.examType;
-    if (examType === 'PRACTICE_EXAM') {
-      router.push(`/student/practice/test/${submissionId}`);
-    } else {
-      router.push(`/student/exam/${submissionId}`);
+  const handleRetake = async () => {
+    try {
+      const examType = submissionData?.examPaper?.examType;
+      if (examType === 'PRACTICE_EXAM') {
+        // For practice exams, redirect to practice test creation
+        router.push('/student/practice');
+      } else {
+        // For regular exams, start a new exam session
+        const examId = submissionData?.examPaper?.id;
+        if (examId) {
+          const response = await api.post(`/student/exams/papers/${examId}/start`);
+          const newSubmissionId = response.data.submissionId;
+          router.push(`/student/exam/${newSubmissionId}`);
+        }
+      }
+    } catch (error) {
+      console.error('Error starting retake:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to start exam retake. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   };
 
@@ -346,56 +366,82 @@ export default function ExamResultsPage() {
                               <LatexContentDisplay content={question.stem} />
                             </div>
                             
-                            {/* Options */}
-                            <div className="space-y-3">
-                              {question.options.map((option) => {
-                                const isSelected = answer?.selectedOption.id === option.id;
-                                const isCorrectOption = option.isCorrect;
-                                
-                                return (
-                                  <div
-                                    key={option.id}
-                                    className={`p-4 rounded-lg border-2 ${
-                                      isCorrectOption
-                                        ? 'bg-green-50 border-green-200'
-                                        : isSelected && !isCorrectOption
-                                        ? 'bg-red-50 border-red-200'
-                                        : 'bg-gray-50 border-gray-200'
-                                    }`}
-                                  >
+                            {/* Options or Numeric Answer Display */}
+                            {question.isOpenEnded ? (
+                              <div className="space-y-3">
+                                <div className="p-4 rounded-lg border-2 bg-gray-50 border-gray-200">
+                                  <div className="flex items-center justify-between">
                                     <div className="flex items-center">
-                                      <span className={`w-5 h-5 rounded-full border-2 mr-4 ${
-                                        isCorrectOption
-                                          ? 'bg-green-500 border-green-500'
-                                          : isSelected
-                                          ? 'bg-red-500 border-red-500'
-                                          : 'border-gray-300'
-                                      }`}>
-                                        {isCorrectOption && (
-                                          <svg className="w-3 h-3 text-white mx-auto mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                          </svg>
-                                        )}
+                                      <span className="text-lg text-gray-700 font-medium">
+                                        Your Answer: {answer?.selectedOption?.text || 'No answer provided'}
                                       </span>
-                                      <span className={`text-lg ${
-                                        isCorrectOption
-                                          ? 'text-white-800 font-medium'
-                                          : isSelected && !isCorrectOption
-                                          ? 'text-white-800 font-medium'
-                                          : 'text-white-700'
-                                      }`}>
-                                        <LatexContentDisplay content={option.text} />
-                                      </span>
-                                      {isSelected && (
-                                        <span className="ml-3 text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                                          Your Answer
+                                      {answer?.isCorrect ? (
+                                        <span className="ml-3 text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
+                                          Correct
+                                        </span>
+                                      ) : (
+                                        <span className="ml-3 text-sm bg-red-100 text-red-800 px-2 py-1 rounded">
+                                          Incorrect
                                         </span>
                                       )}
                                     </div>
                                   </div>
-                                );
-                              })}
-                            </div>
+                                  <div className="mt-2 text-sm text-gray-600">
+                                    Correct Answer: {question.correctNumericAnswer}
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="space-y-3">
+                                {question.options?.map((option) => {
+                                  const isSelected = answer?.selectedOption.id === option.id;
+                                  const isCorrectOption = option.isCorrect;
+                                  
+                                  return (
+                                    <div
+                                      key={option.id}
+                                      className={`p-4 rounded-lg border-2 ${
+                                        isCorrectOption
+                                          ? 'bg-green-50 border-green-200'
+                                          : isSelected && !isCorrectOption
+                                          ? 'bg-red-50 border-red-200'
+                                          : 'bg-gray-50 border-gray-200'
+                                      }`}
+                                    >
+                                      <div className="flex items-center">
+                                        <span className={`w-5 h-5 rounded-full border-2 mr-4 ${
+                                          isCorrectOption
+                                            ? 'bg-green-500 border-green-500'
+                                            : isSelected
+                                            ? 'bg-red-500 border-red-500'
+                                            : 'border-gray-300'
+                                        }`}>
+                                          {isCorrectOption && (
+                                            <svg className="w-3 h-3 text-white mx-auto mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                            </svg>
+                                          )}
+                                        </span>
+                                        <span className={`text-lg ${
+                                          isCorrectOption
+                                            ? 'text-white-800 font-medium'
+                                            : isSelected && !isCorrectOption
+                                            ? 'text-white-800 font-medium'
+                                            : 'text-white-700'
+                                        }`}>
+                                          <LatexContentDisplay content={option.text} />
+                                        </span>
+                                        {isSelected && (
+                                          <span className="ml-3 text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                            Your Answer
+                                          </span>
+                                        )}
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
                           </div>
                           
                           {/* Tips & Formulas */}
