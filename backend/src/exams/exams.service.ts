@@ -676,6 +676,7 @@ export class ExamsService {
     lessonId?: string;
     topicId?: string;
     subtopicId?: string;
+    year?: number;
     questionCount: number;
     difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
     timeLimitMin: number;
@@ -692,6 +693,12 @@ export class ExamsService {
     if (config.topicId) where.topicId = config.topicId;
     if (config.subtopicId) where.subtopicId = config.subtopicId;
     if (config.difficulty !== 'MIXED') where.difficulty = config.difficulty;
+    
+    // If year is specified, filter for PYQ questions (yearAppeared is not null)
+    const isPYQTest = config.year !== undefined;
+    if (isPYQTest) {
+      where.yearAppeared = config.year;
+    }
 
     // Get available questions
     const availableQuestions = await this.prisma.question.findMany({
@@ -720,18 +727,22 @@ export class ExamsService {
     // Create exam paper
     const examPaper = await this.prisma.examPaper.create({
       data: {
-        title: config.title || `Manual Practice Test - ${new Date().toLocaleDateString()}`,
-        description: 'Manual Practice Test from existing questions',
+        title: config.title || `${isPYQTest ? 'PYQ' : 'Manual'} Practice Test - ${new Date().toLocaleDateString()}`,
+        description: isPYQTest ? 'Previous Year Questions Practice Test' : 'Manual Practice Test from existing questions',
         questionIds: selectedQuestions.map((q: any) => q.id),
         timeLimitMin: config.timeLimitMin,
-        examType: 'PRACTICE_EXAM' as any, // Set as practice exam
+        examType: isPYQTest ? 'PYQ_PRACTICE' as any : 'PRACTICE_EXAM' as any,
         createdById: userId
       }
     });
 
     console.log('Manual practice test created:', { examPaperId: examPaper.id, questionCount: selectedQuestions.length });
 
+    // Start the exam (create submission)
+    const submission = await this.startExam(userId, examPaper.id);
+
     return {
+      submissionId: submission.submissionId,
       examPaper: {
         id: examPaper.id,
         title: examPaper.title,
@@ -742,4 +753,5 @@ export class ExamsService {
       totalQuestions: selectedQuestions.length
     };
   }
+
 } 

@@ -182,39 +182,9 @@ export default function PYQPage() {
     return rangeWithDots.filter((page, index, arr) => arr.indexOf(page) === index);
   };
 
-  const startPractice = async () => {
-    try {
-      const params = new URLSearchParams({
-        questionCount: '10',
-        ...filters
-      });
-
-      const response = await api.get(`/student/pyq/practice/generate?${params}`);
-      
-      if (response.data.questions.length === 0) {
-        Swal.fire('No Questions', 'No questions available with current filters', 'info');
-        return;
-      }
-
-      // Create a practice test
-      const practiceData = {
-        title: `PYQ Practice Test - ${new Date().toLocaleDateString()}`,
-        description: 'Previous Year Questions Practice Test',
-        questionIds: response.data.questions.map((q: Question) => q.id),
-        timeLimitMin: 60
-      };
-
-      const examResponse = await api.post('/exams/papers', practiceData);
-      
-      // Start the test
-      const startResponse = await api.post(`/exams/papers/${examResponse.data.id}/start`);
-      
-      // Redirect to test
-      router.push(`/student/practice/test/${startResponse.data.submissionId}`);
-    } catch (error) {
-      console.error('Failed to start practice:', error);
-      Swal.fire('Error', 'Failed to start practice test', 'error');
-    }
+  const startPractice = () => {
+    // Redirect to PYQ practice test creation page
+    router.push('/student/pyq/practice');
   };
 
   const getDifficultyColor = (difficulty: string) => {

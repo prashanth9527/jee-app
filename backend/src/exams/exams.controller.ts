@@ -77,7 +77,7 @@ export class ExamsController {
   }
 
   @Post('manual/generate-practice-test')
-  async generateManualPracticeTest(
+async generateManualPracticeTest(
     @Req() req: any,
     @Body() body: {
       subjectId: string;
@@ -90,8 +90,9 @@ export class ExamsController {
       title?: string;
     }
   ) {
-    return this.examsService.generateManualPracticeTest(req.user.id, body);
+return this.examsService.generateManualPracticeTest(req.user.id, body);
   }
+
 }
 
 // Papers Controller

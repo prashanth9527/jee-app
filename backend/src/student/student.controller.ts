@@ -860,4 +860,5 @@ export class StudentController {
 			}
 		});
 	}
+
 } 

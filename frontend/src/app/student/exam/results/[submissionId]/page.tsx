@@ -177,18 +177,12 @@ export default function ExamResultsPage() {
 
   const handleRetake = async () => {
     try {
-      const examType = submissionData?.examPaper?.examType;
-      if (examType === 'PRACTICE_EXAM') {
-        // For practice exams, redirect to practice test creation
-        router.push('/student/practice');
-      } else {
-        // For regular exams, start a new exam session
-        const examId = submissionData?.examPaper?.id;
-        if (examId) {
-          const response = await api.post(`/student/exams/papers/${examId}/start`);
-          const newSubmissionId = response.data.submissionId;
-          router.push(`/student/exam/${newSubmissionId}`);
-        }
+      // For all exam types, start a new exam session with the same exam paper
+      const examId = submissionData?.examPaper?.id;
+      if (examId) {
+        const response = await api.post(`/student/exams/papers/${examId}/start`);
+        const newSubmissionId = response.data.submissionId;
+        router.push(`/student/exam/${newSubmissionId}`);
       }
     } catch (error) {
       console.error('Error starting retake:', error);

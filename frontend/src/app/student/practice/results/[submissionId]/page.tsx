@@ -252,6 +252,29 @@ export default function PracticeTestResultsPage() {
     return `${diffSecs}s`;
   };
 
+  const handleRetake = async () => {
+    try {
+      // Get the submission data to find the exam paper ID
+      const submissionResponse = await api.get(`/exams/submissions/${submissionId}`);
+      const examId = submissionResponse.data.examPaper.id;
+      
+      if (examId) {
+        // Start a new exam session with the same exam paper
+        const response = await api.post(`/student/exams/papers/${examId}/start`);
+        const newSubmissionId = response.data.submissionId;
+        router.push(`/student/exam/${newSubmissionId}`);
+      }
+    } catch (error) {
+      console.error('Error starting retake:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to start exam retake. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
+
   if (loading) {
     return (
       <ProtectedRoute requiredRole="STUDENT">
@@ -430,7 +453,7 @@ export default function PracticeTestResultsPage() {
                       <span>Back to History</span>
                     </button>
                     <button
-                      onClick={() => router.push('/student/practice')}
+                      onClick={handleRetake}
                       className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors flex items-center space-x-2"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
