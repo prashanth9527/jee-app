@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
+import { cleanLatex } from '@/utils/textCleaner';
 
 interface LatexRichTextEditorProps {
   value: string;
@@ -100,6 +101,24 @@ export default function LatexRichTextEditor({
     return blocks.sort((a, b) => a.start - b.start);
   }, []);
 
+  // Preprocess LaTeX content to fix common issues
+  const preprocessLatex = useCallback((latex: string): string => {
+    // Debug logging for LaTeX preprocessing
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Original LaTeX:', latex);
+    }
+    
+    // Use the utility function to clean the LaTeX content
+    const processed = cleanLatex(latex);
+    
+    // Debug logging for processed LaTeX
+    if (process.env.NODE_ENV === 'development' && processed !== latex) {
+      console.log('Processed LaTeX:', processed);
+    }
+    
+    return processed;
+  }, []);
+
   // Render markdown and LaTeX content to HTML
   const renderLatexContent = useCallback((content: string): string => {
     let html = content;
@@ -110,10 +129,23 @@ export default function LatexRichTextEditor({
     
     blocks.forEach(block => {
       try {
-        const rendered = katex.renderToString(block.latex, {
+        // Preprocess the LaTeX to fix common issues
+        const processedLatex = preprocessLatex(block.latex);
+        
+        const rendered = katex.renderToString(processedLatex, {
           throwOnError: false,
           displayMode: block.type === 'display',
-          strict: false
+          strict: false,
+          trust: true, // Allow more LaTeX commands
+          macros: {
+            // Add custom macros if needed
+            "\\rac": "\\frac",
+            "\\R": "\\mathbb{R}",
+            "\\N": "\\mathbb{N}",
+            "\\Z": "\\mathbb{Z}",
+            "\\Q": "\\mathbb{Q}",
+            "\\C": "\\mathbb{C}"
+          }
         });
         
         const before = html.substring(0, block.start + offset);
@@ -123,7 +155,7 @@ export default function LatexRichTextEditor({
         html = before + replacement + after;
         offset += replacement.length - (block.end - block.start);
       } catch (error) {
-        console.warn('LaTeX rendering error:', error);
+        console.warn('LaTeX rendering error:', error, 'Original LaTeX:', block.latex);
         // Keep original LaTeX if rendering fails
       }
     });
@@ -132,7 +164,7 @@ export default function LatexRichTextEditor({
     html = renderMarkdown(html);
     
     return html;
-  }, [parseLatexBlocks]);
+  }, [parseLatexBlocks, preprocessLatex]);
 
   // Render markdown formatting
   const renderMarkdown = (text: string): string => {

@@ -203,7 +203,7 @@ export default function QuestionsPage() {
 		});
 
 			const [questionsResponse, subjectsResponse, lessonsResponse, topicsResponse, subtopicsResponse] = await Promise.all([
-				api.get(`/admin/questions?${params}`),
+				api.get(`/admin/questions/open-ended?${params}`),
 				api.get('/admin/subjects'),
 				api.get('/admin/lessons?limit=1000'), // Get all lessons
 				api.get('/admin/topics?limit=1000'), // Get all topics

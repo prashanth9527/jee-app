@@ -29,6 +29,7 @@ import { AIProviderFactory } from '../ai/ai-provider.factory';
 import { OpenAIService } from '../ai/openai.service';
 import { DeepSeekService } from '../ai/deepseek.service';
 import { ClaudeService } from '../ai/claude.service';
+import { AiService } from '../ai/ai.service';
 import { MathpixService } from './mathpix.service';
 import { MathpixProcessorService } from './mathpix-processor.service';
 import { ZipProcessorService } from './zip-processor.service';
@@ -69,7 +70,8 @@ import { ImageWatermarkRemoverService } from './image-watermark-remover.service'
     AIProviderFactory,
     OpenAIService,
     DeepSeekService,
-    ClaudeService
+    ClaudeService,
+    AiService
   ],
   exports: [AdminAnalyticsService, SystemSettingsService],
 })

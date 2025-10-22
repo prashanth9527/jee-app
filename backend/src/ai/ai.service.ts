@@ -913,4 +913,212 @@ Make the explanation educational and suitable for JEE preparation level.`;
     // Fallback disabled to avoid placeholder options. Return empty to force upstream retry/failure.
     return [];
   }
+
+  async generateQuestionAnswer(request: {
+    question: string;
+    explanation?: string;
+    subject: string;
+    topic?: string;
+    subtopic?: string;
+    difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+    existingOptions?: any[];
+  }): Promise<{
+    explanation: string;
+    tip_formula?: string;
+    options?: Array<{ text: string; isCorrect: boolean; order: number }>;
+    correctNumericAnswer?: number;
+    answerTolerance?: number;
+    isOpenEnded?: boolean;
+  }> {
+    if (!this.openaiApiKey) {
+      throw new Error('OpenAI API key not configured');
+    }
+
+    try {
+      const response = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.openaiApiKey}`,
+        },
+        body: JSON.stringify({
+          model: this.openaiModel,
+          messages: [
+            {
+              role: 'system',
+              content: `You are an expert JEE (Joint Entrance Examination) question analyzer and answer generator. Your task is to analyze a question and generate the correct answer with detailed explanation.
+
+CRITICAL REQUIREMENTS:
+1. Determine if the question is MCQ (Multiple Choice) or Open-ended (Numeric)
+2. For MCQ questions: Generate exactly 4 options with only ONE correct answer
+3. For Open-ended questions: Provide the exact numeric answer with appropriate tolerance
+4. Always provide a detailed step-by-step explanation
+5. Include relevant formulas or concepts in tip_formula field
+
+QUESTION ANALYSIS:
+- Subject: ${request.subject}
+- Topic: ${request.topic || 'General'}
+- Subtopic: ${request.subtopic || 'General'}
+- Difficulty: ${request.difficulty}
+- Question: ${request.question}
+
+EXISTING CONTEXT:
+${request.explanation ? `Current explanation: ${request.explanation}` : 'No existing explanation'}
+
+RESPONSE FORMAT:
+Return a JSON object with the following structure:
+
+For MCQ Questions:
+{
+  "isOpenEnded": false,
+  "explanation": "Detailed step-by-step solution...",
+  "tip_formula": "Key formulas and concepts used",
+  "options": [
+    {"text": "Option A text", "isCorrect": false, "order": 0},
+    {"text": "Option B text", "isCorrect": true, "order": 1},
+    {"text": "Option C text", "isCorrect": false, "order": 2},
+    {"text": "Option D text", "isCorrect": false, "order": 3}
+  ]
+}
+
+For Open-ended Questions:
+{
+  "isOpenEnded": true,
+  "explanation": "Detailed step-by-step solution...",
+  "tip_formula": "Key formulas and concepts used",
+  "correctNumericAnswer": 42.5,
+  "answerTolerance": 0.01
+}
+
+IMPORTANT:
+- Ensure mathematical accuracy
+- Use proper LaTeX formatting for mathematical expressions
+- Provide clear, educational explanations
+- Make incorrect options plausible but clearly wrong
+- For numeric answers, provide appropriate tolerance (usually 0.01 for most cases)`
+            },
+            {
+              role: 'user',
+              content: `Analyze this question and generate the correct answer:\n\n${request.question}`
+            }
+          ],
+          temperature: 0.3,
+          max_tokens: 2000
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices[0]?.message?.content;
+
+      if (!content) {
+        throw new Error('No response from OpenAI API');
+      }
+
+      // Parse the JSON response
+      let aiResponse;
+      try {
+        // Extract JSON from markdown code blocks if present
+        let jsonContent = content.trim();
+        
+        // Check if response is wrapped in markdown code blocks
+        if (jsonContent.startsWith('```json') && jsonContent.endsWith('```')) {
+          jsonContent = jsonContent.slice(7, -3).trim(); // Remove ```json and ```
+        } else if (jsonContent.startsWith('```') && jsonContent.endsWith('```')) {
+          jsonContent = jsonContent.slice(3, -3).trim(); // Remove ``` and ```
+        }
+        
+        // Use a more robust JSON parsing approach
+        try {
+          aiResponse = JSON.parse(jsonContent);
+        } catch (firstError) {
+          // If first attempt fails, try to fix common issues
+          console.log('First JSON parse failed, attempting to fix common issues...');
+          
+          // More targeted approach - only fix specific LaTeX patterns that break JSON
+          let fixedContent = jsonContent;
+          
+          // Fix specific LaTeX patterns that cause JSON parsing issues
+          fixedContent = fixedContent
+            .replace(/\\frac/g, '\\\\frac') // Fix \frac
+            .replace(/\\sqrt/g, '\\\\sqrt') // Fix \sqrt
+            .replace(/\\pm/g, '\\\\pm') // Fix \pm
+            .replace(/\\geq/g, '\\\\geq') // Fix \geq
+            .replace(/\\leq/g, '\\\\leq') // Fix \leq
+            .replace(/\\cdot/g, '\\\\cdot') // Fix \cdot
+            .replace(/\\times/g, '\\\\times') // Fix \times
+            .replace(/\\div/g, '\\\\div') // Fix \div
+            .replace(/\\alpha/g, '\\\\alpha') // Fix \alpha
+            .replace(/\\beta/g, '\\\\beta') // Fix \beta
+            .replace(/\\gamma/g, '\\\\gamma') // Fix \gamma
+            .replace(/\\delta/g, '\\\\delta') // Fix \delta
+            .replace(/\\epsilon/g, '\\\\epsilon') // Fix \epsilon
+            .replace(/\\theta/g, '\\\\theta') // Fix \theta
+            .replace(/\\lambda/g, '\\\\lambda') // Fix \lambda
+            .replace(/\\mu/g, '\\\\mu') // Fix \mu
+            .replace(/\\pi/g, '\\\\pi') // Fix \pi
+            .replace(/\\sigma/g, '\\\\sigma') // Fix \sigma
+            .replace(/\\tau/g, '\\\\tau') // Fix \tau
+            .replace(/\\phi/g, '\\\\phi') // Fix \phi
+            .replace(/\\omega/g, '\\\\omega') // Fix \omega
+            .replace(/\\infty/g, '\\\\infty') // Fix \infty
+            .replace(/\\sum/g, '\\\\sum') // Fix \sum
+            .replace(/\\int/g, '\\\\int') // Fix \int
+            .replace(/\\prod/g, '\\\\prod') // Fix \prod
+            .replace(/\\lim/g, '\\\\lim') // Fix \lim
+            .replace(/\\log/g, '\\\\log') // Fix \log
+            .replace(/\\ln/g, '\\\\ln') // Fix \ln
+            .replace(/\\exp/g, '\\\\exp') // Fix \exp
+            .replace(/\\sin/g, '\\\\sin') // Fix \sin
+            .replace(/\\cos/g, '\\\\cos') // Fix \cos
+            .replace(/\\tan/g, '\\\\tan') // Fix \tan
+            .replace(/\\arcsin/g, '\\\\arcsin') // Fix \arcsin
+            .replace(/\\arccos/g, '\\\\arccos') // Fix \arccos
+            .replace(/\\arctan/g, '\\\\arctan') // Fix \arctan
+            .replace(/\\sinh/g, '\\\\sinh') // Fix \sinh
+            .replace(/\\cosh/g, '\\\\cosh') // Fix \cosh
+            .replace(/\\tanh/g, '\\\\tanh') // Fix \tanh
+            .replace(/\\mathbb\{R\}/g, '\\\\mathbb{R}') // Fix \mathbb{R}
+            .replace(/\\mathbb\{N\}/g, '\\\\mathbb{N}') // Fix \mathbb{N}
+            .replace(/\\mathbb\{Z\}/g, '\\\\mathbb{Z}') // Fix \mathbb{Z}
+            .replace(/\\mathbb\{Q\}/g, '\\\\mathbb{Q}') // Fix \mathbb{Q}
+            .replace(/\\mathbb\{C\}/g, '\\\\mathbb{C}') // Fix \mathbb{C}
+            .replace(/\n/g, '\\n') // Escape newlines
+            .replace(/\r/g, '\\r') // Escape carriage returns
+            .replace(/\t/g, '\\t'); // Escape tabs
+          
+          console.log('Fixed content preview:', fixedContent.substring(0, 200) + '...');
+          aiResponse = JSON.parse(fixedContent);
+        }
+      } catch (parseError) {
+        console.error('Failed to parse AI response:', content);
+        console.error('Parse error:', parseError);
+        throw new Error('Invalid response format from AI service');
+      }
+
+      // Validate the response structure
+      if (aiResponse.isOpenEnded) {
+        if (!aiResponse.explanation || typeof aiResponse.correctNumericAnswer !== 'number') {
+          throw new Error('Invalid open-ended question response from AI');
+        }
+      } else {
+        if (!aiResponse.explanation || !Array.isArray(aiResponse.options) || aiResponse.options.length !== 4) {
+          throw new Error('Invalid MCQ response from AI');
+        }
+        const correctOptions = aiResponse.options.filter((opt: any) => opt.isCorrect);
+        if (correctOptions.length !== 1) {
+          throw new Error('AI response must have exactly one correct option');
+        }
+      }
+
+      return aiResponse;
+
+    } catch (error) {
+      console.error('AI Answer Generation Error:', error);
+      throw new Error(`Failed to generate answer: ${error.message}`);
+    }
+  }
 } 

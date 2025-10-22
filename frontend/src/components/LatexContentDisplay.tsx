@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import parse from 'html-react-parser';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
+import { cleanLatex } from '@/utils/textCleaner';
 
 interface LatexContentDisplayProps {
   content: string;
@@ -69,8 +70,11 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     let offset = 0;
     
     blocks.forEach(block => {
+      // Clean the LaTeX content before rendering
+      const cleanedLatex = cleanLatex(block.latex);
+      
       try {
-        const rendered = katex.renderToString(block.latex, {
+        const rendered = katex.renderToString(cleanedLatex, {
           throwOnError: false,
           displayMode: block.type === 'display',
           strict: false,
@@ -101,7 +105,15 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
             "\\xlongmapsto": "\\stackrel{#1}{\\longmapsto}",
             "\\substack": "\\begin{array}{c}#1\\end{array}",
             "\\underset": "\\mathop{#2}\\limits_{#1}",
-            "\\overset": "\\mathop{#2}\\limits^{#1}"
+            "\\overset": "\\mathop{#2}\\limits^{#1}",
+            
+            // Common LaTeX fixes
+            "\\rac": "\\frac",
+            "\\R": "\\mathbb{R}",
+            "\\N": "\\mathbb{N}",
+            "\\Z": "\\mathbb{Z}",
+            "\\Q": "\\mathbb{Q}",
+            "\\C": "\\mathbb{C}"
           }
         });
         
@@ -112,7 +124,7 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
         html = before + replacement + after;
         offset += replacement.length - (block.end - block.start);
       } catch (error) {
-        console.warn('LaTeX rendering error for:', block.latex, error);
+        console.warn('LaTeX rendering error for:', block.latex, 'Cleaned:', cleanedLatex, error);
         // Keep original LaTeX if rendering fails
       }
     });

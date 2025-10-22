@@ -70,6 +70,12 @@ export default function AdminPYQPage() {
     search: ''
   });
 
+  // Enhanced filter states
+  const [searchText, setSearchText] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedDifficulty, setSelectedDifficulty] = useState('');
+
   // Navigation
   const router = useRouter();
 
@@ -79,7 +85,7 @@ export default function AdminPYQPage() {
 
   useEffect(() => {
     loadQuestions();
-  }, [filters, pagination.currentPage]);
+  }, [selectedYear, selectedSubject, selectedDifficulty, searchText, pagination.currentPage]);
 
   const loadInitialData = async () => {
     try {
@@ -103,7 +109,10 @@ export default function AdminPYQPage() {
       const params = new URLSearchParams({
         page: pagination.currentPage.toString(),
         limit: pagination.itemsPerPage.toString(),
-        ...filters
+        ...(searchText && { search: searchText }),
+        ...(selectedYear && { year: selectedYear }),
+        ...(selectedSubject && { subjectId: selectedSubject }),
+        ...(selectedDifficulty && { difficulty: selectedDifficulty })
       });
 
       const response = await api.get(`/admin/pyq/questions?${params}`);
@@ -123,6 +132,38 @@ export default function AdminPYQPage() {
   const handleSearch = (searchTerm: string) => {
     setFilters(prev => ({ ...prev, search: searchTerm }));
     setPagination(prev => ({ ...prev, currentPage: 1 }));
+  };
+
+  // Enhanced filter handlers
+  const handleSearchClick = () => {
+    setPagination(prev => ({ ...prev, currentPage: 1 }));
+    setSelectedQuestions([]);
+    loadQuestions();
+  };
+
+  const handleYearChange = (year: string) => {
+    setSelectedYear(year);
+    setPagination(prev => ({ ...prev, currentPage: 1 }));
+  };
+
+  const handleSubjectChange = (subjectId: string) => {
+    setSelectedSubject(subjectId);
+    setPagination(prev => ({ ...prev, currentPage: 1 }));
+  };
+
+  const handleDifficultyChange = (difficulty: string) => {
+    setSelectedDifficulty(difficulty);
+    setPagination(prev => ({ ...prev, currentPage: 1 }));
+  };
+
+  const clearFilters = () => {
+    setSearchText('');
+    setSelectedYear('');
+    setSelectedSubject('');
+    setSelectedDifficulty('');
+    setPagination(prev => ({ ...prev, currentPage: 1 }));
+    setSelectedQuestions([]);
+    loadQuestions();
   };
 
   const handleSelectAll = (checked: boolean) => {
@@ -337,56 +378,68 @@ export default function AdminPYQPage() {
                 </div>
               )}
 
-              {/* Filters */}
+              {/* Enhanced Filters */}
               <div className="bg-white rounded-lg shadow p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Filters</h2>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
-                    <select
-                      value={filters.year}
-                      onChange={(e) => handleFilterChange('year', e.target.value)}
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
-                    >
-                      <option value="" className="text-gray-600">All Years</option>
-                      {Array.from({ length: new Date().getFullYear() - 1949 }, (_, i) => {
-                        const year = new Date().getFullYear() - i;
-                        return (
-                          <option key={year} value={year.toString()} className="text-gray-900">
-                            {year}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                    <select
-                      value={filters.subjectId}
-                      onChange={(e) => handleFilterChange('subjectId', e.target.value)}
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
-                    >
-                      <option value="" className="text-gray-600">All Subjects</option>
-                      {subjects.map(subject => (
-                        <option key={subject.id} value={subject.id} className="text-gray-900">
-                          {subject.name} ({subject.stream?.code || 'N/A'}) - {subject._count?.questions || 0} questions
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+                  <input 
+                    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium placeholder-gray-500" 
+                    placeholder="Search questions..." 
+                    value={searchText}
+                    onChange={e => setSearchText(e.target.value)}
+                    onKeyPress={e => e.key === 'Enter' && handleSearchClick()}
+                  />
+                  <select 
+                    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+                    value={selectedYear}
+                    onChange={e => handleYearChange(e.target.value)}
+                  >
+                    <option value="">All Years</option>
+                    {Array.from({ length: new Date().getFullYear() - 1949 }, (_, i) => {
+                      const year = new Date().getFullYear() - i;
+                      return (
+                        <option key={year} value={year.toString()}>
+                          {year}
                         </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Search */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                    <input
-                      type="text"
-                      placeholder="Search questions..."
-                      value={filters.search}
-                      onChange={(e) => handleSearch(e.target.value)}
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white placeholder-gray-500"
-                    />
-                  </div>
+                      );
+                    })}
+                  </select>
+                  <select 
+                    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+                    value={selectedSubject}
+                    onChange={e => handleSubjectChange(e.target.value)}
+                  >
+                    <option value="">All Subjects</option>
+                    {subjects.map(subject => (
+                      <option key={subject.id} value={subject.id}>
+                        {subject.name} ({subject.stream?.code || 'N/A'})
+                      </option>
+                    ))}
+                  </select>
+                  <select 
+                    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+                    value={selectedDifficulty}
+                    onChange={e => handleDifficultyChange(e.target.value)}
+                  >
+                    <option value="">All Difficulties</option>
+                    <option value="EASY">Easy</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="HARD">Hard</option>
+                  </select>
+                  <button 
+                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                    onClick={handleSearchClick}
+                  >
+                    Search
+                  </button>
+                </div>
+                <div className="flex space-x-3 mt-3">
+                  <button 
+                    className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+                    onClick={clearFilters}
+                  >
+                    Clear Filters
+                  </button>
                 </div>
               </div>
 

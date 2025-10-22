@@ -858,6 +858,10 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
               subjectId: subjectId,
               topicId: topicId || null,
               subtopicId: subtopicId || null,
+              // Handle open-ended questions
+              isOpenEnded: questionData.isOpenEnded || false,
+              correctNumericAnswer: questionData.correctNumericAnswer || null,
+              answerTolerance: questionData.answerTolerance || 0.01,
               options: {
                 create: questionData.options.map((opt: any, index: number) => ({
                   text: opt.text,

@@ -76,7 +76,8 @@ export class AdminPYQController {
 
     // Build where clause
     const where: any = {
-      isPreviousYear: true
+      isPreviousYear: true,
+      createdById: null
     };
 
     if (year) where.yearAppeared = parseInt(year);

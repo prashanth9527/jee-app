@@ -685,7 +685,11 @@ export class PDFProcessorCacheService {
               subtopicId: subtopicId,
               formulaid: formulaId, // Link to Formula table
               pdfProcessorCacheId: record.id,
-              exerciseName: questionData.exerciseName || ''
+              exerciseName: questionData.exerciseName || '',
+              // Handle open-ended questions
+              isOpenEnded: questionData.isOpenEnded || false,
+              correctNumericAnswer: questionData.correctNumericAnswer || null,
+              answerTolerance: questionData.answerTolerance || 0.01
             }
           });
 
