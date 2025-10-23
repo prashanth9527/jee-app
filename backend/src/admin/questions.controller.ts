@@ -670,7 +670,11 @@ export class AdminQuestionsController {
 		subtopicId?: string; 
 		status?: 'approved'|'underreview'|'rejected';
 		options?: { id?: string; text: string; isCorrect?: boolean; order?: number }[]; 
-		tagNames?: string[] 
+		tagNames?: string[];
+		// Open-ended question fields
+		isOpenEnded?: boolean;
+		correctNumericAnswer?: number;
+		answerTolerance?: number;
 	}) {
 		await this.prisma.question.update({ 
 			where: { id }, 
@@ -686,10 +690,15 @@ export class AdminQuestionsController {
 				topicId: body.topicId,
 				subtopicId: body.subtopicId,
 				status: body.status,
+				// Handle open-ended questions
+				isOpenEnded: body.isOpenEnded,
+				correctNumericAnswer: body.correctNumericAnswer,
+				answerTolerance: body.answerTolerance,
 			}
 		});
 		
-		if (body.options) {
+		// Handle options for MCQ questions
+		if (body.options && !body.isOpenEnded) {
 			await this.prisma.questionOption.deleteMany({ where: { questionId: id } });
 			await this.prisma.questionOption.createMany({ 
 				data: body.options.map((o: any) => ({ 
@@ -699,6 +708,9 @@ export class AdminQuestionsController {
 					order: o.order ?? 0 
 				})) 
 			});
+		} else if (body.isOpenEnded) {
+			// Clear options for open-ended questions
+			await this.prisma.questionOption.deleteMany({ where: { questionId: id } });
 		}
 		
 		if (body.tagNames) {
@@ -988,3 +1000,4 @@ function parseString(content: string, rows: any[], cb: (err?: Error) => void) {
 		.on('data', (row) => rows.push(row))
 		.on('end', () => cb());
 }
+

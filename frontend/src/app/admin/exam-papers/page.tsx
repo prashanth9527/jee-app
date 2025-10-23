@@ -260,7 +260,7 @@ export default function AdminExamPapersPage() {
 					}
 				});
 
-				const response = await api.delete('/admin/exam-papers/bulk', { data: { ids: selectedPapers } });
+				const response = await api.post('/admin/exam-papers/bulk-delete', { ids: selectedPapers });
 				
 				Swal.fire({
 					title: 'Deleted!',

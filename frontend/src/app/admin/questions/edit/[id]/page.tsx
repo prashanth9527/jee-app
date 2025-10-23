@@ -19,6 +19,9 @@ interface Question {
 	subjectId?: string;
 	topicId?: string;
 	subtopicId?: string;
+	isOpenEnded: boolean;
+	correctNumericAnswer?: number;
+	answerTolerance?: number;
 	subject?: {
 		id: string;
 		name: string;
@@ -112,6 +115,10 @@ export default function EditQuestionPage() {
 	const [tagNames, setTagNames] = useState('');
 	const [tagSuggestions, setTagSuggestions] = useState<string[]>([]);
 	const [showTagSuggestions, setShowTagSuggestions] = useState(false);
+	// Open-ended question states
+	const [isOpenEnded, setIsOpenEnded] = useState(false);
+	const [correctNumericAnswer, setCorrectNumericAnswer] = useState('');
+	const [answerTolerance, setAnswerTolerance] = useState('0.01');
 	
 	// Form validation states
 	const [errors, setErrors] = useState<{[key: string]: string}>({});
@@ -150,6 +157,10 @@ export default function EditQuestionPage() {
 			setSubtopicId(questionData.subtopicId || '');
 			setOptions(questionData.options.map((opt: QuestionOption) => ({ text: opt.text, isCorrect: opt.isCorrect })));
 			setTagNames(questionData.tags.map((t: QuestionTag) => t.tag.name).join(', '));
+			// Populate open-ended question fields
+			setIsOpenEnded(questionData.isOpenEnded || false);
+			setCorrectNumericAnswer(questionData.correctNumericAnswer?.toString() || '');
+			setAnswerTolerance(questionData.answerTolerance?.toString() || '0.01');
 		} catch (error) {
 			console.error('Error fetching data:', error);
 			Swal.fire({
@@ -182,20 +193,27 @@ export default function EditQuestionPage() {
 
 			return () => clearTimeout(timer);
 		}
-	}, [stem, explanation, tipFormula, difficulty, yearAppeared, isPreviousYear, subjectId, topicId, subtopicId, options, tagNames, hasUnsavedChanges, loading]);
+	}, [stem, explanation, tipFormula, difficulty, yearAppeared, isPreviousYear, subjectId, topicId, subtopicId, options, tagNames, isOpenEnded, correctNumericAnswer, answerTolerance, hasUnsavedChanges, loading]);
 
 	// Calculate form progress
 	useEffect(() => {
 		let progress = 0;
 		if (stem.trim()) progress += 25;
 		if (subjectId) progress += 20;
-		if (options.every(opt => opt.text.trim())) progress += 25;
-		if (options.some(opt => opt.isCorrect)) progress += 15;
+		if (isOpenEnded) {
+			// For open-ended questions, check if answer is provided
+			if (correctNumericAnswer.trim()) progress += 25;
+			if (answerTolerance.trim()) progress += 15;
+		} else {
+			// For MCQ questions, check options
+			if (options.every(opt => opt.text.trim())) progress += 25;
+			if (options.some(opt => opt.isCorrect)) progress += 15;
+		}
 		if (difficulty) progress += 10;
 		if (explanation.trim() || tipFormula.trim() || yearAppeared || tagNames.trim()) progress += 5;
 		
 		setFormProgress(Math.min(progress, 100));
-	}, [stem, subjectId, options, difficulty, explanation, tipFormula, yearAppeared, tagNames]);
+	}, [stem, subjectId, options, difficulty, explanation, tipFormula, yearAppeared, tagNames, isOpenEnded, correctNumericAnswer, answerTolerance]);
 
 	// Validate form
 	const validateForm = useCallback(() => {
@@ -211,12 +229,28 @@ export default function EditQuestionPage() {
 			newErrors.subject = 'Subject is required';
 		}
 		
-		if (options.some(opt => !opt.text.trim())) {
-			newErrors.options = 'All options must be filled';
-		}
-		
-		if (!options.some(opt => opt.isCorrect)) {
-			newErrors.correctAnswer = 'Please select a correct answer';
+		if (isOpenEnded) {
+			// Validate open-ended question fields
+			if (!correctNumericAnswer.trim()) {
+				newErrors.correctNumericAnswer = 'Correct numeric answer is required for open-ended questions';
+			} else if (isNaN(parseFloat(correctNumericAnswer))) {
+				newErrors.correctNumericAnswer = 'Correct answer must be a valid number';
+			}
+			
+			if (!answerTolerance.trim()) {
+				newErrors.answerTolerance = 'Answer tolerance is required';
+			} else if (isNaN(parseFloat(answerTolerance)) || parseFloat(answerTolerance) < 0) {
+				newErrors.answerTolerance = 'Answer tolerance must be a positive number';
+			}
+		} else {
+			// Validate MCQ question fields
+			if (options.some(opt => !opt.text.trim())) {
+				newErrors.options = 'All options must be filled';
+			}
+			
+			if (!options.some(opt => opt.isCorrect)) {
+				newErrors.correctAnswer = 'Please select a correct answer';
+			}
 		}
 		
 		if (yearAppeared && (parseInt(yearAppeared) < 1900 || parseInt(yearAppeared) > new Date().getFullYear())) {
@@ -225,7 +259,7 @@ export default function EditQuestionPage() {
 		
 		setErrors(newErrors);
 		return Object.keys(newErrors).length === 0;
-	}, [stem, subjectId, options, yearAppeared]);
+	}, [stem, subjectId, options, yearAppeared, isOpenEnded, correctNumericAnswer, answerTolerance]);
 
 	// Tag suggestions
 	const handleTagInput = (value: string) => {
@@ -304,6 +338,9 @@ export default function EditQuestionPage() {
 			subtopicId,
 			options,
 			tagNames,
+			isOpenEnded,
+			correctNumericAnswer,
+			answerTolerance,
 			timestamp: new Date().toISOString()
 		};
 		localStorage.setItem(`questionDraft_${questionId}`, JSON.stringify(draft));
@@ -316,32 +353,35 @@ export default function EditQuestionPage() {
 		const draft = localStorage.getItem(`questionDraft_${questionId}`);
 		if (draft) {
 			try {
-				const parsed = JSON.parse(draft);
-				setStem(parsed.stem || '');
-				setExplanation(parsed.explanation || '');
-				setTipFormula(parsed.tipFormula || '');
-				setDifficulty(parsed.difficulty || 'MEDIUM');
-				setYearAppeared(parsed.yearAppeared || '');
-				setIsPreviousYear(parsed.isPreviousYear || false);
-				setSubjectId(parsed.subjectId || '');
-				setTopicId(parsed.topicId || '');
-				setSubtopicId(parsed.subtopicId || '');
-				setOptions(parsed.options || []);
-				setTagNames(parsed.tagNames || '');
-				setHasUnsavedChanges(false);
-				
-				Swal.fire({
-					title: 'Draft Loaded!',
-					text: 'Your previous draft has been restored.',
-					icon: 'info',
-					timer: 2000,
-					showConfirmButton: false
-				});
-			} catch (error) {
-				console.error('Error loading draft:', error);
-			}
+			const parsed = JSON.parse(draft);
+			setStem(parsed.stem || '');
+			setExplanation(parsed.explanation || '');
+			setTipFormula(parsed.tipFormula || '');
+			setDifficulty(parsed.difficulty || 'MEDIUM');
+			setYearAppeared(parsed.yearAppeared || '');
+			setIsPreviousYear(parsed.isPreviousYear || false);
+			setSubjectId(parsed.subjectId || '');
+			setTopicId(parsed.topicId || '');
+			setSubtopicId(parsed.subtopicId || '');
+			setOptions(parsed.options || []);
+			setTagNames(parsed.tagNames || '');
+			setIsOpenEnded(parsed.isOpenEnded || false);
+			setCorrectNumericAnswer(parsed.correctNumericAnswer || '');
+			setAnswerTolerance(parsed.answerTolerance || '0.01');
+			setHasUnsavedChanges(false);
+			
+			Swal.fire({
+				title: 'Draft Loaded!',
+				text: 'Your previous draft has been restored.',
+				icon: 'info',
+				timer: 2000,
+				showConfirmButton: false
+			});
+		} catch (error) {
+			console.error('Error loading draft:', error);
 		}
-	};
+	}
+};
 
 	const save = async () => {
 		if (!validateForm()) {
@@ -368,8 +408,12 @@ export default function EditQuestionPage() {
 				subjectId,
 				topicId: topicId || undefined,
 				subtopicId: subtopicId || undefined,
-				options,
-				tagNames: tagNamesArray.length > 0 ? tagNamesArray : undefined
+				options: isOpenEnded ? [] : options,
+				tagNames: tagNamesArray.length > 0 ? tagNamesArray : undefined,
+				// Open-ended question fields
+				isOpenEnded,
+				correctNumericAnswer: isOpenEnded && correctNumericAnswer ? parseFloat(correctNumericAnswer) : undefined,
+				answerTolerance: isOpenEnded && answerTolerance ? parseFloat(answerTolerance) : undefined
 			});
 			
 			// Clear draft after successful save
@@ -411,6 +455,9 @@ export default function EditQuestionPage() {
 			setSubtopicId(question.subtopicId || '');
 			setOptions(question.options.map(opt => ({ text: opt.text, isCorrect: opt.isCorrect })));
 			setTagNames(question.tags.map(t => t.tag.name).join(', '));
+			setIsOpenEnded(question.isOpenEnded || false);
+			setCorrectNumericAnswer(question.correctNumericAnswer?.toString() || '');
+			setAnswerTolerance(question.answerTolerance?.toString() || '0.01');
 			setErrors({});
 			setHasUnsavedChanges(false);
 		}
@@ -755,8 +802,126 @@ export default function EditQuestionPage() {
 								</div>
 							</div>
 
+							{/* Question Type Toggle */}
+							<div className="bg-gray-50 rounded-lg p-4">
+								<div className="flex items-center justify-between">
+									<div>
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Question Type
+										</label>
+										<p className="text-xs text-gray-500">
+											Choose between multiple choice or open-ended question
+										</p>
+									</div>
+									<div className="flex items-center space-x-4">
+										<label className="flex items-center">
+											<input 
+												type="radio"
+												name="questionType"
+												checked={!isOpenEnded}
+												onChange={() => {
+													setIsOpenEnded(false);
+													setHasUnsavedChanges(true);
+												}}
+												className="text-blue-600 focus:ring-blue-500"
+											/>
+											<span className="ml-2 text-sm text-gray-700">Multiple Choice</span>
+										</label>
+										<label className="flex items-center">
+											<input 
+												type="radio"
+												name="questionType"
+												checked={isOpenEnded}
+												onChange={() => {
+													setIsOpenEnded(true);
+													setHasUnsavedChanges(true);
+												}}
+												className="text-blue-600 focus:ring-blue-500"
+											/>
+											<span className="ml-2 text-sm text-gray-700">Open-ended</span>
+										</label>
+									</div>
+								</div>
+							</div>
+
+							{/* Open-ended Question Fields */}
+							{isOpenEnded && (
+								<div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+									<h3 className="text-lg font-medium text-blue-900 mb-4">Open-ended Question Settings</h3>
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+										<div>
+											<label className="block text-sm font-medium text-gray-700 mb-2">
+												Correct Numeric Answer *
+											</label>
+											<input 
+												type="number"
+												step="any"
+												className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium ${
+													errors.correctNumericAnswer ? 'border-red-300' : 'border-gray-300'
+												}`}
+												placeholder="e.g., 42.5" 
+												value={correctNumericAnswer} 
+												onChange={e => {
+													setCorrectNumericAnswer(e.target.value);
+													setHasUnsavedChanges(true);
+													if (errors.correctNumericAnswer) {
+														setErrors(prev => ({ ...prev, correctNumericAnswer: '' }));
+													}
+												}}
+											/>
+											{errors.correctNumericAnswer && (
+												<p className="mt-1 text-sm text-red-600">{errors.correctNumericAnswer}</p>
+											)}
+											<div className="mt-1 text-xs text-gray-500">
+												💡 Enter the exact numeric answer students should provide
+											</div>
+										</div>
+										<div>
+											<label className="block text-sm font-medium text-gray-700 mb-2">
+												Answer Tolerance *
+											</label>
+											<input 
+												type="number"
+												step="any"
+												min="0"
+												className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium ${
+													errors.answerTolerance ? 'border-red-300' : 'border-gray-300'
+												}`}
+												placeholder="e.g., 0.01" 
+												value={answerTolerance} 
+												onChange={e => {
+													setAnswerTolerance(e.target.value);
+													setHasUnsavedChanges(true);
+													if (errors.answerTolerance) {
+														setErrors(prev => ({ ...prev, answerTolerance: '' }));
+													}
+												}}
+											/>
+											{errors.answerTolerance && (
+												<p className="mt-1 text-sm text-red-600">{errors.answerTolerance}</p>
+											)}
+											<div className="mt-1 text-xs text-gray-500">
+												💡 Acceptable range: ±{answerTolerance || '0.01'} from the correct answer
+											</div>
+										</div>
+									</div>
+									<div className="mt-3 p-3 bg-blue-100 rounded-md">
+										<div className="flex items-center space-x-2">
+											<svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+											</svg>
+											<span className="text-sm text-blue-800">
+												<strong>Open-ended questions</strong> require students to enter a numeric value. 
+												The system will automatically check if their answer falls within the specified tolerance range.
+											</span>
+										</div>
+									</div>
+								</div>
+							)}
+
 							{/* Options */}
-							<div>
+							{!isOpenEnded && (
+								<div>
 								<div className="flex items-center justify-between mb-2">
 									<label className="block text-sm font-medium text-gray-700">Options *</label>
 									<div className="flex items-center space-x-2">
@@ -819,17 +984,22 @@ export default function EditQuestionPage() {
 									))}
 								</div>
 							</div>
+							)}
 
 							{/* Action Buttons */}
 							<div className="flex space-x-3 pt-4 border-t border-gray-200">
 								<button 
 									className={`px-6 py-2 rounded-md text-white font-medium transition-colors ${
-										saving || !stem.trim() || !subjectId || options.some(opt => !opt.text.trim())
+										saving || !stem.trim() || !subjectId || 
+										(!isOpenEnded && options.some(opt => !opt.text.trim())) ||
+										(isOpenEnded && (!correctNumericAnswer.trim() || !answerTolerance.trim()))
 											? 'bg-gray-400 cursor-not-allowed' 
 											: 'bg-green-600 hover:bg-green-700'
 									}`}
 									onClick={save}
-									disabled={saving || !stem.trim() || !subjectId || options.some(opt => !opt.text.trim())}
+									disabled={saving || !stem.trim() || !subjectId || 
+										(!isOpenEnded && options.some(opt => !opt.text.trim())) ||
+										(isOpenEnded && (!correctNumericAnswer.trim() || !answerTolerance.trim()))}
 								>
 									{saving ? (
 										<div className="flex items-center">

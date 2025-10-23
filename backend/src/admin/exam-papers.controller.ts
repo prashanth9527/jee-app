@@ -321,6 +321,48 @@ export class AdminExamPapersController {
 		};
 	}
 
+	@Post('bulk-delete')
+	async bulkDeletePost(@Body() body: { ids: string[] }) {
+		if (!body.ids || !Array.isArray(body.ids) || body.ids.length === 0) {
+			throw new BadRequestException('Exam paper IDs array is required');
+		}
+
+		// Check which exam papers have submissions
+		const examPapersWithSubmissions = await this.prisma.examPaper.findMany({
+			where: {
+				id: { in: body.ids }
+			},
+			include: {
+				_count: {
+					select: {
+						submissions: true
+					}
+				}
+			}
+		});
+
+		const papersWithSubmissions = examPapersWithSubmissions.filter((paper: any) => paper._count.submissions > 0);
+		
+		if (papersWithSubmissions.length > 0) {
+			const paperTitles = papersWithSubmissions.map((paper: any) => `"${paper.title}"`).join(', ');
+			throw new BadRequestException(`Cannot delete the following exam papers as they have submissions: ${paperTitles}. Please delete all submissions first.`);
+		}
+
+		const result = await this.prisma.examPaper.deleteMany({
+			where: {
+				id: {
+					in: body.ids
+				}
+			}
+		});
+		
+		return { 
+			ok: true, 
+			deletedCount: result.count,
+			message: `Successfully deleted ${result.count} exam paper${result.count !== 1 ? 's' : ''}`
+		};
+	}
+
 	@Get(':id/statistics')
 	async getStatistics(@Param('id') id: string) {
 		const examPaper = await this.prisma.examPaper.findUnique({
