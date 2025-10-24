@@ -280,7 +280,7 @@ export default function AdminPYQPage() {
   };
 
   const openCreateForm = () => {
-    router.push('/admin/pyq/add');
+    router.push('/admin/questions/add');
   };
 
   const openEditForm = (question: Question) => {

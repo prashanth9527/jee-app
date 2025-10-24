@@ -35,7 +35,8 @@ export class AdminQuestionsController {
 		@Query('subtopicIds') subtopicIds?: string,
 		@Query('difficulty') difficulty?: string,
 		@Query('status') status?: string,
-		@Query('reviewMode') reviewMode?: string
+		@Query('reviewMode') reviewMode?: string,
+		@Query('parentQuestionId') parentQuestionId?: string
 	) {
 		const currentPage = parseInt(page || '1');
 		const itemsPerPage = parseInt(limit || '10');
@@ -45,6 +46,13 @@ export class AdminQuestionsController {
 		const where: any = {
 			createdById: null
 		};
+		
+		// Filter by parentQuestionId
+		if (parentQuestionId === 'null') {
+			where.parentQuestionId = null;
+		} else if (parentQuestionId) {
+			where.parentQuestionId = parentQuestionId;
+		}
 		
 		// Special filtering for review mode (question-review page)
 		if (reviewMode === 'true') {
@@ -276,7 +284,9 @@ export class AdminQuestionsController {
 
 		// Build where clause
 		const where: any = {
-			createdById: null
+			createdById: null,
+			parentQuestionId: null,
+			questionType: 'OPEN_ENDED'
 		};
 		
 		// Special filtering for review mode (question-review page)

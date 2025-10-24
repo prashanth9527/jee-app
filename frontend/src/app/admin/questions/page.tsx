@@ -208,7 +208,10 @@ export default function QuestionsPage() {
 			...(selectedSubtopic && { subtopicId: selectedSubtopic }),
 			...(selectedDifficulty && { difficulty: selectedDifficulty }),
 			...(selectedStatus && { status: selectedStatus }),
-			...(selectedQuestionType && { questionType: selectedQuestionType })
+			...(selectedQuestionType && { questionType: selectedQuestionType }),
+			// Filter for questions with createdById null and parentQuestionId null
+			createdById: 'null',
+			parentQuestionId: 'null'
 		});
 
 			const [questionsResponse, subjectsResponse, lessonsResponse, topicsResponse, subtopicsResponse] = await Promise.all([
