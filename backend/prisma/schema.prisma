@@ -10,54 +10,54 @@ datasource db {
 }
 
 model User {
-  id                String             @id @default(cuid())
-  email             String             @unique
-  phone             String?            @unique
-  pendingPhone      String?
-  emailVerified     Boolean            @default(false)
-  phoneVerified     Boolean            @default(false)
-  hashedPassword    String?
-  fullName          String
-  role              UserRole           @default(STUDENT)
-  streamId          String?
-  googleId          String?            @unique
-  profilePicture    String?
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
-  trialStartedAt    DateTime?
-  trialEndsAt       DateTime?
-  aiTestsUsed       Int                @default(0)
-  aiTestsLimit      Int                @default(0)
-  lastAiResetAt     DateTime?
-  createdExamPapers ExamPaper[]        @relation("ExamPaperCreator")
-  examSubmissions   ExamSubmission[]
-  otps              Otp[]
-  paymentOrders     PaymentOrder[]
-  createdQuestions  Question[]         @relation("QuestionCreator")
-  reviewedReports   QuestionReport[]   @relation("ReportReviewer")
-  questionReports   QuestionReport[]
-  referralReceived  Referral?          @relation("Referee")
-  referralsMade     Referral[]         @relation("Referrer")
-  referralCode      ReferralCode?
-  subscriptions     Subscription[]
-  stream            Stream?            @relation(fields: [streamId], references: [id])
-  blogBookmarks     BlogBookmark[]
-  blogComments      BlogComment[]
-  blogLikes         BlogLike[]
-  blogs             Blog[]
-  bookmarks         Bookmark[]
-  contactTickets    ContactTicket[]
-  lessonBadges      LessonBadge[]
-  lessonProgress    LessonProgress[]
-  lmsProgress       LMSProgress[]
-  subjectProgress   SubjectProgress[]
-  subtopicProgress  SubtopicProgress[]
-  ticketResponses   TicketResponse[]
-  topicProgress     TopicProgress[]
-  sessions          UserSession[]
-  performanceAnalysis ContentPerformanceAnalysis[]
-  aiFeatureUsage     AIFeatureUsage[]
-  aiGeneratedResults AIGeneratedResult[]
+  id                   String                       @id @default(cuid())
+  email                String                       @unique
+  phone                String?                      @unique
+  pendingPhone         String?
+  emailVerified        Boolean                      @default(false)
+  phoneVerified        Boolean                      @default(false)
+  hashedPassword       String?
+  fullName             String
+  role                 UserRole                     @default(STUDENT)
+  streamId             String?
+  googleId             String?                      @unique
+  profilePicture       String?
+  createdAt            DateTime                     @default(now())
+  updatedAt            DateTime                     @updatedAt
+  trialStartedAt       DateTime?
+  trialEndsAt          DateTime?
+  aiTestsUsed          Int                          @default(0)
+  aiTestsLimit         Int                          @default(0)
+  lastAiResetAt        DateTime?
+  createdExamPapers    ExamPaper[]                  @relation("ExamPaperCreator")
+  examSubmissions      ExamSubmission[]
+  otps                 Otp[]
+  paymentOrders        PaymentOrder[]
+  createdQuestions     Question[]                   @relation("QuestionCreator")
+  reviewedReports      QuestionReport[]             @relation("ReportReviewer")
+  questionReports      QuestionReport[]
+  referralReceived     Referral?                    @relation("Referee")
+  referralsMade        Referral[]                   @relation("Referrer")
+  referralCode         ReferralCode?
+  subscriptions        Subscription[]
+  stream               Stream?                      @relation(fields: [streamId], references: [id])
+  blogBookmarks        BlogBookmark[]
+  blogComments         BlogComment[]
+  blogLikes            BlogLike[]
+  blogs                Blog[]
+  bookmarks            Bookmark[]
+  contactTickets       ContactTicket[]
+  lessonBadges         LessonBadge[]
+  lessonProgress       LessonProgress[]
+  lmsProgress          LMSProgress[]
+  subjectProgress      SubjectProgress[]
+  subtopicProgress     SubtopicProgress[]
+  ticketResponses      TicketResponse[]
+  topicProgress        TopicProgress[]
+  sessions             UserSession[]
+  performanceAnalysis  ContentPerformanceAnalysis[]
+  aiFeatureUsage       AIFeatureUsage[]
+  aiGeneratedResults   AIGeneratedResult[]
   aiContentGenerations AIContentGeneration[]
 }
 
@@ -76,38 +76,38 @@ model Stream {
 }
 
 model Subject {
-  id          String            @id @default(cuid())
-  name        String
-  description String?
-  streamId    String
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  lessons     Lesson[]
-  questions   Question[]
-  stream      Stream            @relation(fields: [streamId], references: [id], onDelete: Cascade)
-  topics      Topic[]
-  blogs       Blog[]
-  lmsContent  LMSContent[]
-  progress    SubjectProgress[]
+  id                  String                       @id @default(cuid())
+  name                String
+  description         String?
+  streamId            String
+  createdAt           DateTime                     @default(now())
+  updatedAt           DateTime                     @updatedAt
+  lessons             Lesson[]
+  questions           Question[]
+  stream              Stream                       @relation(fields: [streamId], references: [id], onDelete: Cascade)
+  topics              Topic[]
+  blogs               Blog[]
+  lmsContent          LMSContent[]
+  progress            SubjectProgress[]
   performanceAnalysis ContentPerformanceAnalysis[]
 
   @@unique([streamId, name])
 }
 
 model Lesson {
-  id          String           @id @default(cuid())
-  name        String
-  description String?
-  subjectId   String
-  order       Int              @default(0)
-  isActive    Boolean          @default(true)
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  subject     Subject          @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-  questions   Question[]
-  topics      Topic[]
-  progress    LessonProgress[]
-  lmsContent  LMSContent[]
+  id                   String                @id @default(cuid())
+  name                 String
+  description          String?
+  subjectId            String
+  order                Int                   @default(0)
+  isActive             Boolean               @default(true)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  subject              Subject               @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  questions            Question[]
+  topics               Topic[]
+  progress             LessonProgress[]
+  lmsContent           LMSContent[]
   aiContentGenerations AIContentGeneration[]
 
   @@unique([subjectId, name])
@@ -115,21 +115,21 @@ model Lesson {
 }
 
 model Topic {
-  id          String          @id @default(cuid())
-  name        String
-  description String?
-  lessonId    String
-  subjectId   String
-  order       Int             @default(0)
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-  questions   Question[]
-  subtopics   Subtopic[]
-  lesson      Lesson          @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  subject     Subject         @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-  lmsContent  LMSContent[]
-  progress    TopicProgress[]
-  performanceAnalysis ContentPerformanceAnalysis[]
+  id                   String                       @id @default(cuid())
+  name                 String
+  description          String?
+  lessonId             String
+  subjectId            String
+  order                Int                          @default(0)
+  createdAt            DateTime                     @default(now())
+  updatedAt            DateTime                     @updatedAt
+  questions            Question[]
+  subtopics            Subtopic[]
+  lesson               Lesson                       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  subject              Subject                      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  lmsContent           LMSContent[]
+  progress             TopicProgress[]
+  performanceAnalysis  ContentPerformanceAnalysis[]
   aiContentGenerations AIContentGeneration[]
 
   @@unique([lessonId, name])
@@ -137,18 +137,18 @@ model Topic {
 }
 
 model Subtopic {
-  id          String             @id @default(cuid())
-  name        String
-  description String?
-  topicId     String
-  order       Int                @default(0)
-  createdAt   DateTime           @default(now())
-  updatedAt   DateTime           @updatedAt
-  questions   Question[]
-  topic       Topic              @relation(fields: [topicId], references: [id], onDelete: Cascade)
-  lmsContent  LMSContent[]
-  progress    SubtopicProgress[]
-  performanceAnalysis ContentPerformanceAnalysis[]
+  id                   String                       @id @default(cuid())
+  name                 String
+  description          String?
+  topicId              String
+  order                Int                          @default(0)
+  createdAt            DateTime                     @default(now())
+  updatedAt            DateTime                     @updatedAt
+  questions            Question[]
+  topic                Topic                        @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  lmsContent           LMSContent[]
+  progress             SubtopicProgress[]
+  performanceAnalysis  ContentPerformanceAnalysis[]
   aiContentGenerations AIContentGeneration[]
 
   @@unique([topicId, name])
@@ -273,22 +273,24 @@ model QuestionAlternativeExplanation {
 }
 
 model ExamPaper {
-  id           String           @id @default(cuid())
-  title        String
-  description  String?
-  subjectIds   String[]         @default([])
-  topicIds     String[]         @default([])
-  subtopicIds  String[]         @default([])
-  questionIds  String[]         @default([])
-  timeLimitMin Int?
-  examType     ExamType         @default(REGULAR)
-  contentId    String?          // For content-specific exams
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  createdById  String?
-  createdBy    User?            @relation("ExamPaperCreator", fields: [createdById], references: [id])
-  submissions  ExamSubmission[]
-  content      LMSContent?      @relation(fields: [contentId], references: [id])
+  id                  String           @id @default(cuid())
+  title               String
+  description         String?
+  subjectIds          String[]         @default([])
+  topicIds            String[]         @default([])
+  subtopicIds         String[]         @default([])
+  questionIds         String[]         @default([])
+  timeLimitMin        Int?
+  examType            ExamType         @default(REGULAR)
+  contentId           String? // For content-specific exams
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  createdById         String?
+  pdfProcessorCacheId String?
+  createdBy           User?            @relation("ExamPaperCreator", fields: [createdById], references: [id])
+  submissions         ExamSubmission[]
+  content             LMSContent?      @relation(fields: [contentId], references: [id])
+  pdfProcessorCache   PDFProcessorCache?   @relation(fields: [pdfProcessorCacheId], references: [id])
 }
 
 model ExamSubmission {
@@ -618,56 +620,56 @@ model TicketResponse {
 }
 
 model LMSContent {
-  id               String        @id @default(cuid())
-  title            String
-  description      String?
-  contentType      ContentType
-  status           ContentStatus @default(DRAFT)
-  accessType       AccessType    @default(FREE)
-  contentData      Json?
-  fileUrl          String?
-  fileSize         Int?
-  fileType         String?
-  originalFileName String?
-  externalUrl      String?
-  iframeCode       String?
-  youtubeId        String?
-  youtubeUrl       String?
-  h5pContent       Json?
-  scormData        Json?
-  contentSummary   String?       @db.Text
-  mindMap          String?       @db.Text
-  videoLink        String?
-  streamId         String?
-  subjectId        String?
-  lessonId         String?
-  topicId          String?
-  subtopicId       String?
-  isDripContent    Boolean       @default(false)
-  dripDelay        Int?
-  dripDate         DateTime?
-  duration         Int?
-  difficulty       Difficulty?
-  tags             String[]
-  order            Int           @default(0)
-  parentId         String?
-  views            Int           @default(0)
-  completions      Int           @default(0)
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
-  lesson           Lesson?       @relation(fields: [lessonId], references: [id])
-  parent           LMSContent?   @relation("ContentHierarchy", fields: [parentId], references: [id])
-  children         LMSContent[]  @relation("ContentHierarchy")
-  stream           Stream?       @relation(fields: [streamId], references: [id])
-  subject          Subject?      @relation(fields: [subjectId], references: [id])
-  subtopic         Subtopic?     @relation(fields: [subtopicId], references: [id])
-  topic            Topic?        @relation(fields: [topicId], references: [id])
-  progress         LMSProgress[]
-  pdfProcessorCache PDFProcessorCache[]
-  exams            ExamPaper[]
+  id                  String                       @id @default(cuid())
+  title               String
+  description         String?
+  contentType         ContentType
+  status              ContentStatus                @default(DRAFT)
+  accessType          AccessType                   @default(FREE)
+  contentData         Json?
+  fileUrl             String?
+  fileSize            Int?
+  fileType            String?
+  originalFileName    String?
+  externalUrl         String?
+  iframeCode          String?
+  youtubeId           String?
+  youtubeUrl          String?
+  h5pContent          Json?
+  scormData           Json?
+  contentSummary      String?                      @db.Text
+  mindMap             String?                      @db.Text
+  videoLink           String?
+  streamId            String?
+  subjectId           String?
+  lessonId            String?
+  topicId             String?
+  subtopicId          String?
+  isDripContent       Boolean                      @default(false)
+  dripDelay           Int?
+  dripDate            DateTime?
+  duration            Int?
+  difficulty          Difficulty?
+  tags                String[]
+  order               Int                          @default(0)
+  parentId            String?
+  views               Int                          @default(0)
+  completions         Int                          @default(0)
+  createdAt           DateTime                     @default(now())
+  updatedAt           DateTime                     @updatedAt
+  lesson              Lesson?                      @relation(fields: [lessonId], references: [id])
+  parent              LMSContent?                  @relation("ContentHierarchy", fields: [parentId], references: [id])
+  children            LMSContent[]                 @relation("ContentHierarchy")
+  stream              Stream?                      @relation(fields: [streamId], references: [id])
+  subject             Subject?                     @relation(fields: [subjectId], references: [id])
+  subtopic            Subtopic?                    @relation(fields: [subtopicId], references: [id])
+  topic               Topic?                       @relation(fields: [topicId], references: [id])
+  progress            LMSProgress[]
+  pdfProcessorCache   PDFProcessorCache[]
+  exams               ExamPaper[]
   performanceAnalysis ContentPerformanceAnalysis[]
-  aiFeatureUsage     AIFeatureUsage[]
-  aiGeneratedResults AIGeneratedResult[]
+  aiFeatureUsage      AIFeatureUsage[]
+  aiGeneratedResults  AIGeneratedResult[]
 
   @@map("lms_content")
 }
@@ -944,9 +946,10 @@ model PDFProcessorCache {
   htmlFilePath     String?
   htmlContent      String?
   lmsContentId     String?
-  lmsContent       LMSContent? @relation(fields: [lmsContentId], references: [id])
+  lmsContent       LMSContent?       @relation(fields: [lmsContentId], references: [id])
   questions        Question[]
   logs             PDFProcessorLog[]
+  examPapers       ExamPaper[]
 
   @@map("pdf_processor_cache")
 }
@@ -1194,104 +1197,104 @@ enum ExamType {
 }
 
 model ContentPerformanceAnalysis {
-  id                String   @id @default(cuid())
-  userId            String
-  contentId         String
-  subjectId         String?
-  topicId           String?
-  subtopicId        String?
-  
+  id         String  @id @default(cuid())
+  userId     String
+  contentId  String
+  subjectId  String?
+  topicId    String?
+  subtopicId String?
+
   // Performance metrics
-  timeSpent         Int      @default(0) // in seconds
-  completionRate   Float    @default(0) // 0-100
-  averageScore      Float?   // if applicable
-  attempts          Int      @default(0)
-  
+  timeSpent      Int    @default(0) // in seconds
+  completionRate Float  @default(0) // 0-100
+  averageScore   Float? // if applicable
+  attempts       Int    @default(0)
+
   // AI analysis data
-  strengths         String[] @default([])
-  weaknesses        String[] @default([])
-  suggestions       String[] @default([])
-  difficultyLevel   String?  // AI assessed difficulty
-  learningStyle    String?  // AI detected learning style
-  
+  strengths       String[] @default([])
+  weaknesses      String[] @default([])
+  suggestions     String[] @default([])
+  difficultyLevel String? // AI assessed difficulty
+  learningStyle   String? // AI detected learning style
+
   // Analysis metadata
-  lastAnalyzedAt    DateTime @default(now())
-  analysisVersion   String   @default("1.0")
-  aiModel           String   @default("gpt-4")
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  content           LMSContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  subject           Subject? @relation(fields: [subjectId], references: [id])
-  topic            Topic?   @relation(fields: [topicId], references: [id])
-  subtopic          Subtopic? @relation(fields: [subtopicId], references: [id])
-  
+  lastAnalyzedAt  DateTime @default(now())
+  analysisVersion String   @default("1.0")
+  aiModel         String   @default("gpt-4")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content  LMSContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  subject  Subject?   @relation(fields: [subjectId], references: [id])
+  topic    Topic?     @relation(fields: [topicId], references: [id])
+  subtopic Subtopic?  @relation(fields: [subtopicId], references: [id])
+
   @@unique([userId, contentId])
   @@map("content_performance_analysis")
 }
 
 model AIFeatureUsage {
-  id                String   @id @default(cuid())
-  userId            String
-  contentId         String
-  featureType       AIFeatureType
-  usageCount        Int      @default(0)
-  lastUsedAt        DateTime @default(now())
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  content           LMSContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  
+  id          String        @id @default(cuid())
+  userId      String
+  contentId   String
+  featureType AIFeatureType
+  usageCount  Int           @default(0)
+  lastUsedAt  DateTime      @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content LMSContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
   @@unique([userId, contentId, featureType])
   @@map("ai_feature_usage")
 }
 
 model AIGeneratedResult {
-  id                String   @id @default(cuid())
-  userId            String
-  contentId         String
-  featureType       AIFeatureType
-  resultData        Json     // Stores the generated content (questions, summary, etc.)
-  version           Int      @default(1)
-  isActive          Boolean  @default(true)
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  content           LMSContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  
+  id          String        @id @default(cuid())
+  userId      String
+  contentId   String
+  featureType AIFeatureType
+  resultData  Json // Stores the generated content (questions, summary, etc.)
+  version     Int           @default(1)
+  isActive    Boolean       @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content LMSContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
   @@unique([userId, contentId, featureType, version])
   @@map("ai_generated_results")
 }
 
 model AIContentGeneration {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   // Content identification
-  lessonId  String?
-  topicId   String?
+  lessonId   String?
+  topicId    String?
   subtopicId String?
-  
+
   // Content type and data
   contentType String // 'LESSON_SUMMARY', 'TOPIC_EXPLANATION', 'MICRO_LESSON'
-  contentData Json   // The actual generated content
-  
+  contentData Json // The actual generated content
+
   // Metadata
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   // Relations
-  lesson    Lesson?    @relation(fields: [lessonId], references: [id])
-  topic     Topic?     @relation(fields: [topicId], references: [id])
-  subtopic  Subtopic?  @relation(fields: [subtopicId], references: [id])
-  
+  lesson   Lesson?   @relation(fields: [lessonId], references: [id])
+  topic    Topic?    @relation(fields: [topicId], references: [id])
+  subtopic Subtopic? @relation(fields: [subtopicId], references: [id])
+
   @@unique([userId, lessonId, contentType])
   @@unique([userId, topicId, contentType])
   @@unique([userId, subtopicId, contentType])

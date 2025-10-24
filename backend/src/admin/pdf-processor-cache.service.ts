@@ -169,7 +169,7 @@ export class PDFProcessorCacheService {
         
         // If database path doesn't work, try to construct it like the working implementation
         if (!fs.existsSync(filePath)) {
-          const contentDir = path.join(process.cwd(), 'content');
+          const contentDir = path.join(process.cwd(), '..', 'content');
           const constructedPath = path.join(contentDir, record.fileName);
           this.logger.log(`Trying constructed path: ${constructedPath}`);
           
@@ -236,7 +236,7 @@ export class PDFProcessorCacheService {
         
         // If database path doesn't work, try to construct it like the working implementation
         if (!fs.existsSync(filePath)) {
-          const contentDir = path.join(process.cwd(), 'content');
+          const contentDir = path.join(process.cwd(), '..', 'content');
           const constructedPath = path.join(contentDir, record.fileName);
           this.logger.log(`Trying constructed path: ${constructedPath}`);
           
@@ -311,23 +311,47 @@ export class PDFProcessorCacheService {
     try {
       this.logger.log('Starting sync of files from content folder');
       
-      const contentDir = path.join(process.cwd(), 'content');
+      const contentDir = path.join(process.cwd(), '..', 'content');
       
       if (!fs.existsSync(contentDir)) {
         throw new Error(`Content directory not found: ${contentDir}`);
       }
+      console.log('Content directory:', contentDir);
+      console.log('Platform:', process.platform);
       
-      // Get all PDF files from content directory
-      const files = fs.readdirSync(contentDir).filter(file => 
-        file.toLowerCase().endsWith('.pdf')
-      );
+      // Recursively get all PDF files from content directory and subdirectories
+      const getAllPdfFiles = (dir: string): string[] => {
+        const files: string[] = [];
+        const items = fs.readdirSync(dir);
+        
+        for (const item of items) {
+          const fullPath = path.join(dir, item);
+          const stat = fs.statSync(fullPath);
+          
+          if (stat.isDirectory()) {
+            // Recursively search subdirectories
+            files.push(...getAllPdfFiles(fullPath));
+          } else if (item.toLowerCase().endsWith('.pdf')) {
+            files.push(fullPath);
+          }
+        }
+        
+        return files;
+      };
       
+      const files = getAllPdfFiles(contentDir);
+      // console.log('Found PDF files:', files);
       let synced = 0;
       let updated = 0;
       let skipped = 0;
       
-      for (const fileName of files) {
-        const filePath = path.join(contentDir, fileName);
+      for (const filePath of files) {
+        // Get relative path from content directory and normalize for cross-platform compatibility
+        const relativePath = path.relative(contentDir, filePath);
+        const fileName = relativePath.replace(/\\/g, '/'); // Normalize path separators for cross-platform compatibility
+        // console.log('Processing file:', fileName);
+        // console.log('Full path:', filePath);
+        // console.log('Relative path:', relativePath);
         const stats = fs.statSync(filePath);
         
         // Check if record already exists
@@ -362,16 +386,21 @@ export class PDFProcessorCacheService {
           });
           synced++;
         }
+        
       }
       
+      
       this.logger.log(`Sync completed: ${synced} synced, ${updated} updated, ${skipped} skipped`);
+      console.log(`Total PDF files found: ${files.length}`);
+      console.log(`Files processed: ${synced + updated + skipped}`);
       
       return {
         success: true,
         synced,
         updated,
         skipped,
-        message: `Sync completed: ${synced} files synced, ${updated} files updated, ${skipped} duplicates skipped`
+        totalFound: files.length,
+        message: `Sync completed: ${files.length} PDF files found, ${synced} files synced, ${updated} files updated, ${skipped} duplicates skipped`
       };
     } catch (error) {
       this.logger.error('Error syncing files:', error);
@@ -852,16 +881,54 @@ export class PDFProcessorCacheService {
     try {
       this.logger.log(`Starting deletion of cache record: ${id}`);
       
+      // First, get the record to access file information
+      const record = await this.prisma.pDFProcessorCache.findUnique({
+        where: { id }
+      });
+
+      if (!record) {
+        throw new Error(`Record not found for ID: ${id}`);
+      }
+
+      // Delete the physical file if it exists
+      if (record.filePath && fs.existsSync(record.filePath)) {
+        try {
+          fs.unlinkSync(record.filePath);
+          this.logger.log(`Successfully deleted physical file: ${record.filePath}`);
+        } catch (fileError) {
+          this.logger.warn(`Failed to delete physical file: ${record.filePath}`, fileError);
+          // Continue with database deletion even if file deletion fails
+        }
+      } else {
+        this.logger.warn(`Physical file not found or path not specified: ${record.filePath}`);
+      }
+
+      // Delete associated exam papers first (if any)
+      await this.prisma.examPaper.deleteMany({
+        where: { pdfProcessorCacheId: id }
+      });
+
+      // Delete associated questions first (if any)
+      await this.prisma.question.deleteMany({
+        where: { pdfProcessorCacheId: id }
+      });
+
+      // Delete associated logs (if any)
+      await this.prisma.pDFProcessorLog.deleteMany({
+        where: { cacheId: id }
+      });
+
+      // Delete the database record
       const deleted = await this.prisma.pDFProcessorCache.delete({
         where: { id }
       });
 
-      this.logger.log(`Successfully deleted cache record: ${id}`);
+      this.logger.log(`Successfully deleted cache record and associated data: ${id}`);
       
       return {
         success: true,
         deleted,
-        message: 'Cache record deleted successfully'
+        message: 'Cache record, associated data, and physical file deleted successfully'
       };
     } catch (error) {
       this.logger.error('Error deleting cache record:', error);
