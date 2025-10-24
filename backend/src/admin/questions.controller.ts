@@ -605,11 +605,24 @@ export class AdminQuestionsController {
 		subtopicId?: string; 
 		options: { text: string; isCorrect?: boolean; order?: number }[]; 
 		tagNames?: string[];
-		// Open-ended question fields
+		// Question type and marks system
+		questionType?: 'MCQ_SINGLE'|'MCQ_MULTIPLE'|'OPEN_ENDED'|'PARAGRAPH';
+		parentQuestionId?: string;
+		allowPartialMarking?: boolean;
+		fullMarks?: number;
+		partialMarks?: number;
+		negativeMarks?: number;
+		// Open-ended question fields (legacy support)
 		isOpenEnded?: boolean;
 		correctNumericAnswer?: number;
 		answerTolerance?: number;
 	}) {
+		// Determine question type based on legacy isOpenEnded field or new questionType
+		let questionType = body.questionType || 'MCQ_SINGLE';
+		if (body.isOpenEnded && !body.questionType) {
+			questionType = 'OPEN_ENDED';
+		}
+
 		const question = await this.prisma.question.create({ 
 			data: {
 				stem: body.stem,
@@ -622,8 +635,15 @@ export class AdminQuestionsController {
 				lessonId: body.lessonId || null,
 				topicId: body.topicId || null,
 				subtopicId: body.subtopicId || null,
-				// Handle open-ended questions
-				isOpenEnded: body.isOpenEnded || false,
+				// New question type and marks system
+				questionType: questionType as any,
+				parentQuestionId: body.parentQuestionId || null,
+				allowPartialMarking: body.allowPartialMarking || false,
+				fullMarks: body.fullMarks || 4.0,
+				partialMarks: body.partialMarks || 2.0,
+				negativeMarks: body.negativeMarks || -2.0,
+				// Handle open-ended questions (legacy support)
+				isOpenEnded: body.isOpenEnded || questionType === 'OPEN_ENDED',
 				correctNumericAnswer: body.correctNumericAnswer || null,
 				answerTolerance: body.answerTolerance || 0.01,
 				options: { 
@@ -671,11 +691,24 @@ export class AdminQuestionsController {
 		status?: 'approved'|'underreview'|'rejected';
 		options?: { id?: string; text: string; isCorrect?: boolean; order?: number }[]; 
 		tagNames?: string[];
-		// Open-ended question fields
+		// Question type and marks system
+		questionType?: 'MCQ_SINGLE'|'MCQ_MULTIPLE'|'OPEN_ENDED'|'PARAGRAPH';
+		parentQuestionId?: string;
+		allowPartialMarking?: boolean;
+		fullMarks?: number;
+		partialMarks?: number;
+		negativeMarks?: number;
+		// Open-ended question fields (legacy support)
 		isOpenEnded?: boolean;
 		correctNumericAnswer?: number;
 		answerTolerance?: number;
 	}) {
+		// Determine question type based on legacy isOpenEnded field or new questionType
+		let questionType = body.questionType;
+		if (body.isOpenEnded && !body.questionType) {
+			questionType = 'OPEN_ENDED';
+		}
+
 		await this.prisma.question.update({ 
 			where: { id }, 
 			data: {
@@ -690,15 +723,22 @@ export class AdminQuestionsController {
 				topicId: body.topicId,
 				subtopicId: body.subtopicId,
 				status: body.status,
-				// Handle open-ended questions
+				// New question type and marks system
+				questionType: questionType as any,
+				parentQuestionId: body.parentQuestionId,
+				allowPartialMarking: body.allowPartialMarking,
+				fullMarks: body.fullMarks,
+				partialMarks: body.partialMarks,
+				negativeMarks: body.negativeMarks,
+				// Handle open-ended questions (legacy support)
 				isOpenEnded: body.isOpenEnded,
 				correctNumericAnswer: body.correctNumericAnswer,
 				answerTolerance: body.answerTolerance,
 			}
 		});
 		
-		// Handle options for MCQ questions
-		if (body.options && !body.isOpenEnded) {
+		// Handle options based on question type
+		if (body.options && (questionType === 'MCQ_SINGLE' || questionType === 'MCQ_MULTIPLE')) {
 			await this.prisma.questionOption.deleteMany({ where: { questionId: id } });
 			await this.prisma.questionOption.createMany({ 
 				data: body.options.map((o: any) => ({ 
@@ -708,8 +748,8 @@ export class AdminQuestionsController {
 					order: o.order ?? 0 
 				})) 
 			});
-		} else if (body.isOpenEnded) {
-			// Clear options for open-ended questions
+		} else if (questionType === 'OPEN_ENDED' || questionType === 'PARAGRAPH') {
+			// Clear options for open-ended and paragraph questions
 			await this.prisma.questionOption.deleteMany({ where: { questionId: id } });
 		}
 		
@@ -987,6 +1027,308 @@ export class AdminQuestionsController {
 		res.setHeader('Content-Type', 'text/csv');
 		res.setHeader('Content-Disposition', 'attachment; filename="questions.csv"');
 		res.send(lines.join('\n'));
+	}
+
+	// New endpoints for paragraph-based questions
+	@Get('paragraph/:id')
+	async getParagraphWithSubQuestions(@Param('id') id: string) {
+		const paragraph = await this.prisma.question.findUnique({
+			where: { id },
+			include: {
+				subQuestions: {
+					include: {
+						options: true,
+						tags: { include: { tag: true } },
+						subject: {
+							select: {
+								id: true,
+								name: true,
+								stream: {
+									select: {
+										id: true,
+										name: true,
+										code: true
+									}
+								}
+							}
+						},
+						topic: {
+							select: {
+								id: true,
+								name: true
+							}
+						},
+						subtopic: {
+							select: {
+								id: true,
+								name: true
+							}
+						}
+					},
+					orderBy: { createdAt: 'asc' }
+				},
+				subject: {
+					select: {
+						id: true,
+						name: true,
+						stream: {
+							select: {
+								id: true,
+								name: true,
+								code: true
+							}
+						}
+					}
+				},
+				topic: {
+					select: {
+						id: true,
+						name: true
+					}
+				},
+				subtopic: {
+					select: {
+						id: true,
+						name: true
+					}
+				}
+			}
+		});
+
+		if (!paragraph || paragraph.questionType !== 'PARAGRAPH') {
+			throw new BadRequestException('Paragraph question not found');
+		}
+
+		return paragraph;
+	}
+
+	@Post('paragraph')
+	async createParagraphQuestion(@Body() body: {
+		stem: string;
+		explanation?: string;
+		tip_formula?: string;
+		difficulty?: 'EASY'|'MEDIUM'|'HARD';
+		yearAppeared?: number;
+		isPreviousYear?: boolean;
+		subjectId?: string;
+		lessonId?: string;
+		topicId?: string;
+		subtopicId?: string;
+		tagNames?: string[];
+		subQuestions: {
+			stem: string;
+			explanation?: string;
+			questionType: 'MCQ_SINGLE'|'MCQ_MULTIPLE'|'OPEN_ENDED';
+			options?: { text: string; isCorrect?: boolean; order?: number }[];
+			correctNumericAnswer?: number;
+			answerTolerance?: number;
+			allowPartialMarking?: boolean;
+			fullMarks?: number;
+			partialMarks?: number;
+			negativeMarks?: number;
+		}[];
+	}) {
+		// Create the paragraph question
+		const paragraph = await this.prisma.question.create({
+			data: {
+				stem: body.stem,
+				explanation: body.explanation || null,
+				tip_formula: body.tip_formula || null,
+				difficulty: body.difficulty || 'MEDIUM',
+				yearAppeared: body.yearAppeared || null,
+				isPreviousYear: !!body.isPreviousYear,
+				subjectId: body.subjectId || null,
+				lessonId: body.lessonId || null,
+				topicId: body.topicId || null,
+				subtopicId: body.subtopicId || null,
+				questionType: 'PARAGRAPH',
+				allowPartialMarking: false,
+				fullMarks: 4.0,
+				partialMarks: 2.0,
+				negativeMarks: -2.0,
+			}
+		});
+
+		// Create sub-questions
+		const subQuestions = [];
+		for (const subQ of body.subQuestions) {
+			const subQuestion = await this.prisma.question.create({
+				data: {
+					stem: subQ.stem,
+					explanation: subQ.explanation || null,
+					difficulty: body.difficulty || 'MEDIUM',
+					yearAppeared: body.yearAppeared || null,
+					isPreviousYear: !!body.isPreviousYear,
+					subjectId: body.subjectId || null,
+					lessonId: body.lessonId || null,
+					topicId: body.topicId || null,
+					subtopicId: body.subtopicId || null,
+					questionType: subQ.questionType,
+					parentQuestionId: paragraph.id,
+					allowPartialMarking: subQ.allowPartialMarking || false,
+					fullMarks: subQ.fullMarks || 4.0,
+					partialMarks: subQ.partialMarks || 2.0,
+					negativeMarks: subQ.negativeMarks || -2.0,
+					correctNumericAnswer: subQ.correctNumericAnswer || null,
+					answerTolerance: subQ.answerTolerance || 0.01,
+					options: {
+						create: (subQ.options || []).map((o: any) => ({
+							text: o.text,
+							isCorrect: !!o.isCorrect,
+							order: o.order ?? 0
+						}))
+					}
+				}
+			});
+			subQuestions.push(subQuestion);
+		}
+
+		// Handle tags for paragraph
+		if (body.tagNames?.length) {
+			for (const name of body.tagNames) {
+				const tag = await this.prisma.tag.upsert({
+					where: { name },
+					update: {},
+					create: { name }
+				});
+				await this.prisma.questionTag.create({
+					data: { questionId: paragraph.id, tagId: tag.id }
+				});
+			}
+		}
+
+		return {
+			paragraph,
+			subQuestions
+		};
+	}
+
+	@Put('paragraph/:id')
+	async updateParagraphQuestion(@Param('id') id: string, @Body() body: {
+		stem: string;
+		explanation?: string;
+		tip_formula?: string;
+		difficulty?: 'EASY'|'MEDIUM'|'HARD';
+		yearAppeared?: number;
+		isPreviousYear?: boolean;
+		subjectId?: string;
+		lessonId?: string;
+		topicId?: string;
+		subtopicId?: string;
+		tagNames?: string[];
+		subQuestions: {
+			stem: string;
+			explanation?: string;
+			questionType: 'MCQ_SINGLE'|'MCQ_MULTIPLE'|'OPEN_ENDED';
+			options?: { text: string; isCorrect?: boolean; order?: number }[];
+			correctNumericAnswer?: number;
+			answerTolerance?: number;
+			allowPartialMarking?: boolean;
+			fullMarks?: number;
+			partialMarks?: number;
+			negativeMarks?: number;
+		}[];
+	}) {
+		// Verify the question exists and is a paragraph question
+		const existingQuestion = await this.prisma.question.findUnique({
+			where: { id },
+			include: { subQuestions: true }
+		});
+
+		if (!existingQuestion || existingQuestion.questionType !== 'PARAGRAPH') {
+			throw new BadRequestException('Paragraph question not found');
+		}
+
+		// Update the main paragraph question
+		const updatedParagraph = await this.prisma.question.update({
+			where: { id },
+			data: {
+				stem: body.stem,
+				explanation: body.explanation,
+				tip_formula: body.tip_formula,
+				difficulty: body.difficulty,
+				yearAppeared: body.yearAppeared,
+				isPreviousYear: body.isPreviousYear,
+				subjectId: body.subjectId,
+				lessonId: body.lessonId,
+				topicId: body.topicId,
+				subtopicId: body.subtopicId,
+			}
+		});
+
+		// Delete existing sub-questions
+		await this.prisma.question.deleteMany({
+			where: { parentQuestionId: id }
+		});
+
+		// Create new sub-questions
+		const subQuestions = [];
+		for (const subQ of body.subQuestions) {
+			const subQuestion = await this.prisma.question.create({
+				data: {
+					stem: subQ.stem,
+					explanation: subQ.explanation,
+					questionType: subQ.questionType,
+					parentQuestionId: id,
+					subjectId: body.subjectId,
+					lessonId: body.lessonId,
+					topicId: body.topicId,
+					subtopicId: body.subtopicId,
+					difficulty: body.difficulty,
+					yearAppeared: body.yearAppeared,
+					isPreviousYear: body.isPreviousYear,
+					allowPartialMarking: subQ.allowPartialMarking,
+					fullMarks: subQ.fullMarks,
+					partialMarks: subQ.partialMarks,
+					negativeMarks: subQ.negativeMarks,
+					correctNumericAnswer: subQ.correctNumericAnswer,
+					answerTolerance: subQ.answerTolerance,
+					status: 'approved'
+				}
+			});
+
+			// Add options for MCQ sub-questions
+			if (subQ.options && subQ.questionType !== 'OPEN_ENDED') {
+				await this.prisma.questionOption.createMany({
+					data: subQ.options.map((opt, index) => ({
+						questionId: subQuestion.id,
+						text: opt.text,
+						isCorrect: !!opt.isCorrect,
+						order: opt.order ?? index
+					}))
+				});
+			}
+
+			subQuestions.push(subQuestion);
+		}
+
+		// Handle tags for paragraph
+		if (body.tagNames && body.tagNames.length > 0) {
+			await this.prisma.questionTag.deleteMany({ where: { questionId: id } });
+			for (const name of body.tagNames) {
+				const tag = await this.prisma.tag.upsert({ 
+					where: { name }, 
+					update: {}, 
+					create: { name } 
+				});
+				await this.prisma.questionTag.create({ 
+					data: { questionId: id, tagId: tag.id } 
+				});
+			}
+		}
+
+		// Return the updated paragraph with sub-questions
+		return this.prisma.question.findUnique({
+			where: { id },
+			include: {
+				subQuestions: {
+					include: {
+						options: true
+					}
+				},
+				tags: { include: { tag: true } }
+			}
+		});
 	}
 
 	

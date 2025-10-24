@@ -22,6 +22,13 @@ interface Question {
 	isOpenEnded: boolean;
 	correctNumericAnswer?: number;
 	answerTolerance?: number;
+	// New fields for question types and marks system
+	questionType?: 'MCQ_SINGLE' | 'MCQ_MULTIPLE' | 'OPEN_ENDED' | 'PARAGRAPH';
+	parentQuestionId?: string;
+	allowPartialMarking?: boolean;
+	fullMarks?: number;
+	partialMarks?: number;
+	negativeMarks?: number;
 	subject?: {
 		id: string;
 		name: string;
@@ -120,6 +127,31 @@ export default function EditQuestionPage() {
 	const [correctNumericAnswer, setCorrectNumericAnswer] = useState('');
 	const [answerTolerance, setAnswerTolerance] = useState('0.01');
 	
+	// New question type and marks system states
+	const [questionType, setQuestionType] = useState<'MCQ_SINGLE' | 'MCQ_MULTIPLE' | 'OPEN_ENDED' | 'PARAGRAPH'>('MCQ_SINGLE');
+	const [allowPartialMarking, setAllowPartialMarking] = useState(false);
+	const [fullMarks, setFullMarks] = useState('4.0');
+	const [partialMarks, setPartialMarks] = useState('2.0');
+	const [negativeMarks, setNegativeMarks] = useState('-2.0');
+	
+	// Paragraph question states
+	const [subQuestions, setSubQuestions] = useState<{
+		id: string;
+		stem: string;
+		explanation?: string;
+		questionType: 'MCQ_SINGLE' | 'MCQ_MULTIPLE' | 'OPEN_ENDED';
+		options: { text: string; isCorrect: boolean }[];
+		correctNumericAnswer?: string;
+		answerTolerance?: string;
+		allowPartialMarking: boolean;
+		fullMarks: string;
+		partialMarks: string;
+		negativeMarks: string;
+	}[]>([]);
+	
+	// Sub-question toggle states
+	const [expandedSubQuestions, setExpandedSubQuestions] = useState<Set<string>>(new Set());
+	
 	// Form validation states
 	const [errors, setErrors] = useState<{[key: string]: string}>({});
 	const [formProgress, setFormProgress] = useState(0);
@@ -130,37 +162,80 @@ export default function EditQuestionPage() {
 
 	const loadData = async () => {
 		try {
-			const [questionResponse, subjectsResponse, topicsResponse, subtopicsResponse, tagsResponse] = await Promise.all([
-				api.get(`/admin/questions/${questionId}`),
+			// First, get the question to determine its type
+			const questionResponse = await api.get(`/admin/questions/${questionId}`);
+			const questionData = questionResponse.data;
+			
+			// If it's a paragraph question, fetch with sub-questions
+			let fullQuestionData = questionData;
+			if (questionData.questionType === 'PARAGRAPH') {
+				try {
+					const paragraphResponse = await api.get(`/admin/questions/paragraph/${questionId}`);
+					fullQuestionData = paragraphResponse.data;
+				} catch (error) {
+					console.warn('Could not fetch paragraph details, using basic question data:', error);
+				}
+			}
+			
+			const [subjectsResponse, topicsResponse, subtopicsResponse, tagsResponse] = await Promise.all([
 				api.get('/admin/subjects'),
 				api.get('/admin/topics?limit=1000'),
 				api.get('/admin/subtopics?limit=1000'),
 				api.get('/admin/tags?limit=1000')
 			]);
 			
-			const questionData = questionResponse.data;
-			setQuestion(questionData);
+			setQuestion(fullQuestionData);
 			setSubjects(subjectsResponse.data);
 			setTopics(topicsResponse.data.topics || topicsResponse.data);
 			setSubtopics(subtopicsResponse.data.subtopics || subtopicsResponse.data);
 			setAllTags(tagsResponse.data.tags || tagsResponse.data);
 			
 			// Populate form with question data
-			setStem(questionData.stem);
-			setExplanation(questionData.explanation || '');
-			setTipFormula(questionData.tip_formula || '');
-			setDifficulty(questionData.difficulty);
-			setYearAppeared(questionData.yearAppeared?.toString() || '');
-			setIsPreviousYear(questionData.isPreviousYear);
-			setSubjectId(questionData.subjectId || '');
-			setTopicId(questionData.topicId || '');
-			setSubtopicId(questionData.subtopicId || '');
-			setOptions(questionData.options.map((opt: QuestionOption) => ({ text: opt.text, isCorrect: opt.isCorrect })));
-			setTagNames(questionData.tags.map((t: QuestionTag) => t.tag.name).join(', '));
+			setStem(fullQuestionData.stem);
+			setExplanation(fullQuestionData.explanation || '');
+			setTipFormula(fullQuestionData.tip_formula || '');
+			setDifficulty(fullQuestionData.difficulty);
+			setYearAppeared(fullQuestionData.yearAppeared?.toString() || '');
+			setIsPreviousYear(fullQuestionData.isPreviousYear);
+			setSubjectId(fullQuestionData.subjectId || '');
+			setTopicId(fullQuestionData.topicId || '');
+			setSubtopicId(fullQuestionData.subtopicId || '');
+			setOptions(fullQuestionData.options?.map((opt: QuestionOption) => ({ text: opt.text, isCorrect: opt.isCorrect })) || []);
+			setTagNames(fullQuestionData.tags?.map((t: QuestionTag) => t.tag.name).join(', ') || '');
 			// Populate open-ended question fields
-			setIsOpenEnded(questionData.isOpenEnded || false);
-			setCorrectNumericAnswer(questionData.correctNumericAnswer?.toString() || '');
-			setAnswerTolerance(questionData.answerTolerance?.toString() || '0.01');
+			setIsOpenEnded(fullQuestionData.isOpenEnded || false);
+			setCorrectNumericAnswer(fullQuestionData.correctNumericAnswer?.toString() || '');
+			setAnswerTolerance(fullQuestionData.answerTolerance?.toString() || '0.01');
+			
+			// Populate new question type and marks system fields
+			setQuestionType(fullQuestionData.questionType || 'MCQ_SINGLE');
+			setAllowPartialMarking(fullQuestionData.allowPartialMarking || false);
+			setFullMarks(fullQuestionData.fullMarks?.toString() || '4.0');
+			setPartialMarks(fullQuestionData.partialMarks?.toString() || '2.0');
+			setNegativeMarks(fullQuestionData.negativeMarks?.toString() || '-2.0');
+			
+			// Load sub-questions for paragraph questions
+			if (fullQuestionData.questionType === 'PARAGRAPH' && fullQuestionData.subQuestions) {
+				const loadedSubQuestions = fullQuestionData.subQuestions.map((subQ: any) => ({
+					id: subQ.id,
+					stem: subQ.stem,
+					explanation: subQ.explanation || '',
+					questionType: subQ.questionType,
+					options: subQ.options?.map((opt: any) => ({ text: opt.text, isCorrect: opt.isCorrect })) || [],
+					correctNumericAnswer: subQ.correctNumericAnswer?.toString() || '',
+					answerTolerance: subQ.answerTolerance?.toString() || '0.01',
+					allowPartialMarking: subQ.allowPartialMarking || false,
+					fullMarks: subQ.fullMarks?.toString() || '4.0',
+					partialMarks: subQ.partialMarks?.toString() || '2.0',
+					negativeMarks: subQ.negativeMarks?.toString() || '-2.0'
+				}));
+				setSubQuestions(loadedSubQuestions);
+				
+				// Expand the first sub-question by default
+				if (loadedSubQuestions.length > 0) {
+					setExpandedSubQuestions(new Set([loadedSubQuestions[0].id]));
+				}
+			}
 		} catch (error) {
 			console.error('Error fetching data:', error);
 			Swal.fire({
@@ -229,7 +304,7 @@ export default function EditQuestionPage() {
 			newErrors.subject = 'Subject is required';
 		}
 		
-		if (isOpenEnded) {
+		if (questionType === 'OPEN_ENDED') {
 			// Validate open-ended question fields
 			if (!correctNumericAnswer.trim()) {
 				newErrors.correctNumericAnswer = 'Correct numeric answer is required for open-ended questions';
@@ -242,6 +317,31 @@ export default function EditQuestionPage() {
 			} else if (isNaN(parseFloat(answerTolerance)) || parseFloat(answerTolerance) < 0) {
 				newErrors.answerTolerance = 'Answer tolerance must be a positive number';
 			}
+		} else if (questionType === 'PARAGRAPH') {
+			// Validate paragraph questions
+			if (subQuestions.length === 0) {
+				newErrors.subQuestions = 'At least one sub-question is required for paragraph questions';
+			}
+			
+			// Validate each sub-question
+			subQuestions.forEach((subQ, index) => {
+				if (!subQ.stem.trim()) {
+					newErrors[`subQuestion_${index}_stem`] = `Sub-question ${index + 1} stem is required`;
+				}
+				
+				if (subQ.questionType !== 'OPEN_ENDED') {
+					if (subQ.options.some(opt => !opt.text.trim())) {
+						newErrors[`subQuestion_${index}_options`] = `Sub-question ${index + 1} options must be filled`;
+					}
+					if (!subQ.options.some(opt => opt.isCorrect)) {
+						newErrors[`subQuestion_${index}_correct`] = `Sub-question ${index + 1} must have a correct answer`;
+					}
+				} else {
+					if (!subQ.correctNumericAnswer || String(subQ.correctNumericAnswer).trim() === '') {
+						newErrors[`subQuestion_${index}_numeric`] = `Sub-question ${index + 1} numeric answer is required`;
+					}
+				}
+			});
 		} else {
 			// Validate MCQ question fields
 			if (options.some(opt => !opt.text.trim())) {
@@ -259,7 +359,7 @@ export default function EditQuestionPage() {
 		
 		setErrors(newErrors);
 		return Object.keys(newErrors).length === 0;
-	}, [stem, subjectId, options, yearAppeared, isOpenEnded, correctNumericAnswer, answerTolerance]);
+	}, [stem, subjectId, options, yearAppeared, questionType, correctNumericAnswer, answerTolerance, subQuestions]);
 
 	// Tag suggestions
 	const handleTagInput = (value: string) => {
@@ -312,15 +412,110 @@ export default function EditQuestionPage() {
 	const updateOption = (index: number, field: 'text' | 'isCorrect', value: string | boolean) => {
 		const newOptions = [...options];
 		if (field === 'isCorrect') {
-			// If setting this option as correct, uncheck others
-			newOptions.forEach((opt, i) => {
-				opt.isCorrect = i === index;
-			});
+			if (questionType === 'MCQ_MULTIPLE') {
+				// For multiple choice, allow multiple correct answers
+				newOptions[index].isCorrect = value as boolean;
+			} else {
+				// For single choice, uncheck others when setting this one as correct
+				newOptions.forEach((opt, i) => {
+					opt.isCorrect = i === index;
+				});
+			}
 		} else {
 			newOptions[index][field] = value as string;
 		}
 		setOptions(newOptions);
 		setHasUnsavedChanges(true);
+	};
+
+	// Sub-question management functions
+	const addSubQuestion = () => {
+		const newSubQuestion = {
+			id: `sub_${Date.now()}`,
+			stem: '',
+			explanation: '',
+			questionType: 'MCQ_SINGLE' as 'MCQ_SINGLE' | 'MCQ_MULTIPLE' | 'OPEN_ENDED',
+			options: [
+				{ text: '', isCorrect: true },
+				{ text: '', isCorrect: false },
+				{ text: '', isCorrect: false },
+				{ text: '', isCorrect: false }
+			],
+			correctNumericAnswer: '',
+			answerTolerance: '0.01',
+			allowPartialMarking: false,
+			fullMarks: '4.0',
+			partialMarks: '2.0',
+			negativeMarks: '-2.0'
+		};
+		setSubQuestions([...subQuestions, newSubQuestion]);
+		
+		// Expand the new sub-question
+		const newExpanded = new Set(expandedSubQuestions);
+		newExpanded.add(newSubQuestion.id);
+		setExpandedSubQuestions(newExpanded);
+		
+		setHasUnsavedChanges(true);
+	};
+
+	const removeSubQuestion = (id: string) => {
+		setSubQuestions(subQuestions.filter(sq => sq.id !== id));
+		
+		// Remove from expanded state
+		const newExpanded = new Set(expandedSubQuestions);
+		newExpanded.delete(id);
+		setExpandedSubQuestions(newExpanded);
+		
+		setHasUnsavedChanges(true);
+	};
+
+	const updateSubQuestion = (id: string, field: string, value: any) => {
+		setSubQuestions(subQuestions.map(sq => 
+			sq.id === id ? { ...sq, [field]: value } : sq
+		));
+		setHasUnsavedChanges(true);
+	};
+
+	const updateSubQuestionOption = (subQuestionId: string, optionIndex: number, field: 'text' | 'isCorrect', value: string | boolean) => {
+		setSubQuestions(subQuestions.map(sq => {
+			if (sq.id === subQuestionId) {
+				const newOptions = [...sq.options];
+				if (field === 'isCorrect') {
+					if (sq.questionType === 'MCQ_MULTIPLE') {
+						newOptions[optionIndex].isCorrect = value as boolean;
+					} else {
+						newOptions.forEach((opt, i) => {
+							opt.isCorrect = i === optionIndex;
+						});
+					}
+				} else {
+					newOptions[optionIndex][field] = value as string;
+				}
+				return { ...sq, options: newOptions };
+			}
+			return sq;
+		}));
+		setHasUnsavedChanges(true);
+	};
+
+	// Sub-question toggle functions
+	const toggleSubQuestion = (subQuestionId: string) => {
+		const newExpanded = new Set(expandedSubQuestions);
+		if (newExpanded.has(subQuestionId)) {
+			newExpanded.delete(subQuestionId);
+		} else {
+			newExpanded.add(subQuestionId);
+		}
+		setExpandedSubQuestions(newExpanded);
+	};
+
+	const expandAllSubQuestions = () => {
+		const allIds = new Set(subQuestions.map(sq => sq.id));
+		setExpandedSubQuestions(allIds);
+	};
+
+	const collapseAllSubQuestions = () => {
+		setExpandedSubQuestions(new Set());
 	};
 
 	// Auto-save draft
@@ -398,23 +593,57 @@ export default function EditQuestionPage() {
 		try {
 			const tagNamesArray = tagNames.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
 			
-			await api.put(`/admin/questions/${questionId}`, { 
-				stem: stem.trim(),
-				explanation: explanation.trim() || undefined,
-				tip_formula: tipFormula.trim() || undefined,
-				difficulty,
-				yearAppeared: yearAppeared ? parseInt(yearAppeared) : undefined,
-				isPreviousYear,
-				subjectId,
-				topicId: topicId || undefined,
-				subtopicId: subtopicId || undefined,
-				options: isOpenEnded ? [] : options,
-				tagNames: tagNamesArray.length > 0 ? tagNamesArray : undefined,
-				// Open-ended question fields
-				isOpenEnded,
-				correctNumericAnswer: isOpenEnded && correctNumericAnswer ? parseFloat(correctNumericAnswer) : undefined,
-				answerTolerance: isOpenEnded && answerTolerance ? parseFloat(answerTolerance) : undefined
-			});
+			// Handle paragraph questions differently
+			if (questionType === 'PARAGRAPH') {
+				await api.put(`/admin/questions/paragraph/${questionId}`, {
+					stem: stem.trim(),
+					explanation: explanation.trim() || undefined,
+					tip_formula: tipFormula.trim() || undefined,
+					difficulty,
+					yearAppeared: yearAppeared ? parseInt(yearAppeared) : undefined,
+					isPreviousYear,
+					subjectId,
+					topicId: topicId || undefined,
+					subtopicId: subtopicId || undefined,
+					tagNames: tagNamesArray.length > 0 ? tagNamesArray : undefined,
+					subQuestions: subQuestions.map(sq => ({
+						stem: sq.stem,
+						explanation: sq.explanation,
+						questionType: sq.questionType,
+						options: sq.questionType !== 'OPEN_ENDED' ? sq.options : undefined,
+						correctNumericAnswer: sq.questionType === 'OPEN_ENDED' ? parseFloat(sq.correctNumericAnswer || '0') : undefined,
+						answerTolerance: sq.questionType === 'OPEN_ENDED' ? parseFloat(sq.answerTolerance || '0.01') : undefined,
+						allowPartialMarking: sq.allowPartialMarking,
+						fullMarks: parseFloat(sq.fullMarks),
+						partialMarks: parseFloat(sq.partialMarks),
+						negativeMarks: parseFloat(sq.negativeMarks)
+					}))
+				});
+			} else {
+				await api.put(`/admin/questions/${questionId}`, { 
+					stem: stem.trim(),
+					explanation: explanation.trim() || undefined,
+					tip_formula: tipFormula.trim() || undefined,
+					difficulty,
+					yearAppeared: yearAppeared ? parseInt(yearAppeared) : undefined,
+					isPreviousYear,
+					subjectId,
+					topicId: topicId || undefined,
+					subtopicId: subtopicId || undefined,
+					options: isOpenEnded ? [] : options,
+					tagNames: tagNamesArray.length > 0 ? tagNamesArray : undefined,
+					// New question type and marks system
+					questionType,
+					allowPartialMarking,
+					fullMarks: parseFloat(fullMarks),
+					partialMarks: parseFloat(partialMarks),
+					negativeMarks: parseFloat(negativeMarks),
+					// Open-ended question fields
+					isOpenEnded,
+					correctNumericAnswer: isOpenEnded && correctNumericAnswer ? parseFloat(correctNumericAnswer) : undefined,
+					answerTolerance: isOpenEnded && answerTolerance ? parseFloat(answerTolerance) : undefined
+				});
+			}
 			
 			// Clear draft after successful save
 			localStorage.removeItem(`questionDraft_${questionId}`);
@@ -739,6 +968,330 @@ export default function EditQuestionPage() {
 								</div>
 							</div>
 
+							{/* Question Type and Marks System */}
+							<div className="bg-gray-50 rounded-lg p-4">
+								<h3 className="text-lg font-semibold text-gray-900 mb-4">Question Type & Marks System</h3>
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+									<div>
+										<label className="block text-sm font-medium text-gray-700 mb-2">Question Type *</label>
+										<select 
+											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+											value={questionType}
+											onChange={e => {
+												setQuestionType(e.target.value as 'MCQ_SINGLE' | 'MCQ_MULTIPLE' | 'OPEN_ENDED' | 'PARAGRAPH');
+												setHasUnsavedChanges(true);
+												// Auto-set isOpenEnded for backward compatibility
+												setIsOpenEnded(e.target.value === 'OPEN_ENDED');
+											}}
+										>
+											<option value="MCQ_SINGLE">MCQ Single (One correct answer)</option>
+											<option value="MCQ_MULTIPLE">MCQ Multiple (Multiple correct answers)</option>
+											<option value="OPEN_ENDED">Open Ended (Numeric answer)</option>
+											<option value="PARAGRAPH">Paragraph (Comprehension)</option>
+										</select>
+										<div className="mt-1 text-xs text-gray-500">
+											{questionType === 'MCQ_SINGLE' && 'Traditional MCQ with one correct answer'}
+											{questionType === 'MCQ_MULTIPLE' && 'MCQ with multiple correct answers - partial marking supported'}
+											{questionType === 'OPEN_ENDED' && 'Numeric answer question with tolerance'}
+											{questionType === 'PARAGRAPH' && 'Paragraph-based question with sub-questions'}
+										</div>
+									</div>
+									<div>
+										<label className="block text-sm font-medium text-gray-700 mb-2">Full Marks</label>
+										<input 
+											type="number" 
+											step="0.1"
+											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+											value={fullMarks}
+											onChange={e => {
+												setFullMarks(e.target.value);
+												setHasUnsavedChanges(true);
+											}}
+											placeholder="4.0"
+										/>
+									</div>
+								</div>
+								
+								{questionType === 'MCQ_MULTIPLE' && (
+									<div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+										<div>
+											<label className="block text-sm font-medium text-gray-700 mb-2">Partial Marks</label>
+											<input 
+												type="number" 
+												step="0.1"
+												className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+												value={partialMarks}
+												onChange={e => {
+													setPartialMarks(e.target.value);
+													setHasUnsavedChanges(true);
+												}}
+												placeholder="2.0"
+											/>
+										</div>
+										<div>
+											<label className="block text-sm font-medium text-gray-700 mb-2">Negative Marks</label>
+											<input 
+												type="number" 
+												step="0.1"
+												className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+												value={negativeMarks}
+												onChange={e => {
+													setNegativeMarks(e.target.value);
+													setHasUnsavedChanges(true);
+												}}
+												placeholder="-2.0"
+											/>
+										</div>
+										<div className="flex items-center">
+											<label className="flex items-center">
+												<input 
+													type="checkbox" 
+													className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+													checked={allowPartialMarking}
+													onChange={e => {
+														setAllowPartialMarking(e.target.checked);
+														setHasUnsavedChanges(true);
+													}}
+												/>
+												<span className="ml-2 text-sm text-gray-700">Allow Partial Marking</span>
+											</label>
+										</div>
+									</div>
+								)}
+								
+								{questionType === 'OPEN_ENDED' && (
+									<div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+										<div>
+											<label className="block text-sm font-medium text-gray-700 mb-2">Correct Numeric Answer</label>
+											<input 
+												type="number" 
+												step="0.01"
+												className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+												value={correctNumericAnswer}
+												onChange={e => {
+													setCorrectNumericAnswer(e.target.value);
+													setHasUnsavedChanges(true);
+												}}
+												placeholder="Enter the correct numeric answer"
+											/>
+										</div>
+										<div>
+											<label className="block text-sm font-medium text-gray-700 mb-2">Answer Tolerance</label>
+											<input 
+												type="number" 
+												step="0.01"
+												className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+												value={answerTolerance}
+												onChange={e => {
+													setAnswerTolerance(e.target.value);
+													setHasUnsavedChanges(true);
+												}}
+												placeholder="0.01"
+											/>
+										</div>
+									</div>
+								)}
+							</div>
+
+							{/* Sub-Questions for Paragraph Questions */}
+							{questionType === 'PARAGRAPH' && (
+								<div className="bg-pink-50 rounded-lg p-4">
+									<div className="flex items-center justify-between mb-4">
+										<h3 className="text-lg font-semibold text-pink-900">Sub-Questions</h3>
+										<div className="flex items-center space-x-2">
+											{subQuestions.length > 0 && (
+												<>
+													<button
+														type="button"
+														onClick={expandAllSubQuestions}
+														className="px-3 py-1 text-sm bg-pink-500 text-white rounded hover:bg-pink-600 transition-colors"
+													>
+														Expand All
+													</button>
+													<button
+														type="button"
+														onClick={collapseAllSubQuestions}
+														className="px-3 py-1 text-sm bg-pink-500 text-white rounded hover:bg-pink-600 transition-colors"
+													>
+														Collapse All
+													</button>
+												</>
+											)}
+											<button
+												type="button"
+												onClick={addSubQuestion}
+												className="px-4 py-2 bg-pink-600 text-white rounded-md hover:bg-pink-700 transition-colors flex items-center"
+											>
+												<svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+												</svg>
+												Add Sub-Question
+											</button>
+										</div>
+									</div>
+									
+									{subQuestions.length === 0 ? (
+										<div className="text-center py-8 text-pink-600">
+											<svg className="w-12 h-12 mx-auto mb-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+											</svg>
+											<p className="text-sm">No sub-questions added yet</p>
+											<p className="text-xs text-pink-500 mt-1">Add sub-questions to create a complete paragraph question</p>
+										</div>
+									) : (
+										<div className="space-y-4">
+											{subQuestions.map((subQ, index) => {
+												const isExpanded = expandedSubQuestions.has(subQ.id);
+												return (
+													<div key={subQ.id} className="bg-white border border-pink-200 rounded-lg overflow-hidden">
+														<div className="flex items-center justify-between p-4 bg-pink-100 hover:bg-pink-200 transition-colors cursor-pointer"
+															 onClick={() => toggleSubQuestion(subQ.id)}>
+															<div className="flex items-center space-x-3">
+																<svg 
+																	className={`w-5 h-5 text-pink-600 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+																	fill="none" 
+																	stroke="currentColor" 
+																	viewBox="0 0 24 24"
+																>
+																	<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+																</svg>
+																<h4 className="text-md font-medium text-pink-900">
+																	Sub-Question {index + 1}
+																</h4>
+																{subQ.stem && (
+																	<span className="text-sm text-pink-600 truncate max-w-xs">
+																		{subQ.stem.replace(/<[^>]*>/g, '').substring(0, 50)}...
+																	</span>
+																)}
+															</div>
+															<div className="flex items-center space-x-2">
+																<span className="text-xs text-pink-500 bg-pink-200 px-2 py-1 rounded">
+																	{subQ.questionType.replace('_', ' ')}
+																</span>
+																<button
+																	type="button"
+																	onClick={(e) => {
+																		e.stopPropagation();
+																		removeSubQuestion(subQ.id);
+																	}}
+																	className="p-1 text-red-600 hover:text-red-800"
+																	title="Remove sub-question"
+																>
+																	<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+																		<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+																	</svg>
+																</button>
+															</div>
+														</div>
+														
+														{isExpanded && (
+															<div className="p-4 border-t border-pink-200">
+																<div className="space-y-4">
+														{/* Sub-question stem */}
+														<div>
+															<label className="block text-sm font-medium text-gray-700 mb-2">
+																Question Stem *
+															</label>
+															<LatexRichTextEditor
+																value={subQ.stem}
+																onChange={(content) => updateSubQuestion(subQ.id, 'stem', content)}
+																placeholder="Enter the sub-question text..."
+																height={150}
+															/>
+														</div>
+														
+														{/* Sub-question type */}
+														<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+															<div>
+																<label className="block text-sm font-medium text-gray-700 mb-2">Question Type</label>
+																<select 
+																	className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent text-gray-900 text-base font-medium"
+																	value={subQ.questionType}
+																	onChange={e => updateSubQuestion(subQ.id, 'questionType', e.target.value)}
+																>
+																	<option value="MCQ_SINGLE">MCQ Single</option>
+																	<option value="MCQ_MULTIPLE">MCQ Multiple</option>
+																	<option value="OPEN_ENDED">Open Ended</option>
+																</select>
+															</div>
+															<div>
+																<label className="block text-sm font-medium text-gray-700 mb-2">Full Marks</label>
+																<input 
+																	type="number" 
+																	step="0.1"
+																	className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent text-gray-900 text-base font-medium"
+																	value={subQ.fullMarks}
+																	onChange={e => updateSubQuestion(subQ.id, 'fullMarks', e.target.value)}
+																/>
+															</div>
+														</div>
+														
+														{/* Sub-question options for MCQ */}
+														{subQ.questionType !== 'OPEN_ENDED' && (
+															<div>
+																<label className="block text-sm font-medium text-gray-700 mb-2">Options</label>
+																<div className="space-y-3">
+																	{subQ.options.map((option, optIndex) => (
+																		<div key={optIndex} className="flex items-center space-x-3">
+																			<input 
+																				type={subQ.questionType === 'MCQ_MULTIPLE' ? 'checkbox' : 'radio'}
+																				name={`sub_${subQ.id}_option`}
+																				checked={option.isCorrect}
+																				onChange={() => updateSubQuestionOption(subQ.id, optIndex, 'isCorrect', !option.isCorrect)}
+																				className="text-pink-600 focus:ring-pink-500"
+																			/>
+																			<div className="flex-1">
+																				<LatexRichTextEditor
+																					value={option.text}
+																					onChange={(content) => updateSubQuestionOption(subQ.id, optIndex, 'text', content)}
+																					placeholder={`Option ${optIndex + 1}...`}
+																					height={100}
+																				/>
+																			</div>
+																		</div>
+																	))}
+																</div>
+															</div>
+														)}
+														
+														{/* Sub-question numeric answer for open-ended */}
+														{subQ.questionType === 'OPEN_ENDED' && (
+															<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+																<div>
+																	<label className="block text-sm font-medium text-gray-700 mb-2">Correct Numeric Answer</label>
+																	<input 
+																		type="number" 
+																		step="0.01"
+																		className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent text-gray-900 text-base font-medium"
+																		value={subQ.correctNumericAnswer}
+																		onChange={e => updateSubQuestion(subQ.id, 'correctNumericAnswer', e.target.value)}
+																		placeholder="Enter correct answer"
+																	/>
+																</div>
+																<div>
+																	<label className="block text-sm font-medium text-gray-700 mb-2">Answer Tolerance</label>
+																	<input 
+																		type="number" 
+																		step="0.01"
+																		className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent text-gray-900 text-base font-medium"
+																		value={subQ.answerTolerance}
+																		onChange={e => updateSubQuestion(subQ.id, 'answerTolerance', e.target.value)}
+																		placeholder="0.01"
+																	/>
+																</div>
+															</div>
+														)}
+																</div>
+															</div>
+														)}
+													</div>
+												);
+											})}
+										</div>
+									)}
+								</div>
+							)}
+
 							{/* Additional Metadata */}
 							<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 								<div>
@@ -802,47 +1355,6 @@ export default function EditQuestionPage() {
 								</div>
 							</div>
 
-							{/* Question Type Toggle */}
-							<div className="bg-gray-50 rounded-lg p-4">
-								<div className="flex items-center justify-between">
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">
-											Question Type
-										</label>
-										<p className="text-xs text-gray-500">
-											Choose between multiple choice or open-ended question
-										</p>
-									</div>
-									<div className="flex items-center space-x-4">
-										<label className="flex items-center">
-											<input 
-												type="radio"
-												name="questionType"
-												checked={!isOpenEnded}
-												onChange={() => {
-													setIsOpenEnded(false);
-													setHasUnsavedChanges(true);
-												}}
-												className="text-blue-600 focus:ring-blue-500"
-											/>
-											<span className="ml-2 text-sm text-gray-700">Multiple Choice</span>
-										</label>
-										<label className="flex items-center">
-											<input 
-												type="radio"
-												name="questionType"
-												checked={isOpenEnded}
-												onChange={() => {
-													setIsOpenEnded(true);
-													setHasUnsavedChanges(true);
-												}}
-												className="text-blue-600 focus:ring-blue-500"
-											/>
-											<span className="ml-2 text-sm text-gray-700">Open-ended</span>
-										</label>
-									</div>
-								</div>
-							</div>
 
 							{/* Open-ended Question Fields */}
 							{isOpenEnded && (
@@ -920,7 +1432,7 @@ export default function EditQuestionPage() {
 							)}
 
 							{/* Options */}
-							{!isOpenEnded && (
+							{questionType !== 'OPEN_ENDED' && questionType !== 'PARAGRAPH' && (
 								<div>
 								<div className="flex items-center justify-between mb-2">
 									<label className="block text-sm font-medium text-gray-700">Options *</label>
@@ -946,10 +1458,10 @@ export default function EditQuestionPage() {
 									{options.map((option, index) => (
 										<div key={index} className="flex items-center space-x-3">
 											<input 
-												type="radio"
-												name="correctOption"
+												type={questionType === 'MCQ_MULTIPLE' ? 'checkbox' : 'radio'}
+												name={questionType === 'MCQ_MULTIPLE' ? `correctOption${index}` : 'correctOption'}
 												checked={option.isCorrect}
-												onChange={() => updateOption(index, 'isCorrect', true)}
+												onChange={() => updateOption(index, 'isCorrect', !option.isCorrect)}
 												className="text-blue-600 focus:ring-blue-500"
 											/>
 											<div className="flex-1">
@@ -991,15 +1503,17 @@ export default function EditQuestionPage() {
 								<button 
 									className={`px-6 py-2 rounded-md text-white font-medium transition-colors ${
 										saving || !stem.trim() || !subjectId || 
-										(!isOpenEnded && options.some(opt => !opt.text.trim())) ||
-										(isOpenEnded && (!correctNumericAnswer.trim() || !answerTolerance.trim()))
+										(questionType === 'PARAGRAPH' && subQuestions.length === 0) ||
+										(questionType !== 'OPEN_ENDED' && questionType !== 'PARAGRAPH' && options.some(opt => !opt.text.trim())) ||
+										(questionType === 'OPEN_ENDED' && (!correctNumericAnswer.trim() || !answerTolerance.trim()))
 											? 'bg-gray-400 cursor-not-allowed' 
 											: 'bg-green-600 hover:bg-green-700'
 									}`}
 									onClick={save}
 									disabled={saving || !stem.trim() || !subjectId || 
-										(!isOpenEnded && options.some(opt => !opt.text.trim())) ||
-										(isOpenEnded && (!correctNumericAnswer.trim() || !answerTolerance.trim()))}
+										(questionType === 'PARAGRAPH' && subQuestions.length === 0) ||
+										(questionType !== 'OPEN_ENDED' && questionType !== 'PARAGRAPH' && options.some(opt => !opt.text.trim())) ||
+										(questionType === 'OPEN_ENDED' && (!correctNumericAnswer.trim() || !answerTolerance.trim()))}
 								>
 									{saving ? (
 										<div className="flex items-center">

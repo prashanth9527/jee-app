@@ -16,9 +16,19 @@ interface Question {
   explanation?: string;
   tip_formula?: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  // Legacy support
   isOpenEnded?: boolean;
   correctNumericAnswer?: number;
   answerTolerance?: number;
+  // New question type system
+  questionType?: 'MCQ_SINGLE' | 'MCQ_MULTIPLE' | 'OPEN_ENDED' | 'PARAGRAPH';
+  allowPartialMarking?: boolean;
+  fullMarks?: number;
+  partialMarks?: number;
+  negativeMarks?: number;
+  // Paragraph questions
+  parentQuestionId?: string;
+  subQuestions?: Question[];
   subject?: {
     id: string;
     name: string;
@@ -63,10 +73,20 @@ interface ExamSubmission {
 interface QuestionAnswer {
   questionId: string;
   selectedOptionId?: string;
+  selectedOptionIds?: string[]; // For MCQ_MULTIPLE
   numericValue?: number;
   isCorrect?: boolean;
   timeSpent: number;
   isMarkedForReview: boolean;
+  // For paragraph questions
+  subQuestionAnswers?: {
+    [subQuestionId: string]: {
+      selectedOptionId?: string;
+      selectedOptionIds?: string[];
+      numericValue?: number;
+      isCorrect?: boolean;
+    };
+  };
 }
 
 export default function ExamPage() {
@@ -81,11 +101,40 @@ export default function ExamPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [examCompleted, setExamCompleted] = useState(false);
+  
+  // State for paragraph questions
+  const [expandedSubQuestions, setExpandedSubQuestions] = useState<Set<string>>(new Set());
+  const [currentSubQuestionIndex, setCurrentSubQuestionIndex] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
   const [selectedQuestionForReport, setSelectedQuestionForReport] = useState<Question | null>(null);
   const [userConfirmedExit, setUserConfirmedExit] = useState(false);
+
+  // Helper functions for question types
+  const getQuestionType = (question: Question): 'MCQ_SINGLE' | 'MCQ_MULTIPLE' | 'OPEN_ENDED' | 'PARAGRAPH' => {
+    if (question.questionType) {
+      return question.questionType;
+    }
+    // Legacy support
+    return question.isOpenEnded ? 'OPEN_ENDED' : 'MCQ_SINGLE';
+  };
+
+  const isParagraphQuestion = (question: Question): boolean => {
+    return getQuestionType(question) === 'PARAGRAPH';
+  };
+
+  const isMultipleChoiceQuestion = (question: Question): boolean => {
+    return getQuestionType(question) === 'MCQ_MULTIPLE';
+  };
+
+  const isOpenEndedQuestion = (question: Question): boolean => {
+    return getQuestionType(question) === 'OPEN_ENDED';
+  };
+
+  const isSingleChoiceQuestion = (question: Question): boolean => {
+    return getQuestionType(question) === 'MCQ_SINGLE';
+  };
   const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
   
   
@@ -124,6 +173,19 @@ export default function ExamPage() {
       }));
       
       setAnswers(initialAnswers);
+      
+      // Initialize sub-question expansion for paragraph questions
+      const paragraphQuestions = questionsData.filter((q: Question) => getQuestionType(q) === 'PARAGRAPH');
+      if (paragraphQuestions.length > 0) {
+        const expandedSet = new Set<string>();
+        paragraphQuestions.forEach((question: Question) => {
+          if (question.subQuestions && question.subQuestions.length > 0) {
+            // Expand first sub-question by default
+            expandedSet.add(question.subQuestions[0].id);
+          }
+        });
+        setExpandedSubQuestions(expandedSet);
+      }
       
       // Set timer if exam has time limit
       if (submissionData.examPaper.timeLimitMin) {
@@ -229,19 +291,92 @@ export default function ExamPage() {
 
 
   const handleAnswerSelect = (optionId: string) => {
-    setAnswers(prev => prev.map((answer, index) => 
-      index === currentQuestionIndex 
-        ? { ...answer, selectedOptionId: optionId, numericValue: undefined }
-        : answer
-    ));
+    const currentQuestion = filteredQuestions[currentQuestionIndex];
+    if (isMultipleChoiceQuestion(currentQuestion)) {
+      // For multiple choice, toggle the option
+      setAnswers(prev => prev.map((answer, index) => {
+        if (index === currentQuestionIndex) {
+          const currentSelected = answer.selectedOptionIds || [];
+          const newSelected = currentSelected.includes(optionId)
+            ? currentSelected.filter(id => id !== optionId)
+            : [...currentSelected, optionId];
+          return { ...answer, selectedOptionIds: newSelected, selectedOptionId: undefined, numericValue: undefined };
+        }
+        return answer;
+      }));
+    } else {
+      // For single choice, replace the selection
+      setAnswers(prev => prev.map((answer, index) => 
+        index === currentQuestionIndex 
+          ? { ...answer, selectedOptionId: optionId, selectedOptionIds: undefined, numericValue: undefined }
+          : answer
+      ));
+    }
   };
 
   const handleNumericAnswerChange = (value: number | undefined) => {
     setAnswers(prev => prev.map((answer, index) => 
       index === currentQuestionIndex 
-        ? { ...answer, numericValue: value, selectedOptionId: undefined }
+        ? { ...answer, numericValue: value, selectedOptionId: undefined, selectedOptionIds: undefined }
         : answer
     ));
+  };
+
+  // Handle sub-question answers for paragraph questions
+  const handleSubQuestionAnswerSelect = (subQuestionId: string, optionId: string) => {
+    const currentQuestion = filteredQuestions[currentQuestionIndex];
+    if (!isParagraphQuestion(currentQuestion)) return;
+
+    const subQuestion = currentQuestion.subQuestions?.find(sq => sq.id === subQuestionId);
+    if (!subQuestion) return;
+
+    setAnswers(prev => prev.map((answer, index) => {
+      if (index === currentQuestionIndex) {
+        const subAnswers = answer.subQuestionAnswers || {};
+        const currentSubAnswer = subAnswers[subQuestionId] || {};
+        
+        if (isMultipleChoiceQuestion(subQuestion)) {
+          // For multiple choice sub-questions
+          const currentSelected = currentSubAnswer.selectedOptionIds || [];
+          const newSelected = currentSelected.includes(optionId)
+            ? currentSelected.filter(id => id !== optionId)
+            : [...currentSelected, optionId];
+          return {
+            ...answer,
+            subQuestionAnswers: {
+              ...subAnswers,
+              [subQuestionId]: { ...currentSubAnswer, selectedOptionIds: newSelected, selectedOptionId: undefined }
+            }
+          };
+        } else {
+          // For single choice sub-questions
+          return {
+            ...answer,
+            subQuestionAnswers: {
+              ...subAnswers,
+              [subQuestionId]: { ...currentSubAnswer, selectedOptionId: optionId, selectedOptionIds: undefined }
+            }
+          };
+        }
+      }
+      return answer;
+    }));
+  };
+
+  const handleSubQuestionNumericAnswer = (subQuestionId: string, value: number | undefined) => {
+    setAnswers(prev => prev.map((answer, index) => {
+      if (index === currentQuestionIndex) {
+        const subAnswers = answer.subQuestionAnswers || {};
+        return {
+          ...answer,
+          subQuestionAnswers: {
+            ...subAnswers,
+            [subQuestionId]: { ...subAnswers[subQuestionId], numericValue: value }
+          }
+        };
+      }
+      return answer;
+    }));
   };
 
   const handleMarkForReview = () => {
@@ -640,8 +775,109 @@ export default function ExamPage() {
                       <LatexContentDisplay content={currentQuestion.stem} />
                     </div>
                     
-                    {/* Options or Numeric Input */}
-                    {currentQuestion.isOpenEnded || !currentQuestion.options || currentQuestion.options.length === 0 ? (
+                    {/* Question Type Specific Rendering */}
+                    {isParagraphQuestion(currentQuestion) ? (
+                      /* Paragraph Question with Sub-Questions */
+                      <div className="space-y-6">
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                          <h3 className="text-lg font-semibold text-blue-900 mb-2">Comprehension Passage</h3>
+                          <p className="text-blue-800">Read the passage above and answer the following questions:</p>
+                        </div>
+                        
+                        {currentQuestion.subQuestions?.map((subQuestion, subIndex) => (
+                          <div key={subQuestion.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-4">
+                              <h4 className="text-lg font-medium text-gray-900">
+                                Question {subIndex + 1}
+                              </h4>
+                              <button
+                                onClick={() => {
+                                  const newExpanded = new Set(expandedSubQuestions);
+                                  if (newExpanded.has(subQuestion.id)) {
+                                    newExpanded.delete(subQuestion.id);
+                                  } else {
+                                    newExpanded.add(subQuestion.id);
+                                  }
+                                  setExpandedSubQuestions(newExpanded);
+                                }}
+                                className="text-blue-600 hover:text-blue-800 transition-colors"
+                              >
+                                {expandedSubQuestions.has(subQuestion.id) ? '▼' : '▶'} 
+                                {expandedSubQuestions.has(subQuestion.id) ? ' Hide' : ' Show'}
+                              </button>
+                            </div>
+                            
+                            {expandedSubQuestions.has(subQuestion.id) && (
+                              <div className="space-y-4">
+                                <div className="text-gray-900">
+                                  <LatexContentDisplay content={subQuestion.stem} />
+                                </div>
+                                
+                                {/* Sub-question options or numeric input */}
+                                {isOpenEndedQuestion(subQuestion) ? (
+                                  <div className="space-y-3">
+                                    <div className="p-4 rounded-lg border-2 border-gray-200 bg-gray-50">
+                                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Enter your numeric answer:
+                                      </label>
+                                      <input
+                                        type="number"
+                                        step="any"
+                                        value={currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.numericValue || ''}
+                                        onChange={(e) => handleSubQuestionNumericAnswer(subQuestion.id, parseFloat(e.target.value) || undefined)}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Enter numeric value"
+                                      />
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="space-y-3">
+                                    {subQuestion.options?.map((option, optionIndex) => (
+                                      <label
+                                        key={option.id}
+                                        className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors ${
+                                          isMultipleChoiceQuestion(subQuestion) 
+                                            ? (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionIds?.includes(option.id)
+                                                ? 'border-blue-500 bg-blue-50'
+                                                : 'border-gray-200 hover:border-gray-300')
+                                            : (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionId === option.id
+                                                ? 'border-blue-500 bg-blue-50'
+                                                : 'border-gray-200 hover:border-gray-300')
+                                        }`}
+                                        onClick={() => handleSubQuestionAnswerSelect(subQuestion.id, option.id)}
+                                      >
+                                        <div className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
+                                          isMultipleChoiceQuestion(subQuestion) 
+                                            ? (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionIds?.includes(option.id)
+                                                ? 'border-blue-500 bg-blue-500'
+                                                : 'border-gray-300')
+                                            : (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionId === option.id
+                                                ? 'border-blue-500 bg-blue-500'
+                                                : 'border-gray-300')
+                                        }`}>
+                                          {isMultipleChoiceQuestion(subQuestion) 
+                                            ? (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionIds?.includes(option.id) && (
+                                                <div className="w-2 h-2 bg-white rounded-full"></div>
+                                              ))
+                                            : (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionId === option.id && (
+                                                <div className="w-2 h-2 bg-white rounded-full"></div>
+                                              ))
+                                          }
+                                        </div>
+                                        <div className="text-gray-900">
+                                          <LatexContentDisplay content={option.text} />
+                                        </div>
+                                      </label>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : isOpenEndedQuestion(currentQuestion) ? (
+                      /* Open-ended Question */
                       <div className="space-y-3">
                         <div className="p-4 rounded-lg border-2 border-gray-200 bg-gray-50">
                           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -658,32 +894,47 @@ export default function ExamPage() {
                         </div>
                       </div>
                     ) : (
+                      /* MCQ Questions (Single or Multiple Choice) */
                       <div className="space-y-3">
-                        {currentQuestion.options?.map((option) => (
+                        {isMultipleChoiceQuestion(currentQuestion) && (
+                          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+                            <p className="text-yellow-800 text-sm">
+                              <strong>Multiple Choice:</strong> Select all correct options. You must mark all correct options to get full marks.
+                            </p>
+                          </div>
+                        )}
+                        
+                        {currentQuestion.options?.map((option, index) => (
                           <label
                             key={option.id}
                             className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors ${
-                              currentAnswer?.selectedOptionId === option.id
-                                ? 'border-blue-500 bg-blue-50'
-                                : 'border-gray-200 hover:border-gray-300'
+                              isMultipleChoiceQuestion(currentQuestion)
+                                ? (currentAnswer?.selectedOptionIds?.includes(option.id)
+                                    ? 'border-blue-500 bg-blue-50'
+                                    : 'border-gray-200 hover:border-gray-300')
+                                : (currentAnswer?.selectedOptionId === option.id
+                                    ? 'border-blue-500 bg-blue-50'
+                                    : 'border-gray-200 hover:border-gray-300')
                             }`}
+                            onClick={() => handleAnswerSelect(option.id)}
                           >
-                            <input
-                              type="radio"
-                              name={`question-${currentQuestion.id}`}
-                              value={option.id}
-                              checked={currentAnswer?.selectedOptionId === option.id}
-                              onChange={() => handleAnswerSelect(option.id)}
-                              className="sr-only"
-                            />
-                            <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                              currentAnswer?.selectedOptionId === option.id
-                                ? 'border-blue-500 bg-blue-500'
-                                : 'border-gray-300'
+                            <div className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
+                              isMultipleChoiceQuestion(currentQuestion)
+                                ? (currentAnswer?.selectedOptionIds?.includes(option.id)
+                                    ? 'border-blue-500 bg-blue-500'
+                                    : 'border-gray-300')
+                                : (currentAnswer?.selectedOptionId === option.id
+                                    ? 'border-blue-500 bg-blue-500'
+                                    : 'border-gray-300')
                             }`}>
-                              {currentAnswer?.selectedOptionId === option.id && (
-                                <div className="w-2 h-2 bg-white rounded-full"></div>
-                              )}
+                              {isMultipleChoiceQuestion(currentQuestion)
+                                ? (currentAnswer?.selectedOptionIds?.includes(option.id) && (
+                                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                                  ))
+                                : (currentAnswer?.selectedOptionId === option.id && (
+                                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                                  ))
+                              }
                             </div>
                             <div className="text-gray-900">
                               <LatexContentDisplay content={option.text} />

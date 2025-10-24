@@ -179,6 +179,13 @@ model Question {
   isOpenEnded             Boolean                          @default(false)
   correctNumericAnswer    Float?
   answerTolerance         Float?                           @default(0.01)
+  // New fields for question types and marks system
+  questionType            QuestionType                     @default(MCQ_SINGLE)
+  parentQuestionId        String?
+  allowPartialMarking     Boolean                          @default(false)
+  fullMarks               Float?                           @default(4.0)
+  partialMarks            Float?                           @default(2.0)
+  negativeMarks           Float?                           @default(-2.0)
   answers                 ExamAnswer[]
   createdBy               User?                            @relation("QuestionCreator", fields: [createdById], references: [id])
   lesson                  Lesson?                          @relation(fields: [lessonId], references: [id])
@@ -192,6 +199,9 @@ model Question {
   reports                 QuestionReport[]
   tags                    QuestionTag[]
   bookmarks               Bookmark[]
+  // Relations for paragraph-based questions
+  parentQuestion          Question?                        @relation("ParagraphQuestions", fields: [parentQuestionId], references: [id])
+  subQuestions            Question[]                       @relation("ParagraphQuestions")
 }
 
 model QuestionOption {
@@ -1160,6 +1170,13 @@ enum QuestionStatus {
   approved
   underreview
   rejected
+}
+
+enum QuestionType {
+  MCQ_SINGLE
+  MCQ_MULTIPLE
+  OPEN_ENDED
+  PARAGRAPH
 }
 
 enum RecordType {

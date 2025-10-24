@@ -20,6 +20,13 @@ interface Question {
 	isOpenEnded: boolean;
 	correctNumericAnswer?: number;
 	answerTolerance?: number;
+	// New fields for question types and marks system
+	questionType?: 'MCQ_SINGLE' | 'MCQ_MULTIPLE' | 'OPEN_ENDED' | 'PARAGRAPH';
+	parentQuestionId?: string;
+	allowPartialMarking?: boolean;
+	fullMarks?: number;
+	partialMarks?: number;
+	negativeMarks?: number;
 	subjectId?: string;
 	topicId?: string;
 	subtopicId?: string;
@@ -177,6 +184,7 @@ export default function QuestionsPage() {
 	const [selectedSubtopic, setSelectedSubtopic] = useState('');
 	const [selectedDifficulty, setSelectedDifficulty] = useState('');
 	const [selectedStatus, setSelectedStatus] = useState('');
+	const [selectedQuestionType, setSelectedQuestionType] = useState('');
 	
 	// Bulk selection states
 	const [selectedQuestions, setSelectedQuestions] = useState<string[]>([]);
@@ -199,7 +207,8 @@ export default function QuestionsPage() {
 			...(selectedTopic && { topicId: selectedTopic }),
 			...(selectedSubtopic && { subtopicId: selectedSubtopic }),
 			...(selectedDifficulty && { difficulty: selectedDifficulty }),
-			...(selectedStatus && { status: selectedStatus })
+			...(selectedStatus && { status: selectedStatus }),
+			...(selectedQuestionType && { questionType: selectedQuestionType })
 		});
 
 			const [questionsResponse, subjectsResponse, lessonsResponse, topicsResponse, subtopicsResponse] = await Promise.all([
@@ -318,6 +327,7 @@ export default function QuestionsPage() {
 		setSelectedSubtopic('');
 		setSelectedDifficulty('');
 		setSelectedStatus('');
+		setSelectedQuestionType('');
 		setCurrentPage(1);
 		setSelectedQuestions([]);
 		setSelectAll(false);
@@ -779,7 +789,7 @@ export default function QuestionsPage() {
 					{/* Filters Section */}
 					<div className="bg-white rounded-lg shadow p-6">
 						<h2 className="text-lg font-semibold text-gray-900 mb-4">Filters</h2>
-						<div className="grid grid-cols-1 md:grid-cols-8 gap-3">
+						<div className="grid grid-cols-1 md:grid-cols-9 gap-3">
 							<input 
 								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium placeholder-gray-500" 
 								placeholder="Search questions..." 
@@ -863,6 +873,23 @@ export default function QuestionsPage() {
 								<option value="approved">Approved</option>
 								<option value="underreview">Under Review</option>
 								<option value="rejected">Rejected</option>
+							</select>
+							<select 
+								className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base font-medium"
+								value={selectedQuestionType}
+								onChange={e => {
+									setSelectedQuestionType(e.target.value);
+									setCurrentPage(1);
+									setSelectedQuestions([]);
+									setSelectAll(false);
+									refresh(1);
+								}}
+							>
+								<option value="">All Types</option>
+								<option value="MCQ_SINGLE">MCQ Single</option>
+								<option value="MCQ_MULTIPLE">MCQ Multiple</option>
+								<option value="OPEN_ENDED">Open Ended</option>
+								<option value="PARAGRAPH">Paragraph</option>
 							</select>
 							<button 
 								className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
@@ -1018,9 +1045,42 @@ export default function QuestionsPage() {
 																{question.status === 'underreview' ? 'Under Review' : 
 																 question.status === 'approved' ? 'Approved' : 'Rejected'}
 															</span>
+															{question.questionType && (
+																<span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+																	question.questionType === 'MCQ_SINGLE' ? 'bg-blue-100 text-blue-800' :
+																	question.questionType === 'MCQ_MULTIPLE' ? 'bg-purple-100 text-purple-800' :
+																	question.questionType === 'OPEN_ENDED' ? 'bg-indigo-100 text-indigo-800' :
+																	'bg-pink-100 text-pink-800'
+																}`}>
+																	{question.questionType === 'MCQ_SINGLE' ? 'MCQ Single' :
+																	 question.questionType === 'MCQ_MULTIPLE' ? 'MCQ Multiple' :
+																	 question.questionType === 'OPEN_ENDED' ? 'Open Ended' :
+																	 'Paragraph'}
+																</span>
+															)}
+															{question.allowPartialMarking && (
+																<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+																	Partial Marking
+																</span>
+															)}
+															{question.fullMarks && (
+																<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+																	{question.fullMarks} marks
+																</span>
+															)}
 														</div>
 														<div className="space-y-2">
-															{question.isOpenEnded ? (
+															{/* Handle different question types */}
+															{question.questionType === 'PARAGRAPH' ? (
+																<div className="p-3 bg-pink-50 border border-pink-200 rounded">
+																	<div className="text-sm font-medium text-pink-700 mb-2">
+																		Paragraph Question
+																	</div>
+																	<div className="text-xs text-pink-600">
+																		This is a paragraph-based question. Sub-questions are managed separately.
+																	</div>
+																</div>
+															) : question.questionType === 'OPEN_ENDED' || question.isOpenEnded ? (
 																<div className="p-3 bg-blue-50 border border-blue-200 rounded">
 																	<div className="flex items-center space-x-2">
 																		<span className="text-sm font-medium text-blue-700">Numeric Answer:</span>
@@ -1035,20 +1095,33 @@ export default function QuestionsPage() {
 																		Open-ended question - requires numeric input
 																	</div>
 																</div>
+															) : question.options && question.options.length > 0 ? (
+																<div className="space-y-1">
+																	{question.questionType === 'MCQ_MULTIPLE' && (
+																		<div className="text-xs text-purple-600 font-medium mb-2">
+																			Multiple correct options - partial marking allowed
+																		</div>
+																	)}
+																	{question.options.map((option, index) => (
+																		<div key={option.id} className={`flex items-center space-x-2 p-2 rounded ${
+																			option.isCorrect ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200'
+																		}`}>
+																			<span className="text-sm font-medium text-gray-600">{String.fromCharCode(65 + index)}.</span>
+																			<span className={`text-sm ${option.isCorrect ? 'text-green-700 font-medium' : 'text-gray-700'}`}>
+																				<LatexContentDisplay content={option.text} />
+																			</span>
+																			{option.isCorrect && (
+																				<span className="text-green-600 text-xs font-medium">✓ Correct</span>
+																			)}
+																		</div>
+																	))}
+																</div>
 															) : (
-																question.options.map((option, index) => (
-																	<div key={option.id} className={`flex items-center space-x-2 p-2 rounded ${
-																		option.isCorrect ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200'
-																	}`}>
-																		<span className="text-sm font-medium text-gray-600">{String.fromCharCode(65 + index)}.</span>
-																		<span className={`text-sm ${option.isCorrect ? 'text-green-700 font-medium' : 'text-gray-700'}`}>
-																			<LatexContentDisplay content={option.text} />
-																		</span>
-																		{option.isCorrect && (
-																			<span className="text-green-600 text-xs font-medium">✓ Correct</span>
-																		)}
+																<div className="p-3 bg-gray-50 border border-gray-200 rounded">
+																	<div className="text-sm text-gray-600">
+																		No options available for this question type
 																	</div>
-																))
+																</div>
 															)}
 														</div>
 														{question.tags.length > 0 && (
