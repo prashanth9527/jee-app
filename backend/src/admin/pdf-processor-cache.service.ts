@@ -718,7 +718,8 @@ export class PDFProcessorCacheService {
               // Handle open-ended questions
               isOpenEnded: questionData.isOpenEnded || false,
               correctNumericAnswer: questionData.correctNumericAnswer || null,
-              answerTolerance: questionData.answerTolerance || 0.01
+              answerTolerance: questionData.answerTolerance || 0.01,
+              questionType: questionData.questionType || 'MCQ_SINGLE'
             }
           });
 
