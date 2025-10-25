@@ -427,9 +427,9 @@ export class PDFProcessorController {
     }
   }
 
-  @Post('save-json/:fileName')
+  @Post('save-json/:cacheId')
   async saveJsonContent(
-    @Param('fileName') fileName: string,
+    @Param('cacheId') cacheId: string,
     @Body() body: { jsonContent: string }
   ) {
     try {
@@ -437,7 +437,7 @@ export class PDFProcessorController {
         throw new BadRequestException('jsonContent is required');
       }
 
-      const result = await this.pdfProcessorService.saveJsonContent(fileName, body.jsonContent);
+      const result = await this.pdfProcessorService.saveJsonContent(cacheId, body.jsonContent);
       
       return {
         success: true,

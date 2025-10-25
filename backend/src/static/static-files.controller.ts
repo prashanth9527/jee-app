@@ -15,46 +15,29 @@ import * as fs from 'fs';
 @Controller('static')
 export class StaticFilesController {
   
-  @Get('pdf/:fileName')
-  async viewPDF(@Param('fileName') fileName: string, @Res() res: Response) {
+  @Get('pdf/*')
+  async viewPDF(@Param('0') filePath: string, @Res() res: Response) {
     try {
-      // Construct the file path
-      const contentDir = join(process.cwd(), '..', 'content', 'JEE', 'Previous Papers');
+      // Decode the URL-encoded file path
+      const decodedPath = decodeURIComponent(filePath);
       
-      // First, try to find the file by scanning the directory
-      let fullPath: string | null = null;
+      // Construct the full file path
+      const contentDir = join(process.cwd(), '..', 'content');
+      const fullPath = join(contentDir, decodedPath);
       
-      const findFile = (dir: string, targetFileName: string): string | null => {
-        try {
-          const items = fs.readdirSync(dir);
-          
-          for (const item of items) {
-            const itemPath = join(dir, item);
-            const stat = fs.statSync(itemPath);
-            
-            if (stat.isDirectory()) {
-              const found = findFile(itemPath, targetFileName);
-              if (found) return found;
-            } else if (item === targetFileName) {
-              return itemPath;
-            }
-          }
-        } catch (error) {
-          // Directory doesn't exist or can't be read
-        }
-        return null;
-      };
+      // Security check: ensure the path is within the content directory
+      const normalizedPath = join(contentDir, decodedPath);
+      if (!normalizedPath.startsWith(contentDir)) {
+        throw new BadRequestException('Invalid file path');
+      }
       
-      fullPath = findFile(contentDir, fileName);
-      
-      if (!fullPath) {
+      // Check if file exists
+      if (!fs.existsSync(fullPath)) {
         throw new BadRequestException('PDF file not found');
       }
 
-      // Check if file exists
-      if (!fs.existsSync(fullPath)) {
-        throw new BadRequestException('PDF file not found on disk');
-      }
+      // Extract filename from path for the Content-Disposition header
+      const fileName = decodedPath.split('/').pop() || 'document.pdf';
 
       // Set headers for PDF viewing
       res.setHeader('Content-Type', 'application/pdf');

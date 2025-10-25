@@ -1386,7 +1386,7 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
     }
   }
 
-  async saveJsonContent(fileName: string, jsonContent: string) {
+  async saveJsonContent(cacheId: string, jsonContent: string) {
     try {
       // Validate JSON content
       let parsedData;
@@ -1401,42 +1401,27 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
         throw new BadRequestException('JSON must contain a "questions" array');
       }
 
-      // Convert local image paths to AWS URLs in JSON content
-      const processedJsonContent = this.convertImagePathsToAwsUrls(jsonContent, fileName);
-      const processedParsedData = JSON.parse(processedJsonContent);
-
-      // Find or create cache entry
+      // Find cache entry by ID
       let cache = await this.prisma.pDFProcessorCache.findUnique({
-        where: { fileName }
+        where: { id: cacheId }
       });
 
       if (!cache) {
-        // Create new cache entry
-        const pdfPath = this.findPDFPath(fileName);
-        if (!pdfPath) {
-          throw new BadRequestException('PDF file not found');
-        }
-
-        const stats = fs.statSync(pdfPath);
-        cache = await this.prisma.pDFProcessorCache.create({
-          data: {
-            fileName,
-            filePath: pdfPath,
-            fileSize: stats.size,
-            processingStatus: 'PENDING',
-            jsonContent: processedJsonContent
-          }
-        });
-      } else {
-        // Update existing cache entry
-        cache = await this.prisma.pDFProcessorCache.update({
-          where: { fileName },
-          data: { jsonContent: processedJsonContent }
-        });
+        throw new BadRequestException('Cache entry not found');
       }
 
+      // Convert local image paths to AWS URLs in JSON content
+      const processedJsonContent = this.convertImagePathsToAwsUrls(jsonContent, cache.fileName);
+      const processedParsedData = JSON.parse(processedJsonContent);
+
+      // Update existing cache entry
+      cache = await this.prisma.pDFProcessorCache.update({
+        where: { id: cacheId },
+        data: { jsonContent: processedJsonContent }
+      });
+
       // Save JSON content to local file
-      const jsonFilePath = await this.saveJsonToFile(fileName, processedJsonContent);
+      const jsonFilePath = await this.saveJsonToFile(cache.fileName, processedJsonContent);
 
       return {
         cacheId: cache.id,

@@ -793,9 +793,24 @@ export default function PDFReviewPage() {
                             <button
                               onClick={() => {
                                 try {
-                                  // Extract just the filename from the full path
-                                  const fileName = pdfData.filePath.split(/[\\/]/).pop();
-                                  const fileUrl = `${process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001'}/static/pdf/${fileName}`;
+                                  // Extract the relative path from the full file path
+                                  // The filePath should be something like: C:\wamp64\www\nodejs\jee-app\content\JEE\Previous Papers\2025\Session2\Physics\0804-Physics Paper+With+Sol Evening.pdf
+                                  // We need to extract: JEE\Previous Papers\2025\Session2\Physics\0804-Physics Paper+With+Sol Evening.pdf
+                                  
+                                  // Find the 'content' directory in the path
+                                  const contentIndex = pdfData.filePath.indexOf('content');
+                                  if (contentIndex === -1) {
+                                    console.error('Content directory not found in file path:', pdfData.filePath);
+                                    toast.error('Invalid file path');
+                                    return;
+                                  }
+                                  
+                                  // Extract the relative path from content directory
+                                  const relativePath = pdfData.filePath.substring(contentIndex + 8); // Skip 'content' + path separator
+                                  const encodedPath = encodeURIComponent(relativePath);
+                                  
+                                  const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+                                  const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
                                   console.log('Opening PDF URL:', fileUrl);
                                   window.open(fileUrl, '_blank');
                                 } catch (error) {
@@ -810,26 +825,26 @@ export default function PDFReviewPage() {
                             </button>
                           )}
                           
-                          {/* View LaTeX Button */}
-                          {pdfData?.latexFilePath && (
-                            <button
-                              onClick={() => {
-                                try {
-                                  const fileName = pdfData.latexFilePath!.split(/[\\/]/).pop();
-                                  const fileUrl = `${process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001'}/static/latex/${fileName}`;
-                                  console.log('Opening LaTeX URL:', fileUrl);
-                                  window.open(fileUrl, '_blank');
-                                } catch (error) {
-                                  console.error('Error opening LaTeX file:', error);
-                                  toast.error('Failed to open LaTeX file');
-                                }
-                              }}
-                              className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 border border-orange-500"
-                              title="Open LaTeX file in new window"
-                            >
-                              View LaTeX
-                            </button>
-                          )}
+                           {/* View LaTeX Button */}
+                           {pdfData?.latexFilePath && (
+                             <button
+                               onClick={() => {
+                                 try {
+                                   // Use the direct AWS URL from latexFilePath
+                                   const fileUrl = pdfData.latexFilePath!;
+                                   console.log('Opening LaTeX URL:', fileUrl);
+                                   window.open(fileUrl, '_blank');
+                                 } catch (error) {
+                                   console.error('Error opening LaTeX file:', error);
+                                   toast.error('Failed to open LaTeX file');
+                                 }
+                               }}
+                               className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 border border-orange-500"
+                               title="Open LaTeX file in new window"
+                             >
+                               View LaTeX
+                             </button>
+                           )}
                           
                           <button
                             onClick={startEditing}

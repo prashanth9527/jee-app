@@ -315,12 +315,30 @@ export default function PDFProcessorCachePage() {
   };
 
   const viewPDF = (filePath: string, fileName: string) => {
+    try {
     // Extract the relative path from the full file path
-    // Convert Windows path to URL format and encode the filename
-    const encodedFileName = encodeURIComponent(fileName);
+      // The filePath should be something like: C:\wamp64\www\nodejs\jee-app\content\JEE\Previous Papers\2025\Session2\Physics\0804-Physics Paper+With+Sol Evening.pdf
+      // We need to extract: JEE\Previous Papers\2025\Session2\Physics\0804-Physics Paper+With+Sol Evening.pdf
+      
+      // Find the 'content' directory in the path
+      const contentIndex = filePath.indexOf('content');
+      if (contentIndex === -1) {
+        console.error('Content directory not found in file path:', filePath);
+        toast.error('Invalid file path');
+        return;
+      }
+      
+      // Extract the relative path from content directory
+      const relativePath = filePath.substring(contentIndex + 8); // Skip 'content' + path separator
+      const encodedPath = encodeURIComponent(relativePath);
+      
     const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-    const pdfUrl = `${apiBase}/static/pdf/${encodedFileName}`;
+      const pdfUrl = `${apiBase}/static/pdf/${encodedPath}`;
     window.open(pdfUrl, '_blank');
+    } catch (error) {
+      console.error('Error opening PDF:', error);
+      toast.error('Failed to open PDF file');
+    }
   };
 
   const viewLatex = (latexContent: string, fileName: string) => {
@@ -467,10 +485,17 @@ export default function PDFProcessorCachePage() {
       return;
     }
 
+    // Find the record to get the cache ID
+    const currentRecord = records.find(r => r.fileName === editingJson);
+    if (!currentRecord) {
+      toast.error('Record not found');
+      return;
+    }
+
     toast.loading('Saving JSON content...', 'Please wait');
     
     try {
-      const response = await api.post(`/admin/pdf-processor/save-json/${editingJson}`, {
+      const response = await api.post(`/admin/pdf-processor/save-json/${currentRecord.id}`, {
         jsonContent: jsonContent.trim()
       });
       
@@ -1615,15 +1640,7 @@ First scan the entire file and count the how many questions in the file, at the 
                         onClick={() => {
                           const record = records.find(r => r.fileName === editingJson);
                           if (record?.filePath) {
-                            try {
-                              const encodedFileName = encodeURIComponent(record.fileName);
-                              const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                              const fileUrl = `${apiBase}/static/pdf/${encodedFileName}`;
-                              window.open(fileUrl, '_blank');
-                            } catch (error) {
-                              console.error('Error opening PDF:', error);
-                              toast.error('Failed to open PDF file');
-                            }
+                            viewPDF(record.filePath, record.fileName);
                           } else {
                             toast.error('PDF file not found');
                           }
