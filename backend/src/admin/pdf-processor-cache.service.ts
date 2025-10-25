@@ -717,8 +717,8 @@ export class PDFProcessorCacheService {
               exerciseName: questionData.exerciseName || '',
               // Handle open-ended questions
               isOpenEnded: questionData.isOpenEnded || false,
-              correctNumericAnswer: questionData.correctNumericAnswer || null,
-              answerTolerance: questionData.answerTolerance || 0.01,
+              correctNumericAnswer: questionData.isOpenEnded ? questionData.correctNumericAnswer : null,
+              answerTolerance: questionData.isOpenEnded ? questionData.answerTolerance : 0.01,
               questionType: questionData.questionType || 'MCQ_SINGLE'
             }
           });
