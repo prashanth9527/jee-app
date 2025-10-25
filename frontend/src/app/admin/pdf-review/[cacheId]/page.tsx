@@ -841,12 +841,11 @@ export default function PDFReviewPage() {
                                   
                                   // Extract the relative path from content directory
                                   const relativePath = pdfData.filePath.substring(contentIndex + 8); // Skip 'content' + path separator
-                                  // Convert Windows backslashes to forward slashes for web URLs
-                                  const normalizedPath = relativePath.replace(/\\/g, '/');
-                                  const encodedPath = encodeURIComponent(normalizedPath);
+                                  const encodedPath = encodeURIComponent(relativePath);
                                   
                                   const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                                  const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
+                                  // const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
+                                  const fileUrl = `${pdfData.filePath || ''}`;
                                   console.log('Opening PDF URL:', fileUrl);
                                   window.open(fileUrl, '_blank');
                                 } catch (error) {
