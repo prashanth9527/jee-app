@@ -83,6 +83,7 @@ export default function PDFReviewPage() {
   const [examDescription, setExamDescription] = useState('');
   const [examTimeLimit, setExamTimeLimit] = useState<number | ''>('');
   const [groupedQuestions, setGroupedQuestions] = useState<Record<string, Question[]>>({});
+  const [originalSelectedQuestions, setOriginalSelectedQuestions] = useState<Set<string> | null>(null);
 
   useEffect(() => {
     if (cacheId) {
@@ -325,12 +326,19 @@ export default function PDFReviewPage() {
         setExamTitle('');
         setExamDescription('');
         setExamTimeLimit('');
-        setSelectedQuestions(new Set());
+        
+        // Restore original selected questions if they were stored
+        if (originalSelectedQuestions) {
+          setSelectedQuestions(originalSelectedQuestions);
+          setOriginalSelectedQuestions(null);
+        } else {
+          setSelectedQuestions(new Set());
+        }
         
         // Optionally redirect to exam preview page
         const viewExam = window.confirm('Exam created! Would you like to preview it now?');
         if (viewExam) {
-          router.push(`/admin/exam-papers/create-enhanced?edit=${examId}`);
+          window.open(`/admin/exam-papers/create-enhanced?edit=${examId}`, '_blank');
         }
       }
     } catch (error: any) {
@@ -409,7 +417,7 @@ export default function PDFReviewPage() {
     setShowCreateExamModal(true);
   };
 
-  const createExamForExercise = async (exerciseName: string) => {
+  const createExamForExercise = (exerciseName: string) => {
     const exerciseQuestions = groupedQuestions[exerciseName];
     if (!exerciseQuestions || exerciseQuestions.length === 0) {
       toast.warning('No questions found in this exercise');
@@ -421,41 +429,64 @@ export default function PDFReviewPage() {
     
     // If no questions selected from this exercise, use all questions from the exercise
     const questionsToUse = selectedExerciseQuestions.length > 0 ? selectedExerciseQuestions : exerciseQuestions;
-    const questionIds = questionsToUse.map(q => q.id);
     
+    // Store original selected questions to restore later
+    setOriginalSelectedQuestions(new Set(selectedQuestions));
+    
+    // Temporarily set the selected questions to only this exercise's questions
+    setSelectedQuestions(new Set(questionsToUse.map(q => q.id)));
+    
+    // Generate title suggestion based on the exercise
     const subjects = [...new Set(questionsToUse.map(q => q.subject?.name).filter(Boolean))];
-    const title = subjects.length > 0 
-      ? `${subjects.join(', ')} - ${exerciseName}`
-      : exerciseName;
-
-    const description = selectedExerciseQuestions.length > 0
-      ? `Practice exam from ${exerciseName} with ${questionIds.length} selected questions`
-      : `Practice exam from ${exerciseName} with all ${questionIds.length} questions`;
-
-    try {
-      const response = await api.post('/admin/pdf-review/create-exam', {
-        questionIds: questionIds,
-        title: title,
-        description: description,
-        timeLimitMin: questionIds.length * 2 // 2 minutes per question
-      });
-
-      if (response.data.success) {
-        const examId = response.data.data.examPaper.id;
-        const examTitle = response.data.data.examPaper.title;
-        
-        toast.success(`Exam "${examTitle}" created successfully with ${response.data.data.questionCount} questions!`);
-        
-        // Optionally redirect to exam preview page
-        const viewExam = window.confirm('Exam created! Would you like to preview it now?');
-        if (viewExam) {
-          router.push(`/admin/exam-papers/${examId}`);
-        }
+    const lessons = [...new Set(questionsToUse.map(q => q.lesson?.name).filter(Boolean))];
+    const topics = [...new Set(questionsToUse.map(q => q.topic?.name).filter(Boolean))];
+    const subtopics = [...new Set(questionsToUse.map(q => q.subtopic?.name).filter(Boolean))];
+    
+    // Generate detailed title based on metadata hierarchy
+    let suggestedTitle = '';
+    
+    if (subtopics.length === 1) {
+      // Single subtopic - most specific
+      const subject = subjects.length === 1 ? subjects[0] : '';
+      const topic = topics.length === 1 ? topics[0] : '';
+      if (subject && topic) {
+        suggestedTitle = `${subject} - ${topic} - ${subtopics[0]} Practice`;
+      } else if (subject) {
+        suggestedTitle = `${subject} - ${subtopics[0]} Practice`;
+      } else {
+        suggestedTitle = `${subtopics[0]} - Practice Exam`;
       }
-    } catch (error: any) {
-      console.error('Error creating exam:', error);
-      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    } else if (topics.length === 1) {
+      // Single topic
+      const subject = subjects.length === 1 ? subjects[0] : '';
+      suggestedTitle = subject 
+        ? `${subject} - ${topics[0]} Practice`
+        : `${topics[0]} - Practice Exam`;
+    } else if (lessons.length === 1) {
+      // Single lesson
+      const subject = subjects.length === 1 ? subjects[0] : '';
+      suggestedTitle = subject 
+        ? `${subject} - ${lessons[0]} Practice`
+        : `${lessons[0]} - Practice Exam`;
+    } else if (subjects.length === 1) {
+      // Single subject with multiple topics/subtopics
+      if (topics.length > 1) {
+        suggestedTitle = `${subjects[0]} - ${topics.slice(0, 2).join(', ')} Practice`;
+      } else {
+        suggestedTitle = `${subjects[0]} - Practice Exam`;
+      }
+    } else if (subjects.length > 1) {
+      // Multiple subjects
+      suggestedTitle = `${subjects.join(', ')} - Mixed Practice`;
+    } else {
+      // No metadata - use exercise name
+      suggestedTitle = exerciseName;
     }
+    
+    setExamTitle(suggestedTitle);
+    setExamDescription(`Practice exam from ${exerciseName} with ${questionsToUse.length} questions`);
+    setExamTimeLimit(questionsToUse.length * 2); // 2 minutes per question
+    setShowCreateExamModal(true);
   };
 
   if (loading) {
@@ -1180,12 +1211,19 @@ export default function PDFReviewPage() {
                     >
                       Create Exam
                     </button>
-                    <button
-                      onClick={() => setShowCreateExamModal(false)}
-                      className="flex-1 bg-gray-200 text-gray-800 px-6 py-3 rounded-md hover:bg-gray-300 font-medium"
-                    >
-                      Cancel
-                    </button>
+                  <button
+                    onClick={() => {
+                      setShowCreateExamModal(false);
+                      // Restore original selected questions if they were stored
+                      if (originalSelectedQuestions) {
+                        setSelectedQuestions(originalSelectedQuestions);
+                        setOriginalSelectedQuestions(null);
+                      }
+                    }}
+                    className="flex-1 bg-gray-200 text-gray-800 px-6 py-3 rounded-md hover:bg-gray-300 font-medium"
+                  >
+                    Cancel
+                  </button>
                   </div>
                 </div>
               </div>
