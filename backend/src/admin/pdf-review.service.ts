@@ -381,7 +381,8 @@ export class PDFReviewService {
     questionIds: string[],
     customTitle?: string,
     description?: string,
-    timeLimitMin?: number
+    timeLimitMin?: number,
+    examType?: string
   ) {
     try {
       // Fetch questions to analyze their metadata
@@ -424,7 +425,8 @@ export class PDFReviewService {
           topicIds,
           subtopicIds,
           questionIds,
-          timeLimitMin: calculatedTimeLimit
+          timeLimitMin: calculatedTimeLimit,
+          examType: (examType as any) || 'REGULAR'
         },
         include: {
           _count: {

@@ -1529,22 +1529,34 @@ Your task is to **extract and structure ALL questions into JSON format**.
 
 ---
 
+### CHUNKED PROCESSING
+- Physics: Section A **Q1-Q20** & Section B **Q1–Q10**  
+- Chemistry: Section A **Q1-Q20** & Section B **Q1–Q10**  
+- Mathematics: Section A **Q1-Q20** & Section B **Q1–Q10**  
+- Each subject must have **exactly 30 questions**.  
+- If fewer appear in the \`.tex\`, do not generate realistic filler questions to complete the block.  
+
+---
+
 ### QUESTION CONTENT RULES
 For each question:
 - \`stem\`: must match the original question text from the \`.tex\`.  
-- \`options\`: must match exactly the four options from the \`.tex\`.  
+- \`options\`: must match exactly the four options from the \`.tex\`.
+- \`correctNumericAnswer\`: if there are no options found, then calculate the answer for the question and store it in 'correctNumericAnswer' field
+- \`isOpenEnded\`: if there are no options found, make this field as true
 - \`isCorrect\`:  
-  - You can find correct answer with \`Answer (D)\` 
   - If the correct answer is explicitly given in the \`.tex\`, preserve it.  
   - If missing, you may **generate the correct answer** as a subject expert.  
 - \`explanation\`:  
-  - You can find explanation with \`Sol.\`
+  - You can find explanation starts with 'Sol.'
   - If given in the file, preserve it.  
   - If missing, **generate a step-by-step reasoning** as a subject expert.  
 - \`tip_formula\`:  
   - If given in the file, preserve it.  
   - If missing, **generate a key formula or shortcut**.  
-- \`difficulty\`: assign as \`EASY\`, \`MEDIUM\`, or \`HARD\`.  
+- If you found \`yearAppeared\` then \`isPreviousYear\` is true otherwise false
+- \`difficulty\`: assign as \`EASY\`, \`MEDIUM\`, or \`HARD\`. 
+- \`questionType\`: Can be any one from: MCQ_SINGLE, MCQ_MULTIPLE, OPEN_ENDED, PARAGRAPH 
 - Preserve all LaTeX math exactly.  
 
 ---
@@ -1581,6 +1593,9 @@ Assign: **lesson → topic → subtopic**.
       "subtopic": "Defects in Crystals",
       "yearAppeared": 2023,
       "isPreviousYear": true,
+      "isOpenEnded": false,
+      "correctNumericAnswer": 2,
+      "questionType": "MCQ_SINGLE",
       "exerciseName": "Exercise1",
       "tags": ["solid-state", "defects", "charge-neutrality"]
     }
@@ -1610,9 +1625,8 @@ Do not guess if unclear — mark "lesson": "Unknown" etc. if uncertain.
 
 Read the \`.tex\` file carefully and return **only the JSON output** in the schema above.  
 Ensure exactly questions from .tex file do not invent OR fabricate, numbered sequentially (Q1, Q2 OR 1., 2., etc), with lesson/topic/subtopic classification.  
-Ensure exactly solution/explanation from .tex file do not invent OR fabricate, starts with (Sol., Answer etc).
 Ignore and skip any **branding, coaching names, promotional headers/footers, or unrelated text**.  
-Preserve **exactly the questions, options, solution/explanation and correct answers** from the \`.tex\` file.  
+Preserve **exactly the questions, options, and correct answers** from the \`.tex\` file.  
    - ❌ Do not fabricate or invent any question text or options.  
    - ✅ Use the same wording, LaTeX math, and image references as in the file.  
 **Do not skip ANY image references.** Every \`\\includegraphics\` in the \`.tex\` must be included in the JSON.  
@@ -1620,8 +1634,8 @@ Use single dollar signs $ ... $ for all LaTeX math expressions.
 Read the .tex file carefully.
 Return only valid JSON, faithfully representing every question that truly exists in the source file.
 Do not generate or hallucinate new data under any circumstances.
-Please proceed with extracting ALL questions from the complete .tex file content you provided. Read through the entire document carefully and include all questions. If you need do **CHUNK PROCESSING** for reading all questions
-First scan the entire file and count the how many questions in the file, at the end of the process cross check with questions count`;
+Please proceed with extracting ALL **90** questions from the complete .tex file content you provided. Read through the entire document carefully and include all **90** questions. If you need do **CHUNKED PROCESSING** for reading all **90** questions
+**Remember and take into your memory that, my attachment contains 90 questions, kindly give all 90 questions**`;
 
                           navigator.clipboard.writeText(promptText).then(() => {
                             toast.success('Prompt copied to clipboard!');

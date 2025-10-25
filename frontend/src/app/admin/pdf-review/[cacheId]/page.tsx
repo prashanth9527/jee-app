@@ -82,6 +82,7 @@ export default function PDFReviewPage() {
   const [examTitle, setExamTitle] = useState('');
   const [examDescription, setExamDescription] = useState('');
   const [examTimeLimit, setExamTimeLimit] = useState<number | ''>('');
+  const [examType, setExamType] = useState<'REGULAR' | 'AI_EXAM' | 'CONTENT_EXAM' | 'PRACTICE_EXAM' | 'PYQ_PRACTICE'>('REGULAR');
   const [groupedQuestions, setGroupedQuestions] = useState<Record<string, Question[]>>({});
   const [originalSelectedQuestions, setOriginalSelectedQuestions] = useState<Set<string> | null>(null);
 
@@ -314,7 +315,8 @@ export default function PDFReviewPage() {
         questionIds: Array.from(selectedQuestions),
         title: examTitle || undefined,
         description: examDescription || undefined,
-        timeLimitMin: examTimeLimit || undefined
+        timeLimitMin: examTimeLimit || undefined,
+        examType: examType
       });
 
       if (response.data.success) {
@@ -326,6 +328,7 @@ export default function PDFReviewPage() {
         setExamTitle('');
         setExamDescription('');
         setExamTimeLimit('');
+        setExamType('REGULAR');
         
         // Restore original selected questions if they were stored
         if (originalSelectedQuestions) {
@@ -1200,6 +1203,27 @@ export default function PDFReviewPage() {
                     />
                     <p className="mt-1 text-sm text-gray-500">
                       Recommended: {selectedQuestions.size * 2} minutes (2 min per question)
+                    </p>
+                  </div>
+
+                  {/* Exam Type */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Exam Type *
+                    </label>
+                    <select
+                      value={examType}
+                      onChange={(e) => setExamType(e.target.value as any)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    >
+                      <option value="REGULAR">Regular Exam</option>
+                      <option value="AI_EXAM">AI Generated Exam</option>
+                      <option value="CONTENT_EXAM">Content Exam</option>
+                      <option value="PRACTICE_EXAM">Practice Exam</option>
+                      <option value="PYQ_PRACTICE">Previous Year Questions Practice</option>
+                    </select>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Select the type of exam you want to create
                     </p>
                   </div>
 

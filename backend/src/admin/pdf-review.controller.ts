@@ -210,6 +210,7 @@ export class PDFReviewController {
     title?: string;
     description?: string;
     timeLimitMin?: number;
+    examType?: string;
   }) {
     try {
       if (!body.questionIds || !Array.isArray(body.questionIds) || body.questionIds.length === 0) {
@@ -220,7 +221,8 @@ export class PDFReviewController {
         body.questionIds,
         body.title,
         body.description,
-        body.timeLimitMin
+        body.timeLimitMin,
+        body.examType
       );
       
       return {

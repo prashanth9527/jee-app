@@ -54,6 +54,8 @@ interface ExamResults {
   totalQuestions: number;
   submittedAt: string;
   examTitle: string;
+  totalMarksObtained: number;
+  totalMarksAvailable: number;
   answers: Array<{
     questionId: string;
     question: string;
@@ -68,6 +70,11 @@ interface ExamResults {
       isCorrect: boolean;
     };
     isCorrect: boolean;
+    marksObtained: number;
+    fullMarks: number;
+    partialMarks: number;
+    negativeMarks: number;
+    allowPartialMarking: boolean;
   }>;
 }
 
@@ -84,6 +91,7 @@ export default function ExamResultsPage() {
   const [selectedQuestionForReport, setSelectedQuestionForReport] = useState<Question | null>(null);
   const [submittedReports, setSubmittedReports] = useState<Set<string>>(new Set());
   const [submissionData, setSubmissionData] = useState<any>(null);
+  const [helpModalOpen, setHelpModalOpen] = useState<boolean>(false);
 
   const fetchResults = async () => {
     try {
@@ -275,6 +283,15 @@ export default function ExamResultsPage() {
                     className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
                   >
                     Back to History
+                  </button>
+                  <button
+                    onClick={() => setHelpModalOpen(true)}
+                    className="px-3 py-2 bg-blue-100 text-blue-600 rounded-md hover:bg-blue-200 transition-colors"
+                    title="How are marks and scores calculated?"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                   </button>                  
                     <button
                       onClick={handleRetake}
@@ -286,7 +303,7 @@ export default function ExamResultsPage() {
               </div>
               
               {/* Score Summary */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="bg-blue-50 rounded-lg p-4">
                   <h3 className="text-lg font-semibold text-blue-900">Total Questions</h3>
                   <p className="text-2xl font-bold text-blue-600">{results.totalQuestions}</p>
@@ -298,6 +315,10 @@ export default function ExamResultsPage() {
                 <div className="bg-orange-50 rounded-lg p-4">
                   <h3 className="text-lg font-semibold text-gray-900">Score</h3>
                   <p className="text-2xl font-bold text-gray-600">{results.scorePercent}%</p>
+                </div>
+                <div className="bg-teal-500 text-white rounded-lg p-4">
+                  <h3 className="text-lg font-semibold text-teal-900">Marks</h3>
+                  <p className="text-2xl font-bold text-purple-600">{results.totalMarksObtained}/{results.totalMarksAvailable}</p>
                 </div>
               </div>
             </div>
@@ -324,13 +345,24 @@ export default function ExamResultsPage() {
                               </h2>
                               <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
                                 status === 'correct' 
-                                  ? 'bg-green-100 text-green-800' 
+                                  ? 'bg-emerald-100 text-emerald-800' 
                                   : status === 'incorrect'
-                                  ? 'bg-red-100 text-red-800'
-                                  : 'bg-gray-100 text-orange-800'
+                                  ? 'bg-rose-100 text-rose-800'
+                                  : 'bg-amber-100 text-amber-800'
                               }`}>
                                 {status === 'correct' ? 'Correct' : status === 'incorrect' ? 'Incorrect' : 'Not Answered'}
                               </span>
+                              {answer && (
+                                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                                  answer.marksObtained > 0 
+                                    ? 'bg-blue-100 text-blue-800' 
+                                    : answer.marksObtained < 0
+                                    ? 'bg-orange-100 text-orange-800'
+                                    : 'bg-slate-100 text-slate-800'
+                                }`}>
+                                  Marks: {answer.marksObtained}/{answer.fullMarks}
+                                </span>
+                              )}
                             </div>
                             <div className="flex items-center space-x-2">
                               <span className="text-sm text-gray-500">
@@ -579,6 +611,18 @@ export default function ExamResultsPage() {
                         {questions.length - results.answers.length}
                       </span>
                     </div>
+                    <div className="flex justify-between pt-2 border-t border-gray-200">
+                      <span className="text-gray-600 font-medium">Total Marks:</span>
+                      <span className="font-bold text-purple-600">
+                        {results.totalMarksObtained}/{results.totalMarksAvailable}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Marks Percentage:</span>
+                      <span className="font-medium text-purple-600">
+                        {Math.round((results.totalMarksObtained / results.totalMarksAvailable) * 100)}%
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -593,6 +637,13 @@ export default function ExamResultsPage() {
             submissionId={submissionId}
             submittedReports={submittedReports}
             onReportSubmitted={(questionId) => markReportAsSubmitted(questionId)}
+          />
+          
+          {/* Help Modal */}
+          <HelpModal
+            isOpen={helpModalOpen}
+            onClose={() => setHelpModalOpen(false)}
+            results={results}
           />
         </StudentLayout>
       </SubscriptionGuard>
@@ -786,6 +837,163 @@ function ReportIssueModal({
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  );
+}
+
+// Help Modal Component
+function HelpModal({ 
+  isOpen, 
+  onClose, 
+  results 
+}: { 
+  isOpen: boolean; 
+  onClose: () => void; 
+  results: ExamResults | null;
+}) {
+  if (!isOpen || !results) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-4xl mx-4 shadow-xl max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Marks & Score Calculation Guide</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="space-y-6">
+          {/* Overview */}
+          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+            <h4 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">📊 Your Current Results</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="text-blue-700 dark:text-blue-300">Score:</span>
+                <span className="font-bold ml-2">{results.scorePercent}%</span>
+              </div>
+              <div>
+                <span className="text-blue-700 dark:text-blue-300">Marks:</span>
+                <span className="font-bold ml-2">{results.totalMarksObtained}/{results.totalMarksAvailable}</span>
+              </div>
+              <div>
+                <span className="text-blue-700 dark:text-blue-300">Correct:</span>
+                <span className="font-bold ml-2">{results.correctCount}/{results.totalQuestions}</span>
+              </div>
+              <div>
+                <span className="text-blue-700 dark:text-blue-300">Marks %:</span>
+                <span className="font-bold ml-2">{Math.round((results.totalMarksObtained / results.totalMarksAvailable) * 100)}%</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Score vs Marks Explanation */}
+          <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+            <h4 className="text-lg font-semibold text-green-900 dark:text-green-100 mb-3">🎯 Score vs Marks - What's the Difference?</h4>
+            <div className="space-y-3 text-sm text-green-800 dark:text-green-200">
+              <div>
+                <strong>Score Percentage:</strong> Based on number of correct answers
+                <br />
+                <code className="bg-green-100 dark:bg-green-800 px-2 py-1 rounded">Score = (Correct Answers ÷ Total Questions) × 100</code>
+                <br />
+                <span className="text-xs">Example: 5 correct out of 25 = (5÷25) × 100 = 20%</span>
+              </div>
+              <div>
+                <strong>Marks:</strong> Based on marking scheme (includes negative marking)
+                <br />
+                <code className="bg-green-100 dark:bg-green-800 px-2 py-1 rounded">Total Marks = Sum of all question marks (positive + negative)</code>
+                <br />
+                <span className="text-xs">Example: 5 correct (+20) + 20 wrong (-20) = 0 marks</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Question Type Marking Schemes */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white">📝 Marking Schemes by Question Type</h4>
+            
+            {/* MCQ Single */}
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-4">
+              <h5 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2">🔘 MCQ Single Choice</h5>
+              <div className="text-sm text-yellow-800 dark:text-yellow-200 space-y-1">
+                <div>✅ <strong>Correct Answer:</strong> +4 marks</div>
+                <div>❌ <strong>Wrong Answer:</strong> -1 mark</div>
+                <div>⭕ <strong>Not Attempted:</strong> 0 marks</div>
+                <div className="text-xs mt-2 bg-yellow-100 dark:bg-yellow-800 p-2 rounded">
+                  <strong>Example:</strong> If you answer 5 correctly and 20 incorrectly: (5×4) + (20×-1) = 20 - 20 = 0 marks
+                </div>
+              </div>
+            </div>
+
+            {/* Open Ended */}
+            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4">
+              <h5 className="font-semibold text-purple-900 dark:text-purple-100 mb-2">✏️ Open Ended Questions</h5>
+              <div className="text-sm text-purple-800 dark:text-purple-200 space-y-1">
+                <div>✅ <strong>Correct Answer:</strong> +4 marks</div>
+                <div>❌ <strong>Wrong Answer:</strong> -1 mark</div>
+                <div>⭕ <strong>Not Attempted:</strong> 0 marks</div>
+                <div className="text-xs mt-2 bg-purple-100 dark:bg-purple-800 p-2 rounded">
+                  <strong>Example:</strong> Numerical questions where you enter a value. Correct value = +4, wrong value = -1
+                </div>
+              </div>
+            </div>
+
+            {/* Paragraph */}
+            <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4">
+              <h5 className="font-semibold text-indigo-900 dark:text-indigo-100 mb-2">📄 Paragraph Questions</h5>
+              <div className="text-sm text-indigo-800 dark:text-indigo-200 space-y-1">
+                <div>✅ <strong>Correct Answer:</strong> +2 marks</div>
+                <div>❌ <strong>Wrong Answer:</strong> 0 marks</div>
+                <div>⭕ <strong>Not Attempted:</strong> 0 marks</div>
+                <div className="text-xs mt-2 bg-indigo-100 dark:bg-indigo-800 p-2 rounded">
+                  <strong>Example:</strong> Questions with passage followed by questions. Only correct answers get +2 marks
+                </div>
+              </div>
+            </div>
+
+            {/* MCQ Multiple */}
+            <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
+              <h5 className="font-semibold text-red-900 dark:text-red-100 mb-2">☑️ MCQ Multiple Choice</h5>
+              <div className="text-sm text-red-800 dark:text-red-200 space-y-1">
+                <div>✅ <strong>All Correct Options:</strong> +4 marks</div>
+                <div>🟡 <strong>3 out of 4 Correct:</strong> +3 marks</div>
+                <div>🟡 <strong>2 out of 3+ Correct:</strong> +2 marks</div>
+                <div>🟡 <strong>1 out of 2+ Correct:</strong> +1 mark</div>
+                <div>❌ <strong>Any Wrong Selection:</strong> -2 marks</div>
+                <div>⭕ <strong>Not Attempted:</strong> 0 marks</div>
+                <div className="text-xs mt-2 bg-red-100 dark:bg-red-800 p-2 rounded">
+                  <strong>Example:</strong> If correct options are A, B, D: Selecting A,B,D = +4, Selecting A,B = +2, Selecting A,C = -2
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tips */}
+          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">💡 Tips for Better Performance</h4>
+            <div className="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+              <div>• <strong>Don't guess randomly:</strong> Negative marking means wrong answers cost you marks</div>
+              <div>• <strong>Attempt questions you're confident about:</strong> Correct answers give you full marks</div>
+              <div>• <strong>For MCQ Multiple:</strong> Only select options you're sure about to avoid negative marking</div>
+              <div>• <strong>Time management:</strong> Focus on questions you can solve rather than attempting all</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-end mt-6">
+          <button
+            onClick={onClose}
+            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Got it!
+          </button>
+        </div>
       </div>
     </div>
   );

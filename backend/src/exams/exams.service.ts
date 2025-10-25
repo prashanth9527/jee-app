@@ -480,15 +480,93 @@ export class ExamsService {
     if (submission.userId !== userId) {
       throw new BadRequestException('You do not have access to this submission');
     }
-    console.log('Submission results:', { submissionId: submission.answers, score: submission.scorePercent });
-    return {
-      submissionId: submission.id,
-      scorePercent: submission.scorePercent,
-      correctCount: submission.correctCount,
-      totalQuestions: submission.totalQuestions,
-      submittedAt: submission.submittedAt,
-      examTitle: submission.examPaper.title,
-      answers: submission.answers.map((a: any) => ({
+
+    // Calculate marks based on specific marking scheme
+    let totalMarksObtained = 0;
+    let totalMarksAvailable = 0;
+    const answersWithMarks = submission.answers.map((a: any) => {
+      const question = a.question;
+      const questionType = question.questionType || 'MCQ_SINGLE';
+      const fullMarks = question.fullMarks || 4.0;
+      const partialMarks = question.partialMarks || 2.0;
+      const negativeMarks = question.negativeMarks || -1.0;
+      
+      totalMarksAvailable += fullMarks;
+      
+      let marksObtained = 0;
+      
+      // Apply specific marking scheme based on question type
+      switch (questionType) {
+        case 'MCQ_SINGLE':
+        case 'OPEN_ENDED':
+          if (a.isCorrect) {
+            marksObtained = fullMarks; // +4 for correct
+          } else if (a.selectedOptionId || a.numericValue !== null) {
+            marksObtained = negativeMarks; // -1 for wrong answer
+          } else {
+            marksObtained = 0; // 0 for not attempted
+          }
+          break;
+          
+        case 'PARAGRAPH':
+          if (a.isCorrect) {
+            marksObtained = fullMarks; // +2 for correct
+          } else {
+            marksObtained = 0; // 0 in all other cases
+          }
+          break;
+          
+        case 'MCQ_MULTIPLE':
+          if (a.isCorrect) {
+            marksObtained = fullMarks; // +4 for all correct options
+          } else if (a.selectedOptionId) {
+            // For MCQ_MULTIPLE, implement complex partial marking logic
+            const selectedOptions = a.selectedOptionId ? [a.selectedOptionId] : [];
+            const correctOptions = question.options.filter((opt: any) => opt.isCorrect);
+            const selectedCorrectOptions = selectedOptions.filter(optId => 
+              correctOptions.some((opt: any) => opt.id === optId)
+            );
+            const selectedIncorrectOptions = selectedOptions.filter(optId => 
+              !correctOptions.some((opt: any) => opt.id === optId)
+            );
+            
+            if (selectedIncorrectOptions.length > 0) {
+              // Any incorrect selection gets -2 marks
+              marksObtained = -2;
+            } else if (selectedCorrectOptions.length === correctOptions.length) {
+              // All correct options selected
+              marksObtained = fullMarks;
+            } else if (selectedCorrectOptions.length === 3 && correctOptions.length === 4) {
+              // 3 out of 4 correct options selected
+              marksObtained = 3;
+            } else if (selectedCorrectOptions.length === 2 && correctOptions.length >= 3) {
+              // 2 out of 3+ correct options selected
+              marksObtained = 2;
+            } else if (selectedCorrectOptions.length === 1 && correctOptions.length >= 2) {
+              // 1 out of 2+ correct options selected
+              marksObtained = 1;
+            } else {
+              marksObtained = -2; // Default negative marking
+            }
+          } else {
+            marksObtained = 0; // 0 for not attempted
+          }
+          break;
+          
+        default:
+          // Fallback to original logic
+          if (a.isCorrect) {
+            marksObtained = fullMarks;
+          } else if (a.selectedOptionId) {
+            marksObtained = negativeMarks;
+          } else {
+            marksObtained = 0;
+          }
+      }
+      
+      totalMarksObtained += marksObtained;
+      
+      return {
         questionId: a.questionId,
         question: a.question.stem,
         selectedOption: a.question.isOpenEnded ? 
@@ -497,8 +575,27 @@ export class ExamsService {
         correctOption: a.question.isOpenEnded ?
           { text: a.question.correctNumericAnswer?.toString() || '', isCorrect: true } :
           a.question.options.find((o: any) => o.isCorrect) || null,
-        isCorrect: a.isCorrect
-      }))
+        isCorrect: a.isCorrect,
+        marksObtained: marksObtained,
+        fullMarks: fullMarks,
+        partialMarks: partialMarks,
+        negativeMarks: negativeMarks,
+        allowPartialMarking: question.allowPartialMarking,
+        questionType: questionType
+      };
+    });
+
+    console.log('Submission results:', { submissionId: submission.answers, score: submission.scorePercent });
+    return {
+      submissionId: submission.id,
+      scorePercent: submission.scorePercent,
+      correctCount: submission.correctCount,
+      totalQuestions: submission.totalQuestions,
+      submittedAt: submission.submittedAt,
+      examTitle: submission.examPaper.title,
+      totalMarksObtained: totalMarksObtained,
+      totalMarksAvailable: totalMarksAvailable,
+      answers: answersWithMarks
     };
   }
 
