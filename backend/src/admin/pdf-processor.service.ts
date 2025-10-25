@@ -471,12 +471,12 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
   }
 
   /**
-   * Save JSON content to AWS S3 only (no local storage)
+   * Save JSON content to AWS S3 using database record ID as filename
    */
-  private async saveJsonToFile(fileName: string, jsonContent: string): Promise<string> {
+  private async saveJsonToFile(cacheId: string, jsonContent: string): Promise<string> {
     try {
-      // Generate JSON file name (replace .pdf with .json)
-      const jsonFileName = fileName.replace(/\.pdf$/i, '.json');
+      // Generate JSON file name using database record ID
+      const jsonFileName = `${cacheId}.json`;
 
       // Format JSON content
       const formattedJson = JSON.stringify(JSON.parse(jsonContent), null, 2);
@@ -1414,14 +1414,17 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
       const processedJsonContent = this.convertImagePathsToAwsUrls(jsonContent, cache.fileName);
       const processedParsedData = JSON.parse(processedJsonContent);
 
-      // Update existing cache entry
+      // Save JSON content to file using database record ID
+      const jsonFilePath = await this.saveJsonToFile(cache.id, processedJsonContent);
+
+      // Update existing cache entry with both JSON content and file path
       cache = await this.prisma.pDFProcessorCache.update({
         where: { id: cacheId },
-        data: { jsonContent: processedJsonContent }
+        data: { 
+          jsonContent: processedJsonContent,
+          outputFilePath: jsonFilePath
+        }
       });
-
-      // Save JSON content to local file
-      const jsonFilePath = await this.saveJsonToFile(cache.fileName, processedJsonContent);
 
       return {
         cacheId: cache.id,

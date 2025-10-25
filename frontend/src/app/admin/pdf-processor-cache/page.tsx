@@ -500,10 +500,10 @@ export default function PDFProcessorCachePage() {
         jsonContent: jsonContent.trim()
       });
       
-      if (response.data.success) {
-        toast.close();
-        const { questionCount, jsonFilePath } = response.data.data;
-        toast.success('JSON updated', 'JSON content saved successfully!');
+        if (response.data.success) {
+          toast.close();
+          const { questionCount, jsonFilePath } = response.data.data;
+          toast.success('JSON updated', `JSON content saved to database and file: ${jsonFilePath}`);
         
         // Keep modal open and refresh the records
         fetchRecords();
