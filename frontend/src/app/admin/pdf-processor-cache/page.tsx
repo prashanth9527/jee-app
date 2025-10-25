@@ -330,7 +330,9 @@ export default function PDFProcessorCachePage() {
       
       // Extract the relative path from content directory
       const relativePath = filePath.substring(contentIndex + 8); // Skip 'content' + path separator
-      const encodedPath = encodeURIComponent(relativePath);
+      // Convert Windows backslashes to forward slashes for web URLs
+      const normalizedPath = relativePath.replace(/\\/g, '/');
+      const encodedPath = encodeURIComponent(normalizedPath);
       
     const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
       const pdfUrl = `${apiBase}/static/pdf/${encodedPath}`;
