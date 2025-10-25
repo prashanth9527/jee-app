@@ -11,6 +11,7 @@ interface PDFProcessorCacheRecord {
   id: string;
   fileName: string;
   filePath: string;
+  pdfFilePath?: string;
   fileSize: number;
   recordType: 'pyq' | 'question' | 'lms';
   chatGptFileId?: string;
@@ -1162,7 +1163,7 @@ export default function PDFProcessorCachePage() {
                         </div>
                         <div className="flex space-x-2 mt-2">
                           <button
-                            onClick={() => viewPDF(record.filePath, record.fileName)}
+                            onClick={() => window.open(record.pdfFilePath || '', '_blank')}
                             className="inline-flex items-center px-2 py-1 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                             title="View PDF"
                           >
@@ -1174,7 +1175,7 @@ export default function PDFProcessorCachePage() {
                           </button>
                           {record.latexContent && (
                           <button
-                            onClick={() => viewLatex(record.latexContent || '', record.fileName)}
+                            onClick={() => window.open(record.latexFilePath || '', '_blank')}
                             className="inline-flex items-center px-2 py-1 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                             title="View LaTeX"
                           >
@@ -1653,11 +1654,12 @@ Please proceed with extracting ALL **90** questions from the complete .tex file 
                       <button
                         onClick={() => {
                           const record = records.find(r => r.fileName === editingJson);
-                          if (record?.filePath) {
-                            viewPDF(record.filePath, record.fileName);
-                          } else {
-                            toast.error('PDF file not found');
-                          }
+                          // if (record?.filePath) {
+                          //   viewPDF(record.filePath, record.fileName);
+                          // } else {
+                          //   toast.error('PDF file not found');
+                          // }
+                          window.open(record?.pdfFilePath || '', '_blank');
                         }}
                         className="px-3 py-1 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
                         title="Open PDF file in new window"

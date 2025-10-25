@@ -1812,7 +1812,8 @@ Preserve **exactly the questions, options, and correct answers** from the \`.tex
                               // Extract just the filename from the full path
                               const fileName = pdf.filePath.split(/[\\/]/).pop();
                               const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                              const fileUrl = `${apiBase}/static/pdf/${fileName}`;
+                              // const fileUrl = `${apiBase}/static/pdf/${fileName}`;
+                              const fileUrl = `${pdf.filePath || ''}`;
                               console.log('Opening PDF URL:', fileUrl);
                               window.open(fileUrl, '_blank');
                             } catch (error) {
@@ -1837,7 +1838,8 @@ Preserve **exactly the questions, options, and correct answers** from the \`.tex
                               // Convert LaTeX file path to static URL
                               const fileName = latexFilePath.split(/[\\/]/).pop();
                               const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                              const fileUrl = `${apiBase}/static/latex/${fileName}`;
+                              // const fileUrl = `${apiBase}/static/latex/${fileName}`;
+                              const fileUrl = `${latexFilePath || ''}`;
                               console.log('Opening LaTeX URL:', fileUrl);
                               window.open(fileUrl, '_blank');
                             } catch (error) {
