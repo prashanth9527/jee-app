@@ -1414,8 +1414,13 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
       const processedJsonContent = this.convertImagePathsToAwsUrls(jsonContent, cache.fileName);
       const processedParsedData = JSON.parse(processedJsonContent);
 
+      let fileName = cache.latexFilePath?.split('/').pop()?.replace('.tex', '');
+      if (!fileName) {
+        fileName = cache.id;
+      }
+
       // Save JSON content to file using database record ID
-      const jsonFilePath = await this.saveJsonToFile(cache.id, processedJsonContent);
+      const jsonFilePath = await this.saveJsonToFile(fileName, processedJsonContent);
 
       // Update existing cache entry with both JSON content and file path
       cache = await this.prisma.pDFProcessorCache.update({
