@@ -1809,11 +1809,22 @@ Preserve **exactly the questions, options, and correct answers** from the \`.tex
                           const pdf = pdfs.find(p => p.fileName === editingJson);
                           if (pdf?.filePath) {
                             try {
-                              // Extract just the filename from the full path
-                              const fileName = pdf.filePath.split(/[\\/]/).pop();
+                              // Extract the relative path from the full file path
+                              const contentIndex = pdf.filePath.indexOf('content');
+                              if (contentIndex === -1) {
+                                console.error('Content directory not found in file path:', pdf.filePath);
+                                toast.error('Invalid file path');
+                                return;
+                              }
+                              
+                              // Extract the relative path from content directory
+                              const relativePath = pdf.filePath.substring(contentIndex + 8); // Skip 'content' + path separator
+                              // Convert backslashes to forward slashes for URL
+                              const normalizedPath = relativePath.replace(/\\/g, '/');
+                              const encodedPath = encodeURIComponent(normalizedPath);
+                              
                               const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                              // const fileUrl = `${apiBase}/static/pdf/${fileName}`;
-                              const fileUrl = `${pdf.filePath || ''}`;
+                              const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
                               console.log('Opening PDF URL:', fileUrl);
                               window.open(fileUrl, '_blank');
                             } catch (error) {

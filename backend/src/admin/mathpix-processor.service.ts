@@ -672,7 +672,7 @@ export class MathpixProcessorService {
         const tempImagePath = path.join(tempDir, `temp_${Date.now()}_${imageName}`);
         fs.writeFileSync(tempImagePath, imageBuffer);
 
-        // Remove watermarks
+        // Remove watermarks and background tints
         let cleanedImagePath: string;
         if (this.removeAllColorWatermarks) {
           this.logger.log('🌈 Applying multi-color watermark removal...');
@@ -681,6 +681,13 @@ export class MathpixProcessorService {
           this.logger.log('🔵 Applying blue watermark removal...');
           cleanedImagePath = await this.imageWatermarkRemover.removeBlueWatermark(tempImagePath);
         }
+
+        // Additional step: Remove background tints for better results
+        this.logger.log('🎨 Removing background tints...');
+        const finalCleanedPath = await this.imageWatermarkRemover.removeBackgroundTints(cleanedImagePath);
+        
+        // Update the cleaned image path to use the final result
+        cleanedImagePath = finalCleanedPath;
 
         // Read cleaned image
         processedImageBuffer = fs.readFileSync(cleanedImagePath);

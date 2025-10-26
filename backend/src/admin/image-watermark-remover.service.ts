@@ -179,6 +179,24 @@ export class ImageWatermarkRemoverService {
         neutralG = Math.min(255, avg + 30);
         neutralB = Math.min(255, avg + 30);
       }
+      // Enhanced detection for LIGHT YELLOW/BEIGE backgrounds (like in your screenshot)
+      else if (this.isLightBackgroundTint(r, g, b)) {
+        isWatermark = true;
+        // Convert to pure white or very light gray
+        const brightness = Math.max(r, g, b);
+        if (brightness > 200) {
+          // Very light background - make it pure white
+          neutralR = 255;
+          neutralG = 255;
+          neutralB = 255;
+        } else {
+          // Light tint - neutralize to light gray
+          const avg = (r + g + b) / 3;
+          neutralR = Math.min(255, avg + 40);
+          neutralG = Math.min(255, avg + 40);
+          neutralB = Math.min(255, avg + 40);
+        }
+      }
       // Detect SEMI-TRANSPARENT overlays (any color with similar RGB but biased)
       else if (r > 120 || g > 120 || b > 120) {
         const max = Math.max(r, g, b);
@@ -203,6 +221,25 @@ export class ImageWatermarkRemoverService {
     }
 
     return processedData;
+  }
+
+  /**
+   * Detect light background tints (yellow, beige, cream, etc.)
+   * This handles the specific case shown in your screenshot
+   */
+  private isLightBackgroundTint(r: number, g: number, b: number): boolean {
+    // Check for light yellow/beige tints
+    const isLightYellow = r > 200 && g > 200 && b < 180 && Math.abs(r - g) < 30;
+    const isLightBeige = r > 180 && g > 180 && b > 150 && r > b + 20 && g > b + 20;
+    const isLightCream = r > 220 && g > 220 && b > 200 && Math.abs(r - g) < 20 && Math.abs(g - b) < 30;
+    
+    // Check for very light tints with subtle color bias
+    const isVeryLightTint = (r > 200 || g > 200 || b > 200) && 
+                           Math.abs(r - g) < 40 && 
+                           Math.abs(g - b) < 40 && 
+                           Math.abs(r - b) < 40;
+    
+    return isLightYellow || isLightBeige || isLightCream || isVeryLightTint;
   }
 
   /**
@@ -349,5 +386,84 @@ export class ImageWatermarkRemoverService {
       this.logger.error('Advanced watermark removal failed:', error);
       throw error;
     }
+  }
+
+  /**
+   * Remove background tints and make them pure white
+   * Specifically designed for circuit diagrams and technical images
+   */
+  async removeBackgroundTints(imagePath: string): Promise<string> {
+    try {
+      this.logger.log(`Removing background tints from: ${imagePath}`);
+
+      const imageBuffer = fs.readFileSync(imagePath);
+      const image = sharp(imageBuffer);
+
+      const { data, info } = await image
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+
+      const processedData = this.removeBackgroundTintsFromPixels(data, info.channels);
+
+      const ext = path.extname(imagePath);
+      const baseName = path.basename(imagePath, ext);
+      const dirName = path.dirname(imagePath);
+      const outputPath = path.join(dirName, `${baseName}_background_removed${ext}`);
+
+      await sharp(processedData, {
+        raw: {
+          width: info.width,
+          height: info.height,
+          channels: info.channels,
+        },
+      }).toFile(outputPath);
+
+      this.logger.log(`✅ Background tints removed: ${outputPath}`);
+      return outputPath;
+    } catch (error) {
+      this.logger.error('Background tint removal failed:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Remove background tints from pixel data
+   */
+  private removeBackgroundTintsFromPixels(data: Buffer, channels: number): Buffer {
+    const processedData = Buffer.from(data);
+
+    for (let i = 0; i < data.length; i += channels) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+
+      // Check if this is a background pixel (light tint)
+      if (this.isBackgroundTint(r, g, b)) {
+        // Convert to pure white
+        processedData[i] = 255;
+        processedData[i + 1] = 255;
+        processedData[i + 2] = 255;
+      }
+    }
+
+    return processedData;
+  }
+
+  /**
+   * Detect if a pixel is a background tint that should be removed
+   */
+  private isBackgroundTint(r: number, g: number, b: number): boolean {
+    // Very light pixels that are likely background
+    const isVeryLight = r > 240 && g > 240 && b > 240;
+    
+    // Light yellow/beige tints
+    const isLightTint = (r > 200 && g > 200 && b < 200) || 
+                      (r > 180 && g > 180 && b > 150 && r > b + 10 && g > b + 10);
+    
+    // Cream/off-white tints
+    const isCreamTint = r > 220 && g > 220 && b > 200 && 
+                       Math.abs(r - g) < 30 && Math.abs(g - b) < 40;
+    
+    return isVeryLight || isLightTint || isCreamTint;
   }
 }

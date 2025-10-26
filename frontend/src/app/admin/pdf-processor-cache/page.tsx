@@ -1163,7 +1163,31 @@ export default function PDFProcessorCachePage() {
                         </div>
                         <div className="flex space-x-2 mt-2">
                           <button
-                            onClick={() => window.open(record.pdfFilePath || '', '_blank')}
+                            onClick={() => {
+                              try {
+                                // Extract the relative path from the full file path
+                                const contentIndex = record.filePath.indexOf('content');
+                                if (contentIndex === -1) {
+                                  console.error('Content directory not found in file path:', record.filePath);
+                                  toast.error('Invalid file path');
+                                  return;
+                                }
+                                
+                                // Extract the relative path from content directory
+                                const relativePath = record.filePath.substring(contentIndex + 8); // Skip 'content' + path separator
+                                // Convert backslashes to forward slashes for URL
+                                const normalizedPath = relativePath.replace(/\\/g, '/');
+                                const encodedPath = encodeURIComponent(normalizedPath);
+                                
+                                const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+                                const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
+                                console.log('Opening PDF URL:', fileUrl);
+                                window.open(fileUrl, '_blank');
+                              } catch (error) {
+                                console.error('Error opening PDF:', error);
+                                toast.error('Failed to open PDF file');
+                              }
+                            }}
                             className="inline-flex items-center px-2 py-1 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                             title="View PDF"
                           >
@@ -1654,12 +1678,33 @@ Please proceed with extracting ALL **90** questions from the complete .tex file 
                       <button
                         onClick={() => {
                           const record = records.find(r => r.fileName === editingJson);
-                          // if (record?.filePath) {
-                          //   viewPDF(record.filePath, record.fileName);
-                          // } else {
-                          //   toast.error('PDF file not found');
-                          // }
-                          window.open(record?.pdfFilePath || '', '_blank');
+                          if (record?.filePath) {
+                            try {
+                              // Extract the relative path from the full file path
+                              const contentIndex = record.filePath.indexOf('content');
+                              if (contentIndex === -1) {
+                                console.error('Content directory not found in file path:', record.filePath);
+                                toast.error('Invalid file path');
+                                return;
+                              }
+                              
+                              // Extract the relative path from content directory
+                              const relativePath = record.filePath.substring(contentIndex + 8); // Skip 'content' + path separator
+                              // Convert backslashes to forward slashes for URL
+                              const normalizedPath = relativePath.replace(/\\/g, '/');
+                              const encodedPath = encodeURIComponent(normalizedPath);
+                              
+                              const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+                              const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
+                              console.log('Opening PDF URL:', fileUrl);
+                              window.open(fileUrl, '_blank');
+                            } catch (error) {
+                              console.error('Error opening PDF:', error);
+                              toast.error('Failed to open PDF file');
+                            }
+                          } else {
+                            toast.error('PDF file not found');
+                          }
                         }}
                         className="px-3 py-1 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
                         title="Open PDF file in new window"

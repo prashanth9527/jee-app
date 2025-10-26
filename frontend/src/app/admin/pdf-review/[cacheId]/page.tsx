@@ -829,7 +829,7 @@ export default function PDFReviewPage() {
                                 try {
                                   // Extract the relative path from the full file path
                                   // The filePath should be something like: C:\wamp64\www\nodejs\jee-app\content\JEE\Previous Papers\2025\Session2\Physics\0804-Physics Paper+With+Sol Evening.pdf
-                                  // We need to extract: JEE\Previous Papers\2025\Session2\Physics\0804-Physics Paper+With+Sol Evening.pdf
+                                  // We need to extract: JEE/Previous Papers/2025/Session2/Physics/0804-Physics Paper+With+Sol Evening.pdf
                                   
                                   // Find the 'content' directory in the path
                                   const contentIndex = pdfData.filePath.indexOf('content');
@@ -841,11 +841,12 @@ export default function PDFReviewPage() {
                                   
                                   // Extract the relative path from content directory
                                   const relativePath = pdfData.filePath.substring(contentIndex + 8); // Skip 'content' + path separator
-                                  const encodedPath = encodeURIComponent(relativePath);
+                                  // Convert backslashes to forward slashes for URL
+                                  const normalizedPath = relativePath.replace(/\\/g, '/');
+                                  const encodedPath = encodeURIComponent(normalizedPath);
                                   
                                   const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                                  // const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
-                                  const fileUrl = `${pdfData.filePath || ''}`;
+                                  const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
                                   console.log('Opening PDF URL:', fileUrl);
                                   window.open(fileUrl, '_blank');
                                 } catch (error) {
