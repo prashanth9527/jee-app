@@ -843,10 +843,15 @@ export default function PDFReviewPage() {
                                   const relativePath = pdfData.filePath.substring(contentIndex + 8); // Skip 'content' + path separator
                                   // Convert backslashes to forward slashes for URL
                                   const normalizedPath = relativePath.replace(/\\/g, '/');
-                                  const encodedPath = encodeURIComponent(normalizedPath);
+                                  // Only encode the filename, not the path separators
+                                  const pathParts = normalizedPath.split('/');
+                                  const encodedParts = pathParts.map(part => encodeURIComponent(part));
+                                  const encodedPath = encodedParts.join('/');
                                   
+                                  // Use the main domain for static files, not the backend subdomain
                                   const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                                  const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
+                                  const staticBase = apiBase.includes('backend.') ? apiBase.replace('backend.', '') : apiBase;
+                                  const fileUrl = `${staticBase}/static/pdf/${encodedPath}`;
                                   console.log('Opening PDF URL:', fileUrl);
                                   window.open(fileUrl, '_blank');
                                 } catch (error) {
