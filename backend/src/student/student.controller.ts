@@ -333,6 +333,7 @@ export class StudentController {
 					topicIds: true,
 					subtopicIds: true,
 					questionIds: true,
+					examType: true,
 					_count: {
 						select: {
 							submissions: {

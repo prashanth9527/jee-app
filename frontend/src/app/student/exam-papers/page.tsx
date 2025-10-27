@@ -781,21 +781,42 @@ export default function ExamPapersPage() {
                   {/* Lesson Information */}
                   {paper.lessonInfo && paper.lessonInfo.length > 0 && (
                     <div className="mb-4">
-                      <div className="flex items-center text-sm text-gray-600 mb-2">
-                        <svg className="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center text-sm text-gray-700 mb-3">
+                        <svg className="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
-                        <span className="font-medium">Lessons:</span>
+                        <span className="font-semibold text-gray-800">Lessons Covered:</span>
                       </div>
-                      <div className="flex flex-wrap gap-1">
-                        {paper.lessonInfo.slice(0, 3).map((lesson: any, index: number) => (
-                          <span key={index} className="inline-flex items-center px-2 py-1 rounded text-xs bg-gray-100 text-gray-700">
-                            {lesson.name}
-                          </span>
-                        ))}
-                        {paper.lessonInfo.length > 3 && (
-                          <span className="inline-flex items-center px-2 py-1 rounded text-xs bg-gray-100 text-gray-500">
-                            +{paper.lessonInfo.length - 3} more
+                      <div className="flex flex-wrap gap-2">
+                        {paper.lessonInfo.slice(0, 4).map((lesson: any, index: number) => {
+                          const colors = [
+                            'bg-blue-500 text-white border-blue-600',
+                            'bg-green-500 text-white border-green-600',
+                            'bg-purple-500 text-white border-purple-600',
+                            'bg-orange-500 text-white border-orange-600',
+                            'bg-pink-500 text-white border-pink-600',
+                            'bg-indigo-500 text-white border-indigo-600'
+                          ];
+                          const colorClass = colors[index % colors.length];
+                          
+                          return (
+                            <span 
+                              key={index} 
+                              className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold border ${colorClass} shadow-lg hover:shadow-xl transition-all duration-200`}
+                            >
+                              <svg className="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              {lesson.name}
+                            </span>
+                          );
+                        })}
+                        {paper.lessonInfo.length > 4 && (
+                          <span className="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-gray-700 text-white border border-gray-600 shadow-lg hover:bg-gray-600 hover:shadow-xl transition-all duration-200">
+                            <svg className="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                            </svg>
+                            +{paper.lessonInfo.length - 4} more
                           </span>
                         )}
                       </div>
@@ -876,7 +897,7 @@ export default function ExamPapersPage() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => startPracticeSession(paper)}
-                      className={`flex-1 py-2.5 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 font-medium text-sm ${
+                      className={`flex-1 bg-pink-600 text-white py-2.5 px-4 rounded-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-all duration-200 font-medium text-sm shadow-md hover:shadow-lg ${
                         paper.hasPracticed 
                           ? 'bg-green-100 text-green-700 hover:bg-green-200 focus:ring-green-500' 
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500'
@@ -1022,16 +1043,39 @@ export default function ExamPapersPage() {
                 {/* Lesson Information */}
                 {previewModal.paper.lessonInfo && previewModal.paper.lessonInfo.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Lessons Covered</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+                      <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                      Lessons Covered
+                    </h3>
                     <div className="flex flex-wrap gap-2">
-                      {previewModal.paper.lessonInfo.map((lesson: any, index: number) => (
-                        <span key={index} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
-                          {lesson.name}
-                          {lesson.subject && (
-                            <span className="ml-1 text-xs text-gray-500">({lesson.subject.name})</span>
-                          )}
-                        </span>
-                      ))}
+                      {previewModal.paper.lessonInfo.map((lesson: any, index: number) => {
+                        const colors = [
+                          'bg-blue-500 text-white border-blue-600',
+                          'bg-green-500 text-white border-green-600',
+                          'bg-purple-500 text-white border-purple-600',
+                          'bg-orange-500 text-white border-orange-600',
+                          'bg-pink-500 text-white border-pink-600',
+                          'bg-indigo-500 text-white border-indigo-600'
+                        ];
+                        const colorClass = colors[index % colors.length];
+                        
+                        return (
+                          <span 
+                            key={index} 
+                            className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold border ${colorClass} shadow-lg hover:shadow-xl transition-all duration-200`}
+                          >
+                            <svg className="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            {lesson.name}
+                            {lesson.subject && (
+                              <span className="ml-1 text-xs opacity-75">({lesson.subject.name})</span>
+                            )}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
