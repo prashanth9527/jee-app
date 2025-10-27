@@ -103,7 +103,9 @@ export class StudentController {
 		@Query('minDuration') minDuration?: string,
 		@Query('maxDuration') maxDuration?: string,
 		@Query('minQuestions') minQuestions?: string,
-		@Query('maxQuestions') maxQuestions?: string
+		@Query('maxQuestions') maxQuestions?: string,
+		@Query('attempted') attempted?: string,
+		@Query('bookmarked') bookmarked?: string
 	) {
 		const userId = req.user.id;
 
@@ -232,6 +234,50 @@ export class StudentController {
 			});
 		}
 
+		// Attempted filter
+		if (attempted === 'true') {
+			where.AND = where.AND || [];
+			where.AND.push({
+				submissions: {
+					some: {
+						userId: userId,
+						submittedAt: { not: null }
+					}
+				}
+			});
+		} else if (attempted === 'false') {
+			where.AND = where.AND || [];
+			where.AND.push({
+				submissions: {
+					none: {
+						userId: userId,
+						submittedAt: { not: null }
+					}
+				}
+			});
+		}
+
+		// Bookmarked filter
+		if (bookmarked === 'true') {
+			where.AND = where.AND || [];
+			where.AND.push({
+				examBookmarks: {
+					some: {
+						userId: userId
+					}
+				}
+			});
+		} else if (bookmarked === 'false') {
+			where.AND = where.AND || [];
+			where.AND.push({
+				examBookmarks: {
+					none: {
+						userId: userId
+					}
+				}
+			});
+		}
+
 		// Difficulty and year filters (through questions)
 		if (difficulty || year) {
 			// Get question IDs that match the difficulty and year criteria
@@ -353,10 +399,34 @@ export class StudentController {
 					}
 				}
 
+				// Check if user has practiced this exam
+				const hasPracticed = await this.prisma.practiceSession.findUnique({
+					where: {
+						userId_examPaperId: {
+							userId: req.user.id,
+							examPaperId: paper.id
+						}
+					},
+					select: { id: true }
+				});
+
+				// Check if user has bookmarked this exam
+				const isBookmarked = await this.prisma.examBookmark.findUnique({
+					where: {
+						userId_examPaperId: {
+							userId: req.user.id,
+							examPaperId: paper.id
+						}
+					},
+					select: { id: true }
+				});
+
 				return {
 					...paper,
 					subjects,
 					hasAttempted: paper._count.submissions > 0,
+					hasPracticed: !!hasPracticed,
+					isBookmarked: !!isBookmarked,
 					questionCount: paper.questionIds?.length || 0,
 					lessonInfo: lessonInfo.map(q => q.lesson).filter(Boolean),
 					averageScore: submissionStats._avg.scorePercent || 0,
@@ -379,7 +449,189 @@ export class StudentController {
 		};
 	}
 
+	@Post('exam-papers/:examId/bookmark')
+	async bookmarkExam(@Req() req: any, @Param('examId') examId: string) {
+		const userId = req.user.id;
 
+		try {
+			// Check if exam exists
+			const examPaper = await this.prisma.examPaper.findUnique({
+				where: { id: examId }
+			});
+
+			if (!examPaper) {
+				throw new Error('Exam paper not found');
+			}
+
+			// Create bookmark
+			const bookmark = await this.prisma.examBookmark.create({
+				data: {
+					userId,
+					examPaperId: examId
+				}
+			});
+
+			return { success: true, message: 'Exam bookmarked successfully' };
+		} catch (error) {
+			if (error.code === 'P2002') {
+				throw new Error('Exam is already bookmarked');
+			}
+			throw new Error(`Failed to bookmark exam: ${error.message}`);
+		}
+	}
+
+	@Delete('exam-papers/:examId/bookmark')
+	async unbookmarkExam(@Req() req: any, @Param('examId') examId: string) {
+		const userId = req.user.id;
+
+		try {
+			await this.prisma.examBookmark.deleteMany({
+				where: {
+					userId,
+					examPaperId: examId
+				}
+			});
+
+			return { success: true, message: 'Exam unbookmarked successfully' };
+		} catch (error) {
+			throw new Error(`Failed to unbookmark exam: ${error.message}`);
+		}
+	}
+
+	@Get('practice-exam/:examId')
+	async getPracticeExam(@Req() req: any, @Param('examId') examId: string) {
+		const userId = req.user.id;
+
+		try {
+			// Get exam paper with full question details
+			const examPaper = await this.prisma.examPaper.findUnique({
+				where: { id: examId },
+				select: {
+					id: true,
+					title: true,
+					description: true,
+					timeLimitMin: true,
+					examType: true,
+					subjectIds: true,
+					topicIds: true,
+					subtopicIds: true,
+					questionIds: true,
+					createdAt: true
+				}
+			});
+
+			if (!examPaper) {
+				throw new Error('Exam paper not found');
+			}
+
+			// Get full question details with options and explanations
+			const questions = await this.prisma.question.findMany({
+				where: { id: { in: examPaper.questionIds } },
+				select: {
+					id: true,
+					stem: true,
+					options: {
+						select: {
+							id: true,
+							text: true,
+							isCorrect: true,
+							order: true
+						},
+						orderBy: { order: 'asc' }
+					},
+					explanation: true,
+					difficulty: true,
+					yearAppeared: true,
+					lessonId: true,
+					correctNumericAnswer: true,
+					questionType: true,
+					isOpenEnded: true,
+					answerTolerance: true,
+					parentQuestionId: true,
+					subQuestions: {
+						select: {
+							id: true,
+							stem: true,
+							options: {
+								select: {
+									id: true,
+									text: true,
+									isCorrect: true,
+									order: true
+								},
+								orderBy: { order: 'asc' }
+							},
+							explanation: true,
+							difficulty: true,
+							correctNumericAnswer: true,
+							questionType: true,
+							isOpenEnded: true,
+							answerTolerance: true
+						}
+					},
+					lesson: {
+						select: { id: true, name: true, subject: { select: { name: true } } }
+					}
+				}
+			});
+
+			// Get subject names
+			const subjects = examPaper.subjectIds?.length 
+				? await this.prisma.subject.findMany({
+					where: { id: { in: examPaper.subjectIds } },
+					select: { id: true, name: true }
+				})
+				: [];
+
+			return {
+				...examPaper,
+				subjects,
+				questions,
+				questionCount: questions.length
+			};
+		} catch (error) {
+			throw new Error(`Failed to fetch practice exam: ${error.message}`);
+		}
+	}
+
+	@Post('practice-exam/:examId/track')
+	async trackPracticeSession(@Req() req: any, @Param('examId') examId: string) {
+		const userId = req.user.id;
+
+		try {
+			// Check if exam paper exists
+			const examPaper = await this.prisma.examPaper.findUnique({
+				where: { id: examId },
+				select: { id: true }
+			});
+
+			if (!examPaper) {
+				throw new Error('Exam paper not found');
+			}
+
+			// Upsert practice session tracking
+			await this.prisma.practiceSession.upsert({
+				where: {
+					userId_examPaperId: {
+						userId,
+						examPaperId: examId
+					}
+				},
+				update: {
+					practicedAt: new Date()
+				},
+				create: {
+					userId,
+					examPaperId: examId,
+					practicedAt: new Date()
+				}
+			});
+
+			return { success: true, message: 'Practice session tracked' };
+		} catch (error) {
+			throw new Error(`Failed to track practice session: ${error.message}`);
+		}
+	}
 
 	@Get('ai-usage')
 	async getAiUsage(@Req() req: any) {

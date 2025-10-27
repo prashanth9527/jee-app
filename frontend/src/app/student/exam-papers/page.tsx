@@ -17,6 +17,8 @@ interface ExamPaper {
   createdAt: string;
   subjects: { id: string; name: string }[];
   hasAttempted: boolean;
+  hasPracticed: boolean;
+  isBookmarked: boolean;
   questionCount: number;
   examType: string;
   overallDifficulty: string;
@@ -59,6 +61,8 @@ export default function ExamPapersPage() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [error, setError] = useState<string | null>(null);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [selectedAttempted, setSelectedAttempted] = useState('');
+  const [selectedBookmarked, setSelectedBookmarked] = useState('');
   const [previewModal, setPreviewModal] = useState<{ isOpen: boolean; paper: any | null }>({
     isOpen: false,
     paper: null
@@ -81,7 +85,7 @@ export default function ExamPapersPage() {
 
   useEffect(() => {
     fetchPapers();
-  }, [currentPage, itemsPerPage, debouncedSearchText, selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, selectedExamType, selectedDifficulty, selectedYear, minDuration, maxDuration, minQuestions, maxQuestions]);
+  }, [currentPage, itemsPerPage, debouncedSearchText, selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, selectedExamType, selectedDifficulty, selectedYear, minDuration, maxDuration, minQuestions, maxQuestions, selectedAttempted, selectedBookmarked]);
 
   const loadInitialData = async () => {
     try {
@@ -159,6 +163,14 @@ export default function ExamPapersPage() {
 
       if (maxQuestions) {
         params.append('maxQuestions', maxQuestions);
+      }
+
+      if (selectedAttempted) {
+        params.append('attempted', selectedAttempted);
+      }
+
+      if (selectedBookmarked) {
+        params.append('bookmarked', selectedBookmarked);
       }
 
       const response = await api.get(`/student/exam-papers?${params}`);
@@ -281,6 +293,47 @@ export default function ExamPapersPage() {
 
   const closePreviewModal = () => {
     setPreviewModal({ isOpen: false, paper: null });
+  };
+
+  const startPracticeSession = (paper: any) => {
+    router.push(`/student/practice-exam/${paper.id}`);
+  };
+
+  const handleBookmark = async (paper: ExamPaper) => {
+    try {
+      if (paper.isBookmarked) {
+        await api.delete(`/student/exam-papers/${paper.id}/bookmark`);
+        setPapers(papers.map(p => 
+          p.id === paper.id ? { ...p, isBookmarked: false } : p
+        ));
+        Swal.fire({
+          title: 'Success',
+          text: 'Exam removed from bookmarks',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      } else {
+        await api.post(`/student/exam-papers/${paper.id}/bookmark`);
+        setPapers(papers.map(p => 
+          p.id === paper.id ? { ...p, isBookmarked: true } : p
+        ));
+        Swal.fire({
+          title: 'Success',
+          text: 'Exam bookmarked successfully',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      }
+    } catch (error: any) {
+      console.error('Error toggling bookmark:', error);
+      Swal.fire({
+        title: 'Error',
+        text: error.response?.data?.message || 'Failed to update bookmark',
+        icon: 'error'
+      });
+    }
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -417,10 +470,10 @@ export default function ExamPapersPage() {
                   {lessons
                     .filter(lesson => !selectedSubject || lesson.subject?.name === subjects.find(s => s.id === selectedSubject)?.name)
                     .map((lesson) => (
-                      <option key={lesson.id} value={lesson.id}>
+                    <option key={lesson.id} value={lesson.id}>
                         {lesson.name} ({lesson._count?.questions || 0})
-                      </option>
-                    ))}
+                    </option>
+                  ))}
                 </select>
                 {!selectedSubject && (
                   <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
@@ -448,10 +501,10 @@ export default function ExamPapersPage() {
                       return topic.lesson?.name === lesson?.name;
                     })
                     .map((topic) => (
-                      <option key={topic.id} value={topic.id}>
+                    <option key={topic.id} value={topic.id}>
                         {topic.name} ({topic._count?.questions || 0})
-                      </option>
-                    ))}
+                    </option>
+                  ))}
                 </select>
                 {!selectedSubject && (
                   <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
@@ -474,10 +527,10 @@ export default function ExamPapersPage() {
                       return subtopic.topic?.id === topic?.id;
                     })
                     .map((subtopic) => (
-                      <option key={subtopic.id} value={subtopic.id}>
+                    <option key={subtopic.id} value={subtopic.id}>
                         {subtopic.name} ({subtopic._count?.questions || 0})
-                      </option>
-                    ))}
+                    </option>
+                  ))}
                 </select>
                 {!selectedSubject && (
                   <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
@@ -537,6 +590,8 @@ export default function ExamPapersPage() {
                   setMaxDuration('');
                   setMinQuestions('');
                   setMaxQuestions('');
+                  setSelectedAttempted('');
+                  setSelectedBookmarked('');
                   setCurrentPage(1);
                   setShowAdvancedFilters(false);
                 }}
@@ -634,21 +689,49 @@ export default function ExamPapersPage() {
                   </div>
                 </div>
 
-                {/* Items per page - moved to advanced section */}
-                <div className="mt-4">
-                  <div className="max-w-xs">
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Items per page</label>
-                    <select
-                      value={itemsPerPage}
-                      onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
-                    >
-                      <option value={5}>5</option>
-                      <option value={10}>10</option>
-                      <option value={20}>20</option>
-                      <option value={50}>50</option>
-                    </select>
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Attempted Filter */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Attempted</label>
+                  <select
+                    value={selectedAttempted}
+                    onChange={(e) => setSelectedAttempted(e.target.value)}
+                    className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                  >
+                    <option value="">All Exams</option>
+                    <option value="true">Attempted</option>
+                    <option value="false">Not Attempted</option>
+                  </select>
+                </div>
+
+                {/* Bookmarked Filter */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Bookmarked</label>
+                  <select
+                    value={selectedBookmarked}
+                    onChange={(e) => setSelectedBookmarked(e.target.value)}
+                    className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                  >
+                    <option value="">All Exams</option>
+                    <option value="true">Bookmarked</option>
+                    <option value="false">Not Bookmarked</option>
+                  </select>
+                </div>
+
+                {/* Items per page */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Items per page</label>
+                  <select
+                    value={itemsPerPage}
+                    onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                    className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                  >
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                  </select>
+                </div>
                 </div>
               </div>
             )}
@@ -675,11 +758,11 @@ export default function ExamPapersPage() {
                   <div className="flex items-start justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900 line-clamp-2 leading-tight flex-1 mr-3">{paper.title}</h3>
                     <div className="flex flex-col gap-2 items-end">
-                      {paper.hasAttempted && (
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800 border border-blue-200">
-                          Attempted
-                        </span>
-                      )}
+                    {paper.hasAttempted && (
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800 border border-blue-200">
+                        Attempted
+                      </span>
+                    )}
                       <div className="flex gap-2">
                         <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold border ${getDifficultyColor(paper.overallDifficulty)}`}>
                           {paper.overallDifficulty}
@@ -741,7 +824,7 @@ export default function ExamPapersPage() {
                     </div>
                     
                     {/* Performance Stats */}
-                    {paper.totalAttempts > 0 && (
+                    {paper.totalAttempts > 0 ? (
                       <div className="flex items-center justify-between text-sm">
                         <div className="flex items-center text-gray-600">
                           <svg className="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -755,21 +838,55 @@ export default function ExamPapersPage() {
                           </svg>
                           <span>{paper.totalAttempts} attempts</span>
                         </div>
+                        <button
+                          onClick={() => handleBookmark(paper)}
+                          className={`ml-3 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 ${
+                            paper.isBookmarked 
+                              ? 'text-yellow-600 hover:text-yellow-700 hover:bg-yellow-50 focus:ring-yellow-500' 
+                              : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50 focus:ring-gray-500'
+                          }`}
+                          title={paper.isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+                        >
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+                          </svg>
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-end text-sm">
+                        <button
+                          onClick={() => handleBookmark(paper)}
+                          className={`p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 ${
+                            paper.isBookmarked 
+                              ? 'text-yellow-600 hover:text-yellow-700 hover:bg-yellow-50 focus:ring-yellow-500' 
+                              : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50 focus:ring-gray-500'
+                          }`}
+                          title={paper.isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+                        >
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+                          </svg>
+                        </button>
                       </div>
                     )}
                   </div>
 
+
                   {/* Action Buttons */}
-                  <div className="flex gap-2">
+                  <div className="flex gap-3">
                     <button
-                      onClick={() => openPreviewModal(paper)}
-                      className="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 font-medium text-sm"
+                      onClick={() => startPracticeSession(paper)}
+                      className={`flex-1 py-2.5 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 font-medium text-sm ${
+                        paper.hasPracticed 
+                          ? 'bg-green-100 text-green-700 hover:bg-green-200 focus:ring-green-500' 
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500'
+                      }`}
                     >
-                      Preview
+                      {paper.hasPracticed ? 'Re-Practice' : 'Practice'}
                     </button>
                     <button
                       onClick={() => handleStartExam(paper.id, paper.title)}
-                      className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-semibold text-sm shadow-md hover:shadow-lg"
+                      className="flex-1 bg-blue-600 text-white py-2.5 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium text-sm shadow-md hover:shadow-lg"
                     >
                       {paper.hasAttempted ? 'Retake' : 'Start'}
                     </button>
@@ -953,7 +1070,7 @@ export default function ExamPapersPage() {
               <div className="flex gap-3 mt-8 pt-6 border-t border-gray-200">
                 <button
                   onClick={closePreviewModal}
-                  className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors font-medium"
+                  className="flex-1 py-2.5 px-4 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors font-medium text-sm"
                 >
                   Close
                 </button>
@@ -962,7 +1079,7 @@ export default function ExamPapersPage() {
                     closePreviewModal();
                     handleStartExam(previewModal.paper.id, previewModal.paper.title);
                   }}
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-semibold"
+                  className="flex-1 py-2.5 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium text-sm shadow-md hover:shadow-lg"
                 >
                   {previewModal.paper.hasAttempted ? 'Retake Exam' : 'Start Exam'}
                 </button>
