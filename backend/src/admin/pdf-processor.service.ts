@@ -473,10 +473,10 @@ RESPOND WITH ONLY THIS JSON STRUCTURE (no other text):
   /**
    * Save JSON content to AWS S3 using database record ID as filename
    */
-  private async saveJsonToFile(cacheId: string, jsonContent: string): Promise<string> {
+  private async saveJsonToFile(fileName: string, jsonContent: string): Promise<string> {
     try {
       // Generate JSON file name using database record ID
-      const jsonFileName = `${cacheId}.json`;
+      const jsonFileName = `${fileName}.json`;
 
       // Format JSON content
       const formattedJson = JSON.stringify(JSON.parse(jsonContent), null, 2);

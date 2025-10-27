@@ -93,7 +93,17 @@ export class StudentController {
 		@Query('page') page = '1',
 		@Query('limit') limit = '10',
 		@Query('search') search?: string,
-		@Query('subjectId') subjectId?: string
+		@Query('subjectId') subjectId?: string,
+		@Query('lessonId') lessonId?: string,
+		@Query('topicId') topicId?: string,
+		@Query('subtopicId') subtopicId?: string,
+		@Query('examType') examType?: string,
+		@Query('difficulty') difficulty?: string,
+		@Query('year') year?: string,
+		@Query('minDuration') minDuration?: string,
+		@Query('maxDuration') maxDuration?: string,
+		@Query('minQuestions') minQuestions?: string,
+		@Query('maxQuestions') maxQuestions?: string
 	) {
 		const userId = req.user.id;
 
@@ -101,6 +111,17 @@ export class StudentController {
 		const subscriptionStatus = await this.subscriptionValidation.validateStudentSubscription(userId);
 		if (!subscriptionStatus.hasValidSubscription && !subscriptionStatus.isOnTrial) {
 			throw new ForbiddenException('Subscription required to access exam papers');
+		}
+
+		// Validate filter combinations
+		if (lessonId && !subjectId) {
+			throw new BadRequestException('Subject must be selected when filtering by lesson');
+		}
+		if (topicId && !subjectId) {
+			throw new BadRequestException('Subject must be selected when filtering by topic');
+		}
+		if (subtopicId && !topicId) {
+			throw new BadRequestException('Topic must be selected when filtering by subtopic');
 		}
 		const pageNum = parseInt(page, 10);
 		const limitNum = parseInt(limit, 10);
@@ -127,6 +148,126 @@ export class StudentController {
 		if (subjectId) {
 			where.AND = where.AND || [];
 			where.AND.push({ subjectIds: { has: subjectId } });
+		}
+
+		// For lesson filtering, we need to filter through questions
+		// since ExamPaper doesn't store lessonIds directly
+		if (lessonId) {
+			try {
+				// Get question IDs that belong to this lesson
+				const lessonQuestions = await this.prisma.question.findMany({
+					where: { lessonId },
+					select: { id: true }
+				});
+				const lessonQuestionIds = lessonQuestions.map(q => q.id);
+				
+				if (lessonQuestionIds.length === 0) {
+					// No questions found for this lesson, return empty result
+					return {
+						papers: [],
+						pagination: {
+							currentPage: pageNum,
+							totalPages: 0,
+							totalItems: 0,
+							itemsPerPage: limitNum
+						}
+					};
+				}
+				
+				where.AND = where.AND || [];
+				where.AND.push({
+					questionIds: {
+						hasSome: lessonQuestionIds
+					}
+				});
+			} catch (error) {
+				console.error('Error filtering by lesson:', error);
+				throw new BadRequestException('Invalid lesson ID provided');
+			}
+		}
+
+		if (topicId) {
+			where.AND = where.AND || [];
+			where.AND.push({ topicIds: { has: topicId } });
+		}
+
+		if (subtopicId) {
+			where.AND = where.AND || [];
+			where.AND.push({ subtopicIds: { has: subtopicId } });
+		}
+
+		// Exam type filter
+		if (examType) {
+			where.AND = where.AND || [];
+			where.AND.push({ examType: examType as any });
+		}
+
+		// Duration range filter
+		if (minDuration || maxDuration) {
+			where.AND = where.AND || [];
+			const durationFilter: any = {};
+			if (minDuration) {
+				durationFilter.gte = parseInt(minDuration, 10);
+			}
+			if (maxDuration) {
+				durationFilter.lte = parseInt(maxDuration, 10);
+			}
+			where.AND.push({ timeLimitMin: durationFilter });
+		}
+
+		// Question count range filter
+		if (minQuestions || maxQuestions) {
+			where.AND = where.AND || [];
+			const questionCountFilter: any = {};
+			if (minQuestions) {
+				questionCountFilter.gte = parseInt(minQuestions, 10);
+			}
+			if (maxQuestions) {
+				questionCountFilter.lte = parseInt(maxQuestions, 10);
+			}
+			where.AND.push({
+				questionIds: {
+					_arrayLength: questionCountFilter
+				}
+			});
+		}
+
+		// Difficulty and year filters (through questions)
+		if (difficulty || year) {
+			// Get question IDs that match the difficulty and year criteria
+			const questionWhere: any = {};
+			if (difficulty) {
+				questionWhere.difficulty = difficulty as any;
+			}
+			if (year) {
+				questionWhere.yearAppeared = parseInt(year, 10);
+			}
+
+			const matchingQuestions = await this.prisma.question.findMany({
+				where: questionWhere,
+				select: { id: true }
+			});
+			const matchingQuestionIds = matchingQuestions.map(q => q.id);
+
+			if (matchingQuestionIds.length > 0) {
+				where.AND = where.AND || [];
+				where.AND.push({
+					questionIds: {
+						hasSome: matchingQuestionIds
+					}
+				});
+			} else {
+				// No questions match the criteria, return empty result
+				return {
+					papers: [],
+					pagination: {
+						currentPage: pageNum,
+						totalPages: 0,
+						totalItems: 0,
+						itemsPerPage: limitNum
+					}
+				};
+			}
 		}
 
 		// Get exam papers
@@ -158,7 +299,7 @@ export class StudentController {
 			this.prisma.examPaper.count({ where })
 		]);
 
-		// Get subject names for each paper
+		// Get subject names and additional data for each paper
 		const papersWithSubjects = await Promise.all(
 			papers.map(async (paper: any) => {
 				const subjects = paper.subjectIds?.length 
@@ -168,11 +309,61 @@ export class StudentController {
 					})
 					: [];
 
+				// Get lesson information for the first few questions
+				const lessonInfo = paper.questionIds?.length 
+					? await this.prisma.question.findMany({
+						where: { id: { in: paper.questionIds.slice(0, 5) } },
+						select: { 
+							id: true, 
+							lessonId: true,
+							lesson: {
+								select: { id: true, name: true, subject: { select: { name: true } } }
+							}
+						}
+					})
+					: [];
+
+				// Get average score and completion rate
+				const submissionStats = await this.prisma.examSubmission.aggregate({
+					where: { examPaperId: paper.id },
+					_count: { id: true },
+					_avg: { scorePercent: true }
+				});
+
+				// Get difficulty distribution
+				const difficultyStats = paper.questionIds?.length
+					? await this.prisma.question.groupBy({
+						where: { id: { in: paper.questionIds } },
+						by: ['difficulty'],
+						_count: { difficulty: true }
+					})
+					: [];
+
+				// Determine overall difficulty based on question distribution
+				let overallDifficulty = 'MEDIUM';
+				if (difficultyStats.length > 0) {
+					const totalQuestions = difficultyStats.reduce((sum, stat) => sum + stat._count.difficulty, 0);
+					const hardCount = difficultyStats.find(d => d.difficulty === 'HARD')?._count.difficulty || 0;
+					const easyCount = difficultyStats.find(d => d.difficulty === 'EASY')?._count.difficulty || 0;
+					
+					if (hardCount / totalQuestions > 0.6) {
+						overallDifficulty = 'HARD';
+					} else if (easyCount / totalQuestions > 0.6) {
+						overallDifficulty = 'EASY';
+					}
+				}
+
 				return {
 					...paper,
 					subjects,
 					hasAttempted: paper._count.submissions > 0,
-					questionCount: paper.questionIds?.length || 0
+					questionCount: paper.questionIds?.length || 0,
+					lessonInfo: lessonInfo.map(q => q.lesson).filter(Boolean),
+					averageScore: submissionStats._avg.scorePercent || 0,
+					completionRate: submissionStats._count.id > 0 ? 100 : 0, // Simplified for now
+					totalAttempts: submissionStats._count.id,
+					overallDifficulty,
+					difficultyStats
 				};
 			})
 		);
