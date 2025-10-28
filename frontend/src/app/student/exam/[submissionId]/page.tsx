@@ -827,6 +827,7 @@ export default function ExamPage() {
                           }`}
                         >
                           {currentAnswer?.isMarkedForReview ? '✓ Marked for Review' : 'Mark for Review'}
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">M</kbd>
                         </button>
                       </div>
                     </div>
@@ -1013,6 +1014,7 @@ export default function ExamPage() {
                       className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Previous
+                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
                     </button>
                     
                     <button
@@ -1021,6 +1023,7 @@ export default function ExamPage() {
                       className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Next
+                      <kbd className="ml-2 px-1 py-0.5 bg-blue-500 rounded text-xs">→</kbd>
                     </button>
                   </div>
                 </div>
@@ -1080,24 +1083,24 @@ export default function ExamPage() {
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Navigate:</span>
                         <div className="flex space-x-1">
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">←</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">A</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">A</kbd>
                           <span className="text-gray-400">/</span>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">→</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">D</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">→</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">D</kbd>
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Mark Review:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">M</kbd>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">M</kbd>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Jump to Q:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">1-9</kbd>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">1-9</kbd>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Toggle Help:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">H</kbd>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">H</kbd>
                       </div>
                     </div>
                   </div>

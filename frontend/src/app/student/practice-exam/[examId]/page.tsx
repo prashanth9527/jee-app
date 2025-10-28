@@ -88,26 +88,47 @@ export default function PracticeExamPage() {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      // Don't trigger shortcuts when typing in input fields
+      console.log('Key event triggered:', event.key, 'Target:', event.target);
+      
+      // Don't trigger shortcuts when typing in input fields, except for space key on radio buttons
       if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+        // Allow space key to work on radio buttons for checking answers
+        if (event.key === ' ' && event.target instanceof HTMLInputElement && event.target.type === 'radio') {
+          console.log('Space key on radio button - allowing shortcut');
+          // Continue to process the space key
+        } else {
+          console.log('Ignoring key event - typing in input field');
+          return;
+        }
+      }
+
+      if (!examPaper) {
+        console.log('Ignoring key event - no exam paper');
         return;
       }
 
       // Get current values inside the handler
-      const currentQuestion = examPaper?.questions[practiceState.currentQuestionIndex];
+      const currentQuestion = examPaper.questions[practiceState.currentQuestionIndex];
       const selectedAnswer = practiceState.selectedAnswers[currentQuestion?.id || ''];
       const isChecked = practiceState.checkedQuestions[currentQuestion?.id || ''];
 
-      if (!currentQuestion) return;
+      console.log('Current question:', currentQuestion?.id, 'Index:', practiceState.currentQuestionIndex);
+      
+      if (!currentQuestion) {
+        console.log('No current question found');
+        return;
+      }
 
-      switch (event.key.toLowerCase()) {
-        case 'arrowleft':
+      console.log('Key pressed:', event.key, 'Code:', event.code);
+      
+      switch (event.key) {
+        case 'ArrowLeft':
         case 'a':
           event.preventDefault();
           handlePreviousQuestion();
           showInfo('Navigation', 'Previous question', 1000);
           break;
-        case 'arrowright':
+        case 'ArrowRight':
         case 'd':
           event.preventDefault();
           handleNextQuestion();
@@ -121,22 +142,48 @@ export default function PracticeExamPage() {
           break;
         case ' ':
           event.preventDefault();
+          console.log('Space key detected!');
+          
           // Check answer if answer is selected and not already checked
-          if (!isChecked && (
+          console.log('Space pressed - Debug info:', {
+            isChecked,
+            selectedAnswer,
+            questionType: currentQuestion.questionType,
+            questionId: currentQuestion.id,
+            practiceState: practiceState.selectedAnswers
+          });
+          
+          const hasValidAnswer = (
             (currentQuestion.questionType === QuestionType.MCQ_SINGLE && selectedAnswer) ||
             (currentQuestion.questionType === QuestionType.MCQ_MULTIPLE && (selectedAnswer as string[]).length > 0) ||
             (currentQuestion.questionType === QuestionType.OPEN_ENDED && selectedAnswer !== undefined) ||
             (currentQuestion.questionType === QuestionType.PARAGRAPH && currentQuestion.subQuestions?.every(subQ => practiceState.selectedAnswers[subQ.id]))
-          )) {
+          );
+          
+          console.log('Answer validation:', {
+            hasValidAnswer,
+            isChecked,
+            canCheck: !isChecked && hasValidAnswer
+          });
+          
+          if (!isChecked && hasValidAnswer) {
             handleCheckAnswer(currentQuestion.id);
             showSuccess('Answer Checked', 'Your answer has been checked', 1500);
+          } else {
+            console.log('Space key condition not met:', {
+              isChecked,
+              hasValidAnswer,
+              questionType: currentQuestion.questionType,
+              selectedAnswer
+            });
+            showInfo('Cannot Check Answer', 'Please select an answer first or answer is already checked', 2000);
           }
           break;
         case 'h':
           event.preventDefault();
           setShowShortcutsLegend(!showShortcutsLegend);
           break;
-        case 'escape':
+        case 'Escape':
           event.preventDefault();
           setShowShortcutsLegend(false);
           break;
@@ -155,7 +202,11 @@ export default function PracticeExamPage() {
     };
 
     document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
+    console.log('Keyboard event listener attached');
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+      console.log('Keyboard event listener removed');
+    };
   }, [practiceState.currentQuestionIndex, practiceState.selectedAnswers, practiceState.checkedQuestions, practiceState.markedForReview, examPaper, showShortcutsLegend]);
 
   const fetchExamData = async () => {
@@ -236,8 +287,8 @@ export default function PracticeExamPage() {
       case 'answered': return 'bg-green-500';
       case 'answered-review': return 'bg-blue-500';
       case 'review': return 'bg-yellow-500';
-      case 'unanswered': return 'bg-gray-300';
-      default: return 'bg-gray-300';
+      case 'unanswered': return 'bg-gray1-300';
+      default: return 'bg-gray1-300';
     }
   };
 
@@ -677,7 +728,7 @@ export default function PracticeExamPage() {
                           title="Mark for Review (Press M)"
                         >
                           {practiceState.markedForReview[currentQuestion.id] ? '✓ Marked for Review' : 'Mark for Review'}
-                          <kbd className="ml-2 px-1 py-0.5 bg-gray-200 rounded text-xs">M</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">M</kbd>
                         </button>
                       </div>
                     </div>
@@ -730,7 +781,7 @@ export default function PracticeExamPage() {
                       title="Previous Question (Press ← or A)"
                     >
                       Previous
-                      <kbd className="ml-2 px-1 py-0.5 bg-gray-200 rounded text-xs">←</kbd>
+                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
                     </button>
                     
                     <button
@@ -785,48 +836,34 @@ export default function PracticeExamPage() {
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Navigate:</span>
                         <div className="flex space-x-1">
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">←</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">A</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">A</kbd>
                           <span className="text-gray-400">/</span>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">→</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">D</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">→</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">D</kbd>
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Mark Review:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">M</kbd>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">M</kbd>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Check Answer:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">Space</kbd>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">Space</kbd>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Jump to Q:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">1-9</kbd>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">1-9</kbd>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Help:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">H</kbd>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">H</kbd>
                       </div>
                     </div>
                   </div>
                 )}
                 
-                {/* Show Shortcuts Button (when legend is hidden) */}
-                {!showShortcutsLegend && (
-                  <div className="mb-6">
-                    <button
-                      onClick={() => setShowShortcutsLegend(true)}
-                      className="w-full p-3 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-200 transition-colors text-sm text-gray-700 flex items-center justify-center"
-                      title="Show keyboard shortcuts legend"
-                    >
-                      <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
-                      </svg>
-                      Show Shortcuts
-                    </button>
-                  </div>
-                )}
+                
                 
                 {/* Practice Progress */}
                 <div className="space-y-3 mb-6">

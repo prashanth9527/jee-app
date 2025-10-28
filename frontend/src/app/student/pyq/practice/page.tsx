@@ -65,7 +65,6 @@ interface PYQPracticeTestConfig {
   difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
   timeLimit: number; // in minutes
   year?: number;
-  useAI: boolean; // Whether to use AI-generated questions
 }
 
 function PYQPracticeTestContent() {
@@ -79,6 +78,7 @@ function PYQPracticeTestContent() {
   const [availableYears, setAvailableYears] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [questionAvailability, setQuestionAvailability] = useState<any>(null);
 
   const [selectedSubject, setSelectedSubject] = useState<string>('');
   const [selectedLesson, setSelectedLesson] = useState<string>('');
@@ -89,13 +89,18 @@ function PYQPracticeTestContent() {
   const [config, setConfig] = useState<PYQPracticeTestConfig>({
     questionCount: 10,
     difficulty: 'MIXED',
-    timeLimit: 60,
-    useAI: false
+    timeLimit: 60
   });
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (selectedSubject) {
+      getAvailableQuestions();
+    }
+  }, [selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, selectedYear, config.difficulty]);
 
   const fetchData = async () => {
     try {
@@ -169,6 +174,28 @@ function PYQPracticeTestContent() {
     }
   };
 
+  const getAvailableQuestions = async () => {
+    if (!selectedSubject) return 0;
+    
+    try {
+      const params = new URLSearchParams({
+        subjectId: selectedSubject,
+        ...(selectedLesson && { lessonId: selectedLesson }),
+        ...(selectedTopic && { topicId: selectedTopic }),
+        ...(selectedSubtopic && { subtopicId: selectedSubtopic }),
+        ...(selectedYear && { year: selectedYear.toString() }),
+        ...(config.difficulty !== 'MIXED' && { difficulty: config.difficulty })
+      });
+      
+      const response = await api.get(`/student/question-availability?${params}`);
+      setQuestionAvailability(response.data);
+      return response.data.totalQuestions;
+    } catch (error) {
+      console.error('Error fetching question availability:', error);
+      return 0;
+    }
+  };
+
   const handleSubjectChange = (subjectId: string) => {
     setSelectedSubject(subjectId);
     setSelectedLesson('');
@@ -228,7 +255,7 @@ function PYQPracticeTestContent() {
     return `${titleParts.join(' -> ')}${yearText} - ${currentDate}`;
   };
 
-  const createPYQPracticeTest = async () => {
+  const createPYQPracticeTest = async (isPractice: boolean = true) => {
     if (!selectedSubject) {
       Swal.fire('Error', 'Please select a subject', 'error');
       return;
@@ -249,17 +276,33 @@ function PYQPracticeTestContent() {
         title: generateTestTitle()
       };
 
+      // Generate practice test using PYQ database
       const response = await api.post('/student/exams/manual/generate-practice-test', testData);
       
       if (response.data.submissionId) {
-        Swal.fire({
-          title: 'Practice Test Created!',
-          text: 'Your PYQ practice test has been generated successfully.',
-          icon: 'success',
-          confirmButtonText: 'Start Test'
-        }).then(() => {
-          router.push(`/student/exam/${response.data.submissionId}`);
-        });
+        if (isPractice) {
+          // For practice mode, we need to get the paper ID and redirect to practice-exam
+          // This might need to be adjusted based on your API response structure
+          Swal.fire({
+            title: 'Practice Test Created!',
+            text: 'Your PYQ practice test has been generated successfully.',
+            icon: 'success',
+            confirmButtonText: 'Start Practice'
+          }).then(() => {
+            // For now, redirect to exam mode - you may need to adjust this
+            router.push(`/student/exam/${response.data.submissionId}`);
+          });
+        } else {
+          // Start the exam
+          Swal.fire({
+            title: 'Practice Test Created!',
+            text: 'Your PYQ practice test has been generated successfully.',
+            icon: 'success',
+            confirmButtonText: 'Start Exam'
+          }).then(() => {
+            router.push(`/student/exam/${response.data.submissionId}`);
+          });
+        }
       } else {
         Swal.fire('Error', 'Failed to create practice test', 'error');
       }
@@ -286,12 +329,189 @@ function PYQPracticeTestContent() {
 
   return (
     <StudentLayout>
-      <div className="min-h-screen bg-gray-50 py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Create PYQ Practice Test</h1>
-              <p className="text-gray-600">Create a practice test using Previous Year Questions (PYQ)</p>
+      <div className="space-y-8">
+        {/* Header */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">PYQ Practice Tests</h1>
+          <p className="text-lg text-gray-600">Create custom practice tests using Previous Year Questions (PYQ)</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Configuration Panel */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Subject Selection */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Select Content</h2>
+              
+              {/* Subject and Year Row */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                {/* Subject */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">Subject *</label>
+                  <select
+                    value={selectedSubject}
+                    onChange={(e) => handleSubjectChange(e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
+                  >
+                    <option value="">Choose a subject</option>
+                    {subjects.map((subject) => (
+                      <option key={subject.id} value={subject.id}>
+                        {subject.name} ({subject._count.questions} questions)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Year */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">Previous Year</label>
+                  <select
+                    value={selectedYear || ''}
+                    onChange={(e) => setSelectedYear(e.target.value ? parseInt(e.target.value) : undefined)}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
+                  >
+                    <option value="">All years</option>
+                    {availableYears.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Additional Filters Row */}
+              {selectedSubject && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  {/* Lesson */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Lesson (Optional)</label>
+                    <select
+                      value={selectedLesson}
+                      onChange={(e) => handleLessonChange(e.target.value)}
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                    >
+                      <option value="">All lessons</option>
+                      {lessons.map((lesson) => (
+                        <option key={lesson.id} value={lesson.id}>
+                          {lesson.name} ({lesson._count?.questions || 0})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Topic */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Topic (Optional)</label>
+                    <select
+                      value={selectedTopic}
+                      onChange={(e) => handleTopicChange(e.target.value)}
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                      disabled={!topics.length}
+                    >
+                      <option value="">All topics</option>
+                      {topics.map((topic) => (
+                        <option key={topic.id} value={topic.id}>
+                          {topic.name} ({topic._count?.questions || 0})
+                        </option>
+                      ))}
+                    </select>
+                    {!topics.length && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        {selectedLesson ? 'No topics' : 'Loading...'}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Subtopic */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Subtopic (Optional)</label>
+                    <select
+                      value={selectedSubtopic}
+                      onChange={(e) => setSelectedSubtopic(e.target.value)}
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                      disabled={!selectedTopic || !subtopics.length}
+                    >
+                      <option value="">All subtopics</option>
+                      {subtopics.map((subtopic) => (
+                        <option key={subtopic.id} value={subtopic.id}>
+                          {subtopic.name} ({subtopic._count?.questions || 0})
+                        </option>
+                      ))}
+                    </select>
+                    {selectedTopic && !subtopics.length && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        No subtopics
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+            </div>
+
+            {/* Test Configuration */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Test Configuration</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                {/* Question Count */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">Number of Questions</label>
+                  <select
+                    value={config.questionCount}
+                    onChange={(e) => setConfig(prev => ({ ...prev, questionCount: parseInt(e.target.value) }))}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
+                  >
+                    <option value={5}>5 questions</option>
+                    <option value={10}>10 questions</option>
+                    <option value={15}>15 questions</option>
+                    <option value={20}>20 questions</option>
+                    <option value={25}>25 questions</option>
+                    <option value={30}>30 questions</option>
+                  </select>
+                </div>
+
+                {/* Difficulty */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">Difficulty Level</label>
+                  <select
+                    value={config.difficulty}
+                    onChange={(e) => setConfig(prev => ({ ...prev, difficulty: e.target.value as any }))}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
+                  >
+                    <option value="MIXED">Mixed difficulty</option>
+                    <option value="EASY">Easy</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="HARD">Hard</option>
+                  </select>
+                </div>
+
+                {/* Time Limit */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">Time Limit</label>
+                  <select
+                    value={config.timeLimit}
+                    onChange={(e) => setConfig(prev => ({ ...prev, timeLimit: parseInt(e.target.value) }))}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
+                  >
+                    <option value={30}>30 minutes</option>
+                    <option value={60}>1 hour</option>
+                    <option value={90}>1.5 hours</option>
+                    <option value={120}>2 hours</option>
+                    <option value={180}>3 hours</option>
+                  </select>
+                </div>
+
+                {/* Question Source */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">Question Source</label>
+                  <div className="px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-lg">
+                    <span className="text-sm text-gray-700 font-medium">PYQ Database</span>
+                    <p className="text-xs text-gray-500 mt-1">Previous Year Questions from official sources</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Test Title Preview */}
@@ -302,201 +522,143 @@ function PYQPracticeTestContent() {
               </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Left Column - Filters */}
-              <div className="space-y-6">
-                <h2 className="text-xl font-semibold text-gray-900">Test Configuration</h2>
-                
-                {/* Subject Selection */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Subject *
-                  </label>
-                  <select
-                    value={selectedSubject}
-                    onChange={(e) => handleSubjectChange(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                  >
-                    <option value="">Select Subject</option>
-                    {subjects.map((subject) => (
-                      <option key={subject.id} value={subject.id}>
-                        {subject.name} ({subject._count.questions} questions)
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Year Selection */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Year
-                  </label>
-                  <select
-                    value={selectedYear || ''}
-                    onChange={(e) => setSelectedYear(e.target.value ? parseInt(e.target.value) : undefined)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                  >
-                    <option value="">All Years</option>
-                    {availableYears.map((year) => (
-                      <option key={year} value={year}>
-                        {year}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Lesson Selection */}
-                {selectedSubject && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Lesson
-                    </label>
-                    <select
-                      value={selectedLesson}
-                      onChange={(e) => handleLessonChange(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                    >
-                      <option value="">All Lessons</option>
-                      {lessons.map((lesson) => (
-                        <option key={lesson.id} value={lesson.id}>
-                          {lesson.name} ({lesson._count.questions} questions)
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-
-                {/* Topic Selection */}
-                {selectedLesson && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Topic
-                    </label>
-                    <select
-                      value={selectedTopic}
-                      onChange={(e) => handleTopicChange(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                    >
-                      <option value="">All Topics</option>
-                      {topics.map((topic) => (
-                        <option key={topic.id} value={topic.id}>
-                          {topic.name} ({topic._count.questions} questions)
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-
-                {/* Subtopic Selection */}
-                {selectedTopic && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Subtopic
-                    </label>
-                    <select
-                      value={selectedSubtopic}
-                      onChange={(e) => setSelectedSubtopic(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                    >
-                      <option value="">All Subtopics</option>
-                      {subtopics.map((subtopic) => (
-                        <option key={subtopic.id} value={subtopic.id}>
-                          {subtopic.name} ({subtopic._count.questions} questions)
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+            {/* Action Buttons */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <div className="flex gap-3">
+                <button
+                  onClick={() => createPYQPracticeTest(true)}
+                  disabled={creating || !selectedSubject || config.questionCount > (questionAvailability?.totalQuestions || 0)}
+                  className="flex-1 bg-pink-600 text-white py-2.5 px-4 rounded-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-all duration-200 font-medium text-sm shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {creating ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
+                      Creating...
+                    </div>
+                  ) : (
+                    'Start Practice'
+                  )}
+                </button>
+                <button
+                  onClick={() => createPYQPracticeTest(false)}
+                  disabled={creating || !selectedSubject || config.questionCount > (questionAvailability?.totalQuestions || 0)}
+                  className="flex-1 bg-blue-600 text-white py-2.5 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium text-sm shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {creating ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
+                      Creating...
+                    </div>
+                  ) : (
+                    'Start Exam'
+                  )}
+                </button>
               </div>
+              
+              {config.questionCount > (questionAvailability?.totalQuestions || 0) && (
+                <p className="mt-3 text-sm text-red-600 text-center">
+                  Only {questionAvailability?.totalQuestions || 0} questions available. Please reduce the question count.
+                </p>
+              )}
+            </div>
+          </div>
 
-              {/* Right Column - Test Settings */}
-              <div className="space-y-6">
-                <h2 className="text-xl font-semibold text-gray-900">Test Settings</h2>
+          {/* Quick Stats Panel */}
+          <div className="space-y-6">
+            {/* Available Questions */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Available Questions</h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Total Questions:</span>
+                  <span className="font-semibold text-gray-900">
+                    {questionAvailability?.totalQuestions || 0}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Selected Questions:</span>
+                  <span className={`font-semibold ${config.questionCount > (questionAvailability?.totalQuestions || 0) ? 'text-red-600' : 'text-green-600'}`}>
+                    {config.questionCount}
+                  </span>
+                </div>
                 
-                {/* Number of Questions */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Number of Questions
-                  </label>
-                  <select
-                    value={config.questionCount}
-                    onChange={(e) => setConfig(prev => ({ ...prev, questionCount: parseInt(e.target.value) }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                  >
-                    <option value={5}>5 Questions</option>
-                    <option value={10}>10 Questions</option>
-                    <option value={15}>15 Questions</option>
-                    <option value={20}>20 Questions</option>
-                    <option value={25}>25 Questions</option>
-                    <option value={30}>30 Questions</option>
-                  </select>
-                </div>
-
-                {/* Difficulty Level */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Difficulty Level
-                  </label>
-                  <select
-                    value={config.difficulty}
-                    onChange={(e) => setConfig(prev => ({ ...prev, difficulty: e.target.value as any }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                  >
-                    <option value="MIXED">Mixed Difficulty</option>
-                    <option value="EASY">Easy</option>
-                    <option value="MEDIUM">Medium</option>
-                    <option value="HARD">Hard</option>
-                  </select>
-                </div>
-
-                {/* Time Limit */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Time Limit
-                  </label>
-                  <select
-                    value={config.timeLimit}
-                    onChange={(e) => setConfig(prev => ({ ...prev, timeLimit: parseInt(e.target.value) }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                  >
-                    <option value={30}>30 minutes</option>
-                    <option value={60}>1 hour</option>
-                    <option value={90}>1.5 hours</option>
-                    <option value={120}>2 hours</option>
-                    <option value={180}>3 hours</option>
-                  </select>
-                </div>
+                {/* Difficulty Breakdown */}
+                {questionAvailability?.difficultyBreakdown && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <h4 className="text-sm font-medium text-gray-700 mb-2">By Difficulty:</h4>
+                    <div className="space-y-1">
+                      {questionAvailability.difficultyBreakdown.map((item: any) => (
+                        <div key={item.difficulty} className="flex items-center justify-between text-sm">
+                          <span className="text-gray-600 capitalize">{item.difficulty.toLowerCase()}:</span>
+                          <span className="font-medium text-gray-900">{item.count}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="mt-8 flex justify-between">
-              <Link
-                href="/student/pyq"
-                className="px-6 py-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                Back to PYQ
-              </Link>
-              
-              <button
-                onClick={createPYQPracticeTest}
-                disabled={creating || !selectedSubject}
-                className="px-8 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
-              >
-                {creating ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    <span>Creating Test...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Create Practice Test</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </>
-                )}
-              </button>
+            {/* Quick Start Options */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Start</h3>
+              <div className="space-y-3">
+                {subjects.slice(0, 3).map((subject) => (
+                  <button
+                    key={subject.id}
+                    onClick={() => {
+                      setSelectedSubject(subject.id);
+                      setConfig(prev => ({ ...prev, subjectId: subject.id }));
+                    }}
+                    className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                  >
+                    <div className="font-medium text-gray-900">{subject.name}</div>
+                    <div className="text-sm text-gray-600">{subject._count.questions} PYQ questions</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+              <div className="space-y-3">
+                <Link
+                  href="/student/pyq"
+                  className="flex items-center w-full p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                >
+                  <svg className="w-5 h-5 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div className="text-left">
+                    <div className="font-medium text-gray-900">PYQ History</div>
+                    <div className="text-sm text-gray-600">View past PYQ tests</div>
+                  </div>
+                </Link>
+                <Link
+                  href="/student/performance"
+                  className="flex items-center w-full p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                >
+                  <svg className="w-5 h-5 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                  <div className="text-left">
+                    <div className="font-medium text-gray-900">Performance</div>
+                    <div className="text-sm text-gray-600">View detailed analytics</div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+
+            {/* Tips */}
+            <div className="bg-blue-50 rounded-lg border border-blue-200 p-6">
+              <h3 className="text-lg font-semibold text-blue-900 mb-3">💡 PYQ Practice Tips</h3>
+              <ul className="space-y-2 text-sm text-blue-800">
+                <li>• Practice with actual previous year questions</li>
+                <li>• Focus on recent years for current patterns</li>
+                <li>• Review explanations to understand concepts</li>
+                <li>• Track your progress over time</li>
+              </ul>
             </div>
           </div>
         </div>

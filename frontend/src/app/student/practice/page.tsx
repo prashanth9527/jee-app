@@ -234,7 +234,7 @@ function PracticeTestPageContent() {
     return `${titleParts.join(' -> ')} - ${currentDate}`;
   };
 
-  const createPracticeTest = async () => {
+  const createPracticeTest = async (isPractice: boolean = true) => {
     if (!selectedSubject) {
       Swal.fire({
         title: 'Subject Required',
@@ -272,12 +272,15 @@ function PracticeTestPageContent() {
         const aiResponse = await api.post('/student/exams/ai/generate-practice-test', aiTestData);
         const paperId = aiResponse.data.examPaper.id;
 
-        // Start the practice test
-        const startResponse = await api.post(`/student/exams/papers/${paperId}/start`);
-        const { submissionId } = startResponse.data;
-
-        // Redirect to the practice test
-        router.push(`/student/practice/test/${submissionId}`);
+        if (isPractice) {
+          // Redirect to practice mode
+          router.push(`/student/practice-exam/${paperId}`);
+        } else {
+          // Start the exam
+          const startResponse = await api.post(`/student/exams/papers/${paperId}/start`);
+          const { submissionId } = startResponse.data;
+          router.push(`/student/exam/${submissionId}`);
+        }
       } else {
         // Generate manual practice test using existing database questions
         const manualTestData = {
@@ -294,12 +297,15 @@ function PracticeTestPageContent() {
         const manualResponse = await api.post('/student/exams/manual/generate-practice-test', manualTestData);
         const paperId = manualResponse.data.examPaper.id;
 
-        // Start the practice test
-        const startResponse = await api.post(`/student/exams/papers/${paperId}/start`);
-        const { submissionId } = startResponse.data;
-
-        // Redirect to the practice test
-        router.push(`/student/practice/test/${submissionId}`);
+        if (isPractice) {
+          // Redirect to practice mode
+          router.push(`/student/practice-exam/${paperId}`);
+        } else {
+          // Start the exam
+          const startResponse = await api.post(`/student/exams/papers/${paperId}/start`);
+          const { submissionId } = startResponse.data;
+          router.push(`/student/exam/${submissionId}`);
+        }
       }
     } catch (error: any) {
       console.error('Error creating practice test:', error);
@@ -310,6 +316,36 @@ function PracticeTestPageContent() {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleStartPractice = async () => {
+    const result = await Swal.fire({
+      title: 'Start Practice Session',
+      text: 'This will start an untimed practice session where you can check answers and learn.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Start Practice',
+      cancelButtonText: 'Cancel',
+    });
+
+    if (result.isConfirmed) {
+      await createPracticeTest(true);
+    }
+  };
+
+  const handleStartExam = async () => {
+    const result = await Swal.fire({
+      title: 'Start Exam',
+      text: 'This will start a timed exam session. Are you ready to begin?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Start Exam',
+      cancelButtonText: 'Cancel',
+    });
+
+    if (result.isConfirmed) {
+      await createPracticeTest(false);
     }
   };
 
@@ -565,22 +601,38 @@ function PracticeTestPageContent() {
                   </div>
                 )}
 
-                {/* Start Test Button */}
+                {/* Action Buttons */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                  <button
-                    onClick={createPracticeTest}
-                    disabled={!selectedSubject || loading || (!config.useAI && config.questionCount > availableQuestions)}
-                    className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-semibold text-lg shadow-md hover:shadow-lg transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                  >
-                    {loading ? (
-                      <div className="flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-6 w-6 border-2 border-white border-t-transparent mr-3"></div>
-                        Creating Practice Test...
-                      </div>
-                    ) : (
-                      'Start Practice Test'
-                    )}
-                  </button>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={handleStartPractice}
+                      disabled={!selectedSubject || loading || (!config.useAI && config.questionCount > availableQuestions)}
+                      className="flex-1 bg-pink-600 text-white py-2.5 px-4 rounded-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-all duration-200 font-medium text-sm shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {loading ? (
+                        <div className="flex items-center justify-center">
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
+                          Creating...
+                        </div>
+                      ) : (
+                        'Start Practice'
+                      )}
+                    </button>
+                    <button
+                      onClick={handleStartExam}
+                      disabled={!selectedSubject || loading || (!config.useAI && config.questionCount > availableQuestions)}
+                      className="flex-1 bg-blue-600 text-white py-2.5 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium text-sm shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {loading ? (
+                        <div className="flex items-center justify-center">
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
+                          Creating...
+                        </div>
+                      ) : (
+                        'Start Exam'
+                      )}
+                    </button>
+                  </div>
                   
                   {!config.useAI && config.questionCount > availableQuestions && (
                     <p className="mt-3 text-sm text-red-600 text-center">
