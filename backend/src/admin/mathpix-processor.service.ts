@@ -289,20 +289,21 @@ export class MathpixProcessorService {
    */
   private async uploadPdfToAws(fileName: string, pdfPath: string): Promise<string> {
     const pdfBuffer = fs.readFileSync(pdfPath);
+    const sanitizedFileName = this.sanitizeFileName(fileName);
     const mockFile: Express.Multer.File = {
       fieldname: 'file',
-      originalname: fileName,
+      originalname: sanitizedFileName,
       encoding: '7bit',
       mimetype: 'application/pdf',
       buffer: pdfBuffer,
       size: pdfBuffer.length,
       stream: Readable.from(pdfBuffer),
       destination: '',
-      filename: fileName,
+      filename: sanitizedFileName,
       path: '',
     };
 
-    return await this.awsService.uploadFileWithCustomName(mockFile, 'content/pdf', fileName);
+    return await this.awsService.uploadFileWithCustomName(mockFile, 'content/pdf', sanitizedFileName);
   }
 
   /**
