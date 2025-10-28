@@ -840,7 +840,10 @@ export default function PDFReviewPage() {
                                   }
                                   
                                   // Extract the relative path from content directory
-                                  const relativePath = pdfData.filePath.substring(contentIndex + 8); // Skip 'content' + path separator
+                                  // Find the position after 'content' and the path separator
+                                  const contentStart = contentIndex + 'content'.length;
+                                  const pathSeparator = pdfData.filePath[contentStart] === '\\' || pdfData.filePath[contentStart] === '/' ? 1 : 0;
+                                  const relativePath = pdfData.filePath.substring(contentStart + pathSeparator);
                                   // Convert backslashes to forward slashes for URL
                                   const normalizedPath = relativePath.replace(/\\/g, '/');
                                   // Only encode the filename, not the path separators

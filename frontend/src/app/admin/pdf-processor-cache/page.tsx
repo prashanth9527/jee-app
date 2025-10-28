@@ -1174,7 +1174,10 @@ export default function PDFProcessorCachePage() {
                                 }
                                 
                                 // Extract the relative path from content directory
-                                const relativePath = record.filePath.substring(contentIndex + 8); // Skip 'content' + path separator
+                                // Find the position after 'content' and the path separator
+                                const contentStart = contentIndex + 'content'.length;
+                                const pathSeparator = record.filePath[contentStart] === '\\' || record.filePath[contentStart] === '/' ? 1 : 0;
+                                const relativePath = record.filePath.substring(contentStart + pathSeparator);
                                 // Convert backslashes to forward slashes for URL
                                 const normalizedPath = relativePath.replace(/\\/g, '/');
                                 // Only encode the filename, not the path separators
@@ -1186,7 +1189,16 @@ export default function PDFProcessorCachePage() {
                                 const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
                                 const staticBase = apiBase.includes('backend.') ? apiBase.replace('backend.', '') : apiBase;
                                 const fileUrl = `${staticBase}/static/pdf/${encodedPath}`;
-                                console.log('Opening PDF URL:', fileUrl);
+                                
+                                console.log('PDF View Debug Info:');
+                                console.log('- Original file path:', record.filePath);
+                                console.log('- Relative path:', relativePath);
+                                console.log('- Normalized path:', normalizedPath);
+                                console.log('- Encoded path:', encodedPath);
+                                console.log('- API base:', apiBase);
+                                console.log('- Static base:', staticBase);
+                                console.log('- Final URL:', fileUrl);
+                                
                                 window.open(fileUrl, '_blank');
                               } catch (error) {
                                 console.error('Error opening PDF:', error);

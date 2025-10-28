@@ -1818,7 +1818,10 @@ Preserve **exactly the questions, options, and correct answers** from the \`.tex
                               }
                               
                               // Extract the relative path from content directory
-                              const relativePath = pdf.filePath.substring(contentIndex + 8); // Skip 'content' + path separator
+                              // Find the position after 'content' and the path separator
+                              const contentStart = contentIndex + 'content'.length;
+                              const pathSeparator = pdf.filePath[contentStart] === '\\' || pdf.filePath[contentStart] === '/' ? 1 : 0;
+                              const relativePath = pdf.filePath.substring(contentStart + pathSeparator);
                               // Convert backslashes to forward slashes for URL
                               const normalizedPath = relativePath.replace(/\\/g, '/');
                               // Only encode the filename, not the path separators
