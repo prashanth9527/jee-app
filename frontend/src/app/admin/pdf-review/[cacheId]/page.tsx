@@ -827,35 +827,8 @@ export default function PDFReviewPage() {
                             <button
                               onClick={() => {
                                 try {
-                                  // Extract the relative path from the full file path
-                                  // The filePath should be something like: C:\wamp64\www\nodejs\jee-app\content\JEE\Previous Papers\2025\Session2\Physics\0804-Physics Paper+With+Sol Evening.pdf
-                                  // We need to extract: JEE/Previous Papers/2025/Session2/Physics/0804-Physics Paper+With+Sol Evening.pdf
-                                  
-                                  // Find the 'content' directory in the path
-                                  const contentIndex = pdfData.filePath.indexOf('content');
-                                  if (contentIndex === -1) {
-                                    console.error('Content directory not found in file path:', pdfData.filePath);
-                                    toast.error('Invalid file path');
-                                    return;
-                                  }
-                                  
-                                  // Extract the relative path from content directory
-                                  // Find the position after 'content' and the path separator
-                                  const contentStart = contentIndex + 'content'.length;
-                                  const pathSeparator = pdfData.filePath[contentStart] === '\\' || pdfData.filePath[contentStart] === '/' ? 1 : 0;
-                                  const relativePath = pdfData.filePath.substring(contentStart + pathSeparator);
-                                  // Convert backslashes to forward slashes for URL
-                                  const normalizedPath = relativePath.replace(/\\/g, '/');
-                                  // Only encode the filename, not the path separators
-                                  const pathParts = normalizedPath.split('/');
-                                  const encodedParts = pathParts.map(part => encodeURIComponent(part));
-                                  const encodedPath = encodedParts.join('/');
-                                  
-                                  // Use the backend API for static files
-                                  const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                                  const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
-                                  console.log('Opening PDF URL:', fileUrl);
-                                  window.open(fileUrl, '_blank');
+                                  console.log('Opening PDF directly:', pdfData.filePath);
+                                  window.open(pdfData.filePath, '_blank');
                                 } catch (error) {
                                   console.error('Error opening PDF:', error);
                                   toast.error('Failed to open PDF file');

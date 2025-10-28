@@ -1165,39 +1165,17 @@ export default function PDFProcessorCachePage() {
                           <button
                             onClick={() => {
                               try {
-                                // Extract the relative path from the full file path
-                                const contentIndex = record.filePath.indexOf('content');
-                                if (contentIndex === -1) {
-                                  console.error('Content directory not found in file path:', record.filePath);
-                                  toast.error('Invalid file path');
+                                // Use pdfFilePath if available, otherwise fall back to filePath
+                                const pdfPath = record.pdfFilePath || record.filePath;
+                                
+                                if (!pdfPath) {
+                                  console.error('No PDF file path available');
+                                  toast.error('PDF file path not available');
                                   return;
                                 }
                                 
-                                // Extract the relative path from content directory
-                                // Find the position after 'content' and the path separator
-                                const contentStart = contentIndex + 'content'.length;
-                                const pathSeparator = record.filePath[contentStart] === '\\' || record.filePath[contentStart] === '/' ? 1 : 0;
-                                const relativePath = record.filePath.substring(contentStart + pathSeparator);
-                                // Convert backslashes to forward slashes for URL
-                                const normalizedPath = relativePath.replace(/\\/g, '/');
-                                // Only encode the filename, not the path separators
-                                const pathParts = normalizedPath.split('/');
-                                const encodedParts = pathParts.map(part => encodeURIComponent(part));
-                                const encodedPath = encodedParts.join('/');
-                                
-                                // Use the backend API for static files
-                                const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                                const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
-                                
-                                console.log('PDF View Debug Info:');
-                                console.log('- Original file path:', record.filePath);
-                                console.log('- Relative path:', relativePath);
-                                console.log('- Normalized path:', normalizedPath);
-                                console.log('- Encoded path:', encodedPath);
-                                console.log('- API base:', apiBase);
-                                console.log('- Final URL:', fileUrl);
-                                
-                                window.open(fileUrl, '_blank');
+                                console.log('Opening PDF directly:', pdfPath);
+                                window.open(pdfPath, '_blank');
                               } catch (error) {
                                 console.error('Error opening PDF:', error);
                                 toast.error('Failed to open PDF file');

@@ -1809,31 +1809,8 @@ Preserve **exactly the questions, options, and correct answers** from the \`.tex
                           const pdf = pdfs.find(p => p.fileName === editingJson);
                           if (pdf?.filePath) {
                             try {
-                              // Extract the relative path from the full file path
-                              const contentIndex = pdf.filePath.indexOf('content');
-                              if (contentIndex === -1) {
-                                console.error('Content directory not found in file path:', pdf.filePath);
-                                toast.error('Invalid file path');
-                                return;
-                              }
-                              
-                              // Extract the relative path from content directory
-                              // Find the position after 'content' and the path separator
-                              const contentStart = contentIndex + 'content'.length;
-                              const pathSeparator = pdf.filePath[contentStart] === '\\' || pdf.filePath[contentStart] === '/' ? 1 : 0;
-                              const relativePath = pdf.filePath.substring(contentStart + pathSeparator);
-                              // Convert backslashes to forward slashes for URL
-                              const normalizedPath = relativePath.replace(/\\/g, '/');
-                              // Only encode the filename, not the path separators
-                              const pathParts = normalizedPath.split('/');
-                              const encodedParts = pathParts.map(part => encodeURIComponent(part));
-                              const encodedPath = encodedParts.join('/');
-                              
-                              // Use the backend API for static files
-                              const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                              const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
-                              console.log('Opening PDF URL:', fileUrl);
-                              window.open(fileUrl, '_blank');
+                              console.log('Opening PDF directly:', pdf.filePath);
+                              window.open(pdf.filePath, '_blank');
                             } catch (error) {
                               console.error('Error opening PDF:', error);
                               toast.error('Failed to open PDF file');
