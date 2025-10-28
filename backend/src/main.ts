@@ -73,20 +73,8 @@ async function bootstrap() {
 		next();
 	});
 	
-	// Serve PDF files
-	app.useStaticAssets(join(__dirname, '..', 'content'), {
-		prefix: '/static/pdf/',
-	});
-	
-	// Serve LaTeX files
-	app.useStaticAssets(join(__dirname, '..', 'content', 'latex'), {
-		prefix: '/static/latex/',
-	});
-	
-	// Serve processed JSON files
-	app.useStaticAssets(join(__dirname, '..', 'content', 'Processed'), {
-		prefix: '/static/processed/',
-	});
+	// Static files are now handled by the StaticFilesController
+	// This ensures proper authentication and error handling
 	
 	const port = process.env.PORT || 3001;
 	await app.listen(port as number);

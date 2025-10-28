@@ -851,10 +851,9 @@ export default function PDFReviewPage() {
                                   const encodedParts = pathParts.map(part => encodeURIComponent(part));
                                   const encodedPath = encodedParts.join('/');
                                   
-                                  // Use the main domain for static files, not the backend subdomain
+                                  // Use the backend API for static files
                                   const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                                  const staticBase = apiBase.includes('backend.') ? apiBase.replace('backend.', '') : apiBase;
-                                  const fileUrl = `${staticBase}/static/pdf/${encodedPath}`;
+                                  const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
                                   console.log('Opening PDF URL:', fileUrl);
                                   window.open(fileUrl, '_blank');
                                 } catch (error) {

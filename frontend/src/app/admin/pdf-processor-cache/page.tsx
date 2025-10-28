@@ -1185,10 +1185,9 @@ export default function PDFProcessorCachePage() {
                                 const encodedParts = pathParts.map(part => encodeURIComponent(part));
                                 const encodedPath = encodedParts.join('/');
                                 
-                                // Use the main domain for static files, not the backend subdomain
+                                // Use the backend API for static files
                                 const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
-                                const staticBase = apiBase.includes('backend.') ? apiBase.replace('backend.', '') : apiBase;
-                                const fileUrl = `${staticBase}/static/pdf/${encodedPath}`;
+                                const fileUrl = `${apiBase}/static/pdf/${encodedPath}`;
                                 
                                 console.log('PDF View Debug Info:');
                                 console.log('- Original file path:', record.filePath);
@@ -1196,7 +1195,6 @@ export default function PDFProcessorCachePage() {
                                 console.log('- Normalized path:', normalizedPath);
                                 console.log('- Encoded path:', encodedPath);
                                 console.log('- API base:', apiBase);
-                                console.log('- Static base:', staticBase);
                                 console.log('- Final URL:', fileUrl);
                                 
                                 window.open(fileUrl, '_blank');
