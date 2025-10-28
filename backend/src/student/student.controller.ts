@@ -316,7 +316,7 @@ export class StudentController {
 			}
 		}
 
-		// Get exam papers
+		// Get exam papers with optimized queries
 		const [papers, total] = await Promise.all([
 			this.prisma.examPaper.findMany({
 				where,
@@ -346,98 +346,174 @@ export class StudentController {
 			this.prisma.examPaper.count({ where })
 		]);
 
-		// Get subject names and additional data for each paper
-		const papersWithSubjects = await Promise.all(
-			papers.map(async (paper: any) => {
-				const subjects = paper.subjectIds?.length 
-					? await this.prisma.subject.findMany({
-						where: { id: { in: paper.subjectIds } },
-						select: { id: true, name: true }
-					})
-					: [];
+		// Collect all unique IDs for batch queries
+		const paperIds = papers.map(p => p.id);
+		const allSubjectIds = [...new Set(papers.flatMap(p => p.subjectIds || []))];
+		const allQuestionIds = [...new Set(papers.flatMap(p => p.questionIds || []))];
 
-				// Get lesson information for the first few questions
-				const lessonInfo = paper.questionIds?.length 
-					? await this.prisma.question.findMany({
-						where: { id: { in: paper.questionIds.slice(0, 5) } },
-						select: { 
-							id: true, 
-							lessonId: true,
-							lesson: {
-								select: { id: true, name: true, subject: { select: { name: true } } }
-							}
+		// Define types for better TypeScript support
+		type SubjectMap = Record<string, { id: string; name: string }>;
+		type LessonInfoMap = Record<string, { id: string; lessonId: string | null; lesson: { id: string; name: string; subject: { name: string } } | null }>;
+		type SubmissionStatsMap = Record<string, { _count: { id: number }; _avg: { scorePercent: number | null } }>;
+		type DifficultyStatsMap = Record<string, Array<{ id: string; difficulty: string; _count: { difficulty: number } }>>;
+
+		// Batch fetch all related data
+		const [
+			subjectsMap,
+			lessonInfoMap,
+			submissionStatsMap,
+			difficultyStatsMap,
+			practiceSessions,
+			bookmarks
+		] = await Promise.all([
+			// Fetch all subjects in one query
+			allSubjectIds.length > 0 
+				? this.prisma.subject.findMany({
+					where: { id: { in: allSubjectIds } },
+					select: { id: true, name: true }
+				}).then(subjects => 
+					subjects.reduce((map: SubjectMap, subject) => {
+						map[subject.id] = subject;
+						return map;
+					}, {} as SubjectMap)
+				)
+				: Promise.resolve({} as SubjectMap),
+
+			// Fetch lesson info for all questions in one query
+			allQuestionIds.length > 0
+				? this.prisma.question.findMany({
+					where: { id: { in: allQuestionIds } },
+					select: { 
+						id: true, 
+						lessonId: true,
+						lesson: {
+							select: { id: true, name: true, subject: { select: { name: true } } }
 						}
-					})
-					: [];
+					}
+				}).then(questions => 
+					questions.reduce((map: LessonInfoMap, question) => {
+						map[question.id] = question;
+						return map;
+					}, {} as LessonInfoMap)
+				)
+				: Promise.resolve({} as LessonInfoMap),
 
-				// Get average score and completion rate
-				const submissionStats = await this.prisma.examSubmission.aggregate({
-					where: { examPaperId: paper.id },
+			// Fetch submission stats for all papers in one query
+			paperIds.length > 0
+				? this.prisma.examSubmission.groupBy({
+					by: ['examPaperId'],
+					where: { examPaperId: { in: paperIds } },
 					_count: { id: true },
 					_avg: { scorePercent: true }
-				});
+				}).then(stats => 
+					stats.reduce((map: SubmissionStatsMap, stat) => {
+						map[stat.examPaperId] = stat;
+						return map;
+					}, {} as SubmissionStatsMap)
+				)
+				: Promise.resolve({} as SubmissionStatsMap),
 
-				// Get difficulty distribution
-				const difficultyStats = paper.questionIds?.length
-					? await this.prisma.question.groupBy({
-						where: { id: { in: paper.questionIds } },
-						by: ['difficulty'],
-						_count: { difficulty: true }
-					})
-					: [];
+			// Fetch difficulty stats for all questions in one query
+			allQuestionIds.length > 0
+				? this.prisma.question.groupBy({
+					where: { id: { in: allQuestionIds } },
+					by: ['id', 'difficulty'],
+					_count: { difficulty: true }
+				}).then(stats => 
+					stats.reduce((map: DifficultyStatsMap, stat) => {
+						if (!map[stat.id]) map[stat.id] = [];
+						map[stat.id].push(stat);
+						return map;
+					}, {} as DifficultyStatsMap)
+				)
+				: Promise.resolve({} as DifficultyStatsMap),
 
-				// Determine overall difficulty based on question distribution
-				let overallDifficulty = 'MEDIUM';
-				if (difficultyStats.length > 0) {
-					const totalQuestions = difficultyStats.reduce((sum, stat) => sum + stat._count.difficulty, 0);
-					const hardCount = difficultyStats.find(d => d.difficulty === 'HARD')?._count.difficulty || 0;
-					const easyCount = difficultyStats.find(d => d.difficulty === 'EASY')?._count.difficulty || 0;
-					
-					if (hardCount / totalQuestions > 0.6) {
-						overallDifficulty = 'HARD';
-					} else if (easyCount / totalQuestions > 0.6) {
-						overallDifficulty = 'EASY';
-					}
+			// Fetch practice sessions for all papers in one query
+			paperIds.length > 0
+				? this.prisma.practiceSession.findMany({
+					where: { 
+						userId: req.user.id,
+						examPaperId: { in: paperIds }
+					},
+					select: { examPaperId: true }
+				}).then(sessions => new Set(sessions.map(s => s.examPaperId)))
+				: Promise.resolve(new Set<string>()),
+
+			// Fetch bookmarks for all papers in one query
+			paperIds.length > 0
+				? this.prisma.examBookmark.findMany({
+					where: { 
+						userId: req.user.id,
+						examPaperId: { in: paperIds }
+					},
+					select: { examPaperId: true }
+				}).then(bookmarks => new Set(bookmarks.map(b => b.examPaperId)))
+				: Promise.resolve(new Set<string>())
+		]);
+
+		// Process papers with the batch-fetched data
+		const papersWithSubjects = papers.map((paper: any) => {
+			// Get subjects for this paper
+			const subjects = paper.subjectIds?.length 
+				? paper.subjectIds.map((id: string) => subjectsMap[id]).filter(Boolean)
+				: [];
+
+			// Get lesson information for the first few questions
+			const lessonInfo = paper.questionIds?.length 
+				? paper.questionIds.slice(0, 5)
+					.map((id: string) => lessonInfoMap[id])
+					.filter(Boolean)
+					.map((q: any) => q.lesson)
+					.filter(Boolean)
+				: [];
+
+			// Get submission stats for this paper
+			const submissionStats = submissionStatsMap[paper.id] || { _count: { id: 0 }, _avg: { scorePercent: 0 } };
+
+			// Get difficulty stats for this paper's questions
+			const difficultyStats = paper.questionIds?.length
+				? paper.questionIds
+					.flatMap((id: string) => difficultyStatsMap[id] || [])
+					.reduce((acc: any[], stat: any) => {
+						const existing = acc.find((d: any) => d.difficulty === stat.difficulty);
+						if (existing) {
+							existing._count.difficulty += stat._count.difficulty;
+						} else {
+							acc.push({ ...stat });
+						}
+						return acc;
+					}, [] as any[])
+				: [];
+
+			// Determine overall difficulty based on question distribution
+			let overallDifficulty = 'MEDIUM';
+			if (difficultyStats.length > 0) {
+				const totalQuestions = difficultyStats.reduce((sum: number, stat: any) => sum + stat._count.difficulty, 0);
+				const hardCount = difficultyStats.find((d: any) => d.difficulty === 'HARD')?._count.difficulty || 0;
+				const easyCount = difficultyStats.find((d: any) => d.difficulty === 'EASY')?._count.difficulty || 0;
+				
+				if (hardCount / totalQuestions > 0.6) {
+					overallDifficulty = 'HARD';
+				} else if (easyCount / totalQuestions > 0.6) {
+					overallDifficulty = 'EASY';
 				}
+			}
 
-				// Check if user has practiced this exam
-				const hasPracticed = await this.prisma.practiceSession.findUnique({
-					where: {
-						userId_examPaperId: {
-							userId: req.user.id,
-							examPaperId: paper.id
-						}
-					},
-					select: { id: true }
-				});
-
-				// Check if user has bookmarked this exam
-				const isBookmarked = await this.prisma.examBookmark.findUnique({
-					where: {
-						userId_examPaperId: {
-							userId: req.user.id,
-							examPaperId: paper.id
-						}
-					},
-					select: { id: true }
-				});
-
-				return {
-					...paper,
-					subjects,
-					hasAttempted: paper._count.submissions > 0,
-					hasPracticed: !!hasPracticed,
-					isBookmarked: !!isBookmarked,
-					questionCount: paper.questionIds?.length || 0,
-					lessonInfo: lessonInfo.map(q => q.lesson).filter(Boolean),
-					averageScore: submissionStats._avg.scorePercent || 0,
-					completionRate: submissionStats._count.id > 0 ? 100 : 0, // Simplified for now
-					totalAttempts: submissionStats._count.id,
-					overallDifficulty,
-					difficultyStats
-				};
-			})
-		);
+			return {
+				...paper,
+				subjects,
+				hasAttempted: paper._count.submissions > 0,
+				hasPracticed: practiceSessions.has(paper.id),
+				isBookmarked: bookmarks.has(paper.id),
+				questionCount: paper.questionIds?.length || 0,
+				lessonInfo,
+				averageScore: submissionStats._avg.scorePercent || 0,
+				completionRate: submissionStats._count.id > 0 ? 100 : 0, // Simplified for now
+				totalAttempts: submissionStats._count.id,
+				overallDifficulty,
+				difficultyStats
+			};
+		});
 
 		return {
 			papers: papersWithSubjects,

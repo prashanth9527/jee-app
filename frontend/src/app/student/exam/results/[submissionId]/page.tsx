@@ -8,6 +8,7 @@ import SubscriptionGuard from '@/components/SubscriptionGuard';
 import LatexContentDisplay from '@/components/LatexContentDisplay';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
+import { useToastContext } from '@/contexts/ToastContext';
 
 interface Question {
   id: string;
@@ -82,6 +83,7 @@ export default function ExamResultsPage() {
   const params = useParams();
   const router = useRouter();
   const submissionId = params?.submissionId as string;
+  const { showSuccess, showInfo } = useToastContext();
   
   const [results, setResults] = useState<ExamResults | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -92,6 +94,7 @@ export default function ExamResultsPage() {
   const [submittedReports, setSubmittedReports] = useState<Set<string>>(new Set());
   const [submissionData, setSubmissionData] = useState<any>(null);
   const [helpModalOpen, setHelpModalOpen] = useState<boolean>(false);
+  const [showShortcutsLegend, setShowShortcutsLegend] = useState(false);
 
   const fetchResults = async () => {
     try {
@@ -139,6 +142,53 @@ export default function ExamResultsPage() {
       fetchResults();
     }
   }, [submissionId]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      // Don't trigger shortcuts when typing in input fields
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      switch (event.key.toLowerCase()) {
+        case 'arrowleft':
+        case 'a':
+          event.preventDefault();
+          handlePreviousQuestion();
+          showInfo('Navigation', 'Previous question', 1000);
+          break;
+        case 'arrowright':
+        case 'd':
+          event.preventDefault();
+          handleNextQuestion();
+          showInfo('Navigation', 'Next question', 1000);
+          break;
+        case 'h':
+          event.preventDefault();
+          setShowShortcutsLegend(!showShortcutsLegend);
+          break;
+        case 'escape':
+          event.preventDefault();
+          setShowShortcutsLegend(false);
+          break;
+        default:
+          // Handle number keys 1-9 for quick navigation
+          if (event.key >= '1' && event.key <= '9') {
+            const questionNumber = parseInt(event.key) - 1;
+            if (questionNumber < questions.length) {
+              event.preventDefault();
+              setCurrentQuestionIndex(questionNumber);
+              showInfo('Quick Navigation', `Jumped to question ${questionNumber + 1}`, 1000);
+            }
+          }
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [currentQuestionIndex, questions.length, showShortcutsLegend]);
 
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
@@ -549,7 +599,48 @@ export default function ExamResultsPage() {
               <div className="w-80 bg-white shadow-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">Question Navigation</h3>
+                  <button
+                    onClick={() => setShowShortcutsLegend(!showShortcutsLegend)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    title={showShortcutsLegend ? "Hide shortcuts" : "Show shortcuts"}
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
+                    </svg>
+                  </button>
                 </div>
+                
+                {/* Keyboard Shortcuts Legend */}
+                {showShortcutsLegend && (
+                  <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                      <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
+                      </svg>
+                      Keyboard Shortcuts
+                    </h4>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Navigate:</span>
+                        <div className="flex space-x-1">
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">←</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">A</kbd>
+                          <span className="text-gray-400">/</span>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">→</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">D</kbd>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Jump to Q:</span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">1-9</kbd>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Toggle Help:</span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">H</kbd>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 
                 {/* Question Grid */}
                 <div className="grid grid-cols-5 gap-2 mb-6">
@@ -645,6 +736,7 @@ export default function ExamResultsPage() {
             onClose={() => setHelpModalOpen(false)}
             results={results}
           />
+
         </StudentLayout>
       </SubscriptionGuard>
     </ProtectedRoute>

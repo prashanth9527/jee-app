@@ -7,6 +7,7 @@ import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
 import api from '@/lib/api';
+import { useToastContext } from '@/contexts/ToastContext';
 import Swal from 'sweetalert2';
 
 interface ExamPaper {
@@ -38,6 +39,7 @@ interface Pagination {
 
 export default function ExamPapersPage() {
   const router = useRouter();
+  const { showSuccess, showError } = useToastContext();
   const [papers, setPapers] = useState<ExamPaper[]>([]);
   const [subjects, setSubjects] = useState<any[]>([]);
   const [lessons, setLessons] = useState<any[]>([]);
@@ -104,7 +106,7 @@ export default function ExamPapersPage() {
     } catch (error: any) {
       console.error('Failed to load initial data:', error);
       setError('Failed to load filter data. Please try again.');
-      Swal.fire('Error', 'Failed to load data', 'error');
+      showError('Loading Error', 'Failed to load data', 4000);
     } finally {
       setLoading(false);
     }
@@ -180,11 +182,7 @@ export default function ExamPapersPage() {
       console.error('Error fetching exam papers:', error);
       const errorMessage = error?.response?.data?.message || 'Failed to load exam papers';
       setError(errorMessage);
-      Swal.fire({
-        title: 'Error',
-        text: errorMessage,
-        icon: 'error',
-      });
+      showError('Loading Error', errorMessage, 4000);
     }
   };
 
@@ -207,11 +205,7 @@ export default function ExamPapersPage() {
       }
     } catch (error: any) {
       console.error('Error starting exam:', error);
-      Swal.fire({
-        title: 'Error',
-        text: error?.response?.data?.message || 'Failed to start exam',
-        icon: 'error',
-      });
+      showError('Exam Error', error?.response?.data?.message || 'Failed to start exam', 4000);
     }
   };
 
@@ -306,33 +300,17 @@ export default function ExamPapersPage() {
         setPapers(papers.map(p => 
           p.id === paper.id ? { ...p, isBookmarked: false } : p
         ));
-        Swal.fire({
-          title: 'Success',
-          text: 'Exam removed from bookmarks',
-          icon: 'success',
-          timer: 2000,
-          showConfirmButton: false
-        });
+        showSuccess('Bookmark Removed', 'Exam removed from bookmarks', 3000);
       } else {
         await api.post(`/student/exam-papers/${paper.id}/bookmark`);
         setPapers(papers.map(p => 
           p.id === paper.id ? { ...p, isBookmarked: true } : p
         ));
-        Swal.fire({
-          title: 'Success',
-          text: 'Exam bookmarked successfully',
-          icon: 'success',
-          timer: 2000,
-          showConfirmButton: false
-        });
+        showSuccess('Bookmark Added', 'Exam bookmarked successfully', 3000);
       }
     } catch (error: any) {
       console.error('Error toggling bookmark:', error);
-      Swal.fire({
-        title: 'Error',
-        text: error.response?.data?.message || 'Failed to update bookmark',
-        icon: 'error'
-      });
+      showError('Bookmark Error', error.response?.data?.message || 'Failed to update bookmark', 4000);
     }
   };
 

@@ -9,6 +9,7 @@ import QuestionReportModal from '@/components/QuestionReportModal';
 import LatexContentDisplay from '@/components/LatexContentDisplay';
 import api from '@/lib/api';
 import Swal from 'sweetalert2';
+import { useToastContext } from '@/contexts/ToastContext';
 
 interface Question {
   id: string;
@@ -93,6 +94,7 @@ export default function ExamPage() {
   const params = useParams();
   const router = useRouter();
   const submissionId = params?.submissionId as string;
+  const { showSuccess, showInfo } = useToastContext();
   
   const [submission, setSubmission] = useState<ExamSubmission | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -110,6 +112,7 @@ export default function ExamPage() {
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
   const [selectedQuestionForReport, setSelectedQuestionForReport] = useState<Question | null>(null);
   const [userConfirmedExit, setUserConfirmedExit] = useState(false);
+  const [showShortcutsLegend, setShowShortcutsLegend] = useState(false);
 
   // Helper functions for question types
   const getQuestionType = (question: Question): 'MCQ_SINGLE' | 'MCQ_MULTIPLE' | 'OPEN_ENDED' | 'PARAGRAPH' => {
@@ -619,6 +622,63 @@ export default function ExamPage() {
     return `${minutes}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      // Don't trigger shortcuts when typing in input fields
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      // Don't trigger shortcuts if exam is not started or completed
+      if (!examStarted || examCompleted) return;
+
+      switch (event.key.toLowerCase()) {
+        case 'arrowleft':
+        case 'a':
+          event.preventDefault();
+          handlePreviousQuestion();
+          showInfo('Navigation', 'Previous question', 1000);
+          break;
+        case 'arrowright':
+        case 'd':
+          event.preventDefault();
+          handleNextQuestion();
+          showInfo('Navigation', 'Next question', 1000);
+          break;
+        case 'm':
+          event.preventDefault();
+          handleMarkForReview();
+          const currentAnswer = answers[currentQuestionIndex];
+          const isMarked = currentAnswer?.isMarkedForReview;
+          showInfo('Mark for Review', isMarked ? 'Question unmarked' : 'Question marked for review', 1500);
+          break;
+        case 'h':
+          event.preventDefault();
+          setShowShortcutsLegend(!showShortcutsLegend);
+          break;
+        case 'escape':
+          event.preventDefault();
+          setShowShortcutsLegend(false);
+          break;
+        default:
+          // Handle number keys 1-9 for quick navigation
+          if (event.key >= '1' && event.key <= '9') {
+            const questionNumber = parseInt(event.key) - 1;
+            if (questionNumber < filteredQuestions.length) {
+              event.preventDefault();
+              setCurrentQuestionIndex(questionNumber);
+              showInfo('Quick Navigation', `Jumped to question ${questionNumber + 1}`, 1000);
+            }
+          }
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [currentQuestionIndex, answers, examStarted, examCompleted, filteredQuestions.length, showShortcutsLegend]);
+
   const getQuestionStatus = (index: number) => {
     const answer = answers[index];
     if (!answer) return 'unanswered';
@@ -970,6 +1030,15 @@ export default function ExamPage() {
               <div className="w-80 bg-white shadow-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">Exam Progress</h3>
+                  <button
+                    onClick={() => setShowShortcutsLegend(!showShortcutsLegend)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    title="Toggle Keyboard Shortcuts"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
+                    </svg>
+                  </button>
                 </div>
                 
                 {/* Exam Progress */}
@@ -997,6 +1066,42 @@ export default function ExamPage() {
                     </div>
                   )}
                 </div>
+                
+                {/* Keyboard Shortcuts Legend */}
+                {showShortcutsLegend && (
+                  <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                      <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
+                      </svg>
+                      Keyboard Shortcuts
+                    </h4>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Navigate:</span>
+                        <div className="flex space-x-1">
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">←</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">A</kbd>
+                          <span className="text-gray-400">/</span>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">→</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">D</kbd>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Mark Review:</span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">M</kbd>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Jump to Q:</span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">1-9</kbd>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Toggle Help:</span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">H</kbd>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 
                 {/* Question Navigation */}
                 <div className="pt-4 border-t border-gray-200">
@@ -1068,6 +1173,7 @@ export default function ExamPage() {
                 currentOptions={selectedQuestionForReport.options}
               />
             )}
+
           </div>
         </StudentLayout>
       </SubscriptionGuard>
