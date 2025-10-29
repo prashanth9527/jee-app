@@ -161,7 +161,9 @@ export default function MyAIQuestionsPage() {
 
           {/* AI Plan Upgrade Prompt */}
           {subscriptionStatus && subscriptionStatus.planType !== 'AI_ENABLED' && (
-            <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-200 p-6">
+            <div className="rounded-lg border p-6
+    bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200
+    dark:from-gray-800 dark:to-gray-800 dark:bg-none dark:border-gray-700">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
@@ -189,20 +191,20 @@ export default function MyAIQuestionsPage() {
                 </div>
               </div>
               <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="flex items-center text-sm text-purple-700">
-                  <svg className="w-4 h-4 mr-2 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="flex items-center text-sm text-gray-700">
+                  <svg className="w-4 h-4 mr-2 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   Unlimited AI Questions
                 </div>
-                <div className="flex items-center text-sm text-purple-700">
-                  <svg className="w-4 h-4 mr-2 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="flex items-center text-sm text-gray-700">
+                  <svg className="w-4 h-4 mr-2 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   AI-Powered Explanations
                 </div>
-                <div className="flex items-center text-sm text-purple-700">
-                  <svg className="w-4 h-4 mr-2 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="flex items-center text-sm text-gray-700">
+                  <svg className="w-4 h-4 mr-2 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   Personalized Learning
@@ -271,7 +273,7 @@ export default function MyAIQuestionsPage() {
                       setSelectedDifficulty('');
                       setCurrentPage(1);
                     }}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
                   >
                     Clear Filters
                   </button>
@@ -499,26 +501,30 @@ export default function MyAIQuestionsPage() {
                   </ul>
                 </div>
               ) : (
-                <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg border border-purple-200 p-6">
-                  <h3 className="text-lg font-semibold text-purple-900 mb-3">🚀 Unlock AI Features</h3>
-                  <p className="text-sm text-purple-700 mb-4">
+                <div className="rounded-lg border p-6
+  bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200
+  dark:bg-none dark:from-gray-800 dark:to-gray-800 dark:border-gray-700">
+                  <h3 className="text-lg font-semibold text-purple-300 mb-3 dark:!text-purple-500">🚀 Unlock AI Features</h3>
+                  <p className="text-sm text-purple-900 dark:!text-purple-500">
                     Upgrade to AI-Enabled plan to access these powerful features:
                   </p>
-                  <ul className="space-y-2 text-sm text-purple-800 mb-4">
-                    <li>• Generate unlimited custom questions</li>
-                    <li>• AI-powered explanations for every answer</li>
-                    <li>• Personalized difficulty adjustment</li>
-                    <li>• Real-time question generation</li>
-                  </ul>
+                  <ul className="mt-3 space-y-2 text-white-700 dark:!text-purple-500">
+    <li className="flex items-center gap-2"><span className="dark:!text-purple-400">•</span> Unlimited custom questions</li>
+    <li className="flex items-center gap-2"><span className="dark:!text-purple-400">•</span> AI-powered explanations</li>
+    <li className="flex items-center gap-2"><span className="dark:!text-purple-400">•</span> Personalized difficulty</li>
+  </ul>
+  <div className="mt-4">
                   <button
                     onClick={handleUpgradeToAI}
-                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors"
+                    className="w-full inline-flex items-center justify-center px-4 py-2 rounded-md
+                       text-white bg-purple-600 hover:bg-purple-700 transition-colors"
                   >
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                     Upgrade Now
                   </button>
+                  </div>
                 </div>
               )}
 

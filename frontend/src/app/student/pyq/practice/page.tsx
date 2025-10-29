@@ -294,14 +294,14 @@ function PYQPracticeTestContent() {
           });
         } else {
           // Start the exam
-          Swal.fire({
-            title: 'Practice Test Created!',
-            text: 'Your PYQ practice test has been generated successfully.',
-            icon: 'success',
+        Swal.fire({
+          title: 'Practice Test Created!',
+          text: 'Your PYQ practice test has been generated successfully.',
+          icon: 'success',
             confirmButtonText: 'Start Exam'
-          }).then(() => {
-            router.push(`/student/exam/${response.data.submissionId}`);
-          });
+        }).then(() => {
+          router.push(`/student/exam/${response.data.submissionId}`);
+        });
         }
       } else {
         Swal.fire('Error', 'Failed to create practice test', 'error');
@@ -334,7 +334,7 @@ function PYQPracticeTestContent() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">PYQ Practice Tests</h1>
           <p className="text-lg text-gray-600">Create custom practice tests using Previous Year Questions (PYQ)</p>
-        </div>
+            </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Configuration Panel */}
@@ -378,10 +378,10 @@ function PYQPracticeTestContent() {
                     ))}
                   </select>
                 </div>
-              </div>
+                </div>
 
               {/* Additional Filters Row */}
-              {selectedSubject && (
+                {selectedSubject && (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                   {/* Lesson */}
                   <div>
@@ -445,10 +445,10 @@ function PYQPracticeTestContent() {
                       </p>
                     )}
                   </div>
-                </div>
-              )}
+                  </div>
+                )}
 
-            </div>
+              </div>
 
             {/* Test Configuration */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -539,12 +539,12 @@ function PYQPracticeTestContent() {
                     'Start Practice'
                   )}
                 </button>
-                <button
+              <button
                   onClick={() => createPYQPracticeTest(false)}
                   disabled={creating || !selectedSubject || config.questionCount > (questionAvailability?.totalQuestions || 0)}
                   className="flex-1 bg-blue-600 text-white py-2.5 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium text-sm shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {creating ? (
+              >
+                {creating ? (
                     <div className="flex items-center justify-center">
                       <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
                       Creating...
@@ -614,7 +614,7 @@ function PYQPracticeTestContent() {
                   >
                     <div className="font-medium text-gray-900">{subject.name}</div>
                     <div className="text-sm text-gray-600">{subject._count.questions} PYQ questions</div>
-                  </button>
+              </button>
                 ))}
               </div>
             </div>

@@ -17,6 +17,8 @@ interface ExamPaper {
   topicIds: string[];
   subtopicIds: string[];
   questionIds: string[];
+  hasAttempted?: boolean;
+  hasPracticed?: boolean;
   _count?: {
     submissions: number;
   };
@@ -89,11 +91,22 @@ export default function MyAITestsPage() {
     }
   };
 
-  const handleStartTest = async (paperId: string) => {
+  const handleStartTest = async (paperId: string, paperTitle: string) => {
     try {
-      const response = await api.post(`/exams/papers/${paperId}/start`);
-      const { submissionId } = response.data;
-      router.push(`/student/practice/test/${submissionId}`);
+      const result = await Swal.fire({
+        title: 'Start Test',
+        text: `Are you sure you want to start "${paperTitle}"?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Start Test',
+        cancelButtonText: 'Cancel',
+      });
+
+      if (result.isConfirmed) {
+        const response = await api.post(`/exams/papers/${paperId}/start`);
+        const { submissionId } = response.data;
+        router.push(`/student/exam/${submissionId}`);
+      }
     } catch (error) {
       console.error('Error starting test:', error);
       Swal.fire({
@@ -102,6 +115,10 @@ export default function MyAITestsPage() {
         icon: 'error',
       });
     }
+  };
+
+  const startPracticeSession = (paper: ExamPaper) => {
+    router.push(`/student/practice-exam/${paper.id}`);
   };
 
   const handleDeleteTest = async (paperId: string) => {
@@ -161,7 +178,9 @@ export default function MyAITestsPage() {
 
           {/* AI Plan Upgrade Prompt */}
           {subscriptionStatus && subscriptionStatus.planType !== 'AI_ENABLED' && (
-            <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-200 p-6">
+            <div className="rounded-lg border p-6
+    bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200
+    dark:from-gray-800 dark:to-gray-800 dark:bg-none dark:border-gray-700">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
@@ -255,7 +274,7 @@ export default function MyAITestsPage() {
                       setSelectedSubject('');
                       setCurrentPage(1);
                     }}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
                   >
                     Clear Filters
                   </button>
@@ -348,13 +367,30 @@ export default function MyAITestsPage() {
                           </div>
                           <div className="ml-4 flex-shrink-0 flex items-center gap-2">
                             <button
-                              onClick={() => handleStartTest(paper.id)}
-                              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                              onClick={() => startPracticeSession(paper)}
+                              className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md transition-colors ${
+                                paper.hasPracticed 
+                                  ? 'bg-green-100 text-green-700 hover:bg-green-200' 
+                                  : 'bg-pink-600 text-white hover:bg-pink-700'
+                              }`}
                             >
                               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                               </svg>
-                              Start Test
+                              {paper.hasPracticed ? 'Re-Practice' : 'Practice'}
+                            </button>
+                            <button
+                              onClick={() => handleStartTest(paper.id, paper.title)}
+                              className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md transition-colors ${
+                                paper.hasAttempted 
+                                  ? 'bg-green-100 text-green-700 hover:bg-green-200' 
+                                  : 'bg-blue-600 text-white hover:bg-blue-700'
+                              }`}
+                            >
+                              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              {paper.hasAttempted ? 'Re-Start' : 'Start'}
                             </button>
                             <button
                               onClick={() => handleDeleteTest(paper.id)}
@@ -469,26 +505,30 @@ export default function MyAITestsPage() {
                   </ul>
                 </div>
               ) : (
-                <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg border border-purple-200 p-6">
-                  <h3 className="text-lg font-semibold text-purple-900 mb-3">🚀 Unlock AI Features</h3>
-                  <p className="text-sm text-purple-700 mb-4">
+                <div className="rounded-lg border p-6
+  bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200
+  dark:bg-none dark:from-gray-800 dark:to-gray-800 dark:border-gray-700">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3 dark:!text-purple-500">🚀 Unlock AI Features</h3>
+                  <p className="text-sm text-purple-700 dark:!text-purple-500">
                     Upgrade to AI-Enabled plan to access these powerful features:
                   </p>
-                  <ul className="space-y-2 text-sm text-purple-800 mb-4">
-                    <li>• Generate unlimited custom tests</li>
-                    <li>• AI-powered explanations for every answer</li>
-                    <li>• Personalized difficulty adjustment</li>
-                    <li>• Real-time test generation</li>
-                  </ul>
+                  <ul className="mt-3 space-y-2 text-purple-700 dark:!text-purple-500">
+    <li className="flex items-center gap-2"><span className="dark:!text-purple-400">•</span> Unlimited custom questions</li>
+    <li className="flex items-center gap-2"><span className="dark:!text-purple-400">•</span> AI-powered explanations</li>
+    <li className="flex items-center gap-2"><span className="dark:!text-purple-400">•</span> Personalized difficulty</li>
+  </ul>
+  <div className="mt-4">
                   <button
                     onClick={handleUpgradeToAI}
-                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors"
+                    className="w-full inline-flex items-center justify-center px-4 py-2 rounded-md
+                       text-white bg-purple-600 hover:bg-purple-700 transition-colors"
                   >
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                     Upgrade Now
                   </button>
+                  </div>
                 </div>
               )}
 
