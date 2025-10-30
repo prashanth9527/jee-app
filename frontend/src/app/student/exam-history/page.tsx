@@ -133,9 +133,11 @@ export default function ExamHistoryPage() {
         <StudentLayout>
           <div className="space-y-6">
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 text-white">
+            <div className="bg-[linear-gradient(to_right,var(--banner-from),var(--banner-to))]
+    rounded-2xl p-6 shadow-lg border border-transparent dark:border-white/5
+    transition-all duration-300">
               <h1 className="text-3xl font-bold mb-2">Exam History</h1>
-              <p className="text-blue-100">View all your previous exam submissions and track your progress</p>
+              <p className="text-base font-medium opacity-90">View all your previous exam submissions and track your progress</p>
             </div>
 
             {/* Stats Cards */}
