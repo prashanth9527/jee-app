@@ -935,6 +935,23 @@ function ContentPracticePageContent() {
           <div className={`flex-1 flex flex-col relative ${showSidePanel && !focusMode ? 'pr-80' : ''}`}>
             
 
+            {/* Floating toggle button at top-left of question area (collapse/expand left panel) */}
+            <button
+              onClick={() => setShowLeftPanel(!showLeftPanel)}
+              title={showLeftPanel ? 'Collapse content panel' : 'Expand content panel'}
+              className="absolute left-2 top-2 z-30 p-2 rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 shadow-sm"
+            >
+              {showLeftPanel ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              )}
+            </button>
+
             {/* Floating toggle button at top-right of question area */}
             <button
               onClick={async () => {
