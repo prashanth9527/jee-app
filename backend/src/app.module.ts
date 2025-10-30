@@ -22,6 +22,7 @@ import { ContactModule } from './contact/contact.module';
 import { LMSModule } from './lms/lms.module';
 import { BlogsModule } from './blogs/blogs.module';
 import { StaticFilesModule } from './static/static-files.module';
+import { PracticeModule } from './practice/practice.module';
 import { PYQController } from './pyq.controller';
 
 
@@ -49,7 +50,7 @@ import { PYQController } from './pyq.controller';
     LMSModule,
     BlogsModule,
     StaticFilesModule,
-    
+    PracticeModule,
   ],
   controllers: [AppController, PYQController],
   providers: [AppService],

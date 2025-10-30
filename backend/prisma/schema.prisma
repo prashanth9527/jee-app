@@ -59,6 +59,7 @@ model User {
   aiFeatureUsage       AIFeatureUsage[]
   aiGeneratedResults   AIGeneratedResult[]
   aiContentGenerations AIContentGeneration[]
+  practiceProgress     PracticeProgress[]
   practiceSessions     PracticeSession[]
   examBookmarks        ExamBookmark[]
 }
@@ -204,6 +205,7 @@ model Question {
   // Relations for paragraph-based questions
   parentQuestion          Question?                        @relation("ParagraphQuestions", fields: [parentQuestionId], references: [id])
   subQuestions            Question[]                       @relation("ParagraphQuestions")
+  practiceQuestionSessions PracticeQuestionSession[]
 }
 
 model QuestionOption {
@@ -1342,4 +1344,46 @@ enum AIFeatureType {
   LESSON_SUMMARY
   TOPIC_EXPLANATION
   MICRO_LESSON
+}
+
+model PracticeProgress {
+  id                   String   @id @default(cuid())
+  userId               String
+  contentType          String   // 'lesson', 'topic', 'subtopic'
+  contentId            String
+  currentQuestionIndex Int      @default(0)
+  totalQuestions       Int
+  completedQuestions   Int      @default(0)
+  visitedQuestions     Json     @default("[]")
+  isCompleted          Boolean  @default(false)
+  startedAt            DateTime @default(now())
+  lastAccessedAt       DateTime @default(now())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  // Relations
+  user     User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessions PracticeQuestionSession[]
+
+  @@unique([userId, contentType, contentId])
+  @@map("practice_progress")
+}
+
+model PracticeQuestionSession {
+  id           String   @id @default(cuid())
+  progressId   String
+  questionId   String
+  userAnswer   Json?
+  isCorrect    Boolean?
+  timeSpent    Int      @default(0) // in seconds
+  attemptedAt  DateTime @default(now())
+  isChecked    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  progress  PracticeProgress @relation(fields: [progressId], references: [id], onDelete: Cascade)
+  question  Question         @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@map("practice_question_sessions")
 }
