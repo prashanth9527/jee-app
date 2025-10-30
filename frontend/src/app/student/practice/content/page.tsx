@@ -901,7 +901,7 @@ function ContentPracticePageContent() {
                   <h1 className="text-xl font-bold text-gray-900">Practice Questions</h1>
                   <p className="text-sm text-gray-600 mt-1">Select content to practice</p>
                 </div>
-                <button
+                {/* <button
                   onClick={() => setShowLeftPanel(false)}
                   className="p-2 text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-50"
                   title="Collapse panel"
@@ -909,7 +909,7 @@ function ContentPracticePageContent() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
-                </button>
+                </button> */}
               </div>
               {/* Search */}
               <div className="mt-3 relative">
