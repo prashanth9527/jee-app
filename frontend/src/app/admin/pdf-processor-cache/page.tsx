@@ -2110,7 +2110,10 @@ Please proceed with extracting ALL **90** questions from the complete .tex file 
                             setEditingJson(null);
                             setJsonContent('');
                           }}
-                          className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                          className="px-4 py-2 text-sm font-medium rounded-md border
+    text-gray-700 bg-gray-100 hover:bg-gray-200 border-gray-300
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500
+    dark:text-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-700"
                         >
                           Cancel
                         </button>
@@ -2118,7 +2121,10 @@ Please proceed with extracting ALL **90** questions from the complete .tex file 
                         {/* Always show Save JSON Content button */}
                         <button
                           onClick={saveJsonContent}
-                          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                          className="px-4 py-2 text-sm font-semibold rounded-md border
+    text-white bg-blue-600 hover:bg-blue-500 border-blue-700
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400
+    dark:bg-blue-500 dark:hover:bg-blue-400 dark:border-blue-400"
                         >
                           Save JSON Content
                         </button>

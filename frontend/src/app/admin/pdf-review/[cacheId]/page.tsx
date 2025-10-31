@@ -1240,7 +1240,11 @@ export default function PDFReviewPage() {
                   <div className="flex space-x-3 pt-4">
                     <button
                       onClick={handleCreateExam}
-                      className="flex-1 bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 font-medium"
+                      className="flex-1 px-6 py-3 rounded-md text-sm font-semibold
+    text-white bg-indigo-600 hover:bg-indigo-500
+    ring-1 ring-inset ring-indigo-700
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400
+    dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:ring-indigo-300"
                     >
                       Create Exam
                     </button>
@@ -1253,7 +1257,11 @@ export default function PDFReviewPage() {
                         setOriginalSelectedQuestions(null);
                       }
                     }}
-                    className="flex-1 bg-gray-200 text-gray-800 px-6 py-3 rounded-md hover:bg-gray-300 font-medium"
+                    className="flex-1 px-6 py-3 rounded-md text-sm font-medium
+    text-gray-800 bg-gray-200 hover:bg-gray-300
+    ring-1 ring-inset ring-gray-300
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500
+    dark:text-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:ring-gray-600"
                   >
                     Cancel
                   </button>
