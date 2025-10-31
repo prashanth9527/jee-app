@@ -1252,7 +1252,7 @@ export default function PDFProcessorCachePage() {
                         <div className="space-y-2">
                           {/* ID with Copy Button */}
                           <div className="flex items-center space-x-2">
-                            <span className="text-xs font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                            <span className="inline-flex items-center px-2 py-1 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                               {record.id}
                             </span>
                             <button

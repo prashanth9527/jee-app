@@ -651,7 +651,7 @@ export default function PDFReviewPage() {
                   return (
                     <div key={exerciseName} className="mb-4">
                       {/* Exercise Header */}
-                      <div className="sticky top-0 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-3 mb-2 shadow-sm z-10">
+                      <div className="sticky top-0 background-gray border border-indigo-200 rounded-lg p-3 mb-2 shadow-sm z-10">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
                             <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1223,7 +1223,10 @@ export default function PDFReviewPage() {
                     <select
                       value={examType}
                       onChange={(e) => setExamType(e.target.value as any)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-md border
+    bg-white text-gray-900 border-gray-300
+    focus:outline-none focus:ring-2 focus:ring-indigo-400
+    dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
                     >
                       <option value="REGULAR">Regular Exam</option>
                       <option value="AI_EXAM">AI Generated Exam</option>
@@ -1242,9 +1245,9 @@ export default function PDFReviewPage() {
                       onClick={handleCreateExam}
                       className="flex-1 px-6 py-3 rounded-md text-sm font-semibold
     text-white bg-indigo-600 hover:bg-indigo-500
-    ring-1 ring-inset ring-indigo-700
+    border border-indigo-700
     focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400
-    dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:ring-indigo-300"
+    dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:border-indigo-300"
                     >
                       Create Exam
                     </button>
