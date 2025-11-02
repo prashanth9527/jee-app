@@ -211,6 +211,7 @@ export class PDFReviewController {
     description?: string;
     timeLimitMin?: number;
     examType?: string;
+    previousYear?: string;
   }) {
     try {
       if (!body.questionIds || !Array.isArray(body.questionIds) || body.questionIds.length === 0) {
@@ -222,7 +223,8 @@ export class PDFReviewController {
         body.title,
         body.description,
         body.timeLimitMin,
-        body.examType
+        body.examType,
+        body.previousYear
       );
       
       return {

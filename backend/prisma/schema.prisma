@@ -280,6 +280,7 @@ model ExamPaper {
   id                  String           @id @default(cuid())
   title               String
   description         String?
+  previousYear        String?
   subjectIds          String[]         @default([])
   topicIds            String[]         @default([])
   subtopicIds         String[]         @default([])

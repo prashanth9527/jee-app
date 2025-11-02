@@ -382,7 +382,8 @@ export class PDFReviewService {
     customTitle?: string,
     description?: string,
     timeLimitMin?: number,
-    examType?: string
+    examType?: string,
+    previousYear?: string
   ) {
     try {
       // Fetch questions to analyze their metadata
@@ -421,6 +422,7 @@ export class PDFReviewService {
         data: {
           title,
           description: description || `Practice exam with ${questions.length} questions`,
+          previousYear: previousYear || null,
           subjectIds,
           topicIds,
           subtopicIds,

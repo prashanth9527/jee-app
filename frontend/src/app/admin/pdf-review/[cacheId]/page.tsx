@@ -83,6 +83,7 @@ export default function PDFReviewPage() {
   const [examDescription, setExamDescription] = useState('');
   const [examTimeLimit, setExamTimeLimit] = useState<number | ''>('');
   const [examType, setExamType] = useState<'REGULAR' | 'AI_EXAM' | 'CONTENT_EXAM' | 'PRACTICE_EXAM' | 'PYQ_PRACTICE'>('REGULAR');
+  const [previousYear, setPreviousYear] = useState('');
   const [groupedQuestions, setGroupedQuestions] = useState<Record<string, Question[]>>({});
   const [originalSelectedQuestions, setOriginalSelectedQuestions] = useState<Set<string> | null>(null);
 
@@ -316,7 +317,8 @@ export default function PDFReviewPage() {
         title: examTitle || undefined,
         description: examDescription || undefined,
         timeLimitMin: examTimeLimit || undefined,
-        examType: examType
+        examType: examType,
+        previousYear: previousYear || undefined
       });
 
       if (response.data.success) {
@@ -329,6 +331,7 @@ export default function PDFReviewPage() {
         setExamDescription('');
         setExamTimeLimit('');
         setExamType('REGULAR');
+        setPreviousYear('');
         
         // Restore original selected questions if they were stored
         if (originalSelectedQuestions) {
@@ -1236,6 +1239,34 @@ export default function PDFReviewPage() {
                     </select>
                     <p className="mt-1 text-sm text-gray-500">
                       Select the type of exam you want to create
+                    </p>
+                  </div>
+
+                  {/* Previous Year */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Previous Year
+                    </label>
+                    <select
+                      value={previousYear}
+                      onChange={(e) => setPreviousYear(e.target.value)}
+                      className="w-full px-4 py-2 rounded-md border
+    bg-white text-gray-900 border-gray-300
+    focus:outline-none focus:ring-2 focus:ring-indigo-400
+    dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
+                    >
+                      <option value="">Select year (optional)</option>
+                      {Array.from({ length: 50 }, (_, i) => {
+                        const year = new Date().getFullYear() - i;
+                        return (
+                          <option key={year} value={year.toString()}>
+                            {year}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Optional: Select the previous year for this exam
                     </p>
                   </div>
 
