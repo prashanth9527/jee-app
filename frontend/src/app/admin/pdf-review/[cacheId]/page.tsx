@@ -1218,56 +1218,68 @@ export default function PDFReviewPage() {
                     </p>
                   </div>
 
-                  {/* Exam Type */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Exam Type *
-                    </label>
-                    <select
-                      value={examType}
-                      onChange={(e) => setExamType(e.target.value as any)}
-                      className="w-full px-4 py-2 rounded-md border
+                  {/* Exam Type and Previous Year */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Exam Type */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Exam Type *
+                      </label>
+                      <select
+                        value={examType}
+                        onChange={(e) => {
+                          const newExamType = e.target.value as any;
+                          setExamType(newExamType);
+                          // Clear previousYear if exam type is not PYQ_PRACTICE
+                          if (newExamType !== 'PYQ_PRACTICE') {
+                            setPreviousYear('');
+                          }
+                        }}
+                        className="w-full px-4 py-2 rounded-md border
     bg-white text-gray-900 border-gray-300
     focus:outline-none focus:ring-2 focus:ring-indigo-400
     dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
-                    >
-                      <option value="REGULAR">Regular Exam</option>
-                      <option value="AI_EXAM">AI Generated Exam</option>
-                      <option value="CONTENT_EXAM">Content Exam</option>
-                      <option value="PRACTICE_EXAM">Practice Exam</option>
-                      <option value="PYQ_PRACTICE">Previous Year Questions Practice</option>
-                    </select>
-                    <p className="mt-1 text-sm text-gray-500">
-                      Select the type of exam you want to create
-                    </p>
-                  </div>
+                      >
+                        <option value="REGULAR">Regular Exam</option>
+                        <option value="AI_EXAM">AI Generated Exam</option>
+                        <option value="CONTENT_EXAM">Content Exam</option>
+                        <option value="PRACTICE_EXAM">Practice Exam</option>
+                        <option value="PYQ_PRACTICE">Previous Year Questions Practice</option>
+                      </select>
+                      <p className="mt-1 text-sm text-gray-500">
+                        Select the type of exam you want to create
+                      </p>
+                    </div>
 
-                  {/* Previous Year */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Previous Year
-                    </label>
-                    <select
-                      value={previousYear}
-                      onChange={(e) => setPreviousYear(e.target.value)}
-                      className="w-full px-4 py-2 rounded-md border
+                    {/* Previous Year - Only visible when Exam Type is PYQ_PRACTICE */}
+                    {examType === 'PYQ_PRACTICE' && (
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Previous Year
+                        </label>
+                        <select
+                          value={previousYear}
+                          onChange={(e) => setPreviousYear(e.target.value)}
+                          className="w-full px-4 py-2 rounded-md border
     bg-white text-gray-900 border-gray-300
     focus:outline-none focus:ring-2 focus:ring-indigo-400
     dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
-                    >
-                      <option value="">Select year (optional)</option>
-                      {Array.from({ length: 50 }, (_, i) => {
-                        const year = new Date().getFullYear() - i;
-                        return (
-                          <option key={year} value={year.toString()}>
-                            {year}
-                          </option>
-                        );
-                      })}
-                    </select>
-                    <p className="mt-1 text-sm text-gray-500">
-                      Optional: Select the previous year for this exam
-                    </p>
+                        >
+                          <option value="">Select year (optional)</option>
+                          {Array.from({ length: 50 }, (_, i) => {
+                            const year = new Date().getFullYear() - i;
+                            return (
+                              <option key={year} value={year.toString()}>
+                                {year}
+                              </option>
+                            );
+                          })}
+                        </select>
+                        <p className="mt-1 text-sm text-gray-500">
+                          Optional: Select the previous year for this exam
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   {/* Action Buttons */}
