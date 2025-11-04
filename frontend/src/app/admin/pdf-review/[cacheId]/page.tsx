@@ -654,7 +654,7 @@ export default function PDFReviewPage() {
                   return (
                     <div key={exerciseName} className="mb-4">
                       {/* Exercise Header */}
-                      <div className="sticky top-0 background-gray border border-indigo-200 rounded-lg p-3 mb-2 shadow-sm z-10">
+                      <div className="sticky top-0 bg-blue-600 border border-indigo-200 rounded-lg p-3 mb-2 shadow-sm z-10">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
                             <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
