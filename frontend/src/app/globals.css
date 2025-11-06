@@ -545,3 +545,22 @@ textarea:focus {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;            /* Chrome, Safari, Opera */
 }
+/* Fix for PNG images in dark mode */
+img[src$=".png"] {
+  background-color: white; /* makes it visible on dark background */
+  border-radius: 6px; /* optional, just for smoother look */
+  padding: 4px; /* optional */
+}
+
+/* Optional: if you want it to auto-adapt to light/dark mode */
+@media (prefers-color-scheme: dark) {
+  img[src$=".png"] {
+    background-color: #fff; /* white background in dark mode */
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  img[src$=".png"] {
+    background-color: transparent; /* or keep it clean in light mode */
+  }
+}
