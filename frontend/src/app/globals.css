@@ -472,6 +472,13 @@ textarea:focus {
   line-height: 1.7;
 }
 
+/* Increase spacing between lines (br tags) in latex content */
+.latex-content-display br {
+  display: block;
+  margin-bottom: 0.75rem;
+  line-height: 0.75rem;
+}
+
 .latex-content-display h1,
 .latex-content-display h2,
 .latex-content-display h3,
