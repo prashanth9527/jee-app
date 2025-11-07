@@ -469,14 +469,22 @@ textarea:focus {
 
 /* Question display specific styles */
 .latex-content-display {
-  line-height: 1.7;
+  line-height: 2.2;
+  letter-spacing: 0.1em;
 }
 
-/* Increase spacing between lines (br tags) in latex content */
-.latex-content-display br {
+/* Reset letter-spacing for LaTeX math elements to prevent breaking formulas */
+.latex-content-display .katex,
+.latex-content-display .katex *,
+.latex-content-display .math-inline,
+.latex-content-display .math-display {
+  letter-spacing: 0;
+}
+
+/* Increase spacing between lines in latex content */
+.latex-content-display .line-spacer {
+  height: 0.75rem;
   display: block;
-  margin-bottom: 0.75rem;
-  line-height: 0.75rem;
 }
 
 .latex-content-display h1,
