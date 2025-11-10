@@ -153,15 +153,20 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
       // Remove all \hline commands
       cleanContent = cleanContent.replace(/\\hline/g, '');
       
+      // Convert literal \n to actual newlines first, then normalize
+      cleanContent = cleanContent.replace(/\\n/g, '\n');
+      
       // Normalize whitespace - replace newlines and multiple spaces with single space
+      // This removes all newlines from table content to prevent <br> tags inside cells
       cleanContent = cleanContent.replace(/\s+/g, ' ');
       
-      // Remove trailing \\ and whitespace
+      // Remove trailing \\ and whitespace - be more aggressive
       cleanContent = cleanContent.replace(/\\\\\s*$/g, '');
+      cleanContent = cleanContent.replace(/\s*\\\\\s*$/g, '');
       cleanContent = cleanContent.trim();
       
       // Split by \\ (row separator) and filter out empty strings
-      const rawRows = cleanContent.split(/\\\\/).map((row: string) => row.trim()).filter((row: string) => row.length > 0);
+      const rawRows = cleanContent.split(/\\\\/);
       const rows: string[][] = [];
       
       rawRows.forEach((rawRow: string) => {
@@ -169,17 +174,16 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
         let cleanRow = rawRow.trim();
         
         // Skip completely empty rows
-        if (!cleanRow) {
+        if (!cleanRow || cleanRow.length === 0) {
           return;
         }
         
         // Split by & (column separator)
         const cells = cleanRow.split('&').map((cell: string) => {
-          // Trim each cell
-          return cell.trim();
+          // Trim each cell and remove any remaining whitespace/newlines
+          return cell.trim().replace(/\s+/g, ' ');
         });
         
-        // Filter out completely empty cells, but keep cells that might be empty (for proper column alignment)
         // Only add row if it has at least one non-empty cell
         const hasNonEmptyCell = cells.some((cell: string) => cell && cell.length > 0);
         if (hasNonEmptyCell && cells.length > 0) {
@@ -216,10 +220,24 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     processed = processed.replace(/\\n/g, '\n');
     
     // Convert newlines to <br> tags with spacing divs, but skip if already inside HTML tags
-    // Use a more careful approach: only replace newlines that are not inside HTML tags
+    // Use a more careful approach: only replace newlines that are not inside HTML tags or table cells
     processed = processed.replace(/\n/g, (match, offset, string) => {
       // Check if we're inside an HTML tag
       const before = string.substring(0, offset);
+      const after = string.substring(offset);
+      
+      // Check if we're inside a table cell (<td> or <th>)
+      const lastTdOpen = before.lastIndexOf('<td');
+      const lastTdClose = before.lastIndexOf('</td>');
+      const lastThOpen = before.lastIndexOf('<th');
+      const lastThClose = before.lastIndexOf('</th>');
+      
+      // If we're inside a table cell, don't replace
+      if ((lastTdOpen > lastTdClose) || (lastThOpen > lastThClose)) {
+        return match;
+      }
+      
+      // Check if we're inside any other HTML tag
       const openTags = (before.match(/<[^>]*>/g) || []).length;
       const closeTags = (before.match(/<\/[^>]*>/g) || []).length;
       
