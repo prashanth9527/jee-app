@@ -148,40 +148,43 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     // Handle \begin{tabular}...\end{tabular}
     processed = processed.replace(/\\begin\{tabular\}\{([^}]+)\}([\s\S]*?)\\end\{tabular\}/g, (match, columnSpec, tableContent) => {
       // Parse table content - handle \hline and split by \\ (row separator)
-      // First, remove standalone \hline at the end
       let cleanContent = tableContent.trim();
-      cleanContent = cleanContent.replace(/\\hline\s*$/g, '');
       
-      // Split by \\ (row separator) - this handles both \\ at end of line and standalone \\
-      const rawRows = cleanContent.split(/\\\\/).filter((row: string) => row.trim());
+      // Remove trailing \hline and empty lines
+      cleanContent = cleanContent.replace(/\\hline\s*$/gm, '');
+      cleanContent = cleanContent.replace(/^\s*$/gm, '');
+      
+      // Split by \\ (row separator) - handle both \\ at end of line and standalone \\
+      const rawRows = cleanContent.split(/\\\\/);
       const rows: string[][] = [];
       
       rawRows.forEach((rawRow: string) => {
         // Remove \hline from the row (can be at start or end)
         let cleanRow = rawRow.replace(/\\hline/g, '').trim();
         
-        if (cleanRow) {
-          // Split by & (column separator)
-          const cells = cleanRow.split('&').map((cell: string) => {
-            // Trim each cell
-            return cell.trim();
-          });
-          
-          // Only add row if it has cells
-          if (cells.length > 0 && cells.some((c: string) => c)) {
-            rows.push(cells);
-          }
+        // Skip empty rows
+        if (!cleanRow) {
+          return;
+        }
+        
+        // Split by & (column separator)
+        const cells = cleanRow.split('&').map((cell: string) => {
+          // Trim each cell
+          return cell.trim();
+        });
+        
+        // Only add row if it has non-empty cells
+        if (cells.length > 0 && cells.some((c: string) => c && c.length > 0)) {
+          rows.push(cells);
         }
       });
       
-      // Build HTML table
-      let tableHtml = '<table style="border-collapse: collapse; margin: 1rem auto; border: 1px solid #ccc; text-align: center;">';
+      // Build HTML table with compact styling
+      let tableHtml = '<table class="latex-table">';
       rows.forEach((row: string[]) => {
         tableHtml += '<tr>';
         row.forEach((cell: string) => {
-          // All cells get borders
-          const borderStyle = 'border: 1px solid #ccc; padding: 0.5rem;';
-          tableHtml += `<td style="${borderStyle}">${cell}</td>`;
+          tableHtml += `<td>${cell}</td>`;
         });
         tableHtml += '</tr>';
       });

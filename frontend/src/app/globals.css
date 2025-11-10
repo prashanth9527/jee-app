@@ -487,6 +487,28 @@ textarea:focus {
   display: block;
 }
 
+/* LaTeX table styling - neat and compact */
+.latex-content-display .latex-table {
+  border-collapse: collapse;
+  margin: 1rem auto;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: inherit;
+}
+
+.latex-content-display .latex-table td {
+  border: 1px solid #ccc;
+  padding: 0.25rem 0.5rem;
+  vertical-align: middle;
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+
+.latex-content-display .latex-table tr {
+  height: auto;
+  min-height: 0;
+}
+
 .latex-content-display h1,
 .latex-content-display h2,
 .latex-content-display h3,
