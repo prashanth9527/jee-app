@@ -478,7 +478,7 @@ textarea:focus {
 .latex-content-display .katex *,
 .latex-content-display .math-inline,
 .latex-content-display .math-display {
-  letter-spacing: 0;
+  letter-spacing: 4px;
 }
 
 /* Increase spacing between lines in latex content */
