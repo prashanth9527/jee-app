@@ -132,16 +132,95 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     return html;
   };
 
+  // Convert LaTeX environments to HTML
+  const convertLatexEnvironments = (content: string): string => {
+    let processed = content;
+    
+    // Handle \begin{center}...\end{center}
+    processed = processed.replace(/\\begin\{center\}([\s\S]*?)\\end\{center\}/g, (match, innerContent) => {
+      // Process inner content (handle newlines and LaTeX)
+      const processedInner = innerContent
+        .replace(/\\n/g, '\n')
+        .replace(/\n/g, '<br><div class="line-spacer"></div>');
+      return `<div style="text-align: center; margin: 1rem 0;">${processedInner}</div>`;
+    });
+    
+    // Handle \begin{tabular}...\end{tabular}
+    processed = processed.replace(/\\begin\{tabular\}\{([^}]+)\}([\s\S]*?)\\end\{tabular\}/g, (match, columnSpec, tableContent) => {
+      // Parse table content - handle \hline and split by \\ (row separator)
+      // First, remove standalone \hline at the end
+      let cleanContent = tableContent.trim();
+      cleanContent = cleanContent.replace(/\\hline\s*$/g, '');
+      
+      // Split by \\ (row separator) - this handles both \\ at end of line and standalone \\
+      const rawRows = cleanContent.split(/\\\\/).filter((row: string) => row.trim());
+      const rows: string[][] = [];
+      
+      rawRows.forEach((rawRow: string) => {
+        // Remove \hline from the row (can be at start or end)
+        let cleanRow = rawRow.replace(/\\hline/g, '').trim();
+        
+        if (cleanRow) {
+          // Split by & (column separator)
+          const cells = cleanRow.split('&').map((cell: string) => {
+            // Trim each cell
+            return cell.trim();
+          });
+          
+          // Only add row if it has cells
+          if (cells.length > 0 && cells.some((c: string) => c)) {
+            rows.push(cells);
+          }
+        }
+      });
+      
+      // Build HTML table
+      let tableHtml = '<table style="border-collapse: collapse; margin: 1rem auto; border: 1px solid #ccc; text-align: center;">';
+      rows.forEach((row: string[]) => {
+        tableHtml += '<tr>';
+        row.forEach((cell: string) => {
+          // All cells get borders
+          const borderStyle = 'border: 1px solid #ccc; padding: 0.5rem;';
+          tableHtml += `<td style="${borderStyle}">${cell}</td>`;
+        });
+        tableHtml += '</tr>';
+      });
+      tableHtml += '</table>';
+      
+      return tableHtml;
+    });
+    
+    return processed;
+  };
+
   // Process content to handle both HTML and LaTeX
   const processContent = (content: string) => {
-    // First convert literal \n strings (backslash followed by n) to actual newlines
-    // Then convert actual newlines to <br> tags with spacing divs for proper line breaks
-    const contentWithBreaks = content
-      .replace(/\\n/g, '\n')  // Replace literal \n with actual newline
-      .replace(/\n/g, '<br><div class="line-spacer"></div>'); // Replace newlines with <br> tags and spacing divs
+    // First convert LaTeX environments to HTML (before processing newlines)
+    let processed = convertLatexEnvironments(content);
+    
+    // Then convert literal \n strings (backslash followed by n) to actual newlines
+    // But only outside of already processed HTML blocks
+    // We need to be careful not to break HTML we just created
+    processed = processed.replace(/\\n/g, '\n');
+    
+    // Convert newlines to <br> tags with spacing divs, but skip if already inside HTML tags
+    // Use a more careful approach: only replace newlines that are not inside HTML tags
+    processed = processed.replace(/\n/g, (match, offset, string) => {
+      // Check if we're inside an HTML tag
+      const before = string.substring(0, offset);
+      const openTags = (before.match(/<[^>]*>/g) || []).length;
+      const closeTags = (before.match(/<\/[^>]*>/g) || []).length;
+      
+      // If we're inside an HTML tag, don't replace
+      if (openTags > closeTags) {
+        return match;
+      }
+      
+      return '<br><div class="line-spacer"></div>';
+    });
     
     // Then render LaTeX expressions
-    const latexRendered = renderLatexContent(contentWithBreaks);
+    const latexRendered = renderLatexContent(processed);
     
     // Then process any remaining HTML
     return latexRendered;
