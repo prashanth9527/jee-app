@@ -150,19 +150,25 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
       // Parse table content - handle \hline and split by \\ (row separator)
       let cleanContent = tableContent.trim();
       
-      // Remove trailing \hline and empty lines
-      cleanContent = cleanContent.replace(/\\hline\s*$/gm, '');
-      cleanContent = cleanContent.replace(/^\s*$/gm, '');
+      // Remove all \hline commands
+      cleanContent = cleanContent.replace(/\\hline/g, '');
       
-      // Split by \\ (row separator) - handle both \\ at end of line and standalone \\
-      const rawRows = cleanContent.split(/\\\\/);
+      // Normalize whitespace - replace newlines and multiple spaces with single space
+      cleanContent = cleanContent.replace(/\s+/g, ' ');
+      
+      // Remove trailing \\ and whitespace
+      cleanContent = cleanContent.replace(/\\\\\s*$/g, '');
+      cleanContent = cleanContent.trim();
+      
+      // Split by \\ (row separator) and filter out empty strings
+      const rawRows = cleanContent.split(/\\\\/).map((row: string) => row.trim()).filter((row: string) => row.length > 0);
       const rows: string[][] = [];
       
       rawRows.forEach((rawRow: string) => {
-        // Remove \hline from the row (can be at start or end)
-        let cleanRow = rawRow.replace(/\\hline/g, '').trim();
+        // Trim the row
+        let cleanRow = rawRow.trim();
         
-        // Skip empty rows
+        // Skip completely empty rows
         if (!cleanRow) {
           return;
         }
@@ -173,8 +179,11 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
           return cell.trim();
         });
         
-        // Only add row if it has non-empty cells
-        if (cells.length > 0 && cells.some((c: string) => c && c.length > 0)) {
+        // Filter out completely empty cells, but keep cells that might be empty (for proper column alignment)
+        // Only add row if it has at least one non-empty cell
+        const hasNonEmptyCell = cells.some((cell: string) => cell && cell.length > 0);
+        if (hasNonEmptyCell && cells.length > 0) {
+          // Keep all cells (including empty ones) for proper table structure
           rows.push(cells);
         }
       });
