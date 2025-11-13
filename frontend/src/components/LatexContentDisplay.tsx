@@ -111,8 +111,11 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
         );
         
         if (!overlaps) {
-          // Unescape LaTeX content (convert \\ to \)
-          const unescapedLatex = match[1].replace(/\\\\/g, '\\');
+          // Preserve LaTeX content as-is (don't unescape \\ as it's needed for line breaks)
+          // Only unescape if it's clearly an escaped backslash (\\\\ in string = \\ in LaTeX)
+          let unescapedLatex = match[1];
+          // Don't unescape \\ that are part of LaTeX line breaks or commands
+          // Only handle cases where we have escaped backslashes that aren't LaTeX commands
           
           // Determine actual type: if single $ contains display math, treat as display
           const actualType = (type === 'inline' && isDisplayMath(unescapedLatex)) 
@@ -140,8 +143,19 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     let offset = 0;
     
     blocks.forEach(block => {
-      // Clean the LaTeX content before rendering
-      const cleanedLatex = cleanLatex(block.latex);
+      // Clean the LaTeX content before rendering, but preserve line breaks and \\
+      // We need to preserve \\ for line breaks in aligned environments
+      let cleanedLatex = block.latex;
+      
+      // Apply LaTeX-specific fixes without collapsing whitespace
+      cleanedLatex = cleanedLatex.replace(/\\rac\b/g, '\\frac');
+      
+      // Remove only problematic control characters, but preserve newlines and \\
+      // Don't collapse whitespace as it's needed for LaTeX structure
+      cleanedLatex = cleanedLatex.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+      
+      // Preserve \\ line breaks - they are essential for aligned environments
+      // KaTeX will handle them correctly
       
       try {
         const rendered = katex.renderToString(cleanedLatex, {

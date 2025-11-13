@@ -447,10 +447,10 @@ textarea:focus {
 }
 
 .latex-content-display .math-display {
-  display: block;
+  /*display: block;*/
   text-align: center;
   margin: 1rem 0;
-  padding: 0.5rem;
+  /*padding: 0.5rem;*/
   background-color: #f8f9fa;
   border-radius: 4px;
 }
