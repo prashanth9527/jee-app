@@ -11,8 +11,50 @@ interface LatexContentDisplayProps {
   className?: string;
 }
 
+// Global style injection for KaTeX color inheritance (only inject once)
+let katexStyleInjected = false;
+
 export default function LatexContentDisplay({ content, className = '' }: LatexContentDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Ensure KaTeX elements inherit text color (inject style only once globally)
+  useEffect(() => {
+    if (!katexStyleInjected) {
+      const style = document.createElement('style');
+      style.id = 'katex-color-inherit';
+      style.textContent = `
+        /* Force KaTeX to inherit text color from parent */
+        .latex-content-display .katex,
+        .latex-content-display .katex *,
+        .latex-content-display .katex-display,
+        .latex-content-display .katex-display * {
+          color: inherit !important;
+        }
+        .math-display .katex,
+        .math-display .katex *,
+        .math-inline .katex,
+        .math-inline .katex * {
+          color: inherit !important;
+        }
+        /* Ensure KaTeX respects parent text color classes */
+        .text-gray-900 .katex,
+        .text-gray-900 .katex *,
+        .text-green-700 .katex,
+        .text-green-700 .katex *,
+        .text-gray-700 .katex,
+        .text-gray-700 .katex * {
+          color: inherit !important;
+        }
+        /* Fallback: if no color is inherited, use a visible default */
+        .latex-content-display:not([class*="text-"]) .katex,
+        .latex-content-display:not([class*="text-"]) .katex * {
+          color: #1f2937 !important; /* gray-800 */
+        }
+      `;
+      document.head.appendChild(style);
+      katexStyleInjected = true;
+    }
+  }, []);
 
   // Parse LaTeX blocks from content
   const parseLatexBlocks = (content: string) => {
@@ -147,7 +189,8 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
         
         const before = html.substring(0, block.start + offset);
         const after = html.substring(block.end + offset);
-        const replacement = `<span class="math-${block.type}" data-latex="${block.latex}">${rendered}</span>`;
+        // Add explicit color styling to ensure math is visible
+        const replacement = `<span class="math-${block.type}" data-latex="${block.latex}" style="color: inherit;">${rendered}</span>`;
         
         html = before + replacement + after;
         offset += replacement.length - (block.end - block.start);
