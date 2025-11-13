@@ -132,125 +132,16 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     return html;
   };
 
-  // Convert LaTeX environments to HTML
-  const convertLatexEnvironments = (content: string): string => {
-    let processed = content;
-    
-    // Handle \begin{center}...\end{center}
-    processed = processed.replace(/\\begin\{center\}([\s\S]*?)\\end\{center\}/g, (match, innerContent) => {
-      // Process inner content (handle newlines and LaTeX)
-      const processedInner = innerContent
-        .replace(/\\n/g, '\n')
-        .replace(/\n/g, '<br><div class="line-spacer"></div>');
-      return `<div style="text-align: center; margin: 1rem 0;">${processedInner}</div>`;
-    });
-    
-    // Handle \begin{tabular}...\end{tabular}
-    processed = processed.replace(/\\begin\{tabular\}\{([^}]+)\}([\s\S]*?)\\end\{tabular\}/g, (match, columnSpec, tableContent) => {
-      // Parse table content - handle \hline and split by \\ (row separator)
-      let cleanContent = tableContent.trim();
-      
-      // Remove all \hline commands
-      cleanContent = cleanContent.replace(/\\hline/g, '');
-      
-      // Convert literal \n to actual newlines first, then normalize
-      cleanContent = cleanContent.replace(/\\n/g, '\n');
-      
-      // Normalize whitespace - replace newlines and multiple spaces with single space
-      // This removes all newlines from table content to prevent <br> tags inside cells
-      cleanContent = cleanContent.replace(/\s+/g, ' ');
-      
-      // Remove trailing \\ and whitespace - be more aggressive
-      cleanContent = cleanContent.replace(/\\\\\s*$/g, '');
-      cleanContent = cleanContent.replace(/\s*\\\\\s*$/g, '');
-      cleanContent = cleanContent.trim();
-      
-      // Split by \\ (row separator) and filter out empty strings
-      const rawRows = cleanContent.split(/\\\\/);
-      const rows: string[][] = [];
-      
-      rawRows.forEach((rawRow: string) => {
-        // Trim the row
-        let cleanRow = rawRow.trim();
-        
-        // Skip completely empty rows
-        if (!cleanRow || cleanRow.length === 0) {
-          return;
-        }
-        
-        // Split by & (column separator)
-        const cells = cleanRow.split('&').map((cell: string) => {
-          // Trim each cell and remove any remaining whitespace/newlines
-          return cell.trim().replace(/\s+/g, ' ');
-        });
-        
-        // Only add row if it has at least one non-empty cell
-        const hasNonEmptyCell = cells.some((cell: string) => cell && cell.length > 0);
-        if (hasNonEmptyCell && cells.length > 0) {
-          // Keep all cells (including empty ones) for proper table structure
-          rows.push(cells);
-        }
-      });
-      
-      // Build HTML table with compact styling
-      let tableHtml = '<table class="latex-table">';
-      rows.forEach((row: string[]) => {
-        tableHtml += '<tr>';
-        row.forEach((cell: string) => {
-          tableHtml += `<td>${cell}</td>`;
-        });
-        tableHtml += '</tr>';
-      });
-      tableHtml += '</table>';
-      
-      return tableHtml;
-    });
-    
-    return processed;
-  };
-
   // Process content to handle both HTML and LaTeX
   const processContent = (content: string) => {
-    // First convert LaTeX environments to HTML (before processing newlines)
-    let processed = convertLatexEnvironments(content);
-    
-    // Then convert literal \n strings (backslash followed by n) to actual newlines
-    // But only outside of already processed HTML blocks
-    // We need to be careful not to break HTML we just created
-    processed = processed.replace(/\\n/g, '\n');
-    
-    // Convert newlines to <br> tags with spacing divs, but skip if already inside HTML tags
-    // Use a more careful approach: only replace newlines that are not inside HTML tags or table cells
-    processed = processed.replace(/\n/g, (match, offset, string) => {
-      // Check if we're inside an HTML tag
-      const before = string.substring(0, offset);
-      const after = string.substring(offset);
-      
-      // Check if we're inside a table cell (<td> or <th>)
-      const lastTdOpen = before.lastIndexOf('<td');
-      const lastTdClose = before.lastIndexOf('</td>');
-      const lastThOpen = before.lastIndexOf('<th');
-      const lastThClose = before.lastIndexOf('</th>');
-      
-      // If we're inside a table cell, don't replace
-      if ((lastTdOpen > lastTdClose) || (lastThOpen > lastThClose)) {
-        return match;
-      }
-      
-      // Check if we're inside any other HTML tag
-      const openTags = (before.match(/<[^>]*>/g) || []).length;
-      const closeTags = (before.match(/<\/[^>]*>/g) || []).length;
-      
-      // If we're inside an HTML tag, don't replace
-      if (openTags > closeTags) {
-        return match;
-      }
-      
-      return '<br><div class="line-spacer"></div>';
-    });
+    // First convert literal \n strings (backslash followed by n) to actual newlines
+    // Then convert actual newlines to <br> tags for proper line breaks
+    const contentWithBreaks = content
+      .replace(/\\n/g, '\n')  // Replace literal \n with actual newline
+      .replace(/\n/g, '<br>'); // Replace newlines with <br> tags
     
     // Then render LaTeX expressions
-    const latexRendered = renderLatexContent(processed);
+    const latexRendered = renderLatexContent(contentWithBreaks);
     
     // Then process any remaining HTML
     return latexRendered;
@@ -338,6 +229,5 @@ export function LatexQuestionOption({
     </div>
   );
 }
-
 
 
