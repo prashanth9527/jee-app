@@ -22,13 +22,35 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     // 1. \[ ... \] for display math
     // 2. \( ... \) for inline math
     // 3. $$ ... $$ for display math
-    // 4. $ ... $ for inline math
+    // 4. $ ... $ for inline math (but check if it contains display environments)
+    
+    // Helper to detect if LaTeX content contains display math environments
+    const isDisplayMath = (latex: string): boolean => {
+      const displayEnvs = [
+        '\\begin{aligned}',
+        '\\begin{align}',
+        '\\begin{alignat}',
+        '\\begin{eqnarray}',
+        '\\begin{equation}',
+        '\\begin{gather}',
+        '\\begin{multline}',
+        '\\begin{split}',
+        '\\begin{array}',
+        '\\begin{matrix}',
+        '\\begin{pmatrix}',
+        '\\begin{bmatrix}',
+        '\\begin{vmatrix}',
+        '\\begin{Vmatrix}',
+        '\\begin{cases}',
+      ];
+      return displayEnvs.some(env => latex.includes(env));
+    };
     
     const patterns = [
-      { regex: /\\\[([^\]]+)\\\]/g, type: 'display' as const },    // \[ ... \]
-      { regex: /\\\((.+?)\\\)/g, type: 'inline' as const },        // \( ... \)
-      { regex: /\$\$(.+?)\$\$/g, type: 'display' as const },       // $$ ... $$
-      { regex: /\$(.+?)\$/g, type: 'inline' as const },            // $ ... $
+      { regex: /\\\[([\s\S]*?)\\\]/g, type: 'display' as const },    // \[ ... \]
+      { regex: /\\\(([\s\S]+?)\\\)/g, type: 'inline' as const },        // \( ... \)
+      { regex: /\$\$([\s\S]*?)\$\$/g, type: 'display' as const },       // $$ ... $$
+      { regex: /\$([\s\S]+?)\$/g, type: 'inline' as const },            // $ ... $ (will check for display envs)
     ];
     
     patterns.forEach(({ regex, type }) => {
@@ -49,12 +71,18 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
         if (!overlaps) {
           // Unescape LaTeX content (convert \\ to \)
           const unescapedLatex = match[1].replace(/\\\\/g, '\\');
+          
+          // Determine actual type: if single $ contains display math, treat as display
+          const actualType = (type === 'inline' && isDisplayMath(unescapedLatex)) 
+            ? 'display' 
+            : type;
+          
           blocks.push({
-            id: `${type}-${match.index}`,
+            id: `${actualType}-${match.index}`,
             latex: unescapedLatex,
             start,
             end,
-            type
+            type: actualType
           });
         }
       }
