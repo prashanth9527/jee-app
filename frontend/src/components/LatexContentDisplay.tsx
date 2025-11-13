@@ -134,14 +134,8 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
 
   // Process content to handle both HTML and LaTeX
   const processContent = (content: string) => {
-    // First convert literal \n strings (backslash followed by n) to actual newlines
-    // Then convert actual newlines to <br> tags for proper line breaks
-    const contentWithBreaks = content
-      .replace(/\\n/g, '\n')  // Replace literal \n with actual newline
-      .replace(/\n/g, '<br>'); // Replace newlines with <br> tags
-    
-    // Then render LaTeX expressions
-    const latexRendered = renderLatexContent(contentWithBreaks);
+    // First render LaTeX expressions
+    const latexRendered = renderLatexContent(content);
     
     // Then process any remaining HTML
     return latexRendered;
