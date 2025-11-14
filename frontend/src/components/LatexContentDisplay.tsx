@@ -4,57 +4,14 @@ import { useEffect, useRef } from 'react';
 import parse from 'html-react-parser';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
-import { cleanLatex } from '@/utils/textCleaner';
 
 interface LatexContentDisplayProps {
   content: string;
   className?: string;
 }
 
-// Global style injection for KaTeX color inheritance (only inject once)
-let katexStyleInjected = false;
-
 export default function LatexContentDisplay({ content, className = '' }: LatexContentDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Ensure KaTeX elements inherit text color (inject style only once globally)
-  useEffect(() => {
-    if (!katexStyleInjected) {
-      const style = document.createElement('style');
-      style.id = 'katex-color-inherit';
-      style.textContent = `
-        /* Force KaTeX to inherit text color from parent */
-        .latex-content-display .katex,
-        .latex-content-display .katex *,
-        .latex-content-display .katex-display,
-        .latex-content-display .katex-display * {
-          color: inherit !important;
-        }
-        .math-display .katex,
-        .math-display .katex *,
-        .math-inline .katex,
-        .math-inline .katex * {
-          color: inherit !important;
-        }
-        /* Ensure KaTeX respects parent text color classes */
-        .text-gray-900 .katex,
-        .text-gray-900 .katex *,
-        .text-green-700 .katex,
-        .text-green-700 .katex *,
-        .text-gray-700 .katex,
-        .text-gray-700 .katex * {
-          color: inherit !important;
-        }
-        /* Fallback: if no color is inherited, use a visible default */
-        .latex-content-display:not([class*="text-"]) .katex,
-        .latex-content-display:not([class*="text-"]) .katex * {
-          color: #1f2937 !important; /* gray-800 */
-        }
-      `;
-      document.head.appendChild(style);
-      katexStyleInjected = true;
-    }
-  }, []);
 
   // Parse LaTeX blocks from content
   const parseLatexBlocks = (content: string) => {
@@ -64,35 +21,13 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     // 1. \[ ... \] for display math
     // 2. \( ... \) for inline math
     // 3. $$ ... $$ for display math
-    // 4. $ ... $ for inline math (but check if it contains display environments)
-    
-    // Helper to detect if LaTeX content contains display math environments
-    const isDisplayMath = (latex: string): boolean => {
-      const displayEnvs = [
-        '\\begin{aligned}',
-        '\\begin{align}',
-        '\\begin{alignat}',
-        '\\begin{eqnarray}',
-        '\\begin{equation}',
-        '\\begin{gather}',
-        '\\begin{multline}',
-        '\\begin{split}',
-        '\\begin{array}',
-        '\\begin{matrix}',
-        '\\begin{pmatrix}',
-        '\\begin{bmatrix}',
-        '\\begin{vmatrix}',
-        '\\begin{Vmatrix}',
-        '\\begin{cases}',
-      ];
-      return displayEnvs.some(env => latex.includes(env));
-    };
+    // 4. $ ... $ for inline math
     
     const patterns = [
-      { regex: /\\\[([\s\S]*?)\\\]/g, type: 'display' as const },    // \[ ... \]
-      { regex: /\\\(([\s\S]+?)\\\)/g, type: 'inline' as const },        // \( ... \)
-      { regex: /\$\$([\s\S]*?)\$\$/g, type: 'display' as const },       // $$ ... $$
-      { regex: /\$([\s\S]+?)\$/g, type: 'inline' as const },            // $ ... $ (will check for display envs)
+      { regex: /\\\[([^\]]+)\\\]/g, type: 'display' as const },    // \[ ... \]
+      { regex: /\\\((.+?)\\\)/g, type: 'inline' as const },        // \( ... \)
+      { regex: /\$\$(.+?)\$\$/g, type: 'display' as const },       // $$ ... $$
+      { regex: /\$(.+?)\$/g, type: 'inline' as const },            // $ ... $
     ];
     
     patterns.forEach(({ regex, type }) => {
@@ -111,23 +46,14 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
         );
         
         if (!overlaps) {
-          // Preserve LaTeX content as-is (don't unescape \\ as it's needed for line breaks)
-          // Only unescape if it's clearly an escaped backslash (\\\\ in string = \\ in LaTeX)
-          let unescapedLatex = match[1];
-          // Don't unescape \\ that are part of LaTeX line breaks or commands
-          // Only handle cases where we have escaped backslashes that aren't LaTeX commands
-          
-          // Determine actual type: if single $ contains display math, treat as display
-          const actualType = (type === 'inline' && isDisplayMath(unescapedLatex)) 
-            ? 'display' 
-            : type;
-          
+          // Unescape LaTeX content (convert \\ to \)
+          const unescapedLatex = match[1].replace(/\\\\/g, '\\');
           blocks.push({
-            id: `${actualType}-${match.index}`,
+            id: `${type}-${match.index}`,
             latex: unescapedLatex,
             start,
             end,
-            type: actualType
+            type
           });
         }
       }
@@ -143,22 +69,8 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     let offset = 0;
     
     blocks.forEach(block => {
-      // Clean the LaTeX content before rendering, but preserve line breaks and \\
-      // We need to preserve \\ for line breaks in aligned environments
-      let cleanedLatex = block.latex;
-      
-      // Apply LaTeX-specific fixes without collapsing whitespace
-      cleanedLatex = cleanedLatex.replace(/\\rac\b/g, '\\frac');
-      
-      // Remove only problematic control characters, but preserve newlines and \\
-      // Don't collapse whitespace as it's needed for LaTeX structure
-      cleanedLatex = cleanedLatex.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
-      
-      // Preserve \\ line breaks - they are essential for aligned environments
-      // KaTeX will handle them correctly
-      
       try {
-        const rendered = katex.renderToString(cleanedLatex, {
+        const rendered = katex.renderToString(block.latex, {
           throwOnError: false,
           displayMode: block.type === 'display',
           strict: false,
@@ -189,27 +101,18 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
             "\\xlongmapsto": "\\stackrel{#1}{\\longmapsto}",
             "\\substack": "\\begin{array}{c}#1\\end{array}",
             "\\underset": "\\mathop{#2}\\limits_{#1}",
-            "\\overset": "\\mathop{#2}\\limits^{#1}",
-            
-            // Common LaTeX fixes
-            "\\rac": "\\frac",
-            "\\R": "\\mathbb{R}",
-            "\\N": "\\mathbb{N}",
-            "\\Z": "\\mathbb{Z}",
-            "\\Q": "\\mathbb{Q}",
-            "\\C": "\\mathbb{C}"
+            "\\overset": "\\mathop{#2}\\limits^{#1}"
           }
         });
         
         const before = html.substring(0, block.start + offset);
         const after = html.substring(block.end + offset);
-        // Add explicit color styling to ensure math is visible
-        const replacement = `<span class="math-${block.type}" data-latex="${block.latex}" style="color: inherit;">${rendered}</span>`;
+        const replacement = `<span class="math-${block.type}" data-latex="${block.latex}">${rendered}</span>`;
         
         html = before + replacement + after;
         offset += replacement.length - (block.end - block.start);
       } catch (error) {
-        console.warn('LaTeX rendering error for:', block.latex, 'Cleaned:', cleanedLatex, error);
+        console.warn('LaTeX rendering error for:', block.latex, error);
         // Keep original LaTeX if rendering fails
       }
     });
