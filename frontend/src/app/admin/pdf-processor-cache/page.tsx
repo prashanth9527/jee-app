@@ -1011,9 +1011,9 @@ export default function PDFProcessorCachePage() {
           )}
 
           {/* Filters */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <div className="flex flex-wrap items-end gap-4">
-              <div className="flex-1 min-w-[150px]">
+          <div className="bg-white p-6 rounded-lg shadow relative z-10 overflow-visible">
+            <div className="flex flex-wrap items-end gap-4 overflow-visible">
+              <div className="flex-1 min-w-[150px] relative z-20">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
                 <select
                   value={filters.status}
@@ -1026,7 +1026,7 @@ export default function PDFProcessorCachePage() {
                 </select>
               </div>
 
-              <div className="flex-1 min-w-[150px]">
+              <div className="flex-1 min-w-[150px] relative z-20">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Record Type</label>
                 <select
                   value={filters.recordType}
@@ -1056,7 +1056,7 @@ export default function PDFProcessorCachePage() {
                 />
               </div>
 
-              <div className="flex-1 min-w-[150px]">
+              <div className="flex-1 min-w-[150px] relative z-20">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
                 <select
                   value={filters.sortBy}
@@ -1074,7 +1074,7 @@ export default function PDFProcessorCachePage() {
                 </select>
               </div>
 
-              <div className="flex-1 min-w-[120px]">
+              <div className="flex-1 min-w-[120px] relative z-20">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Order</label>
                 <select
                   value={filters.sortOrder}
