@@ -536,7 +536,7 @@ export default function ExamResultsPage() {
                               {/* Original Explanation */}
                               {question.explanation && (
                                 <div className="bg-blue-50 rounded-lg p-4">
-                                  <h4 className="font-semibold text-blue-900 mb-2">Explanation</h4>
+                                  <h4 className="font-semibold text-white-900 mb-2">Explanation</h4>
                                   <div className="text-blue-800">
                                     <LatexContentDisplay content={question.explanation} />
                                   </div>

@@ -46,6 +46,14 @@
   background-color: rgb(31, 41, 55) !important; /* gray-800 */
 }
 
+:root.dark [class*="bg-gray-100"] {
+  background-color: rgb(55, 65, 81) !important; /* gray-700 */
+}
+
+:root.dark [class*="bg-gray-200"] {
+  background-color: rgb(75, 85, 99) !important; /* gray-600 */
+}
+
 :root.dark [class*="bg-white"] {
   background-color: rgb(31, 41, 55) !important; /* gray-800 */
 }
