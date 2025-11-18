@@ -165,7 +165,7 @@ export function LatexQuestionExplanation({ explanation, className = '' }: { expl
   return (
     <LatexContentDisplay 
       content={explanation} 
-      className={`text-sm text-green-700 leading-relaxed ${className}`}
+      className={`text-sm text-green-700 leading-relaxed whitespace-pre-line ${className}`}
     />
   );
 }
