@@ -89,6 +89,7 @@ export default function AdminSubscriptionsPage() {
 	const [planName, setPlanName] = useState('');
 	const [planDescription, setPlanDescription] = useState('');
 	const [planPrice, setPlanPrice] = useState('');
+	const [planDiscountPercent, setPlanDiscountPercent] = useState(0);
 	const [planDuration, setPlanDuration] = useState<'MONTH' | 'THREE_MONTHS' | 'SIX_MONTHS' | 'YEAR'>('MONTH');
 	const [planType, setPlanType] = useState<'MANUAL' | 'AI_ENABLED'>('MANUAL');
 	const [planIsActive, setPlanIsActive] = useState(true);
@@ -216,6 +217,7 @@ export default function AdminSubscriptionsPage() {
 			setPlanName('');
 			setPlanDescription('');
 			setPlanPrice('');
+			setPlanDiscountPercent(0);
 			setPlanDuration('MONTH');
 			setPlanType('MANUAL');
 			setPlanIsActive(true);
@@ -259,6 +261,7 @@ export default function AdminSubscriptionsPage() {
 				name: planName.trim(),
 				description: planDescription.trim() || undefined,
 				priceCents: Math.round(parseFloat(planPrice) * 100),
+				discountPercent: planDiscountPercent,
 				interval: planDuration,
 				planType: planType,
 				isActive: planIsActive
@@ -329,6 +332,7 @@ export default function AdminSubscriptionsPage() {
 		setPlanName(plan.name);
 		setPlanDescription(plan.description || '');
 		setPlanPrice((plan.priceCents / 100).toString());
+		setPlanDiscountPercent(plan.discountPercent || 0);
 		setPlanDuration(plan.interval);
 		setPlanType(plan.planType);
 		setPlanIsActive(plan.isActive);
@@ -339,6 +343,7 @@ export default function AdminSubscriptionsPage() {
 		setPlanName('');
 		setPlanDescription('');
 		setPlanPrice('');
+		setPlanDiscountPercent(0);
 		setPlanDuration('MONTH');
 		setPlanType('MANUAL');
 		setPlanIsActive(true);
@@ -539,6 +544,17 @@ export default function AdminSubscriptionsPage() {
 										/>
 									</div>
 									<div>
+										<label className="block text-sm font-semibold text-gray-800 mb-2">Discount Percent</label>
+										<input 
+											type="number"
+											step="0.01"
+											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 font-medium placeholder-gray-500" 
+											placeholder="0.00" 
+											value={planDiscountPercent} 
+											onChange={e => setPlanDiscountPercent(parseInt(e.target.value))}
+										/>
+									</div>
+									<div>
 										<label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Duration</label>
 										<select
 											className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-gray-100 dark:bg-gray-700 font-medium"
@@ -644,6 +660,16 @@ export default function AdminSubscriptionsPage() {
 																className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 font-medium" 
 																value={planPrice} 
 																onChange={e => setPlanPrice(e.target.value)}
+															/>
+														</div>
+														<div>
+															<label className="block text-sm font-semibold text-gray-800 mb-2">Discount Percent</label>
+															<input 
+																type="number"
+																step="0.01"
+																className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 font-medium" 
+																value={planDiscountPercent} 
+																onChange={e => setPlanDiscountPercent(parseInt(e.target.value))}
 															/>
 														</div>
 														<div>
