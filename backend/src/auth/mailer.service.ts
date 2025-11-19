@@ -289,4 +289,140 @@ export class MailerService {
 			throw error;
 		}
 	}
+
+	async sendReferralCodeEmail(to: string, referralCode: string, referrerName: string, registrationUrl: string) {
+		if (!this.transporter) {
+			console.log(`[MailerService] SMTP not configured, skipping referral email to ${to}. Code: ${referralCode}`);
+			return;
+		}
+
+		const from = process.env.SMTP_FROM || 'no-reply@jeemaster.com';
+		const subject = `${referrerName} invited you to join JEE Master!`;
+
+		const htmlContent = `
+			<!DOCTYPE html>
+			<html>
+			<head>
+				<meta charset="utf-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title>Referral Invitation</title>
+				<style>
+					body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f8fafc; }
+					.container { max-width: 600px; margin: 0 auto; padding: 20px; }
+					.header { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+					.content { background: #ffffff; padding: 30px; border: 1px solid #e5e7eb; }
+					.code-container { background: #f3f4f6; border: 2px solid #3b82f6; border-radius: 8px; padding: 20px; text-align: center; margin: 20px 0; }
+					.code { font-size: 32px; font-weight: bold; color: #3b82f6; letter-spacing: 4px; font-family: monospace; }
+					.button { display: inline-block; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+					.benefits { background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 20px; margin: 20px 0; }
+					.benefits ul { margin: 10px 0; padding-left: 20px; }
+					.footer { background: #f9fafb; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; font-size: 14px; color: #6b7280; }
+				</style>
+			</head>
+			<body>
+				<div class="container">
+					<div class="header">
+						<h1>🎓 JEE Master</h1>
+						<p>You've been invited!</p>
+					</div>
+					<div class="content">
+						<h2>Hello!</h2>
+						<p><strong>${referrerName}</strong> has invited you to join <strong>JEE Master</strong> - the ultimate platform for JEE preparation!</p>
+						
+						<div class="code-container">
+							<p style="margin: 0 0 10px 0; font-size: 16px; color: #6b7280;">Your referral code:</p>
+							<div class="code">${referralCode}</div>
+						</div>
+
+						<div style="text-align: center;">
+							<a href="${registrationUrl}" class="button">
+								🚀 Sign Up Now & Get Rewards!
+							</a>
+						</div>
+
+						<div class="benefits">
+							<h3 style="margin-top: 0; color: #1e40af;">🎁 Special Benefits for You:</h3>
+							<ul>
+								<li><strong>3 days free subscription</strong> when you sign up using this code</li>
+								<li>Access to thousands of practice questions</li>
+								<li>AI-powered learning recommendations</li>
+								<li>Detailed performance analytics</li>
+								<li>Previous year question papers</li>
+							</ul>
+						</div>
+
+						<p><strong>How to use your referral code:</strong></p>
+						<ol>
+							<li>Click the button above or visit: <a href="${registrationUrl}">${registrationUrl}</a></li>
+							<li>Create your account</li>
+							<li>Enter the referral code: <strong>${referralCode}</strong> during registration</li>
+							<li>Start your JEE preparation journey!</li>
+						</ol>
+
+						<p><strong>What happens next?</strong></p>
+						<p>When you subscribe to JEE Master, both you and ${referrerName} will receive rewards! It's a win-win situation.</p>
+
+						<p>Don't miss out on this opportunity to excel in your JEE preparation!</p>
+
+						<p>Best regards,<br>
+						<strong>The JEE Master Team</strong></p>
+					</div>
+					<div class="footer">
+						<p>This is an automated message. Please do not reply to this email.</p>
+						<p>© 2024 JEE Master. All rights reserved.</p>
+					</div>
+				</div>
+			</body>
+			</html>
+		`;
+
+		const textContent = `
+			JEE Master - Referral Invitation
+			
+			Hello!
+			
+			${referrerName} has invited you to join JEE Master - the ultimate platform for JEE preparation!
+			
+			Your referral code: ${referralCode}
+			
+			Sign up here: ${registrationUrl}
+			
+			Special Benefits for You:
+			- 3 days free subscription when you sign up using this code
+			- Access to thousands of practice questions
+			- AI-powered learning recommendations
+			- Detailed performance analytics
+			- Previous year question papers
+			
+			How to use your referral code:
+			1. Visit: ${registrationUrl}
+			2. Create your account
+			3. Enter the referral code: ${referralCode} during registration
+			4. Start your JEE preparation journey!
+			
+			What happens next?
+			When you subscribe to JEE Master, both you and ${referrerName} will receive rewards!
+			
+			Best regards,
+			The JEE Master Team
+			
+			---
+			This is an automated message. Please do not reply to this email.
+			© 2024 JEE Master. All rights reserved.
+		`;
+
+		try {
+			await this.transporter.sendMail({
+				from,
+				to,
+				subject,
+				text: textContent,
+				html: htmlContent
+			});
+			console.log(`[MailerService] Referral email sent to ${to} with code: ${referralCode}`);
+		} catch (error) {
+			console.error(`[MailerService] Failed to send referral email to ${to}:`, error);
+			throw error;
+		}
+	}
 } 

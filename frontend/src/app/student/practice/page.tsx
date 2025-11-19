@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, useCallback, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import StudentLayout from '@/components/StudentLayout';
@@ -96,24 +96,69 @@ function PracticeTestPageContent() {
     }
   }, [searchParams, subjects]);
 
+  const fetchLessons = useCallback(async (subjectId: string) => {
+    try {
+      const response = await api.get(`/student/lessons?subjectId=${subjectId}`);
+      setLessons(response.data);
+    } catch (error) {
+      console.error('Error fetching lessons:', error);
+      setLessons([]);
+    }
+  }, []);
+
+  const fetchTopics = useCallback(async (subjectId: string, lessonId?: string) => {
+    try {
+      let url = `/student/topics?subjectId=${subjectId}`;
+      if (lessonId) {
+        url += `&lessonId=${lessonId}`;
+      }
+      const response = await api.get(url);
+      setTopics(response.data);
+    } catch (error) {
+      console.error('Error fetching topics:', error);
+      setTopics([]);
+    }
+  }, []);
+
+  const fetchSubtopics = useCallback(async (topicId: string) => {
+    try {
+      const response = await api.get(`/student/subtopics?topicId=${topicId}`);
+      setSubtopics(response.data);
+    } catch (error) {
+      console.error('Error fetching subtopics:', error);
+      setSubtopics([]);
+    }
+  }, []);
+
+  // Fetch lessons when subject changes
   useEffect(() => {
     if (selectedSubject) {
       fetchLessons(selectedSubject);
-      fetchTopics(selectedSubject);
     } else {
       setLessons([]);
       setTopics([]);
       setSubtopics([]);
     }
-  }, [selectedSubject]);
+  }, [selectedSubject, fetchLessons]);
 
+  // Fetch topics when subject or lesson changes
+  useEffect(() => {
+    if (selectedSubject) {
+      fetchTopics(selectedSubject, selectedLesson || undefined);
+    } else {
+      setTopics([]);
+      setSubtopics([]);
+    }
+  }, [selectedSubject, selectedLesson, fetchTopics]);
+
+  // Fetch subtopics when topic changes
   useEffect(() => {
     if (selectedTopic) {
       fetchSubtopics(selectedTopic);
     } else {
       setSubtopics([]);
     }
-  }, [selectedTopic]);
+  }, [selectedTopic, fetchSubtopics]);
 
   const fetchSubjects = async () => {
     try {
@@ -135,40 +180,6 @@ function PracticeTestPageContent() {
     }
   };
 
-  const fetchLessons = async (subjectId: string) => {
-    try {
-      const response = await api.get(`/student/lessons?subjectId=${subjectId}`);
-      setLessons(response.data);
-    } catch (error) {
-      console.error('Error fetching lessons:', error);
-      setLessons([]);
-    }
-  };
-
-  const fetchTopics = async (subjectId: string, lessonId?: string) => {
-    try {
-      let url = `/student/topics?subjectId=${subjectId}`;
-      if (lessonId) {
-        url = `/student/topics?subjectId=${subjectId}&lessonId=${lessonId}`;
-      }
-      const response = await api.get(url);
-      setTopics(response.data);
-    } catch (error) {
-      console.error('Error fetching topics:', error);
-      setTopics([]);
-    }
-  };
-
-
-  const fetchSubtopics = async (topicId: string) => {
-    try {
-      const response = await api.get(`/student/subtopics?topicId=${topicId}`);
-      setSubtopics(response.data);
-    } catch (error) {
-      console.error('Error fetching subtopics:', error);
-      setSubtopics([]);
-    }
-  };
 
   const handleSubjectChange = (subjectId: string) => {
     setSelectedSubject(subjectId);
@@ -188,16 +199,7 @@ function PracticeTestPageContent() {
     setSelectedLesson(lessonId);
     setSelectedTopic('');
     setSelectedSubtopic('');
-    setSubtopics([]);
     setConfig(prev => ({ ...prev, lessonId, topicId: undefined, subtopicId: undefined }));
-    
-    // Load topics for the selected lesson
-    if (lessonId) {
-      fetchTopics(selectedSubject, lessonId);
-    } else {
-      // If no lesson selected, fetch topics for the subject
-      fetchTopics(selectedSubject);
-    }
   };
 
   const handleSubtopicChange = (subtopicId: string) => {
@@ -442,7 +444,8 @@ function PracticeTestPageContent() {
                         <select
                           value={selectedLesson}
                           onChange={(e) => handleLessonChange(e.target.value)}
-                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                          disabled={!selectedSubject}
+                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
                         >
                           <option value="">All lessons</option>
                           {lessons.map((lesson) => (
@@ -451,6 +454,9 @@ function PracticeTestPageContent() {
                             </option>
                           ))}
                         </select>
+                        {!selectedSubject && (
+                          <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
+                        )}
                       </div>
 
                       {/* Topic */}
@@ -459,8 +465,8 @@ function PracticeTestPageContent() {
                         <select
                           value={selectedTopic}
                           onChange={(e) => handleTopicChange(e.target.value)}
-                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
-                          disabled={!topics.length}
+                          disabled={!selectedSubject}
+                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
                         >
                           <option value="">All topics</option>
                           {topics.map((topic) => (
@@ -469,10 +475,8 @@ function PracticeTestPageContent() {
                             </option>
                           ))}
                         </select>
-                        {!topics.length && (
-                          <p className="text-xs text-gray-500 mt-1">
-                            {selectedLesson ? 'No topics' : 'Loading...'}
-                          </p>
+                        {!selectedSubject && (
+                          <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
                         )}
                       </div>
 
@@ -482,8 +486,8 @@ function PracticeTestPageContent() {
                         <select
                           value={selectedSubtopic}
                           onChange={(e) => handleSubtopicChange(e.target.value)}
-                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
-                          disabled={!selectedTopic || !subtopics.length}
+                          disabled={!selectedTopic}
+                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
                         >
                           <option value="">All subtopics</option>
                           {subtopics.map((subtopic) => (
@@ -492,10 +496,11 @@ function PracticeTestPageContent() {
                             </option>
                           ))}
                         </select>
-                        {selectedTopic && !subtopics.length && (
-                          <p className="text-xs text-gray-500 mt-1">
-                            No subtopics
-                          </p>
+                        {!selectedSubject && (
+                          <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
+                        )}
+                        {selectedSubject && !selectedTopic && (
+                          <p className="text-xs text-gray-500 mt-1">Select a topic first</p>
                         )}
                       </div>
                     </div>

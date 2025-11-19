@@ -8,6 +8,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
 import AiUsageCard from '@/components/AiUsageCard';
 import NotificationBanner from '@/components/NotificationBanner';
+import { useAuth } from '@/contexts/AuthContext';
 import api from '@/lib/api';
 
 interface StudentStats {
@@ -24,6 +25,7 @@ interface StudentStats {
 
 export default function StudentDashboard() {
   const router = useRouter();
+  const { user } = useAuth();
   const [stats, setStats] = useState<StudentStats | null>(null);
   const [recentExams, setRecentExams] = useState<{ id: string; examPaper?: { title?: string; subjects?: string[] }; submittedAt: string; scorePercent?: number }[]>([]);
   const [loading, setLoading] = useState(true);
@@ -98,7 +100,9 @@ export default function StudentDashboard() {
           {/* Header */}
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600">Welcome to your student dashboard</p>
+            <p className="text-gray-600">
+              Welcome <span className="font-bold">{user?.fullName || ''}</span> to your dashboard
+            </p>
           </div>
 
           {/* Stats Cards */}
@@ -146,7 +150,7 @@ export default function StudentDashboard() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            {/* <div className="bg-white rounded-lg shadow p-6">
               <div className="flex items-center">
                 <div className="p-3 rounded-lg bg-orange-500 text-white">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,7 +162,7 @@ export default function StudentDashboard() {
                   <p className="text-2xl font-bold text-gray-900">{stats?.correctAnswers}</p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Practice Options */}

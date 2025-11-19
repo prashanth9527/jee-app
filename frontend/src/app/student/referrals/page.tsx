@@ -54,6 +54,9 @@ export default function ReferralsPage() {
   const [loading, setLoading] = useState(true);
   const [generatingCode, setGeneratingCode] = useState(false);
   const [claimingReward, setClaimingReward] = useState<string | null>(null);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [sendingEmails, setSendingEmails] = useState(false);
 
   useEffect(() => {
     fetchReferralInfo();
@@ -143,6 +146,44 @@ export default function ReferralsPage() {
       });
     } else {
       copyToClipboard(shareText);
+    }
+  };
+
+  const sendReferralCodeByEmail = async () => {
+    if (!emailInput.trim()) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Please enter at least one email address',
+        icon: 'error',
+      });
+      return;
+    }
+
+    try {
+      setSendingEmails(true);
+      const response = await api.post('/referrals/send-email', {
+        emails: emailInput
+      });
+      
+      Swal.fire({
+        title: response.data.success ? 'Success!' : 'Partial Success',
+        text: response.data.message,
+        icon: response.data.success ? 'success' : 'warning',
+      });
+
+      if (response.data.success) {
+        setEmailInput('');
+        setShowEmailModal(false);
+      }
+    } catch (error: any) {
+      console.error('Error sending referral emails:', error);
+      Swal.fire({
+        title: 'Error',
+        text: error?.response?.data?.message || 'Failed to send emails',
+        icon: 'error',
+      });
+    } finally {
+      setSendingEmails(false);
     }
   };
 
@@ -242,6 +283,12 @@ export default function ReferralsPage() {
                           📤 Share Code
                         </button>
                         <button
+                          onClick={() => setShowEmailModal(true)}
+                          className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                        >
+                          📧 Send Code
+                        </button>
+                        <button
                           onClick={() => window.open(`/register?ref=${referralInfo.referralCode.code}`, '_blank')}
                           className="flex-1 bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors font-medium"
                         >
@@ -268,29 +315,29 @@ export default function ReferralsPage() {
                   <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                     <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Statistics</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      <div className="text-center p-4 bg-blue-50 rounded-lg">
-                        <div className="text-2xl font-bold text-blue-600">{referralInfo.stats.totalReferrals}</div>
-                        <div className="text-sm text-gray-600">Total Referrals</div>
+                      <div className="text-center p-4 bg-gray-800 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-400">
+                        <div className="text-2xl font-bold text-gray-100">{referralInfo.stats.totalReferrals}</div>
+                        <div className="text-sm text-gray-300">Total Referrals</div>
                       </div>
-                      <div className="text-center p-4 bg-green-50 rounded-lg">
-                        <div className="text-2xl font-bold text-green-600">{referralInfo.stats.completedReferrals}</div>
-                        <div className="text-sm text-gray-600">Completed</div>
+                      <div className="text-center p-4 bg-gray-800 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-400">
+                        <div className="text-2xl font-bold text-gray-100">{referralInfo.stats.completedReferrals}</div>
+                        <div className="text-sm text-gray-300">Completed</div>
                       </div>
-                      <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                        <div className="text-2xl font-bold text-yellow-600">{referralInfo.stats.pendingReferrals}</div>
-                        <div className="text-sm text-gray-600">Pending</div>
+                      <div className="text-center p-4 bg-gray-800 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-400">
+                        <div className="text-2xl font-bold text-gray-100">{referralInfo.stats.pendingReferrals}</div>
+                        <div className="text-sm text-gray-300">Pending</div>
                       </div>
-                      <div className="text-center p-4 bg-purple-50 rounded-lg">
-                        <div className="text-2xl font-bold text-purple-600">{referralInfo.stats.totalRewardsEarned}</div>
-                        <div className="text-sm text-gray-600">Days Earned</div>
+                      <div className="text-center p-4 bg-gray-800 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-400">
+                        <div className="text-2xl font-bold text-gray-100">{referralInfo.stats.totalRewardsEarned}</div>
+                        <div className="text-sm text-gray-300">Days Earned</div>
                       </div>
-                      <div className="text-center p-4 bg-indigo-50 rounded-lg">
-                        <div className="text-2xl font-bold text-indigo-600">{referralInfo.stats.claimedRewards}</div>
-                        <div className="text-sm text-gray-600">Claimed</div>
+                      <div className="text-center p-4 bg-gray-800 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-400">
+                        <div className="text-2xl font-bold text-gray-100">{referralInfo.stats.claimedRewards}</div>
+                        <div className="text-sm text-gray-300">Claimed</div>
                       </div>
-                      <div className="text-center p-4 bg-red-50 rounded-lg">
-                        <div className="text-2xl font-bold text-red-600">{referralInfo.stats.unclaimedRewards}</div>
-                        <div className="text-sm text-gray-600">Unclaimed</div>
+                      <div className="text-center p-4 bg-gray-800 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-400">
+                        <div className="text-2xl font-bold text-gray-100">{referralInfo.stats.unclaimedRewards}</div>
+                        <div className="text-sm text-gray-300">Unclaimed</div>
                       </div>
                     </div>
                   </div>
@@ -372,38 +419,38 @@ export default function ReferralsPage() {
                 )}
 
                 {/* How It Works */}
-                <div className="bg-blue-50 rounded-lg border border-blue-200 p-6">
-                  <h3 className="text-lg font-semibold text-blue-900 mb-3">🎯 How It Works</h3>
-                  <div className="space-y-3 text-sm text-blue-800">
+                <div className="bg-gray-800 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-400 p-6">
+                  <h3 className="text-lg font-semibold text-gray-100 mb-3">🎯 How It Works</h3>
+                  <div className="space-y-3 text-sm text-gray-200">
                     <div className="flex items-start space-x-2">
-                      <span className="font-bold">1.</span>
+                      <span className="font-bold text-gray-100">1.</span>
                       <span>Share your referral code with friends</span>
                     </div>
                     <div className="flex items-start space-x-2">
-                      <span className="font-bold">2.</span>
+                      <span className="font-bold text-gray-100">2.</span>
                       <span>They sign up using your code</span>
                     </div>
                     <div className="flex items-start space-x-2">
-                      <span className="font-bold">3.</span>
+                      <span className="font-bold text-gray-100">3.</span>
                       <span>When they subscribe, you both get rewards!</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Rewards Info */}
-                <div className="bg-green-50 rounded-lg border border-green-200 p-6">
-                  <h3 className="text-lg font-semibold text-green-900 mb-3">🎁 Rewards</h3>
-                  <div className="space-y-2 text-sm text-green-800">
-                    <div>• <strong>You get:</strong> 7 days free subscription</div>
-                    <div>• <strong>Your friend gets:</strong> 3 days free subscription</div>
-                    <div>• <strong>Unlimited referrals</strong> - earn more rewards!</div>
+                <div className="bg-gray-800 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-400 p-6">
+                  <h3 className="text-lg font-semibold text-gray-100 mb-3">🎁 Rewards</h3>
+                  <div className="space-y-2 text-sm text-gray-200">
+                    <div>• <strong className="text-gray-100">You get:</strong> one month free subscription</div>
+                    <div>• <strong className="text-gray-100">Your friend gets:</strong> 50% discount on first month subscription</div>
+                    <div>• <strong className="text-gray-100">Unlimited referrals</strong> - earn more rewards!</div>
                   </div>
                 </div>
 
                 {/* Tips */}
-                <div className="bg-purple-50 rounded-lg border border-purple-200 p-6">
-                  <h3 className="text-lg font-semibold text-purple-900 mb-3">💡 Tips</h3>
-                  <ul className="space-y-2 text-sm text-purple-800">
+                <div className="bg-gray-800 dark:bg-gray-800 rounded-lg border-2 border-gray-300 dark:border-gray-400 p-6">
+                  <h3 className="text-lg font-semibold text-gray-100 mb-3">💡 Tips</h3>
+                  <ul className="space-y-2 text-sm text-gray-200">
                     <li>• Share on social media</li>
                     <li>• Send to study groups</li>
                     <li>• Post in JEE forums</li>
@@ -413,6 +460,64 @@ export default function ReferralsPage() {
               </div>
             </div>
           </div>
+
+          {/* Email Modal */}
+          {showEmailModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+                <div className="p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-xl font-bold text-gray-900">Send Referral Code via Email</h3>
+                    <button
+                      onClick={() => {
+                        setShowEmailModal(false);
+                        setEmailInput('');
+                      }}
+                      className="text-gray-400 hover:text-gray-600 text-2xl"
+                    >
+                      ×
+                    </button>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Email Addresses (comma-separated)
+                    </label>
+                    <textarea
+                      value={emailInput}
+                      onChange={(e) => setEmailInput(e.target.value)}
+                      placeholder="email1@example.com, email2@example.com, email3@example.com"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm min-h-[100px]"
+                      rows={4}
+                    />
+                    <p className="text-xs text-gray-500 mt-2">
+                      Enter multiple email addresses separated by commas
+                    </p>
+                  </div>
+
+                  <div className="flex space-x-3">
+                    <button
+                      onClick={() => {
+                        setShowEmailModal(false);
+                        setEmailInput('');
+                      }}
+                      className="flex-1 px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                      disabled={sendingEmails}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={sendReferralCodeByEmail}
+                      disabled={sendingEmails || !emailInput.trim()}
+                      className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {sendingEmails ? 'Sending...' : 'Send Emails'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </StudentLayout>
       </SubscriptionGuard>
     </ProtectedRoute>

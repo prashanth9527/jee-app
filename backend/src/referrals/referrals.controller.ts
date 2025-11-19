@@ -45,6 +45,19 @@ export class ReferralsController {
     const limitNum = limit ? parseInt(limit) : 10;
     return this.referralsService.getReferralLeaderboard(limitNum);
   }
+
+  // Send referral code via email
+  @Post('send-email')
+  async sendReferralCodeByEmail(@Req() req: any, @Body() body: { emails: string }) {
+    const emails = body.emails.split(',').map((e: string) => e.trim()).filter((e: string) => e);
+    return this.referralsService.sendReferralCodeByEmail(req.user.id, emails);
+  }
+
+  // Get referral email history
+  @Get('email-history')
+  async getEmailHistory(@Req() req: any) {
+    return this.referralsService.getReferralEmailHistory(req.user.id);
+  }
 }
 
 // Admin controller for managing referrals

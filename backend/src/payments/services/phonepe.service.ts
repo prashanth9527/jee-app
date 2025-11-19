@@ -70,18 +70,12 @@ export class PhonePeService implements PaymentGatewayInterface {
       // Initiate payment
       const response = await this.client.pay(request);
 
-      // Store order in database
-      const paymentOrder = await this.prisma.paymentOrder.create({
+      // Update existing order in database (created by subscriptions service)
+      const paymentOrder = await this.prisma.paymentOrder.update({
+        where: { merchantOrderId },
         data: {
-          userId,
-          planId,
-          merchantOrderId,
-          amount: amountInPaisa, // Store in paisa for PhonePe
-          currency: currency.toUpperCase(),
           gateway: 'PHONEPE',
           gatewayOrderId: (response as any).merchantOrderId || merchantOrderId, // Use PhonePe's order ID if available
-          successUrl,
-          cancelUrl,
           phonepeRedirectUrl: response.redirectUrl,
           phonepeDeepLink: (response as any).deepLink || null,
           status: 'PENDING',

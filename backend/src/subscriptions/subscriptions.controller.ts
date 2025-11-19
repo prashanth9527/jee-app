@@ -37,8 +37,8 @@ export class SubscriptionsController {
 
 	@UseGuards(JwtAuthGuard)
 	@Post('checkout')
-	createCheckout(@Req() req: any, @Body() body: { planId: string; successUrl: string; cancelUrl: string }) {
-		return this.subs.createCheckoutSession(req.user.id, body.planId, body.successUrl, body.cancelUrl);
+	createCheckout(@Req() req: any, @Body() body: { planId: string; successUrl: string; cancelUrl: string; referralCode?: string }) {
+		return this.subs.createCheckoutSession(req.user.id, body.planId, body.successUrl, body.cancelUrl, body.referralCode);
 	}
 
 	@Post('webhook')

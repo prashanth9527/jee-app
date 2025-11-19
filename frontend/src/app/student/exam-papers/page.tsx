@@ -60,7 +60,7 @@ export default function ExamPapersPage() {
   const [maxQuestions, setMaxQuestions] = useState('');
   const [pagination, setPagination] = useState<Pagination | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(9);
   const [error, setError] = useState<string | null>(null);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [selectedAttempted, setSelectedAttempted] = useState('');
@@ -81,9 +81,76 @@ export default function ExamPapersPage() {
     return () => clearTimeout(timer);
   }, [searchText]);
 
+  const fetchLessons = useCallback(async (subjectId: string) => {
+    try {
+      const response = await api.get(`/student/lessons?subjectId=${subjectId}`);
+      setLessons(response.data);
+    } catch (error: any) {
+      console.error('Error fetching lessons:', error);
+      setLessons([]);
+      showError('Loading Error', 'Failed to load lessons', 3000);
+    }
+  }, [showError]);
+
+  const fetchTopics = useCallback(async (subjectId: string, lessonId?: string) => {
+    try {
+      let url = `/student/topics?subjectId=${subjectId}`;
+      if (lessonId) {
+        url += `&lessonId=${lessonId}`;
+      }
+      const response = await api.get(url);
+      setTopics(response.data);
+    } catch (error: any) {
+      console.error('Error fetching topics:', error);
+      setTopics([]);
+      showError('Loading Error', 'Failed to load topics', 3000);
+    }
+  }, [showError]);
+
+  const fetchSubtopics = useCallback(async (topicId: string) => {
+    try {
+      const response = await api.get(`/student/subtopics?topicId=${topicId}`);
+      setSubtopics(response.data);
+    } catch (error: any) {
+      console.error('Error fetching subtopics:', error);
+      setSubtopics([]);
+      showError('Loading Error', 'Failed to load subtopics', 3000);
+    }
+  }, [showError]);
+
   useEffect(() => {
     loadInitialData();
   }, []);
+
+  // Fetch lessons when subject changes
+  useEffect(() => {
+    if (selectedSubject) {
+      fetchLessons(selectedSubject);
+    } else {
+      setLessons([]);
+      setTopics([]);
+      setSubtopics([]);
+    }
+  }, [selectedSubject, fetchLessons]);
+
+  // Fetch topics when subject or lesson changes
+  useEffect(() => {
+    if (selectedSubject) {
+      fetchTopics(selectedSubject, selectedLesson || undefined);
+    } else {
+      setTopics([]);
+      setSubtopics([]);
+    }
+  }, [selectedSubject, selectedLesson, fetchTopics]);
+
+  // Fetch subtopics when topic changes
+  useEffect(() => {
+    if (selectedTopic) {
+      fetchSubtopics(selectedTopic);
+    } else {
+      setSubtopics([]);
+    }
+  }, [selectedTopic, fetchSubtopics]);
 
   useEffect(() => {
     fetchPapers();
@@ -91,17 +158,8 @@ export default function ExamPapersPage() {
 
   const loadInitialData = async () => {
     try {
-      const [subjectsRes, lessonsRes, topicsRes, subtopicsRes] = await Promise.all([
-        api.get('/student/subjects'),
-        api.get('/student/lessons'),
-        api.get('/student/topics'),
-        api.get('/student/subtopics')
-      ]);
-
+      const subjectsRes = await api.get('/student/subjects');
       setSubjects(subjectsRes.data);
-      setLessons(lessonsRes.data);
-      setTopics(topicsRes.data);
-      setSubtopics(subtopicsRes.data);
       setError(null);
     } catch (error: any) {
       console.error('Failed to load initial data:', error);
@@ -111,6 +169,7 @@ export default function ExamPapersPage() {
       setLoading(false);
     }
   };
+
 
   const fetchPapers = async () => {
     try {
@@ -442,14 +501,13 @@ export default function ExamPapersPage() {
                 <select
                   value={selectedLesson}
                   onChange={(e) => handleLessonChange(e.target.value)}
-                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                  disabled={!selectedSubject}
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
                   <option value="">All Lessons</option>
-                  {lessons
-                    .filter(lesson => !selectedSubject || lesson.subject?.name === subjects.find(s => s.id === selectedSubject)?.name)
-                    .map((lesson) => (
+                  {lessons.map((lesson) => (
                     <option key={lesson.id} value={lesson.id}>
-                        {lesson.name} ({lesson._count?.questions || 0})
+                      {lesson.name} ({lesson._count?.questions || 0})
                     </option>
                   ))}
                 </select>
@@ -464,23 +522,13 @@ export default function ExamPapersPage() {
                 <select
                   value={selectedTopic}
                   onChange={(e) => handleTopicChange(e.target.value)}
-                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                  disabled={!selectedSubject}
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
                   <option value="">All Topics</option>
-                  {topics
-                    .filter(topic => {
-                      if (!selectedSubject) return true;
-                      const subject = subjects.find(s => s.id === selectedSubject);
-                      return topic.subject?.name === subject?.name;
-                    })
-                    .filter(topic => {
-                      if (!selectedLesson) return true;
-                      const lesson = lessons.find(l => l.id === selectedLesson);
-                      return topic.lesson?.name === lesson?.name;
-                    })
-                    .map((topic) => (
+                  {topics.map((topic) => (
                     <option key={topic.id} value={topic.id}>
-                        {topic.name} ({topic._count?.questions || 0})
+                      {topic.name} ({topic._count?.questions || 0})
                     </option>
                   ))}
                 </select>
@@ -495,18 +543,13 @@ export default function ExamPapersPage() {
                 <select
                   value={selectedSubtopic}
                   onChange={(e) => handleSubtopicChange(e.target.value)}
-                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm"
+                  disabled={!selectedTopic}
+                  className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
                   <option value="">All Subtopics</option>
-                  {subtopics
-                    .filter(subtopic => {
-                      if (!selectedTopic) return true;
-                      const topic = topics.find(t => t.id === selectedTopic);
-                      return subtopic.topic?.id === topic?.id;
-                    })
-                    .map((subtopic) => (
+                  {subtopics.map((subtopic) => (
                     <option key={subtopic.id} value={subtopic.id}>
-                        {subtopic.name} ({subtopic._count?.questions || 0})
+                      {subtopic.name} ({subtopic._count?.questions || 0})
                     </option>
                   ))}
                 </select>
@@ -757,7 +800,7 @@ export default function ExamPapersPage() {
                   )}
 
                   {/* Lesson Information */}
-                  {paper.lessonInfo && paper.lessonInfo.length > 0 && (
+                  {/* {paper.lessonInfo && paper.lessonInfo.length > 0 && (
                     <div className="mb-4">
                       <div className="flex items-center text-sm text-gray-700 mb-3">
                         <svg className="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -799,7 +842,7 @@ export default function ExamPapersPage() {
                         )}
                       </div>
                     </div>
-                  )}
+                  )} */}
 
                   {/* Stats and Info */}
                   <div className="space-y-3 mb-6">

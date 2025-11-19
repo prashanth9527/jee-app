@@ -1,10 +1,12 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { MailerService } from '../auth/mailer.service';
 
 @Injectable()
 export class ReferralsService {
   constructor(
-    private readonly prisma: PrismaService
+    private readonly prisma: PrismaService,
+    private readonly mailerService: MailerService
   ) {}
 
   // Generate unique referral code for user
@@ -422,6 +424,116 @@ export class ReferralsService {
       email: user.email,
       completedReferrals: user._count.referralsMade
     }));
+  }
+
+  // Send referral code via email
+  async sendReferralCodeByEmail(userId: string, emails: string[]): Promise<{ success: boolean; sent: number; failed: number; message: string }> {
+    // Get user's referral code
+    const referralCode = await this.prisma.referralCode.findUnique({
+      where: { userId },
+      include: {
+        user: {
+          select: {
+            fullName: true,
+            email: true
+          }
+        }
+      }
+    });
+
+    if (!referralCode) {
+      throw new BadRequestException('Referral code not found. Please generate a referral code first.');
+    }
+
+    // Validate and clean emails
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const validEmails = emails
+      .map(email => email.trim())
+      .filter(email => email && emailRegex.test(email));
+
+    if (validEmails.length === 0) {
+      throw new BadRequestException('Please provide at least one valid email address.');
+    }
+
+    let sentCount = 0;
+    let failedCount = 0;
+    const errors: string[] = [];
+
+    // Send email to each recipient
+    for (const email of validEmails) {
+      try {
+        // Check if email was already sent (optional - to prevent spam)
+        const existingEmail = await this.prisma.referralEmail.findFirst({
+          where: {
+            referrerId: userId,
+            email: email.toLowerCase(),
+            referralCodeId: referralCode.id
+          }
+        });
+
+        if (existingEmail) {
+          // Skip if already sent, but don't count as failed
+          continue;
+        }
+
+        // Send email
+        const frontendUrl = process.env.FRONTEND_URL || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+        await this.mailerService.sendReferralCodeEmail(
+          email,
+          referralCode.code,
+          referralCode.user.fullName || 'Friend',
+          `${frontendUrl}/register?ref=${referralCode.code}`
+        );
+
+        // Record email in database
+        await this.prisma.referralEmail.create({
+          data: {
+            referrerId: userId,
+            referralCodeId: referralCode.id,
+            email: email.toLowerCase(),
+            status: 'SENT'
+          }
+        });
+
+        sentCount++;
+      } catch (error: any) {
+        failedCount++;
+        errors.push(`${email}: ${error.message || 'Failed to send'}`);
+        
+        // Record failed email
+        try {
+          await this.prisma.referralEmail.create({
+            data: {
+              referrerId: userId,
+              referralCodeId: referralCode.id,
+              email: email.toLowerCase(),
+              status: 'FAILED',
+              errorMessage: error.message || 'Unknown error'
+            }
+          });
+        } catch (dbError) {
+          console.error('Failed to record email error:', dbError);
+        }
+      }
+    }
+
+    return {
+      success: sentCount > 0,
+      sent: sentCount,
+      failed: failedCount,
+      message: sentCount > 0 
+        ? `Successfully sent ${sentCount} email(s).${failedCount > 0 ? ` ${failedCount} failed.` : ''}`
+        : `Failed to send emails. ${errors.join('; ')}`
+    };
+  }
+
+  // Get referral email history
+  async getReferralEmailHistory(userId: string) {
+    return await this.prisma.referralEmail.findMany({
+      where: { referrerId: userId },
+      orderBy: { sentAt: 'desc' },
+      take: 50
+    });
   }
 
   // Generate random referral code
