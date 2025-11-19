@@ -102,8 +102,9 @@ export class AdminSubscriptionsController {
 		name: string; 
 		description?: string; 
 		priceCents: number; 
-		currency?: string; 
-		interval?: 'MONTH'|'YEAR' 
+		discountPercent?: number;
+		interval?: 'MONTH' | 'THREE_MONTHS' | 'SIX_MONTHS' | 'YEAR';
+		planType?: 'MANUAL' | 'AI_ENABLED'
 	}) {
 		if (!body.name || !body.priceCents) {
 			throw new BadRequestException('Name and price are required');
@@ -118,13 +119,24 @@ export class AdminSubscriptionsController {
 			throw new BadRequestException('A plan with this name already exists');
 		}
 
+		let priceCents = body.priceCents;
+		if (body.interval === 'THREE_MONTHS') {
+			priceCents = body.priceCents * 3;
+		} else if (body.interval === 'SIX_MONTHS') {
+			priceCents = body.priceCents * 6;
+		} else if (body.interval === 'YEAR') {
+			priceCents = body.priceCents * 12;
+		}
+
 		return this.prisma.plan.create({
 			data: {
 				name: body.name,
 				description: body.description || null,
-				priceCents: body.priceCents,
-				currency: body.currency || 'usd',
+				priceCents: priceCents,
+				basePriceCents: body.priceCents,
+				discountPercent: body.discountPercent,
 				interval: (body.interval || 'MONTH') as any,
+				planType: body.planType || 'MANUAL',
 			}
 		});
 	}
@@ -136,8 +148,8 @@ export class AdminSubscriptionsController {
 			name?: string; 
 			description?: string; 
 			priceCents?: number; 
-			currency?: string; 
-			interval?: 'MONTH'|'YEAR'; 
+			interval?: 'MONTH' | 'THREE_MONTHS' | 'SIX_MONTHS' | 'YEAR';
+			planType?: 'MANUAL' | 'AI_ENABLED'; 
 			isActive?: boolean 
 		}
 	) {

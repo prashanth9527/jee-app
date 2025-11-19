@@ -12,8 +12,8 @@ interface Plan {
 	name: string;
 	description?: string;
 	priceCents: number;
-	currency: string;
-	interval: 'MONTH' | 'YEAR';
+	interval: 'MONTH' | 'THREE_MONTHS' | 'SIX_MONTHS' | 'YEAR';
+	planType: 'MANUAL' | 'AI_ENABLED';
 	isActive: boolean;
 	createdAt: string;
 	updatedAt: string;
@@ -38,8 +38,7 @@ interface Subscription {
 		id: string;
 		name: string;
 		priceCents: number;
-		currency: string;
-		interval: 'MONTH' | 'YEAR';
+		planType: 'MANUAL' | 'AI_ENABLED';
 	};
 }
 
@@ -89,8 +88,9 @@ export default function AdminSubscriptionsPage() {
 	const [planName, setPlanName] = useState('');
 	const [planDescription, setPlanDescription] = useState('');
 	const [planPrice, setPlanPrice] = useState('');
-	const [planCurrency, setPlanCurrency] = useState('usd');
-	const [planInterval, setPlanInterval] = useState<'MONTH' | 'YEAR'>('MONTH');
+	const [planDiscountPercent, setPlanDiscountPercent] = useState(0);
+	const [planDuration, setPlanDuration] = useState<'MONTH' | 'THREE_MONTHS' | 'SIX_MONTHS' | 'YEAR'>('MONTH');
+	const [planType, setPlanType] = useState<'MANUAL' | 'AI_ENABLED'>('MANUAL');
 	const [planIsActive, setPlanIsActive] = useState(true);
 	
 	// Pagination states
@@ -206,18 +206,20 @@ export default function AdminSubscriptionsPage() {
 		try {
 			await api.post('/admin/subscriptions/plans', {
 				name: planName.trim(),
+				discountPercent: planDiscountPercent,
 				description: planDescription.trim() || undefined,
 				priceCents: Math.round(parseFloat(planPrice) * 100),
-				currency: planCurrency,
-				interval: planInterval
+				interval: planDuration,
+				planType: planType
 			});
 			
 			// Reset form
 			setPlanName('');
 			setPlanDescription('');
 			setPlanPrice('');
-			setPlanCurrency('usd');
-			setPlanInterval('MONTH');
+			setPlanDiscountPercent(0);
+			setPlanDuration('MONTH');
+			setPlanType('MANUAL');
 			setPlanIsActive(true);
 			
 			Swal.fire({
@@ -257,10 +259,11 @@ export default function AdminSubscriptionsPage() {
 		try {
 			await api.put(`/admin/subscriptions/plans/${planId}`, {
 				name: planName.trim(),
+				discountPercent: planDiscountPercent,
 				description: planDescription.trim() || undefined,
 				priceCents: Math.round(parseFloat(planPrice) * 100),
-				currency: planCurrency,
-				interval: planInterval,
+				interval: planDuration,
+				planType: planType,
 				isActive: planIsActive
 			});
 			
@@ -329,8 +332,9 @@ export default function AdminSubscriptionsPage() {
 		setPlanName(plan.name);
 		setPlanDescription(plan.description || '');
 		setPlanPrice((plan.priceCents / 100).toString());
-		setPlanCurrency(plan.currency);
-		setPlanInterval(plan.interval);
+		setPlanDiscountPercent(plan.discountPercent);
+		setPlanDuration(plan.interval);
+		setPlanType(plan.planType);
 		setPlanIsActive(plan.isActive);
 	};
 
@@ -339,15 +343,16 @@ export default function AdminSubscriptionsPage() {
 		setPlanName('');
 		setPlanDescription('');
 		setPlanPrice('');
-		setPlanCurrency('usd');
-		setPlanInterval('MONTH');
+		setPlanDiscountPercent(0);
+		setPlanDuration('MONTH');
+		setPlanType('MANUAL');
 		setPlanIsActive(true);
 	};
 
-	const formatPrice = (priceCents: number, currency: string) => {
+	const formatPrice = (priceCents: number) => {
 		return new Intl.NumberFormat('en-US', {
 			style: 'currency',
-			currency: currency.toUpperCase()
+			currency: 'USD'
 		}).format(priceCents / 100);
 	};
 
@@ -539,26 +544,38 @@ export default function AdminSubscriptionsPage() {
 										/>
 									</div>
 									<div>
-										<label className="block text-sm font-semibold text-gray-800 mb-2">Currency</label>
+										<label className="block text-sm font-semibold text-gray-800 mb-2">Discount Percent</label>
+										<input 
+											type="number"
+											step="0.01"
+											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 font-medium placeholder-gray-500" 
+											placeholder="0.00" 
+											value={planDiscountPercent} 
+											onChange={e => setPlanDiscountPercent(parseInt(e.target.value))}
+										/>
+									</div>
+									<div>
+										<label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Duration</label>
 										<select
-											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 font-medium"
-											value={planCurrency}
-											onChange={e => setPlanCurrency(e.target.value)}
+											className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-gray-100 dark:bg-gray-700 font-medium"
+											value={planDuration}
+											onChange={e => setPlanDuration(e.target.value as 'MONTH' | 'THREE_MONTHS' | 'SIX_MONTHS' | 'YEAR')}
 										>
-											<option value="usd">USD</option>
-											<option value="eur">EUR</option>
-											<option value="gbp">GBP</option>
+											<option value="MONTH" className="dark:bg-gray-700 dark:text-gray-100">Month</option>
+											<option value="THREE_MONTHS" className="dark:bg-gray-700 dark:text-gray-100">3 Months</option>
+											<option value="SIX_MONTHS" className="dark:bg-gray-700 dark:text-gray-100">6 Months</option>
+											<option value="YEAR" className="dark:bg-gray-700 dark:text-gray-100">Year</option>
 										</select>
 									</div>
 									<div>
-										<label className="block text-sm font-semibold text-gray-800 mb-2">Interval</label>
+										<label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Plan Type</label>
 										<select
-											className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 font-medium"
-											value={planInterval}
-											onChange={e => setPlanInterval(e.target.value as 'MONTH' | 'YEAR')}
+											className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-gray-100 dark:bg-gray-700 font-medium"
+											value={planType}
+											onChange={e => setPlanType(e.target.value as 'MANUAL' | 'AI_ENABLED')}
 										>
-											<option value="MONTH">Monthly</option>
-											<option value="YEAR">Yearly</option>
+											<option value="MANUAL" className="dark:bg-gray-700 dark:text-gray-100">Manual</option>
+											<option value="AI_ENABLED" className="dark:bg-gray-700 dark:text-gray-100">AI Enabled</option>
 										</select>
 									</div>
 									<div className="md:col-span-2">
@@ -646,26 +663,27 @@ export default function AdminSubscriptionsPage() {
 															/>
 														</div>
 														<div>
-															<label className="block text-sm font-semibold text-gray-800 mb-2">Currency</label>
+															<label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Duration</label>
 															<select
-																className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 font-medium"
-																value={planCurrency}
-																onChange={e => setPlanCurrency(e.target.value)}
+																className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-gray-100 dark:bg-gray-700 font-medium"
+																value={planDuration}
+																onChange={e => setPlanDuration(e.target.value as 'MONTH' | 'THREE_MONTHS' | 'SIX_MONTHS' | 'YEAR')}
 															>
-																<option value="usd">USD</option>
-																<option value="eur">EUR</option>
-																<option value="gbp">GBP</option>
+																<option value="MONTH" className="dark:bg-gray-700 dark:text-gray-100">Month</option>
+																<option value="THREE_MONTHS" className="dark:bg-gray-700 dark:text-gray-100">3 Months</option>
+																<option value="SIX_MONTHS" className="dark:bg-gray-700 dark:text-gray-100">6 Months</option>
+																<option value="YEAR" className="dark:bg-gray-700 dark:text-gray-100">Year</option>
 															</select>
 														</div>
 														<div>
-															<label className="block text-sm font-semibold text-gray-800 mb-2">Interval</label>
+															<label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Plan Type</label>
 															<select
-																className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 font-medium"
-																value={planInterval}
-																onChange={e => setPlanInterval(e.target.value as 'MONTH' | 'YEAR')}
+																className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-gray-100 dark:bg-gray-700 font-medium"
+																value={planType}
+																onChange={e => setPlanType(e.target.value as 'MANUAL' | 'AI_ENABLED')}
 															>
-																<option value="MONTH">Monthly</option>
-																<option value="YEAR">Yearly</option>
+																<option value="MANUAL" className="dark:bg-gray-700 dark:text-gray-100">Manual</option>
+																<option value="AI_ENABLED" className="dark:bg-gray-700 dark:text-gray-100">AI Enabled</option>
 															</select>
 														</div>
 														<div className="md:col-span-2">
@@ -723,7 +741,14 @@ export default function AdminSubscriptionsPage() {
 														)}
 														<div className="flex flex-wrap gap-2 mt-2">
 															<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-																{formatPrice(plan.priceCents, plan.currency)} / {plan.interval === 'MONTH' ? 'month' : 'year'}
+																{formatPrice(plan.priceCents)}
+															</span>
+															<span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+																plan.planType === 'AI_ENABLED' 
+																	? 'bg-purple-100 text-purple-800' 
+																	: 'bg-gray-100 text-gray-800'
+															}`}>
+																{plan.planType === 'AI_ENABLED' ? 'AI Enabled' : 'Manual'}
 															</span>
 															<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
 																{plan._count?.subscriptions || 0} subscribers
@@ -820,7 +845,14 @@ export default function AdminSubscriptionsPage() {
 															{subscription.plan.name}
 														</span>
 														<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-															{formatPrice(subscription.plan.priceCents, subscription.plan.currency)} / {subscription.plan.interval === 'MONTH' ? 'month' : 'year'}
+															{formatPrice(subscription.plan.priceCents)}
+														</span>
+														<span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+															subscription.plan.planType === 'AI_ENABLED' 
+																? 'bg-indigo-100 text-indigo-800' 
+																: 'bg-gray-100 text-gray-800'
+														}`}>
+															{subscription.plan.planType === 'AI_ENABLED' ? 'AI Enabled' : 'Manual'}
 														</span>
 														<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
 															Started: {formatDate(subscription.startedAt)}

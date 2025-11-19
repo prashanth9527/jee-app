@@ -68,18 +68,12 @@ export class StripeService implements PaymentGatewayInterface {
         },
       });
 
-      // Store order in database
-      await this.prisma.paymentOrder.create({
+      // Update existing order in database (created by subscriptions service)
+      await this.prisma.paymentOrder.update({
+        where: { merchantOrderId },
         data: {
-          userId,
-          planId,
-          merchantOrderId,
-          amount: plan.priceCents, // Stripe uses cents
-          currency: plan.currency.toUpperCase(),
           gateway: 'STRIPE',
           gatewayOrderId: session.id,
-          successUrl,
-          cancelUrl,
           stripeSessionId: session.id,
           status: 'PENDING',
         },
