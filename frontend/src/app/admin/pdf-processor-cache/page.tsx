@@ -1158,9 +1158,9 @@ export default function PDFProcessorCachePage() {
                         <div className="text-sm font-medium text-gray-900 truncate max-w-xs" title={record.fileName}>
                           {record.fileName}
                         </div>
-                        <div className="text-sm text-gray-500 truncate max-w-xs" title={record.filePath}>
+                        {/* <div className="text-sm text-gray-500 truncate max-w-xs" title={record.filePath}>
                           {record.filePath}
-                        </div>
+                        </div> */}
                         <div className="flex space-x-2 mt-2">
                           <button
                             onClick={() => {
