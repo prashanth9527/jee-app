@@ -27,7 +27,7 @@
 }
 
 :root:not(.dark) [class*="bg-white"] {
-  background-color: rgb(255, 255, 255) !important;
+  background-color: rgb(250, 250, 250) !important; /* Softer off-white instead of pure white */
 }
 
 :root:not(.dark) [class*="text-gray-100"],
