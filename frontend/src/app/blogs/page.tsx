@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Calendar, User, ArrowRight, BookOpen, TrendingUp, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -48,7 +48,7 @@ interface Pagination {
   totalPages: number;
 }
 
-export default function BlogsPage() {
+function BlogsPageContent() {
   const { systemSettings } = useSystemSettings();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -446,5 +446,31 @@ export default function BlogsPage() {
       </main>
       <Footer systemSettings={systemSettings || undefined} />
     </div>
+  );
+}
+
+function BlogsPageLoading() {
+  const { systemSettings } = useSystemSettings();
+  return (
+    <div className="min-h-screen bg-white dark:bg-gray-900">
+      <HeaderHome systemSettings={systemSettings || undefined} />
+      <main className="pt-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600 dark:text-gray-300">Loading blogs...</p>
+          </div>
+        </div>
+      </main>
+      <Footer systemSettings={systemSettings || undefined} />
+    </div>
+  );
+}
+
+export default function BlogsPage() {
+  return (
+    <Suspense fallback={<BlogsPageLoading />}>
+      <BlogsPageContent />
+    </Suspense>
   );
 }
