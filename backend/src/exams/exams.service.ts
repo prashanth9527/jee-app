@@ -648,6 +648,7 @@ export class ExamsService {
     difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
     timeLimitMin: number;
     title?: string;
+    questionType?: 'PYQ' | 'LMS';
   }) {
     console.log('Generating AI practice test:', { userId, config });
 
@@ -778,6 +779,7 @@ export class ExamsService {
     difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
     timeLimitMin: number;
     title?: string;
+    questionType?: 'PYQ' | 'LMS';
   }) {
     console.log('Generating manual practice test:', { userId, config });
 
@@ -790,6 +792,14 @@ export class ExamsService {
     if (config.topicId) where.topicId = config.topicId;
     if (config.subtopicId) where.subtopicId = config.subtopicId;
     if (config.difficulty !== 'MIXED') where.difficulty = config.difficulty;
+    
+    // Filter by question type: PYQ = isPreviousYear: true, LMS = isPreviousYear: false
+    if (config.questionType === 'PYQ') {
+      where.isPreviousYear = true;
+    } else if (config.questionType === 'LMS') {
+      where.isPreviousYear = false;
+    }
+    // If questionType is undefined or 'ALL', no filter is applied
     
     // If year is specified, filter for PYQ questions (yearAppeared is not null)
     const isPYQTest = config.year !== undefined;

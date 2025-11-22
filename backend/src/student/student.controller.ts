@@ -1311,16 +1311,27 @@ export class StudentController {
 	@Get('question-availability')
 	async getQuestionAvailability(
 		@Query('subjectId') subjectId?: string,
+		@Query('lessonId') lessonId?: string,
 		@Query('topicId') topicId?: string,
 		@Query('subtopicId') subtopicId?: string,
-		@Query('difficulty') difficulty?: string
+		@Query('difficulty') difficulty?: string,
+		@Query('questionType') questionType?: string
 	) {
 		const where: any = {};
 		
 		if (subjectId) where.subjectId = subjectId;
+		if (lessonId) where.lessonId = lessonId;
 		if (topicId) where.topicId = topicId;
 		if (subtopicId) where.subtopicId = subtopicId;
 		if (difficulty && difficulty !== 'MIXED') where.difficulty = difficulty;
+		
+		// Filter by question type: PYQ = isPreviousYear: true, LMS = isPreviousYear: false, ALL = no filter
+		if (questionType === 'PYQ') {
+			where.isPreviousYear = true;
+		} else if (questionType === 'LMS') {
+			where.isPreviousYear = false;
+		}
+		// If questionType is 'ALL' or undefined, no filter is applied
 
 		const totalQuestions = await this.prisma.question.count({ where });
 

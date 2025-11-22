@@ -959,29 +959,29 @@ export default function StudentLMSPage() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Learning Management</h1>
-                <p className="text-gray-600 mt-1">Select a subject to start learning</p>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Learning Management</h1>
+                <p className="text-gray-600 dark:text-gray-400 mt-1">Select a subject to start learning</p>
               </div>
             </div>
 
             {/* Overall Progress Card */}
             {allContentList.length > 0 && (
-              <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-lg font-semibold mb-1">Overall Progress</h2>
-                    <p className="text-blue-100">Track your learning journey across all subjects</p>
+                    <h2 className="text-lg font-semibold mb-1 text-gray-900 dark:text-gray-100">Overall Progress</h2>
+                    <p className="text-gray-600 dark:text-gray-400">Track your learning journey across all subjects</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-4xl font-bold">{getOverallProgress().percentage}%</div>
-                    <p className="text-sm text-blue-100 mt-1">
+                    <div className="text-4xl font-bold text-gray-900 dark:text-gray-100">{getOverallProgress().percentage}%</div>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                       {getOverallProgress().completed} of {getOverallProgress().total} completed
                     </p>
                   </div>
                 </div>
-                <div className="mt-4 w-full bg-white/20 rounded-full h-3">
+                <div className="mt-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                   <div
-                    className="bg-white h-3 rounded-full transition-all duration-500"
+                    className="bg-blue-500 dark:bg-blue-400 h-3 rounded-full transition-all duration-500"
                     style={{ width: `${getOverallProgress().percentage}%` }}
                   ></div>
                 </div>
@@ -1013,17 +1013,17 @@ export default function StudentLMSPage() {
                   <div
                     key={subject.id}
                     onClick={() => handleSubjectSelect(subject.id)}
-                    className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-blue-500 overflow-hidden group"
+                    className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 overflow-hidden group hover:bg-gray-50 dark:hover:bg-gray-700/90"
                   >
                     <div className="p-6">
                       <div className="flex items-start justify-between mb-4">
-                        <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                           {subject.name}
                         </h3>
-                        <span className={`flex-shrink-0 text-2xl ${
-                          progress.percentage === 100 ? 'text-green-600' :
-                          progress.percentage > 0 ? 'text-blue-600' :
-                          'text-gray-400'
+                        <span className={`flex-shrink-0 text-2xl transition-transform group-hover:scale-110 ${
+                          progress.percentage === 100 ? 'text-green-600 dark:text-green-400' :
+                          progress.percentage > 0 ? 'text-blue-600 dark:text-blue-400' :
+                          'text-gray-400 dark:text-gray-500'
                         }`}>
                           {progress.percentage === 100 ? '✓' :
                            progress.percentage > 0 ? '▶' :
@@ -1032,44 +1032,44 @@ export default function StudentLMSPage() {
                       </div>
 
                       {subject.description && (
-                        <p className="text-sm text-gray-600 mb-4 line-clamp-2">{subject.description}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{subject.description}</p>
                       )}
 
                       <div className="space-y-3">
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-600">Progress</span>
-                          <span className="font-semibold text-gray-900">
+                          <span className="text-gray-600 dark:text-gray-400">Progress</span>
+                          <span className="font-semibold text-gray-900 dark:text-gray-100">
                             {progress.completed} / {progress.total} completed
                           </span>
                         </div>
 
-                        <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                           <div
                             className={`h-2 rounded-full transition-all duration-500 ${
-                              progress.percentage === 100 ? 'bg-gradient-to-r from-green-500 to-green-600' :
-                              progress.percentage > 0 ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
-                              'bg-gray-300'
+                              progress.percentage === 100 ? 'bg-green-500 dark:bg-green-400' :
+                              progress.percentage > 0 ? 'bg-blue-500 dark:bg-blue-400' :
+                              'bg-gray-300 dark:bg-gray-600'
                             }`}
                             style={{ width: `${progress.percentage}%` }}
                           ></div>
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <span className={`text-sm font-semibold ${
-                            progress.percentage === 100 ? 'text-green-600' :
-                            progress.percentage > 0 ? 'text-blue-600' :
-                            'text-gray-500'
+                          <span className={`text-sm font-semibold transition-colors ${
+                            progress.percentage === 100 ? 'text-green-600 dark:text-green-400' :
+                            progress.percentage > 0 ? 'text-blue-600 dark:text-blue-400' :
+                            'text-gray-500 dark:text-gray-400'
                           }`}>
                             {progress.percentage}% Complete
                           </span>
-                          <span className="text-sm text-gray-500">
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
                             {subject.lessons.length} lessons
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-gray-50 px-6 py-3 border-t border-gray-100">
+                    <div className="bg-gray-50 dark:bg-gray-700/50 group-hover:bg-gray-100 dark:group-hover:bg-gray-700 px-6 py-3 border-t border-gray-100 dark:border-gray-700 transition-colors">
                       <div className="flex items-center justify-between gap-2">
                         {progress.percentage > 0 && progress.percentage < 100 ? (
                           <>
@@ -1098,7 +1098,7 @@ export default function StudentLMSPage() {
                             </button>
                             <button 
                               onClick={() => handleSubjectSelect(subject.id)}
-                              className="text-sm font-medium text-blue-600 hover:text-blue-700 px-3 py-2 flex items-center"
+                              className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 px-3 py-2 flex items-center"
                             >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
@@ -1106,7 +1106,7 @@ export default function StudentLMSPage() {
                             </button>
                           </>
                         ) : (
-                          <button className="text-sm font-medium text-blue-600 group-hover:text-blue-700 flex items-center">
+                          <button className="text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 flex items-center">
                             <span>{progress.percentage === 100 ? 'Review Content' : 'Start Learning'}</span>
                             <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

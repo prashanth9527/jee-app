@@ -54,6 +54,7 @@ interface PracticeTestConfig {
   difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
   timeLimit: number; // in minutes
   useAI: boolean; // Whether to use AI-generated questions
+  questionType: 'ALL' | 'PYQ' | 'LMS'; // Question type filter
 }
 
 function PracticeTestPageContent() {
@@ -73,7 +74,8 @@ function PracticeTestPageContent() {
     questionCount: 10,
     difficulty: 'MIXED',
     timeLimit: 30,
-    useAI: false
+    useAI: false,
+    questionType: 'ALL'
   });
 
   useEffect(() => {
@@ -268,7 +270,8 @@ function PracticeTestPageContent() {
           questionCount: config.questionCount,
           difficulty: config.difficulty === 'MIXED' ? 'MEDIUM' : config.difficulty,
           timeLimitMin: config.timeLimit,
-          title: generateTestTitle()
+          title: generateTestTitle(),
+          questionType: config.questionType !== 'ALL' ? config.questionType : undefined
         };
 
         const aiResponse = await api.post('/student/exams/ai/generate-practice-test', aiTestData);
@@ -293,7 +296,8 @@ function PracticeTestPageContent() {
           questionCount: config.questionCount,
           difficulty: config.difficulty,
           timeLimitMin: config.timeLimit,
-          title: generateTestTitle()
+          title: generateTestTitle(),
+          questionType: config.questionType !== 'ALL' ? config.questionType : undefined
         };
 
         const manualResponse = await api.post('/student/exams/manual/generate-practice-test', manualTestData);
@@ -351,7 +355,118 @@ function PracticeTestPageContent() {
     }
   };
 
+  const generateQuickPracticeTitle = (questionType: 'ALL' | 'PYQ' | 'LMS') => {
+    const currentDate = new Date().toLocaleDateString();
+    const subjectName = subjects.find(s => s.id === selectedSubject)?.name || 'Unknown Subject';
+    const lessonName = lessons.find(l => l.id === selectedLesson)?.name || '';
+    const topicName = topics.find(t => t.id === selectedTopic)?.name || '';
+    const subtopicName = subtopics.find(st => st.id === selectedSubtopic)?.name || '';
+
+    // Build the title parts
+    const titleParts = [subjectName];
+    
+    if (lessonName) titleParts.push(lessonName);
+    if (topicName) titleParts.push(topicName);
+    if (subtopicName) titleParts.push(subtopicName);
+    
+    // Add question type to title
+    if (questionType === 'PYQ') {
+      titleParts.push('PYQ');
+    } else if (questionType === 'LMS') {
+      titleParts.push('LMS');
+    }
+    
+    titleParts.push('Practice');
+    
+    return `${titleParts.join(' -> ')} - ${currentDate}`;
+  };
+
+  const handleQuickPractice = async (questionType: 'ALL' | 'PYQ' | 'LMS') => {
+    if (!selectedSubject) {
+      Swal.fire({
+        title: 'Subject Required',
+        text: 'Please select a subject to start practice',
+        icon: 'warning',
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+      
+      // Get available questions count for the selected filters
+      const params = new URLSearchParams({
+        subjectId: selectedSubject,
+        ...(selectedLesson && { lessonId: selectedLesson }),
+        ...(selectedTopic && { topicId: selectedTopic }),
+        ...(selectedSubtopic && { subtopicId: selectedSubtopic }),
+        ...(questionType !== 'ALL' && { questionType })
+      });
+      
+      const availabilityResponse = await api.get(`/student/question-availability?${params}`);
+      const availableCount = availabilityResponse.data.totalQuestions;
+
+      if (availableCount === 0) {
+        Swal.fire({
+          title: 'No Questions Available',
+          text: `No questions found for the selected ${questionType === 'ALL' ? 'filters' : questionType === 'PYQ' ? 'PYQ' : 'LMS'} questions.`,
+          icon: 'warning',
+        });
+        setLoading(false);
+        return;
+      }
+
+      // Create practice test with all available questions
+      const testData = {
+        subjectId: selectedSubject,
+        lessonId: selectedLesson || undefined,
+        topicId: selectedTopic || undefined,
+        subtopicId: selectedSubtopic || undefined,
+        questionCount: availableCount, // Use all available questions
+        difficulty: 'MIXED',
+        timeLimitMin: 0, // No time limit for practice
+        title: generateQuickPracticeTitle(questionType),
+        questionType: questionType !== 'ALL' ? questionType : undefined
+      };
+
+      const response = await api.post('/student/exams/manual/generate-practice-test', testData);
+      const paperId = response.data.examPaper.id;
+
+      // Redirect to practice mode
+      router.push(`/student/practice-exam/${paperId}`);
+    } catch (error: any) {
+      console.error('Error creating quick practice:', error);
+      Swal.fire({
+        title: 'Error',
+        text: error?.response?.data?.message || 'Failed to start practice',
+        icon: 'error',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const [questionAvailability, setQuestionAvailability] = useState<any>(null);
+  const [subjectCounts, setSubjectCounts] = useState<{
+    all: number;
+    pyq: number;
+    lms: number;
+  }>({ all: 0, pyq: 0, lms: 0 });
+  const [lessonCounts, setLessonCounts] = useState<{
+    all: number;
+    pyq: number;
+    lms: number;
+  }>({ all: 0, pyq: 0, lms: 0 });
+  const [topicCounts, setTopicCounts] = useState<{
+    all: number;
+    pyq: number;
+    lms: number;
+  }>({ all: 0, pyq: 0, lms: 0 });
+  const [subtopicCounts, setSubtopicCounts] = useState<{
+    all: number;
+    pyq: number;
+    lms: number;
+  }>({ all: 0, pyq: 0, lms: 0 });
 
   const getAvailableQuestions = async () => {
     if (!selectedSubject) return 0;
@@ -362,7 +477,8 @@ function PracticeTestPageContent() {
         ...(selectedLesson && { lessonId: selectedLesson }),
         ...(selectedTopic && { topicId: selectedTopic }),
         ...(selectedSubtopic && { subtopicId: selectedSubtopic }),
-        ...(config.difficulty !== 'MIXED' && { difficulty: config.difficulty })
+        ...(config.difficulty !== 'MIXED' && { difficulty: config.difficulty }),
+        ...(config.questionType !== 'ALL' && { questionType: config.questionType })
       });
       
       const response = await api.get(`/student/question-availability?${params}`);
@@ -374,11 +490,112 @@ function PracticeTestPageContent() {
     }
   };
 
+  const getQuestionCounts = async () => {
+    if (!selectedSubject) {
+      setSubjectCounts({ all: 0, pyq: 0, lms: 0 });
+      setLessonCounts({ all: 0, pyq: 0, lms: 0 });
+      setTopicCounts({ all: 0, pyq: 0, lms: 0 });
+      setSubtopicCounts({ all: 0, pyq: 0, lms: 0 });
+      return;
+    }
+    
+    try {
+      // Subject-level counts (subject only)
+      const subjectParams = { subjectId: selectedSubject };
+      const [subjectAllRes, subjectPyqRes, subjectLmsRes] = await Promise.all([
+        api.get(`/student/question-availability?${new URLSearchParams(subjectParams)}`),
+        api.get(`/student/question-availability?${new URLSearchParams({ ...subjectParams, questionType: 'PYQ' })}`),
+        api.get(`/student/question-availability?${new URLSearchParams({ ...subjectParams, questionType: 'LMS' })}`)
+      ]);
+
+      setSubjectCounts({
+        all: subjectAllRes.data.totalQuestions || 0,
+        pyq: subjectPyqRes.data.totalQuestions || 0,
+        lms: subjectLmsRes.data.totalQuestions || 0
+      });
+
+      // Lesson-level counts (subject + lesson)
+      if (selectedLesson) {
+        const lessonParams = { subjectId: selectedSubject, lessonId: selectedLesson };
+        const [lessonAllRes, lessonPyqRes, lessonLmsRes] = await Promise.all([
+          api.get(`/student/question-availability?${new URLSearchParams(lessonParams)}`),
+          api.get(`/student/question-availability?${new URLSearchParams({ ...lessonParams, questionType: 'PYQ' })}`),
+          api.get(`/student/question-availability?${new URLSearchParams({ ...lessonParams, questionType: 'LMS' })}`)
+        ]);
+
+        setLessonCounts({
+          all: lessonAllRes.data.totalQuestions || 0,
+          pyq: lessonPyqRes.data.totalQuestions || 0,
+          lms: lessonLmsRes.data.totalQuestions || 0
+        });
+      } else {
+        setLessonCounts({ all: 0, pyq: 0, lms: 0 });
+      }
+
+      // Topic-level counts (subject + lesson + topic)
+      if (selectedTopic) {
+        const topicParams = {
+          subjectId: selectedSubject,
+          ...(selectedLesson && { lessonId: selectedLesson }),
+          topicId: selectedTopic
+        };
+        const [topicAllRes, topicPyqRes, topicLmsRes] = await Promise.all([
+          api.get(`/student/question-availability?${new URLSearchParams(topicParams)}`),
+          api.get(`/student/question-availability?${new URLSearchParams({ ...topicParams, questionType: 'PYQ' })}`),
+          api.get(`/student/question-availability?${new URLSearchParams({ ...topicParams, questionType: 'LMS' })}`)
+        ]);
+
+        setTopicCounts({
+          all: topicAllRes.data.totalQuestions || 0,
+          pyq: topicPyqRes.data.totalQuestions || 0,
+          lms: topicLmsRes.data.totalQuestions || 0
+        });
+      } else {
+        setTopicCounts({ all: 0, pyq: 0, lms: 0 });
+      }
+
+      // Subtopic-level counts (subject + lesson + topic + subtopic)
+      if (selectedSubtopic) {
+        const subtopicParams = {
+          subjectId: selectedSubject,
+          ...(selectedLesson && { lessonId: selectedLesson }),
+          topicId: selectedTopic,
+          subtopicId: selectedSubtopic
+        };
+        const [subtopicAllRes, subtopicPyqRes, subtopicLmsRes] = await Promise.all([
+          api.get(`/student/question-availability?${new URLSearchParams(subtopicParams)}`),
+          api.get(`/student/question-availability?${new URLSearchParams({ ...subtopicParams, questionType: 'PYQ' })}`),
+          api.get(`/student/question-availability?${new URLSearchParams({ ...subtopicParams, questionType: 'LMS' })}`)
+        ]);
+
+        setSubtopicCounts({
+          all: subtopicAllRes.data.totalQuestions || 0,
+          pyq: subtopicPyqRes.data.totalQuestions || 0,
+          lms: subtopicLmsRes.data.totalQuestions || 0
+        });
+      } else {
+        setSubtopicCounts({ all: 0, pyq: 0, lms: 0 });
+      }
+    } catch (error) {
+      console.error('Error fetching question counts:', error);
+      setSubjectCounts({ all: 0, pyq: 0, lms: 0 });
+      setLessonCounts({ all: 0, pyq: 0, lms: 0 });
+      setTopicCounts({ all: 0, pyq: 0, lms: 0 });
+      setSubtopicCounts({ all: 0, pyq: 0, lms: 0 });
+    }
+  };
+
   useEffect(() => {
     if (selectedSubject) {
       getAvailableQuestions();
+      getQuestionCounts();
+    } else {
+      setSubjectCounts({ all: 0, pyq: 0, lms: 0 });
+      setLessonCounts({ all: 0, pyq: 0, lms: 0 });
+      setTopicCounts({ all: 0, pyq: 0, lms: 0 });
+      setSubtopicCounts({ all: 0, pyq: 0, lms: 0 });
     }
-  }, [selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, config.difficulty]);
+  }, [selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, config.difficulty, config.questionType]);
 
   const availableQuestions = questionAvailability?.totalQuestions || 0;
 
@@ -418,55 +635,136 @@ function PracticeTestPageContent() {
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                   <h2 className="text-xl font-semibold text-gray-900 mb-4">Select Content</h2>
                   
-                  {/* Subject */}
-                  <div className="mb-6">
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">Subject *</label>
-                    <select
-                      value={selectedSubject}
-                      onChange={(e) => handleSubjectChange(e.target.value)}
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
-                    >
-                      <option value="">Choose a subject</option>
-                      {subjects.map((subject) => (
-                        <option key={subject.id} value={subject.id}>
-                          {subject.name} ({subject._count.questions} questions)
-                        </option>
-                      ))}
-                    </select>
+                  {/* Subject & Lesson Row */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    {/* Subject */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">Subject *</label>
+                      <select
+                        value={selectedSubject}
+                        onChange={(e) => handleSubjectChange(e.target.value)}
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
+                      >
+                        <option value="">Choose a subject</option>
+                        {subjects.map((subject) => (
+                          <option key={subject.id} value={subject.id}>
+                            {subject.name} ({subject._count.questions} questions)
+                          </option>
+                        ))}
+                      </select>
+                      
+                      {/* Quick Practice Buttons */}
+                      {selectedSubject && (
+                        <div className="mt-3 flex items-center gap-3">
+                          <label className="text-sm font-semibold text-gray-700">Practice:</label>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleQuickPractice('ALL')}
+                              disabled={loading || subjectCounts.all === 0}
+                              className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                            >
+                              <span>All</span>
+                              <span className="bg-blue-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                {subjectCounts.all}
+                              </span>
+                            </button>
+                            <button
+                              onClick={() => handleQuickPractice('PYQ')}
+                              disabled={loading || subjectCounts.pyq === 0}
+                              className="px-3 py-1.5 text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                            >
+                              <span>PYQ</span>
+                              <span className="bg-purple-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                {subjectCounts.pyq}
+                              </span>
+                            </button>
+                            <button
+                              onClick={() => handleQuickPractice('LMS')}
+                              disabled={loading || subjectCounts.lms === 0}
+                              className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                            >
+                              <span>LMS Q</span>
+                              <span className="bg-green-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                {subjectCounts.lms}
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Lesson */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">Lesson (Optional)</label>
+                      <select
+                        value={selectedLesson}
+                        onChange={(e) => handleLessonChange(e.target.value)}
+                        disabled={!selectedSubject}
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      >
+                        <option value="">All lessons</option>
+                        {lessons.map((lesson) => (
+                          <option key={lesson.id} value={lesson.id}>
+                            {lesson.name} ({lesson._count?.questions || 0})
+                          </option>
+                        ))}
+                      </select>
+                      {!selectedSubject && (
+                        <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
+                      )}
+                      
+                      {/* Quick Practice Buttons for Lesson */}
+                      {selectedLesson && (
+                        <div className="mt-3 flex items-center gap-3">
+                          <label className="text-sm font-semibold text-gray-700">Practice:</label>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleQuickPractice('ALL')}
+                              disabled={loading || lessonCounts.all === 0}
+                              className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                            >
+                              <span>All</span>
+                              <span className="bg-blue-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                {lessonCounts.all}
+                              </span>
+                            </button>
+                            <button
+                              onClick={() => handleQuickPractice('PYQ')}
+                              disabled={loading || lessonCounts.pyq === 0}
+                              className="px-3 py-1.5 text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                            >
+                              <span>PYQ</span>
+                              <span className="bg-purple-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                {lessonCounts.pyq}
+                              </span>
+                            </button>
+                            <button
+                              onClick={() => handleQuickPractice('LMS')}
+                              disabled={loading || lessonCounts.lms === 0}
+                              className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                            >
+                              <span>LMS Q</span>
+                              <span className="bg-green-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                {lessonCounts.lms}
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Additional Filters Row */}
+                  {/* Topic & Subtopic Row */}
                   {selectedSubject && (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                      {/* Lesson */}
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Lesson (Optional)</label>
-                        <select
-                          value={selectedLesson}
-                          onChange={(e) => handleLessonChange(e.target.value)}
-                          disabled={!selectedSubject}
-                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
-                        >
-                          <option value="">All lessons</option>
-                          {lessons.map((lesson) => (
-                            <option key={lesson.id} value={lesson.id}>
-                              {lesson.name} ({lesson._count?.questions || 0})
-                            </option>
-                          ))}
-                        </select>
-                        {!selectedSubject && (
-                          <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
-                        )}
-                      </div>
-
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Topic */}
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Topic (Optional)</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-3">Topic (Optional)</label>
                         <select
                           value={selectedTopic}
                           onChange={(e) => handleTopicChange(e.target.value)}
                           disabled={!selectedSubject}
-                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
+                          className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
                         >
                           <option value="">All topics</option>
                           {topics.map((topic) => (
@@ -478,16 +776,55 @@ function PracticeTestPageContent() {
                         {!selectedSubject && (
                           <p className="text-xs text-gray-500 mt-1">Select a subject first</p>
                         )}
+                        
+                        {/* Quick Practice Buttons for Topic */}
+                        {selectedTopic && (
+                          <div className="mt-3 flex items-center gap-3">
+                            <label className="text-sm font-semibold text-gray-700">Practice:</label>
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => handleQuickPractice('ALL')}
+                                disabled={loading || topicCounts.all === 0}
+                                className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              >
+                                <span>All</span>
+                                <span className="bg-blue-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                  {topicCounts.all}
+                                </span>
+                              </button>
+                              <button
+                                onClick={() => handleQuickPractice('PYQ')}
+                                disabled={loading || topicCounts.pyq === 0}
+                                className="px-3 py-1.5 text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              >
+                                <span>PYQ</span>
+                                <span className="bg-purple-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                  {topicCounts.pyq}
+                                </span>
+                              </button>
+                              <button
+                                onClick={() => handleQuickPractice('LMS')}
+                                disabled={loading || topicCounts.lms === 0}
+                                className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              >
+                                <span>LMS Q</span>
+                                <span className="bg-green-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                  {topicCounts.lms}
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       {/* Subtopic */}
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Subtopic (Optional)</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-3">Subtopic (Optional)</label>
                         <select
                           value={selectedSubtopic}
                           onChange={(e) => handleSubtopicChange(e.target.value)}
                           disabled={!selectedTopic}
-                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
+                          className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
                         >
                           <option value="">All subtopics</option>
                           {subtopics.map((subtopic) => (
@@ -501,6 +838,45 @@ function PracticeTestPageContent() {
                         )}
                         {selectedSubject && !selectedTopic && (
                           <p className="text-xs text-gray-500 mt-1">Select a topic first</p>
+                        )}
+                        
+                        {/* Quick Practice Buttons for Subtopic */}
+                        {selectedSubtopic && (
+                          <div className="mt-3 flex items-center gap-3">
+                            <label className="text-sm font-semibold text-gray-700">Practice:</label>
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => handleQuickPractice('ALL')}
+                                disabled={loading || subtopicCounts.all === 0}
+                                className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              >
+                                <span>All</span>
+                                <span className="bg-blue-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                  {subtopicCounts.all}
+                                </span>
+                              </button>
+                              <button
+                                onClick={() => handleQuickPractice('PYQ')}
+                                disabled={loading || subtopicCounts.pyq === 0}
+                                className="px-3 py-1.5 text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              >
+                                <span>PYQ</span>
+                                <span className="bg-purple-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                  {subtopicCounts.pyq}
+                                </span>
+                              </button>
+                              <button
+                                onClick={() => handleQuickPractice('LMS')}
+                                disabled={loading || subtopicCounts.lms === 0}
+                                className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              >
+                                <span>LMS Q</span>
+                                <span className="bg-green-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                  {subtopicCounts.lms}
+                                </span>
+                              </button>
+                            </div>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -561,39 +937,53 @@ function PracticeTestPageContent() {
                       </select>
                     </div>
 
-                    {/* AI Generation Toggle */}
+                    {/* Question Type */}
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-3">Question Source</label>
-                      <div className="space-y-3">
-                        <label className="flex items-center">
-                          <input
-                            type="radio"
-                            name="questionSource"
-                            value="manual"
-                            checked={!config.useAI}
-                            onChange={() => handleConfigChange('useAI', false)}
-                            className="mr-2 text-blue-600 focus:ring-blue-500"
-                          />
-                          <span className="text-sm text-gray-700">Database Questions</span>
-                        </label>
-                        <label className="flex items-center">
-                          <input
-                            type="radio"
-                            name="questionSource"
-                            value="ai"
-                            checked={config.useAI}
-                            onChange={() => handleConfigChange('useAI', true)}
-                            disabled={subscriptionStatus?.planType !== 'AI_ENABLED'}
-                            className="mr-2 text-blue-600 focus:ring-blue-500 disabled:opacity-50"
-                          />
-                          <span className={`text-sm ${subscriptionStatus?.planType !== 'AI_ENABLED' ? 'text-gray-400' : 'text-gray-700'}`}>
-                            AI Generated
-                            {subscriptionStatus?.planType !== 'AI_ENABLED' && (
-                              <span className="ml-1 text-xs text-red-500">(Premium)</span>
-                            )}
-                          </span>
-                        </label>
-                      </div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">Question Type</label>
+                      <select
+                        value={config.questionType}
+                        onChange={(e) => handleConfigChange('questionType', e.target.value)}
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 bg-white"
+                      >
+                        <option value="ALL">All</option>
+                        <option value="PYQ">PYQ</option>
+                        <option value="LMS">LMS</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Question Source - Moved to separate row */}
+                  <div className="mt-6">
+                    <label className="block text-sm font-semibold text-gray-700 mb-3">Question Source</label>
+                    <div className="flex gap-6">
+                      <label className="flex items-center">
+                        <input
+                          type="radio"
+                          name="questionSource"
+                          value="manual"
+                          checked={!config.useAI}
+                          onChange={() => handleConfigChange('useAI', false)}
+                          className="mr-2 text-blue-600 focus:ring-blue-500"
+                        />
+                        <span className="text-sm text-gray-700">Database Questions</span>
+                      </label>
+                      <label className="flex items-center">
+                        <input
+                          type="radio"
+                          name="questionSource"
+                          value="ai"
+                          checked={config.useAI}
+                          onChange={() => handleConfigChange('useAI', true)}
+                          disabled={subscriptionStatus?.planType !== 'AI_ENABLED'}
+                          className="mr-2 text-blue-600 focus:ring-blue-500 disabled:opacity-50"
+                        />
+                        <span className={`text-sm ${subscriptionStatus?.planType !== 'AI_ENABLED' ? 'text-gray-400' : 'text-gray-700'}`}>
+                          AI Generated
+                          {subscriptionStatus?.planType !== 'AI_ENABLED' && (
+                            <span className="ml-1 text-xs text-red-500">(Premium)</span>
+                          )}
+                        </span>
+                      </label>
                     </div>
                   </div>
                 </div>

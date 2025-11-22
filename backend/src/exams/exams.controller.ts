@@ -71,6 +71,7 @@ export class ExamsController {
       difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
       timeLimitMin: number;
       title?: string;
+      questionType?: 'PYQ' | 'LMS';
     }
   ) {
     return this.examsService.generateAIPracticeTest(req.user.id, body);
@@ -88,6 +89,7 @@ async generateManualPracticeTest(
       difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
       timeLimitMin: number;
       title?: string;
+      questionType?: 'PYQ' | 'LMS';
     }
   ) {
 return this.examsService.generateManualPracticeTest(req.user.id, body);
