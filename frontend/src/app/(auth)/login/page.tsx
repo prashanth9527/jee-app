@@ -242,7 +242,7 @@ export default function LoginPage() {
 						>
 							Email & Password
 						</button>
-						<button
+						{/* <button
 							type="button"
 							onClick={() => switchLoginMethod('phone')}
 							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
@@ -252,7 +252,7 @@ export default function LoginPage() {
 							}`}
 						>
 							Phone OTP
-						</button>
+						</button> */}
 						<button
 							type="button"
 							onClick={() => switchLoginMethod('emailCode')}

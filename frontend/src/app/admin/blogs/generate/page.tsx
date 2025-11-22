@@ -202,7 +202,7 @@ export default function GenerateBlogPage() {
                   name="generationType"
                   value={formData.generationType}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white"
                 >
                   <option value="news">From Current News</option>
                   <option value="topic">From Topic</option>
@@ -248,7 +248,7 @@ export default function GenerateBlogPage() {
                   name="streamId"
                   value={formData.streamId}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white"
                 >
                   <option value="">Select Stream (Optional)</option>
                   {streams.map((stream) => (
@@ -269,7 +269,7 @@ export default function GenerateBlogPage() {
                   name="categoryId"
                   value={formData.categoryId}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white"
                 >
                   <option value="">Select Category (Optional)</option>
                   {categories.map((category) => (

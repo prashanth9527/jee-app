@@ -416,26 +416,25 @@ function PracticeTestPageContent() {
         return;
       }
 
-      // Create practice test with all available questions
-      const testData = {
+      // Build query params for direct practice (no exam paper creation)
+      const subjectName = subjects.find(s => s.id === selectedSubject)?.name || '';
+      const lessonName = selectedLesson ? lessons.find(l => l.id === selectedLesson)?.name : '';
+      const topicName = selectedTopic ? topics.find(t => t.id === selectedTopic)?.name : '';
+      const subtopicName = selectedSubtopic ? subtopics.find(st => st.id === selectedSubtopic)?.name : '';
+
+      const queryParams = new URLSearchParams({
         subjectId: selectedSubject,
-        lessonId: selectedLesson || undefined,
-        topicId: selectedTopic || undefined,
-        subtopicId: selectedSubtopic || undefined,
-        questionCount: availableCount, // Use all available questions
-        difficulty: 'MIXED',
-        timeLimitMin: 0, // No time limit for practice
-        title: generateQuickPracticeTitle(questionType),
-        questionType: questionType !== 'ALL' ? questionType : undefined
-      };
+        subjectName: subjectName,
+        ...(selectedLesson && { lessonId: selectedLesson, lessonName: lessonName }),
+        ...(selectedTopic && { topicId: selectedTopic, topicName: topicName }),
+        ...(selectedSubtopic && { subtopicId: selectedSubtopic, subtopicName: subtopicName }),
+        ...(questionType !== 'ALL' && { questionType })
+      });
 
-      const response = await api.post('/student/exams/manual/generate-practice-test', testData);
-      const paperId = response.data.examPaper.id;
-
-      // Redirect to practice mode
-      router.push(`/student/practice-exam/${paperId}`);
+      // Redirect to practice mode with query params (no exam paper creation)
+      router.push(`/student/practice-exam/direct-practice?${queryParams.toString()}`);
     } catch (error: any) {
-      console.error('Error creating quick practice:', error);
+      console.error('Error starting quick practice:', error);
       Swal.fire({
         title: 'Error',
         text: error?.response?.data?.message || 'Failed to start practice',

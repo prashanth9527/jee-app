@@ -619,3 +619,44 @@ img[src$=".png"] {
   border-color: #9ca3af !important; /* gray-400 */
   font-weight: 700 !important;
 }
+
+/* Ensure select dropdowns are visible above other content */
+select {
+  position: relative;
+  z-index: 10;
+}
+
+select:focus {
+  z-index: 20;
+}
+
+/* Ensure select options are visible in both light and dark mode */
+select option {
+  background-color: white;
+  color: #111827;
+}
+
+.dark select option {
+  background-color: rgb(31, 41, 55);
+  color: rgb(243, 244, 246);
+}
+
+/* Admin panel specific: Ensure dropdowns in forms are visible */
+.admin-layout select,
+[class*="bg-white"] select,
+[class*="bg-gray-50"] select {
+  position: relative;
+  z-index: 10;
+}
+
+[class*="bg-white"] select:focus,
+[class*="bg-gray-50"] select:focus {
+  z-index: 30;
+}
+
+/* Ensure parent containers don't clip dropdowns */
+form,
+[class*="space-y"],
+[class*="grid"] {
+  position: relative;
+}

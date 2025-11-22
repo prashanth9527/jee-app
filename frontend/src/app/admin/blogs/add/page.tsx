@@ -48,6 +48,8 @@ export default function AddBlogPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [tagInput, setTagInput] = useState('');
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string>('');
 
   const [formData, setFormData] = useState<BlogFormData>({
     title: '',
@@ -146,6 +148,81 @@ export default function AddBlogPage() {
       ...prev,
       metaKeywords: prev.metaKeywords.filter(keyword => keyword !== keywordToRemove)
     }));
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid File Type',
+        text: 'Please upload a JPEG, PNG, GIF, or WebP image.'
+      });
+      return;
+    }
+
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      Swal.fire({
+        icon: 'error',
+        title: 'File Too Large',
+        text: 'Image size must be less than 5MB.'
+      });
+      return;
+    }
+
+    // Show preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    // Upload image
+    setUploadingImage(true);
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await api.post('/admin/blogs/upload-image', formData);
+
+      if (response.data.url) {
+        handleInputChange('featuredImage', response.data.url);
+        Swal.fire({
+          icon: 'success',
+          title: 'Image Uploaded',
+          text: 'Image uploaded successfully!',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      }
+    } catch (error: any) {
+      console.error('Error uploading image:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Upload Failed',
+        text: error.response?.data?.message || 'Failed to upload image. Please try again.'
+      });
+      setImagePreview('');
+    } finally {
+      setUploadingImage(false);
+      // Reset file input
+      e.target.value = '';
+    }
+  };
+
+  const handleImageUrlChange = (url: string) => {
+    handleInputChange('featuredImage', url);
+    setImagePreview(url);
+  };
+
+  const removeImage = () => {
+    handleInputChange('featuredImage', '');
+    setImagePreview('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -283,14 +360,60 @@ export default function AddBlogPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Featured Image URL
+                      Featured Image
                     </label>
+                    
+                    {/* Image Preview */}
+                    {imagePreview && (
+                      <div className="mb-3 relative">
+                        <img
+                          src={imagePreview}
+                          alt="Featured image preview"
+                          className="w-full h-48 object-cover rounded-md border border-gray-300 dark:border-gray-600"
+                        />
+                        <button
+                          type="button"
+                          onClick={removeImage}
+                          className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-md hover:bg-red-700 text-sm"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Upload Image Button */}
+                    <div className="mb-3">
+                      <label className="block">
+                        <span className="sr-only">Choose image file</span>
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+                          onChange={handleImageUpload}
+                          disabled={uploadingImage}
+                          className="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900/20 file:text-blue-700 dark:file:text-blue-300 hover:file:bg-blue-100 dark:hover:file:bg-blue-900/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                        />
+                      </label>
+                      {uploadingImage && (
+                        <p className="mt-1 text-sm text-blue-600 dark:text-blue-400">Uploading image...</p>
+                      )}
+                    </div>
+
+                    {/* Or use URL */}
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Or enter URL</span>
+                      </div>
+                    </div>
+
                     <input
                       type="url"
                       value={formData.featuredImage}
-                      onChange={(e) => handleInputChange('featuredImage', e.target.value)}
+                      onChange={(e) => handleImageUrlChange(e.target.value)}
                       placeholder="https://example.com/image.jpg"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="mt-3 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                     />
                   </div>
                 </div>

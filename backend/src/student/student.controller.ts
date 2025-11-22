@@ -759,6 +759,74 @@ export class StudentController {
 		const userId = req.user.id;
 
 		try {
+			// Handle direct practice (no exam paper)
+			if (examId === 'direct-practice') {
+				// Get filters from query params
+				const subjectId = req.query?.subjectId;
+				const lessonId = req.query?.lessonId;
+				const topicId = req.query?.topicId;
+				const subtopicId = req.query?.subtopicId;
+				const questionType = req.query?.questionType;
+
+				if (!subjectId) {
+					throw new BadRequestException('Subject ID is required for direct practice');
+				}
+
+				// Create contentId based on filters
+				const contentId = `direct-practice-${subjectId}${lessonId ? `-${lessonId}` : ''}${topicId ? `-${topicId}` : ''}${subtopicId ? `-${subtopicId}` : ''}${questionType ? `-${questionType}` : ''}`;
+
+				// Get or create practice progress for direct practice
+				const practiceProgress = await this.prisma.practiceProgress.upsert({
+					where: {
+						userId_contentType_contentId: {
+							userId,
+							contentType: 'DIRECT_PRACTICE',
+							contentId: contentId
+						}
+					},
+					update: {
+						lastAccessedAt: new Date()
+					},
+					create: {
+						userId,
+						contentType: 'DIRECT_PRACTICE',
+						contentId: contentId,
+						totalQuestions: 0, // Will be updated as questions are practiced
+						lastAccessedAt: new Date()
+					}
+				});
+
+				// Check if question session already exists
+				const existingSession = await this.prisma.practiceQuestionSession.findFirst({
+					where: {
+						progressId: practiceProgress.id,
+						questionId: questionId
+					}
+				});
+
+				if (existingSession) {
+					// Update existing session
+					await this.prisma.practiceQuestionSession.update({
+						where: { id: existingSession.id },
+						data: {
+							attemptedAt: new Date()
+						}
+					});
+				} else {
+					// Create new session
+					await this.prisma.practiceQuestionSession.create({
+						data: {
+							progressId: practiceProgress.id,
+							questionId: questionId,
+							attemptedAt: new Date()
+						}
+					});
+				}
+
+				return { success: true, message: 'Question marked as practiced' };
+			}
+
+			// Handle exam paper-based practice
 			// Check if exam paper exists
 			const examPaper = await this.prisma.examPaper.findUnique({
 				where: { id: examId },
@@ -1468,6 +1536,143 @@ export class StudentController {
 				difficulty: d.difficulty,
 				count: d._count.difficulty
 			}))
+		};
+	}
+
+	@Get('practice-questions')
+	async getPracticeQuestions(
+		@Req() req: any,
+		@Query('subjectId') subjectId?: string,
+		@Query('lessonId') lessonId?: string,
+		@Query('topicId') topicId?: string,
+		@Query('subtopicId') subtopicId?: string,
+		@Query('questionType') questionType?: string
+	) {
+		const userId = req.user.id;
+		
+		if (!subjectId) {
+			throw new BadRequestException('Subject ID is required');
+		}
+
+		// Build where clause for question selection
+		const where: any = {
+			subjectId: subjectId
+		};
+
+		if (lessonId) where.lessonId = lessonId;
+		if (topicId) where.topicId = topicId;
+		if (subtopicId) where.subtopicId = subtopicId;
+		
+		// Filter by question type: PYQ = isPreviousYear: true, LMS = isPreviousYear: false
+		if (questionType === 'PYQ') {
+			where.isPreviousYear = true;
+		} else if (questionType === 'LMS') {
+			where.isPreviousYear = false;
+		}
+		// If questionType is 'ALL' or undefined, no filter is applied
+
+		// Fetch all questions matching the criteria
+		const questions = await this.prisma.question.findMany({
+			where,
+			include: {
+				options: {
+					orderBy: { order: 'asc' }
+				},
+				lesson: {
+					select: {
+						id: true,
+						name: true,
+						subject: {
+							select: { name: true }
+						}
+					}
+				},
+				subQuestions: {
+					include: {
+						options: {
+							orderBy: { order: 'asc' }
+						}
+					}
+				}
+			},
+			orderBy: {
+				createdAt: 'desc'
+			}
+		});
+
+		if (questions.length === 0) {
+			return {
+				questions: [],
+				totalQuestions: 0,
+				practicedQuestionIds: []
+			};
+		}
+
+		// Get practiced question IDs for this user
+		// For direct practice, we use a contentId based on the filters
+		const contentId = `direct-practice-${subjectId}${lessonId ? `-${lessonId}` : ''}${topicId ? `-${topicId}` : ''}${subtopicId ? `-${subtopicId}` : ''}${questionType ? `-${questionType}` : ''}`;
+		
+		const practiceProgress = await this.prisma.practiceProgress.findUnique({
+			where: {
+				userId_contentType_contentId: {
+					userId,
+					contentType: 'DIRECT_PRACTICE',
+					contentId: contentId
+				}
+			},
+			include: {
+				sessions: {
+					select: {
+						questionId: true
+					}
+				}
+			}
+		});
+
+		const practicedQuestionIds = practiceProgress?.sessions.map(s => s.questionId) || [];
+
+		// Format questions to match practice-exam response format
+		const formattedQuestions = questions.map((question: any) => ({
+			id: question.id,
+			stem: question.stem,
+			options: question.options.map((option: any) => ({
+				id: option.id,
+				text: option.text,
+				isCorrect: option.isCorrect,
+				order: option.order
+			})),
+			explanation: question.explanation,
+			difficulty: question.difficulty,
+			yearAppeared: question.yearAppeared,
+			lessonId: question.lessonId,
+			correctNumericAnswer: question.correctNumericAnswer,
+			questionType: question.questionType,
+			isOpenEnded: question.isOpenEnded,
+			answerTolerance: question.answerTolerance,
+			parentQuestionId: question.parentQuestionId,
+			lesson: question.lesson,
+			subQuestions: question.subQuestions ? question.subQuestions.map((subQ: any) => ({
+				id: subQ.id,
+				stem: subQ.stem,
+				options: subQ.options.map((option: any) => ({
+					id: option.id,
+					text: option.text,
+					isCorrect: option.isCorrect,
+					order: option.order
+				})),
+				explanation: subQ.explanation,
+				difficulty: subQ.difficulty,
+				correctNumericAnswer: subQ.correctNumericAnswer,
+				questionType: subQ.questionType,
+				isOpenEnded: subQ.isOpenEnded,
+				answerTolerance: subQ.answerTolerance
+			})) : undefined
+		}));
+
+		return {
+			questions: formattedQuestions,
+			totalQuestions: formattedQuestions.length,
+			practicedQuestionIds: practicedQuestionIds
 		};
 	}
 

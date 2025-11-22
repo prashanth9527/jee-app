@@ -2,111 +2,152 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Calendar, User, ArrowRight, BookOpen, TrendingUp, Clock } from 'lucide-react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { Calendar, User, ArrowRight, BookOpen, TrendingUp, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import HeaderHome from '@/components/HeaderHome';
 import Footer from '@/components/Footer';
 import { useSystemSettings } from '@/contexts/SystemSettingsContext';
+import api from '@/lib/api';
 
 interface BlogPost {
   id: string;
   title: string;
   excerpt: string;
-  author: string;
+  slug: string;
+  featuredImage?: string;
   publishedAt: string;
-  readTime: string;
-  category: string;
-  image: string;
-  views: number;
+  content: string;
+  author: {
+    id: string;
+    fullName: string;
+    email: string;
+    profilePicture?: string;
+  };
+  category: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+  _count: {
+    comments: number;
+    likes: number;
+    bookmarks: number;
+  };
+}
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+interface Pagination {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
 }
 
 export default function BlogsPage() {
   const { systemSettings } = useSystemSettings();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [pagination, setPagination] = useState<Pagination>({
+    page: 1,
+    limit: 9,
+    total: 0,
+    totalPages: 0,
+  });
+  
+  const limit = 9; // Fixed limit for pagination
+
+  // Calculate read time from content (average reading speed: 200 words per minute)
+  const calculateReadTime = (content: string): string => {
+    const words = content.split(/\s+/).length;
+    const minutes = Math.ceil(words / 200);
+    return `${minutes} min read`;
+  };
+
+  // Fetch categories
+  const fetchCategories = async () => {
+    try {
+      const response = await api.get('/blogs/categories');
+      setCategories(response.data || []);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  // Fetch blogs
+  const fetchBlogs = async (page: number = 1, categoryId?: string) => {
+    try {
+      setLoading(true);
+      const params = new URLSearchParams();
+      params.append('page', page.toString());
+      params.append('limit', limit.toString());
+      
+      if (categoryId && categoryId !== 'All') {
+        params.append('categoryId', categoryId);
+      }
+
+      const response = await api.get(`/blogs?${params.toString()}`);
+      const data = response.data;
+      
+      setBlogs(data.blogs || []);
+      setPagination(data.pagination || {
+        page: 1,
+        limit: limit,
+        total: 0,
+        totalPages: 0,
+      });
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+      setBlogs([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Mock data - in real app, fetch from API
-    const mockBlogs: BlogPost[] = [
-      {
-        id: '1',
-        title: 'JEE Main 2024: Complete Preparation Strategy',
-        excerpt: 'Learn the most effective strategies to crack JEE Main 2024 with our comprehensive guide covering all subjects and time management tips.',
-        author: 'Dr. Rajesh Kumar',
-        publishedAt: '2024-01-15',
-        readTime: '8 min read',
-        category: 'Preparation',
-        image: '/api/placeholder/400/200',
-        views: 1250
-      },
-      {
-        id: '2',
-        title: 'Physics: Mastering Mechanics for JEE',
-        excerpt: 'Essential concepts and problem-solving techniques for mechanics that every JEE aspirant must know.',
-        author: 'Prof. Sunita Sharma',
-        publishedAt: '2024-01-12',
-        readTime: '6 min read',
-        category: 'Physics',
-        image: '/api/placeholder/400/200',
-        views: 980
-      },
-      {
-        id: '3',
-        title: 'Chemistry: Organic Reactions Made Easy',
-        excerpt: 'Simplify complex organic chemistry reactions with our step-by-step approach and memory techniques.',
-        author: 'Dr. Amit Patel',
-        publishedAt: '2024-01-10',
-        readTime: '10 min read',
-        category: 'Chemistry',
-        image: '/api/placeholder/400/200',
-        views: 1100
-      },
-      {
-        id: '4',
-        title: 'Mathematics: Calculus Shortcuts for JEE',
-        excerpt: 'Time-saving techniques and shortcuts for calculus problems that frequently appear in JEE exams.',
-        author: 'Prof. Vikram Singh',
-        publishedAt: '2024-01-08',
-        readTime: '7 min read',
-        category: 'Mathematics',
-        image: '/api/placeholder/400/200',
-        views: 1350
-      },
-      {
-        id: '5',
-        title: 'Time Management During JEE Preparation',
-        excerpt: 'Learn how to effectively manage your time and create a balanced study schedule for JEE preparation.',
-        author: 'Dr. Priya Agarwal',
-        publishedAt: '2024-01-05',
-        readTime: '5 min read',
-        category: 'Study Tips',
-        image: '/api/placeholder/400/200',
-        views: 890
-      },
-      {
-        id: '6',
-        title: 'JEE Advanced vs JEE Main: Key Differences',
-        excerpt: 'Understanding the fundamental differences between JEE Main and JEE Advanced to plan your preparation accordingly.',
-        author: 'Dr. Ravi Verma',
-        publishedAt: '2024-01-03',
-        readTime: '9 min read',
-        category: 'Exam Info',
-        image: '/api/placeholder/400/200',
-        views: 1500
-      }
-    ];
-
-    setTimeout(() => {
-      setBlogs(mockBlogs);
-      setLoading(false);
-    }, 1000);
+    fetchCategories();
+    
+    // Initialize selected category and page from URL
+    const categoryParam = searchParams?.get('categoryId');
+    const pageParam = parseInt(searchParams?.get('page') || '1');
+    
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+      fetchBlogs(pageParam, categoryParam);
+    } else {
+      fetchBlogs(pageParam);
+    }
   }, []);
 
-  const categories = ['All', 'Preparation', 'Physics', 'Chemistry', 'Mathematics', 'Study Tips', 'Exam Info'];
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const handleCategoryChange = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+    // Reset to page 1 when category changes
+    const params = new URLSearchParams();
+    if (categoryId !== 'All') {
+      params.append('categoryId', categoryId);
+    }
+    params.append('page', '1');
+    router.push(`/blogs?${params.toString()}`);
+    fetchBlogs(1, categoryId === 'All' ? undefined : categoryId);
+  };
 
-  const filteredBlogs = selectedCategory === 'All' 
-    ? blogs 
-    : blogs.filter(blog => blog.category === selectedCategory);
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams();
+    if (selectedCategory !== 'All') {
+      params.append('categoryId', selectedCategory);
+    }
+    params.append('page', newPage.toString());
+    router.push(`/blogs?${params.toString()}`);
+    fetchBlogs(newPage, selectedCategory === 'All' ? undefined : selectedCategory);
+  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -116,7 +157,7 @@ export default function BlogsPage() {
     });
   };
 
-  if (loading) {
+  if (loading && blogs.length === 0) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900">
         <HeaderHome systemSettings={systemSettings || undefined} />
@@ -132,6 +173,9 @@ export default function BlogsPage() {
       </div>
     );
   }
+
+  const featuredBlog = blogs.length > 0 ? blogs[0] : null;
+  const otherBlogs = blogs.slice(1);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
@@ -168,63 +212,81 @@ export default function BlogsPage() {
           {/* Categories */}
           <div className="mb-8">
             <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => handleCategoryChange('All')}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  selectedCategory === 'All'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-600'
+                }`}
+              >
+                All
+              </button>
               {categories.map((category) => (
                 <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  key={category.id}
+                  onClick={() => handleCategoryChange(category.id)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    selectedCategory === category
+                    selectedCategory === category.id
                       ? 'bg-blue-600 text-white'
                       : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-600'
                   }`}
                 >
-                  {category}
+                  {category.name}
                 </button>
               ))}
             </div>
           </div>
 
           {/* Featured Blog */}
-          {filteredBlogs.length > 0 && (
+          {featuredBlog && (
             <div className="mb-12">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Featured Article</h2>
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
                 <div className="md:flex">
                   <div className="md:w-1/2">
-                    <div className="h-64 md:h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                      <BookOpen className="w-16 h-16 text-white" />
-                    </div>
+                    {featuredBlog.featuredImage ? (
+                      <img 
+                        src={featuredBlog.featuredImage} 
+                        alt={featuredBlog.title}
+                        className="w-full h-64 md:h-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-64 md:h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                        <BookOpen className="w-16 h-16 text-white" />
+                      </div>
+                    )}
                   </div>
                   <div className="md:w-1/2 p-6">
                     <div className="flex items-center space-x-2 mb-2">
                       <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2.5 py-0.5 rounded">
-                        {filteredBlogs[0].category}
+                        {featuredBlog.category.name}
                       </span>
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">
-                      {filteredBlogs[0].title}
+                      {featuredBlog.title}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      {filteredBlogs[0].excerpt}
+                      {featuredBlog.excerpt}
                     </p>
                     <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                       <div className="flex items-center space-x-4">
                         <div className="flex items-center space-x-1">
                           <User className="w-4 h-4" />
-                          <span>{filteredBlogs[0].author}</span>
+                          <span>{featuredBlog.author.fullName}</span>
                         </div>
                         <div className="flex items-center space-x-1">
                           <Calendar className="w-4 h-4" />
-                          <span>{formatDate(filteredBlogs[0].publishedAt)}</span>
+                          <span>{formatDate(featuredBlog.publishedAt)}</span>
                         </div>
                       </div>
                       <div className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
-                        <span>{filteredBlogs[0].readTime}</span>
+                        <span>{calculateReadTime(featuredBlog.content)}</span>
                       </div>
                     </div>
                     <Link
-                      href="/login"
+                      href={`/blogs/${featuredBlog.slug}`}
                       className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
                     >
                       Read More
@@ -239,50 +301,128 @@ export default function BlogsPage() {
           {/* Blog Grid */}
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Latest Articles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredBlogs.slice(1).map((blog) => (
-                <div key={blog.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="h-48 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-700 flex items-center justify-center">
-                    <BookOpen className="w-12 h-12 text-gray-500 dark:text-gray-400" />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2.5 py-0.5 rounded">
-                        {blog.category}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2">
-                      {blog.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
-                      {blog.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
-                      <div className="flex items-center space-x-1">
-                        <User className="w-3 h-3" />
-                        <span>{blog.author}</span>
+            {otherBlogs.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {otherBlogs.map((blog) => (
+                    <div key={blog.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      {blog.featuredImage ? (
+                        <img 
+                          src={blog.featuredImage} 
+                          alt={blog.title}
+                          className="w-full h-48 object-cover"
+                        />
+                      ) : (
+                        <div className="h-48 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-700 flex items-center justify-center">
+                          <BookOpen className="w-12 h-12 text-gray-500 dark:text-gray-400" />
+                        </div>
+                      )}
+                      <div className="p-6">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2.5 py-0.5 rounded">
+                            {blog.category.name}
+                          </span>
+                        </div>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2">
+                          {blog.title}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
+                          {blog.excerpt}
+                        </p>
+                        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
+                          <div className="flex items-center space-x-1">
+                            <User className="w-3 h-3" />
+                            <span>{blog.author.fullName}</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <TrendingUp className="w-3 h-3" />
+                            <span>{blog._count.likes} likes</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-400">
+                            <Calendar className="w-3 h-3" />
+                            <span>{formatDate(blog.publishedAt)}</span>
+                          </div>
+                          <Link
+                            href={`/blogs/${blog.slug}`}
+                            className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                          >
+                            Read More →
+                          </Link>
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-1">
-                        <TrendingUp className="w-3 h-3" />
-                        <span>{blog.views} views</span>
-                      </div>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-400">
-                        <Calendar className="w-3 h-3" />
-                        <span>{formatDate(blog.publishedAt)}</span>
-                      </div>
-                      <Link
-                        href="/login"
-                        className="text-blue-600 hover:text-blue-700 text-sm font-medium"
-                      >
-                        Read More →
-                      </Link>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+
+                {/* Pagination */}
+                {pagination.totalPages > 1 && (
+                  <div className="mt-8 flex items-center justify-center space-x-2">
+                    <button
+                      onClick={() => handlePageChange(pagination.page - 1)}
+                      disabled={pagination.page === 1}
+                      className={`px-4 py-2 rounded-lg border ${
+                        pagination.page === 1
+                          ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                          : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    
+                    {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map((pageNum) => {
+                      // Show first page, last page, current page, and pages around current
+                      if (
+                        pageNum === 1 ||
+                        pageNum === pagination.totalPages ||
+                        (pageNum >= pagination.page - 1 && pageNum <= pagination.page + 1)
+                      ) {
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => handlePageChange(pageNum)}
+                            className={`px-4 py-2 rounded-lg border ${
+                              pagination.page === pageNum
+                                ? 'bg-blue-600 text-white border-blue-600'
+                                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      } else if (
+                        pageNum === pagination.page - 2 ||
+                        pageNum === pagination.page + 2
+                      ) {
+                        return (
+                          <span key={pageNum} className="px-2 text-gray-500 dark:text-gray-400">
+                            ...
+                          </span>
+                        );
+                      }
+                      return null;
+                    })}
+                    
+                    <button
+                      onClick={() => handlePageChange(pagination.page + 1)}
+                      disabled={pagination.page === pagination.totalPages}
+                      className={`px-4 py-2 rounded-lg border ${
+                        pagination.page === pagination.totalPages
+                          ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 border-gray-200 dark:border-gray-700 cursor-not-allowed'
+                          : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-gray-600 dark:text-gray-400">No blogs found in this category.</p>
+              </div>
+            )}
           </div>
 
           {/* Newsletter Signup */}

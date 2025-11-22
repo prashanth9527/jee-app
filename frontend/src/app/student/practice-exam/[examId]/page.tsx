@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
 import StudentLayout from '@/components/StudentLayout';
@@ -67,6 +67,7 @@ interface PracticeState {
 export default function PracticeExamPage() {
   const router = useRouter();
   const params = useParams();
+  const searchParams = useSearchParams();
   const examId = params?.examId as string;
   const { showSuccess, showInfo } = useToastContext();
 
@@ -83,10 +84,21 @@ export default function PracticeExamPage() {
   const [showShortcutsLegend, setShowShortcutsLegend] = useState(false);
 
   useEffect(() => {
-    if (examId) {
+    // Check if we have query params for direct question fetching
+    const subjectId = searchParams?.get('subjectId');
+    const lessonId = searchParams?.get('lessonId');
+    const topicId = searchParams?.get('topicId');
+    const subtopicId = searchParams?.get('subtopicId');
+    const questionType = searchParams?.get('questionType');
+
+    if (subjectId) {
+      // Fetch questions directly based on filters
+      fetchQuestionsDirectly(subjectId, lessonId || undefined, topicId || undefined, subtopicId || undefined, questionType || undefined);
+    } else if (examId) {
+      // Use existing flow with examId
       fetchExamData();
     }
-  }, [examId]);
+  }, [examId, searchParams]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -260,6 +272,96 @@ export default function PracticeExamPage() {
     };
   }, [practiceState.currentQuestionIndex, practiceState.selectedAnswers, practiceState.checkedQuestions, practiceState.markedForReview, practiceState.practicedQuestions, examPaper, showShortcutsLegend]);
 
+  const fetchQuestionsDirectly = async (
+    subjectId: string,
+    lessonId?: string,
+    topicId?: string,
+    subtopicId?: string,
+    questionType?: string
+  ) => {
+    try {
+      setLoading(true);
+      const params = new URLSearchParams({
+        subjectId,
+        ...(lessonId && { lessonId }),
+        ...(topicId && { topicId }),
+        ...(subtopicId && { subtopicId }),
+        ...(questionType && questionType !== 'ALL' && { questionType })
+      });
+
+      const response = await api.get(`/student/practice-questions?${params}`);
+      const questions = response.data.questions;
+
+      if (!questions || questions.length === 0) {
+        Swal.fire({
+          title: 'No Questions Available',
+          text: 'No questions found for the selected filters.',
+          icon: 'warning',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          router.push('/student/practice');
+        });
+        return;
+      }
+
+      // Generate a title based on filters
+      const subjectName = searchParams?.get('subjectName') || 'Practice';
+      const lessonName = searchParams?.get('lessonName');
+      const topicName = searchParams?.get('topicName');
+      const subtopicName = searchParams?.get('subtopicName');
+      
+      const titleParts = [subjectName];
+      if (lessonName) titleParts.push(lessonName);
+      if (topicName) titleParts.push(topicName);
+      if (subtopicName) titleParts.push(subtopicName);
+      if (questionType === 'PYQ') titleParts.push('PYQ');
+      if (questionType === 'LMS') titleParts.push('LMS');
+      titleParts.push('Practice');
+      
+      const title = `${titleParts.join(' → ')} - ${new Date().toLocaleDateString()}`;
+
+      // Format as ExamPaper structure
+      const practiceExamPaper: ExamPaper = {
+        id: 'direct-practice', // No exam paper ID for direct practice
+        title: title,
+        description: 'Direct practice session',
+        timeLimitMin: null, // No time limit for direct practice
+        examType: 'PRACTICE_EXAM',
+        subjects: [],
+        questions: questions,
+        questionCount: questions.length,
+        practicedQuestionIds: response.data.practicedQuestionIds || []
+      };
+
+      setExamPaper(practiceExamPaper);
+      
+      // Initialize practiced questions from API response
+      if (response.data.practicedQuestionIds && response.data.practicedQuestionIds.length > 0) {
+        const practicedQuestionsMap: { [questionId: string]: boolean } = {};
+        response.data.practicedQuestionIds.forEach((questionId: string) => {
+          practicedQuestionsMap[questionId] = true;
+        });
+        setPracticeState(prev => ({
+          ...prev,
+          practicedQuestions: practicedQuestionsMap
+        }));
+      }
+    } catch (error: any) {
+      console.error('Error fetching questions directly:', error);
+      setError(error.response?.data?.message || 'Failed to load questions');
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to load questions',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        router.push('/student/practice');
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const fetchExamData = async () => {
     try {
       setLoading(true);
@@ -313,7 +415,26 @@ export default function PracticeExamPage() {
     // Save to database if not already practiced
     if (!practiceState.practicedQuestions[questionId]) {
       try {
-        await api.post(`/student/practice-exam/${examId}/question/${questionId}/practice`);
+        // For direct practice, pass filters as query params
+        if (examId === 'direct-practice') {
+          const subjectId = searchParams?.get('subjectId');
+          const lessonId = searchParams?.get('lessonId');
+          const topicId = searchParams?.get('topicId');
+          const subtopicId = searchParams?.get('subtopicId');
+          const questionType = searchParams?.get('questionType');
+          
+          const queryParams = new URLSearchParams();
+          if (subjectId) queryParams.append('subjectId', subjectId);
+          if (lessonId) queryParams.append('lessonId', lessonId);
+          if (topicId) queryParams.append('topicId', topicId);
+          if (subtopicId) queryParams.append('subtopicId', subtopicId);
+          if (questionType) queryParams.append('questionType', questionType);
+          
+          await api.post(`/student/practice-exam/direct-practice/question/${questionId}/practice?${queryParams.toString()}`);
+        } else {
+          // For exam paper-based practice
+          await api.post(`/student/practice-exam/${examId}/question/${questionId}/practice`);
+        }
       } catch (error: any) {
         console.error('Error marking question as practiced:', error);
         // Don't show error to user, just log it
@@ -417,6 +538,16 @@ export default function PracticeExamPage() {
   };
 
   const handleStartExam = async () => {
+    // Only allow starting exam if we have a valid examId (not direct practice)
+    if (!examId || examId === 'direct-practice') {
+      Swal.fire({
+        title: 'Cannot Start Exam',
+        text: 'This is a direct practice session. Please create an exam paper first to start a timed exam.',
+        icon: 'info'
+      });
+      return;
+    }
+
     try {
       const result = await Swal.fire({
         title: 'Start Real Exam?',

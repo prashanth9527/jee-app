@@ -9,17 +9,25 @@ import {
   Query,
   UseGuards,
   Request,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto, UpdateBlogDto, BlogFilters, CreateBlogCategoryDto, UpdateBlogCategoryDto } from './dto/blog.dto';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
+import { FileUploadService } from '../file-upload/file-upload.service';
 
 @Controller('admin/blogs')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class BlogsController {
-  constructor(private readonly blogsService: BlogsService) {}
+  constructor(
+    private readonly blogsService: BlogsService,
+    private readonly fileUploadService: FileUploadService
+  ) {}
 
   // ========================================
   // BLOG CATEGORIES
@@ -174,6 +182,48 @@ export class BlogsController {
   @Roles('ADMIN')
   async generateBlogOutline(@Body() body: { topic: string; streamId?: string }) {
     return this.blogsService.generateBlogOutline(body.topic, body.streamId);
+  }
+
+  // ========================================
+  // IMAGE UPLOAD
+  // ========================================
+
+  @Post('upload-image')
+  @Roles('ADMIN')
+  @UseInterceptors(FileInterceptor('image'))
+  async uploadImage(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new BadRequestException('No image file provided');
+    }
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.mimetype)) {
+      throw new BadRequestException('Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.');
+    }
+
+    // Validate file size (max 5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      throw new BadRequestException('File size exceeds 5MB limit.');
+    }
+
+    try {
+      const imageUrl = await this.fileUploadService.uploadFile(
+        file.buffer,
+        file.originalname,
+        file.mimetype,
+        'blog-images'
+      );
+
+      return {
+        success: true,
+        url: imageUrl,
+        message: 'Image uploaded successfully'
+      };
+    } catch (error) {
+      throw new BadRequestException('Failed to upload image: ' + error.message);
+    }
   }
 }
 
