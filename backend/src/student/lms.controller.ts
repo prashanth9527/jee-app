@@ -24,35 +24,17 @@ export class StudentLMSController {
       throw new ForbiddenException('No stream assigned to user');
     }
 
-    // Get subjects with progress
+    // Get subjects with progress - show all subjects for the stream
     const subjects = await this.prisma.subject.findMany({
       where: {
-        streamId: user.streamId,
-        lmsContent: {
-          some: { status: 'PUBLISHED' }
-        }
+        streamId: user.streamId
       },
       include: {
         lessons: {
-          where: {
-            lmsContent: {
-              some: { status: 'PUBLISHED' }
-            }
-          },
           include: {
             topics: {
-              where: {
-                lmsContent: {
-                  some: { status: 'PUBLISHED' }
-                }
-              },
               include: {
                 subtopics: {
-                  where: {
-                    lmsContent: {
-                      some: { status: 'PUBLISHED' }
-                    }
-                  },
                   include: {
                     lmsContent: {
                       where: { status: 'PUBLISHED' },
@@ -224,12 +206,7 @@ export class StudentLMSController {
 
     const subjects = await this.prisma.subject.findMany({
       where: {
-        streamId: user.streamId,
-        lmsContent: {
-          some: {
-            status: 'PUBLISHED'
-          }
-        }
+        streamId: user.streamId
       },
       include: {
         _count: {

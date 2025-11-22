@@ -121,15 +121,52 @@ export default function PracticeExamPage() {
 
       console.log('Key pressed:', event.key, 'Code:', event.code);
       
+      // Handle option selection with A, B, C, D keys or numbers 1-4 (for MCQ questions)
+      // Use uppercase letters (A-D) or number keys (1-4) to avoid conflict with navigation (lowercase 'a' and 'd')
+      if ((currentQuestion.questionType === QuestionType.MCQ_SINGLE || currentQuestion.questionType === QuestionType.MCQ_MULTIPLE) && !isChecked) {
+        const key = event.key;
+        const optionIndexMap: { [key: string]: number } = {
+          'A': 0, '1': 0,
+          'B': 1, '2': 1,
+          'C': 2, '3': 2,
+          'D': 3, '4': 3,
+          'E': 4, '5': 4,
+          'F': 5, '6': 5
+        };
+        
+        // Only handle uppercase letters or number keys to avoid conflict with navigation
+        if (optionIndexMap.hasOwnProperty(key) && currentQuestion.options && optionIndexMap[key] < currentQuestion.options.length) {
+          event.preventDefault();
+          const optionIndex = optionIndexMap[key];
+          const selectedOption = currentQuestion.options[optionIndex];
+          
+          if (currentQuestion.questionType === QuestionType.MCQ_SINGLE) {
+            handleAnswerSelect(currentQuestion.id, selectedOption.id);
+            showInfo('Option Selected', `Selected option ${String.fromCharCode(65 + optionIndex)}`, 800);
+          } else if (currentQuestion.questionType === QuestionType.MCQ_MULTIPLE) {
+            const currentAnswers = (selectedAnswer as string[]) || [];
+            const isAlreadySelected = currentAnswers.includes(selectedOption.id);
+            const newAnswers = isAlreadySelected
+              ? currentAnswers.filter(id => id !== selectedOption.id)
+              : [...currentAnswers, selectedOption.id];
+            handleAnswerSelect(currentQuestion.id, newAnswers);
+            showInfo('Option Toggled', `${isAlreadySelected ? 'Deselected' : 'Selected'} option ${String.fromCharCode(65 + optionIndex)}`, 800);
+          }
+          return;
+        }
+      }
+      
       switch (event.key) {
         case 'ArrowLeft':
-        case 'a':
+        case 'p':
+        case 'P':
           event.preventDefault();
           handlePreviousQuestion();
           showInfo('Navigation', 'Previous question', 1000);
           break;
         case 'ArrowRight':
-        case 'd':
+        case 'n':
+        case 'N':
           event.preventDefault();
           handleNextQuestion();
           showInfo('Navigation', 'Next question', 1000);
@@ -480,62 +517,74 @@ export default function PracticeExamPage() {
       case QuestionType.MCQ_SINGLE:
         return (
           <div className="space-y-3">
-            {question.options.map((option: QuestionOption) => (
-              <label
-                key={option.id}
-                className={`block p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
-                  selectedAnswer === option.id
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
-                } ${
-                  isChecked && option.isCorrect
-                    ? 'border-green-500 bg-green-50'
-                    : ''
-                } ${
-                  isChecked && selectedAnswer === option.id && !isCorrect
-                    ? 'border-red-500 bg-red-50'
-                    : ''
-                }`}
-              >
-                <input
-                  type="radio"
-                  name={`question-${question.id}`}
-                  value={option.id}
-                  checked={selectedAnswer === option.id}
-                  onChange={(e) => handleAnswerSelect(question.id, e.target.value)}
-                  className="sr-only"
-                  disabled={isChecked}
-                />
-                <div className="flex items-center">
-                  <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
+            {question.options.map((option: QuestionOption, index: number) => {
+              const optionLetter = String.fromCharCode(65 + index); // A, B, C, D, etc.
+              return (
+                <label
+                  key={option.id}
+                  className={`block p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
                     selectedAnswer === option.id
-                      ? 'border-blue-500 bg-blue-500'
-                      : 'border-gray-300'
+                      ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
+                      : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                   } ${
                     isChecked && option.isCorrect
-                      ? 'border-green-500 bg-green-500'
+                      ? 'border-green-500 bg-green-50 dark:border-green-400 dark:bg-green-900/20'
                       : ''
                   } ${
                     isChecked && selectedAnswer === option.id && !isCorrect
-                      ? 'border-red-500 bg-red-500'
+                      ? 'border-red-500 bg-red-50 dark:border-red-400 dark:bg-red-900/20'
                       : ''
-                  }`}>
-                    {selectedAnswer === option.id && (
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name={`question-${question.id}`}
+                    value={option.id}
+                    checked={selectedAnswer === option.id}
+                    onChange={(e) => handleAnswerSelect(question.id, e.target.value)}
+                    className="sr-only"
+                    disabled={isChecked}
+                  />
+                  <div className="flex items-center">
+                    <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
+                      selectedAnswer === option.id
+                        ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
+                        : 'border-gray-300 dark:border-gray-600'
+                    } ${
+                      isChecked && option.isCorrect
+                        ? 'border-green-500 bg-green-500 dark:border-green-400 dark:bg-green-400'
+                        : ''
+                    } ${
+                      isChecked && selectedAnswer === option.id && !isCorrect
+                        ? 'border-red-500 bg-red-500 dark:border-red-400 dark:bg-red-400'
+                        : ''
+                    }`}>
+                      {selectedAnswer === option.id && (
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-3 flex-1">
+                      <span className={`text-xs font-semibold px-2 py-1 rounded border ${
+                        selectedAnswer === option.id
+                          ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
+                          : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
+                      }`}>
+                        {optionLetter}
+                      </span>
+                      <div className="flex-1">
+                        <LatexContentDisplay content={option.text} />
+                      </div>
+                    </div>
+                    {isChecked && option.isCorrect && (
+                      <div className="text-green-600 dark:text-green-400 ml-2">✓</div>
+                    )}
+                    {isChecked && selectedAnswer === option.id && !isCorrect && (
+                      <div className="text-red-600 dark:text-red-400 ml-2">✗</div>
                     )}
                   </div>
-                  <div className="flex-1">
-                    <LatexContentDisplay content={option.text} />
-                  </div>
-                  {isChecked && option.isCorrect && (
-                    <div className="text-green-600 ml-2">✓</div>
-                  )}
-                  {isChecked && selectedAnswer === option.id && !isCorrect && (
-                    <div className="text-red-600 ml-2">✗</div>
-                  )}
-                </div>
-              </label>
-            ))}
+                </label>
+              );
+            })}
           </div>
         );
 
@@ -543,60 +592,72 @@ export default function PracticeExamPage() {
         const selectedArray = (selectedAnswer as string[]) || [];
         return (
           <div className="space-y-3">
-            {question.options.map((option: QuestionOption) => (
-              <label
-                key={option.id}
-                className={`block p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
-                  selectedArray.includes(option.id)
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
-                } ${
-                  isChecked && option.isCorrect
-                    ? 'border-green-500 bg-green-50'
-                    : ''
-                } ${
-                  isChecked && selectedArray.includes(option.id) && !option.isCorrect
-                    ? 'border-red-500 bg-red-50'
-                    : ''
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  checked={selectedArray.includes(option.id)}
-                  onChange={() => handleMultipleChoiceSelect(question.id, option.id)}
-                  className="sr-only"
-                  disabled={isChecked}
-                />
-                <div className="flex items-center">
-                  <div className={`w-6 h-6 border-2 mr-3 flex items-center justify-center rounded ${
+            {question.options.map((option: QuestionOption, index: number) => {
+              const optionLetter = String.fromCharCode(65 + index); // A, B, C, D, etc.
+              return (
+                <label
+                  key={option.id}
+                  className={`block p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
                     selectedArray.includes(option.id)
-                      ? 'border-blue-500 bg-blue-500'
-                      : 'border-gray-300'
+                      ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
+                      : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                   } ${
                     isChecked && option.isCorrect
-                      ? 'border-green-500 bg-green-500'
+                      ? 'border-green-500 bg-green-50 dark:border-green-400 dark:bg-green-900/20'
                       : ''
                   } ${
                     isChecked && selectedArray.includes(option.id) && !option.isCorrect
-                      ? 'border-red-500 bg-red-500'
+                      ? 'border-red-500 bg-red-50 dark:border-red-400 dark:bg-red-900/20'
                       : ''
-                  }`}>
-                    {selectedArray.includes(option.id) && (
-                      <div className="text-white text-sm">✓</div>
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedArray.includes(option.id)}
+                    onChange={() => handleMultipleChoiceSelect(question.id, option.id)}
+                    className="sr-only"
+                    disabled={isChecked}
+                  />
+                  <div className="flex items-center">
+                    <div className={`w-6 h-6 border-2 mr-3 flex items-center justify-center rounded ${
+                      selectedArray.includes(option.id)
+                        ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
+                        : 'border-gray-300 dark:border-gray-600'
+                    } ${
+                      isChecked && option.isCorrect
+                        ? 'border-green-500 bg-green-500 dark:border-green-400 dark:bg-green-400'
+                        : ''
+                    } ${
+                      isChecked && selectedArray.includes(option.id) && !option.isCorrect
+                        ? 'border-red-500 bg-red-500 dark:border-red-400 dark:bg-red-400'
+                        : ''
+                    }`}>
+                      {selectedArray.includes(option.id) && (
+                        <div className="text-white text-sm">✓</div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-3 flex-1">
+                      <span className={`text-xs font-semibold px-2 py-1 rounded border ${
+                        selectedArray.includes(option.id)
+                          ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
+                          : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
+                      }`}>
+                        {optionLetter}
+                      </span>
+                      <div className="flex-1">
+                        <LatexContentDisplay content={option.text} />
+                      </div>
+                    </div>
+                    {isChecked && option.isCorrect && (
+                      <div className="text-green-600 dark:text-green-400 ml-2">✓</div>
+                    )}
+                    {isChecked && selectedArray.includes(option.id) && !option.isCorrect && (
+                      <div className="text-red-600 dark:text-red-400 ml-2">✗</div>
                     )}
                   </div>
-                  <div className="flex-1">
-                    <LatexContentDisplay content={option.text} />
-                  </div>
-                  {isChecked && option.isCorrect && (
-                    <div className="text-green-600 ml-2">✓</div>
-                  )}
-                  {isChecked && selectedArray.includes(option.id) && !option.isCorrect && (
-                    <div className="text-red-600 ml-2">✗</div>
-                  )}
-                </div>
-              </label>
-            ))}
+                </label>
+              );
+            })}
           </div>
         );
 
@@ -814,9 +875,9 @@ export default function PracticeExamPage() {
                 
                 {/* Keyboard Shortcuts Legend */}
                 {showShortcutsLegend && (
-                  <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-sm font-semibold text-gray-700 flex items-center">
+                      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center">
                         <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
                         </svg>
@@ -834,21 +895,32 @@ export default function PracticeExamPage() {
                     </div>
                     <div className="space-y-2 text-xs">
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Navigate:</span>
+                        <span className="text-gray-600 dark:text-gray-400">Navigate:</span>
                         <div className="flex space-x-1">
                           <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">A</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">P</kbd>
                           <span className="text-gray-400">/</span>
                           <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">→</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">D</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">N</kbd>
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Mark Review:</span>
+                        <span className="text-gray-600 dark:text-gray-400">Select Option:</span>
+                        <div className="flex space-x-1">
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">A</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">B</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">C</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">D</kbd>
+                          <span className="text-gray-400">/</span>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">1-4</kbd>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600 dark:text-gray-400">Mark Review:</span>
                         <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">M</kbd>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Check Answer:</span>
+                        <span className="text-gray-600 dark:text-gray-400">Check Answer:</span>
                         <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">Space</kbd>
                       </div>
                       <div className="flex justify-between items-center">
