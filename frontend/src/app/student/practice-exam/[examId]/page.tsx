@@ -225,10 +225,21 @@ export default function PracticeExamPage() {
           setShowShortcutsLegend(false);
           break;
         default:
-          // Handle number keys 1-9 for quick navigation
-          if (event.key >= '1' && event.key <= '9') {
-            const questionNumber = parseInt(event.key) - 1;
-            if (questionNumber < examPaper?.questionCount) {
+          // Handle number keys 1-9 for quick navigation (both regular and numeric keypad)
+          const keyCode = event.code;
+          const isNumpadKey = keyCode.startsWith('Numpad');
+          const isRegularNumber = event.key >= '1' && event.key <= '9';
+          
+          if (isRegularNumber || isNumpadKey) {
+            let questionNumber: number;
+            if (isNumpadKey) {
+              // Extract number from keyCode (e.g., "Numpad1" -> 1)
+              questionNumber = parseInt(keyCode.replace('Numpad', '')) - 1;
+            } else {
+              questionNumber = parseInt(event.key) - 1;
+            }
+            
+            if (questionNumber >= 0 && questionNumber < examPaper?.questionCount) {
               event.preventDefault();
               setPracticeState(prev => ({ ...prev, currentQuestionIndex: questionNumber }));
               showInfo('Quick Navigation', `Jumped to question ${questionNumber + 1}`, 1000);
@@ -320,12 +331,12 @@ export default function PracticeExamPage() {
 
   const getQuestionStatusColor = (status: string) => {
     switch (status) {
-      case 'checked': return 'bg-green-500';
-      case 'answered': return 'bg-green-500';
-      case 'answered-review': return 'bg-blue-500';
-      case 'review': return 'bg-yellow-500';
-      case 'unanswered': return 'bg-gray1-300';
-      default: return 'bg-gray1-300';
+      case 'checked': return 'bg-green-500 dark:bg-green-500 border border-gray-200 dark:border-gray-600 text-white dark:text-white font-semibold';
+      case 'answered': return 'bg-green-500 dark:bg-green-500 border border-gray-200 dark:border-gray-600 text-white dark:text-white font-semibold';
+      case 'answered-review': return 'bg-blue-500 dark:bg-blue-500 border border-gray-200 dark:border-gray-600 text-white dark:text-white font-semibold';
+      case 'review': return 'bg-yellow-500 dark:bg-yellow-500 border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white font-semibold';
+      case 'unanswered': return 'bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-600 text-gray-900 dark:text-gray-300 font-bold';
+      default: return 'bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-600 text-gray-900 dark:text-gray-300 font-bold';
     }
   };
 
@@ -480,7 +491,8 @@ export default function PracticeExamPage() {
       
       case QuestionType.MCQ_MULTIPLE:
         const correctOptions = question.options.filter(option => option.isCorrect).map(option => option.id);
-        const selectedArray = selectedAnswer as string[];
+        const selectedArray = (selectedAnswer as string[]) || [];
+        if (selectedArray.length === 0) return false;
         return correctOptions.length === selectedArray.length && 
                correctOptions.every(optionId => selectedArray.includes(optionId));
       
@@ -789,7 +801,7 @@ export default function PracticeExamPage() {
                           title="Mark for Review (Press M)"
                         >
                           {practiceState.markedForReview[currentQuestion.id] ? '✓ Marked for Review' : 'Mark for Review'}
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">M</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-700 dark:text-green-300 rounded text-xs">M</kbd>
                         </button>
                       </div>
                     </div>
@@ -806,7 +818,7 @@ export default function PracticeExamPage() {
                     {/* Check Answer Button */}
                     {!isChecked && (
                       (currentQuestion.questionType === QuestionType.MCQ_SINGLE && selectedAnswer) ||
-                      (currentQuestion.questionType === QuestionType.MCQ_MULTIPLE && (selectedAnswer as string[]).length > 0) ||
+                      (currentQuestion.questionType === QuestionType.MCQ_MULTIPLE && selectedAnswer && Array.isArray(selectedAnswer) && selectedAnswer.length > 0) ||
                       (currentQuestion.questionType === QuestionType.OPEN_ENDED && selectedAnswer !== undefined) ||
                       (currentQuestion.questionType === QuestionType.PARAGRAPH && currentQuestion.subQuestions?.every(subQ => practiceState.selectedAnswers[subQ.id]))
                     ) && (
@@ -895,41 +907,44 @@ export default function PracticeExamPage() {
                     </div>
                     <div className="space-y-2 text-xs">
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600 dark:text-gray-400">Navigate:</span>
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Navigate:</span>
                         <div className="flex space-x-1">
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">P</kbd>
-                          <span className="text-gray-400">/</span>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">→</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">N</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">←</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">P</kbd>
+                          <span className="text-gray-400 dark:text-gray-500">/</span>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">→</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">N</kbd>
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600 dark:text-gray-400">Select Option:</span>
-                        <div className="flex space-x-1">
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">A</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">B</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">C</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">D</kbd>
-                          <span className="text-gray-400">/</span>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">1-4</kbd>
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Select Option:</span>
+                        <div className="flex">
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">A</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">B</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">C</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">D</kbd>
+                          <span className="text-gray-400 dark:text-gray-500">/</span>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">1-4</kbd>
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600 dark:text-gray-400">Mark Review:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">M</kbd>
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Mark Review:</span>
+                        <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">M</kbd>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600 dark:text-gray-400">Check Answer:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">Space</kbd>
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Check Answer:</span>
+                        <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">Space</kbd>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Jump to Q:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">1-9</kbd>
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Jump to Q:</span>
+                        <div className="flex items-center space-x-1">
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">1-9</kbd>
+                          <span className="text-gray-500 dark:text-gray-400 text-[10px]">(Num Pad)</span>
+                        </div>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Help:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">H</kbd>
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Help:</span>
+                        <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">H</kbd>
                       </div>
                     </div>
                   </div>
@@ -970,8 +985,15 @@ export default function PracticeExamPage() {
                 </div>
                 
                 {/* Question Navigation */}
-                <div className="pt-4 border-t border-gray-200">
-                  <h4 className="font-semibold text-gray-900 mb-3">Quick Navigation</h4>
+                <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">Quick Navigation</h4>
+                    <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                      <span>Press</span>
+                      <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">1-9</kbd>
+                      <span className="text-[10px] text-gray-500 dark:text-gray-400">(Num Pad)</span>
+                    </div>
+                  </div>
                   <div className="grid grid-cols-5 gap-2 mb-4">
                     {examPaper.questions.map((question, index) => {
                       const status = getQuestionStatus(question.id);
@@ -981,9 +1003,9 @@ export default function PracticeExamPage() {
                         <button
                           key={question.id}
                           onClick={() => setPracticeState(prev => ({ ...prev, currentQuestionIndex: index }))}
-                          className={`w-10 h-10 rounded-lg text-sm font-medium flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+                          className={`w-10 h-10 rounded-lg text-sm flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 question-nav-btn ${
                             isCurrent
-                              ? 'ring-2 ring-blue-500 bg-blue-600 text-white'
+                              ? 'ring-2 ring-blue-500 bg-blue-600 dark:bg-blue-600 border border-gray-200 dark:border-gray-600 text-white font-semibold'
                               : getQuestionStatusColor(status)
                           }`}
                         >

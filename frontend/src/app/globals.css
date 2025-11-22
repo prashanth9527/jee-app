@@ -610,3 +610,12 @@ img[src$=".png"] {
     background-color: transparent; /* or keep it clean in light mode */
   }
 }
+
+/* Ensure question navigation buttons are visible in light mode */
+:root:not(.dark) .question-nav-btn.bg-white,
+:root:not(.dark) .question-nav-btn[class*="bg-gray-100"] {
+  background-color: #ffffff !important;
+  color: #111827 !important; /* gray-900 - very dark text */
+  border-color: #9ca3af !important; /* gray-400 */
+  font-weight: 700 !important;
+}
