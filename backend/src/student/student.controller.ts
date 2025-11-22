@@ -660,16 +660,35 @@ export class StudentController {
 				})
 				: [];
 
-			return {
-				...examPaper,
-				subjects,
-				questions,
-				questionCount: questions.length
-			};
-		} catch (error) {
-			throw new Error(`Failed to fetch practice exam: ${error.message}`);
-		}
+		// Get practiced questions for this user and exam
+		const practiceProgress = await this.prisma.practiceProgress.findFirst({
+			where: {
+				userId,
+				contentType: 'PRACTICE_EXAM',
+				contentId: examId
+			},
+			include: {
+				sessions: {
+					select: {
+						questionId: true
+					}
+				}
+			}
+		});
+
+		const practicedQuestionIds = practiceProgress?.sessions.map(s => s.questionId) || [];
+
+		return {
+			...examPaper,
+			subjects,
+			questions,
+			questionCount: questions.length,
+			practicedQuestionIds
+		};
+	} catch (error) {
+		throw new Error(`Failed to fetch practice exam: ${error.message}`);
 	}
+}
 
 	@Post('practice-exam/:examId/track')
 	async trackPracticeSession(@Req() req: any, @Param('examId') examId: string) {
@@ -679,7 +698,7 @@ export class StudentController {
 			// Check if exam paper exists
 			const examPaper = await this.prisma.examPaper.findUnique({
 				where: { id: examId },
-				select: { id: true }
+				select: { id: true, questionIds: true }
 			});
 
 			if (!examPaper) {
@@ -704,9 +723,108 @@ export class StudentController {
 				}
 			});
 
+			// Create or update practice progress
+			await this.prisma.practiceProgress.upsert({
+				where: {
+					userId_contentType_contentId: {
+						userId,
+						contentType: 'PRACTICE_EXAM',
+						contentId: examId
+					}
+				},
+				update: {
+					lastAccessedAt: new Date()
+				},
+				create: {
+					userId,
+					contentType: 'PRACTICE_EXAM',
+					contentId: examId,
+					totalQuestions: examPaper.questionIds?.length || 0,
+					lastAccessedAt: new Date()
+				}
+			});
+
 			return { success: true, message: 'Practice session tracked' };
 		} catch (error) {
 			throw new Error(`Failed to track practice session: ${error.message}`);
+		}
+	}
+
+	@Post('practice-exam/:examId/question/:questionId/practice')
+	async markQuestionAsPracticed(
+		@Req() req: any,
+		@Param('examId') examId: string,
+		@Param('questionId') questionId: string
+	) {
+		const userId = req.user.id;
+
+		try {
+			// Check if exam paper exists
+			const examPaper = await this.prisma.examPaper.findUnique({
+				where: { id: examId },
+				select: { id: true, questionIds: true }
+			});
+
+			if (!examPaper) {
+				throw new Error('Exam paper not found');
+			}
+
+			// Verify question belongs to this exam
+			if (!examPaper.questionIds?.includes(questionId)) {
+				throw new Error('Question does not belong to this exam');
+			}
+
+			// Get or create practice progress
+			const practiceProgress = await this.prisma.practiceProgress.upsert({
+				where: {
+					userId_contentType_contentId: {
+						userId,
+						contentType: 'PRACTICE_EXAM',
+						contentId: examId
+					}
+				},
+				update: {
+					lastAccessedAt: new Date()
+				},
+				create: {
+					userId,
+					contentType: 'PRACTICE_EXAM',
+					contentId: examId,
+					totalQuestions: examPaper.questionIds?.length || 0,
+					lastAccessedAt: new Date()
+				}
+			});
+
+			// Check if question session already exists
+			const existingSession = await this.prisma.practiceQuestionSession.findFirst({
+				where: {
+					progressId: practiceProgress.id,
+					questionId: questionId
+				}
+			});
+
+			if (existingSession) {
+				// Update existing session
+				await this.prisma.practiceQuestionSession.update({
+					where: { id: existingSession.id },
+					data: {
+						attemptedAt: new Date()
+					}
+				});
+			} else {
+				// Create new session
+				await this.prisma.practiceQuestionSession.create({
+					data: {
+						progressId: practiceProgress.id,
+						questionId: questionId,
+						attemptedAt: new Date()
+					}
+				});
+			}
+
+			return { success: true, message: 'Question marked as practiced' };
+		} catch (error) {
+			throw new Error(`Failed to mark question as practiced: ${error.message}`);
 		}
 	}
 

@@ -415,7 +415,14 @@ export class ExamsService {
         },
         subject: true,
         topic: true,
-        subtopic: true
+        subtopic: true,
+        subQuestions: {
+          include: {
+            options: {
+              orderBy: { order: 'asc' }
+            }
+          }
+        }
       }
     });
 
@@ -425,7 +432,8 @@ export class ExamsService {
         isOpenEnded: question.isOpenEnded,
         correctNumericAnswer: question.correctNumericAnswer,
         answerTolerance: question.answerTolerance,
-        optionsCount: question.options?.length || 0
+        optionsCount: question.options?.length || 0,
+        subQuestionsCount: question.subQuestions?.length || 0
       });
       
       return {
@@ -437,6 +445,8 @@ export class ExamsService {
         isOpenEnded: question.isOpenEnded,
         correctNumericAnswer: question.correctNumericAnswer,
         answerTolerance: question.answerTolerance,
+        questionType: question.questionType,
+        parentQuestionId: question.parentQuestionId,
       subject: question.subject ? {
         id: question.subject.id,
         name: question.subject.name
@@ -453,7 +463,22 @@ export class ExamsService {
         id: option.id,
         text: option.text,
         isCorrect: option.isCorrect
-      }))
+      })),
+      subQuestions: question.subQuestions ? question.subQuestions.map((subQ: any) => ({
+        id: subQ.id,
+        stem: subQ.stem,
+        explanation: subQ.explanation,
+        difficulty: subQ.difficulty,
+        questionType: subQ.questionType,
+        isOpenEnded: subQ.isOpenEnded,
+        correctNumericAnswer: subQ.correctNumericAnswer,
+        answerTolerance: subQ.answerTolerance,
+        options: subQ.options.map((option: any) => ({
+          id: option.id,
+          text: option.text,
+          isCorrect: option.isCorrect
+        }))
+      })) : undefined
       };
     });
   }

@@ -53,6 +53,7 @@ interface ExamPaper {
   subjects: { id: string; name: string }[];
   questions: Question[];
   questionCount: number;
+  practicedQuestionIds?: string[];
 }
 
 interface PracticeState {
@@ -60,6 +61,7 @@ interface PracticeState {
   checkedQuestions: { [questionId: string]: boolean };
   currentQuestionIndex: number;
   markedForReview: { [questionId: string]: boolean };
+  practicedQuestions: { [questionId: string]: boolean };
 }
 
 export default function PracticeExamPage() {
@@ -75,7 +77,8 @@ export default function PracticeExamPage() {
     selectedAnswers: {},
     checkedQuestions: {},
     currentQuestionIndex: 0,
-    markedForReview: {}
+    markedForReview: {},
+    practicedQuestions: {}
   });
   const [showShortcutsLegend, setShowShortcutsLegend] = useState(false);
 
@@ -255,13 +258,25 @@ export default function PracticeExamPage() {
       document.removeEventListener('keydown', handleKeyPress);
       console.log('Keyboard event listener removed');
     };
-  }, [practiceState.currentQuestionIndex, practiceState.selectedAnswers, practiceState.checkedQuestions, practiceState.markedForReview, examPaper, showShortcutsLegend]);
+  }, [practiceState.currentQuestionIndex, practiceState.selectedAnswers, practiceState.checkedQuestions, practiceState.markedForReview, practiceState.practicedQuestions, examPaper, showShortcutsLegend]);
 
   const fetchExamData = async () => {
     try {
       setLoading(true);
       const response = await api.get(`/student/practice-exam/${examId}`);
       setExamPaper(response.data);
+      
+      // Initialize practiced questions from API response
+      if (response.data.practicedQuestionIds && response.data.practicedQuestionIds.length > 0) {
+        const practicedQuestionsMap: { [questionId: string]: boolean } = {};
+        response.data.practicedQuestionIds.forEach((questionId: string) => {
+          practicedQuestionsMap[questionId] = true;
+        });
+        setPracticeState(prev => ({
+          ...prev,
+          practicedQuestions: practicedQuestionsMap
+        }));
+      }
       
       // Track that user started practice session
       await api.post(`/student/practice-exam/${examId}/track`);
@@ -281,14 +296,29 @@ export default function PracticeExamPage() {
     }
   };
 
-  const handleAnswerSelect = (questionId: string, answer: string | string[] | number) => {
+  const handleAnswerSelect = async (questionId: string, answer: string | string[] | number) => {
+    // Update local state immediately
     setPracticeState(prev => ({
       ...prev,
       selectedAnswers: {
         ...prev.selectedAnswers,
         [questionId]: answer
+      },
+      practicedQuestions: {
+        ...prev.practicedQuestions,
+        [questionId]: true
       }
     }));
+
+    // Save to database if not already practiced
+    if (!practiceState.practicedQuestions[questionId]) {
+      try {
+        await api.post(`/student/practice-exam/${examId}/question/${questionId}/practice`);
+      } catch (error: any) {
+        console.error('Error marking question as practiced:', error);
+        // Don't show error to user, just log it
+      }
+    }
   };
 
   const handleMultipleChoiceSelect = (questionId: string, optionId: string) => {
@@ -524,7 +554,12 @@ export default function PracticeExamPage() {
   const selectedAnswer = practiceState.selectedAnswers[currentQuestion.id];
   const isCorrect = validateAnswer(currentQuestion, selectedAnswer);
 
-  const renderQuestionInput = (question: Question) => {
+  const renderQuestionInput = (question: Question, overrideSelectedAnswer?: string | string[] | number, overrideIsChecked?: boolean, overrideIsCorrect?: boolean) => {
+    // Use override values if provided (for sub-questions), otherwise use current question's state
+    const questionSelectedAnswer = overrideSelectedAnswer !== undefined ? overrideSelectedAnswer : (question.id === currentQuestion.id ? selectedAnswer : practiceState.selectedAnswers[question.id]);
+    const questionIsChecked = overrideIsChecked !== undefined ? overrideIsChecked : (question.id === currentQuestion.id ? isChecked : practiceState.checkedQuestions[question.id]);
+    const questionIsCorrect = overrideIsCorrect !== undefined ? overrideIsCorrect : (question.id === currentQuestion.id ? isCorrect : validateAnswer(question, questionSelectedAnswer));
+
     switch (question.questionType) {
       case QuestionType.MCQ_SINGLE:
         return (
@@ -535,15 +570,15 @@ export default function PracticeExamPage() {
                 <label
                   key={option.id}
                   className={`block p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
-                    selectedAnswer === option.id
+                    questionSelectedAnswer === option.id
                       ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
                       : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                   } ${
-                    isChecked && option.isCorrect
+                    questionIsChecked && option.isCorrect
                       ? 'border-green-500 bg-green-50 dark:border-green-400 dark:bg-green-900/20'
                       : ''
                   } ${
-                    isChecked && selectedAnswer === option.id && !isCorrect
+                    questionIsChecked && questionSelectedAnswer === option.id && !questionIsCorrect
                       ? 'border-red-500 bg-red-50 dark:border-red-400 dark:bg-red-900/20'
                       : ''
                   }`}
@@ -552,32 +587,32 @@ export default function PracticeExamPage() {
                     type="radio"
                     name={`question-${question.id}`}
                     value={option.id}
-                    checked={selectedAnswer === option.id}
+                    checked={questionSelectedAnswer === option.id}
                     onChange={(e) => handleAnswerSelect(question.id, e.target.value)}
                     className="sr-only"
-                    disabled={isChecked}
+                    disabled={questionIsChecked}
                   />
                   <div className="flex items-center">
                     <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
-                      selectedAnswer === option.id
+                      questionSelectedAnswer === option.id
                         ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
                         : 'border-gray-300 dark:border-gray-600'
                     } ${
-                      isChecked && option.isCorrect
+                      questionIsChecked && option.isCorrect
                         ? 'border-green-500 bg-green-500 dark:border-green-400 dark:bg-green-400'
                         : ''
                     } ${
-                      isChecked && selectedAnswer === option.id && !isCorrect
+                      questionIsChecked && questionSelectedAnswer === option.id && !questionIsCorrect
                         ? 'border-red-500 bg-red-500 dark:border-red-400 dark:bg-red-400'
                         : ''
                     }`}>
-                      {selectedAnswer === option.id && (
+                      {questionSelectedAnswer === option.id && (
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                       )}
                     </div>
                     <div className="flex items-center gap-3 flex-1">
                       <span className={`text-xs font-semibold px-2 py-1 rounded border ${
-                        selectedAnswer === option.id
+                        questionSelectedAnswer === option.id
                           ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
                           : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
                       }`}>
@@ -587,10 +622,10 @@ export default function PracticeExamPage() {
                         <LatexContentDisplay content={option.text} />
                       </div>
                     </div>
-                    {isChecked && option.isCorrect && (
+                    {questionIsChecked && option.isCorrect && (
                       <div className="text-green-600 dark:text-green-400 ml-2">✓</div>
                     )}
-                    {isChecked && selectedAnswer === option.id && !isCorrect && (
+                    {questionIsChecked && questionSelectedAnswer === option.id && !questionIsCorrect && (
                       <div className="text-red-600 dark:text-red-400 ml-2">✗</div>
                     )}
                   </div>
@@ -601,7 +636,7 @@ export default function PracticeExamPage() {
         );
 
       case QuestionType.MCQ_MULTIPLE:
-        const selectedArray = (selectedAnswer as string[]) || [];
+        const selectedArray = (questionSelectedAnswer as string[]) || [];
         return (
           <div className="space-y-3">
             {question.options.map((option: QuestionOption, index: number) => {
@@ -614,11 +649,11 @@ export default function PracticeExamPage() {
                       ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
                       : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                   } ${
-                    isChecked && option.isCorrect
+                    questionIsChecked && option.isCorrect
                       ? 'border-green-500 bg-green-50 dark:border-green-400 dark:bg-green-900/20'
                       : ''
                   } ${
-                    isChecked && selectedArray.includes(option.id) && !option.isCorrect
+                    questionIsChecked && selectedArray.includes(option.id) && !questionIsCorrect
                       ? 'border-red-500 bg-red-50 dark:border-red-400 dark:bg-red-900/20'
                       : ''
                   }`}
@@ -628,7 +663,7 @@ export default function PracticeExamPage() {
                     checked={selectedArray.includes(option.id)}
                     onChange={() => handleMultipleChoiceSelect(question.id, option.id)}
                     className="sr-only"
-                    disabled={isChecked}
+                    disabled={questionIsChecked}
                   />
                   <div className="flex items-center">
                     <div className={`w-6 h-6 border-2 mr-3 flex items-center justify-center rounded ${
@@ -636,11 +671,11 @@ export default function PracticeExamPage() {
                         ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
                         : 'border-gray-300 dark:border-gray-600'
                     } ${
-                      isChecked && option.isCorrect
+                      questionIsChecked && option.isCorrect
                         ? 'border-green-500 bg-green-500 dark:border-green-400 dark:bg-green-400'
                         : ''
                     } ${
-                      isChecked && selectedArray.includes(option.id) && !option.isCorrect
+                      questionIsChecked && selectedArray.includes(option.id) && !questionIsCorrect
                         ? 'border-red-500 bg-red-500 dark:border-red-400 dark:bg-red-400'
                         : ''
                     }`}>
@@ -660,10 +695,10 @@ export default function PracticeExamPage() {
                         <LatexContentDisplay content={option.text} />
                       </div>
                     </div>
-                    {isChecked && option.isCorrect && (
+                    {questionIsChecked && option.isCorrect && (
                       <div className="text-green-600 dark:text-green-400 ml-2">✓</div>
                     )}
-                    {isChecked && selectedArray.includes(option.id) && !option.isCorrect && (
+                    {questionIsChecked && selectedArray.includes(option.id) && !questionIsCorrect && (
                       <div className="text-red-600 dark:text-red-400 ml-2">✗</div>
                     )}
                   </div>
@@ -680,33 +715,33 @@ export default function PracticeExamPage() {
               <input
                 type="number"
                 step="any"
-                value={selectedAnswer || ''}
+                value={questionSelectedAnswer || ''}
                 onChange={(e) => handleNumericAnswerChange(question.id, e.target.value)}
                 placeholder="Enter your answer"
-                className={`w-full p-4 border-2 rounded-lg text-lg ${
-                  isChecked
-                    ? isCorrect
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-red-500 bg-red-50'
-                    : 'border-gray-300 focus:border-blue-500'
+                className={`w-full p-4 border-2 rounded-lg text-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 ${
+                  questionIsChecked
+                    ? questionIsCorrect
+                      ? 'border-green-500 bg-green-50 dark:border-green-400 dark:bg-green-900/20'
+                      : 'border-red-500 bg-red-50 dark:border-red-400 dark:bg-red-900/20'
+                    : 'border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400'
                 }`}
-                disabled={isChecked}
+                disabled={questionIsChecked}
               />
-              {isChecked && (
+              {questionIsChecked && (
                 <div className={`absolute right-4 top-1/2 transform -translate-y-1/2 text-2xl ${
-                  isCorrect ? 'text-green-600' : 'text-red-600'
+                  questionIsCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
                 }`}>
-                  {isCorrect ? '✓' : '✗'}
+                  {questionIsCorrect ? '✓' : '✗'}
                 </div>
               )}
             </div>
-            {isChecked && question.correctNumericAnswer !== undefined && (
-              <div className="p-4 bg-blue-50 rounded-lg">
-                <p className="text-blue-800 font-medium">
+            {questionIsChecked && question.correctNumericAnswer !== undefined && (
+              <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <p className="text-blue-800 dark:text-blue-200 font-medium">
                   Correct Answer: {question.correctNumericAnswer}
                 </p>
                 {question.answerTolerance && (
-                  <p className="text-blue-600 text-sm">
+                  <p className="text-blue-600 dark:text-blue-300 text-sm">
                     Tolerance: ±{question.answerTolerance}
                   </p>
                 )}
@@ -718,24 +753,30 @@ export default function PracticeExamPage() {
       case QuestionType.PARAGRAPH:
         return (
           <div className="space-y-6">
-            {question.subQuestions?.map((subQ, index) => (
-              <div key={subQ.id} className="border-l-4 border-blue-500 pl-4">
-                <div className="mb-3">
-                  <h4 className="text-lg font-medium text-gray-800">
-                    Question {index + 1}
-                  </h4>
-                  <div className="prose max-w-none mt-2">
-                    <LatexContentDisplay content={subQ.stem} />
+            {question.subQuestions?.map((subQ, index) => {
+              const subSelectedAnswer = practiceState.selectedAnswers[subQ.id];
+              const subIsChecked = practiceState.checkedQuestions[subQ.id];
+              const subIsCorrect = validateAnswer(subQ, subSelectedAnswer);
+              
+              return (
+                <div key={subQ.id} className="border-l-4 border-blue-500 dark:border-blue-400 pl-4">
+                  <div className="mb-3">
+                    <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                      Question {index + 1}
+                    </h4>
+                    <div className="prose max-w-none mt-2 text-gray-900 dark:text-gray-100">
+                      <LatexContentDisplay content={subQ.stem} />
+                    </div>
                   </div>
+                  {renderQuestionInput(subQ, subSelectedAnswer, subIsChecked, subIsCorrect)}
                 </div>
-                {renderQuestionInput(subQ)}
-              </div>
-            ))}
+              );
+            })}
           </div>
         );
 
       default:
-        return <div className="text-gray-500">Unsupported question type</div>;
+        return <div className="text-gray-500 dark:text-gray-400">Unsupported question type</div>;
     }
   };
 
@@ -784,6 +825,11 @@ export default function PracticeExamPage() {
                         Question {practiceState.currentQuestionIndex + 1} - {currentQuestion.id} - {currentQuestion.questionType}
                       </h2>
                       <div className="flex items-center space-x-2">
+                        {practiceState.practicedQuestions[currentQuestion.id] && (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-300 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700">
+                            PRACTICED
+                          </span>
+                        )}
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           currentQuestion.difficulty === 'EASY' ? 'bg-green-100 text-green-800' :
                           currentQuestion.difficulty === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' :
@@ -801,19 +847,57 @@ export default function PracticeExamPage() {
                           title="Mark for Review (Press M)"
                         >
                           {practiceState.markedForReview[currentQuestion.id] ? '✓ Marked for Review' : 'Mark for Review'}
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-700 dark:text-green-300 rounded text-xs">M</kbd>
+                          <kbd className="ml-2 px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-700 dark:text-green-300 rounded text-xs">M</kbd>
                         </button>
                       </div>
                     </div>
                     
-                    <div className="text-gray-900 text-lg mb-6">
-                      <LatexContentDisplay content={currentQuestion.stem} />
-                    </div>
-                    
-                    {/* Answer Input */}
-                    <div className="mb-6">
-                      {renderQuestionInput(currentQuestion)}
-                    </div>
+                    {/* Question Type Specific Rendering */}
+                    {currentQuestion.questionType === QuestionType.PARAGRAPH ? (
+                      /* Paragraph Question with Sub-Questions */
+                      <div className="space-y-6">
+                        {/* Display the paragraph passage */}
+                        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-6">
+                          <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-3">Comprehension Passage</h3>
+                          <div className="text-gray-900 dark:text-gray-100 text-base leading-relaxed">
+                            <LatexContentDisplay content={currentQuestion.stem} />
+                          </div>
+                        </div>
+                        
+                        {/* Display all sub-questions */}
+                        {currentQuestion.subQuestions && currentQuestion.subQuestions.length > 0 ? (
+                          <div className="space-y-6">
+                            {currentQuestion.subQuestions.map((subQ, index) => (
+                              <div key={subQ.id} className="border-l-4 border-blue-500 dark:border-blue-400 pl-4">
+                                <div className="mb-3">
+                                  <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                    Question {index + 1}
+                                  </h4>
+                                  <div className="prose max-w-none mt-2 text-gray-900 dark:text-gray-100">
+                                    <LatexContentDisplay content={subQ.stem} />
+                                  </div>
+                                </div>
+                                {renderQuestionInput(subQ)}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-gray-500 dark:text-gray-400 text-sm">No sub-questions available for this paragraph question.</div>
+                        )}
+                      </div>
+                    ) : (
+                      /* Regular Questions (MCQ or Open Ended) */
+                      <>
+                        <div className="text-gray-900 dark:text-gray-100 text-lg mb-6">
+                          <LatexContentDisplay content={currentQuestion.stem} />
+                        </div>
+                        
+                        {/* Answer Input */}
+                        <div className="mb-6">
+                          {renderQuestionInput(currentQuestion)}
+                        </div>
+                      </>
+                    )}
 
                     {/* Check Answer Button */}
                     {!isChecked && (
@@ -854,7 +938,7 @@ export default function PracticeExamPage() {
                       title="Previous Question (Press ← or A)"
                     >
                       Previous
-                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
+                      <kbd className="ml-2 px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
                     </button>
                     
                     <button
@@ -953,34 +1037,63 @@ export default function PracticeExamPage() {
                 
                 
                 {/* Practice Progress */}
-                <div className="space-y-3 mb-6">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Total Questions:</span>
-                    <span className="font-medium">{examPaper.questionCount}</span>
+                <div className="space-y-4 mb-6">
+                  {/* Progress Bar */}
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Practice Progress</span>
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {Object.keys(practiceState.practicedQuestions).length} / {examPaper.questionCount}
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                      <div 
+                        className="bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 h-3 rounded-full transition-all duration-300 ease-out"
+                        style={{ 
+                          width: `${examPaper.questionCount > 0 ? (Object.keys(practiceState.practicedQuestions).length / examPaper.questionCount) * 100 : 0}%` 
+                        }}
+                      ></div>
+                    </div>
+                    <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                      {examPaper.questionCount > 0 ? Math.round((Object.keys(practiceState.practicedQuestions).length / examPaper.questionCount) * 100) : 0}% completed
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Answered:</span>
-                    <span className="font-medium text-green-600">
-                      {Object.keys(practiceState.selectedAnswers).length}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Marked for Review:</span>
-                    <span className="font-medium text-yellow-600">
-                      {Object.values(practiceState.markedForReview).filter(Boolean).length}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Checked:</span>
-                    <span className="font-medium text-blue-600">
-                      {Object.values(practiceState.checkedQuestions).filter(Boolean).length}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Unanswered:</span>
-                    <span className="font-medium text-gray-600">
-                      {examPaper.questionCount - Object.keys(practiceState.selectedAnswers).length}
-                    </span>
+                  
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Total Questions:</span>
+                      <span className="font-medium dark:text-gray-300">{examPaper.questionCount}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Practiced:</span>
+                      <span className="font-medium text-red-600 dark:text-red-400">
+                        {Object.keys(practiceState.practicedQuestions).length}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Answered:</span>
+                      <span className="font-medium text-green-600 dark:text-green-400">
+                        {Object.keys(practiceState.selectedAnswers).length}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Marked for Review:</span>
+                      <span className="font-medium text-yellow-600 dark:text-yellow-400">
+                        {Object.values(practiceState.markedForReview).filter(Boolean).length}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Checked:</span>
+                      <span className="font-medium text-blue-600 dark:text-blue-400">
+                        {Object.values(practiceState.checkedQuestions).filter(Boolean).length}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Unanswered:</span>
+                      <span className="font-medium text-gray-600 dark:text-gray-400">
+                        {examPaper.questionCount - Object.keys(practiceState.selectedAnswers).length}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 
@@ -998,18 +1111,22 @@ export default function PracticeExamPage() {
                     {examPaper.questions.map((question, index) => {
                       const status = getQuestionStatus(question.id);
                       const isCurrent = index === practiceState.currentQuestionIndex;
+                      const isPracticed = practiceState.practicedQuestions[question.id];
                       
                       return (
                         <button
                           key={question.id}
                           onClick={() => setPracticeState(prev => ({ ...prev, currentQuestionIndex: index }))}
-                          className={`w-10 h-10 rounded-lg text-sm flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 question-nav-btn ${
+                          className={`w-10 h-10 rounded-lg text-sm flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 question-nav-btn relative ${
                             isCurrent
                               ? 'ring-2 ring-blue-500 bg-blue-600 dark:bg-blue-600 border border-gray-200 dark:border-gray-600 text-white font-semibold'
                               : getQuestionStatusColor(status)
                           }`}
                         >
                           {index + 1}
+                          {isPracticed && (
+                            <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-red-500 dark:bg-red-400 rounded-full"></span>
+                          )}
                         </button>
                       );
                     })}

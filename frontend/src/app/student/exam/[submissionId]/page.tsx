@@ -163,6 +163,15 @@ export default function ExamPage() {
       const questionsResponse = await api.get(`/exams/submissions/${submissionId}/questions`);
       const questionsData = questionsResponse.data;
       
+      console.log('Questions loaded:', questionsData.length);
+      const paragraphQs = questionsData.filter((q: Question) => getQuestionType(q) === 'PARAGRAPH');
+      if (paragraphQs.length > 0) {
+        console.log('Paragraph questions found:', paragraphQs.length);
+        paragraphQs.forEach((pq: Question) => {
+          console.log('Paragraph question:', pq.id, 'Sub-questions:', pq.subQuestions?.length || 0, pq.subQuestions);
+        });
+      }
+      
       setQuestions(questionsData);
       setFilteredQuestions(questionsData);
       
@@ -625,47 +634,111 @@ export default function ExamPage() {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      // Don't trigger shortcuts when typing in input fields
+      // Don't trigger shortcuts when typing in input fields, except for space key on radio buttons
       if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
-        return;
+        // Allow space key to work on radio buttons
+        if (event.key === ' ' && event.target instanceof HTMLInputElement && event.target.type === 'radio') {
+          // Continue to process the space key
+        } else {
+          return;
+        }
       }
 
       // Don't trigger shortcuts if exam is not started or completed
       if (!examStarted || examCompleted) return;
 
-      switch (event.key.toLowerCase()) {
-        case 'arrowleft':
-        case 'a':
+      const currentQuestion = filteredQuestions[currentQuestionIndex];
+      if (!currentQuestion) return;
+
+      const currentAnswer = answers[currentQuestionIndex];
+      
+      // Handle option selection with A, B, C, D keys or numbers 1-4 (for MCQ questions)
+      // Use uppercase letters (A-D) or number keys (1-4) to avoid conflict with navigation
+      if ((isSingleChoiceQuestion(currentQuestion) || isMultipleChoiceQuestion(currentQuestion)) && currentQuestion.options) {
+        const key = event.key;
+        const optionIndexMap: { [key: string]: number } = {
+          'A': 0, '1': 0,
+          'B': 1, '2': 1,
+          'C': 2, '3': 2,
+          'D': 3, '4': 3,
+          'E': 4, '5': 4,
+          'F': 5, '6': 5
+        };
+        
+        // Only handle uppercase letters or number keys to avoid conflict with navigation
+        if (optionIndexMap.hasOwnProperty(key) && optionIndexMap[key] < currentQuestion.options.length) {
+          event.preventDefault();
+          const optionIndex = optionIndexMap[key];
+          const selectedOption = currentQuestion.options[optionIndex];
+          
+          if (isSingleChoiceQuestion(currentQuestion)) {
+            handleAnswerSelect(selectedOption.id);
+            showInfo('Option Selected', `Selected option ${String.fromCharCode(65 + optionIndex)}`, 800);
+          } else if (isMultipleChoiceQuestion(currentQuestion)) {
+            const currentSelected = currentAnswer?.selectedOptionIds || [];
+            const isAlreadySelected = currentSelected.includes(selectedOption.id);
+            const newSelected = isAlreadySelected
+              ? currentSelected.filter(id => id !== selectedOption.id)
+              : [...currentSelected, selectedOption.id];
+            
+            setAnswers(prev => prev.map((answer, index) => 
+              index === currentQuestionIndex 
+                ? { ...answer, selectedOptionIds: newSelected, selectedOptionId: undefined, numericValue: undefined }
+                : answer
+            ));
+            showInfo('Option Toggled', `${isAlreadySelected ? 'Deselected' : 'Selected'} option ${String.fromCharCode(65 + optionIndex)}`, 800);
+          }
+          return;
+        }
+      }
+
+      switch (event.key) {
+        case 'ArrowLeft':
+        case 'p':
+        case 'P':
           event.preventDefault();
           handlePreviousQuestion();
           showInfo('Navigation', 'Previous question', 1000);
           break;
-        case 'arrowright':
-        case 'd':
+        case 'ArrowRight':
+        case 'n':
+        case 'N':
           event.preventDefault();
           handleNextQuestion();
           showInfo('Navigation', 'Next question', 1000);
           break;
         case 'm':
+        case 'M':
           event.preventDefault();
           handleMarkForReview();
-          const currentAnswer = answers[currentQuestionIndex];
           const isMarked = currentAnswer?.isMarkedForReview;
           showInfo('Mark for Review', isMarked ? 'Question unmarked' : 'Question marked for review', 1500);
           break;
         case 'h':
+        case 'H':
           event.preventDefault();
           setShowShortcutsLegend(!showShortcutsLegend);
           break;
-        case 'escape':
+        case 'Escape':
           event.preventDefault();
           setShowShortcutsLegend(false);
           break;
         default:
-          // Handle number keys 1-9 for quick navigation
-          if (event.key >= '1' && event.key <= '9') {
-            const questionNumber = parseInt(event.key) - 1;
-            if (questionNumber < filteredQuestions.length) {
+          // Handle number keys 1-9 for quick navigation (both regular and numeric keypad)
+          const keyCode = event.code;
+          const isNumpadKey = keyCode.startsWith('Numpad');
+          const isRegularNumber = event.key >= '1' && event.key <= '9';
+          
+          if (isRegularNumber || isNumpadKey) {
+            let questionNumber: number;
+            if (isNumpadKey) {
+              // Extract number from keyCode (e.g., "Numpad1" -> 1)
+              questionNumber = parseInt(keyCode.replace('Numpad', '')) - 1;
+            } else {
+              questionNumber = parseInt(event.key) - 1;
+            }
+            
+            if (questionNumber >= 0 && questionNumber < filteredQuestions.length) {
               event.preventDefault();
               setCurrentQuestionIndex(questionNumber);
               showInfo('Quick Navigation', `Jumped to question ${questionNumber + 1}`, 1000);
@@ -677,7 +750,7 @@ export default function ExamPage() {
 
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [currentQuestionIndex, answers, examStarted, examCompleted, filteredQuestions.length, showShortcutsLegend]);
+  }, [currentQuestionIndex, answers, examStarted, examCompleted, filteredQuestions, showShortcutsLegend]);
 
   const getQuestionStatus = (index: number) => {
     const answer = answers[index];
@@ -691,11 +764,11 @@ export default function ExamPage() {
 
   const getQuestionStatusColor = (status: string) => {
     switch (status) {
-      case 'answered': return 'bg-green-500';
-      case 'answered-review': return 'bg-blue-500';
-      case 'review': return 'bg-yellow-500';
-      case 'unanswered': return 'bg-gray-500';
-      default: return 'bg-gray-300';
+      case 'answered': return 'bg-green-500 dark:bg-green-500 border border-gray-200 dark:border-gray-600 text-white dark:text-white font-semibold';
+      case 'answered-review': return 'bg-blue-500 dark:bg-blue-500 border border-gray-200 dark:border-gray-600 text-white dark:text-white font-semibold';
+      case 'review': return 'bg-yellow-500 dark:bg-yellow-500 border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white font-semibold';
+      case 'unanswered': return 'bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-600 text-black dark:text-gray-300 font-bold';
+      default: return 'bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-600 text-black dark:text-gray-300 font-bold';
     }
   };
 
@@ -808,7 +881,12 @@ export default function ExamPage() {
                   <div className="mb-6">
                     <div className="flex items-center justify-between mb-4">
                       <h2 className="text-lg font-semibold text-gray-900">
-                        Question {currentQuestionIndex + 1} - {currentQuestion.id} - {(currentQuestion.isOpenEnded || !currentQuestion.options || currentQuestion.options.length === 0) ? 'Open Ended' : 'Multiple Choice'}
+                        Question {currentQuestionIndex + 1} - {currentQuestion.id} - {
+                          isParagraphQuestion(currentQuestion) ? 'Paragraph Questions' :
+                          isOpenEndedQuestion(currentQuestion) ? 'Open Ended' :
+                          isMultipleChoiceQuestion(currentQuestion) ? 'Multiple Choice' :
+                          'Multiple Choice'
+                        }
                       </h2>
                       <div className="flex items-center space-x-2">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -827,117 +905,137 @@ export default function ExamPage() {
                           }`}
                         >
                           {currentAnswer?.isMarkedForReview ? '✓ Marked for Review' : 'Mark for Review'}
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">M</kbd>
+                          <kbd className="ml-2 px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-900 dark:text-green-100 rounded text-xs">M</kbd>
                         </button>
                       </div>
-                    </div>
-                    
-                    <div className="text-gray-900 text-lg mb-6">
-                      <LatexContentDisplay content={currentQuestion.stem} />
                     </div>
                     
                     {/* Question Type Specific Rendering */}
                     {isParagraphQuestion(currentQuestion) ? (
                       /* Paragraph Question with Sub-Questions */
                       <div className="space-y-6">
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                          <h3 className="text-lg font-semibold text-blue-900 mb-2">Comprehension Passage</h3>
-                          <p className="text-blue-800">Read the passage above and answer the following questions:</p>
+                        {/* Display the paragraph passage */}
+                        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-6">
+                          <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-3">Comprehension Passage</h3>
+                          <div className="text-gray-900 dark:text-gray-100 text-base leading-relaxed">
+                            <LatexContentDisplay content={currentQuestion.stem} />
+                          </div>
                         </div>
                         
-                        {currentQuestion.subQuestions?.map((subQuestion, subIndex) => (
-                          <div key={subQuestion.id} className="bg-white border border-gray-200 rounded-lg p-4">
-                            <div className="flex items-center justify-between mb-4">
-                              <h4 className="text-lg font-medium text-gray-900">
-                                Question {subIndex + 1}
-                              </h4>
-                              <button
-                                onClick={() => {
-                                  const newExpanded = new Set(expandedSubQuestions);
-                                  if (newExpanded.has(subQuestion.id)) {
-                                    newExpanded.delete(subQuestion.id);
-                                  } else {
-                                    newExpanded.add(subQuestion.id);
-                                  }
-                                  setExpandedSubQuestions(newExpanded);
-                                }}
-                                className="text-blue-600 hover:text-blue-800 transition-colors"
-                              >
-                                {expandedSubQuestions.has(subQuestion.id) ? '▼' : '▶'} 
-                                {expandedSubQuestions.has(subQuestion.id) ? ' Hide' : ' Show'}
-                              </button>
-                            </div>
-                            
-                            {expandedSubQuestions.has(subQuestion.id) && (
-                              <div className="space-y-4">
-                                <div className="text-gray-900">
-                                  <LatexContentDisplay content={subQuestion.stem} />
+                        {/* Display all sub-questions */}
+                        {currentQuestion.subQuestions && currentQuestion.subQuestions.length > 0 ? (
+                          <div className="space-y-6">
+                            {currentQuestion.subQuestions.map((subQuestion, subIndex) => (
+                              <div key={subQuestion.id} className="border-l-4 border-blue-500 dark:border-blue-400 pl-4">
+                                <div className="mb-4">
+                                  <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                                    Question {subIndex + 1}
+                                  </h4>
+                                  <div className="prose max-w-none text-gray-900 dark:text-gray-100">
+                                    <LatexContentDisplay content={subQuestion.stem} />
+                                  </div>
                                 </div>
                                 
                                 {/* Sub-question options or numeric input */}
                                 {isOpenEndedQuestion(subQuestion) ? (
-                      <div className="space-y-3">
-                        <div className="p-4 rounded-lg border-2 border-gray-200 bg-gray-50">
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Enter your numeric answer:
-                          </label>
-                          <input
-                            type="number"
-                            step="any"
+                                  <div className="space-y-3">
+                                    <div className="p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+                                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Enter your numeric answer:
+                                      </label>
+                                      <input
+                                        type="number"
+                                        step="any"
                                         value={currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.numericValue || ''}
                                         onChange={(e) => handleSubQuestionNumericAnswer(subQuestion.id, parseFloat(e.target.value) || undefined)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Enter numeric value"
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="space-y-3">
-                                    {subQuestion.options?.map((option, optionIndex) => (
-                          <label
-                            key={option.id}
-                            className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors ${
-                                          isMultipleChoiceQuestion(subQuestion) 
-                                            ? (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionIds?.includes(option.id)
-                                ? 'border-blue-500 bg-blue-50'
-                                                : 'border-gray-200 hover:border-gray-300')
-                                            : (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionId === option.id
-                                                ? 'border-blue-500 bg-blue-50'
-                                                : 'border-gray-200 hover:border-gray-300')
-                                        }`}
-                                        onClick={() => handleSubQuestionAnswerSelect(subQuestion.id, option.id)}
-                                      >
-                                        <div className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
-                                          isMultipleChoiceQuestion(subQuestion) 
-                                            ? (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionIds?.includes(option.id)
-                                                ? 'border-blue-500 bg-blue-500'
-                                                : 'border-gray-300')
-                                            : (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionId === option.id
-                                                ? 'border-blue-500 bg-blue-500'
-                                                : 'border-gray-300')
-                                        }`}>
-                                          {isMultipleChoiceQuestion(subQuestion) 
-                                            ? (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionIds?.includes(option.id) && (
-                                                <div className="w-2 h-2 bg-white rounded-full"></div>
-                                              ))
-                                            : (currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionId === option.id && (
-                                                <div className="w-2 h-2 bg-white rounded-full"></div>
-                                              ))
-                                          }
-                                        </div>
-                                        <div className="text-gray-900">
-                                          <LatexContentDisplay content={option.text} />
-                                        </div>
-                                      </label>
-                                    ))}
+                                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        placeholder="Enter numeric value"
+                                      />
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="space-y-3">
+                                    {subQuestion.options && subQuestion.options.length > 0 ? (
+                                      subQuestion.options.map((option, optionIndex) => {
+                                        const optionLetter = String.fromCharCode(65 + optionIndex); // A, B, C, D, etc.
+                                        const isSubSelected = isMultipleChoiceQuestion(subQuestion)
+                                          ? currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionIds?.includes(option.id)
+                                          : currentAnswer?.subQuestionAnswers?.[subQuestion.id]?.selectedOptionId === option.id;
+                                        
+                                        return (
+                                          <label
+                                            key={option.id}
+                                            className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors ${
+                                              isSubSelected
+                                                ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
+                                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                                            }`}
+                                          >
+                                            {isMultipleChoiceQuestion(subQuestion) ? (
+                                              <input
+                                                type="checkbox"
+                                                checked={isSubSelected}
+                                                onChange={() => handleSubQuestionAnswerSelect(subQuestion.id, option.id)}
+                                                className="sr-only"
+                                              />
+                                            ) : (
+                                              <input
+                                                type="radio"
+                                                name={`subquestion-${subQuestion.id}`}
+                                                value={option.id}
+                                                checked={isSubSelected}
+                                                onChange={() => handleSubQuestionAnswerSelect(subQuestion.id, option.id)}
+                                                className="sr-only"
+                                              />
+                                            )}
+                                            <div className={`w-6 h-6 ${isMultipleChoiceQuestion(subQuestion) ? 'rounded' : 'rounded-full'} border-2 mr-3 flex items-center justify-center ${
+                                              isSubSelected
+                                                ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
+                                                : 'border-gray-300 dark:border-gray-600'
+                                            }`}>
+                                              {isSubSelected && (
+                                                isMultipleChoiceQuestion(subQuestion) ? (
+                                                  <div className="text-white text-sm">✓</div>
+                                                ) : (
+                                                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                                                )
+                                              )}
+                                            </div>
+                                            <div className="flex items-center gap-3 flex-1">
+                                              <span className={`text-xs font-semibold px-2 py-1 rounded border ${
+                                                isSubSelected
+                                                  ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
+                                                  : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
+                                              }`}>
+                                                {optionLetter}
+                                              </span>
+                                              <div className="flex-1 text-gray-900 dark:text-gray-100">
+                                                <LatexContentDisplay content={option.text} />
+                                              </div>
+                                            </div>
+                                          </label>
+                                        );
+                                      })
+                                    ) : (
+                                      <div className="text-gray-500 dark:text-gray-400 text-sm">No options available for this question.</div>
+                                    )}
                                   </div>
                                 )}
                               </div>
-                            )}
+                            ))}
                           </div>
-                        ))}
+                        ) : (
+                          <div className="text-gray-500 dark:text-gray-400 text-sm">No sub-questions available for this paragraph question.</div>
+                        )}
                       </div>
-                    ) : isOpenEndedQuestion(currentQuestion) ? (
+                    ) : (
+                      /* Regular Questions (MCQ or Open Ended) */
+                      <>
+                        <div className="text-gray-900 dark:text-gray-100 text-lg mb-6">
+                          <LatexContentDisplay content={currentQuestion.stem} />
+                        </div>
+                        
+                        {isOpenEndedQuestion(currentQuestion) ? (
                       /* Open-ended Question */
                       <div className="space-y-3">
                         <div className="p-4 rounded-lg border-2 border-gray-200 bg-gray-50">
@@ -965,44 +1063,49 @@ export default function ExamPage() {
                           </div>
                         )}
                         
-                        {currentQuestion.options?.map((option, index) => (
-                          <label
-                            key={option.id}
-                            className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors ${
-                              isMultipleChoiceQuestion(currentQuestion)
-                                ? (currentAnswer?.selectedOptionIds?.includes(option.id)
-                                    ? 'border-blue-500 bg-blue-50'
-                                    : 'border-gray-200 hover:border-gray-300')
-                                : (currentAnswer?.selectedOptionId === option.id
-                                    ? 'border-blue-500 bg-blue-50'
-                                    : 'border-gray-200 hover:border-gray-300')
-                            }`}
-                            onClick={() => handleAnswerSelect(option.id)}
-                          >
-                            <div className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
-                              isMultipleChoiceQuestion(currentQuestion)
-                                ? (currentAnswer?.selectedOptionIds?.includes(option.id)
-                                ? 'border-blue-500 bg-blue-500'
-                                    : 'border-gray-300')
-                                : (currentAnswer?.selectedOptionId === option.id
-                                    ? 'border-blue-500 bg-blue-500'
-                                    : 'border-gray-300')
-                            }`}>
-                              {isMultipleChoiceQuestion(currentQuestion)
-                                ? (currentAnswer?.selectedOptionIds?.includes(option.id) && (
-                                <div className="w-2 h-2 bg-white rounded-full"></div>
-                                  ))
-                                : (currentAnswer?.selectedOptionId === option.id && (
-                                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                                  ))
-                              }
-                            </div>
-                            <div className="text-gray-900">
-                              <LatexContentDisplay content={option.text} />
-                            </div>
-                          </label>
-                        ))}
+                        {currentQuestion.options?.map((option, index) => {
+                          const optionLetter = String.fromCharCode(65 + index); // A, B, C, D, etc.
+                          const isSelected = isMultipleChoiceQuestion(currentQuestion)
+                            ? currentAnswer?.selectedOptionIds?.includes(option.id)
+                            : currentAnswer?.selectedOptionId === option.id;
+                          
+                          return (
+                            <label
+                              key={option.id}
+                              className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors ${
+                                isSelected
+                                  ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
+                                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                              }`}
+                              onClick={() => handleAnswerSelect(option.id)}
+                            >
+                              <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
+                                isSelected
+                                  ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
+                                  : 'border-gray-300 dark:border-gray-600'
+                              }`}>
+                                {isSelected && (
+                                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-3 flex-1">
+                                <span className={`text-xs font-semibold px-2 py-1 rounded border ${
+                                  isSelected
+                                    ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
+                                    : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
+                                }`}>
+                                  {optionLetter}
+                                </span>
+                                <div className="flex-1 text-gray-900 dark:text-gray-100">
+                                  <LatexContentDisplay content={option.text} />
+                                </div>
+                              </div>
+                            </label>
+                          );
+                        })}
                       </div>
+                    )}
+                      </>
                     )}
                   </div>
                   
@@ -1011,10 +1114,10 @@ export default function ExamPage() {
                     <button
                       onClick={handlePreviousQuestion}
                       disabled={currentQuestionIndex === 0}
-                      className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="ml-2 px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Previous
-                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
+                      <kbd className="ml-2 px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-900 dark:text-green-100 rounded text-xs">←</kbd>
                     </button>
                     
                     <button
@@ -1081,26 +1184,40 @@ export default function ExamPage() {
                     </h4>
                     <div className="space-y-2 text-xs">
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Navigate:</span>
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Navigate:</span>
                         <div className="flex space-x-1">
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">A</kbd>
-                          <span className="text-gray-400">/</span>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">→</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">D</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">←</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">P</kbd>
+                          <span className="text-gray-400 dark:text-gray-500">/</span>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">→</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">N</kbd>
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Mark Review:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">M</kbd>
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Select Option:</span>
+                        <div className="flex">
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">A</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">B</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">C</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">D</kbd>
+                          <span className="text-gray-400 dark:text-gray-500">/</span>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">1-4</kbd>
+                        </div>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Jump to Q:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">1-9</kbd>
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Mark Review:</span>
+                        <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">M</kbd>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Toggle Help:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">H</kbd>
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Jump to Q:</span>
+                        <div className="flex items-center space-x-1">
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">1-9</kbd>
+                          <span className="text-gray-500 dark:text-gray-400 text-[10px]">(Num Pad)</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Help:</span>
+                        <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">H</kbd>
                       </div>
                     </div>
                   </div>
@@ -1113,14 +1230,15 @@ export default function ExamPage() {
   {filteredQuestions.map((_, index) => {
     const status = getQuestionStatus(index);
     const isCurrent = index === currentQuestionIndex;
+    const isAnswered = status === 'answered' || status === 'answered-review';
 
     // minimal base + tiny accessibility/focus additions
     const base =
-      "w-10 h-10 rounded-lg text-sm font-medium flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
+      "w-10 h-10 rounded-lg text-sm flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 question-nav-btn relative";
 
     // keep your existing color helper for non-current tiles
     const colorClasses = isCurrent
-      ? "ring-2 ring-blue-500 bg-blue-600 text-white dark:bg-blue-500 dark:text-white"
+      ? "ring-2 ring-blue-500 bg-blue-600 dark:bg-blue-600 border border-gray-200 dark:border-gray-600 text-white font-semibold"
       : getQuestionStatusColor(status); // existing function
 
     return (
@@ -1133,6 +1251,9 @@ export default function ExamPage() {
         className={`${base} ${colorClasses}`}
       >
         {index + 1}
+        {isAnswered && (
+          <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-red-500 dark:bg-red-400 rounded-full"></span>
+        )}
       </button>
     );
   })}
