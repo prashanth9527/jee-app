@@ -279,7 +279,7 @@ export default function ExamResultsPage() {
       <ProtectedRoute requiredRole="STUDENT">
         <SubscriptionGuard>
           <StudentLayout>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-x-hidden">
               <div className="text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
                 <p className="mt-4 text-gray-600">Loading exam results...</p>
@@ -296,7 +296,7 @@ export default function ExamResultsPage() {
       <ProtectedRoute requiredRole="STUDENT">
         <SubscriptionGuard>
           <StudentLayout>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-x-hidden">
               <div className="text-center">
                 <p className="text-gray-600">Exam results not found.</p>
                 <button 
@@ -317,35 +317,35 @@ export default function ExamResultsPage() {
     <ProtectedRoute requiredRole="STUDENT">
       <SubscriptionGuard>
         <StudentLayout>
-          <div className="space-y-6">
+          <div className="space-y-3 sm:space-y-4 lg:space-y-6 overflow-x-hidden">
             {/* Header */}
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-900">{results.examTitle}</h1>
-                  <p className="text-sm text-gray-600">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 sm:p-4 lg:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">
+                <div className="min-w-0 flex-1">
+                  <h1 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-gray-100 break-words">{results.examTitle}</h1>
+                  <p className="text-[10px] sm:text-xs lg:text-sm text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1">
                     Submitted on {new Date(results.submittedAt).toLocaleDateString()} at {new Date(results.submittedAt).toLocaleTimeString()}
                   </p>
                 </div>
-                <div className="flex space-x-3">
+                <div className="flex flex-wrap gap-2 sm:gap-3 sm:flex-shrink-0">
                   <button
                     onClick={() => router.push('/student/exam-history')}
-                    className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+                    className="px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm lg:text-base bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors whitespace-nowrap"
                   >
                     Back to History
                   </button>
                   <button
                     onClick={() => setHelpModalOpen(true)}
-                    className="px-3 py-2 bg-blue-100 text-blue-600 rounded-md hover:bg-blue-200 transition-colors"
+                    className="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-md hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
                     title="How are marks and scores calculated?"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </button>                  
                     <button
                       onClick={handleRetake}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                      className="px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm lg:text-base bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors whitespace-nowrap"
                     >
                       Retake Exam
                     </button>                 
@@ -353,31 +353,31 @@ export default function ExamResultsPage() {
               </div>
               
               {/* Score Summary */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-blue-50 rounded-lg p-4">
-                  <h3 className="text-lg font-semibold text-blue-900">Total Questions</h3>
-                  <p className="text-2xl font-bold text-blue-600">{results.totalQuestions}</p>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
+                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-2 sm:p-3 lg:p-4">
+                  <h3 className="text-[10px] sm:text-xs lg:text-sm xl:text-lg font-semibold text-blue-900 dark:text-blue-200 mb-1">Total Questions</h3>
+                  <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-blue-600 dark:text-blue-400">{results.totalQuestions}</p>
                 </div>
-                <div className="bg-green-50 rounded-lg p-4">
-                  <h3 className="text-lg font-semibold text-green-900">Correct Answers</h3>
-                  <p className="text-2xl font-bold text-green-600">{results.correctCount}</p>
+                <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-2 sm:p-3 lg:p-4">
+                  <h3 className="text-[10px] sm:text-xs lg:text-sm xl:text-lg font-semibold text-green-900 dark:text-green-200 mb-1">Correct Answers</h3>
+                  <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-green-600 dark:text-green-400">{results.correctCount}</p>
                 </div>
-                <div className="bg-orange-50 rounded-lg p-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Score</h3>
-                  <p className="text-2xl font-bold text-gray-600">{results.scorePercent}%</p>
+                <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-2 sm:p-3 lg:p-4">
+                  <h3 className="text-[10px] sm:text-xs lg:text-sm xl:text-lg font-semibold text-gray-900 dark:text-gray-200 mb-1">Score</h3>
+                  <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-gray-600 dark:text-gray-300">{results.scorePercent}%</p>
                 </div>
-                <div className="bg-teal-500 text-white rounded-lg p-4">
-                  <h3 className="text-lg font-semibold text-teal-900">Marks</h3>
-                  <p className="text-2xl font-bold text-purple-600">{results.totalMarksObtained}/{results.totalMarksAvailable}</p>
+                <div className="bg-teal-500 dark:bg-teal-600 text-white rounded-lg p-2 sm:p-3 lg:p-4">
+                  <h3 className="text-[10px] sm:text-xs lg:text-sm xl:text-lg font-semibold text-white mb-1">Marks</h3>
+                  <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-white">{results.totalMarksObtained}/{results.totalMarksAvailable}</p>
                 </div>
               </div>
             </div>
 
-            <div className="flex">
+            <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 lg:gap-6 overflow-x-hidden">
               {/* Main Content - Single Question Display */}
-              <div className="flex-1 p-6">
+              <div className="flex-1 p-2 sm:p-3 lg:p-4 xl:p-6 min-w-0 overflow-x-hidden">
                 {questions.length > 0 && (
-                  <div className="bg-white rounded-lg shadow p-6">
+                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 sm:p-4 lg:p-6 max-w-full overflow-x-hidden">
                     {(() => {
                       const question = questions[currentQuestionIndex];
                       const answer = results.answers.find(a => a.questionId === question.id);
@@ -388,38 +388,38 @@ export default function ExamResultsPage() {
                       return (
                         <>
                           {/* Question Header */}
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center space-x-4">
-                              <h2 className="text-xl font-semibold text-gray-900">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-6">
+                            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                              <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-gray-100">
                                 Question {currentQuestionIndex + 1} of {questions.length}
                               </h2>
-                              <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                              <span className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${
                                 status === 'correct' 
-                                  ? 'bg-emerald-100 text-emerald-800' 
+                                  ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300' 
                                   : status === 'incorrect'
-                                  ? 'bg-rose-100 text-rose-800'
-                                  : 'bg-amber-100 text-amber-800'
+                                  ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-800 dark:text-rose-300'
+                                  : 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300'
                               }`}>
                                 {status === 'correct' ? 'Correct' : status === 'incorrect' ? 'Incorrect' : 'Not Answered'}
                               </span>
                               {answer && (
-                                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                                <span className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${
                                   answer.marksObtained > 0 
-                                    ? 'bg-blue-100 text-blue-800' 
+                                    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300' 
                                     : answer.marksObtained < 0
-                                    ? 'bg-orange-100 text-orange-800'
-                                    : 'bg-slate-100 text-slate-800'
+                                    ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300'
+                                    : 'bg-slate-100 dark:bg-slate-900/30 text-slate-800 dark:text-slate-300'
                                 }`}>
                                   Marks: {answer.marksObtained}/{answer.fullMarks}
                                 </span>
                               )}
                             </div>
-                            <div className="flex items-center space-x-2">
-                              <span className="text-sm text-gray-500">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                                 Status: {isAnswered ? (isCorrect ? 'Correct' : 'Incorrect') : 'Not Answered'}
                               </span>
                               {isReportSubmitted(question.id) ? (
-                                <span className="px-3 py-1 text-sm bg-green-500 text-white rounded-md">
+                                <span className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-green-500 text-white rounded-md whitespace-nowrap">
                                   ✓ Reported
                                 </span>
                               ) : (
@@ -428,7 +428,7 @@ export default function ExamResultsPage() {
                                     setSelectedQuestionForReport(question);
                                     setReportModalOpen(true);
                                   }}
-                                  className="px-3 py-1 text-sm bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors"
+                                  className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors whitespace-nowrap"
                                 >
                                   Report Issue
                                 </button>
@@ -437,38 +437,38 @@ export default function ExamResultsPage() {
                           </div>
                           
                           {/* Question Content */}
-                          <div className="mb-6">
-                            <div className="text-gray-900 text-lg mb-6">
+                          <div className="mb-6 max-w-full overflow-x-auto">
+                            <div className="text-gray-900 dark:text-gray-100 text-base sm:text-lg mb-6 break-words overflow-wrap-anywhere">
                               <LatexContentDisplay content={question.stem} />
                             </div>
                             
                             {/* Options or Numeric Answer Display */}
                             {question.isOpenEnded ? (
-                              <div className="space-y-3">
-                                <div className="p-4 rounded-lg border-2 bg-gray-50 border-gray-200">
-                                  <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
-                                      <span className="text-lg text-gray-700 font-medium">
+                              <div className="space-y-3 max-w-full overflow-x-auto">
+                                <div className="p-3 sm:p-4 rounded-lg border-2 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                    <div className="flex flex-wrap items-center gap-2">
+                                      <span className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 font-medium">
                                         Your Answer: {answer?.selectedOption?.text || 'No answer provided'}
                                       </span>
                                       {answer?.isCorrect ? (
-                                        <span className="ml-3 text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
+                                        <span className="text-xs sm:text-sm bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded whitespace-nowrap">
                                           Correct
                                         </span>
                                       ) : (
-                                        <span className="ml-3 text-sm bg-red-100 text-red-800 px-2 py-1 rounded">
+                                        <span className="text-xs sm:text-sm bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-2 py-1 rounded whitespace-nowrap">
                                           Incorrect
                                         </span>
                                       )}
                                     </div>
                                   </div>
-                                  <div className="mt-2 text-sm text-gray-600">
+                                  <div className="mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                                     Correct Answer: {question.correctNumericAnswer}
                                   </div>
                                 </div>
                               </div>
                             ) : (
-                              <div className="space-y-3">
+                              <div className="space-y-3 max-w-full overflow-x-auto">
                                 {question.options?.map((option) => {
                                   const isSelected = answer?.selectedOption.id === option.id;
                                   const isCorrectOption = option.isCorrect;
@@ -476,39 +476,39 @@ export default function ExamResultsPage() {
                                   return (
                                     <div
                                       key={option.id}
-                                      className={`p-4 rounded-lg border-2 ${
+                                      className={`p-3 sm:p-4 rounded-lg border-2 max-w-full overflow-x-auto ${
                                         isCorrectOption
-                                          ? 'bg-green-50 border-green-200'
+                                          ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
                                           : isSelected && !isCorrectOption
-                                          ? 'bg-red-50 border-red-200'
-                                          : 'bg-gray-50 border-gray-200'
+                                          ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
+                                          : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
                                       }`}
                                     >
-                                      <div className="flex items-center">
-                                        <span className={`w-5 h-5 rounded-full border-2 mr-4 ${
+                                      <div className="flex items-start sm:items-center gap-3 sm:gap-4">
+                                        <span className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center mt-0.5 sm:mt-0 ${
                                           isCorrectOption
                                             ? 'bg-green-500 border-green-500'
                                             : isSelected
                                             ? 'bg-red-500 border-red-500'
-                                            : 'border-gray-300'
+                                            : 'border-gray-300 dark:border-gray-600'
                                         }`}>
                                           {isCorrectOption && (
-                                            <svg className="w-3 h-3 text-white mx-auto mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                             </svg>
                                           )}
                                         </span>
-                                        <span className={`text-lg ${
+                                        <span className={`flex-1 min-w-0 text-sm sm:text-base lg:text-lg break-words overflow-wrap-anywhere ${
                                           isCorrectOption
-                                            ? 'text-white-800 font-medium'
+                                            ? 'text-gray-800 dark:text-gray-200 font-medium'
                                             : isSelected && !isCorrectOption
-                                            ? 'text-white-800 font-medium'
-                                            : 'text-white-700'
+                                            ? 'text-gray-800 dark:text-gray-200 font-medium'
+                                            : 'text-gray-700 dark:text-gray-300'
                                         }`}>
                                           <LatexContentDisplay content={option.text} />
                                         </span>
                                         {isSelected && (
-                                          <span className="ml-3 text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                          <span className="text-xs sm:text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-2 py-1 rounded whitespace-nowrap flex-shrink-0">
                                             Your Answer
                                           </span>
                                         )}
@@ -522,9 +522,9 @@ export default function ExamResultsPage() {
                           
                           {/* Tips & Formulas */}
                           {question.tip_formula && (
-                            <div className="bg-gray-800 rounded-lg p-4 mb-6 border-2 border-gray-300">
-                              <h4 className="font-semibold text-gray-100 mb-2">💡 Tips & Formulas</h4>
-                              <div className="text-gray-200">
+                            <div className="bg-gray-800 dark:bg-gray-900 rounded-lg p-3 sm:p-4 mb-6 border-2 border-gray-300 dark:border-gray-600 max-w-full overflow-x-auto">
+                              <h4 className="font-semibold text-gray-100 mb-2 text-sm sm:text-base">💡 Tips & Formulas</h4>
+                              <div className="text-gray-200 text-sm sm:text-base break-words overflow-wrap-anywhere">
                                 <LatexContentDisplay content={question.tip_formula} />
                               </div>
                             </div>
@@ -532,12 +532,12 @@ export default function ExamResultsPage() {
                           
                           {/* Explanations */}
                           {(question.explanation || (question.alternativeExplanations && question.alternativeExplanations.length > 0)) && (
-                            <div className="space-y-4">
+                            <div className="space-y-4 max-w-full overflow-x-auto">
                               {/* Original Explanation */}
                               {question.explanation && (
-                                <div className="bg-gray-800 rounded-lg p-4 border-2 border-gray-300">
-                                  <h4 className="font-semibold text-gray-100 mb-2">Explanation</h4>
-                                  <div className="text-gray-200">
+                                <div className="bg-gray-800 dark:bg-gray-900 rounded-lg p-3 sm:p-4 border-2 border-gray-300 dark:border-gray-600">
+                                  <h4 className="font-semibold text-gray-100 mb-2 text-sm sm:text-base">Explanation</h4>
+                                  <div className="text-gray-200 text-sm sm:text-base break-words overflow-wrap-anywhere">
                                     <LatexContentDisplay content={question.explanation} />
                                   </div>
                                 </div>
@@ -546,18 +546,18 @@ export default function ExamResultsPage() {
                               {/* Alternative Explanations */}
                               {question.alternativeExplanations && question.alternativeExplanations.length > 0 && (
                                 <div className="space-y-3">
-                                  <h4 className="font-semibold text-gray-900">Additional Explanations</h4>
+                                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base">Additional Explanations</h4>
                                   {question.alternativeExplanations.map((altExp, altIndex) => (
-                                    <div key={altExp.id} className="bg-gray-800 rounded-lg p-4 border-2 border-gray-300">
-                                      <div className="flex items-center justify-between mb-2">
-                                        <h5 className="text-md font-semibold text-gray-100">
+                                    <div key={altExp.id} className="bg-gray-800 dark:bg-gray-900 rounded-lg p-3 sm:p-4 border-2 border-gray-300 dark:border-gray-600">
+                                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                                        <h5 className="text-sm sm:text-base font-semibold text-gray-100">
                                           Alternative Explanation {altIndex + 1}
                                         </h5>
-                                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-700 text-gray-200 border border-gray-400">
+                                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-700 dark:bg-gray-800 text-gray-200 border border-gray-400 dark:border-gray-600 whitespace-nowrap">
                                           {altExp.source === 'REPORT_APPROVED' ? 'Student Suggested' : 'Community'}
                                         </span>
                                       </div>
-                                      <div className="text-gray-200">
+                                      <div className="text-gray-200 text-sm sm:text-base break-words overflow-wrap-anywhere">
                                         <LatexContentDisplay content={altExp.explanation} />
                                       </div>
                                       <div className="mt-2 text-xs text-gray-400">
@@ -571,11 +571,11 @@ export default function ExamResultsPage() {
                           )}
                           
                           {/* Navigation */}
-                          <div className="flex items-center justify-between pt-6 border-t border-gray-200">
+                          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
                             <button
                               onClick={handlePreviousQuestion}
                               disabled={currentQuestionIndex === 0}
-                              className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                               Previous
                             </button>
@@ -583,7 +583,7 @@ export default function ExamResultsPage() {
                             <button
                               onClick={handleNextQuestion}
                               disabled={currentQuestionIndex === questions.length - 1}
-                              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="px-3 sm:px-4 py-2 text-sm sm:text-base bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                               Next
                             </button>
@@ -596,12 +596,13 @@ export default function ExamResultsPage() {
               </div>
               
               {/* Right Sidebar - Question Navigation */}
-              <div className="w-80 bg-white shadow-lg p-6">
+              {/* Desktop Sidebar */}
+              <div className="hidden lg:block w-80 bg-white dark:bg-gray-800 shadow-lg p-6 flex-shrink-0">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Question Navigation</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Question Navigation</h3>
                   <button
                     onClick={() => setShowShortcutsLegend(!showShortcutsLegend)}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                     title={showShortcutsLegend ? "Hide shortcuts" : "Show shortcuts"}
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -612,8 +613,8 @@ export default function ExamResultsPage() {
                 
                 {/* Keyboard Shortcuts Legend */}
                 {showShortcutsLegend && (
-                  <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                  <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
                       <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
                       </svg>
@@ -621,22 +622,22 @@ export default function ExamResultsPage() {
                     </h4>
                     <div className="space-y-2 text-xs">
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Navigate:</span>
+                        <span className="text-gray-600 dark:text-gray-400">Navigate:</span>
                         <div className="flex space-x-1">
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">←</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">A</kbd>
-                          <span className="text-gray-400">/</span>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">→</kbd>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">D</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">←</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">A</kbd>
+                          <span className="text-gray-400 dark:text-gray-500">/</span>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">→</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">D</kbd>
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Jump to Q:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">1-9</kbd>
+                        <span className="text-gray-600 dark:text-gray-400">Jump to Q:</span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">1-9</kbd>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Toggle Help:</span>
-                        <kbd className="px-1.5 py-0.5 bg-gray-200 rounded text-xs">H</kbd>
+                        <span className="text-gray-600 dark:text-gray-400">Toggle Help:</span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">H</kbd>
                       </div>
                     </div>
                   </div>
@@ -668,49 +669,172 @@ export default function ExamResultsPage() {
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center">
                     <div className="w-4 h-4 bg-green-500 rounded mr-2"></div>
-                    <span>Correct</span>
+                    <span className="text-gray-700 dark:text-gray-300">Correct</span>
                   </div>
                   <div className="flex items-center">
                     <div className="w-4 h-4 bg-red-500 rounded mr-2"></div>
-                    <span>Incorrect</span>
+                    <span className="text-gray-700 dark:text-gray-300">Incorrect</span>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-4 h-4 bg-gray-400 rounded mr-2"></div>
-                    <span>Not Answered</span>
+                    <div className="w-4 h-4 bg-gray-400 dark:bg-gray-600 rounded mr-2"></div>
+                    <span className="text-gray-700 dark:text-gray-300">Not Answered</span>
                   </div>
                 </div>
                 
                 {/* Performance Summary */}
-                <div className="mt-6 pt-4 border-t border-gray-200">
-                  <h4 className="font-semibold text-gray-900 mb-3">Performance Summary</h4>
+                <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Performance Summary</h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Correct:</span>
-                      <span className="font-medium text-green-600">
+                      <span className="text-gray-600 dark:text-gray-400">Correct:</span>
+                      <span className="font-medium text-green-600 dark:text-green-400">
                         {results.answers.filter(a => a.isCorrect).length}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Incorrect:</span>
-                      <span className="font-medium text-red-600">
+                      <span className="text-gray-600 dark:text-gray-400">Incorrect:</span>
+                      <span className="font-medium text-red-600 dark:text-red-400">
                         {results.answers.filter(a => !a.isCorrect).length}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Not Answered:</span>
-                      <span className="font-medium text-gray-600">
+                      <span className="text-gray-600 dark:text-gray-400">Not Answered:</span>
+                      <span className="font-medium text-gray-600 dark:text-gray-400">
                         {questions.length - results.answers.length}
                       </span>
                     </div>
-                    <div className="flex justify-between pt-2 border-t border-gray-200">
-                      <span className="text-gray-600 font-medium">Total Marks:</span>
-                      <span className="font-bold text-purple-600">
+                    <div className="flex justify-between pt-2 border-t border-gray-200 dark:border-gray-700">
+                      <span className="text-gray-600 dark:text-gray-400 font-medium">Total Marks:</span>
+                      <span className="font-bold text-purple-600 dark:text-purple-400">
                         {results.totalMarksObtained}/{results.totalMarksAvailable}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Marks Percentage:</span>
-                      <span className="font-medium text-purple-600">
+                      <span className="text-gray-600 dark:text-gray-400">Marks Percentage:</span>
+                      <span className="font-medium text-purple-600 dark:text-purple-400">
+                        {Math.round((results.totalMarksObtained / results.totalMarksAvailable) * 100)}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile Sidebar - Below main content */}
+              <div className="lg:hidden w-full bg-white dark:bg-gray-800 shadow-lg p-4 sm:p-6 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">Question Navigation</h3>
+                  <button
+                    onClick={() => setShowShortcutsLegend(!showShortcutsLegend)}
+                    className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                    title={showShortcutsLegend ? "Hide shortcuts" : "Show shortcuts"}
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+                
+                {/* Keyboard Shortcuts Legend */}
+                {showShortcutsLegend && (
+                  <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
+                      <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
+                      </svg>
+                      Keyboard Shortcuts
+                    </h4>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600 dark:text-gray-400">Navigate:</span>
+                        <div className="flex space-x-1">
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">←</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">A</kbd>
+                          <span className="text-gray-400 dark:text-gray-500">/</span>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">→</kbd>
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">D</kbd>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600 dark:text-gray-400">Jump to Q:</span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">1-9</kbd>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600 dark:text-gray-400">Toggle Help:</span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-xs">H</kbd>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Question Grid */}
+                <div className="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-2 mb-6">
+                  {questions.map((question, index) => {
+                    const status = getQuestionStatus(question.id);
+                    const isCurrent = index === currentQuestionIndex;
+                    
+                    return (
+                      <button
+                        key={question.id}
+                        onClick={() => handleJumpToQuestion(index)}
+                        className={`w-10 h-10 rounded-lg text-sm font-medium flex items-center justify-center transition-colors ${
+                          isCurrent
+                            ? 'ring-2 ring-blue-500 bg-blue-600 text-white'
+                            : getQuestionStatusColor(status)
+                        }`}
+                      >
+                        {index + 1}
+                      </button>
+                    );
+                  })}
+                </div>
+                
+                {/* Question Status Legend */}
+                <div className="space-y-2 text-xs sm:text-sm">
+                  <div className="flex items-center">
+                    <div className="w-4 h-4 bg-green-500 rounded mr-2"></div>
+                    <span className="text-gray-700 dark:text-gray-300">Correct</span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-4 h-4 bg-red-500 rounded mr-2"></div>
+                    <span className="text-gray-700 dark:text-gray-300">Incorrect</span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-4 h-4 bg-gray-400 dark:bg-gray-600 rounded mr-2"></div>
+                    <span className="text-gray-700 dark:text-gray-300">Not Answered</span>
+                  </div>
+                </div>
+                
+                {/* Performance Summary */}
+                <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3 text-sm sm:text-base">Performance Summary</h4>
+                  <div className="space-y-2 text-xs sm:text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Correct:</span>
+                      <span className="font-medium text-green-600 dark:text-green-400">
+                        {results.answers.filter(a => a.isCorrect).length}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Incorrect:</span>
+                      <span className="font-medium text-red-600 dark:text-red-400">
+                        {results.answers.filter(a => !a.isCorrect).length}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Not Answered:</span>
+                      <span className="font-medium text-gray-600 dark:text-gray-400">
+                        {questions.length - results.answers.length}
+                      </span>
+                    </div>
+                    <div className="flex justify-between pt-2 border-t border-gray-200 dark:border-gray-700">
+                      <span className="text-gray-600 dark:text-gray-400 font-medium">Total Marks:</span>
+                      <span className="font-bold text-purple-600 dark:text-purple-400">
+                        {results.totalMarksObtained}/{results.totalMarksAvailable}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Marks Percentage:</span>
+                      <span className="font-medium text-purple-600 dark:text-purple-400">
                         {Math.round((results.totalMarksObtained / results.totalMarksAvailable) * 100)}%
                       </span>
                     </div>
@@ -851,82 +975,90 @@ function ReportIssueModal({
   if (!isOpen || !question) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md mx-4 shadow-xl report-modal">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Report Issue</h3>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4 overflow-y-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-lg w-full sm:w-auto sm:max-w-sm lg:max-w-sm shadow-xl report-modal my-auto flex flex-col max-h-[calc(100vh-2rem)] sm:max-h-[90vh]">
+        {/* Header - Fixed */}
+        <div className="flex items-center justify-between p-4 sm:p-6 pb-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">Report Issue</h3>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        <div className="mb-4">
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">Question:</p>
-          <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded text-sm">
-            <LatexContentDisplay content={question.stem} />
+        {/* Scrollable Content */}
+        <form onSubmit={handleSubmit} className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+            <div className="mb-4">
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-2">Question:</p>
+              <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded text-xs sm:text-sm max-w-full overflow-x-auto break-words">
+                <LatexContentDisplay content={question.stem} />
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Issue Type
+                </label>
+                <select
+                  value={reportType}
+                  onChange={(e) => setReportType(e.target.value)}
+                  className="w-full border border-gray-300 dark:border-gray-600 
+                          bg-white dark:bg-gray-800 
+                          text-gray-900 dark:text-white 
+                          rounded-md px-3 py-2 text-sm sm:text-base
+                          focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="" style={{ backgroundColor: 'white', color: 'black' }}>Select issue type</option>
+                  <option value="INCORRECT_ANSWER" style={{ backgroundColor: 'white', color: 'black' }}>Incorrect Answer</option>
+                  <option value="INCORRECT_EXPLANATION" style={{ backgroundColor: 'white', color: 'black' }}>Incorrect Explanation</option>
+                  <option value="SUGGESTED_EXPLANATION" style={{ backgroundColor: 'white', color: 'black' }}>Suggested Explanation</option>
+                  <option value="GRAMMATICAL_ERROR" style={{ backgroundColor: 'white', color: 'black' }}>Grammatical Error</option>
+                  <option value="TECHNICAL_ERROR" style={{ backgroundColor: 'white', color: 'black' }}>Technical Error</option>
+                  <option value="OTHER" style={{ backgroundColor: 'white', color: 'black' }}>Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Description
+                </label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={4}
+                  className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-md px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  placeholder="Please describe the issue in detail..."
+                  required
+                />
+              </div>
+            </div>
           </div>
-        </div>
 
-        <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Issue Type
-            </label>
-            <select
-                value={reportType}
-                onChange={(e) => setReportType(e.target.value)}
-                className="w-full border border-gray-300 dark:border-gray-600 
-                        bg-white dark:bg-gray-800 
-                        text-gray-900 dark:text-white 
-                        rounded-md px-3 py-2 
-                        focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-            >
-              <option value="" style={{ backgroundColor: 'white', color: 'black' }}>Select issue type</option>
-              <option value="INCORRECT_ANSWER" style={{ backgroundColor: 'white', color: 'black' }}>Incorrect Answer</option>
-              <option value="INCORRECT_EXPLANATION" style={{ backgroundColor: 'white', color: 'black' }}>Incorrect Explanation</option>
-              <option value="SUGGESTED_EXPLANATION" style={{ backgroundColor: 'white', color: 'black' }}>Suggested Explanation</option>
-              <option value="GRAMMATICAL_ERROR" style={{ backgroundColor: 'white', color: 'black' }}>Grammatical Error</option>
-              <option value="TECHNICAL_ERROR" style={{ backgroundColor: 'white', color: 'black' }}>Technical Error</option>
-              <option value="OTHER" style={{ backgroundColor: 'white', color: 'black' }}>Other</option>
-            </select>
-        </div>
-
-
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Description
-            </label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={4}
-              className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Please describe the issue in detail..."
-              required
-            />
-          </div>
-
-          <div className="flex justify-end space-x-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={submitting || !reportType || !description.trim()}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {submitting ? 'Submitting...' : 'Submit Report'}
-            </button>
+          {/* Footer with Buttons - Fixed */}
+          <div className="p-4 sm:p-6 pt-4 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-3 sm:px-4 py-2 text-xs sm:text-sm sm:text-base text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={submitting || !reportType || !description.trim()}
+                className="px-3 sm:px-4 py-2 text-xs sm:text-sm sm:text-base bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {submitting ? 'Submitting...' : 'Submit Report'}
+              </button>
+            </div>
           </div>
         </form>
       </div>

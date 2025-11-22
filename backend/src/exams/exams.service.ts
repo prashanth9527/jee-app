@@ -886,4 +886,77 @@ export class ExamsService {
     };
   }
 
+  async createExamFromQuestions(userId: string, config: {
+    questionIds: string[];
+    subjectId: string;
+    lessonId?: string;
+    topicId?: string;
+    subtopicId?: string;
+    timeLimitMin?: number;
+    title?: string;
+    questionType?: 'PYQ' | 'LMS';
+  }) {
+    console.log('Creating exam from questions:', { userId, questionCount: config.questionIds.length });
+
+    if (!config.questionIds || config.questionIds.length === 0) {
+      throw new BadRequestException('No questions provided');
+    }
+
+    // Verify questions exist
+    const questions = await this.prisma.question.findMany({
+      where: { id: { in: config.questionIds } },
+      select: { id: true, subjectId: true, lessonId: true, topicId: true, subtopicId: true, isPreviousYear: true }
+    });
+
+    if (questions.length !== config.questionIds.length) {
+      throw new BadRequestException('Some questions not found');
+    }
+
+    // Calculate time limit if not provided (2 minutes per question, minimum 30 minutes)
+    const timeLimitMin = config.timeLimitMin || Math.max(30, questions.length * 2);
+
+    // Determine exam type based on question type
+    const isPYQ = config.questionType === 'PYQ' || questions.every(q => q.isPreviousYear);
+    const examType = isPYQ ? 'PYQ_PRACTICE' : 'PRACTICE_EXAM';
+
+    // Generate title if not provided
+    const title = config.title || `${isPYQ ? 'PYQ' : 'Practice'} Exam - ${new Date().toLocaleDateString()}`;
+
+    // Get unique subject IDs from questions (filter out null values)
+    const subjectIds = [...new Set(questions.map(q => q.subjectId).filter((id): id is string => id !== null && id !== undefined))];
+    const topicIds = [...new Set(questions.map(q => q.topicId).filter((id): id is string => id !== null && id !== undefined))];
+    const subtopicIds = [...new Set(questions.map(q => q.subtopicId).filter((id): id is string => id !== null && id !== undefined))];
+
+    // Create exam paper
+    const examPaper = await this.prisma.examPaper.create({
+      data: {
+        title,
+        description: isPYQ ? 'Previous Year Questions Exam' : 'Practice Exam from direct practice session',
+        questionIds: config.questionIds,
+        timeLimitMin,
+        examType: examType as any,
+        createdById: userId,
+        subjectIds: subjectIds.length > 0 ? subjectIds : undefined,
+        topicIds: topicIds.length > 0 ? topicIds : undefined,
+        subtopicIds: subtopicIds.length > 0 ? subtopicIds : undefined
+      }
+    });
+
+    console.log('Exam paper created from questions:', { examPaperId: examPaper.id, questionCount: questions.length });
+
+    // Start the exam (create submission)
+    const submission = await this.startExam(userId, examPaper.id);
+
+    return {
+      submissionId: submission.submissionId,
+      examPaper: {
+        id: examPaper.id,
+        title: examPaper.title,
+        timeLimitMin: examPaper.timeLimitMin,
+        examType: examPaper.examType
+      },
+      totalQuestions: questions.length
+    };
+  }
+
 } 

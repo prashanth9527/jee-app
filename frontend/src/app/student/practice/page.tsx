@@ -654,36 +654,36 @@ function PracticeTestPageContent() {
                       
                       {/* Quick Practice Buttons */}
                       {selectedSubject && (
-                        <div className="mt-3 flex items-center gap-3">
-                          <label className="text-sm font-semibold text-gray-700">Practice:</label>
-                          <div className="flex gap-2">
+                        <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                          <label className="text-xs sm:text-sm font-semibold text-gray-700 whitespace-nowrap">Practice:</label>
+                          <div className="flex flex-wrap gap-1.5 sm:gap-2">
                             <button
                               onClick={() => handleQuickPractice('ALL')}
                               disabled={loading || subjectCounts.all === 0}
-                              className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                             >
                               <span>All</span>
-                              <span className="bg-blue-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                              <span className="bg-blue-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                 {subjectCounts.all}
                               </span>
                             </button>
                             <button
                               onClick={() => handleQuickPractice('PYQ')}
                               disabled={loading || subjectCounts.pyq === 0}
-                              className="px-3 py-1.5 text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                             >
                               <span>PYQ</span>
-                              <span className="bg-purple-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                              <span className="bg-purple-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                 {subjectCounts.pyq}
                               </span>
                             </button>
                             <button
                               onClick={() => handleQuickPractice('LMS')}
                               disabled={loading || subjectCounts.lms === 0}
-                              className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                             >
                               <span>LMS Q</span>
-                              <span className="bg-green-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                              <span className="bg-green-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                 {subjectCounts.lms}
                               </span>
                             </button>
@@ -714,36 +714,36 @@ function PracticeTestPageContent() {
                       
                       {/* Quick Practice Buttons for Lesson */}
                       {selectedLesson && (
-                        <div className="mt-3 flex items-center gap-3">
-                          <label className="text-sm font-semibold text-gray-700">Practice:</label>
-                          <div className="flex gap-2">
+                        <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                          <label className="text-xs sm:text-sm font-semibold text-gray-700 whitespace-nowrap">Practice:</label>
+                          <div className="flex flex-wrap gap-1.5 sm:gap-2">
                             <button
                               onClick={() => handleQuickPractice('ALL')}
                               disabled={loading || lessonCounts.all === 0}
-                              className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                             >
                               <span>All</span>
-                              <span className="bg-blue-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                              <span className="bg-blue-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                 {lessonCounts.all}
                               </span>
                             </button>
                             <button
                               onClick={() => handleQuickPractice('PYQ')}
                               disabled={loading || lessonCounts.pyq === 0}
-                              className="px-3 py-1.5 text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                             >
                               <span>PYQ</span>
-                              <span className="bg-purple-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                              <span className="bg-purple-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                 {lessonCounts.pyq}
                               </span>
                             </button>
                             <button
                               onClick={() => handleQuickPractice('LMS')}
                               disabled={loading || lessonCounts.lms === 0}
-                              className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                              className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                             >
                               <span>LMS Q</span>
-                              <span className="bg-green-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                              <span className="bg-green-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                 {lessonCounts.lms}
                               </span>
                             </button>
@@ -778,36 +778,36 @@ function PracticeTestPageContent() {
                         
                         {/* Quick Practice Buttons for Topic */}
                         {selectedTopic && (
-                          <div className="mt-3 flex items-center gap-3">
-                            <label className="text-sm font-semibold text-gray-700">Practice:</label>
-                            <div className="flex gap-2">
+                          <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                            <label className="text-xs sm:text-sm font-semibold text-gray-700 whitespace-nowrap">Practice:</label>
+                            <div className="flex flex-wrap gap-1.5 sm:gap-2">
                               <button
                                 onClick={() => handleQuickPractice('ALL')}
                                 disabled={loading || topicCounts.all === 0}
-                                className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                                className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                               >
                                 <span>All</span>
-                                <span className="bg-blue-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                <span className="bg-blue-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                   {topicCounts.all}
                                 </span>
                               </button>
                               <button
                                 onClick={() => handleQuickPractice('PYQ')}
                                 disabled={loading || topicCounts.pyq === 0}
-                                className="px-3 py-1.5 text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                                className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                               >
                                 <span>PYQ</span>
-                                <span className="bg-purple-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                <span className="bg-purple-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                   {topicCounts.pyq}
                                 </span>
                               </button>
                               <button
                                 onClick={() => handleQuickPractice('LMS')}
                                 disabled={loading || topicCounts.lms === 0}
-                                className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                                className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                               >
                                 <span>LMS Q</span>
-                                <span className="bg-green-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                <span className="bg-green-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                   {topicCounts.lms}
                                 </span>
                               </button>
@@ -841,36 +841,36 @@ function PracticeTestPageContent() {
                         
                         {/* Quick Practice Buttons for Subtopic */}
                         {selectedSubtopic && (
-                          <div className="mt-3 flex items-center gap-3">
-                            <label className="text-sm font-semibold text-gray-700">Practice:</label>
-                            <div className="flex gap-2">
+                          <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                            <label className="text-xs sm:text-sm font-semibold text-gray-700 whitespace-nowrap">Practice:</label>
+                            <div className="flex flex-wrap gap-1.5 sm:gap-2">
                               <button
                                 onClick={() => handleQuickPractice('ALL')}
                                 disabled={loading || subtopicCounts.all === 0}
-                                className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                                className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                               >
                                 <span>All</span>
-                                <span className="bg-blue-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                <span className="bg-blue-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                   {subtopicCounts.all}
                                 </span>
                               </button>
                               <button
                                 onClick={() => handleQuickPractice('PYQ')}
                                 disabled={loading || subtopicCounts.pyq === 0}
-                                className="px-3 py-1.5 text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                                className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                               >
                                 <span>PYQ</span>
-                                <span className="bg-purple-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                <span className="bg-purple-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                   {subtopicCounts.pyq}
                                 </span>
                               </button>
                               <button
                                 onClick={() => handleQuickPractice('LMS')}
                                 disabled={loading || subtopicCounts.lms === 0}
-                                className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                                className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 sm:gap-1.5"
                               >
                                 <span>LMS Q</span>
-                                <span className="bg-green-700 px-1.5 py-0.5 rounded text-xs font-semibold">
+                                <span className="bg-green-700 px-1 py-0.5 sm:px-1.5 rounded text-[10px] sm:text-xs font-semibold">
                                   {subtopicCounts.lms}
                                 </span>
                               </button>

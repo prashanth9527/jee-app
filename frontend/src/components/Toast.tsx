@@ -76,29 +76,31 @@ export default function Toast({ id, type, title, message, duration = 5000, onClo
 
   return (
     <div
-      className={`fixed top-4 right-4 z-50 max-w-sm w-full transform transition-all duration-300 ${
+      className={`fixed top-2 sm:top-4 right-2 sm:right-4 z-50 max-w-[calc(100vw-1rem)] sm:max-w-sm w-auto transform transition-all duration-300 ${
         isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
       }`}
     >
-      <div className={`rounded-lg border p-4 shadow-lg ${getBackgroundColor()}`}>
-        <div className="flex items-start">
+      <div className={`rounded-lg border p-2 sm:p-3 lg:p-4 shadow-lg ${getBackgroundColor()}`}>
+        <div className="flex items-start gap-2 sm:gap-3">
           <div className="flex-shrink-0">
-            {getIcon()}
+            <div className="h-4 w-4 sm:h-5 sm:w-5">
+              {getIcon()}
+            </div>
           </div>
-          <div className="ml-3 w-0 flex-1">
-            <p className={`text-sm font-medium ${getTextColor()}`}>
+          <div className="flex-1 min-w-0">
+            <p className={`text-xs sm:text-sm font-medium ${getTextColor()} break-words`}>
               {title}
             </p>
-            <p className={`mt-1 text-sm ${getTextColor()}`}>
+            <p className={`mt-0.5 sm:mt-1 text-xs sm:text-sm ${getTextColor()} break-words`}>
               {message}
             </p>
           </div>
-          <div className="ml-4 flex-shrink-0 flex">
+          <div className="ml-1 sm:ml-2 flex-shrink-0 flex">
             <button
-              className={`inline-flex rounded-md p-1.5 ${getTextColor()} hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2`}
+              className={`inline-flex rounded-md p-1 sm:p-1.5 ${getTextColor()} hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2`}
               onClick={handleClose}
             >
-              <X className="h-4 w-4" />
+              <X className="h-3 w-3 sm:h-4 sm:w-4" />
             </button>
           </div>
         </div>
@@ -115,13 +117,14 @@ export interface ToastContainerProps {
 
 export function ToastContainer({ toasts, onRemoveToast }: ToastContainerProps) {
   return (
-    <div className="fixed top-4 right-4 z-50 space-y-2">
+    <div className="fixed top-2 sm:top-4 right-2 sm:right-4 z-50 space-y-1 sm:space-y-2 pointer-events-none">
       {toasts.map((toast) => (
-        <Toast
-          key={toast.id}
-          {...toast}
-          onClose={onRemoveToast}
-        />
+        <div key={toast.id} className="pointer-events-auto">
+          <Toast
+            {...toast}
+            onClose={onRemoveToast}
+          />
+        </div>
       ))}
     </div>
   );

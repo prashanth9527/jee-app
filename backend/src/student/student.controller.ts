@@ -678,17 +678,17 @@ export class StudentController {
 
 		const practicedQuestionIds = practiceProgress?.sessions.map(s => s.questionId) || [];
 
-		return {
-			...examPaper,
-			subjects,
-			questions,
+			return {
+				...examPaper,
+				subjects,
+				questions,
 			questionCount: questions.length,
 			practicedQuestionIds
-		};
-	} catch (error) {
-		throw new Error(`Failed to fetch practice exam: ${error.message}`);
+			};
+		} catch (error) {
+			throw new Error(`Failed to fetch practice exam: ${error.message}`);
+		}
 	}
-}
 
 	@Post('practice-exam/:examId/track')
 	async trackPracticeSession(@Req() req: any, @Param('examId') examId: string) {

@@ -20,6 +20,69 @@ import { ExamsService } from './exams.service';
 export class ExamsController {
   constructor(private readonly examsService: ExamsService) {}
 
+  // Specific routes must come before parameterized routes
+  @Post('ai/generate-practice-test')
+  async generateAIPracticeTest(
+    @Req() req: any,
+    @Body() body: {
+      subjectId: string;
+      lessonId?: string;
+      topicId?: string;
+      subtopicId?: string;
+      questionCount: number;
+      difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
+      timeLimitMin: number;
+      title?: string;
+      questionType?: 'PYQ' | 'LMS';
+    }
+  ) {
+    return this.examsService.generateAIPracticeTest(req.user.id, body);
+  }
+
+  @Post('manual/generate-practice-test')
+  async generateManualPracticeTest(
+    @Req() req: any,
+    @Body() body: {
+      subjectId: string;
+      lessonId?: string;
+      topicId?: string;
+      subtopicId?: string;
+      questionCount: number;
+      difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
+      timeLimitMin: number;
+      title?: string;
+      questionType?: 'PYQ' | 'LMS';
+    }
+  ) {
+    return this.examsService.generateManualPracticeTest(req.user.id, body);
+  }
+
+  @Post('create-from-questions')
+  async createExamFromQuestions(
+    @Req() req: any,
+    @Body() body: {
+      questionIds: string[];
+      subjectId: string;
+      lessonId?: string;
+      topicId?: string;
+      subtopicId?: string;
+      timeLimitMin?: number;
+      title?: string;
+      questionType?: 'PYQ' | 'LMS';
+    }
+  ) {
+    return this.examsService.createExamFromQuestions(req.user.id, body);
+  }
+
+  @Post('papers/:id/start')
+  async startExam(
+    @Req() req: any,
+    @Param('id') examId: string
+  ) {
+    return this.examsService.startExam(req.user.id, examId);
+  }
+
+  // Parameterized routes come after specific routes
   @Get(':id')
   async getExam(
     @Req() req: any,
@@ -49,50 +112,6 @@ export class ExamsController {
     @Param('id') examId: string
   ) {
     return this.examsService.getExamResults(req.user.id, examId);
-  }
-
-  @Post('papers/:id/start')
-  async startExam(
-    @Req() req: any,
-    @Param('id') examId: string
-  ) {
-    return this.examsService.startExam(req.user.id, examId);
-  }
-
-  @Post('ai/generate-practice-test')
-  async generateAIPracticeTest(
-    @Req() req: any,
-    @Body() body: {
-      subjectId: string;
-      lessonId?: string;
-      topicId?: string;
-      subtopicId?: string;
-      questionCount: number;
-      difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
-      timeLimitMin: number;
-      title?: string;
-      questionType?: 'PYQ' | 'LMS';
-    }
-  ) {
-    return this.examsService.generateAIPracticeTest(req.user.id, body);
-  }
-
-  @Post('manual/generate-practice-test')
-async generateManualPracticeTest(
-    @Req() req: any,
-    @Body() body: {
-      subjectId: string;
-      lessonId?: string;
-      topicId?: string;
-      subtopicId?: string;
-      questionCount: number;
-      difficulty: 'EASY' | 'MEDIUM' | 'HARD' | 'MIXED';
-      timeLimitMin: number;
-      title?: string;
-      questionType?: 'PYQ' | 'LMS';
-    }
-  ) {
-return this.examsService.generateManualPracticeTest(req.user.id, body);
   }
 
 }

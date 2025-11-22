@@ -836,34 +836,34 @@ export default function ExamPage() {
     <ProtectedRoute requiredRole="STUDENT">
       <SubscriptionGuard>
         <StudentLayout>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden">
             {/* Header */}
-            <div className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
-              <div className="px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h1 className="text-xl font-semibold text-gray-900">{submission.examPaper.title}</h1>
-                    <p className="text-sm text-gray-600">
+            <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
+              <div className="px-3 sm:px-4 lg:px-6 py-3 sm:py-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                  <div className="min-w-0 flex-1">
+                    <h1 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-gray-100 truncate">{submission.examPaper.title}</h1>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       Question {currentQuestionIndex + 1} of {filteredQuestions.length}
                       {filteredQuestions.length !== questions.length && (
-                        <span className="text-gray-500 ml-1">
+                        <span className="text-gray-500 dark:text-gray-500 ml-1">
                           (filtered from {questions.length} total)
                         </span>
                       )}
                     </p>
                   </div>
                   
-                  <div className="flex items-center space-x-4">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4 sm:flex-shrink-0">
                     {timeRemaining > 0 && (
-                      <div className="bg-red-50 rounded-lg px-4 py-2">
-                        <div className="text-sm text-red-600 font-medium">Time Remaining</div>
-                        <div className="text-lg font-bold text-red-700">{formatTime(timeRemaining)}</div>
+                      <div className="bg-red-50 dark:bg-red-900/20 rounded-lg px-3 sm:px-4 py-2">
+                        <div className="text-xs sm:text-sm text-red-600 dark:text-red-400 font-medium">Time Remaining</div>
+                        <div className="text-base sm:text-lg font-bold text-red-700 dark:text-red-300">{formatTime(timeRemaining)}</div>
                       </div>
                     )}
                     
                     <button
                       onClick={handleSubmitExam}
-                      className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+                      className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors text-sm sm:text-base whitespace-nowrap"
                     >
                       Submit Exam
                     </button>
@@ -873,39 +873,40 @@ export default function ExamPage() {
             </div>
 
 
-            <div className="flex">
+            <div className="flex flex-col lg:flex-row overflow-hidden">
               {/* Main Content */}
-              <div className="flex-1 p-6">
-                <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex-1 p-3 sm:p-4 lg:p-6 min-w-0 overflow-x-hidden">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 sm:p-4 lg:p-6 max-w-full overflow-x-hidden">
                   {/* Question */}
-                  <div className="mb-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-lg font-semibold text-gray-900">
-                        Question {currentQuestionIndex + 1} - {currentQuestion.id} - {
+                  <div className="mb-6 overflow-x-hidden">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-4">
+                      <h2 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 dark:text-gray-100 break-words overflow-wrap-anywhere">
+                        Question {currentQuestionIndex + 1} - <span className="hidden sm:inline">{currentQuestion.id} - </span>{
                           isParagraphQuestion(currentQuestion) ? 'Paragraph Questions' :
                           isOpenEndedQuestion(currentQuestion) ? 'Open Ended' :
                           isMultipleChoiceQuestion(currentQuestion) ? 'Multiple Choice' :
                           'Multiple Choice'
                         }
                       </h2>
-                      <div className="flex items-center space-x-2">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          currentQuestion.difficulty === 'EASY' ? 'bg-green-100 text-green-800' :
-                          currentQuestion.difficulty === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-red-100 text-red-800'
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className={`inline-flex items-center px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          currentQuestion.difficulty === 'EASY' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
+                          currentQuestion.difficulty === 'MEDIUM' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300' :
+                          'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
                         }`}>
                           {currentQuestion.difficulty}
                         </span>
                         <button
                           onClick={handleMarkForReview}
-                          className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                          className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md transition-colors whitespace-nowrap ${
                             currentAnswer?.isMarkedForReview
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'px-3 py-1 text-sm font-medium rounded-md shadow-sm bg-white text-gray-800 border border-gray-200 hover:bg-gray-50         dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 dark:hover:bg-gray-600         transition-colors duration-150         focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400'
+                              ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200'
+                              : 'font-medium rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400'
                           }`}
                         >
-                          {currentAnswer?.isMarkedForReview ? '✓ Marked for Review' : 'Mark for Review'}
-                          <kbd className="ml-2 px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-900 dark:text-green-100 rounded text-xs">M</kbd>
+                          <span className="hidden sm:inline">{currentAnswer?.isMarkedForReview ? '✓ Marked for Review' : 'Mark for Review'}</span>
+                          <span className="sm:hidden">{currentAnswer?.isMarkedForReview ? '✓ Marked' : 'Mark'}</span>
+                          <kbd className="ml-1 sm:ml-2 px-1 sm:px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-900 dark:text-green-100 rounded text-xs">M</kbd>
                         </button>
                       </div>
                     </div>
@@ -913,25 +914,25 @@ export default function ExamPage() {
                     {/* Question Type Specific Rendering */}
                     {isParagraphQuestion(currentQuestion) ? (
                       /* Paragraph Question with Sub-Questions */
-                      <div className="space-y-6">
+                      <div className="space-y-6 max-w-full overflow-x-hidden">
                         {/* Display the paragraph passage */}
-                        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-6">
-                          <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-3">Comprehension Passage</h3>
-                          <div className="text-gray-900 dark:text-gray-100 text-base leading-relaxed">
+                        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6 mb-6 max-w-full overflow-x-auto">
+                          <h3 className="text-base sm:text-lg font-semibold text-blue-900 dark:text-blue-200 mb-3">Comprehension Passage</h3>
+                          <div className="text-gray-900 dark:text-gray-100 text-sm sm:text-base leading-relaxed break-words overflow-wrap-anywhere">
                             <LatexContentDisplay content={currentQuestion.stem} />
                           </div>
                         </div>
                         
                         {/* Display all sub-questions */}
                         {currentQuestion.subQuestions && currentQuestion.subQuestions.length > 0 ? (
-                          <div className="space-y-6">
+                          <div className="space-y-6 max-w-full overflow-x-hidden">
                             {currentQuestion.subQuestions.map((subQuestion, subIndex) => (
-                              <div key={subQuestion.id} className="border-l-4 border-blue-500 dark:border-blue-400 pl-4">
+                              <div key={subQuestion.id} className="border-l-4 border-blue-500 dark:border-blue-400 pl-3 sm:pl-4 max-w-full overflow-x-hidden">
                                 <div className="mb-4">
-                                  <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                                  <h4 className="text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
                                     Question {subIndex + 1}
                                   </h4>
-                                  <div className="prose max-w-none text-gray-900 dark:text-gray-100">
+                                  <div className="prose max-w-none text-gray-900 dark:text-gray-100 break-words overflow-wrap-anywhere text-sm sm:text-base">
                                     <LatexContentDisplay content={subQuestion.stem} />
                                   </div>
                                 </div>
@@ -965,7 +966,7 @@ export default function ExamPage() {
                                         return (
                                           <label
                                             key={option.id}
-                                            className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors ${
+                                            className={`flex items-start sm:items-center p-3 sm:p-4 rounded-lg border-2 cursor-pointer transition-colors max-w-full overflow-x-hidden ${
                                               isSubSelected
                                                 ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
                                                 : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
@@ -988,7 +989,7 @@ export default function ExamPage() {
                                                 className="sr-only"
                                               />
                                             )}
-                                            <div className={`w-6 h-6 ${isMultipleChoiceQuestion(subQuestion) ? 'rounded' : 'rounded-full'} border-2 mr-3 flex items-center justify-center ${
+                                            <div className={`w-5 h-5 sm:w-6 sm:h-6 ${isMultipleChoiceQuestion(subQuestion) ? 'rounded' : 'rounded-full'} border-2 flex-shrink-0 flex items-center justify-center mt-0.5 sm:mt-0 mr-2 sm:mr-3 ${
                                               isSubSelected
                                                 ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
                                                 : 'border-gray-300 dark:border-gray-600'
@@ -1001,15 +1002,15 @@ export default function ExamPage() {
                                                 )
                                               )}
                                             </div>
-                                            <div className="flex items-center gap-3 flex-1">
-                                              <span className={`text-xs font-semibold px-2 py-1 rounded border ${
+                                            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                                              <span className={`text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border flex-shrink-0 ${
                                                 isSubSelected
                                                   ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
                                                   : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
                                               }`}>
                                                 {optionLetter}
                                               </span>
-                                              <div className="flex-1 text-gray-900 dark:text-gray-100">
+                                              <div className="flex-1 min-w-0 text-gray-900 dark:text-gray-100 break-words overflow-wrap-anywhere text-sm sm:text-base">
                                                 <LatexContentDisplay content={option.text} />
                                               </div>
                                             </div>
@@ -1037,9 +1038,9 @@ export default function ExamPage() {
                         
                         {isOpenEndedQuestion(currentQuestion) ? (
                       /* Open-ended Question */
-                      <div className="space-y-3">
-                        <div className="p-4 rounded-lg border-2 border-gray-200 bg-gray-50">
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <div className="space-y-3 max-w-full overflow-x-hidden">
+                        <div className="p-3 sm:p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             Enter your numeric answer:
                           </label>
                             <input
@@ -1047,7 +1048,7 @@ export default function ExamPage() {
                             step="any"
                             value={currentAnswer?.numericValue || ''}
                             onChange={(e) => handleNumericAnswerChange(parseFloat(e.target.value) || undefined)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 text-base sm:text-lg border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                             placeholder="Enter numeric value"
                           />
                         </div>
@@ -1072,31 +1073,31 @@ export default function ExamPage() {
                           return (
                             <label
                               key={option.id}
-                              className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors ${
+                              className={`flex items-start sm:items-center p-3 sm:p-4 rounded-lg border-2 cursor-pointer transition-colors max-w-full overflow-x-hidden ${
                                 isSelected
                                   ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
                                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                               }`}
                               onClick={() => handleAnswerSelect(option.id)}
                             >
-                              <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
+                              <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mt-0.5 sm:mt-0 mr-2 sm:mr-3 ${
                                 isSelected
                                   ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
                                   : 'border-gray-300 dark:border-gray-600'
                               }`}>
                                 {isSelected && (
-                                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full"></div>
                                 )}
                               </div>
-                              <div className="flex items-center gap-3 flex-1">
-                                <span className={`text-xs font-semibold px-2 py-1 rounded border ${
+                              <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                                <span className={`text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border flex-shrink-0 ${
                                   isSelected
                                     ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
                                     : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
                                 }`}>
                                   {optionLetter}
                                 </span>
-                                <div className="flex-1 text-gray-900 dark:text-gray-100">
+                                <div className="flex-1 min-w-0 text-gray-900 dark:text-gray-100 break-words overflow-wrap-anywhere text-sm sm:text-base">
                                   <LatexContentDisplay content={option.text} />
                                 </div>
                               </div>
@@ -1110,35 +1111,36 @@ export default function ExamPage() {
                   </div>
                   
                   {/* Navigation */}
-                  <div className="flex items-center justify-between pt-6 border-t border-gray-200">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
                     <button
                       onClick={handlePreviousQuestion}
                       disabled={currentQuestionIndex === 0}
-                      className="ml-2 px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Previous
-                      <kbd className="ml-2 px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-900 dark:text-green-100 rounded text-xs">←</kbd>
+                      <kbd className="ml-1 sm:ml-2 px-1 sm:px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-900 dark:text-green-100 rounded text-xs">←</kbd>
                     </button>
                     
                     <button
                       onClick={handleNextQuestion}
                       disabled={currentQuestionIndex === filteredQuestions.length - 1}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-3 sm:px-4 py-2 text-sm sm:text-base bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Next
-                      <kbd className="ml-2 px-1 py-0.5 bg-blue-500 rounded text-xs">→</kbd>
+                      <kbd className="ml-1 sm:ml-2 px-1 py-0.5 bg-blue-500 rounded text-xs">→</kbd>
                     </button>
                   </div>
                 </div>
               </div>
               
               {/* Right Sidebar - Additional Information */}
-              <div className="w-80 bg-white shadow-lg p-6">
+              {/* Desktop Sidebar */}
+              <div className="hidden lg:block w-80 bg-white dark:bg-gray-800 shadow-lg p-6 flex-shrink-0">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Exam Progress</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Exam Progress</h3>
                   <button
                     onClick={() => setShowShortcutsLegend(!showShortcutsLegend)}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                     title="Toggle Keyboard Shortcuts"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -1150,25 +1152,25 @@ export default function ExamPage() {
                 {/* Exam Progress */}
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Total Questions:</span>
-                    <span className="font-medium">{questions.length}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Total Questions:</span>
+                    <span className="font-medium text-gray-900 dark:text-gray-100">{questions.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Answered:</span>
-                    <span className="font-medium text-green-600">{answers.filter(a => a.selectedOptionId).length}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Answered:</span>
+                    <span className="font-medium text-green-600 dark:text-green-400">{answers.filter(a => a.selectedOptionId).length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Marked for Review:</span>
-                    <span className="font-medium text-yellow-600">{answers.filter(a => a.isMarkedForReview).length}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Marked for Review:</span>
+                    <span className="font-medium text-yellow-600 dark:text-yellow-400">{answers.filter(a => a.isMarkedForReview).length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Unanswered:</span>
-                    <span className="font-medium text-gray-600">{answers.filter(a => !a.selectedOptionId).length}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Unanswered:</span>
+                    <span className="font-medium text-gray-600 dark:text-gray-400">{answers.filter(a => !a.selectedOptionId).length}</span>
                   </div>
                   {timeRemaining > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Time Remaining:</span>
-                      <span className="font-medium text-red-600">{formatTime(timeRemaining)}</span>
+                      <span className="text-gray-600 dark:text-gray-400">Time Remaining:</span>
+                      <span className="font-medium text-red-600 dark:text-red-400">{formatTime(timeRemaining)}</span>
                     </div>
                   )}
                 </div>
@@ -1224,9 +1226,9 @@ export default function ExamPage() {
                 )}
                 
                 {/* Question Navigation */}
-                <div className="pt-4 border-t border-gray-200">
-                  <h4 className="font-semibold text-gray-900 mb-3">Quick Navigation</h4>
-                  <div className="grid grid-cols-5 gap-2 mb-4">
+                <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Quick Navigation</h4>
+                  <div className="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-2 mb-4">
   {filteredQuestions.map((_, index) => {
     const status = getQuestionStatus(index);
     const isCurrent = index === currentQuestionIndex;
@@ -1261,22 +1263,171 @@ export default function ExamPage() {
 
                   
                   {/* Question Status Legend */}
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-2 text-xs sm:text-sm">
                     <div className="flex items-center">
                       <div className="w-4 h-4 bg-green-500 rounded mr-2"></div>
-                      <span>Answered</span>
+                      <span className="text-gray-700 dark:text-gray-300">Answered</span>
                     </div>
                     <div className="flex items-center">
                       <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
-                      <span>Answered & Marked</span>
+                      <span className="text-gray-700 dark:text-gray-300">Answered & Marked</span>
                     </div>
                     <div className="flex items-center">
                       <div className="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
-                      <span>Marked for Review</span>
+                      <span className="text-gray-700 dark:text-gray-300">Marked for Review</span>
                     </div>
                     <div className="flex items-center">
-                      <div className="w-4 h-4 bg-gray-300 rounded mr-2"></div>
-                      <span>Unanswered</span>
+                      <div className="w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded mr-2"></div>
+                      <span className="text-gray-700 dark:text-gray-300">Unanswered</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile Sidebar - Below main content */}
+              <div className="lg:hidden w-full bg-white dark:bg-gray-800 shadow-lg p-4 sm:p-6 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">Exam Progress</h3>
+                  <button
+                    onClick={() => setShowShortcutsLegend(!showShortcutsLegend)}
+                    className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                    title="Toggle Keyboard Shortcuts"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+                
+                {/* Exam Progress */}
+                <div className="space-y-3 mb-6">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400 text-sm">Total Questions:</span>
+                    <span className="font-medium text-gray-900 dark:text-gray-100">{questions.length}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400 text-sm">Answered:</span>
+                    <span className="font-medium text-green-600 dark:text-green-400">{answers.filter(a => a.selectedOptionId).length}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400 text-sm">Marked for Review:</span>
+                    <span className="font-medium text-yellow-600 dark:text-yellow-400">{answers.filter(a => a.isMarkedForReview).length}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400 text-sm">Unanswered:</span>
+                    <span className="font-medium text-gray-600 dark:text-gray-400">{answers.filter(a => !a.selectedOptionId).length}</span>
+                  </div>
+                  {timeRemaining > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400 text-sm">Time Remaining:</span>
+                      <span className="font-medium text-red-600 dark:text-red-400">{formatTime(timeRemaining)}</span>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Keyboard Shortcuts Legend */}
+                {showShortcutsLegend && (
+                  <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
+                      <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z" clipRule="evenodd" />
+                      </svg>
+                      Keyboard Shortcuts
+                    </h4>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Navigate:</span>
+                        <div className="flex space-x-1">
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">←</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">P</kbd>
+                          <span className="text-gray-400 dark:text-gray-500">/</span>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">→</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">N</kbd>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Select Option:</span>
+                        <div className="flex">
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">A</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">B</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">C</kbd>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">D</kbd>
+                          <span className="text-gray-400 dark:text-gray-500">/</span>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">1-4</kbd>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Mark Review:</span>
+                        <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">M</kbd>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Jump to Q:</span>
+                        <div className="flex items-center space-x-1">
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">1-9</kbd>
+                          <span className="text-gray-500 dark:text-gray-400 text-[10px]">(Num Pad)</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-700 dark:text-gray-400 font-medium">Help:</span>
+                        <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">H</kbd>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Question Navigation */}
+                <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3 text-sm sm:text-base">Quick Navigation</h4>
+                  <div className="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-2 mb-4">
+{filteredQuestions.map((_, index) => {
+    const status = getQuestionStatus(index);
+    const isCurrent = index === currentQuestionIndex;
+    const isAnswered = status === 'answered' || status === 'answered-review';
+
+    // minimal base + tiny accessibility/focus additions
+    const base =
+      "w-10 h-10 rounded-lg text-sm flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 question-nav-btn relative";
+
+    // keep your existing color helper for non-current tiles
+    const colorClasses = isCurrent
+      ? "ring-2 ring-blue-500 bg-blue-600 dark:bg-blue-600 border border-gray-200 dark:border-gray-600 text-white font-semibold"
+      : getQuestionStatusColor(status); // existing function
+
+    return (
+      <button
+        key={index}
+        type="button"
+        onClick={() => handleJumpToQuestion(index)}
+        title={`Question ${index + 1}${isCurrent ? " (current)" : ""}`}
+        aria-current={isCurrent ? "true" : undefined}
+        className={`${base} ${colorClasses}`}
+      >
+        {index + 1}
+        {isAnswered && (
+          <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-red-500 dark:bg-red-400 rounded-full"></span>
+        )}
+      </button>
+    );
+  })}
+</div>
+                  
+                  {/* Question Status Legend */}
+                  <div className="space-y-2 text-xs sm:text-sm">
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-green-500 rounded mr-2"></div>
+                      <span className="text-gray-700 dark:text-gray-300">Answered</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+                      <span className="text-gray-700 dark:text-gray-300">Answered & Marked</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
+                      <span className="text-gray-700 dark:text-gray-300">Marked for Review</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded mr-2"></div>
+                      <span className="text-gray-700 dark:text-gray-300">Unanswered</span>
                     </div>
                   </div>
                 </div>

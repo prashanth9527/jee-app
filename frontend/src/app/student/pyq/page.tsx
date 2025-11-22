@@ -94,6 +94,9 @@ export default function PYQPage() {
     search: ''
   });
 
+  // Toggle state for stats and filters
+  const [showStatsAndFilters, setShowStatsAndFilters] = useState(false);
+
   useEffect(() => {
     loadInitialData();
   }, []);
@@ -214,68 +217,86 @@ export default function PYQPage() {
         <StudentLayout>
           <div className="space-y-6">
             {/* Header */}
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Previous Year Questions</h1>
-              <p className="text-gray-600">Practice with authentic JEE questions from previous years</p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Previous Year Questions</h1>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Practice with authentic JEE questions from previous years</p>
+              </div>
+              <button
+                onClick={() => setShowStatsAndFilters(!showStatsAndFilters)}
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base"
+                aria-label={showStatsAndFilters ? 'Hide stats and filters' : 'Show stats and filters'}
+              >
+                <svg 
+                  className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform ${showStatsAndFilters ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+                <span className="hidden sm:inline">{showStatsAndFilters ? 'Hide' : 'Show'} Stats & Filters</span>
+                <span className="sm:hidden">{showStatsAndFilters ? 'Hide' : 'Show'}</span>
+              </button>
             </div>
 
             {/* Analytics Cards */}
-            {analytics && (
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="bg-white rounded-lg shadow p-6">
+            {analytics && showStatsAndFilters && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-6">
                   <div className="flex items-center">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600">Total PYQs</p>
-                      <p className="text-2xl font-bold text-gray-900">{analytics.totalPYQ}</p>
+                    <div className="ml-3 sm:ml-4">
+                      <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">Total PYQs</p>
+                      <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{analytics.totalPYQ}</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-lg shadow p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-6">
                   <div className="flex items-center">
-                    <div className="p-2 bg-green-100 rounded-lg">
-                      <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600">Years Covered</p>
-                      <p className="text-2xl font-bold text-gray-900">{analytics.byYear.length}</p>
+                    <div className="ml-3 sm:ml-4">
+                      <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">Years Covered</p>
+                      <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{analytics.byYear.length}</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-lg shadow p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-6">
                   <div className="flex items-center">
-                    <div className="p-2 bg-purple-100 rounded-lg">
-                      <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                       </svg>
                     </div>
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600">Subjects</p>
-                      <p className="text-2xl font-bold text-gray-900">{analytics.bySubject.length}</p>
+                    <div className="ml-3 sm:ml-4">
+                      <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">Subjects</p>
+                      <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{analytics.bySubject.length}</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-lg shadow p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-6">
                   <div className="flex items-center">
-                    <div className="p-2 bg-orange-100 rounded-lg">
-                      <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     </div>
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600">Practice Now</p>
+                    <div className="ml-3 sm:ml-4">
+                      <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">Practice Now</p>
                       <button
                         onClick={startPractice}
-                        className="text-2xl font-bold text-orange-600 hover:text-orange-700"
+                        className="text-lg sm:text-xl lg:text-2xl font-bold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300"
                       >
                         Start →
                       </button>
@@ -286,17 +307,18 @@ export default function PYQPage() {
             )}
 
             {/* Filters */}
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Filters</h2>
+            {showStatsAndFilters && (
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-6">
+              <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">Filters</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4 mb-4">
                 {/* Year Filter */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Year</label>
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1.5 sm:mb-2">Year</label>
                   <select
                     value={filters.year}
                     onChange={(e) => handleFilterChange('year', e.target.value)}
-                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="w-full border-2 border-gray-300 dark:border-gray-600 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="" className="text-gray-600">All Years</option>
                     {years.map(year => (
@@ -307,11 +329,11 @@ export default function PYQPage() {
 
                 {/* Subject Filter */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Subject</label>
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1.5 sm:mb-2">Subject</label>
                   <select
                     value={filters.subjectId}
                     onChange={(e) => handleFilterChange('subjectId', e.target.value)}
-                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="w-full border-2 border-gray-300 dark:border-gray-600 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="" className="text-gray-600">All Subjects</option>
                     {subjects.map(subject => (
@@ -324,11 +346,11 @@ export default function PYQPage() {
 
                 {/* Lesson Filter */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Lesson</label>
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1.5 sm:mb-2">Lesson</label>
                   <select
                     value={filters.lessonId}
                     onChange={(e) => handleFilterChange('lessonId', e.target.value)}
-                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="w-full border-2 border-gray-300 dark:border-gray-600 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="" className="text-gray-600">All Lessons</option>
                     {lessons
@@ -343,11 +365,11 @@ export default function PYQPage() {
 
                 {/* Topic Filter */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Topic</label>
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1.5 sm:mb-2">Topic</label>
                   <select
                     value={filters.topicId}
                     onChange={(e) => handleFilterChange('topicId', e.target.value)}
-                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="w-full border-2 border-gray-300 dark:border-gray-600 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="" className="text-gray-600">All Topics</option>
                     {topics
@@ -366,11 +388,11 @@ export default function PYQPage() {
 
                 {/* Subtopic Filter */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Subtopic</label>
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1.5 sm:mb-2">Subtopic</label>
                   <select
                     value={filters.subtopicId}
                     onChange={(e) => handleFilterChange('subtopicId', e.target.value)}
-                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="w-full border-2 border-gray-300 dark:border-gray-600 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="" className="text-gray-600">All Subtopics</option>
                     {subtopics
@@ -389,11 +411,11 @@ export default function PYQPage() {
 
                 {/* Difficulty Filter */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Difficulty</label>
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1.5 sm:mb-2">Difficulty</label>
                   <select
                     value={filters.difficulty}
                     onChange={(e) => handleFilterChange('difficulty', e.target.value)}
-                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="w-full border-2 border-gray-300 dark:border-gray-600 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="" className="text-gray-600">All Difficulties</option>
                     <option value="EASY" className="text-gray-900">Easy</option>
@@ -405,16 +427,17 @@ export default function PYQPage() {
 
               {/* Search */}
               <div>
-                <label className="block text-sm font-semibold text-gray-800 mb-2">Search</label>
+                <label className="block text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1.5 sm:mb-2">Search</label>
                 <input
                   type="text"
                   placeholder="Search questions, topics, or explanations..."
                   value={filters.search}
                   onChange={(e) => handleSearch(e.target.value)}
-                  className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full border-2 border-gray-300 dark:border-gray-600 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-gray-900 dark:text-white bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 />
               </div>
             </div>
+            )}
 
             {/* Questions List */}
             <div className="bg-white rounded-lg shadow">

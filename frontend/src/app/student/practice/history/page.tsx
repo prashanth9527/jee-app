@@ -14,7 +14,7 @@ interface PracticeTest {
     title: string;
     description: string | null;
     timeLimitMin: number | null;
-  };
+  } | null;
   startedAt: string;
   submittedAt: string | null;
   totalQuestions: number;
@@ -167,7 +167,9 @@ export default function PracticeTestHistoryPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-2">
-                            <h3 className="text-lg font-semibold text-gray-900">{test.examPaper.title}</h3>
+                            <h3 className="text-lg font-semibold text-gray-900">
+                              {test.examPaper?.title || 'Practice Test'}
+                            </h3>
                             {test.submittedAt && (
                               <span className={`px-2 py-1 rounded-full text-xs font-medium ${getScoreBadge(test.scorePercent)}`}>
                                 {test.scorePercent?.toFixed(1)}%
@@ -195,7 +197,7 @@ export default function PracticeTestHistoryPage() {
                             </div>
                           </div>
 
-                          {test.examPaper.description && (
+                          {test.examPaper?.description && (
                             <p className="text-sm text-gray-500 mt-2">{test.examPaper.description}</p>
                           )}
                         </div>

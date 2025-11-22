@@ -538,17 +538,86 @@ export default function PracticeExamPage() {
   };
 
   const handleStartExam = async () => {
-    // Only allow starting exam if we have a valid examId (not direct practice)
-    if (!examId || examId === 'direct-practice') {
-      Swal.fire({
-        title: 'Cannot Start Exam',
-        text: 'This is a direct practice session. Please create an exam paper first to start a timed exam.',
-        icon: 'info'
-      });
-      return;
-    }
-
     try {
+      // If this is a direct practice session, create an exam from current questions
+      if (examId === 'direct-practice' && examPaper) {
+        const result = await Swal.fire({
+          title: 'Start Real Exam?',
+          text: `This will create a timed exam with ${examPaper.questionCount} questions from your current practice session. Are you ready to begin?`,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Start Exam',
+          cancelButtonText: 'Continue Practice'
+        });
+
+        if (result.isConfirmed) {
+          // Get filters from URL params
+          const subjectId = searchParams?.get('subjectId');
+          const lessonId = searchParams?.get('lessonId');
+          const topicId = searchParams?.get('topicId');
+          const subtopicId = searchParams?.get('subtopicId');
+          const questionType = searchParams?.get('questionType');
+          const subjectName = searchParams?.get('subjectName') || 'Practice';
+
+          if (!subjectId || !examPaper.questions || examPaper.questions.length === 0) {
+            Swal.fire({
+              title: 'Error',
+              text: 'Unable to create exam. Missing required information.',
+              icon: 'error'
+            });
+            return;
+          }
+
+          // Get question IDs from current exam paper
+          const questionIds = examPaper.questions.map(q => q.id);
+
+          // Calculate time limit (2 minutes per question, minimum 30 minutes)
+          const timeLimitMin = Math.max(30, questionIds.length * 2);
+
+          // Generate title
+          const titleParts = [subjectName];
+          if (lessonId && searchParams?.get('lessonName')) {
+            titleParts.push(searchParams.get('lessonName')!);
+          }
+          if (topicId && searchParams?.get('topicName')) {
+            titleParts.push(searchParams.get('topicName')!);
+          }
+          if (subtopicId && searchParams?.get('subtopicName')) {
+            titleParts.push(searchParams.get('subtopicName')!);
+          }
+          if (questionType && questionType !== 'ALL') {
+            titleParts.push(questionType);
+          }
+          const title = `${titleParts.join(' - ')} Exam`;
+
+          // Create exam from questions
+          const response = await api.post('/student/exams/create-from-questions', {
+            questionIds,
+            subjectId,
+            lessonId: lessonId || undefined,
+            topicId: topicId || undefined,
+            subtopicId: subtopicId || undefined,
+            timeLimitMin,
+            title,
+            questionType: questionType && questionType !== 'ALL' ? questionType : undefined
+          });
+
+          const { submissionId } = response.data;
+          router.push(`/student/exam/${submissionId}`);
+        }
+        return;
+      }
+
+      // For regular exam papers (not direct practice)
+      if (!examId || examId === 'direct-practice') {
+        Swal.fire({
+          title: 'Cannot Start Exam',
+          text: 'This is a direct practice session. Please create an exam paper first to start a timed exam.',
+          icon: 'info'
+        });
+        return;
+      }
+
       const result = await Swal.fire({
         title: 'Start Real Exam?',
         text: 'This will start a timed exam session. Are you ready to begin?',
@@ -559,7 +628,7 @@ export default function PracticeExamPage() {
       });
 
       if (result.isConfirmed) {
-        const response = await api.post(`/exams/papers/${examId}/start`);
+        const response = await api.post(`/student/exams/papers/${examId}/start`);
         const { submissionId } = response.data;
         router.push(`/student/exam/${submissionId}`);
       }
@@ -700,7 +769,7 @@ export default function PracticeExamPage() {
               return (
                 <label
                   key={option.id}
-                  className={`block p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                  className={`block p-3 sm:p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 max-w-full overflow-x-hidden ${
                     questionSelectedAnswer === option.id
                       ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
                       : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
@@ -723,8 +792,8 @@ export default function PracticeExamPage() {
                     className="sr-only"
                     disabled={questionIsChecked}
                   />
-                  <div className="flex items-center">
-                    <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
+                  <div className="flex items-start sm:items-center gap-2 sm:gap-3">
+                    <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mt-0.5 sm:mt-0 ${
                       questionSelectedAnswer === option.id
                         ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
                         : 'border-gray-300 dark:border-gray-600'
@@ -738,26 +807,26 @@ export default function PracticeExamPage() {
                         : ''
                     }`}>
                       {questionSelectedAnswer === option.id && (
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full"></div>
                       )}
                     </div>
-                    <div className="flex items-center gap-3 flex-1">
-                      <span className={`text-xs font-semibold px-2 py-1 rounded border ${
+                    <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                      <span className={`text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border flex-shrink-0 ${
                         questionSelectedAnswer === option.id
                           ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
                           : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
                       }`}>
                         {optionLetter}
                       </span>
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0 break-words overflow-wrap-anywhere text-sm sm:text-base">
                         <LatexContentDisplay content={option.text} />
                       </div>
                     </div>
                     {questionIsChecked && option.isCorrect && (
-                      <div className="text-green-600 dark:text-green-400 ml-2">✓</div>
+                      <div className="text-green-600 dark:text-green-400 ml-2 flex-shrink-0">✓</div>
                     )}
                     {questionIsChecked && questionSelectedAnswer === option.id && !questionIsCorrect && (
-                      <div className="text-red-600 dark:text-red-400 ml-2">✗</div>
+                      <div className="text-red-600 dark:text-red-400 ml-2 flex-shrink-0">✗</div>
                     )}
                   </div>
                 </label>
@@ -775,7 +844,7 @@ export default function PracticeExamPage() {
               return (
                 <label
                   key={option.id}
-                  className={`block p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                  className={`block p-3 sm:p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 max-w-full overflow-x-hidden ${
                     selectedArray.includes(option.id)
                       ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
                       : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
@@ -796,8 +865,8 @@ export default function PracticeExamPage() {
                     className="sr-only"
                     disabled={questionIsChecked}
                   />
-                  <div className="flex items-center">
-                    <div className={`w-6 h-6 border-2 mr-3 flex items-center justify-center rounded ${
+                  <div className="flex items-start sm:items-center gap-2 sm:gap-3">
+                    <div className={`w-5 h-5 sm:w-6 sm:h-6 border-2 flex-shrink-0 flex items-center justify-center rounded mt-0.5 sm:mt-0 ${
                       selectedArray.includes(option.id)
                         ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
                         : 'border-gray-300 dark:border-gray-600'
@@ -811,26 +880,26 @@ export default function PracticeExamPage() {
                         : ''
                     }`}>
                       {selectedArray.includes(option.id) && (
-                        <div className="text-white text-sm">✓</div>
+                        <div className="text-white text-xs sm:text-sm">✓</div>
                       )}
                     </div>
-                    <div className="flex items-center gap-3 flex-1">
-                      <span className={`text-xs font-semibold px-2 py-1 rounded border ${
+                    <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                      <span className={`text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border flex-shrink-0 ${
                         selectedArray.includes(option.id)
                           ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
                           : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
                       }`}>
                         {optionLetter}
                       </span>
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0 break-words overflow-wrap-anywhere text-sm sm:text-base">
                         <LatexContentDisplay content={option.text} />
                       </div>
                     </div>
                     {questionIsChecked && option.isCorrect && (
-                      <div className="text-green-600 dark:text-green-400 ml-2">✓</div>
+                      <div className="text-green-600 dark:text-green-400 ml-2 flex-shrink-0">✓</div>
                     )}
                     {questionIsChecked && selectedArray.includes(option.id) && !questionIsCorrect && (
-                      <div className="text-red-600 dark:text-red-400 ml-2">✗</div>
+                      <div className="text-red-600 dark:text-red-400 ml-2 flex-shrink-0">✗</div>
                     )}
                   </div>
                 </label>
@@ -841,7 +910,7 @@ export default function PracticeExamPage() {
 
       case QuestionType.OPEN_ENDED:
         return (
-          <div className="space-y-4">
+          <div className="space-y-4 max-w-full overflow-x-hidden">
             <div className="relative">
               <input
                 type="number"
@@ -849,7 +918,7 @@ export default function PracticeExamPage() {
                 value={questionSelectedAnswer || ''}
                 onChange={(e) => handleNumericAnswerChange(question.id, e.target.value)}
                 placeholder="Enter your answer"
-                className={`w-full p-4 border-2 rounded-lg text-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 ${
+                className={`w-full p-3 sm:p-4 border-2 rounded-lg text-base sm:text-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 ${
                   questionIsChecked
                     ? questionIsCorrect
                       ? 'border-green-500 bg-green-50 dark:border-green-400 dark:bg-green-900/20'
@@ -859,7 +928,7 @@ export default function PracticeExamPage() {
                 disabled={questionIsChecked}
               />
               {questionIsChecked && (
-                <div className={`absolute right-4 top-1/2 transform -translate-y-1/2 text-2xl ${
+                <div className={`absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-xl sm:text-2xl ${
                   questionIsCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
                 }`}>
                   {questionIsCorrect ? '✓' : '✗'}
@@ -915,28 +984,28 @@ export default function PracticeExamPage() {
     <ProtectedRoute>
       <SubscriptionGuard>
         <StudentLayout>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden">
             {/* Header */}
-            <div className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
-              <div className="px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h1 className="text-xl font-semibold text-gray-900">{examPaper.title}</h1>
-                    <p className="text-sm text-gray-600">
+            <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
+              <div className="px-4 sm:px-6 py-3 sm:py-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <h1 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 truncate">{examPaper.title}</h1>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       Question {practiceState.currentQuestionIndex + 1} of {examPaper.questionCount}
                     </p>
                   </div>
                   
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center gap-2 sm:space-x-4">
                     <button
                       onClick={handleStartExam}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                      className="bg-blue-600 text-white px-3 sm:px-4 py-2 text-sm sm:text-base rounded-md hover:bg-blue-700 transition-colors whitespace-nowrap"
                     >
                       Start Exam
                     </button>
                     <button
                       onClick={handleExitPractice}
-                      className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors"
+                      className="bg-gray-600 dark:bg-gray-700 text-white px-3 sm:px-4 py-2 text-sm sm:text-base rounded-md hover:bg-gray-700 dark:hover:bg-gray-600 transition-colors whitespace-nowrap"
                     >
                       Exit Practice
                     </button>
@@ -945,17 +1014,17 @@ export default function PracticeExamPage() {
               </div>
             </div>
 
-            <div className="flex">
+            <div className="flex flex-col lg:flex-row overflow-hidden">
               {/* Main Content */}
-              <div className="flex-1 p-6">
-                <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex-1 p-3 sm:p-4 lg:p-6 min-w-0 overflow-x-hidden">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 sm:p-4 lg:p-6 max-w-full overflow-x-hidden">
                   {/* Question */}
-                  <div className="mb-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-lg font-semibold text-gray-900">
-                        Question {practiceState.currentQuestionIndex + 1} - {currentQuestion.id} - {currentQuestion.questionType}
+                  <div className="mb-6 overflow-x-hidden">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+                      <h2 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 dark:text-gray-100 break-words overflow-wrap-anywhere">
+                        Question {practiceState.currentQuestionIndex + 1} - <span className="hidden sm:inline">{currentQuestion.id} - </span>{currentQuestion.questionType}
                       </h2>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         {practiceState.practicedQuestions[currentQuestion.id] && (
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-300 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700">
                             PRACTICED
@@ -970,15 +1039,16 @@ export default function PracticeExamPage() {
                         </span>
                         <button
                           onClick={() => handleMarkForReview(currentQuestion.id)}
-                          className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                          className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md transition-colors whitespace-nowrap ${
                             practiceState.markedForReview[currentQuestion.id]
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'px-3 py-1 text-sm font-medium rounded-md shadow-sm bg-white text-gray-800 border border-gray-200 hover:bg-gray-50 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400'
+                              ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200'
+                              : 'font-medium shadow-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400'
                           }`}
                           title="Mark for Review (Press M)"
                         >
-                          {practiceState.markedForReview[currentQuestion.id] ? '✓ Marked for Review' : 'Mark for Review'}
-                          <kbd className="ml-2 px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-700 dark:text-green-300 rounded text-xs">M</kbd>
+                          <span className="hidden sm:inline">{practiceState.markedForReview[currentQuestion.id] ? '✓ Marked for Review' : 'Mark for Review'}</span>
+                          <span className="sm:hidden">{practiceState.markedForReview[currentQuestion.id] ? '✓ Marked' : 'Mark'}</span>
+                          <kbd className="ml-1 sm:ml-2 px-1 sm:px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-green-700 dark:text-green-300 rounded text-xs">M</kbd>
                         </button>
                       </div>
                     </div>
@@ -986,29 +1056,31 @@ export default function PracticeExamPage() {
                     {/* Question Type Specific Rendering */}
                     {currentQuestion.questionType === QuestionType.PARAGRAPH ? (
                       /* Paragraph Question with Sub-Questions */
-                      <div className="space-y-6">
+                      <div className="space-y-6 max-w-full overflow-x-hidden">
                         {/* Display the paragraph passage */}
-                        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-6">
-                          <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-3">Comprehension Passage</h3>
-                          <div className="text-gray-900 dark:text-gray-100 text-base leading-relaxed">
+                        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6 mb-6 max-w-full overflow-x-auto">
+                          <h3 className="text-base sm:text-lg font-semibold text-blue-900 dark:text-blue-200 mb-3">Comprehension Passage</h3>
+                          <div className="text-gray-900 dark:text-gray-100 text-sm sm:text-base leading-relaxed break-words overflow-wrap-anywhere">
                             <LatexContentDisplay content={currentQuestion.stem} />
                           </div>
                         </div>
                         
                         {/* Display all sub-questions */}
                         {currentQuestion.subQuestions && currentQuestion.subQuestions.length > 0 ? (
-                          <div className="space-y-6">
+                          <div className="space-y-6 max-w-full overflow-x-hidden">
                             {currentQuestion.subQuestions.map((subQ, index) => (
-                              <div key={subQ.id} className="border-l-4 border-blue-500 dark:border-blue-400 pl-4">
+                              <div key={subQ.id} className="border-l-4 border-blue-500 dark:border-blue-400 pl-3 sm:pl-4 max-w-full overflow-x-hidden">
                                 <div className="mb-3">
-                                  <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                  <h4 className="text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100">
                                     Question {index + 1}
                                   </h4>
-                                  <div className="prose max-w-none mt-2 text-gray-900 dark:text-gray-100">
+                                  <div className="prose max-w-none mt-2 text-gray-900 dark:text-gray-100 break-words overflow-wrap-anywhere text-sm sm:text-base">
                                     <LatexContentDisplay content={subQ.stem} />
                                   </div>
                                 </div>
-                                {renderQuestionInput(subQ)}
+                                <div className="max-w-full overflow-x-hidden">
+                                  {renderQuestionInput(subQ)}
+                                </div>
                               </div>
                             ))}
                           </div>
@@ -1019,12 +1091,12 @@ export default function PracticeExamPage() {
                     ) : (
                       /* Regular Questions (MCQ or Open Ended) */
                       <>
-                        <div className="text-gray-900 dark:text-gray-100 text-lg mb-6">
+                        <div className="text-gray-900 dark:text-gray-100 text-base sm:text-lg mb-6 break-words overflow-wrap-anywhere max-w-full overflow-x-auto">
                           <LatexContentDisplay content={currentQuestion.stem} />
                         </div>
                         
                         {/* Answer Input */}
-                        <div className="mb-6">
+                        <div className="mb-6 max-w-full overflow-x-hidden">
                           {renderQuestionInput(currentQuestion)}
                         </div>
                       </>
@@ -1051,9 +1123,9 @@ export default function PracticeExamPage() {
 
                     {/* Explanation */}
                     {isChecked && currentQuestion.explanation && (
-                      <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                        <h3 className="text-lg font-semibold text-blue-900 mb-2">Explanation</h3>
-                        <div className="prose max-w-none text-blue-800">
+                      <div className="mt-6 p-4 sm:p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg max-w-full overflow-x-auto">
+                        <h3 className="text-base sm:text-lg font-semibold text-blue-900 dark:text-blue-200 mb-2">Explanation</h3>
+                        <div className="prose max-w-none text-blue-800 dark:text-blue-200 break-words overflow-wrap-anywhere text-sm sm:text-base">
                           <LatexContentDisplay content={currentQuestion.explanation} />
                         </div>
                       </div>
@@ -1061,12 +1133,12 @@ export default function PracticeExamPage() {
                   </div>
                   
                   {/* Navigation */}
-                  <div className="flex items-center justify-between pt-6 border-t border-gray-200">
+                  <div className="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
                     <button
                       onClick={handlePreviousQuestion}
                       disabled={practiceState.currentQuestionIndex === 0}
-                      className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                      title="Previous Question (Press ← or A)"
+                      className="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Previous Question (Press ← or P)"
                     >
                       Previous
                       <kbd className="ml-2 px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded text-xs">←</kbd>
@@ -1075,23 +1147,143 @@ export default function PracticeExamPage() {
                     <button
                       onClick={handleNextQuestion}
                       disabled={practiceState.currentQuestionIndex === examPaper.questionCount - 1}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                      title="Next Question (Press → or D)"
+                      className="px-3 sm:px-4 py-2 text-sm sm:text-base bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Next Question (Press → or N)"
                     >
                       Next
                       <kbd className="ml-2 px-1 py-0.5 bg-blue-500 rounded text-xs">→</kbd>
                     </button>
                   </div>
+                  
+                  {/* Question Navigation - Mobile: Below Navigation Buttons */}
+                  <div className="lg:hidden mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                    {/* Practice Progress */}
+                    <div className="space-y-4 mb-6">
+                      {/* Progress Bar */}
+                      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Practice Progress</span>
+                          <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                            {Object.keys(practiceState.practicedQuestions).length} / {examPaper.questionCount}
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                          <div 
+                            className="bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 h-3 rounded-full transition-all duration-300 ease-out"
+                            style={{ 
+                              width: `${examPaper.questionCount > 0 ? (Object.keys(practiceState.practicedQuestions).length / examPaper.questionCount) * 100 : 0}%` 
+                            }}
+                          ></div>
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                          {examPaper.questionCount > 0 ? Math.round((Object.keys(practiceState.practicedQuestions).length / examPaper.questionCount) * 100) : 0}% completed
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400 text-sm">Total Questions:</span>
+                          <span className="font-medium dark:text-gray-300 text-sm">{examPaper.questionCount}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400 text-sm">Practiced:</span>
+                          <span className="font-medium text-red-600 dark:text-red-400 text-sm">
+                            {Object.keys(practiceState.practicedQuestions).length}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400 text-sm">Answered:</span>
+                          <span className="font-medium text-green-600 dark:text-green-400 text-sm">
+                            {Object.keys(practiceState.selectedAnswers).length}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400 text-sm">Marked for Review:</span>
+                          <span className="font-medium text-yellow-600 dark:text-yellow-400 text-sm">
+                            {Object.values(practiceState.markedForReview).filter(Boolean).length}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400 text-sm">Checked:</span>
+                          <span className="font-medium text-blue-600 dark:text-blue-400 text-sm">
+                            {Object.values(practiceState.checkedQuestions).filter(Boolean).length}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400 text-sm">Unanswered:</span>
+                          <span className="font-medium text-gray-600 dark:text-gray-400 text-sm">
+                            {examPaper.questionCount - Object.keys(practiceState.selectedAnswers).length}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Question Navigation */}
+                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">Quick Navigation</h4>
+                        <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                          <span>Press</span>
+                          <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">1-9</kbd>
+                          <span className="text-[10px] text-gray-500 dark:text-gray-400">(Num Pad)</span>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-5 gap-2 mb-4">
+                        {examPaper.questions.map((question, index) => {
+                          const status = getQuestionStatus(question.id);
+                          const isCurrent = index === practiceState.currentQuestionIndex;
+                          const isPracticed = practiceState.practicedQuestions[question.id];
+                          
+                          return (
+                            <button
+                              key={question.id}
+                              onClick={() => setPracticeState(prev => ({ ...prev, currentQuestionIndex: index }))}
+                              className={`w-10 h-10 rounded-lg text-sm flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 question-nav-btn relative ${
+                                isCurrent
+                                  ? 'ring-2 ring-blue-500 bg-blue-600 dark:bg-blue-600 border border-gray-200 dark:border-gray-600 text-white font-semibold'
+                                  : getQuestionStatusColor(status)
+                              }`}
+                            >
+                              {index + 1}
+                              {isPracticed && (
+                                <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-red-500 dark:bg-red-400 rounded-full"></span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      
+                      {/* Question Status Legend */}
+                      <div className="space-y-2 text-xs">
+                        <div className="flex items-center">
+                          <div className="w-4 h-4 bg-green-500 rounded mr-2"></div>
+                          <span className="text-gray-700 dark:text-gray-300">Answered/Checked</span>
+                        </div>
+                        <div className="flex items-center">
+                          <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+                          <span className="text-gray-700 dark:text-gray-300">Answered & Marked</span>
+                        </div>
+                        <div className="flex items-center">
+                          <div className="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
+                          <span className="text-gray-700 dark:text-gray-300">Marked for Review</span>
+                        </div>
+                        <div className="flex items-center">
+                          <div className="w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded mr-2"></div>
+                          <span className="text-gray-700 dark:text-gray-300">Unanswered</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               
-              {/* Right Sidebar - Question Navigation */}
-              <div className="w-80 bg-white shadow-lg p-6">
+              {/* Right Sidebar - Question Navigation (Desktop Only) */}
+              <div className="hidden lg:block w-80 bg-white dark:bg-gray-800 shadow-lg p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Practice Progress</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Practice Progress</h3>
                   <button
                     onClick={() => setShowShortcutsLegend(!showShortcutsLegend)}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                     title={showShortcutsLegend ? "Hide shortcuts" : "Show shortcuts"}
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -1231,14 +1423,14 @@ export default function PracticeExamPage() {
                 {/* Question Navigation */}
                 <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">Quick Navigation</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base">Quick Navigation</h4>
                     <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
                       <span>Press</span>
                       <kbd className="px-2 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 rounded text-xs font-semibold shadow-sm">1-9</kbd>
                       <span className="text-[10px] text-gray-500 dark:text-gray-400">(Num Pad)</span>
                     </div>
                   </div>
-                  <div className="grid grid-cols-5 gap-2 mb-4">
+                  <div className="grid grid-cols-5 sm:grid-cols-5 gap-2 mb-4">
                     {examPaper.questions.map((question, index) => {
                       const status = getQuestionStatus(question.id);
                       const isCurrent = index === practiceState.currentQuestionIndex;
