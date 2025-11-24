@@ -205,11 +205,11 @@ export default function LoginPage() {
 				}
 				}}
 			/>
-			<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-				<div className="max-w-6xl w-full">
+			<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
+				<div className="max-w-5xl mx-auto w-fit">
 					{/* Header */}
-					<div className="text-center mb-8">
-						<div className="flex justify-center items-center mb-6">
+					<div className="text-center mb-6">
+						<div className="flex justify-center items-center mb-4">
 							<DynamicLogo 
 								systemSettings={systemSettings} 
 								size="lg"
@@ -217,31 +217,31 @@ export default function LoginPage() {
 								className="justify-center"
 							/>
 						</div>
-						<h2 className="text-3xl font-bold text-gray-900 dark:ttext-gray-100">
+						<h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
 							Welcome back
 						</h2>
-						<p className="mt-2 text-sm text-gray-700 dark:text-gray-100">
+						<p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
 							Sign in to continue your JEE preparation
 						</p>
 					</div>
 
 					{/* Main Content - Side by Side Layout */}
-					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 						{/* Left Side - Login Form */}
-						<div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-200 dark:border-gray-700">
-					{/* Login Method Toggle */}
-							<div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
-						<button
-							type="button"
-							onClick={() => switchLoginMethod('email')}
-							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
-								loginMethod === 'email'
+						<div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl p-6 border border-gray-200 dark:border-gray-700">
+							{/* Login Method Toggle */}
+							<div className="flex mb-5 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+								<button
+									type="button"
+									onClick={() => switchLoginMethod('email')}
+									className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+										loginMethod === 'email'
 											? 'bg-white dark:bg-gray-600 text-orange-600 dark:text-orange-400 shadow-sm'
-											: 'font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 transition-colors'
-							}`}
-						>
-							Email & Password
-						</button>
+											: 'text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
+									}`}
+								>
+									Email & Password
+								</button>
 						{/* <button
 							type="button"
 							onClick={() => switchLoginMethod('phone')}
@@ -253,116 +253,116 @@ export default function LoginPage() {
 						>
 							Phone OTP
 						</button> */}
-						<button
-							type="button"
-							onClick={() => switchLoginMethod('emailCode')}
-							className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
-								loginMethod === 'emailCode'
+								<button
+									type="button"
+									onClick={() => switchLoginMethod('emailCode')}
+									className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+										loginMethod === 'emailCode'
 											? 'bg-white dark:bg-gray-600 text-orange-600 dark:text-orange-400 shadow-sm'
-											: 'font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 transition-colors'
-							}`}
-						>
-							Email Code
-						</button>
-					</div>
+											: 'text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
+									}`}
+								>
+									Email Code
+								</button>
+							</div>
 
-					<form onSubmit={onSubmit} className="space-y-6">
-						{loginMethod === 'email' && (
-							<>
-								{/* Email */}
-								<div>
+							<form onSubmit={onSubmit} className="space-y-5">
+								{loginMethod === 'email' && (
+									<>
+										{/* Email */}
+										<div>
 											<label htmlFor="email" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-										Email Address
-									</label>
-									<input
-										id="email"
-										name="email"
-										type="email"
-										autoComplete="email"
-										required
+												Email Address
+											</label>
+											<input
+												id="email"
+												name="email"
+												type="email"
+												autoComplete="email"
+												required
 												className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
-										placeholder="Enter your email"
-										value={email}
-										onChange={e => setEmail(e.target.value)}
-									/>
-								</div>
+												placeholder="Enter your email"
+												value={email}
+												onChange={e => setEmail(e.target.value)}
+											/>
+										</div>
 
-								{/* Password */}
-								<div>
+										{/* Password */}
+										<div>
 											<label htmlFor="password" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-										Password
-									</label>
-									<div className="relative">
-										<input
-											id="password"
-											name="password"
-											type={showPassword ? "text" : "password"}
-											autoComplete="current-password"
-											required
+												Password
+											</label>
+											<div className="relative">
+												<input
+													id="password"
+													name="password"
+													type={showPassword ? "text" : "password"}
+													autoComplete="current-password"
+													required
 													className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors pr-12 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
-											placeholder="Enter your password"
-											value={password}
-											onChange={e => setPassword(e.target.value)}
-										/>
-										<button
-											type="button"
+													placeholder="Enter your password"
+													value={password}
+													onChange={e => setPassword(e.target.value)}
+												/>
+												<button
+													type="button"
 													className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-											onClick={() => setShowPassword(!showPassword)}
-										>
-											{showPassword ? (
-												<svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
-												</svg>
-											) : (
-												<svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-												</svg>
-											)}
-										</button>
-									</div>
-								</div>
-							</>
-						)}
+													onClick={() => setShowPassword(!showPassword)}
+												>
+													{showPassword ? (
+														<svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+															<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+														</svg>
+													) : (
+														<svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+															<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+															<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+														</svg>
+													)}
+												</button>
+											</div>
+										</div>
+									</>
+								)}
 
-						{loginMethod === 'phone' && (
-							<>
-								{/* Phone Number */}
-								<div>
+								{loginMethod === 'phone' && (
+									<>
+										{/* Phone Number */}
+										<div>
 											<label htmlFor="phone" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-										Phone Number
-									</label>
-									<input
-										id="phone"
-										name="phone"
-										type="tel"
-										autoComplete="tel"
-										required
+												Phone Number
+											</label>
+											<input
+												id="phone"
+												name="phone"
+												type="tel"
+												autoComplete="tel"
+												required
 												className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
-										placeholder="Enter your phone number"
-										value={phone}
-										onChange={e => setPhone(e.target.value)}
-										disabled={otpSent}
-									/>
-								</div>
+												placeholder="Enter your phone number"
+												value={phone}
+												onChange={e => setPhone(e.target.value)}
+												disabled={otpSent}
+											/>
+										</div>
 
-								{/* OTP Code */}
-								{otpSent && (
-									<div>
+										{/* OTP Code */}
+										{otpSent && (
+											<div>
 												<label htmlFor="otpCode" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-											OTP Code
-										</label>
-										<input
-											id="otpCode"
-											name="otpCode"
-											type="text"
-											required
+													OTP Code
+												</label>
+												<input
+													id="otpCode"
+													name="otpCode"
+													type="text"
+													required
 													className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
-											placeholder="Enter 6-digit OTP"
-											value={otpCode}
-											onChange={e => setOtpCode(e.target.value)}
-											maxLength={6}
-										/>
+													placeholder="Enter 6-digit OTP"
+													value={otpCode}
+													onChange={e => setOtpCode(e.target.value)}
+													maxLength={6}
+												/>
 												<p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
 													OTP sent to {phone}. Didn't receive?{' '}
 													<button
@@ -376,38 +376,38 @@ export default function LoginPage() {
 														Resend
 													</button>
 												</p>
-									</div>
+											</div>
+										)}
+									</>
 								)}
-							</>
-						)}
 
-						{loginMethod === 'emailCode' && (
-							<>
-								{/* Email for Code */}
-								<div>
+								{loginMethod === 'emailCode' && (
+									<>
+										{/* Email for Code */}
+										<div>
 											<label htmlFor="email" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-										Email Address
-									</label>
-									<input
-										id="email"
-										name="email"
-										type="email"
-										autoComplete="email"
-										required
+												Email Address
+											</label>
+											<input
+												id="email"
+												name="email"
+												type="email"
+												autoComplete="email"
+												required
 												className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
-										placeholder="Enter your email"
-										value={email}
-										onChange={e => setEmail(e.target.value)}
-										disabled={emailOtpSent}
-									/>
-								</div>
+												placeholder="Enter your email"
+												value={email}
+												onChange={e => setEmail(e.target.value)}
+												disabled={emailOtpSent}
+											/>
+										</div>
 
-								{/* Email OTP Code */}
-								{emailOtpSent && (
-									<div>
+										{/* Email OTP Code */}
+										{emailOtpSent && (
+											<div>
 												<label htmlFor="otpCode" className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-											Verification Code
-										</label>
+													Verification Code
+												</label>
 												<input
 													id="otpCode"
 													name="otpCode"
@@ -432,151 +432,157 @@ export default function LoginPage() {
 														Resend
 													</button>
 												</p>
+											</div>
+										)}
+									</>
+								)}
+
+								{/* Remember Me & Forgot Password - Only for email/password login */}
+								{loginMethod === 'email' && (
+									<div className="flex items-center justify-between">
+										<div className="flex items-center">
+											<input
+												id="remember-me"
+												name="remember-me"
+												type="checkbox"
+												className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 dark:border-gray-600 rounded"
+											/>
+											<label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-100 font-medium">
+												Remember me
+											</label>
+										</div>
+
+										<div className="text-sm">
+											<Link href="/forgot-password" className="font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 transition-colors">
+												Forgot your password?
+											</Link>
+										</div>
 									</div>
 								)}
-							</>
-						)}
 
-						{/* Remember Me & Forgot Password - Only for email/password login */}
-						{loginMethod === 'email' && (
-							<div className="flex items-center justify-between">
-								<div className="flex items-center">
-									<input
-										id="remember-me"
-										name="remember-me"
-										type="checkbox"
-												className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 dark:border-gray-600 rounded"
-									/>
-											<label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-100 font-medium">
-										Remember me
-									</label>
-								</div>
-
-								<div className="text-sm">
-											<Link href="/forgot-password" className="font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 transition-colors">
-										Forgot your password?
-									</Link>
-								</div>
-							</div>
-						)}
-
-						{/* Error Message */}
-						{error && (
+								{/* Error Message */}
+								{error && (
 									<div className="p-4 bg-red-50 dark:bg-red-900 border border-red-300 dark:border-red-700 rounded-lg">
 										<p className="text-red-900 dark:text-red-100 text-sm font-semibold">{error}</p>
-							</div>
-						)}
+									</div>
+								)}
 
-						{/* Submit Button */}
-						<button
-							type="submit"
-							disabled={loading}
-							className="w-full flex justify-center py-4 px-6 border border-transparent rounded-lg shadow-sm text-base font-semibold text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-						>
-							{loading ? (
-								<>
-									<svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-										<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-										<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-									</svg>
-									{loginMethod === 'phone' && !otpSent ? 'Sending OTP...' : 
-									 loginMethod === 'emailCode' && !emailOtpSent ? 'Sending Code...' : 'Signing in...'}
-								</>
-							) : (
-								loginMethod === 'phone' && !otpSent ? 'Send OTP' : 
-								loginMethod === 'emailCode' && !emailOtpSent ? 'Send Code' : 'Sign in'
-							)}
-						</button>
-			</form>
+								{/* Submit Button */}
+								<button
+									type="submit"
+									disabled={loading}
+									className="w-full flex justify-center py-4 px-6 border border-transparent rounded-lg shadow-sm text-base font-semibold text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+								>
+									{loading ? (
+										<>
+											<svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+												<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+												<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+											</svg>
+											{loginMethod === 'phone' && !otpSent ? 'Sending OTP...' : 
+											 loginMethod === 'emailCode' && !emailOtpSent ? 'Sending Code...' : 'Signing in...'}
+										</>
+									) : (
+										loginMethod === 'phone' && !otpSent ? 'Send OTP' : 
+										loginMethod === 'emailCode' && !emailOtpSent ? 'Send Code' : 'Sign in'
+									)}
+								</button>
+							</form>
 
 							{/* Register Link */}
-							<div className="mt-6 text-center">
-								<p className="text-sm text-gray-800 dark:text-gray-300">
+							<div className="mt-5 text-center">
+								<p className="text-sm text-gray-600 dark:text-gray-400">
 									Don&apos;t have an account?{' '}
 									<Link href="/register" className="font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-500 dark:hover:text-orange-300 transition-colors">
 										Create one here
 									</Link>
 								</p>
 							</div>
-				</div>
+						</div>
 
 						{/* Right Side - Social Login & Features */}
-						<div className="space-y-6">
+						<div className="space-y-4">
 							{/* Google Sign-In */}
-							<div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900 dark:to-indigo-900 rounded-2xl shadow-2xl p-8 border-2 border-blue-100 dark:border-blue-800 hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-300 transform hover:scale-[1.02]">
+							<div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900 dark:to-indigo-900 rounded-xl shadow-lg p-6 border-2 border-blue-100 dark:border-blue-800 hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-300">
 								<div className="text-center mb-4">
-									<h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Quick & Secure Login</h3>
-									<p className="text-sm text-gray-900 dark:text-white">Sign in with your Google account</p>
+									<h3 className="text-base font-bold text-gray-900 dark:text-white mb-1">Quick & Secure Login</h3>
+									<p className="text-xs text-gray-600 dark:text-gray-300">Sign in with your Google account</p>
 								</div>
-					<GoogleSignInButton
-						onSuccess={handleGoogleSuccess}
-						onError={handleGoogleError}
-						disabled={loading}
-					/>
+								<GoogleSignInButton
+									onSuccess={handleGoogleSuccess}
+									onError={handleGoogleError}
+									disabled={loading}
+								/>
 								<div className="mt-4 text-center">
-									<p className="text-xs text-gray-800 dark:text-white">
-										🔒 Your data is protected with Google's security
+									<p className="text-xs text-gray-600 dark:text-gray-300 flex items-center justify-center gap-1">
+										<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+										</svg>
+										Your data is protected with Google's security
 									</p>
 								</div>
-				</div>
+							</div>
 
 							{/* Quick Access Info */}
-							<div className="bg-orange-50 dark:bg-orange-900 rounded-xl p-6 border border-orange-200 dark:border-orange-800">
-								<h3 className="text-sm font-semibold text-orange-900 dark:text-white mb-4 text-center">Quick Access</h3>
-								<div className="grid grid-cols-3 gap-4 text-xs">
+							<div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 rounded-xl p-5 border border-orange-200 dark:border-orange-700 shadow-lg">
+								<h3 className="text-sm font-semibold text-orange-900 dark:text-white mb-3 text-center">Quick Access</h3>
+								<div className="grid grid-cols-3 gap-3">
 									<div className="text-center">
-										<div className="w-12 h-12 bg-orange-100 dark:bg-orange-800 border border-orange-300 dark:border-orange-700 rounded-full flex items-center justify-center mx-auto mb-2">
+										<div className="w-12 h-12 bg-white dark:bg-orange-800 border-2 border-orange-300 dark:border-orange-600 rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
 											<span className="text-orange-600 dark:text-orange-200 text-xl">👨‍🎓</span>
 										</div>
-										<div className="font-bold text-gray-900 dark:text-white text-sm">Students</div>
-										<div className="text-gray-900 dark:text-white">Practice & Learn</div>
+										<div className="font-bold text-gray-900 dark:text-white text-xs mb-0.5">Students</div>
+										<div className="text-xs text-gray-700 dark:text-gray-300 leading-tight">Practice & Learn</div>
 									</div>
 									<div className="text-center">
-										<div className="w-12 h-12 bg-orange-100 dark:bg-orange-800 border border-orange-300 dark:border-orange-700 rounded-full flex items-center justify-center mx-auto mb-2">
+										<div className="w-12 h-12 bg-white dark:bg-orange-800 border-2 border-orange-300 dark:border-orange-600 rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
 											<span className="text-orange-600 dark:text-orange-200 text-xl">👨‍🏫</span>
 										</div>
-										<div className="font-bold text-gray-900 dark:text-white text-sm">Experts</div>
-										<div className="text-gray-900 dark:text-white">Create Content</div>
+										<div className="font-bold text-gray-900 dark:text-white text-xs mb-0.5">Experts</div>
+										<div className="text-xs text-gray-700 dark:text-gray-300 leading-tight">Create Content</div>
 									</div>
 									<div className="text-center">
-										<div className="w-12 h-12 bg-orange-100 dark:bg-orange-800 border border-orange-300 dark:border-orange-700 rounded-full flex items-center justify-center mx-auto mb-2">
+										<div className="w-12 h-12 bg-white dark:bg-orange-800 border-2 border-orange-300 dark:border-orange-600 rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
 											<span className="text-orange-600 dark:text-orange-200 text-xl">⚙️</span>
 										</div>
-										<div className="font-bold text-gray-900 dark:text-white text-sm">Admins</div>
-										<div className="text-gray-900 dark:text-white">Manage Platform</div>
+										<div className="font-bold text-gray-900 dark:text-white text-xs mb-0.5">Admins</div>
+										<div className="text-xs text-gray-700 dark:text-gray-300 leading-tight">Manage Platform</div>
 									</div>
 								</div>
 							</div>
 
 							{/* Features Preview */}
-							<div className="text-center">
-								<p className="text-sm text-gray-900 dark:text-gray-100 mb-4 font-medium">Join thousands of successful JEE aspirants</p>
-								<div className="flex justify-center space-x-6 text-sm">
-									<div className="flex items-center">
-										<div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
+							<div className="text-center pt-2">
+								<p className="text-xs text-gray-600 dark:text-gray-400 mb-3 font-medium">Join thousands of successful JEE aspirants</p>
+								<div className="flex flex-wrap justify-center gap-2 text-xs">
+									<div className="flex items-center bg-white dark:bg-gray-800 px-2.5 py-1 rounded-full shadow-sm">
+										<div className="w-2 h-2 bg-orange-500 rounded-full mr-1.5"></div>
 										<span className="text-gray-900 dark:text-gray-100 font-semibold">50K+ Questions</span>
 									</div>
-									<div className="flex items-center">
-										<div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+									<div className="flex items-center bg-white dark:bg-gray-800 px-2.5 py-1 rounded-full shadow-sm">
+										<div className="w-2 h-2 bg-red-500 rounded-full mr-1.5"></div>
 										<span className="text-gray-900 dark:text-gray-100 font-semibold">AI-Powered</span>
 									</div>
-									<div className="flex items-center">
-										<div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
+									<div className="flex items-center bg-white dark:bg-gray-800 px-2.5 py-1 rounded-full shadow-sm">
+										<div className="w-2 h-2 bg-orange-500 rounded-full mr-1.5"></div>
 										<span className="text-gray-900 dark:text-gray-100 font-semibold">25K+ Students</span>
 									</div>
 								</div>
 							</div>
+						</div>
 					</div>
-				</div>
 
 					{/* Back to Home */}
-					<div className="text-center mt-8">
-						<Link href="/" className="text-sm text-gray-900 dark:text-gray-100 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
-							← Back to homepage
+					<div className="text-center mt-6">
+						<Link href="/" className="text-xs text-gray-500 dark:text-gray-500 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors inline-flex items-center gap-1">
+							<svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+							</svg>
+							Back to homepage
 						</Link>
 					</div>
 				</div>
-		</div>
+			</div>
 		</>
 	);
 } 
