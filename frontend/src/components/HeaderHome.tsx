@@ -73,9 +73,9 @@ export default function HeaderHome({ systemSettings }: HeaderHomeProps) {
               <Link href="#testimonials" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 Success Stories
               </Link>
-              <Link href="#pricing" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
+              {/* <Link href="#pricing" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 Pricing
-              </Link>
+              </Link> */}
               <Link href="/blogs" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors">
                 Blogs
               </Link>
