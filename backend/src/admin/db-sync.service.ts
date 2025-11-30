@@ -125,14 +125,20 @@ export class DbSyncService {
           const result = await this.syncTable(modelName, supabaseClient, neonClient);
           syncDetails.tables[modelName] = result;
           syncDetails.totalRecords += result.synced;
-          if (result.synced > 0 || result.errors > 0) {
-            this.logger.log(`Synced ${modelName}: ${result.synced} records${result.errors > 0 ? `, ${result.errors} errors` : ''}`);
+          if (result.synced > 0 || result.errors > 0 || result.sourceCount > 0) {
+            const statusMsg = `Synced ${modelName}: ${result.synced} records`;
+            const details = [
+              result.sourceCount > 0 ? `source: ${result.sourceCount}` : '',
+              result.targetCount > 0 ? `target: ${result.targetCount}` : '',
+              result.errors > 0 ? `${result.errors} errors` : ''
+            ].filter(Boolean).join(', ');
+            this.logger.log(`${statusMsg} (${details})`);
           }
         } catch (error: any) {
           // Check if error is due to table not existing
           if (error.message?.includes('does not exist')) {
             this.logger.warn(`Table ${modelName} does not exist, skipping...`);
-            syncDetails.tables[modelName] = { synced: 0, errors: 0 };
+            syncDetails.tables[modelName] = { synced: 0, errors: 0, sourceCount: 0, targetCount: 0 };
             continue;
           }
           const errorMsg = `Error syncing ${modelName}: ${error.message}`;
@@ -176,57 +182,118 @@ export class DbSyncService {
     modelName: string,
     supabaseClient: PrismaClient,
     neonClient: PrismaClient
-  ): Promise<{ synced: number; errors: number }> {
+  ): Promise<{ synced: number; errors: number; sourceCount: number; targetCount: number }> {
     let synced = 0;
     let errors = 0;
+    let sourceCount = 0;
+    let targetCount = 0;
 
     try {
-      // Get all records from Supabase
-      const sourceRecords = await (supabaseClient as any)[modelName].findMany();
-
-      if (sourceRecords.length === 0) {
-        return { synced: 0, errors: 0 };
+      // Get count from source database first
+      try {
+        sourceCount = await (supabaseClient as any)[modelName].count();
+        this.logger.log(`[${modelName}] Source database has ${sourceCount} records`);
+      } catch (countError: any) {
+        this.logger.warn(`[${modelName}] Could not count source records: ${countError.message}`);
       }
 
-      // Use transaction for batch operations
-      await neonClient.$transaction(async (tx: any) => {
-        for (const record of sourceRecords) {
-          try {
-            // Build where clause based on model type
-            const where = this.buildWhereClause(modelName, record);
-            
-            if (!where) {
-              // If we can't build a where clause, skip this record
-              errors++;
-              this.logger.warn(`Cannot build where clause for record in ${modelName}`);
-              continue;
-            }
-
-            // Use upsert to handle existing records
-            await tx[modelName].upsert({
-              where,
-              update: this.sanitizeRecord(record),
-              create: this.sanitizeRecord(record),
-            });
-            synced++;
-          } catch (error: any) {
-            errors++;
-            const recordId = record.id || `${record.questionId}_${record.tagId}` || 'unknown';
-            this.logger.warn(`Error syncing record ${recordId} in ${modelName}: ${error.message}`);
-          }
-        }
-      }, {
-        timeout: 60000, // 60 second timeout for large tables
+      // Get all records from Supabase (with explicit take to avoid default limits)
+      const sourceRecords = await (supabaseClient as any)[modelName].findMany({
+        take: 1000000, // Explicitly set a high limit to get all records
       });
 
-      return { synced, errors };
+      this.logger.log(`[${modelName}] Fetched ${sourceRecords.length} records from source (expected ${sourceCount})`);
+
+      if (sourceRecords.length === 0) {
+        // Get target count for reporting
+        try {
+          targetCount = await (neonClient as any)[modelName].count();
+        } catch (e) {
+          // Ignore count errors
+        }
+        return { synced: 0, errors: 0, sourceCount, targetCount };
+      }
+
+      // Process in batches to avoid transaction timeouts
+      const batchSize = 100;
+      const batches = [];
+      for (let i = 0; i < sourceRecords.length; i += batchSize) {
+        batches.push(sourceRecords.slice(i, i + batchSize));
+      }
+
+      this.logger.log(`[${modelName}] Processing ${batches.length} batches of up to ${batchSize} records each`);
+
+      // Process each batch in a separate transaction
+      for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+        const batch = batches[batchIndex];
+        try {
+          await neonClient.$transaction(async (tx: any) => {
+            for (const record of batch) {
+              try {
+                // Build where clause based on model type
+                const where = this.buildWhereClause(modelName, record);
+                
+                if (!where) {
+                  // If we can't build a where clause, skip this record
+                  errors++;
+                  const recordId = record.id || `${record.questionId}_${record.tagId}` || JSON.stringify(record).substring(0, 50);
+                  this.logger.warn(`[${modelName}] Cannot build where clause for record: ${recordId}`);
+                  continue;
+                }
+
+                // Use upsert to handle existing records
+                await tx[modelName].upsert({
+                  where,
+                  update: this.sanitizeRecord(record),
+                  create: this.sanitizeRecord(record),
+                });
+                synced++;
+              } catch (error: any) {
+                errors++;
+                const recordId = record.id || `${record.questionId}_${record.tagId}` || JSON.stringify(record).substring(0, 50);
+                this.logger.warn(`[${modelName}] Error syncing record ${recordId}: ${error.message}`);
+                // Log full error for debugging
+                if (error.code) {
+                  this.logger.warn(`[${modelName}] Error code: ${error.code}`);
+                }
+              }
+            }
+          }, {
+            timeout: 300000, // 5 minute timeout per batch for large tables
+          });
+
+          if ((batchIndex + 1) % 10 === 0) {
+            this.logger.log(`[${modelName}] Processed ${batchIndex + 1}/${batches.length} batches (${synced} synced, ${errors} errors so far)`);
+          }
+        } catch (batchError: any) {
+          errors += batch.length;
+          this.logger.error(`[${modelName}] Batch ${batchIndex + 1} failed: ${batchError.message}`);
+          // Continue with next batch instead of failing completely
+        }
+      }
+
+      // Get target count after sync
+      try {
+        targetCount = await (neonClient as any)[modelName].count();
+        this.logger.log(`[${modelName}] Target database now has ${targetCount} records`);
+      } catch (countError: any) {
+        this.logger.warn(`[${modelName}] Could not count target records: ${countError.message}`);
+      }
+
+      // Warn if counts don't match
+      if (sourceCount > 0 && sourceRecords.length < sourceCount) {
+        this.logger.warn(`[${modelName}] WARNING: Fetched ${sourceRecords.length} records but source has ${sourceCount} total. Some records may have been missed.`);
+      }
+
+      return { synced, errors, sourceCount, targetCount };
     } catch (error: any) {
       // Check if error is due to table not existing
       if (error.message?.includes('does not exist')) {
-        this.logger.warn(`Table ${modelName} does not exist in source database, skipping...`);
-        return { synced: 0, errors: 0 }; // Don't treat as error, just skip
+        this.logger.warn(`[${modelName}] Table does not exist in source database, skipping...`);
+        return { synced: 0, errors: 0, sourceCount: 0, targetCount: 0 }; // Don't treat as error, just skip
       }
-      this.logger.error(`Error syncing table ${modelName}: ${error.message}`);
+      this.logger.error(`[${modelName}] Error syncing table: ${error.message}`);
+      this.logger.error(`[${modelName}] Error stack: ${error.stack}`);
       throw error;
     }
   }
