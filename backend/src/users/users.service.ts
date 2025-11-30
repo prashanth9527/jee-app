@@ -12,8 +12,8 @@ export class UsersService {
 		private readonly otpService: OtpService
 	) {}
 
-	createUser(params: { email: string; fullName: string; hashedPassword: string; phone: string; streamId?: string; emailVerified?: boolean }) {
-		const { email, fullName, hashedPassword, phone, streamId, emailVerified } = params;
+	createUser(params: { email: string; fullName: string; hashedPassword: string; phone: string; streamId?: string; emailVerified?: boolean, aiTestsLimit?: number }) {
+		const { email, fullName, hashedPassword, phone, streamId, emailVerified, aiTestsLimit } = params;
 		return this.prisma.user.create({ 
 			data: { 
 				email, 
@@ -21,7 +21,8 @@ export class UsersService {
 				hashedPassword, 
 				phone,
 				streamId: streamId || null,
-				emailVerified: emailVerified !== undefined ? emailVerified : true
+				emailVerified: emailVerified !== undefined ? emailVerified : true,
+				aiTestsLimit: aiTestsLimit || Number(process.env.AI_TESTS_LIMIT) || 10
 			} 
 		});
 	}

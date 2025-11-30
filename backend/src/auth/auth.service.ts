@@ -56,7 +56,8 @@ export class AuthService {
 			fullName: params.fullName, 
 			hashedPassword, 
 			phone: normalizedPhone,
-			streamId: params.streamId
+			streamId: params.streamId,
+			aiTestsLimit: Number(process.env.AI_TESTS_LIMIT) || 10
 		});
 		const days = Number(process.env.FREE_TRIAL_DAYS || 2);
 		const started = new Date();

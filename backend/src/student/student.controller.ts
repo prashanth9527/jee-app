@@ -98,6 +98,7 @@ export class StudentController {
 		@Query('topicId') topicId?: string,
 		@Query('subtopicId') subtopicId?: string,
 		@Query('examType') examType?: string,
+		@Query('excludeExamType') excludeExamType?: string,
 		@Query('difficulty') difficulty?: string,
 		@Query('year') year?: string,
 		@Query('minDuration') minDuration?: string,
@@ -105,7 +106,8 @@ export class StudentController {
 		@Query('minQuestions') minQuestions?: string,
 		@Query('maxQuestions') maxQuestions?: string,
 		@Query('attempted') attempted?: string,
-		@Query('bookmarked') bookmarked?: string
+		@Query('bookmarked') bookmarked?: string,
+		@Query('myExams') myExams?: string // Filter for user's own PRACTICE_EXAM exams
 	) {
 		const userId = req.user.id;
 
@@ -129,13 +131,20 @@ export class StudentController {
 		const limitNum = parseInt(limit, 10);
 		const skip = (pageNum - 1) * limitNum;
 
-		// Build where clause - include both public exam papers and user's AI-generated ones
-		const where: any = {
-			OR: [
+		// Build where clause
+		const where: any = {};
+		
+		// If myExams=true, show only user's PRACTICE_EXAM exams
+		if (myExams === 'true') {
+			where.createdById = userId;
+			where.examType = 'PRACTICE_EXAM';
+		} else {
+			// Default: include both public exam papers and user's AI-generated ones
+			where.OR = [
 				{ createdById: null }, // Public exam papers
 				{ createdById: userId } // User's own AI-generated exam papers
-			]
-		};
+			];
+		}
 		
 		if (search) {
 			where.AND = where.AND || [];
@@ -202,6 +211,12 @@ export class StudentController {
 		if (examType) {
 			where.AND = where.AND || [];
 			where.AND.push({ examType: examType as any });
+		}
+
+		// Exclude exam type filter (e.g., exclude PYQ_PRACTICE)
+		if (excludeExamType) {
+			where.AND = where.AND || [];
+			where.AND.push({ examType: { not: excludeExamType as any } });
 		}
 
 		// Duration range filter

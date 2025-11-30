@@ -15,6 +15,7 @@ import { AdminExamPapersController } from './exam-papers.controller';
 import { AdminQuestionReportsController } from './question-reports.controller';
 import { SystemSettingsController } from './system-settings.controller';
 import { AdminSubscriptionsController } from './subscriptions.controller';
+import { AdminUsersController } from './users.controller';
 import { SyllabusImportController } from './syllabus-import.controller';
 import { SyllabusImportService } from './syllabus-import.service';
 import { PDFProcessorController } from './pdf-processor.controller';
@@ -51,6 +52,7 @@ import { ImageWatermarkRemoverService } from './image-watermark-remover.service'
     AdminQuestionReportsController,
     SystemSettingsController,
     AdminSubscriptionsController,
+    AdminUsersController,
     SyllabusImportController,
     PDFProcessorController,
     PDFProcessorCacheController,

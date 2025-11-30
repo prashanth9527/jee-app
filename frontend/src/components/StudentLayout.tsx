@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSystemSettings } from '@/contexts/SystemSettingsContext';
 import { ThemeToggle } from '@/contexts/ThemeContext';
@@ -53,7 +53,39 @@ const menuSections = [
       // },
       {
         name: 'Exam Papers',
-        href: '/student/exam-papers',
+        href: '/student/exam-papers?type=regular',
+        icon: (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        ),
+      },
+      {
+        name: 'My Exams',
+        href: '/student/my-exams',
+        icon: (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        ),
+      },
+      {
+        name: 'Exam History',
+        href: '/student/exam-history',
+        icon: (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        ),
+      },
+    ],
+  },
+  {
+    title: 'PRACTICE & TESTS(PYQ)',
+    items: [
+      {
+        name: 'Exam Papers(PYQ)',
+        href: '/student/exam-papers?pyq=true',
         icon: (
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -66,15 +98,6 @@ const menuSections = [
         icon: (
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-        ),
-      },
-      {
-        name: 'Exam History',
-        href: '/student/exam-history',
-        icon: (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         ),
       },
@@ -335,6 +358,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
   const [subscriptionStatus, setSubscriptionStatus] = useState<{ type: string; status: string; isOnTrial?: boolean; daysRemaining?: number; needsSubscription?: boolean } | null>(null);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
   const { logout, user, refreshSubscriptionStatus } = useAuth();
 
@@ -503,7 +527,44 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
                   {(!sidebarCollapsed && !isSectionCollapsed) || sidebarCollapsed ? (
                     <div className="space-y-2">
                       {section.items.map((item) => {
-                        const isActive = pathname === item.href;
+                        // Check if menu item is active, considering query parameters
+                        let isActive = false;
+                        
+                        // Parse the item href to get pathname and query params
+                        const itemUrlParts = item.href.split('?');
+                        const itemPathname = itemUrlParts[0];
+                        const itemQueryString = itemUrlParts[1] || '';
+                        const itemQueryParams = new URLSearchParams(itemQueryString);
+                        
+                        // Check if pathname matches
+                        if (pathname === itemPathname) {
+                          // If item has query params, check if they match current params
+                          if (itemQueryString) {
+                            let paramsMatch = true;
+                            itemQueryParams.forEach((value, key) => {
+                              if (searchParams?.get(key) !== value) {
+                                paramsMatch = false;
+                              }
+                            });
+                            isActive = paramsMatch;
+                          } else {
+                            // Item has no query params
+                            // For exam-papers page, check specific conditions
+                            if (itemPathname === '/student/exam-papers') {
+                              const currentPyq = searchParams?.get('pyq');
+                              const currentType = searchParams?.get('type');
+                              // Active only if pyq is not 'true' and type is not set (or matches)
+                              isActive = currentPyq !== 'true' && (currentType === 'regular' || !currentType);
+                            } else if (itemPathname === '/student/my-exams') {
+                              // My Exams page - active if pathname matches exactly
+                              isActive = true;
+                            } else {
+                              // For other pages, just check pathname match
+                              isActive = true;
+                            }
+                          }
+                        }
+                        
                         return (
                           <Link
                             key={item.name}

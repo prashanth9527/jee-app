@@ -94,6 +94,103 @@ export class AdminUsersController {
 		};
 	}
 
+	@Get('analytics/overview')
+	async getAnalytics() {
+		// Get total counts
+		const totalUsers = await this.prisma.user.count();
+		const adminUsers = await this.prisma.user.count({ where: { role: 'ADMIN' } });
+		const studentUsers = await this.prisma.user.count({ where: { role: 'STUDENT' } });
+		const emailVerifiedUsers = await this.prisma.user.count({ where: { emailVerified: true } });
+		const phoneVerifiedUsers = await this.prisma.user.count({ where: { phoneVerified: true } });
+
+		// Get trial users
+		const now = new Date();
+		const trialUsers = await this.prisma.user.count({
+			where: {
+				trialEndsAt: { gt: now }
+			}
+		});
+
+		// Get users with active subscriptions
+		const subscribedUsers = await this.prisma.user.count({
+			where: {
+				subscriptions: {
+					some: {
+						status: 'ACTIVE'
+					}
+				}
+			}
+		});
+
+		// Get recent registrations
+		const recentUsers = await this.prisma.user.findMany({
+			take: 5,
+			orderBy: { createdAt: 'desc' },
+			select: {
+				id: true,
+				fullName: true,
+				email: true,
+				role: true,
+				createdAt: true,
+				emailVerified: true,
+				phoneVerified: true
+			}
+		});
+
+		// Get users with most exam submissions
+		// Note: Prisma doesn't support direct ordering by relation count,
+		// so we fetch more users and sort them in memory
+		const allUsersWithCounts = await this.prisma.user.findMany({
+			select: {
+				id: true,
+				fullName: true,
+				email: true,
+				_count: {
+					select: {
+						examSubmissions: true
+					}
+				}
+			}
+		});
+
+		// Sort by exam submissions count and take top 5
+		const topExamUsers = allUsersWithCounts
+			.sort((a, b) => (b._count.examSubmissions || 0) - (a._count.examSubmissions || 0))
+			.slice(0, 5);
+
+		return {
+			overview: {
+				totalUsers,
+				adminUsers,
+				studentUsers,
+				emailVerifiedUsers,
+				phoneVerifiedUsers,
+				trialUsers,
+				subscribedUsers
+			},
+			recentUsers,
+			topExamUsers
+		};
+	}
+
+	@Get('analytics/roles')
+	async getRoleAnalytics() {
+		const roleStats = await this.prisma.user.groupBy({
+			by: ['role'],
+			_count: true
+		});
+
+		const verificationStats = await this.prisma.user.groupBy({
+			by: ['emailVerified', 'phoneVerified'],
+			_count: true
+		});
+
+		return {
+			roleStats,
+			verificationStats
+		};
+	}
+
 	@Get(':id')
 	async findUser(@Param('id') id: string) {
 		const user = await this.prisma.user.findUnique({
@@ -282,96 +379,5 @@ export class AdminUsersController {
 				trialEndsAt: new Date()
 			}
 		});
-	}
-
-	@Get('analytics/overview')
-	async getAnalytics() {
-		// Get total counts
-		const totalUsers = await this.prisma.user.count();
-		const adminUsers = await this.prisma.user.count({ where: { role: 'ADMIN' } });
-		const studentUsers = await this.prisma.user.count({ where: { role: 'STUDENT' } });
-		const emailVerifiedUsers = await this.prisma.user.count({ where: { emailVerified: true } });
-		const phoneVerifiedUsers = await this.prisma.user.count({ where: { phoneVerified: true } });
-
-		// Get trial users
-		const now = new Date();
-		const trialUsers = await this.prisma.user.count({
-			where: {
-				trialEndsAt: { gt: now }
-			}
-		});
-
-		// Get users with active subscriptions
-		const subscribedUsers = await this.prisma.user.count({
-			where: {
-				subscriptions: {
-					some: {
-						status: 'ACTIVE'
-					}
-				}
-			}
-		});
-
-		// Get recent registrations
-		const recentUsers = await this.prisma.user.findMany({
-			take: 5,
-			orderBy: { createdAt: 'desc' },
-			select: {
-				id: true,
-				fullName: true,
-				email: true,
-				role: true,
-				createdAt: true,
-				emailVerified: true,
-				phoneVerified: true
-			}
-		});
-
-		// Get users with most exam submissions (simplified query)
-		const topExamUsers = await this.prisma.user.findMany({
-			take: 5,
-			select: {
-				id: true,
-				fullName: true,
-				email: true,
-				_count: {
-					select: {
-						examSubmissions: true
-					}
-				}
-			}
-		});
-
-		return {
-			overview: {
-				totalUsers,
-				adminUsers,
-				studentUsers,
-				emailVerifiedUsers,
-				phoneVerifiedUsers,
-				trialUsers,
-				subscribedUsers
-			},
-			recentUsers,
-			topExamUsers
-		};
-	}
-
-	@Get('analytics/roles')
-	async getRoleAnalytics() {
-		const roleStats = await this.prisma.user.groupBy({
-			by: ['role'],
-			_count: true
-		});
-
-		const verificationStats = await this.prisma.user.groupBy({
-			by: ['emailVerified', 'phoneVerified'],
-			_count: true
-		});
-
-		return {
-			roleStats,
-			verificationStats
-		};
 	}
 } 

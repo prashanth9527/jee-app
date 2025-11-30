@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, Suspense } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import StudentLayout from '@/components/StudentLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import SubscriptionGuard from '@/components/SubscriptionGuard';
@@ -37,8 +37,11 @@ interface Pagination {
   itemsPerPage: number;
 }
 
-export default function ExamPapersPage() {
+function ExamPapersPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isPYQPage = searchParams?.get('pyq') === 'true';
+  const pageType = searchParams?.get('type'); // 'regular' for Exam Papers
   const { showSuccess, showError } = useToastContext();
   const [papers, setPapers] = useState<ExamPaper[]>([]);
   const [subjects, setSubjects] = useState<any[]>([]);
@@ -154,7 +157,7 @@ export default function ExamPapersPage() {
 
   useEffect(() => {
     fetchPapers();
-  }, [currentPage, itemsPerPage, debouncedSearchText, selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, selectedExamType, selectedDifficulty, selectedYear, minDuration, maxDuration, minQuestions, maxQuestions, selectedAttempted, selectedBookmarked]);
+  }, [currentPage, itemsPerPage, debouncedSearchText, selectedSubject, selectedLesson, selectedTopic, selectedSubtopic, selectedExamType, selectedDifficulty, selectedYear, minDuration, maxDuration, minQuestions, maxQuestions, selectedAttempted, selectedBookmarked, isPYQPage, pageType]);
 
   const loadInitialData = async () => {
     try {
@@ -198,7 +201,20 @@ export default function ExamPapersPage() {
         params.append('subtopicId', selectedSubtopic);
       }
 
-      if (selectedExamType) {
+      // Add exam type filter based on the page type (only if user hasn't manually selected an exam type)
+      if (!selectedExamType) {
+        if (isPYQPage) {
+          // Show only PYQ exams
+          params.append('examType', 'PYQ_PRACTICE');
+        } else if (pageType === 'regular') {
+          // Show only REGULAR exams
+          params.append('examType', 'REGULAR');
+        } else {
+          // Default: Exclude PYQ exams (for backward compatibility)
+          params.append('excludeExamType', 'PYQ_PRACTICE');
+        }
+      } else {
+        // User manually selected an exam type, use that instead
         params.append('examType', selectedExamType);
       }
 
@@ -439,8 +455,12 @@ export default function ExamPapersPage() {
         <div className="space-y-8">
           {/* Header */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Available Exams</h1>
-            <p className="text-lg text-gray-600">Choose an exam to start practicing</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              {isPYQPage ? 'Previous Year Question Papers' : pageType === 'regular' ? 'Exam Papers' : 'Available Exams'}
+            </h1>
+            <p className="text-lg text-gray-600">
+              {isPYQPage ? 'Practice with previous year question papers' : pageType === 'regular' ? 'Regular exam papers for practice' : 'Choose an exam to start practicing'}
+            </p>
           </div>
 
           {/* Error Display */}
@@ -1154,5 +1174,26 @@ export default function ExamPapersPage() {
         </div>
       )}
     </ProtectedRoute>
+  );
+}
+
+export default function ExamPapersPage() {
+  return (
+    <Suspense fallback={
+      <ProtectedRoute requiredRole="STUDENT">
+        <SubscriptionGuard>
+          <StudentLayout>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600 mx-auto"></div>
+                <p className="mt-6 text-lg font-medium text-gray-700">Loading...</p>
+              </div>
+            </div>
+          </StudentLayout>
+        </SubscriptionGuard>
+      </ProtectedRoute>
+    }>
+      <ExamPapersPageContent />
+    </Suspense>
   );
 } 

@@ -752,13 +752,25 @@ export default function ExamPage() {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [currentQuestionIndex, answers, examStarted, examCompleted, filteredQuestions, showShortcutsLegend]);
 
+  // Helper function to check if an answer has any value
+  const hasAnswer = (answer: QuestionAnswer | undefined): boolean => {
+    if (!answer) return false;
+    return !!(
+      answer.selectedOptionId || 
+      answer.selectedOptionIds?.length || 
+      answer.numericValue !== undefined
+    );
+  };
+
   const getQuestionStatus = (index: number) => {
     const answer = answers[index];
     if (!answer) return 'unanswered';
     
-    if (answer.isMarkedForReview && answer.selectedOptionId) return 'answered-review';
+    const hasAnyAnswer = hasAnswer(answer);
+    
+    if (answer.isMarkedForReview && hasAnyAnswer) return 'answered-review';
     if (answer.isMarkedForReview) return 'review';
-    if (answer.selectedOptionId) return 'answered';
+    if (hasAnyAnswer) return 'answered';
     return 'unanswered';
   };
 
@@ -1157,7 +1169,7 @@ export default function ExamPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600 dark:text-gray-400">Answered:</span>
-                    <span className="font-medium text-green-600 dark:text-green-400">{answers.filter(a => a.selectedOptionId).length}</span>
+                    <span className="font-medium text-green-600 dark:text-green-400">{answers.filter(a => hasAnswer(a)).length}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600 dark:text-gray-400">Marked for Review:</span>
@@ -1165,7 +1177,7 @@ export default function ExamPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600 dark:text-gray-400">Unanswered:</span>
-                    <span className="font-medium text-gray-600 dark:text-gray-400">{answers.filter(a => !a.selectedOptionId).length}</span>
+                    <span className="font-medium text-gray-600 dark:text-gray-400">{answers.filter(a => !hasAnswer(a)).length}</span>
                   </div>
                   {timeRemaining > 0 && (
                     <div className="flex justify-between">
@@ -1307,7 +1319,7 @@ export default function ExamPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600 dark:text-gray-400 text-sm">Answered:</span>
-                    <span className="font-medium text-green-600 dark:text-green-400">{answers.filter(a => a.selectedOptionId).length}</span>
+                    <span className="font-medium text-green-600 dark:text-green-400">{answers.filter(a => hasAnswer(a)).length}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600 dark:text-gray-400 text-sm">Marked for Review:</span>
@@ -1315,7 +1327,7 @@ export default function ExamPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600 dark:text-gray-400 text-sm">Unanswered:</span>
-                    <span className="font-medium text-gray-600 dark:text-gray-400">{answers.filter(a => !a.selectedOptionId).length}</span>
+                    <span className="font-medium text-gray-600 dark:text-gray-400">{answers.filter(a => !hasAnswer(a)).length}</span>
                   </div>
                   {timeRemaining > 0 && (
                     <div className="flex justify-between">
