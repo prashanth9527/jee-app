@@ -35,6 +35,7 @@ export default function SystemSettingsPage() {
   const [settings, setSettings] = useState<SystemSettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [syncing, setSyncing] = useState(false);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingFavicon, setUploadingFavicon] = useState(false);
   const [uploadingOgImage, setUploadingOgImage] = useState(false);
@@ -107,6 +108,95 @@ export default function SystemSettingsPage() {
       Swal.fire('Error', 'Failed to update system settings', 'error');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleSyncDatabase = async () => {
+    const result = await Swal.fire({
+      title: 'Sync Database?',
+      text: 'This will sync all data from Supabase (primary) to Neon (secondary) database. This may take several minutes.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Sync Database',
+      cancelButtonText: 'Cancel',
+    });
+
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    setSyncing(true);
+    try {
+      Swal.fire({
+        title: 'Syncing...',
+        text: 'Please wait while we sync the database. This may take a few minutes.',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      const response = await api.post('/admin/db-sync');
+      const { success, message, details } = response.data;
+
+      if (success) {
+        Swal.fire({
+          title: 'Success!',
+          html: `
+            <div class="text-left">
+              <p class="mb-2">${message}</p>
+              <p class="text-sm text-gray-600 mt-4"><strong>Sync Details:</strong></p>
+              <ul class="text-sm text-gray-600 mt-2 space-y-1">
+                <li>Total Records: ${details.totalRecords}</li>
+                <li>Duration: ${(details.duration / 1000).toFixed(2)}s</li>
+                <li>Tables Synced: ${Object.keys(details.tables).length}</li>
+                ${details.errors.length > 0 ? `<li class="text-red-600">Errors: ${details.errors.length}</li>` : ''}
+              </ul>
+            </div>
+          `,
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+      } else {
+        Swal.fire({
+          title: 'Sync Completed with Errors',
+          html: `
+            <div class="text-left">
+              <p class="mb-2">${message}</p>
+              <p class="text-sm text-gray-600 mt-4"><strong>Sync Details:</strong></p>
+              <ul class="text-sm text-gray-600 mt-2 space-y-1">
+                <li>Total Records: ${details.totalRecords}</li>
+                <li>Duration: ${(details.duration / 1000).toFixed(2)}s</li>
+                <li>Tables Synced: ${Object.keys(details.tables).length}</li>
+                <li class="text-red-600">Errors: ${details.errors.length}</li>
+              </ul>
+              ${details.errors.length > 0 ? `
+                <div class="mt-4">
+                  <p class="text-sm font-semibold text-red-600">Error Details:</p>
+                  <ul class="text-xs text-red-600 mt-2 space-y-1 max-h-40 overflow-y-auto">
+                    ${details.errors.map((err: string) => `<li>• ${err}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+            </div>
+          `,
+          icon: 'warning',
+          confirmButtonText: 'OK',
+        });
+      }
+    } catch (error: any) {
+      console.error('Error syncing database:', error);
+      Swal.fire({
+        title: 'Sync Failed',
+        text: error.response?.data?.message || 'Failed to sync database. Please check the server logs.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    } finally {
+      setSyncing(false);
     }
   };
 
@@ -470,15 +560,42 @@ export default function SystemSettingsPage() {
                 </div>
               </div>
 
-              {/* Save Button */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <button
-                  onClick={handleSave}
-                  disabled={saving}
-                  className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  {saving ? 'Saving...' : 'Save Settings'}
-                </button>
+              {/* Action Buttons */}
+              <div className="bg-white rounded-lg shadow p-6 space-y-4">
+                <div className="flex gap-4">
+                  <button
+                    onClick={handleSyncDatabase}
+                    disabled={syncing || loading}
+                    className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                  >
+                    {syncing ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Syncing...
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Sync DB
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    disabled={saving}
+                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {saving ? 'Saving...' : 'Save Settings'}
+                  </button>
+                </div>
+                <p className="text-sm text-gray-500">
+                  Sync DB: Syncs all data from Supabase (primary) to Neon (secondary) database
+                </p>
               </div>
             </div>
 

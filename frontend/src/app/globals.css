@@ -479,6 +479,7 @@ textarea:focus {
 .latex-content-display {
   line-height: 2.2;
   letter-spacing: 0.1em;
+  color: #ffffff;
 }
 
 /* Reset letter-spacing for LaTeX math elements to prevent breaking formulas */

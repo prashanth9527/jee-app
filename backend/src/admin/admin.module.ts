@@ -24,6 +24,8 @@ import { PDFProcessorCacheController } from './pdf-processor-cache.controller';
 import { PDFProcessorCacheService } from './pdf-processor-cache.service';
 import { PDFReviewController } from './pdf-review.controller';
 import { PDFReviewService } from './pdf-review.service';
+import { DbSyncController } from './db-sync.controller';
+import { DbSyncService } from './db-sync.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { AwsModule } from '../aws/aws.module';
 import { AIProviderFactory } from '../ai/ai-provider.factory';
@@ -56,7 +58,8 @@ import { ImageWatermarkRemoverService } from './image-watermark-remover.service'
     SyllabusImportController,
     PDFProcessorController,
     PDFProcessorCacheController,
-    PDFReviewController
+    PDFReviewController,
+    DbSyncController
   ],
   providers: [
     AdminAnalyticsService, 
@@ -65,6 +68,7 @@ import { ImageWatermarkRemoverService } from './image-watermark-remover.service'
     PDFProcessorService, 
     PDFProcessorCacheService,
     PDFReviewService,
+    DbSyncService,
     MathpixService,
     MathpixProcessorService,
     ZipProcessorService,
