@@ -92,6 +92,19 @@ export class MathpixProcessorService {
     await this.waitForMathpixProcessing(mathpixPdfId);
     this.logger.log('✅ Mathpix processing completed');
 
+    // 5.5. Verify status one more time and get final status info
+    try {
+      const finalStatusCheck = await axios.get(`${this.mathpixBaseUrl}/pdf/${mathpixPdfId}`, {
+        headers: {
+          app_id: this.mathpixAppId,
+          app_key: this.mathpixAppKey,
+        },
+      });
+      this.logger.log(`📊 Final status check: ${JSON.stringify(finalStatusCheck.data)}`);
+    } catch (error) {
+      this.logger.warn(`⚠️ Could not verify final status: ${error.message}`);
+    }
+
     // 6. Download LaTeX ZIP from Mathpix
     this.logger.log('📥 Step 4: Downloading LaTeX ZIP from Mathpix...');
     const zipBuffer = await this.downloadLatexZip(mathpixPdfId);
@@ -184,6 +197,19 @@ export class MathpixProcessorService {
     this.logger.log('⏳ Step 3: Waiting for Mathpix processing...');
     await this.waitForMathpixProcessing(mathpixPdfId);
     this.logger.log('✅ Mathpix processing completed');
+
+    // 5.5. Verify status one more time and get final status info
+    try {
+      const finalStatusCheck = await axios.get(`${this.mathpixBaseUrl}/pdf/${mathpixPdfId}`, {
+        headers: {
+          app_id: this.mathpixAppId,
+          app_key: this.mathpixAppKey,
+        },
+      });
+      this.logger.log(`📊 Final status check: ${JSON.stringify(finalStatusCheck.data)}`);
+    } catch (error) {
+      this.logger.warn(`⚠️ Could not verify final status: ${error.message}`);
+    }
 
     // 6. Download HTML ZIP from Mathpix
     this.logger.log('📥 Step 4: Downloading HTML ZIP from Mathpix...');
@@ -388,8 +414,10 @@ export class MathpixProcessorService {
 
         const status = response.data.status;
         this.logger.log(`⏳ Attempt ${attempt}/${maxAttempts}: Status = ${status}`);
-
+        
+        // Log full response when completed to debug available formats
         if (status === 'completed') {
+          this.logger.log(`✅ Processing completed. Full response: ${JSON.stringify(response.data)}`);
           return;
         }
 
@@ -415,30 +443,122 @@ export class MathpixProcessorService {
    * Download LaTeX ZIP from Mathpix
    */
   private async downloadLatexZip(pdfId: string): Promise<Buffer> {
-    const response = await axios.get(`${this.mathpixBaseUrl}/pdf/${pdfId}.tex`, {
-      headers: {
-        app_id: this.mathpixAppId,
-        app_key: this.mathpixAppKey,
-      },
-      responseType: 'arraybuffer',
-    });
+    // Add a small delay after status becomes "completed" to ensure file is ready
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    return Buffer.from(response.data);
+    // Try .tex.zip format first (newer API format)
+    let url = `${this.mathpixBaseUrl}/pdf/${pdfId}.tex.zip`;
+    this.logger.log(`📥 Attempting to download from: ${url}`);
+    
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          app_id: this.mathpixAppId,
+          app_key: this.mathpixAppKey,
+        },
+        responseType: 'arraybuffer',
+      });
+
+      this.logger.log(`✅ Successfully downloaded LaTeX ZIP (${response.data.byteLength} bytes)`);
+      return Buffer.from(response.data);
+    } catch (error) {
+      // If .tex.zip fails, try .tex format (legacy format)
+      if (error.response?.status === 404) {
+        this.logger.warn(`⚠️ .tex.zip format not found, trying .tex format...`);
+        url = `${this.mathpixBaseUrl}/pdf/${pdfId}.tex`;
+        
+        try {
+          const response = await axios.get(url, {
+            headers: {
+              app_id: this.mathpixAppId,
+              app_key: this.mathpixAppKey,
+            },
+            responseType: 'arraybuffer',
+          });
+
+          this.logger.log(`✅ Successfully downloaded LaTeX ZIP using .tex format (${response.data.byteLength} bytes)`);
+          return Buffer.from(response.data);
+        } catch (fallbackError) {
+          this.logger.error(`❌ Both .tex.zip and .tex formats failed`);
+          this.logger.error(`   .tex.zip error: ${error.response?.status} - ${JSON.stringify(error.response?.data)}`);
+          this.logger.error(`   .tex error: ${fallbackError.response?.status} - ${JSON.stringify(fallbackError.response?.data)}`);
+          throw new BadRequestException(
+            `Failed to download LaTeX ZIP from Mathpix. API returned: ${JSON.stringify(fallbackError.response?.data || error.response?.data)}`
+          );
+        }
+      }
+      
+      // Re-throw if it's not a 404
+      this.logger.error(`❌ Error downloading LaTeX ZIP: ${error.message}`);
+      if (error.response) {
+        this.logger.error(`   Status: ${error.response.status}`);
+        this.logger.error(`   Data: ${JSON.stringify(error.response.data)}`);
+      }
+      throw new BadRequestException(
+        `Failed to download LaTeX ZIP from Mathpix: ${error.message}. Response: ${JSON.stringify(error.response?.data)}`
+      );
+    }
   }
 
   /**
    * Download HTML ZIP from Mathpix
    */
   private async downloadHtmlZip(pdfId: string): Promise<Buffer> {
-    const response = await axios.get(`${this.mathpixBaseUrl}/pdf/${pdfId}.html`, {
-      headers: {
-        app_id: this.mathpixAppId,
-        app_key: this.mathpixAppKey,
-      },
-      responseType: 'arraybuffer',
-    });
+    // Add a small delay after status becomes "completed" to ensure file is ready
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    return Buffer.from(response.data);
+    // Try .html.zip format first (newer API format)
+    let url = `${this.mathpixBaseUrl}/pdf/${pdfId}.html.zip`;
+    this.logger.log(`📥 Attempting to download from: ${url}`);
+    
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          app_id: this.mathpixAppId,
+          app_key: this.mathpixAppKey,
+        },
+        responseType: 'arraybuffer',
+      });
+
+      this.logger.log(`✅ Successfully downloaded HTML ZIP (${response.data.byteLength} bytes)`);
+      return Buffer.from(response.data);
+    } catch (error) {
+      // If .html.zip fails, try .html format (legacy format)
+      if (error.response?.status === 404) {
+        this.logger.warn(`⚠️ .html.zip format not found, trying .html format...`);
+        url = `${this.mathpixBaseUrl}/pdf/${pdfId}.html`;
+        
+        try {
+          const response = await axios.get(url, {
+            headers: {
+              app_id: this.mathpixAppId,
+              app_key: this.mathpixAppKey,
+            },
+            responseType: 'arraybuffer',
+          });
+
+          this.logger.log(`✅ Successfully downloaded HTML ZIP using .html format (${response.data.byteLength} bytes)`);
+          return Buffer.from(response.data);
+        } catch (fallbackError) {
+          this.logger.error(`❌ Both .html.zip and .html formats failed`);
+          this.logger.error(`   .html.zip error: ${error.response?.status} - ${JSON.stringify(error.response?.data)}`);
+          this.logger.error(`   .html error: ${fallbackError.response?.status} - ${JSON.stringify(fallbackError.response?.data)}`);
+          throw new BadRequestException(
+            `Failed to download HTML ZIP from Mathpix. API returned: ${JSON.stringify(fallbackError.response?.data || error.response?.data)}`
+          );
+        }
+      }
+      
+      // Re-throw if it's not a 404
+      this.logger.error(`❌ Error downloading HTML ZIP: ${error.message}`);
+      if (error.response) {
+        this.logger.error(`   Status: ${error.response.status}`);
+        this.logger.error(`   Data: ${JSON.stringify(error.response.data)}`);
+      }
+      throw new BadRequestException(
+        `Failed to download HTML ZIP from Mathpix: ${error.message}. Response: ${JSON.stringify(error.response?.data)}`
+      );
+    }
   }
 
   /**
