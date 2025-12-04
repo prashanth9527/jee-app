@@ -596,8 +596,15 @@ export default function PDFProcessorCachePage() {
   const markAsCompleted = async () => {
     if (!editingJson) return;
 
+    // Find the record to get the cacheId
+    const currentRecord = records.find(r => r.fileName === editingJson);
+    if (!currentRecord) {
+      toast.error('Record not found');
+      return;
+    }
+
     try {
-      const response = await api.post(`/admin/pdf-processor/mark-completed/${editingJson}`);
+      const response = await api.post(`/admin/pdf-processor/mark-completed/${currentRecord.id}`);
       if (response.data.success) {
         toast.success('File marked as completed');
         setCurrentStatus('COMPLETED');
