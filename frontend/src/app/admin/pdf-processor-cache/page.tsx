@@ -617,6 +617,44 @@ export default function PDFProcessorCachePage() {
     }
   };
 
+  const markRecordAsCompleted = async (recordId: string, fileName: string) => {
+    // Show confirmation dialog
+    const result = await Swal.fire({
+      title: 'Mark as Completed',
+      html: `Are you sure you want to mark <strong>${fileName}</strong> as completed?<br><br>This will update the processing status to <strong>'COMPLETED'</strong>.`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#10b981',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, mark as completed!',
+      cancelButtonText: 'Cancel',
+      width: '400px'
+    });
+
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    toast.loading('Updating status...', 'Please wait');
+
+    try {
+      const response = await api.post(`/admin/pdf-processor/mark-completed/${recordId}`);
+      if (response.data.success) {
+        toast.close();
+        toast.success('File marked as completed successfully!');
+        fetchRecords();
+        fetchStats();
+      } else {
+        toast.close();
+        toast.error(response.data.message || 'Failed to mark as completed');
+      }
+    } catch (error: any) {
+      toast.close();
+      console.error('Error marking as completed:', error);
+      toast.error(error.response?.data?.message || 'Failed to mark as completed');
+    }
+  };
+
   const importQuestions = async () => {
     if (!editingJson) return;
 
@@ -1384,6 +1422,20 @@ export default function PDFProcessorCachePage() {
                                 )}
                               </button>
                             )
+                          )}
+
+                          {/* Mark as Completed Button - Only for PENDING status */}
+                          {record.processingStatus === 'PENDING' && (
+                            <button
+                              onClick={() => markRecordAsCompleted(record.id, record.fileName)}
+                              className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
+                              title="Mark this file as completed"
+                            >
+                              <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              Mark as completed
+                            </button>
                           )}
 
                           {/* Delete Button - Red */}
