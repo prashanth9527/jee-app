@@ -1377,6 +1377,7 @@ enum RecordType {
 
 enum ExamType {
   REGULAR
+  REGULAR_ADV
   AI_EXAM
   CONTENT_EXAM
   PRACTICE_EXAM
