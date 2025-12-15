@@ -553,6 +553,25 @@ export class BlogsService {
         : data.metaKeywords;
     }
 
+    // Handle subjectId - make it optional and validate if provided
+    if (data.subjectId !== undefined) {
+      if (data.subjectId === null || data.subjectId === '') {
+        // Clear the subject if null or empty string is provided
+        updateData.subjectId = null;
+      } else {
+        // Validate that the subject exists
+        const subject = await this.prisma.subject.findUnique({
+          where: { id: data.subjectId },
+        });
+
+        if (!subject) {
+          // Subject doesn't exist, remove it from update data to keep existing value
+          delete updateData.subjectId;
+        }
+        // If subject exists, keep the subjectId in updateData
+      }
+    }
+
     return await this.prisma.blog.update({
       where: { id },
       data: updateData,
