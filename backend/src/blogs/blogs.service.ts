@@ -398,9 +398,18 @@ export class BlogsService {
     return blog;
   }
 
-  async getBlogBySlug(slug: string) {
+  async getBlogBySlug(slug: string, publicAccess: boolean = false) {
+    // Decode the slug in case it's URL encoded, with error handling
+    let decodedSlug = slug;
+    try {
+      decodedSlug = decodeURIComponent(slug);
+    } catch (error) {
+      // If decoding fails, use the original slug
+      decodedSlug = slug;
+    }
+    
     const blog = await this.prisma.blog.findUnique({
-      where: { slug },
+      where: { slug: decodedSlug },
       include: {
         author: {
           select: {
@@ -448,6 +457,11 @@ export class BlogsService {
     });
 
     if (!blog) {
+      throw new NotFoundException('Blog not found');
+    }
+
+    // For public access, only return published blogs
+    if (publicAccess && blog.status !== 'PUBLISHED') {
       throw new NotFoundException('Blog not found');
     }
 
