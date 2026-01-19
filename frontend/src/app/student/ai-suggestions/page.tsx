@@ -74,7 +74,7 @@ export default function AISuggestionsPage() {
 
   const handleUpgrade = () => {
     // Redirect to subscription/renewal page
-    window.location.href = '/student/subscription';
+    window.location.href = '/student/subscriptions';
   };
 
   const handleTabChange = (tab: 'insights' | 'suggestions' | 'analysis') => {

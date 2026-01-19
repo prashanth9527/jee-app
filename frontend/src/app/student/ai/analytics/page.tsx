@@ -80,7 +80,7 @@ export default function LearningAnalyticsPage() {
 
   const handleUpgrade = () => {
     // Redirect to subscription/renewal page
-    window.location.href = '/student/subscription';
+    window.location.href = '/student/subscriptions';
   };
 
   const loadAnalyticsData = async () => {
