@@ -357,7 +357,7 @@ export default function AISuggestionsPage() {
                   </div>
                 ) : hasAISubscription === false ? (
                   /* Upgrade Message for Non-AI Users */
-                  <div className="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-lg p-8">
+                  <div className="from-orange-50 to-red-50 border border-orange-200 rounded-lg p-8">
                     <div className="text-center">
                       <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 mb-4">
                         <svg className="h-8 w-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
