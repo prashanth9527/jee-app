@@ -1,5 +1,6 @@
 import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import { AwsService } from '../aws/aws.service';
 import { OtpService } from '../auth/otp.service';
@@ -124,7 +125,7 @@ export class UsersService {
 		}
 
 		// Update user email and mark OTP as used
-		const updatedUser = await this.prisma.$transaction(async (tx) => {
+		const updatedUser = await this.prisma.$transaction(async (tx: Prisma.TransactionClient) => {
 			await tx.otp.update({
 				where: { id: otp.id },
 				data: { used: true }
@@ -201,7 +202,7 @@ export class UsersService {
 		}
 
 		// Update user phone and mark OTP as used
-		const updatedUser = await this.prisma.$transaction(async (tx) => {
+		const updatedUser = await this.prisma.$transaction(async (tx: Prisma.TransactionClient) => {
 			await tx.otp.update({
 				where: { id: otp.id },
 				data: { used: true }

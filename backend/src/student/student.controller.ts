@@ -170,7 +170,7 @@ export class StudentController {
 					where: { lessonId },
 					select: { id: true }
 				});
-				const lessonQuestionIds = lessonQuestions.map(q => q.id);
+				const lessonQuestionIds = lessonQuestions.map((q: any) => q.id);
 				
 				if (lessonQuestionIds.length === 0) {
 					// No questions found for this lesson, return empty result
@@ -308,7 +308,7 @@ export class StudentController {
 				where: questionWhere,
 				select: { id: true }
 			});
-			const matchingQuestionIds = matchingQuestions.map(q => q.id);
+			const matchingQuestionIds = matchingQuestions.map((q: any) => q.id);
 
 			if (matchingQuestionIds.length > 0) {
 				where.AND = where.AND || [];
@@ -362,9 +362,9 @@ export class StudentController {
 		]);
 
 		// Collect all unique IDs for batch queries
-		const paperIds = papers.map(p => p.id);
-		const allSubjectIds = [...new Set(papers.flatMap(p => p.subjectIds || []))];
-		const allQuestionIds = [...new Set(papers.flatMap(p => p.questionIds || []))];
+		const paperIds = papers.map((p: { id: string }) => p.id);
+		const allSubjectIds = [...new Set(papers.flatMap((p: { subjectIds?: string[] }) => p.subjectIds || []))];
+		const allQuestionIds = [...new Set(papers.flatMap((p: { questionIds?: string[] }) => p.questionIds || []))];
 
 		// Define types for better TypeScript support
 		type SubjectMap = Record<string, { id: string; name: string }>;
@@ -386,8 +386,8 @@ export class StudentController {
 				? this.prisma.subject.findMany({
 					where: { id: { in: allSubjectIds } },
 					select: { id: true, name: true }
-				}).then(subjects => 
-					subjects.reduce((map: SubjectMap, subject) => {
+				}).then((subjects: any) => 
+					subjects.reduce((map: SubjectMap, subject: any) => {
 						map[subject.id] = subject;
 						return map;
 					}, {} as SubjectMap)
@@ -405,8 +405,8 @@ export class StudentController {
 							select: { id: true, name: true, subject: { select: { name: true } } }
 						}
 					}
-				}).then(questions => 
-					questions.reduce((map: LessonInfoMap, question) => {
+				}).then((questions: any) => 
+					questions.reduce((map: LessonInfoMap, question: any) => {
 						map[question.id] = question;
 						return map;
 					}, {} as LessonInfoMap)
@@ -420,8 +420,8 @@ export class StudentController {
 					where: { examPaperId: { in: paperIds } },
 					_count: { id: true },
 					_avg: { scorePercent: true }
-				}).then(stats => 
-					stats.reduce((map: SubmissionStatsMap, stat) => {
+				}).then((stats: any) => 
+					stats.reduce((map: SubmissionStatsMap, stat: any) => {
 						map[stat.examPaperId] = stat;
 						return map;
 					}, {} as SubmissionStatsMap)
@@ -434,10 +434,10 @@ export class StudentController {
 					where: { id: { in: allQuestionIds } },
 					by: ['id', 'difficulty'],
 					_count: { difficulty: true }
-				}).then(stats => 
-					stats.reduce((map: DifficultyStatsMap, stat) => {
-						if (!map[stat.id]) map[stat.id] = [];
-						map[stat.id].push(stat);
+				}).then((stats: any) => 
+					stats.reduce((map: DifficultyStatsMap, stat: any) => {
+						if (!map[stat.id]) (map as any)[stat.id] = [];
+						(map as any)[stat.id].push(stat);
 						return map;
 					}, {} as DifficultyStatsMap)
 				)
@@ -451,7 +451,7 @@ export class StudentController {
 						examPaperId: { in: paperIds }
 					},
 					select: { examPaperId: true }
-				}).then(sessions => new Set(sessions.map(s => s.examPaperId)))
+				}).then((sessions: any) => new Set(sessions.map((s: any) => s.examPaperId)))
 				: Promise.resolve(new Set<string>()),
 
 			// Fetch bookmarks for all papers in one query
@@ -462,7 +462,7 @@ export class StudentController {
 						examPaperId: { in: paperIds }
 					},
 					select: { examPaperId: true }
-				}).then(bookmarks => new Set(bookmarks.map(b => b.examPaperId)))
+				}).then((bookmarks: any) => new Set(bookmarks.map((b: any) => b.examPaperId)))
 				: Promise.resolve(new Set<string>())
 		]);
 
@@ -483,12 +483,12 @@ export class StudentController {
 				: [];
 
 			// Get submission stats for this paper
-			const submissionStats = submissionStatsMap[paper.id] || { _count: { id: 0 }, _avg: { scorePercent: 0 } };
+			const submissionStats = (submissionStatsMap as any)[paper.id] || { _count: { id: 0 }, _avg: { scorePercent: 0 } };
 
 			// Get difficulty stats for this paper's questions
 			const difficultyStats = paper.questionIds?.length
 				? paper.questionIds
-					.flatMap((id: string) => difficultyStatsMap[id] || [])
+					.flatMap((id: string) => (difficultyStatsMap as any)[id] || [])
 					.reduce((acc: any[], stat: any) => {
 						const existing = acc.find((d: any) => d.difficulty === stat.difficulty);
 						if (existing) {
@@ -497,7 +497,7 @@ export class StudentController {
 							acc.push({ ...stat });
 						}
 						return acc;
-					}, [] as any[])
+					}, [] as any)
 				: [];
 
 			// Determine overall difficulty based on question distribution
@@ -691,7 +691,7 @@ export class StudentController {
 			}
 		});
 
-		const practicedQuestionIds = practiceProgress?.sessions.map(s => s.questionId) || [];
+		const practicedQuestionIds = practiceProgress?.sessions.map((s: { questionId: string }) => s.questionId) || [];
 
 			return {
 				...examPaper,
@@ -1644,7 +1644,7 @@ export class StudentController {
 			}
 		});
 
-		const practicedQuestionIds = practiceProgress?.sessions.map(s => s.questionId) || [];
+		const practicedQuestionIds = practiceProgress?.sessions.map((s: { questionId: string }) => s.questionId) || [];
 
 		// Format questions to match practice-exam response format
 		const formattedQuestions = questions.map((question: any) => ({
