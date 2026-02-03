@@ -5,6 +5,9 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react', 'chart.js', 'react-chartjs-2'],
   },
 
+  // Force dynamic rendering for API routes to prevent static generation bailouts
+  output: 'standalone',
+
   // Optimize images
   images: {
     remotePatterns: [
