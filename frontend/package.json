@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,16 +11,11 @@
     "postinstall": "npm rebuild @tailwindcss/oxide"
   },
   "dependencies": {
-    "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tailwindcss/forms": "^0.5.11",
-    "@tailwindcss/typography": "^0.5.19",
     "@tinymce/tinymce-react": "^6.3.0",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
-    "autoprefixer": "^10.4.24",
     "axios": "1.11.0",
     "chart.js": "^4.5.0",
-    "client-only": "^0.0.1",
     "clsx": "^2.1.1",
     "html-react-parser": "^5.2.6",
     "katex": "^0.16.22",
@@ -34,8 +28,7 @@
     "react-dom": "^18.2.0",
     "summernote": "^0.9.1",
     "sweetalert2": "^11.22.5",
-    "tailwind-merge": "^3.3.1",
-    "watchpack": "^2.4.2"
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

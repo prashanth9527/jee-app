@@ -314,7 +314,7 @@ export default function LeaderboardPage() {
             </div>
 
           {/* Motivation Section */}
-          <div className="from-blue-600 to-purple-600 rounded-lg shadow p-6 text-white">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow p-6 text-white">
             <div className="text-center">
               <h2 className="text-2xl font-bold mb-2">Keep Learning! 🚀</h2>
               <p className="mb-4 opacity-90">

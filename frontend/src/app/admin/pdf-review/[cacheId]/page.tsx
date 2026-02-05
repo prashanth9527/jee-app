@@ -82,7 +82,7 @@ export default function PDFReviewPage() {
   const [examTitle, setExamTitle] = useState('');
   const [examDescription, setExamDescription] = useState('');
   const [examTimeLimit, setExamTimeLimit] = useState<number | ''>('');
-  const [examType, setExamType] = useState<'REGULAR' | 'REGULAR_ADV' | 'AI_EXAM' | 'CONTENT_EXAM' | 'PRACTICE_EXAM' | 'PYQ_PRACTICE'>('REGULAR');
+  const [examType, setExamType] = useState<'REGULAR' | 'AI_EXAM' | 'CONTENT_EXAM' | 'PRACTICE_EXAM' | 'PYQ_PRACTICE'>('REGULAR');
   const [previousYear, setPreviousYear] = useState('');
   const [groupedQuestions, setGroupedQuestions] = useState<Record<string, Question[]>>({});
   const [originalSelectedQuestions, setOriginalSelectedQuestions] = useState<Set<string> | null>(null);
@@ -1241,7 +1241,6 @@ export default function PDFReviewPage() {
     dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
                       >
                         <option value="REGULAR">Regular Exam</option>
-                        <option value="REGULAR_ADV">Regular Exam-Advanced</option>
                         <option value="AI_EXAM">AI Generated Exam</option>
                         <option value="CONTENT_EXAM">Content Exam</option>
                         <option value="PRACTICE_EXAM">Practice Exam</option>

@@ -398,18 +398,9 @@ export class BlogsService {
     return blog;
   }
 
-  async getBlogBySlug(slug: string, publicAccess: boolean = false) {
-    // Decode the slug in case it's URL encoded, with error handling
-    let decodedSlug = slug;
-    try {
-      decodedSlug = decodeURIComponent(slug);
-    } catch (error) {
-      // If decoding fails, use the original slug
-      decodedSlug = slug;
-    }
-    
+  async getBlogBySlug(slug: string) {
     const blog = await this.prisma.blog.findUnique({
-      where: { slug: decodedSlug },
+      where: { slug },
       include: {
         author: {
           select: {
@@ -457,11 +448,6 @@ export class BlogsService {
     });
 
     if (!blog) {
-      throw new NotFoundException('Blog not found');
-    }
-
-    // For public access, only return published blogs
-    if (publicAccess && blog.status !== 'PUBLISHED') {
       throw new NotFoundException('Blog not found');
     }
 
@@ -565,25 +551,6 @@ export class BlogsService {
       updateData.metaKeywords = Array.isArray(data.metaKeywords) 
         ? data.metaKeywords.join(', ') 
         : data.metaKeywords;
-    }
-
-    // Handle subjectId - make it optional and validate if provided
-    if (data.subjectId !== undefined) {
-      if (data.subjectId === null || data.subjectId === '') {
-        // Clear the subject if null or empty string is provided
-        updateData.subjectId = null;
-      } else {
-        // Validate that the subject exists
-        const subject = await this.prisma.subject.findUnique({
-          where: { id: data.subjectId },
-        });
-
-        if (!subject) {
-          // Subject doesn't exist, remove it from update data to keep existing value
-          delete updateData.subjectId;
-        }
-        // If subject exists, keep the subjectId in updateData
-      }
     }
 
     return await this.prisma.blog.update({

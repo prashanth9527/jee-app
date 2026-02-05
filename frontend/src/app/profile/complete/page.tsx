@@ -216,7 +216,7 @@ export default function CompleteProfilePage() {
           {/* Info */}
           <div className="bg-orange-50 rounded-xl p-6 border border-orange-200">
             <h3 className="text-sm font-semibold text-orange-900 mb-2">Why do we need this information?</h3>
-            <ul className="text-sm text-white-800 space-y-1">
+            <ul className="text-sm text-orange-800 space-y-1">
               <li>• Phone number for SMS notifications and OTP verification</li>
               {user?.role !== 'ADMIN' && (
                 <li>• Stream selection to personalize your learning experience</li>

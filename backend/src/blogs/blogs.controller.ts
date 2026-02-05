@@ -246,8 +246,7 @@ export class PublicBlogsController {
 
   @Get('slug/:slug')
   async getPublicBlogBySlug(@Param('slug') slug: string) {
-    // The service will handle slug decoding
-    return this.blogsService.getBlogBySlug(slug, true);
+    return this.blogsService.getBlogBySlug(slug);
   }
 
   @Get('category/:categoryId')

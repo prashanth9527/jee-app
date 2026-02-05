@@ -1,6 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
-import { Question, Subject } from '@prisma/client';
 
 @Controller('pyq')
 export class PYQController {
@@ -138,7 +137,7 @@ export class PYQController {
     });
 
     // Get subject names
-    const subjectIds = bySubject.map((item: any) => item.subjectId).filter((id): id is string => id !== null);
+    const subjectIds = bySubject.map(item => item.subjectId).filter((id): id is string => id !== null);
     const subjects = await this.prisma.subject.findMany({
       where: {
         id: { in: subjectIds },
@@ -149,7 +148,7 @@ export class PYQController {
       },
     });
 
-    const subjectMap = new Map(subjects.map((s: Subject) => [s.id, s.name]));
+    const subjectMap = new Map(subjects.map(s => [s.id, s.name]));
 
     // Get questions by difficulty
     const byDifficulty = await this.prisma.question.groupBy({
@@ -164,15 +163,15 @@ export class PYQController {
 
     return {
       totalPYQ,
-      byYear: byYear.map((item: any) => ({
+      byYear: byYear.map(item => ({
         year: item.yearAppeared,
         count: item._count?.id || 0,
       })),
-      bySubject: bySubject.map((item: any) => ({
+      bySubject: bySubject.map(item => ({
         name: subjectMap.get(item.subjectId || '') || 'Unknown',
         count: item._count?.id || 0,
       })),
-      byDifficulty: byDifficulty.map((item: any) => ({
+      byDifficulty: byDifficulty.map(item => ({
         difficulty: item.difficulty,
         count: item._count?.id || 0,
       })),

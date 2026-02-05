@@ -1170,7 +1170,6 @@ export default function PDFProcessorCachePage() {
             )}
           </div>
 
-
           {/* Records Table */}
           <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
