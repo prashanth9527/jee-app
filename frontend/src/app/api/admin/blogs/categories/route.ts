@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
@@ -51,4 +52,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Internal server error', error: error.message }, { status: 500 });
   }
 }
-
