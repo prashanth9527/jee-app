@@ -6,7 +6,7 @@ const nextConfig = {
   },
 
   // Force dynamic rendering for API routes to prevent static generation bailouts
-  output: 'standalone',
+  // output: 'standalone',
 
   // Optimize images
   images: {
