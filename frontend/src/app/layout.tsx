@@ -124,20 +124,8 @@ export default function RootLayout({
         <meta name="application-name" content="JEE App" />
         
         {/* Default Favicon and app icons - will be overridden by DynamicFavicon if available */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
         <link rel="manifest" href="/manifest.json" />
-        
-        {/* PWA Icons */}
-        <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
-        <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
-        <link rel="apple-touch-icon" sizes="128x128" href="/icons/icon-128x128.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
-        <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
-        <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" />
         
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
