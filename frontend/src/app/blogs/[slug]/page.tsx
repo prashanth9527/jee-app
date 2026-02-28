@@ -49,7 +49,13 @@ interface BlogResponse {
 
 async function getBlog(slug: string): Promise<BlogResponse | null> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000'}/api/blogs/${slug}`, {
+    const backendUrl = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_BASE;
+
+    if (!backendUrl) {
+      throw new Error('Missing BACKEND_URL, NEXT_PUBLIC_BACKEND_URL, or NEXT_PUBLIC_API_BASE');
+    }
+
+    const response = await fetch(`${backendUrl}/blogs/slug/${encodeURIComponent(slug)}`, {
       cache: 'no-store', // Ensure fresh data for SEO
     });
 
@@ -57,7 +63,7 @@ async function getBlog(slug: string): Promise<BlogResponse | null> {
       if (response.status === 404) {
         return null;
       }
-      throw new Error('Failed to fetch blog');
+      throw new Error(`Failed to fetch blog: ${response.status}`);
     }
 
     const data = await response.json();
