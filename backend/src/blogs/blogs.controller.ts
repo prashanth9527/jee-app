@@ -184,6 +184,24 @@ export class BlogsController {
     return this.blogsService.generateBlogOutline(body.topic, body.streamId);
   }
 
+  @Post('generate/feature-image')
+  @Roles('ADMIN')
+  async generateFeatureImage(
+    @Body() body: {
+      title: string;
+      categoryId?: string;
+      tags?: string[];
+      excerpt?: string;
+      content?: string;
+      streamId?: string;
+      subjectId?: string;
+      regenerateHint?: string;
+    },
+    @Request() req: any
+  ) {
+    return this.blogsService.generateFeatureImage(body, req.user.id);
+  }
+
   // ========================================
   // IMAGE UPLOAD
   // ========================================

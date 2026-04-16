@@ -40,6 +40,12 @@ interface BlogFormData {
   subjectId: string;
 }
 
+interface GeneratedFeatureImage {
+  base64: string;
+  mimeType: string;
+  prompt: string;
+}
+
 export default function EditBlogPage() {
   const router = useRouter();
   const params = useParams();
@@ -53,6 +59,9 @@ export default function EditBlogPage() {
   const [tagInput, setTagInput] = useState('');
   const [uploadingImage, setUploadingImage] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>('');
+  const [generatedImagePreview, setGeneratedImagePreview] = useState<string>('');
+  const [generatedImage, setGeneratedImage] = useState<GeneratedFeatureImage | null>(null);
+  const [generatingImage, setGeneratingImage] = useState(false);
 
   const [formData, setFormData] = useState<BlogFormData>({
     title: '',
@@ -217,6 +226,8 @@ export default function EditBlogPage() {
     // Show preview
     const reader = new FileReader();
     reader.onloadend = () => {
+      setGeneratedImagePreview('');
+      setGeneratedImage(null);
       setImagePreview(reader.result as string);
     };
     reader.readAsDataURL(file);
@@ -231,6 +242,8 @@ export default function EditBlogPage() {
 
       if (response.data.url) {
         handleInputChange('featuredImage', response.data.url);
+        setGeneratedImagePreview('');
+        setGeneratedImage(null);
         Swal.fire({
           icon: 'success',
           title: 'Image Uploaded',
@@ -256,12 +269,138 @@ export default function EditBlogPage() {
 
   const handleImageUrlChange = (url: string) => {
     handleInputChange('featuredImage', url);
+    setGeneratedImagePreview('');
+    setGeneratedImage(null);
     setImagePreview(url);
   };
 
   const removeImage = () => {
     handleInputChange('featuredImage', '');
     setImagePreview('');
+    setGeneratedImagePreview('');
+    setGeneratedImage(null);
+  };
+
+  const stripHtml = (value: string) => value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+
+  const base64ToBlob = (base64: string, mimeType: string) => {
+    const binaryString = window.atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+
+    for (let i = 0; i < binaryString.length; i += 1) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    return new Blob([bytes], { type: mimeType });
+  };
+
+  const slugifyFileName = (value: string) =>
+    value
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .slice(0, 60) || 'blog-feature-image';
+
+  const requestFeatureImage = async (regenerateHint?: string) => {
+    if (!formData.title.trim()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Missing Title',
+        text: 'Please enter a blog title before generating a feature image.'
+      });
+      return;
+    }
+
+    setGeneratingImage(true);
+    try {
+      const response = await api.post('/admin/blogs/generate/feature-image', {
+        title: formData.title,
+        categoryId: formData.categoryId || undefined,
+        tags: formData.tags,
+        excerpt: formData.excerpt,
+        content: stripHtml(formData.content),
+        streamId: formData.streamId || undefined,
+        subjectId: formData.subjectId || undefined,
+        regenerateHint,
+      });
+
+      const mimeType = response.data.mimeType || 'image/png';
+      const base64 = response.data.base64;
+      const previewUrl = `data:${mimeType};base64,${base64}`;
+
+      setGeneratedImage({
+        base64,
+        mimeType,
+        prompt: response.data.prompt || '',
+      });
+      setGeneratedImagePreview(previewUrl);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Preview Ready',
+        text: 'The AI feature image is ready for review.',
+        timer: 2200,
+        showConfirmButton: false
+      });
+    } catch (error: any) {
+      console.error('Error generating feature image:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Generation Failed',
+        text: error.response?.data?.message || 'Failed to generate feature image. Please try again.'
+      });
+    } finally {
+      setGeneratingImage(false);
+    }
+  };
+
+  const handleApproveGeneratedImage = async () => {
+    if (!generatedImage) return;
+
+    setUploadingImage(true);
+    try {
+      const blob = base64ToBlob(generatedImage.base64, generatedImage.mimeType);
+      const fileName = `${slugifyFileName(formData.title)}-${Date.now()}.png`;
+      const file = new File([blob], fileName, { type: generatedImage.mimeType });
+      const uploadData = new FormData();
+      uploadData.append('image', file);
+
+      const response = await api.post('/admin/blogs/upload-image', uploadData);
+
+      if (response.data.url) {
+        handleInputChange('featuredImage', response.data.url);
+        setImagePreview(response.data.url);
+        setGeneratedImagePreview('');
+        setGeneratedImage(null);
+        Swal.fire({
+          icon: 'success',
+          title: 'Image Approved',
+          text: 'The generated image has been uploaded and set as the featured image.',
+          timer: 2200,
+          showConfirmButton: false
+        });
+      }
+    } catch (error: any) {
+      console.error('Error approving generated image:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Upload Failed',
+        text: error.response?.data?.message || 'Failed to upload the generated image.'
+      });
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handleRegenerateFeatureImage = async () => {
+    await requestFeatureImage('Create a noticeably different variation while staying aligned with the article topic.');
+  };
+
+  const discardGeneratedPreview = () => {
+    setGeneratedImagePreview('');
+    setGeneratedImage(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -403,39 +542,79 @@ export default function EditBlogPage() {
                     </label>
                     
                     {/* Image Preview */}
-                    {imagePreview && (
+                    {(generatedImagePreview || imagePreview) && (
                       <div className="mb-3 relative">
                         <img
-                          src={imagePreview}
+                          src={generatedImagePreview || imagePreview}
                           alt="Featured image preview"
                           className="w-full h-48 object-cover rounded-md border border-gray-300 dark:border-gray-600"
                         />
-                        <button
-                          type="button"
-                          onClick={removeImage}
-                          className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-md hover:bg-red-700 text-sm"
-                        >
-                          Remove
-                        </button>
+                        <div className="absolute top-2 right-2 flex gap-2">
+                          {generatedImagePreview ? (
+                            <>
+                              <button
+                                type="button"
+                                onClick={handleApproveGeneratedImage}
+                                disabled={uploadingImage}
+                                className="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 text-sm disabled:opacity-50"
+                              >
+                                {uploadingImage ? 'Uploading...' : 'Approve'}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={handleRegenerateFeatureImage}
+                                disabled={generatingImage || uploadingImage}
+                                className="bg-blue-600 text-white px-2 py-1 rounded-md hover:bg-blue-700 text-sm disabled:opacity-50"
+                              >
+                                Regenerate
+                              </button>
+                              <button
+                                type="button"
+                                onClick={discardGeneratedPreview}
+                                className="bg-red-600 text-white px-2 py-1 rounded-md hover:bg-red-700 text-sm"
+                              >
+                                Discard
+                              </button>
+                            </>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={removeImage}
+                              className="bg-red-600 text-white px-2 py-1 rounded-md hover:bg-red-700 text-sm"
+                            >
+                              Remove
+                            </button>
+                          )}
+                        </div>
                       </div>
                     )}
 
-                    {/* Upload Image Button */}
-                    <div className="mb-3">
-                      <label className="block">
+                    {/* Upload Image Button + AI Generation */}
+                    <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-start">
+                      <label className="flex-1 block">
                         <span className="sr-only">Choose image file</span>
                         <input
                           type="file"
                           accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
                           onChange={handleImageUpload}
-                          disabled={uploadingImage}
+                          disabled={uploadingImage || generatingImage}
                           className="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900/20 file:text-blue-700 dark:file:text-blue-300 hover:file:bg-blue-100 dark:hover:file:bg-blue-900/30 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                       </label>
-                      {uploadingImage && (
-                        <p className="mt-1 text-sm text-blue-600 dark:text-blue-400">Uploading image...</p>
-                      )}
+                      <button
+                        type="button"
+                        onClick={() => requestFeatureImage()}
+                        disabled={uploadingImage || generatingImage || !formData.title.trim()}
+                        className="inline-flex items-center justify-center px-4 py-2 rounded-md bg-violet-600 text-white hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                      >
+                        {generatingImage ? 'Generating...' : 'Generate with AI'}
+                      </button>
                     </div>
+                    {(uploadingImage || generatingImage) && (
+                      <p className="mt-1 text-sm text-blue-600 dark:text-blue-400">
+                        {uploadingImage ? 'Uploading image...' : 'Generating AI preview...'}
+                      </p>
+                    )}
 
                     {/* Or use URL */}
                     <div className="relative">
@@ -693,4 +872,3 @@ export default function EditBlogPage() {
     </ProtectedRoute>
   );
 }
-

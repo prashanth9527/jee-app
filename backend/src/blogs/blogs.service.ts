@@ -1170,4 +1170,41 @@ export class BlogsService {
       throw new BadRequestException(`Failed to generate blog outline: ${error.message}`);
     }
   }
+
+  async generateFeatureImage(request: {
+    title: string;
+    categoryId?: string;
+    tags?: string[];
+    excerpt?: string;
+    content?: string;
+    streamId?: string;
+    subjectId?: string;
+    regenerateHint?: string;
+  }, _userId?: string) {
+    try {
+      if (!request.title?.trim()) {
+        throw new BadRequestException('Blog title is required to generate a feature image');
+      }
+
+      const [category, stream, subject] = await Promise.all([
+        request.categoryId ? this.prisma.blogCategory.findUnique({ where: { id: request.categoryId } }) : null,
+        request.streamId ? this.prisma.stream.findUnique({ where: { id: request.streamId } }) : null,
+        request.subjectId ? this.prisma.subject.findUnique({ where: { id: request.subjectId } }) : null,
+      ]);
+
+      return await this.aiService.generateBlogFeatureImage({
+        title: request.title.trim(),
+        category: category?.name,
+        tags: request.tags || [],
+        excerpt: request.excerpt || '',
+        content: request.content || '',
+        stream: stream?.code || stream?.name || undefined,
+        subject: subject?.name || undefined,
+        regenerateHint: request.regenerateHint,
+      });
+    } catch (error) {
+      console.error('Error generating feature image:', error);
+      throw new BadRequestException(`Failed to generate feature image: ${error.message}`);
+    }
+  }
 }

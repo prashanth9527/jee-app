@@ -1,16 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import OpenAI from 'openai';
 
 @Injectable()
 export class AiService {
   private readonly openaiApiKey: string;
   private readonly openaiBaseUrl: string;
   private readonly openaiModel: string;
+  private readonly openai?: OpenAI;
 
   constructor(private configService: ConfigService) {
     this.openaiApiKey = this.configService.get<string>('OPENAI_API_KEY') || '';
     this.openaiBaseUrl = this.configService.get<string>('OPENAI_BASE_URL') || 'https://api.openai.com/v1';
     this.openaiModel = this.configService.get<string>('OPENAI_MODEL') || 'gpt-3.5-turbo';
+
+    if (this.openaiApiKey) {
+      this.openai = new OpenAI({
+        apiKey: this.openaiApiKey,
+      });
+    }
   }
 
   async generateBlogContent(prompt: string): Promise<string> {
@@ -352,6 +360,91 @@ export class AiService {
       console.error('Error generating blog outline:', error);
       throw new Error(`Failed to generate blog outline: ${error.message}`);
     }
+  }
+
+  async generateBlogFeatureImage(request: {
+    title: string;
+    category?: string;
+    tags?: string[];
+    excerpt?: string;
+    content?: string;
+    stream?: string;
+    subject?: string;
+    regenerateHint?: string;
+  }): Promise<{
+    base64: string;
+    mimeType: string;
+    prompt: string;
+  }> {
+    if (!this.openai) {
+      throw new Error('OpenAI client not initialized');
+    }
+
+    const prompt = this.buildFeatureImagePrompt(request);
+
+    try {
+      const response = await this.openai.images.generate({
+        model: 'gpt-image-1',
+        prompt,
+        size: '1536x1024',
+        output_format: 'png',
+        quality: 'high',
+        background: 'auto',
+      });
+
+      const image = response.data?.[0];
+      if (!image?.b64_json) {
+        throw new Error('No image returned from OpenAI');
+      }
+
+      return {
+        base64: image.b64_json,
+        mimeType: 'image/png',
+        prompt,
+      };
+    } catch (error) {
+      console.error('Error generating blog feature image:', error);
+      throw new Error(`Failed to generate blog feature image: ${error.message}`);
+    }
+  }
+
+  private buildFeatureImagePrompt(request: {
+    title: string;
+    category?: string;
+    tags?: string[];
+    excerpt?: string;
+    content?: string;
+    stream?: string;
+    subject?: string;
+    regenerateHint?: string;
+  }): string {
+    const cleanedTags = (request.tags || [])
+      .map((tag) => tag?.trim())
+      .filter(Boolean)
+      .slice(0, 8)
+      .join(', ');
+    const excerpt = (request.excerpt || '').replace(/\s+/g, ' ').trim().slice(0, 240);
+    const contentSnippet = (request.content || '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 400);
+
+    return [
+      'Create a professional featured image for an educational blog article.',
+      `Title: ${request.title}`,
+      request.category ? `Category: ${request.category}` : '',
+      request.stream ? `Stream: ${request.stream}` : '',
+      request.subject ? `Subject: ${request.subject}` : '',
+      cleanedTags ? `Tags: ${cleanedTags}` : '',
+      excerpt ? `Excerpt: ${excerpt}` : '',
+      contentSnippet ? `Context: ${contentSnippet}` : '',
+      request.regenerateHint ? `Variation guidance: ${request.regenerateHint}` : '',
+      'Style requirements: wide editorial composition, modern educational design, vivid but clean colors, realistic or semi-illustrative visual storytelling, high contrast, polished lighting, no text, no labels, no watermarks, no logos, no borders, no UI mockups, suitable as a blog hero image.',
+      'The image should communicate the topic clearly at a glance and look appropriate for an Indian exam-prep audience.',
+    ]
+      .filter(Boolean)
+      .join('\n');
   }
 
   async generateQuestionsWithTips(request: {
