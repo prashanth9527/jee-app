@@ -337,6 +337,11 @@ export default function PYQBankPage() {
                           {question.subject.name}
                         </span>
                       )}
+                      {question.subject && (
+                        <span className="text-sm bg-gray-100 text-gray-800 px-2 py-1 rounded">
+                          {question.id}
+                        </span>
+                      )}
                     </div>
                     {!question.showSolution && (
                       <div className="flex items-center text-orange-600">

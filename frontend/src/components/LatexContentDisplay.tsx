@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import parse from 'html-react-parser';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
+import { cleanLatex } from '@/utils/textCleaner';
 
 interface LatexContentDisplayProps {
   content: string;
@@ -50,7 +51,7 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
           const unescapedLatex = match[1].replace(/\\\\/g, '\\');
           blocks.push({
             id: `${type}-${match.index}`,
-            latex: unescapedLatex,
+            latex: normalizeLatexBlock(unescapedLatex),
             start,
             end,
             type
@@ -60,6 +61,44 @@ export default function LatexContentDisplay({ content, className = '' }: LatexCo
     });
     
     return blocks.sort((a, b) => a.start - b.start);
+  };
+
+  const normalizeLatexBlock = (latex: string) => {
+    let normalized = cleanLatex(latex).trim();
+
+    let changed = true;
+    while (changed) {
+      changed = false;
+
+      const wrappedDisplay = normalized.match(/^\\\[((?:.|\n)*)\\\]$/);
+      if (wrappedDisplay) {
+        normalized = wrappedDisplay[1].trim();
+        changed = true;
+        continue;
+      }
+
+      const wrappedInline = normalized.match(/^\\\(((?:.|\n)*)\\\)$/);
+      if (wrappedInline) {
+        normalized = wrappedInline[1].trim();
+        changed = true;
+        continue;
+      }
+
+      const wrappedDollarDisplay = normalized.match(/^\$\$((?:.|\n)*)\$\$$/);
+      if (wrappedDollarDisplay) {
+        normalized = wrappedDollarDisplay[1].trim();
+        changed = true;
+        continue;
+      }
+
+      const wrappedDollarInline = normalized.match(/^\$((?:.|\n)*)\$$/);
+      if (wrappedDollarInline) {
+        normalized = wrappedDollarInline[1].trim();
+        changed = true;
+      }
+    }
+
+    return normalized;
   };
 
   // Render LaTeX content to HTML
@@ -211,5 +250,3 @@ export function LatexQuestionOption({
     </div>
   );
 }
-
-
