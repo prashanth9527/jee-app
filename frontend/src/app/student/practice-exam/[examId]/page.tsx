@@ -769,7 +769,7 @@ export default function PracticeExamPage() {
               const optionLetter = String.fromCharCode(65 + index); // A, B, C, D, etc.
               const isSelected = questionSelectedAnswer === option.id;
               const isCorrectOption = option.isCorrect;
-              const isWrongSelected = questionIsChecked && isSelected && !questionIsCorrect;
+              const isWrongSelected = questionIsChecked && isSelected && !isCorrectOption;
               const isCheckedCorrect = questionIsChecked && isCorrectOption;
               return (
                 <label
@@ -809,9 +809,15 @@ export default function PracticeExamPage() {
                           ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
                           : 'border-gray-300 dark:border-gray-600'
                     }`}>
-                      {isSelected && (
+                      {questionIsChecked ? (
+                        isCheckedCorrect ? (
+                          <span className="text-white text-xs sm:text-sm">✓</span>
+                        ) : isWrongSelected ? (
+                          <span className="text-white text-xs sm:text-sm">✕</span>
+                        ) : null
+                      ) : isSelected ? (
                         <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full"></div>
-                      )}
+                      ) : null}
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                       <span className={`text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border flex-shrink-0 ${
@@ -852,7 +858,7 @@ export default function PracticeExamPage() {
               const optionLetter = String.fromCharCode(65 + index); // A, B, C, D, etc.
               const isSelected = selectedArray.includes(option.id);
               const isCorrectOption = option.isCorrect;
-              const isWrongSelected = questionIsChecked && isSelected && !questionIsCorrect;
+              const isWrongSelected = questionIsChecked && isSelected && !isCorrectOption;
               const isCheckedCorrect = questionIsChecked && isCorrectOption;
               return (
                 <label
@@ -890,9 +896,15 @@ export default function PracticeExamPage() {
                         ? 'border-red-500 bg-red-500 dark:border-red-400 dark:bg-red-400'
                         : ''
                     }`}>
-                      {isSelected && (
+                      {questionIsChecked ? (
+                        isCheckedCorrect ? (
+                          <div className="text-white text-xs sm:text-sm">✓</div>
+                        ) : isWrongSelected ? (
+                          <div className="text-white text-xs sm:text-sm">✕</div>
+                        ) : null
+                      ) : isSelected ? (
                         <div className="text-white text-xs sm:text-sm">✓</div>
-                      )}
+                      ) : null}
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                       <span className={`text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border flex-shrink-0 ${

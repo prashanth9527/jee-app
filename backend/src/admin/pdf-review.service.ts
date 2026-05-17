@@ -416,6 +416,7 @@ export class PDFReviewService {
 
       // Calculate default time limit (2 minutes per question if not provided)
       const calculatedTimeLimit = timeLimitMin || questions.length * 2;
+      const normalizedExamType = examType === 'REGULAR_ADV' ? 'REGULAR' : (examType || 'REGULAR');
 
       // Create the exam paper
       const examPaper = await this.prisma.examPaper.create({
@@ -428,7 +429,7 @@ export class PDFReviewService {
           subtopicIds,
           questionIds,
           timeLimitMin: calculatedTimeLimit,
-          examType: (examType as any) || 'REGULAR'
+          examType: normalizedExamType as any
         },
         include: {
           _count: {
