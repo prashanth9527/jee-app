@@ -89,7 +89,10 @@ export async function generateMetadata({
   }
 
   const { blog } = data;
-  const siteUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.NEXT_PUBLIC_FRONTEND_URL ||
+    'https://rankora.in';
   const blogUrl = `${siteUrl}/blogs/${blog.slug}`;
 
   return {
@@ -147,7 +150,10 @@ export default async function BlogPostPage({
   }
 
   const { blog, relatedBlogs } = data;
-  const siteUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.NEXT_PUBLIC_FRONTEND_URL ||
+    'https://rankora.in';
 
   // Generate structured data for SEO
   const structuredData = {

@@ -35,6 +35,7 @@ interface RecentActivity {
   id: string;
   type: string;
   message: string;
+  actorName?: string;
   timeAgo: string;
   icon: string;
   details: any;
@@ -90,7 +91,8 @@ export default function AdminDashboard() {
           {
             id: '1',
             type: 'question',
-            message: 'New question added to Physics',
+            message: 'Admin User added a new question to Physics',
+            actorName: 'Admin User',
             timeAgo: '2 minutes ago',
             icon: '📝',
             details: {}
@@ -98,7 +100,8 @@ export default function AdminDashboard() {
           {
             id: '2',
             type: 'submission',
-            message: 'Student completed Chemistry exam',
+            message: 'Aarav Sharma completed Chemistry exam',
+            actorName: 'Aarav Sharma',
             timeAgo: '5 minutes ago',
             icon: '✅',
             details: {}
@@ -106,7 +109,8 @@ export default function AdminDashboard() {
           {
             id: '3',
             type: 'subscription',
-            message: 'New subscription plan created',
+            message: 'Priya Verma subscribed to AI Enabled Plan',
+            actorName: 'Priya Verma',
             timeAgo: '10 minutes ago',
             icon: '💳',
             details: {}
@@ -114,7 +118,8 @@ export default function AdminDashboard() {
           {
             id: '4',
             type: 'user',
-            message: 'User registered for trial',
+            message: 'Rohan Mehta registered for trial',
+            actorName: 'Rohan Mehta',
             timeAgo: '15 minutes ago',
             icon: '👤',
             details: {}
@@ -325,6 +330,11 @@ export default function AdminDashboard() {
                       <div className="text-2xl">{activity.icon}</div>
                       <div className="flex-1">
                         <p className="text-sm text-gray-900">{activity.message}</p>
+                        {activity.actorName && (
+                          <p className="text-xs text-gray-500">
+                            By <span className="font-semibold text-gray-900">{activity.actorName}</span>
+                          </p>
+                        )}
                         <p className="text-xs text-gray-500">{activity.timeAgo}</p>
                       </div>
                     </div>

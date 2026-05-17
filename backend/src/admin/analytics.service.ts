@@ -631,9 +631,10 @@ export class AdminAnalyticsService {
       activities.push({
         id: `question-${question.id}`,
         type: 'question',
-        message: `New question added to ${question.subject?.name || 'Unknown Subject'}`,
+        message: `${question.createdBy?.fullName || 'Unknown user'} added a new question to ${question.subject?.name || 'Unknown Subject'}`,
         time: question.createdAt,
         icon: '📝',
+        actorName: question.createdBy?.fullName || 'Unknown user',
         details: {
           questionId: question.id,
           subject: question.subject?.name,
@@ -647,9 +648,10 @@ export class AdminAnalyticsService {
       activities.push({
         id: `submission-${submission.id}`,
         type: 'submission',
-        message: `Student completed ${submission.examPaper?.title || 'exam'}`,
+        message: `${submission.user?.fullName || 'Unknown user'} completed ${submission.examPaper?.title || 'an exam'}`,
         time: submission.startedAt,
         icon: '✅',
+        actorName: submission.user?.fullName || 'Unknown user',
         details: {
           submissionId: submission.id,
           examPaper: submission.examPaper?.title,
@@ -664,9 +666,10 @@ export class AdminAnalyticsService {
       activities.push({
         id: `subscription-${subscription.id}`,
         type: 'subscription',
-        message: `New subscription plan created: ${subscription.plan?.name || 'Unknown Plan'}`,
+        message: `${subscription.user?.fullName || 'Unknown user'} subscribed to ${subscription.plan?.name || 'Unknown Plan'}`,
         time: subscription.createdAt,
         icon: '💳',
+        actorName: subscription.user?.fullName || 'Unknown user',
         details: {
           subscriptionId: subscription.id,
           plan: subscription.plan?.name,
@@ -680,9 +683,10 @@ export class AdminAnalyticsService {
       activities.push({
         id: `user-${user.id}`,
         type: 'user',
-        message: 'User registered for trial',
+        message: `${user.fullName || 'Unknown user'} registered for trial`,
         time: user.createdAt,
         icon: '👤',
+        actorName: user.fullName || 'Unknown user',
         details: {
           userId: user.id,
           userName: user.fullName

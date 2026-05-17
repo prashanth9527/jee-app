@@ -507,7 +507,7 @@ export default function EditBlogPage() {
                       value={formData.title}
                       onChange={(e) => handleInputChange('title', e.target.value)}
                       placeholder="Enter blog title"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
                       required
                     />
                   </div>
@@ -521,7 +521,7 @@ export default function EditBlogPage() {
                       onChange={(e) => handleInputChange('excerpt', e.target.value)}
                       placeholder="Brief description of the blog post"
                       rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
                     />
                   </div>
 
@@ -650,7 +650,7 @@ export default function EditBlogPage() {
                         <select
                           value={formData.status}
                           onChange={(e) => handleInputChange('status', e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                           required
                         >
                           <option value="DRAFT">Draft</option>
@@ -667,7 +667,7 @@ export default function EditBlogPage() {
                         <select
                           value={formData.categoryId}
                           onChange={(e) => handleInputChange('categoryId', e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                           required
                         >
                           <option value="">Select a category</option>
@@ -693,7 +693,7 @@ export default function EditBlogPage() {
                         <select
                           value={formData.streamId}
                           onChange={(e) => handleInputChange('streamId', e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                         >
                           <option value="">Select a stream</option>
                           {streams.map((stream) => (
@@ -711,7 +711,7 @@ export default function EditBlogPage() {
                         <select
                           value={formData.subjectId}
                           onChange={(e) => handleInputChange('subjectId', e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                           disabled={!formData.streamId}
                         >
                           <option value="">Select a subject</option>
@@ -737,7 +737,7 @@ export default function EditBlogPage() {
                           onChange={(e) => setTagInput(e.target.value)}
                           onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleTagAdd())}
                           placeholder="Enter tag"
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                          className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
                         />
                         <button
                           type="button"
@@ -784,7 +784,7 @@ export default function EditBlogPage() {
                           value={formData.metaTitle}
                           onChange={(e) => handleInputChange('metaTitle', e.target.value)}
                           placeholder="SEO title (optional)"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
                         />
                       </div>
 
@@ -797,7 +797,7 @@ export default function EditBlogPage() {
                           onChange={(e) => handleInputChange('metaDescription', e.target.value)}
                           placeholder="SEO description (optional)"
                           rows={3}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
                         />
                       </div>
 
@@ -812,7 +812,7 @@ export default function EditBlogPage() {
                             onChange={(e) => setTagInput(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleKeywordAdd())}
                             placeholder="Enter keyword"
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
                           />
                           <button
                             type="button"
