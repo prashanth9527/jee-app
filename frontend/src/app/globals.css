@@ -189,6 +189,25 @@ textarea:focus {
 
 /* Removed hardcoded text color classes - using Tailwind's built-in classes instead */
 
+/* Keep rendered LaTeX/question content readable in both themes */
+.latex-content-display {
+  color: inherit;
+}
+
+.latex-content-display *,
+.latex-content-display *::before,
+.latex-content-display *::after {
+  color: inherit !important;
+}
+
+:root:not(.dark) .latex-content-display {
+  color: rgb(17, 24, 39) !important;
+}
+
+:root.dark .latex-content-display {
+  color: rgb(243, 244, 246) !important;
+}
+
 /* Better loading states */
 .loading-spinner {
   border: 3px solid #e5e7eb;

@@ -753,6 +753,7 @@ export default function PracticeExamPage() {
   const isChecked = practiceState.checkedQuestions[currentQuestion.id];
   const selectedAnswer = practiceState.selectedAnswers[currentQuestion.id];
   const isCorrect = validateAnswer(currentQuestion, selectedAnswer);
+  const correctOptions = currentQuestion.options?.filter(option => option.isCorrect) || [];
 
   const renderQuestionInput = (question: Question, overrideSelectedAnswer?: string | string[] | number, overrideIsChecked?: boolean, overrideIsCorrect?: boolean) => {
     // Use override values if provided (for sub-questions), otherwise use current question's state
@@ -766,19 +767,23 @@ export default function PracticeExamPage() {
           <div className="space-y-3">
             {question.options.map((option: QuestionOption, index: number) => {
               const optionLetter = String.fromCharCode(65 + index); // A, B, C, D, etc.
+              const isSelected = questionSelectedAnswer === option.id;
+              const isCorrectOption = option.isCorrect;
+              const isWrongSelected = questionIsChecked && isSelected && !questionIsCorrect;
+              const isCheckedCorrect = questionIsChecked && isCorrectOption;
               return (
                 <label
                   key={option.id}
                   className={`block p-3 sm:p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 max-w-full overflow-x-hidden ${
-                    questionSelectedAnswer === option.id
+                    isSelected
                       ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
                       : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                   } ${
-                    questionIsChecked && option.isCorrect
+                    isCheckedCorrect
                       ? 'border-green-500 bg-green-50 dark:border-green-400 dark:bg-green-900/20'
                       : ''
                   } ${
-                    questionIsChecked && questionSelectedAnswer === option.id && !questionIsCorrect
+                    isWrongSelected
                       ? 'border-red-500 bg-red-50 dark:border-red-400 dark:bg-red-900/20'
                       : ''
                   }`}
@@ -787,45 +792,49 @@ export default function PracticeExamPage() {
                     type="radio"
                     name={`question-${question.id}`}
                     value={option.id}
-                    checked={questionSelectedAnswer === option.id}
+                    checked={isSelected}
                     onChange={(e) => handleAnswerSelect(question.id, e.target.value)}
                     className="sr-only"
                     disabled={questionIsChecked}
                   />
                   <div className="flex items-start sm:items-center gap-2 sm:gap-3">
                     <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mt-0.5 sm:mt-0 ${
-                      questionSelectedAnswer === option.id
-                        ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
-                        : 'border-gray-300 dark:border-gray-600'
-                    } ${
-                      questionIsChecked && option.isCorrect
-                        ? 'border-green-500 bg-green-500 dark:border-green-400 dark:bg-green-400'
-                        : ''
-                    } ${
-                      questionIsChecked && questionSelectedAnswer === option.id && !questionIsCorrect
-                        ? 'border-red-500 bg-red-500 dark:border-red-400 dark:bg-red-400'
-                        : ''
+                      questionIsChecked
+                        ? isCheckedCorrect
+                          ? 'border-green-500 bg-green-500 dark:border-green-400 dark:bg-green-400'
+                          : isWrongSelected
+                            ? 'border-red-500 bg-red-500 dark:border-red-400 dark:bg-red-400'
+                            : 'border-gray-300 dark:border-gray-600'
+                        : isSelected
+                          ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
+                          : 'border-gray-300 dark:border-gray-600'
                     }`}>
-                      {questionSelectedAnswer === option.id && (
+                      {isSelected && (
                         <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full"></div>
                       )}
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                       <span className={`text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border flex-shrink-0 ${
-                        questionSelectedAnswer === option.id
-                          ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
-                          : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
+                        questionIsChecked
+                          ? isCheckedCorrect
+                            ? 'bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-600 text-green-700 dark:text-green-300'
+                            : isWrongSelected
+                              ? 'bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-600 text-red-700 dark:text-red-300'
+                              : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
+                          : isSelected
+                            ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
+                            : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
                       }`}>
                         {optionLetter}
                       </span>
-                      <div className="flex-1 min-w-0 break-words overflow-wrap-anywhere text-sm sm:text-base">
+                      <div className={`flex-1 min-w-0 break-words overflow-wrap-anywhere text-sm sm:text-base ${isCheckedCorrect ? 'text-green-700 dark:text-green-300 font-semibold' : ''}`}>
                         <LatexContentDisplay content={option.text} />
                       </div>
                     </div>
-                    {questionIsChecked && option.isCorrect && (
+                    {isCheckedCorrect && (
                       <div className="text-green-600 dark:text-green-400 ml-2 flex-shrink-0">✓</div>
                     )}
-                    {questionIsChecked && questionSelectedAnswer === option.id && !questionIsCorrect && (
+                    {isWrongSelected && (
                       <div className="text-red-600 dark:text-red-400 ml-2 flex-shrink-0">✗</div>
                     )}
                   </div>
@@ -841,64 +850,72 @@ export default function PracticeExamPage() {
           <div className="space-y-3">
             {question.options.map((option: QuestionOption, index: number) => {
               const optionLetter = String.fromCharCode(65 + index); // A, B, C, D, etc.
+              const isSelected = selectedArray.includes(option.id);
+              const isCorrectOption = option.isCorrect;
+              const isWrongSelected = questionIsChecked && isSelected && !questionIsCorrect;
+              const isCheckedCorrect = questionIsChecked && isCorrectOption;
               return (
                 <label
                   key={option.id}
                   className={`block p-3 sm:p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 max-w-full overflow-x-hidden ${
-                    selectedArray.includes(option.id)
-                      ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
-                      : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-                  } ${
-                    questionIsChecked && option.isCorrect
-                      ? 'border-green-500 bg-green-50 dark:border-green-400 dark:bg-green-900/20'
-                      : ''
-                  } ${
-                    questionIsChecked && selectedArray.includes(option.id) && !questionIsCorrect
-                      ? 'border-red-500 bg-red-50 dark:border-red-400 dark:bg-red-900/20'
-                      : ''
+                    questionIsChecked
+                      ? isCheckedCorrect
+                        ? 'border-green-500 bg-green-50 dark:border-green-400 dark:bg-green-900/20'
+                        : isWrongSelected
+                          ? 'border-red-500 bg-red-50 dark:border-red-400 dark:bg-red-900/20'
+                          : 'border-gray-200 dark:border-gray-700'
+                      : isSelected
+                        ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
                 >
                   <input
                     type="checkbox"
-                    checked={selectedArray.includes(option.id)}
+                    checked={isSelected}
                     onChange={() => handleMultipleChoiceSelect(question.id, option.id)}
                     className="sr-only"
                     disabled={questionIsChecked}
                   />
                   <div className="flex items-start sm:items-center gap-2 sm:gap-3">
                     <div className={`w-5 h-5 sm:w-6 sm:h-6 border-2 flex-shrink-0 flex items-center justify-center rounded mt-0.5 sm:mt-0 ${
-                      selectedArray.includes(option.id)
+                    isSelected
                         ? 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400'
                         : 'border-gray-300 dark:border-gray-600'
                     } ${
-                      questionIsChecked && option.isCorrect
+                    isCheckedCorrect
                         ? 'border-green-500 bg-green-500 dark:border-green-400 dark:bg-green-400'
                         : ''
                     } ${
-                      questionIsChecked && selectedArray.includes(option.id) && !questionIsCorrect
+                    isWrongSelected
                         ? 'border-red-500 bg-red-500 dark:border-red-400 dark:bg-red-400'
                         : ''
                     }`}>
-                      {selectedArray.includes(option.id) && (
+                      {isSelected && (
                         <div className="text-white text-xs sm:text-sm">✓</div>
                       )}
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                       <span className={`text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border flex-shrink-0 ${
-                        selectedArray.includes(option.id)
-                          ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
-                          : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
+                        questionIsChecked
+                          ? isCheckedCorrect
+                            ? 'bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-600 text-green-700 dark:text-green-300'
+                            : isWrongSelected
+                              ? 'bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-600 text-red-700 dark:text-red-300'
+                              : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
+                          : isSelected
+                            ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
+                            : 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400'
                       }`}>
                         {optionLetter}
                       </span>
-                      <div className="flex-1 min-w-0 break-words overflow-wrap-anywhere text-sm sm:text-base">
+                      <div className={`flex-1 min-w-0 break-words overflow-wrap-anywhere text-sm sm:text-base ${isCheckedCorrect ? 'text-green-700 dark:text-green-300 font-semibold' : ''}`}>
                         <LatexContentDisplay content={option.text} />
                       </div>
                     </div>
-                    {questionIsChecked && option.isCorrect && (
+                    {isCheckedCorrect && (
                       <div className="text-green-600 dark:text-green-400 ml-2 flex-shrink-0">✓</div>
                     )}
-                    {questionIsChecked && selectedArray.includes(option.id) && !questionIsCorrect && (
+                    {isWrongSelected && (
                       <div className="text-red-600 dark:text-red-400 ml-2 flex-shrink-0">✗</div>
                     )}
                   </div>
@@ -1099,6 +1116,25 @@ export default function PracticeExamPage() {
                         <div className="mb-6 max-w-full overflow-x-hidden">
                           {renderQuestionInput(currentQuestion)}
                         </div>
+
+                        {/* Correct Answer */}
+                        {isChecked && correctOptions.length > 0 && (
+                          <div className="mb-6 p-4 rounded-lg border border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20">
+                            <h3 className="text-sm font-semibold text-green-800 dark:text-green-200 mb-2">
+                              Correct Answer{correctOptions.length > 1 ? 's' : ''}
+                            </h3>
+                            <div className="space-y-2">
+                              {correctOptions.map((option, index) => (
+                                <div key={option.id} className="flex items-start gap-2 text-green-800 dark:text-green-200">
+                                  <span className="font-semibold">{String.fromCharCode(65 + index)}.</span>
+                                  <div className="min-w-0 break-words overflow-wrap-anywhere">
+                                    <LatexContentDisplay content={option.text} />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </>
                     )}
 

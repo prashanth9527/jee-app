@@ -1142,7 +1142,7 @@ export default function PDFReviewPage() {
         {/* Create Exam Modal */}
         {showCreateExamModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-fit max-h-[90vh] overflow-y-auto">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-fit max-h-[90vh] overflow-y-auto">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-2xl font-bold text-gray-900">Create Practice Exam</h2>
@@ -1179,7 +1179,7 @@ export default function PDFReviewPage() {
                       value={examTitle}
                       onChange={(e) => setExamTitle(e.target.value)}
                       placeholder="e.g., Physics - Mechanics Practice Exam"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
                     />
                     <p className="mt-1 text-sm text-gray-500">
                       Leave empty to auto-generate based on subject/topic
@@ -1196,7 +1196,7 @@ export default function PDFReviewPage() {
                       onChange={(e) => setExamDescription(e.target.value)}
                       placeholder="Brief description of the exam..."
                       rows={3}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
                     />
                   </div>
 
@@ -1211,7 +1211,7 @@ export default function PDFReviewPage() {
                       onChange={(e) => setExamTimeLimit(e.target.value ? parseInt(e.target.value) : '')}
                       placeholder="e.g., 60"
                       min="1"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
                     />
                     <p className="mt-1 text-sm text-gray-500">
                       Recommended: {selectedQuestions.size * 2} minutes (2 min per question)
